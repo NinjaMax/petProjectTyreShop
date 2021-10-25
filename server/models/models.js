@@ -102,8 +102,21 @@ Rating.belongsTo(Goods);
 Goods.hasMany(BasketGoods);
 BasketGoods.belongsTo(Goods);
 
-Goods.hasMany(GoodsInfo);
+Goods.hasMany(GoodsInfo, {as: 'info'});
 GoodsInfo.belongsTo(Goods);
 
 Type.belongsToMany(Brand, {through: TypeBrand});
 Brand.belongsToMany(Type, {through: TypeBrand});
+
+module.exports = {
+      User,
+      Basket,
+      BasketGoods,
+      Goods,
+      Type,
+      Brand,
+      Rating,
+      TypeBrand,
+      GoodsInfo
+};
+
