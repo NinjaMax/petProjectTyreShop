@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Main = () => {
+const Contact = () => {
     return (
         <div>
-            Main TYRESHOP Page
+            CONTACT PAGE
         </div>
     );
 };
 
-export default Main;
+export default Contact;
