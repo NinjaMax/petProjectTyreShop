@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {Context} from './index';
 import { MDBCarousel, MDBCarouselInner, MDBCarouselItem, MDBContainer, MDBRow, MDBCol, MDBTestimonial, MDBAvatar, MDBIcon } from "mdbreact";
 
 const NavBar = () => {
-    const {user} = userContext(Context);
+    const {user} = useContext(Context);
     return (
-        <div>
+       
             <MDBContainer>
       <section className="text-center my-5">
         <h2 className="h1-responsive font-weight-bold my-5">
@@ -276,7 +276,7 @@ const NavBar = () => {
       </section>
     </MDBContainer>
             
-        </div>
+        
     );
 };
 
