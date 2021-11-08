@@ -17,7 +17,7 @@ export default class GoodsStore {
             {id: 2, name: 'Микроавтобус',  price: 1500, rating: 5, info:"Шины легковые", img: 'https://tshina.ua/upload/iblock/f65/Winter-icept-iz2-w616.png'},
             {id: 3, name: 'Внедорожник',  price: 1500, rating: 5, info:"Шины легковые", img: 'https://tshina.ua/upload/iblock/f65/Winter-icept-iz2-w616.png'}
         ],
-        makeAutoObservable(this)
+        makeAutoObservable(this, {}, { autoBind: true });
     }
 
     setTypes(types) {
