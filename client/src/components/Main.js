@@ -4,19 +4,16 @@ import React from 'react';
 const Main = () => {
     return (
       <div
-      class="p-5 text-center bg-image"
-      style="
-      background-image: url('https://mdbootstrap.com/img/new/slides/041.jpg');
-      height: 400px;
-      margin-top: 58px;
-    "
->
-<div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
-  <div class="d-flex justify-content-center align-items-center h-100">
-    <div class="text-white">
-      <h1 class="mb-3">Heading</h1>
-      <h4 class="mb-3">Subheading</h4>
-      <a class="btn btn-outline-light btn-lg" href="#!" role="button"
+      className="p-5 text-center bg-image"
+      style={{ backgroundImage: 'url(https://mdbootstrap.com/img/new/slides/041.jpg)',
+      height: '400px',
+      marginTop: '58px'}}>
+<div className="mask" style={{backgroundColor: 'rgba(0, 0, 0, 0.6)'}}>
+  <div className="d-flex justify-content-center align-items-center h-100">
+    <div className="text-white">
+      <h1 className="mb-3">Buy TYRES</h1>
+      <h4 className="mb-3">Choose your tyres</h4>
+      <a className="btn btn-outline-light btn-lg" href="#!" role="button"
       >Call to action</a
       >
     </div>
