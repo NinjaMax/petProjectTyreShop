@@ -13,9 +13,8 @@ const Main = () => {
     <div className="text-white">
       <h1 className="mb-3">Buy TYRES</h1>
       <h4 className="mb-3">Choose your tyres</h4>
-      <a className="btn btn-outline-light btn-lg" href="#!" role="button"
-      >Call to action</a
-      >
+      <a className="btn btn-outline-light btn-lg" href="/catalog" role="button"
+      >Call to action</a>
     </div>
   </div>
 </div>

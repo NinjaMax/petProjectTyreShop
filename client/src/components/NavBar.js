@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import {Context} from '../index';
+import { observer } from 'mobx-react-lite';
 
-
-const NavBar = () => {
+const NavBar = observer(() => {
     const {user} = useContext(Context);
     return (
       
-<nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+<nav className="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
   
   <div className="container-fluid">
     
@@ -47,9 +47,21 @@ const NavBar = () => {
       </ul>
       
     </div>
-    
+    <div class="container-fluid">
+      <form class="d-flex input-group w-auto">
+        <input
+          type="search"
+          class="form-control rounded"
+          placeholder="Search"
+          aria-label="Search"
+          aria-describedby="search-addon"
+        />
+        <span class="input-group-text text-white border-0" id="search-addon">
+          <i class="fas fa-search"></i>
+        </span>
+      </form>
+    </div>
 
-   
     <div className="d-flex align-items-center">
       
       <a className="text-reset me-3" href="#">
@@ -124,5 +136,5 @@ const NavBar = () => {
         
    
     );
-};
+});
 export default NavBar;
