@@ -6,7 +6,7 @@ const Main = () => {
         <div>
                 <div
                 className="p-5 text-center bg-image"
-                style={{ backgroundImage: 'src(../../public/img/reifenaufkleberYokohamarot8er.jpg)',
+                style={{ backgroundImage: '../../public/img/reifenaufkleberYokohamarot8er.jpg',
                 height: '400px',
                 marginTop: '58px'}}>
         <div className="mask" style={{backgroundColor: 'rgba(0, 0, 0, 0.6)'}}>
