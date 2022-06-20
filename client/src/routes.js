@@ -28,7 +28,8 @@ export const publicRoutes = [
     Component: Catalog
   },
   {
-    path: GOODS_ROUTE + '/:tyres',
+    path: GOODS_ROUTE,
+    //path: GOODS_ROUTE + '/:tyres',
     Component: Goods
   },
   {

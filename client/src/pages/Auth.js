@@ -90,7 +90,7 @@ const Auth = () => {
 
         <div className="col-md-6 d-flex justify-content-center">
         
-          <a href="#!">Forgot password?</a>
+          <a href="/#">Forgot password?</a>
         </div>
       </div>
 
@@ -99,7 +99,7 @@ const Auth = () => {
 
      
       <div className="text-center">
-        <p>Not a member? <a href="#!">Register</a></p>
+        <p>Not a member? <a href="/#">Register</a></p>
       </div>
     </form>
   </div>
