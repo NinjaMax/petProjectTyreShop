@@ -14,9 +14,6 @@ const CategorySlide = () => {
                 <div className="column">
                   <img src="img3.jpg" onclick="openModal();currentSlide(3)" className="hover-shadow" alt='categorySlider'/>
                 </div>
-                <div className="column">
-                  <img src="img4.jpg" onclick="openModal();currentSlide(4)" className="hover-shadow" alt='categorySlider'/>
-                </div>
             </div>
         </div>
     );

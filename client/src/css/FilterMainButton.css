@@ -1,7 +1,7 @@
 /* Dropdown Button */
 .dropbtn {
     background-color: #4CAF50;
-    color: white;
+    color: rgb(102, 117, 250);
     padding: 16px;
     font-size: 16px;
     border: none;
@@ -16,7 +16,7 @@
 /* The search field */
 #myInput {
   box-sizing: border-box;
-  /*background-image: url('searchicon.png');*/
+  background-image: url('../assets/search_icon.png');
   background-position: 14px 12px;
   background-repeat: no-repeat;
   font-size: 16px;
@@ -32,13 +32,14 @@
 .dropdown {
     position: relative;
     display: inline-block;
+    background-color:#3e8e41;
 }
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
-    display: none;
+    display: block;
     position: absolute;
-    background-color: #f6f6f6;
+    background-color: #0f49f7e3;
     min-width: 230px;
     border: 1px solid #ddd;
     z-index: 1;
