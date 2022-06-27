@@ -6,13 +6,13 @@ const CategorySlide = () => {
         <div>
             <div className="row">
                 <div className="column">
-                  <img src="img1.jpg" href="/goods" className="hover-shadow" alt='categorySlider'/>
+                  <img src="../assets/pexelsJaePark.jpg" href="/goods" className="hover-shadow" alt='categorySlider'/>
                 </div>
                 <div className="column">
-                  <img src="img2.jpg" onclick="openModal();currentSlide(2)" className="hover-shadow" alt='categorySlider'/>
+                  <img src="../assets/pexelsVincenzoMalagoli.jpg" onClick={"openModal();currentSlide(2)"} className="hover-shadow" alt='categorySlider'/>
                 </div>
                 <div className="column">
-                  <img src="img3.jpg" onclick="openModal();currentSlide(3)" className="hover-shadow" alt='categorySlider'/>
+                  <img src="../assets/michelintyres.jpg" onClick={"openModal();currentSlide(3)"} className="hover-shadow" alt='categorySlider'/>
                 </div>
             </div>
         </div>

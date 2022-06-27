@@ -16,13 +16,13 @@
   }
   
   /* The dropdown container */
-  .dropdown {
+  .dropdownNavbar {
     float: left;
     overflow: hidden;
   }
   
   /* Dropdown button */
-  .dropdown .dropbtn {
+  .dropdownNavbar .dropbtnNavbar {
     font-size: 16px;
     border: none;
     outline: none;
@@ -34,12 +34,12 @@
   }
   
   /* Add a red background color to navbar links on hover */
-  .navbar a:hover, .dropdown:hover .dropbtn {
+  .navbar a:hover, .dropdownNavbar:hover .dropbtnNavbar {
     background-color: red;
   }
   
   /* Dropdown content (hidden by default) */
-  .dropdown-content {
+  .dropdownContentNavbar {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
@@ -50,19 +50,19 @@
   }
   
   /* Mega Menu header, if needed */
-  .dropdown-content .header {
+  .dropdownContentNavbar .headerNavbar {
     background: red;
     padding: 16px;
     color: white;
   }
   
   /* Show the dropdown menu on hover */
-  .dropdown:hover .dropdown-content {
+  .dropdownNavbar:hover .dropdownContentNavbar {
     display: block;
   }
   
   /* Create three equal columns that floats next to each other */
-  .column {
+  .columnNavbar {
     float: left;
     width: 33.33%;
     padding: 10px;
@@ -71,7 +71,7 @@
   }
   
   /* Style links inside the columns */
-  .column a {
+  .columnNavbar a {
     float: none;
     color: black;
     padding: 16px;
@@ -81,19 +81,19 @@
   }
   
   /* Add a background color on hover */
-  .column a:hover {
+  .columnNavbar a:hover {
     background-color: #ddd;
   }
   
   /* Clear floats after the columns */
-  .row:after {
+  .rowNavbar:after {
     content: "";
     display: table;
     clear: both;
   }
 
   @media screen and (max-width: 600px) {
-    .column {
+    .columnNavbar {
       width: 100%;
       height: auto;
     }

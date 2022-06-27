@@ -1,0 +1,8 @@
+.filterMain {
+    /*position: relative;*/
+    /*display: inline-block;*/
+    /*background-color:#3e8e41;*/
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
