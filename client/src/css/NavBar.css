@@ -1,8 +1,12 @@
 /* Navbar container */
 .navbar {
-    overflow: hidden;
-    background-color: #333;
+    overflow:hidden;
+    background-color: #0f49f7e3;
     font-family: Arial;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    
   }
   
   /* Links inside the navbar */
@@ -17,7 +21,10 @@
   
   /* The dropdown container */
   .dropdownNavbar {
-    float: left;
+    /*float: left;*/
+    display: block;
+    /*position: absolute;*/
+    /*left: 0px;*/
     overflow: hidden;
   }
   
@@ -35,13 +42,13 @@
   
   /* Add a red background color to navbar links on hover */
   .navbar a:hover, .dropdownNavbar:hover .dropbtnNavbar {
-    background-color: red;
+    background-color: rgb(102, 117, 250);
   }
   
   /* Dropdown content (hidden by default) */
   .dropdownContentNavbar {
     display: none;
-    position: absolute;
+    position:absolute;
     background-color: #f9f9f9;
     width: 100%;
     left: 0;
@@ -51,7 +58,7 @@
   
   /* Mega Menu header, if needed */
   .dropdownContentNavbar .headerNavbar {
-    background: red;
+    background: rgb(102, 117, 250);
     padding: 16px;
     color: white;
   }
@@ -59,6 +66,8 @@
   /* Show the dropdown menu on hover */
   .dropdownNavbar:hover .dropdownContentNavbar {
     display: block;
+    position:relative;
+    /*top:auto;*/
   }
   
   /* Create three equal columns that floats next to each other */

@@ -1,7 +1,7 @@
 /* Dropdown Button */
 .dropbtnFilterMain {
-    background-color: #4CAF50;
-    color: rgb(102, 117, 250);
+    background-color: #0f49f7e3;
+    color: #ddd;
     padding: 16px;
     font-size: 16px;
     border: none;
@@ -10,7 +10,7 @@
 
 /* Dropdown button on hover & focus */
 .dropbtnFilterMain:hover, .dropbtnFilterMain:focus {
-    background-color: #3e8e41;
+    background-color:  rgb(102, 117, 250);
 }
 
 /* The search field */
@@ -32,7 +32,7 @@
 .dropdownFilterMain {
     position: relative;
     display: inline-block;
-    background-color:#3e8e41;
+    background-color:#0f49f7e3;
 }
 
 /* Dropdown Content (Hidden by Default) */
@@ -59,111 +59,4 @@
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {display:block;}
 
-/*BUTTON ONE*/
-/* Dropdown Button */
-.dropbtnFilterMainOne {
-    background-color: #4CAF50;
-    color: rgb(102, 117, 250);
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-}
 
-/* Dropdown button on hover & focus */
-.dropbtnFilterMainOne:hover, .dropbtnFilterMain:focus {
-    background-color: #3e8e41;
-}
-/* Dropdown Content (Hidden by Default) */
-.dropdownContentFilterMainOne {
-    display: block;
-    position: absolute;
-    background-color: #0f49f7e3;
-    min-width: 230px;
-    border: 1px solid #ddd;
-    z-index: 1;
-}
-
-/* Links inside the dropdown */
-.dropdownContentFilterMainOne a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-/* Change color of dropdown links on hover */ 
-.dropdownContentFilterMainOne a:hover {background-color: #f1f1f1}
-
-
-/*BUTTON TWO*/
-/* Dropdown Button */
-.dropbtnFilterMainTwo {
-    background-color: #4CAF50;
-    color: rgb(102, 117, 250);
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-}
-
-/* Dropdown button on hover & focus */
-.dropbtnFilterMainTwo:hover, .dropbtnFilterMain:focus {
-    background-color: #3e8e41;
-}
-/* Dropdown Content (Hidden by Default) */
-.dropdownContentFilterMainTwo {
-    display: block;
-    position: absolute;
-    background-color: #0f49f7e3;
-    min-width: 230px;
-    border: 1px solid #ddd;
-    z-index: 1;
-}
-
-/* Links inside the dropdown */
-.dropdownContentFilterMainTwo a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-/* Change color of dropdown links on hover */ 
-.dropdownContentFilterMainTwo a:hover {background-color: #f1f1f1}
-
-/*BUTTON THREE*/
-/* Dropdown Button */
-.dropbtnFilterMainThree {
-    background-color: #4CAF50;
-    color: rgb(102, 117, 250);
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-}
-
-/* Dropdown button on hover & focus */
-.dropbtnFilterMainThree:hover, .dropbtnFilterMain:focus {
-    background-color: #3e8e41;
-}
-/* Dropdown Content (Hidden by Default) */
-.dropdownContentFilterMainThree {
-    display: block;
-    position: absolute;
-    background-color: #0f49f7e3;
-    min-width: 230px;
-    border: 1px solid #ddd;
-    z-index: 1;
-}
-
-/* Links inside the dropdown */
-.dropdownContentFilterMainThree a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-/* Change color of dropdown links on hover */ 
-.dropdownContentFilterMainThree a:hover {background-color: #f1f1f1}

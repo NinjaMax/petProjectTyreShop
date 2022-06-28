@@ -1,7 +1,7 @@
 /* Dropdown Button */
 .dropbtnFilterMainTwo {
-    background-color: #4CAF50;
-    color: rgb(102, 117, 250);
+    background-color: #0f49f7e3;
+    color: #ddd;
     padding: 16px;
     font-size: 16px;
     border: none;
@@ -10,7 +10,7 @@
 
 /* Dropdown button on hover & focus */
 .dropbtnFilterMainTwo:hover, .dropbtnFilterMain:focus {
-    background-color: #3e8e41;
+    background-color: rgb(102, 117, 250);
 }
 
 /* The search field */
@@ -32,7 +32,7 @@
 .dropdownFilterMainTwo {
     position: relative;
     display: inline-block;
-    background-color:#3e8e41;
+    background-color:#0f49f7e3;
 }
 
 /* Dropdown Content (Hidden by Default) */
