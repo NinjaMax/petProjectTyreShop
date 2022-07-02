@@ -9,6 +9,7 @@ const NavBar = observer(() => {
   return (
 
   <div className="navbar">
+      <a href='/#'>LOGO</a>
       <a href="/#home">Home</a>
       <a href="/#news">News</a>
     <div className="dropdownNavbar">

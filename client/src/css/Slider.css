@@ -3,13 +3,17 @@
 /* Slideshow container */
 .slideshow-container {
   max-width: 1000px;
+  max-height: 350px;
   position: relative;
+  overflow: hidden;
+  padding: 5px 5px 5px 5px;
   margin: auto;
+  
 }
 
 /* Hide the images by default */
 .mySlides {
-    display: none;
+    display:contents;
 }
 
 /* Next & previous buttons */
@@ -32,6 +36,12 @@
   right: 0;
   border-radius: 3px 0 0 3px;
 }
+/* Position the "next button" to the right */
+.prev {
+  left: 0;
+  border-radius: 3px 0 0 3px;
+}
+
 
 /* On hover, add a black background color with a little bit see-through */
 .prev:hover, .next:hover {
@@ -57,14 +67,21 @@
   position: absolute;
   top: 0;
 }
-
+/*dot container*/
+.dotContainer{
+  text-align: center;
+  margin-top: -25px;
+  margin-left: 50%;
+  position:absolute;
+  overflow: visible;
+}
 /* The dots/bullets/indicators */
 .dot {
   cursor: pointer;
   height: 15px;
   width: 15px;
-  margin: 0 2px;
-  background-color: #bbb;
+  margin: 0px 2px;
+  background-color: red;
   border-radius: 50%;
   display: inline-block;
   transition: background-color 0.6s ease;

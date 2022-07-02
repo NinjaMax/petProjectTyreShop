@@ -1,5 +1,13 @@
-.row > .column {
-    padding: 0 8px;
+.rowCategoreSlider {
+    /*background: #1895;*/
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /*gap: 5px 5px;*/
+   /* max-height: 50px;
+    max-width: 50px;*/
+    /*overflow: visible;*/
+    /*padding: 10 8px;*/
   }
   
   .row:after {
@@ -9,9 +17,19 @@
   }
   
   /* Create four equal columns that floats next to eachother */
-  .column {
-    float: left;
-    width: 25%;
+  .columnCategorySlider {
+    /*float: left;*/
+    /*display: flex;*/
+   /* width: 25%;*/
+    /*display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px 20px;*/
+    height: 200px;
+    width: 300px;
+    /*background-color:blueviolet;*/
+    overflow: hidden;
+    margin: 10px;
   }
   
   img.hover-shadow {
