@@ -36,12 +36,9 @@ const Slider = () => {
               <span className="dot" onClick={"currentSlide(2)"}></span>
               <span className="dot" onClick={"currentSlide(3)"}></span>
             </div>
-            <br/>
-
-            
         </div>
       
-        );
+      );
     };
 
 export default Slider;

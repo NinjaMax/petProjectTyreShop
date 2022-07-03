@@ -1,6 +1,7 @@
 import React from 'react';
 //import {Context} from '../index';
 import { observer } from 'mobx-react-lite';
+import ButtonSearch from './Buttons/ButtonSearch'
 import '../css/NavBar.css';
 
 const NavBar = observer(() => {
@@ -42,6 +43,7 @@ const NavBar = observer(() => {
         </div>
       </div>
     </div>
+    <ButtonSearch/>
   </div>
 
     );
