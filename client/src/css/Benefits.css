@@ -1,0 +1,60 @@
+
+.benefitsBox{
+    display: flex;
+    flex-direction: row;
+    /*border:rebeccapurple solid;*/
+    justify-content: center;
+    gap: 0px;
+    /*align-items:center;*/
+    /*position:relative;*/
+    /*width: 800px;
+    height: 40px;*/
+    /*margin: auto;*/
+    overflow: hidden;
+}
+
+.containerBenefit {
+    /*border: 2px solid rebeccapurple;*/
+    border-left: 4px solid #444B54;
+    border-right: 4px solid #444B54;
+    background-color: #fff;
+    border-radius: 0px;
+    padding: 10px;
+    margin: 10px 0;
+    width: 400px;
+    height: 200px;
+}
+
+/* Clear floats after containers */
+.containerBenefit::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* Float images inside the container to the left. Add a right margin, and style the image as a circle */
+.containerBenefit img {
+    float: left;
+    margin-right: 20px;
+    /*border-radius: 50%;*/
+}
+
+/* Increase the font-size of a span element */
+.containerBenefit span {
+    font-size: 20px;
+    font-family:sans-serif;
+    margin-right: 15px;
+}
+
+/* Add media queries for responsiveness. This will center both the text and the image inside the container */
+@media (max-width: 500px) {
+  .containerBenefit {
+    text-align: center;
+  }
+
+  .containerBenefit img {
+    margin: auto;
+    float: none;
+    display: block;
+  }
+}

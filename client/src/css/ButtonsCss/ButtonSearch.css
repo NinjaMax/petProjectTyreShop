@@ -1,17 +1,18 @@
 /* Style buttons */
 .btnSearch {
-    background-color: DodgerBlue; /* Blue background */
+    background-color: #71C2FF; /* Blue background */
     border: none; /* Remove borders */
     color: white; /* White text */
     padding: 12px 16px; /* Some padding */
     font-size: 16px; /* Set a font size */
     cursor: pointer; /* Mouse pointer on hover */
+    border-radius: 3px;
     
 }
 
 /* Darker background on mouse-over */
 .btnSearch:hover {
-    background-color: RoyalBlue;
+    background-color:#9EB9D3;
 }
 
 .btnIcon{

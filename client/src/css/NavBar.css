@@ -1,8 +1,9 @@
 /* Navbar container */
 .navbar {
     /*overflow:hidden;*/
-    background-color: #0f49f7e3;
-    font-family: Arial;
+    background-color: #fff;
+    /*font-family: 'Comfortaa', cursive;*/
+    font-family: 'Fredoka', sans-serif;
     display:flex;
     /*flex-direction: row;*/
     justify-content: flex-start;
@@ -13,11 +14,11 @@
   .navbar a {
     /*float: left;*/
     font-size: 16px;
-    color: white;
+    color: #444B54;
     text-align:center;
     padding: 14px 16px;
     text-decoration: none;
-    /*position:static;*/
+    border-radius:2px;
   }
   
   /* The dropdown container */
@@ -34,7 +35,7 @@
     font-size: 16px;
     border: none;
     outline: none;
-    color: white;
+    color: #444B54;
     padding: 14px 16px;
     background-color: inherit;
     font: inherit; /* Important for vertical align on mobile phones */
@@ -44,7 +45,7 @@
   
   /* Add a red background color to navbar links on hover */
   .navbar a:hover, .dropdownNavbar:hover .dropbtnNavbar {
-    background-color: rgb(102, 117, 250);
+    background-color: #71C2FF;
   }
   
   /* Dropdown content (hidden by default) */
@@ -61,9 +62,9 @@
   
   /* Mega Menu header, if needed */
   .dropdownContentNavbar .headerNavbar {
-    background: rgb(102, 117, 250);
+    background: #71C2FF;
     padding: 16px;
-    color: white;
+    color: #444B54;
   }
   
   /* Show the dropdown menu on hover */

@@ -3,7 +3,9 @@ import Slider from '../components/Slider';
 import FilterMain from '../components/FilterMain';
 import CategorySlide from '../components/CategorySlide';
 import NewsCards from '../components/NewsCards';
-import '../css/Main.css'
+import Benefits from '../components/Benefits';
+import ReviewStore from '../components/Reviews/ReviewStore';
+import '../css/Main.css';
 
 const Main = () => {
     return (
@@ -12,6 +14,8 @@ const Main = () => {
         <FilterMain/>
         <CategorySlide/>
         <NewsCards/>
+        <Benefits/>
+        <ReviewStore/>
     </div>   
 
 
