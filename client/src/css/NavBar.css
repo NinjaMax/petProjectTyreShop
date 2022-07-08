@@ -9,6 +9,11 @@
     justify-content: flex-start;
     /*position:relative;*/
   }
+  .navbar img {
+    width: 181px;
+    height: 60px;
+    margin-left: 50px;
+  }
   
   /* Links inside the navbar */
   .navbar a {

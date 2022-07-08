@@ -1,7 +1,9 @@
 import React from 'react';
 //import {Context} from '../index';
 import { observer } from 'mobx-react-lite';
-import ButtonSearch from './Buttons/ButtonSearch'
+import ButtonSearch from './Buttons/ButtonSearch';
+import logoShop from '../assets/logoShop/logoSkyshina302_100.png';
+import BasketNav from '../components/Basket/BasketNav';
 import '../css/NavBar.css';
 
 const NavBar = observer(() => {
@@ -10,7 +12,7 @@ const NavBar = observer(() => {
   return (
 
   <div className="navbar">
-      <a href='/#'>LOGO</a>
+      <img href='/#' src={logoShop} alt='logoShop'/>
       <a href="/#home">Home</a>
       <a href="/#news">News</a>
     <div className="dropdownNavbar">
@@ -44,6 +46,7 @@ const NavBar = observer(() => {
       </div>
     </div>
     <ButtonSearch/>
+    <BasketNav/>
   </div>
 
     );

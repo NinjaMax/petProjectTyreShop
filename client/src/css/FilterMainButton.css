@@ -1,12 +1,12 @@
 /* Dropdown Button */
 .dropbtnFilterMain {
-    background-color: #0f49f7e3;
-    color: #ddd;
+    background-color: #71C2FF;
+    color: #444B54;
     padding: 16px;
     font-size: 16px;
     border: none;
     cursor: pointer;
-    border: radius 3px;
+    border-radius: 5px;
 }
 
 /* Dropdown button on hover & focus */
@@ -33,7 +33,7 @@
 .dropdownFilterMain {
     position: relative;
     display: inline-block;
-    background-color:#0f49f7e3;
+    /*background-color:#0f49f7e3;*/
 }
 
 /* Dropdown Content (Hidden by Default) */
