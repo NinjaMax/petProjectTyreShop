@@ -1,7 +1,7 @@
 import React from 'react';
 import Slider from '../components/Slider';
 import CategorySlide from '../components/CategorySlide';
-import NewsCards from '../components/NewsCards';
+import TabProdMain from '../components/Tabs/TabProdMain';
 import Benefits from '../components/Benefits';
 import ReviewStore from '../components/Reviews/ReviewStore';
 import TabMain from '../components/Tabs/TabMain';
@@ -13,7 +13,7 @@ const Main = () => {
         <Slider/>
         <TabMain/>
         <CategorySlide/>
-        <NewsCards/>
+        <TabProdMain/>
         <Benefits/>
         <ReviewStore/>
     </div>   

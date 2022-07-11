@@ -1,0 +1,127 @@
+.tyresCard {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    overflow:hidden;
+    padding: 1em;
+    pointer-events: all;
+    position: relative;
+}
+
+ #imgTyres {
+    width: 250px;
+    height: 250px;
+}
+
+.tyresCard:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.tyresCard:hover .optionsTyreBox {
+    /*box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);*/
+
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 5px;
+    /*position:absolute;*/
+}
+
+.tyresCardPrice {
+    color: #444B54;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 22px;
+    font-weight: bolder;
+}
+
+.tyresCard button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+}
+
+.tyresCard a {
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
+}
+
+.tyresCard button:hover, a:hover {
+    opacity: 0.7;
+}
+/*Tooltip container*/
+
+.tooltipCardTyresWidth {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+.tooltipCardTyresWidth .tooltipTextCardTyresWidth {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    top: -70%;
+    left: 115%;
+    /*margin-left: -60px;*/
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+/* Tooltip arrow */
+.tooltipCardTyresWidth .tooltipTextCardTyresWidth::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltipCardTyresWidth:hover .tooltipTextCardTyresWidth {
+    visibility: visible;
+    opacity: 1;
+}
+.optionsTyreBox {
+     display:none;
+     /*position: relative;*/
+    /*visibility: hidden;*/
+    /*flex-direction: column;*/
+    /*align-items: flex-start;*/
+    /*padding-left: 5px;*/
+    /*text-align: start;*/
+}
+
+/*.typesCar:hover .optionsTyreBox{
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 5px;
+    /*text-align: start;*/
+    /*visibility: visible;*/
+/*}*/
+
+
+.tyresCardCountry {
+    display: inline;
+    /*width: 45px;
+    height: 45px;*/
+    /*padding-left: 3px;*/
+}

@@ -1,9 +1,11 @@
 import React from 'react';
-import '../css/NewsCards.css'
+import TyresCard from '../components/Cards/TyresCard';
+import '../css/PromotionBox.css';
 
-const NewsCards = () => {
+const PromotionBox = () => {
     return (
-        <div className='news'>
+
+        <div className='promotionBox'>
             <div className="newsCard">
                 <img src="img_avatar.png" alt="newsCard"/>
                     <div className="newsContainer">
@@ -25,17 +27,10 @@ const NewsCards = () => {
                     <p>Team Lead</p>
                 </div>
             </div>
-            <div className="newsCard">
-                <img src="img_avatar.png" alt="newsCard"/>
-                <div className="newsContainer">
-                    <h4><b>Helicopter</b></h4>
-                    <p>Manager Engineer</p>
-                </div>
-            </div>
-      
+            <TyresCard/>    
         </div>
         
     );
 };
 
-export default NewsCards;
+export default PromotionBox;

@@ -1,0 +1,7 @@
+.propsCardIcons img {
+    display: inline;
+    vertical-align: middle;
+    width: 35px;
+    height: 35px;
+    padding: 3px;
+}
