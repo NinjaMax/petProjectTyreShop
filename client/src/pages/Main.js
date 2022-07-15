@@ -3,7 +3,7 @@ import Slider from '../components/Slider';
 import CategorySlide from '../components/CategorySlide';
 import TabProdMain from '../components/Tabs/TabProdMain';
 import Benefits from '../components/Benefits';
-import ReviewStore from '../components/Reviews/ReviewStore';
+import ReviewsMain from '../components/Reviews/ReviewsMain';
 import TabMain from '../components/Tabs/TabMain';
 import '../css/Main.css';
 
@@ -15,7 +15,7 @@ const Main = () => {
         <CategorySlide/>
         <TabProdMain/>
         <Benefits/>
-        <ReviewStore/>
+        <ReviewsMain/>
     </div>   
 
 

@@ -1,22 +1,71 @@
 /* Slideshow container */
-.reviewStore{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-
+.reviewStore {
+  display: block;
+  width: 655px;
+  height: 355px;
 }
-.reviewsContainer {
+
+.reviewsStoreContainer{
     position: relative;
-    background: #f1f1f1f1;
-  }
+    background: #ddd;
+    border-radius:10px 10px 0 0;
+    height: 290.4px;
+    
+}
   
   /* Slides */
-  .mySlidesReview {
-    display: contents;
-    padding: 80px;
-    text-align: center;
+.mySlidesStoreReview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 1fr);
+  padding: 15px;
+  /*text-align: center;*/
+} 
+  /* Add a blue color to the author */
+.authorStoreReview {
+  border:red solid 2px;
+  padding: 5px;
+  grid-column: 1/2;
+  color: #444B54;
+}
+
+.authorStoreReview img {
+  width: 35px;
+  height: 35px;
+  border-radius:50%;
+  background-color:#9EB9D3;
+}
+
+  .ratingStoreReview {
+    border:red solid 2px;
+    grid-column:2/3;
+    text-align: right;
   }
-  
+
+  .contentStoreReview {
+    border:red solid 2px;
+    grid-column: 1/3;
+    grid-row: 2;
+  }
+
+  .dateStoreReview {
+    border:red solid 2px;
+    grid-column: 1/2;
+    grid-row: 3;
+  }
+
+  .answerStoreReview {
+    border:red solid 2px;
+
+    grid-column: 1/3;
+    grid-row: 4/7;
+  }
+
+  .answerStoreReview img {
+    width: 100px;
+    height: 50px;
+    padding: 5px;
+  }
+
   /* Next & previous buttons */
   .prevReview, .nextReview {
     cursor: pointer;
@@ -69,8 +118,6 @@
     background-color: #717171;
   }
   
-  /* Add an italic font style to all quotes */
-  q {font-style: italic;}
   
-  /* Add a blue color to the author */
-  .authorReview {color: cornflowerblue;}
+ 
+  

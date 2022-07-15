@@ -2,15 +2,21 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    flex-wrap: wrap;
+    /*position: relative;*/
+    /*overflow: hidden;*/
     
 }
 .newsCard {
     /* Add shadows to create the "card" effect */
-    width: 200px;
-    height: 350px;
+    /*width: 200px;*/
+    /*height: 350px;*/
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
     border-radius: 3px;
+    /*position:absolute;*/
+    display: block;
+    /*overflow: hidden;*/
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -19,6 +25,6 @@
 }
 
 /* Add some padding inside the card container */
-.newsContainer {
+/*.newsContainer {
     padding: 2px 16px;
-}
+}*/

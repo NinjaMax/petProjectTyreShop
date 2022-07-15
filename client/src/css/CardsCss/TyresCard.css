@@ -6,25 +6,60 @@
     overflow:hidden;
     padding: 1em;
     pointer-events: all;
-    position: relative;
+    /*display: block;*/
+    /*position: relative;*/
 }
 
  #imgTyres {
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
+}
+
+/*.tyresCard:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}*/
+
+/*.optionsContainer{*/
+    /*display: block;*/
+    /*position:absolute;
+    overflow: hidden;*/
+    /*z-index: 1;*/
+/*}*/
+
+.optionsTyreBox {
+    display:none;
+
+    /*display:flex;*/
+    /*flex-direction: column;
+    align-items: flex-start;
+    padding-left: 5px;*/
+
+    /*position:absolute;*/
+
+   
+    /*z-index:1;*/
+    /*overflow: hidden;*/
+    /*visibility:hidden;*/
 }
 
 .tyresCard:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
-.tyresCard:hover .optionsTyreBox {
-    /*box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);*/
 
-    display:flex;
+.tyresCard:hover .optionsTyreBox {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    /*visibility:visible;*/
+    /*display:flex;
     flex-direction: column;
     align-items: flex-start;
     padding-left: 5px;
-    /*position:absolute;*/
+    width: 300px;
+    /*max-width: 300px;
+    margin: auto;*/
+    /*z-index: 1;
+    position:absolute;
+    background-color:#fff;*/
+    /*overflow:hidden;*/
 }
 
 .tyresCardPrice {
@@ -32,6 +67,7 @@
     font-family: 'Fredoka', sans-serif;
     font-size: 22px;
     font-weight: bolder;
+    text-align: center;
 }
 
 .tyresCard button {
@@ -40,22 +76,30 @@
     display: inline-block;
     padding: 8px;
     color: white;
-    background-color: #000;
+    background-color: #9C93D1;
     text-align: center;
     cursor: pointer;
     width: 100%;
     font-size: 18px;
+    border-radius:5px;
 }
 
 .tyresCard a {
     text-decoration: none;
-    font-size: 22px;
+    font-size: 18px;
     color: black;
+    /*text-align: left;*/
 }
 
-.tyresCard button:hover, a:hover {
+.tyresCard button:hover {
     opacity: 0.7;
+    background-color:#C7C3F4
 }
+.tyresCard a:hover {
+    opacity: 0.7;
+    /*background-color:#C7C3F4*/
+}
+
 /*Tooltip container*/
 
 .tooltipCardTyresWidth {
@@ -99,29 +143,27 @@
     visibility: visible;
     opacity: 1;
 }
-.optionsTyreBox {
-     display:none;
-     /*position: relative;*/
-    /*visibility: hidden;*/
-    /*flex-direction: column;*/
-    /*align-items: flex-start;*/
-    /*padding-left: 5px;*/
-    /*text-align: start;*/
-}
-
-/*.typesCar:hover .optionsTyreBox{
-    display:flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding-left: 5px;
-    /*text-align: start;*/
-    /*visibility: visible;*/
-/*}*/
-
 
 .tyresCardCountry {
     display: inline;
-    /*width: 45px;
-    height: 45px;*/
-    /*padding-left: 3px;*/
+    text-align: center;
+}
+.propsCard {
+    text-align: center;
+}
+.ratingTyres {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items:center;
+    gap:5px;
+    /*vertical-align: bottom;*/
+}
+.ratingTyres a {
+    font-size: 15px;
+    /*vertical-align: bottom;*/
+}
+
+.tyresCardCode {
+    text-align: center;
 }

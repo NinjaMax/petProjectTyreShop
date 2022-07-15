@@ -10,14 +10,14 @@ const TyresCard = () => {
         <div>
             <div className="tyresCard">
                 <img id='imgTyres' src={tyres} alt="John" />
-                <a href="/#">CONTINENTAL CONTICROSSPREMIUMCONTACT 6 UHPD 5P 195/65 R15</a>
-                <div className='ratingTyres'><Rating/></div>
+                <a id='tyresName' href="/#">CONTINENTAL CONTICROSSPREMIUMCONTACT 6 UHPD 5P 195/65 R15 105T XL</a>
+                <div className='ratingTyres'><Rating/><a href='/#'>0 отзывов</a></div>
                 <div className="tyresCardCode">код товара: 0123565447</div>
-                <div><PropsCardIcons/></div>
+                <div className='propsCard'><PropsCardIcons/></div>
                 <div className="tyresCardCountry"><FlagsIcon/></div>
                 <div className="tyresCardPrice">2005 UAH</div>
-                <div><button>Contact</button></div>
-                <p/>
+                <div><button>КУПИТЬ</button></div>
+                <p/> 
                 <div className='optionsTyreBox'>   
                     <div className="tooltipCardTyresWidth">
                         <span>Ширина:195
@@ -55,8 +55,8 @@ const TyresCard = () => {
                         </span>
                     </div>
                 </div>
-                    <p/>
-            </div>
+                </div>
+                    <p/> 
         </div>
     );
 };

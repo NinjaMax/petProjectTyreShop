@@ -1,6 +1,6 @@
 import React from 'react';
 import seasonSummer from '../../assets/icons/iconsSeasons/seasonSummer.png';
-import passCar from '../../assets/icons/iconsTypeCar/passengerCar.png';
+import passCar from '../../assets/icons/iconsTypeCar/londonCabClear64.png';
 import pickup from '../../assets/icons/iconsTypeCar/pickup.png';
 import '../../css/CardsCss/PropsCardIcon.css';
 
