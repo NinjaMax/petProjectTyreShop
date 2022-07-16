@@ -1,6 +1,6 @@
 import React from 'react';
-import thumbUp from '../../assets/icons/thumbs_up_64_1_green.png';
-import thumbDown from '../../assets/icons/thumbs_down_64_red.png';
+import thumbUp from '../../assets/icons/thumbs_up64_1_green.png';
+import thumbDown from '../../assets/icons/thumbs_down_64red.png';
 import '../../css/Reviews/ReviewsGoods.css';
 import customerReview from '../../assets/icons/customer64.png';
 import Rating from '../Rating';

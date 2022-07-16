@@ -5,6 +5,7 @@ import TabProdMain from '../components/Tabs/TabProdMain';
 import Benefits from '../components/Benefits';
 import ReviewsMain from '../components/Reviews/ReviewsMain';
 import TabMain from '../components/Tabs/TabMain';
+import NewsMainBox from '../components/News/NewsMainBox';
 import '../css/Main.css';
 
 const Main = () => {
@@ -16,6 +17,7 @@ const Main = () => {
         <TabProdMain/>
         <Benefits/>
         <ReviewsMain/>
+        <NewsMainBox/>
     </div>   
 
 

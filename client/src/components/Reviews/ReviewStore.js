@@ -1,7 +1,7 @@
 import React from 'react';
 import Rating from '../Rating';
 import customerReview from '../../assets/icons/customer64.png';
-import storeLogo from '../../assets/logoShop/logoSkyshina151_50.png';
+import ReviewAnswer from '../Reviews/ReviewAnswer';
 import '../../css/Reviews/ReviewStore.css';
 
 
@@ -19,10 +19,7 @@ const ReviewStore = () => {
                 </div>
                 <div className='dateStoreReview'>14.07.2022</div>
                 <div className='answerStoreReview'>
-                    <img src={storeLogo} alt='storeLogo'/> 
-                    <div>SKYSHINA</div> 14.07.2022
-                    Дякуємо за відгук і що вибрали наш магазин!
-                    Дякуємо за відгук і що вибрали наш магазин!
+                    <ReviewAnswer/>
                 </div>
             </div>
 
