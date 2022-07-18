@@ -1,5 +1,6 @@
 .answerBox {
-    
+    border-radius:6px;
+    background-color:#ffff;
     display: grid;
     grid-template-columns: repeat(auto-fill, 1fr);
     /*grid-column: 1/3;

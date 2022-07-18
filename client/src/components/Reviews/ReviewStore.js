@@ -2,6 +2,7 @@ import React from 'react';
 import Rating from '../Rating';
 import customerReview from '../../assets/icons/customer64.png';
 import ReviewAnswer from '../Reviews/ReviewAnswer';
+import DotReview from '../Reviews/DotReview';
 import '../../css/Reviews/ReviewStore.css';
 
 
@@ -27,11 +28,12 @@ const ReviewStore = () => {
             <span className="nextReview" onClick={{}}>&#10095;</span>
         </div>
 
-        <div className="dotReviewContainer">
-            <span className="dotReview" onClick="currentSlide(1)"></span>
-            <span className="dotReview" onClick="currentSlide(2)"></span>
-            <span className="dotReview" onClick="currentSlide(3)"></span>
-        </div>       
+        <div className="dotReviewContainerStore">
+            <a href='/#'>Подивитись всі відгуки</a>
+            <DotReview/>
+            <button className='btnStoreReview'>Залишити відгук про магазин</button>     
+        </div>
+               
     </div>
 
     );

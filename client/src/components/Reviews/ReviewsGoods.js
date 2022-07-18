@@ -4,6 +4,7 @@ import thumbDown from '../../assets/icons/thumbs_down_64red.png';
 import '../../css/Reviews/ReviewsGoods.css';
 import customerReview from '../../assets/icons/customer64.png';
 import Rating from '../Rating';
+import DotReview from '../Reviews/DotReview';
 
 const ReviewsGoods = () => {
     return (
@@ -31,11 +32,8 @@ const ReviewsGoods = () => {
                     <span className="nextReview" onClick={{}}>&#10095;</span>
                 </div>
 
-
                 <div className="dotReviewContainer">
-                  <span className="dotReview" onClick="currentSlide(1)"></span>
-                  <span className="dotReview" onClick="currentSlide(2)"></span>
-                  <span className="dotReview" onClick="currentSlide(3)"></span>
+                  <DotReview/>
                 </div>
             </div>
         

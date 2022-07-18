@@ -1,0 +1,10 @@
+.authView img {
+    width: 35px;
+    height: 35px;
+    border-radius:50%;
+    background-color:#9EB9D3;
+}
+
+.btnAuthView {
+    border:none;
+}

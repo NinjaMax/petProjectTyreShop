@@ -1,6 +1,12 @@
 .newsMainBox {
     margin: 25px;
 }
+
+.newsTitle {
+    font-size: 24px;
+    font-weight: bold;
+    padding-left: 25px;
+}
 .newsMainBoxList {
     display: flex;
     flex-direction: row;
@@ -10,20 +16,54 @@
 .columnNewsBox {
     /*float: left;*/
     width: 33.33%;
-    padding: 50px;
-    text-align: center;
-    font-size: 25px;
+    height: 400px;
+    padding: 0px;
+    text-align:left;
+    font-size: 14px;
     cursor: pointer;
-    color: white;
+    color: #444B54;
+    border-radius:5px;
+    background-color:#C7C3F4;
+}
+
+.columnNewsBoxContent {
+    padding: 5px;
+}
+
+.btnNewsMainBox {
+    text-align: center;
+}
+
+.btmNewsMainBox {
+    height: 50px;
+    margin-top: 10px;
+    text-align: center;
+    background-color: #9c93d1;
+    border:none;
+    border-radius:5px;
+    font-size: 18px;
+}
+
+.btmNewsMainBox:hover {
     background-color:#C7C3F4;
 }
 
 .containerTabNewsBox {
     display: none;
+    margin: 5px;
     padding: 20px;
-    color: white;
+    color: #444B54;
+    background-color:#C7C3F4;
 }
 
+.columnNewsBox img {
+    width:100%;
+    height: 200px;
+    border-radius:5px 5px 0px 0px;
+}
+.containerTabNewsBox:active {
+    display: block;
+}
 /* Clear floats after the columns */
 .newsMainBoxList:after {
     content: "";

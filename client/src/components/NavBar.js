@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import ButtonSearch from './Buttons/ButtonSearch';
 import logoShop from '../assets/logoShop/logoSkyshina302_100.png';
 import BasketNav from '../components/Basket/BasketNav';
+import AuthView from '../components/Auth/AuthView';
 import '../css/NavBar.css';
 
 const NavBar = observer(() => {
@@ -46,6 +47,7 @@ const NavBar = observer(() => {
       </div>
     </div>
     <ButtonSearch/>
+    <AuthView/>
     <BasketNav/>
   </div>
 

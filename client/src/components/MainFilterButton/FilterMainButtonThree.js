@@ -14,7 +14,7 @@ const FilterMainButtonThree = () => {
     return (
         <div>
             <div className="dropdownFilterMainThree">
-                <button onClick={filterClick} className="dropbtnFilterMainThree">Dropdown 3</button>
+                <button onClick={filterClick} className="dropbtnFilterMainThree">Діаметр</button>
                 {stateClick?  
                 <div id="myDropdown3" className="dropdownContentFilterMainThree"
                   onClick={e=>e.stopPropagation()}>
