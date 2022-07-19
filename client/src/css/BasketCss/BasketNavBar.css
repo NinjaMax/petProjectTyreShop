@@ -1,0 +1,43 @@
+.basketNav {
+    /*display: block;*/
+    float: left;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+ 
+}
+
+#imgBasketNav {
+    /*display: '';*/
+    float:right;
+    /*margin-top: 0px;*/
+    /*content:none;*/
+    /*position: relative;*/
+    /*text-align: center;*/
+    width: 35px;
+    height: 35px;
+    /*border-radius:50%;*/
+    margin-right: 6px;
+    margin-top: 6px;
+    /*background-color:blueviolet; */
+}
+
+.basketNav:hover {
+    background: #71C2FF;
+    cursor: pointer;
+}
+
+.basketNavCount {
+    float:right;
+    position:absolute;
+    margin-top: -3px;
+    margin-left:40px;
+    width: 20px;
+    height: 20px;
+    border-radius:50%;
+    background-color:red;
+    /*text-align: center;*/
+    /*padding:0 0 20px 0;*/
+    color:#ffff
+}

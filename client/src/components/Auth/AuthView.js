@@ -5,9 +5,10 @@ import '../../css/AuthCss/AuthView.css';
 const AuthView = () => {
     return (
         <div className='authView'>
-            <img src={userImg} alt='imgUser'/>
+            <img id='imgCustomerAuth' src={userImg} alt='imgUser'/>
             <button className='btnAuthView'>
-              <span>Мій кабінет</span>  
+              <span>Мій кабінет</span>
+              <i className='fa fa-caret-down'></i>  
             </button>   
         </div>
     );

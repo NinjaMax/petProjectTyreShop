@@ -1,0 +1,35 @@
+/* Navbar container */
+.navbar {
+    /*overflow:hidden;*/
+    background-color: #fff;
+    /*font-family: 'Comfortaa', cursive;*/
+    font-family: 'Fredoka', sans-serif;
+    display:flex;
+    /*flex-direction: row;*/
+    justify-content:space-around;
+    /*position:relative;*/
+  }
+  .navbar img {
+    width: 181px;
+    height: 60px;
+    margin-left: 50px;
+  }
+  
+  /* Links inside the navbar */
+  .navbar a {
+    /*float: left;*/
+    font-size: 16px;
+    color: #444B54;
+    text-align:center;
+    padding: 14px 16px;
+    text-decoration: none;
+    border-radius:2px;
+  }
+  
+  /* Add a red background color to navbar links on hover */
+  .navbar a:hover {
+    background-color: #71C2FF;
+    border-radius:5px;
+  }
+  
+  

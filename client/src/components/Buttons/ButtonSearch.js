@@ -3,7 +3,7 @@ import '../../css/ButtonsCss/ButtonSearch.css';
 const ButtonSearch = () => {
     return (
         <div>
-            <button className="btnSearch">Search <i class='fa fa-search'></i></button>
+            <button className="btnSearch">Пошук <i class='fa fa-search'></i></button>
             
         </div>
     );
