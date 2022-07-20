@@ -28,8 +28,8 @@
   
   /* Add a red background color to navbar links on hover */
   .navbar a:hover {
-    background-color: #71C2FF;
-    border-radius:5px;
+    border: #71C2FF solid;
+    border-width:0 0 5px 0;
   }
   
   

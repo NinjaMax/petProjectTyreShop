@@ -1,5 +1,5 @@
 import React from 'react';
-import Rating from '../Rating';
+import Rating from '../UX/Rating';
 import customerReview from '../../assets/icons/customer64.png';
 import ReviewAnswer from '../Reviews/ReviewAnswer';
 import DotReview from '../Reviews/DotReview';

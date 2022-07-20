@@ -7,6 +7,7 @@ import BasketNavBar from '../Basket/BasketNavBar';
 import AuthView from '../Auth/AuthView';
 import NavBarDropTyres from './NavBarDropTyres';
 import '../../css/NavBarCss/NavBar.css';
+import FavoriteGoods from '../UX/FavoriteGoods';
 
 
 const NavBar = observer(() => {
@@ -22,9 +23,9 @@ const NavBar = observer(() => {
     <a href="/#home">Доставка і оплата</a>
     <a href="/#home">Контакти</a>
     <span href="/#home">067 777 77 77</span>
-    <span href="/#home">095 888 88 88</span>
     <span href="/#news">Більше</span>
     <ButtonSearch/>
+    <FavoriteGoods/>
     <AuthView/>
     <BasketNavBar/>
   </div>

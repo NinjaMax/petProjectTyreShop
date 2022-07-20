@@ -1,16 +1,22 @@
 /* Dropdown Button */
 .dropbtnFilterMainTwo {
-    background-color: #71C2FF;
+    /*background-color: #71C2FF;*/
     color: #444B54;
     padding: 16px;
     font-size: 16px;
-    border: none;
+    border: #CADBEA solid;
+    border-width: 0 0 5px 0;
     cursor: pointer;
-    border-radius: 5px;
+    /*border-radius: 5px;*/
 }
 
 /* Dropdown button on hover & focus */
-.dropbtnFilterMainTwo:hover, .dropbtnFilterMain:focus {
+.dropbtnFilterMainTwo:hover {
+    border: #71C2FF solid;
+    border-width: 0 0 5px 0;
+} 
+
+.dropbtnFilterMainTwo:focus {
     background-color: #9EB9D3;
 }
 

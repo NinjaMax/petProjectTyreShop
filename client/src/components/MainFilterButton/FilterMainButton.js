@@ -14,7 +14,9 @@ const FilterMainButton = () => {
     return (
         <div>
             <div className="dropdownFilterMain">
-                <button onClick={e=>filterClick(e)} className="dropbtnFilterMain">Ширина</button>
+                <button onClick={e=>filterClick(e)} 
+                className="dropbtnFilterMain">Ширина <i className='fa fa-caret-down'/>
+                </button>
                 {stateClick?  
                 <div id="myDropdown" className="dropdownContentFilterMain"
                   onClick={e=>e.stopPropagation()}>

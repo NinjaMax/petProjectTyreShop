@@ -8,7 +8,7 @@ const AuthView = () => {
             <img id='imgCustomerAuth' src={userImg} alt='imgUser'/>
             <button className='btnAuthView'>
               <span>Мій кабінет</span>
-              <i className='fa fa-caret-down'></i>  
+              <i className='fa fa-caret-down'/> 
             </button>   
         </div>
     );

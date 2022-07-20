@@ -2,7 +2,7 @@ import React from 'react';
 import '../../css/CardsCss/TyresCard.css';
 import FlagsIcon from '../Cards/FlagsIcon';
 import PropsCardIcons from '../Cards/PropsCardIcons';
-import Rating from '../Rating';
+import Rating from '../UX/Rating';
 import tyres from '../../assets/autotyrespilotspotps2.png';
 
 const TyresCard = () => {

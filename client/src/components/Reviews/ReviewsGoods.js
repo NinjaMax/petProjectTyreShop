@@ -3,7 +3,7 @@ import thumbUp from '../../assets/icons/thumbs_up64_1_green.png';
 import thumbDown from '../../assets/icons/thumbs_down_64red.png';
 import '../../css/Reviews/ReviewsGoods.css';
 import customerReview from '../../assets/icons/customer64.png';
-import Rating from '../Rating';
+import Rating from '../UX/Rating';
 import DotReview from '../Reviews/DotReview';
 
 const ReviewsGoods = () => {
