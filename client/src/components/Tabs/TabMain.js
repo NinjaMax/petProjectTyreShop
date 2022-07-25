@@ -12,11 +12,9 @@ const TabMain = () => {
             <button className="tablinks" onClick={'tab'}>ДИСКИ</button>
             <button className="tablinks" onClick={'tab'}>АКБ</button>
         </div>
-
         <div id="filterMain" className="tabcontentMain">
             <FilterMain/>
         </div>
-
     </div>
 
     );

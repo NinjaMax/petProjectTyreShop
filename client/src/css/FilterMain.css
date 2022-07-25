@@ -6,8 +6,9 @@
     flex-direction: row;
     justify-content: center;
     gap: 1px;
-    border: 2px solid #c7C3F4;
-    border-radius:10px;
+    border: solid #c7C3F4;
+    border-width:0px 2px 2px 2px;
+    border-radius:0px 0px 5px 5px;
 }
 
 .btnSelect {
