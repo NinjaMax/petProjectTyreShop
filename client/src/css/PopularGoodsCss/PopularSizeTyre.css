@@ -1,0 +1,16 @@
+.popularSizeTyre {
+    display: flex; 
+    flex-direction: row;
+    justify-content: flex-start;
+    gap:5px;
+}
+.popularSizeTyre span {
+    border-radius: 25px;
+    background-color:#CADBEA;
+    cursor: pointer;
+    padding: 6px;
+}
+
+.popularSizeTyre span:hover {
+    background-color:#ddd; 
+}

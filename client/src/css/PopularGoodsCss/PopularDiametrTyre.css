@@ -1,0 +1,17 @@
+.popularDiametrTyre {
+    display: flex; 
+    flex-direction: row;
+    justify-content: flex-start;
+    gap:16px;
+}
+
+.popularDiametrTyre span {
+    border-radius: 25px;
+    background-color:#CADBEA;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.popularDiametrTyre span:hover {
+    background-color:#ddd;
+}

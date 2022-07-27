@@ -7,7 +7,7 @@
     border: #CADBEA solid;
     border-width: 0 0 5px 0;
     cursor: pointer;
-    /*border-radius: 5px;*/
+    width: 130px;
 }
 
 /* Dropdown button on hover & focus */
@@ -23,7 +23,7 @@
 /* The search field */
 #myInput {
   box-sizing: border-box;
-  background-image: url('../assets/search_icon.png');
+  background-image: url('../../../assets/search_icon.png');
   background-position: 14px 12px;
   background-repeat: no-repeat;
   font-size: 16px;

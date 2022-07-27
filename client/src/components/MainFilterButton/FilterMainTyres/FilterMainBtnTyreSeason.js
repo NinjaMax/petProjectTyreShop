@@ -1,7 +1,7 @@
 import {React, useState} from 'react';
-import '../../css/FilterMainButtonTwo.css';
+import '../../../css/FilterMain/FilterMainTyres/FilterMainBtnTyreSeason.css';
 
-const FilterMainButtonTwo = () => {
+const FilterMainBtnTyreSeason = () => {
   const [stateClick, setStateClick]=useState(false);
 
   const filterClick = (e) => {
@@ -13,13 +13,13 @@ const FilterMainButtonTwo = () => {
 
     return (
         <div>
-            <div className="dropdownFilterMainTwo">
+            <div className="dropdownFilterMainThree">
                 <button onClick={filterClick} 
-                className="dropbtnFilterMainTwo">
-                  Діаметр <i className='fa fa-caret-down'/>
+                className="dropbtnFilterMainThree">
+                  Сезон <i className='fa fa-caret-down'/>
                 </button>
                 {stateClick?  
-                <div id="myDropdown2" className="dropdownContentFilterMainTwo"
+                <div id="myDropdown3" className="dropdownContentFilterMainThree"
                   onClick={e=>e.stopPropagation()}>
                   <input type="text" placeholder="Search.." id="myInput" />
                   <a href="#about">About</a>
@@ -35,4 +35,4 @@ const FilterMainButtonTwo = () => {
     );
 };
 
-export default FilterMainButtonTwo;
+export default FilterMainBtnTyreSeason;

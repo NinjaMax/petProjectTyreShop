@@ -1,6 +1,5 @@
 #buttonAction {
     border: none;
-    outline: 0;
     display: inline-block;
     padding: 8px;
     color: white;
@@ -13,6 +12,6 @@
 }
 
 #buttonAction:hover {
-    opacity: 0.7;
+    /*opacity: 0.7;*/
     background-color:green;
 }

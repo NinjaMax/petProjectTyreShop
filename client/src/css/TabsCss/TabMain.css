@@ -1,6 +1,5 @@
 /* Style the tab */
 .tabMainFilter {
-    border:#9C93D1 solid 2px;
     width: 100%;
     height: 250px;
     background-image:none;
@@ -11,7 +10,7 @@
 
 .tabMain {
     overflow: hidden;
-    border: 1px solid #ccc;
+    /*border: 1px solid #ccc;*/
     border-radius:5px;
     /*background-color: #9EB9D3;*/
     margin: 10px 10px 5px 10px;
@@ -90,37 +89,3 @@
     align-items:center;
 }
 
-.popularSizeTyre {
-    display: flex; 
-    flex-direction: row;
-    justify-content: flex-start;
-    gap:4px;
-}
-.popularSizeTyre span {
-    border-radius: 25px;
-    background-color:#CADBEA;
-    cursor: pointer;
-    padding: 3px;
-}
-
-.popularSizeTyre span:hover {
-    background-color:#ddd; 
-}
-
-.popularDiametrTyre {
-    display: flex; 
-    flex-direction: row;
-    justify-content: flex-start;
-    gap:16px;
-}
-
-.popularDiametrTyre span {
-    border-radius: 25px;
-    background-color:#CADBEA;
-    cursor: pointer;
-    padding: 3px;
-}
-
-.popularDiametrTyre span:hover {
-    background-color:#ddd;
-}

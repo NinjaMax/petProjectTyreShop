@@ -1,7 +1,7 @@
 import {React, useState} from 'react';
-import '../../css/FilterMainButtonOne.css';
+import '../../../css/FilterMain/FilterMainTyres/FilterMainBtnTyreHeight.css';
 
-const FilterMainButtonOne = () => {
+const FilterMainBtnTyreHeight = () => {
   const [stateClick, setStateClick]=useState(false);
 
   const filterClick = (e) => {
@@ -35,4 +35,4 @@ const FilterMainButtonOne = () => {
     );
 };
 
-export default FilterMainButtonOne;
+export default FilterMainBtnTyreHeight;
