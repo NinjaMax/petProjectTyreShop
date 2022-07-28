@@ -21,7 +21,7 @@ const FilterMainBtnTyreDiametr = () => {
                 {stateClick?  
                 <div id="myDropdown2" className="dropdownContentFilterMainTwo"
                   onClick={e=>e.stopPropagation()}>
-                  <input type="text" placeholder="Search.." id="myInput" />
+                  <input type="text" placeholder=" Пошук.." id="myInput" />
                   <a href="#about">About</a>
                   <a href="/#base">Base</a>
                   <a href="/#blog">Blog</a>

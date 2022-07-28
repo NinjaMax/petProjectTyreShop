@@ -5,6 +5,7 @@ import FilterMainBtnTyreDiametr from '../FilterMainTyres/FilterMainBtnTyreDiamet
 import FilterMainBtnTyreSeason from '../FilterMainTyres/FilterMainBtnTyreSeason';
 import FilterMainBtnTyreBrand from '../FilterMainTyres/FilterMainBtnTyreBrand';
 import ButtonAction from '../../Buttons/ButtonAction';
+import CheckboxThornBtn from '../CheckboxThornBtn';
 import '../../../css/FilterMain/FilterMainTyres/FilterMainTyre.css';
 
 const FilterMainTyre = () => {
@@ -18,6 +19,7 @@ const FilterMainTyre = () => {
             <div className='btnSelect'>
                 <ButtonAction props={'ПІДІБРАТИ'}/>
             </div>
+            <CheckboxThornBtn/>
         </div>
     );
 };

@@ -22,43 +22,51 @@
 
 /* Style the buttons that are used to open the tab content */
 .tabMain button {
-    background-color: #fff;
-    border: #9EB9D3 solid 5px;
-    outline: none;
+    background-color: #ddd;
+    border: #CADBEA dashed 5px;
     cursor: pointer;
-    /*padding: 14px 16px;*/
     width: 150px;
     height: 50px;
     border-radius:25px;
-    /*transition: 0.3s;*/
 }
 
 /* Change background color of buttons on hover */
 .tabMain button:hover {
-    background-color: #ddd;
+    background-color: #fff;
 }
 
-/* Create an active/current tablink class */
-.tabMain button:active {
-    background-color: #ccc;
+.tablinksTyres:hover .arrowTabTyres, 
+.tablinksWheel:hover .arrowTabWheels, 
+.tablinksAkb:hover .arrowTabAkb, 
+.tablinksSelect:hover .arrowTabSelect{
+    visibility: visible;
+    opacity: 1;
 }
+
+
+
+/* Create an active/current tablink class */
+/*.tabMain button:active {
+    background-color: #ccc;
+}*/
 
 .tabMain button:focus {
     background-color: #ccc;
     border: solid #71C2FF;
     border-width: 5px 5px 5px 5px;
 }
-.tablinksWheel {
-    display: '';
-}
 
-.tablinksTyres:focus, .tabMainFilter.tyresTab {
+/*.tablinksWheel {
+    display: '';
+}*/
+
+.tablinksTyres:focus, .tabMainFilter {
     background-image:
     linear-gradient(45deg, rgb(199, 195, 244, 0.5), rgb(158, 185, 211, 0.5) 50%),
     url("../../assets/img/tyreBlueBackground_1.png");
 }
 
-.tablinksWheel:focus, .tabMainFilter.wheelsTab {
+.tablinksWheel:focus, .tabMainFilter{
     background-image:
     linear-gradient(45deg, rgb(199, 195, 244, 0.5), rgb(158, 185, 211, 0.5) 50%),
     url("../../assets/img/wheelBackgroundBlue_1.png");  
@@ -73,9 +81,6 @@
     border-top: none;
     border-left: none;
     border-right: none;
-    /*border-radius: 0px 0px 5px 5px;*/
-    /*margin-left: 30px;*/
-    /*margin-right: 30px;*/
 }
 
 .tabMainFilter h5 {
@@ -88,4 +93,61 @@
     justify-content: space-around;
     align-items:center;
 }
+
+.arrowTabTyres, .arrowTabWheels, 
+.arrowTabAkb, .arrowTabSelect {
+    visibility: hidden;
+    color:#fff;
+    transition: opacity 0.3s;
+}
+
+.arrowTabTyres::after {
+    content: "";
+    position: absolute;
+    top: 79.5%;
+    left: 32%;
+    margin-left:0px;
+    margin-right:0px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: red transparent red transparent ;
+}
+
+.arrowTabWheels::after {
+    content: "";
+    position: absolute;
+    top: 79.5%;
+    left: 43.5%;
+    margin-left:0px;
+    margin-right:0px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: #fff transparent #fff transparent ;
+}
+
+.arrowTabAkb::after {
+    content: "";
+    position: absolute;
+    top: 79.5%;
+    left: 55.2%;
+    margin-left:0px;
+    margin-right:0px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: #fff transparent #fff transparent ;
+}
+
+.arrowTabSelect::after {
+    content: "";
+    position: absolute;
+    top: 79.5%;
+    left: 66.6%;
+    margin-left:0px;
+    margin-right:0px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: #fff transparent #fff transparent ;
+}
+
+
 

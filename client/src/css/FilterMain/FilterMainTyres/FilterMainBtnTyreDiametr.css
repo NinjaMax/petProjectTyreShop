@@ -8,6 +8,7 @@
     border-width: 0 0 5px 0;
     cursor: pointer;
     width: 130px;
+    margin-top: 3px;
 }
 
 /* Dropdown button on hover & focus */

@@ -4,8 +4,11 @@
     justify-content: center;
     gap: 1px;
     border: solid #c7C3F4;
-    border-width:0px 0px 2px 0px;
-    border-radius:0px;
+    border-width:2px 2px 2px 2px;
+    border-radius:25px;
+    margin: -5px 200px 0px 200px;
+    padding: 4px;
+    background-image:linear-gradient(45deg, #fff, #CADBEA);
 }
 
 .btnSelect {

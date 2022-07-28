@@ -10,10 +10,19 @@ const TabMain = () => {
 
     <div className='tabMainFilter wheelsTab tyresTab'>
         <div className="tabMain">
-            <button className="tablinksTyres" onClick={'tab'}>ШИНЫ</button>
-            <button className="tablinksWheel" onClick={'tab'}>ДИСКИ</button>
-            <button className="tablinksAkb" onClick={'tab'}>АКБ</button>
-            <button className="tablinksSelect" onClick={'tab'}>ПІДБІР ПО АВТО</button>
+            <button className="tablinksTyres" onClick={'tab'}>
+                ШИНЫ<span className='arrowTabTyres'></span>
+            </button>
+            <button className="tablinksWheel" onClick={'tab'}>
+                ДИСКИ<span className='arrowTabWheels'></span>   
+            </button>
+            <button className="tablinksAkb" onClick={'tab'}>
+                АКБ<span className='arrowTabAkb'></span>
+            </button>
+            <button className="tablinksSelect" onClick={'tab'}>
+                ПІДБІР ПО АВТО<span className='arrowTabSelect'></span>
+            </button>
+            
         </div>
         <div id="filterMain" className="tabContentMain">
             <FilterMainTyre/>

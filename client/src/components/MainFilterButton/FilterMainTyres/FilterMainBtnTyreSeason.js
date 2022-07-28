@@ -21,7 +21,7 @@ const FilterMainBtnTyreSeason = () => {
                 {stateClick?  
                 <div id="myDropdown3" className="dropdownContentFilterMainThree"
                   onClick={e=>e.stopPropagation()}>
-                  <input type="text" placeholder="Search.." id="myInput" />
+                  <input type="text" placeholder=" Пошук.." id="myInput" />
                   <a href="#about">About</a>
                   <a href="/#base">Base</a>
                   <a href="/#blog">Blog</a>
