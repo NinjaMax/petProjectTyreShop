@@ -9,12 +9,7 @@
 }
 
 #imgBasketNav {
-    /*display: '';*/
     float:right;
-    /*margin-top: 0px;*/
-    /*content:none;*/
-    /*position: relative;*/
-    /*text-align: center;*/
     width: 35px;
     height: 35px;
     /*border-radius:50%;*/
@@ -24,20 +19,22 @@
 }
 
 .basketNav:hover {
-    background: #71C2FF;
+    background: #CADBEA;
     cursor: pointer;
 }
 
 .basketNavCount {
-    float:right;
+    /*float:right;*/
     position:absolute;
-    margin-top: -3px;
-    margin-left:40px;
+    /*margin-top: -3px;
+    margin-left:40px;*/
+    right:20px;
     width: 20px;
     height: 20px;
     border-radius:50%;
     background-color:red;
-    /*text-align: center;*/
-    /*padding:0 0 20px 0;*/
+    text-align: center;
+    vertical-align:middle;
+    padding: 0px;
     color:#ffff
 }

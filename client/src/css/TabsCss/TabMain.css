@@ -11,7 +11,7 @@
 .tabMain {
     overflow: hidden;
     /*border: 1px solid #ccc;*/
-    border-radius:5px;
+    /*border-radius:5px;*/
     /*background-color: #9EB9D3;*/
     margin: 10px 10px 5px 10px;
     display: flex;
@@ -23,7 +23,7 @@
 /* Style the buttons that are used to open the tab content */
 .tabMain button {
     background-color: #ddd;
-    border: #CADBEA dashed 5px;
+    border: #CADBEA solid 5px;
     cursor: pointer;
     width: 150px;
     height: 50px;
@@ -33,6 +33,7 @@
 /* Change background color of buttons on hover */
 .tabMain button:hover {
     background-color: #fff;
+    border-color:#71C2FF;
 }
 
 .tablinksTyres:hover .arrowTabTyres, 
@@ -104,49 +105,49 @@
 .arrowTabTyres::after {
     content: "";
     position: absolute;
-    top: 79.5%;
+    top: 78%;
     left: 32%;
     margin-left:0px;
     margin-right:0px;
     border-width: 10px;
     border-style: solid;
-    border-color: red transparent red transparent ;
+    border-color: #71C2FF transparent #71C2FF transparent ;
 }
 
 .arrowTabWheels::after {
     content: "";
     position: absolute;
-    top: 79.5%;
+    top: 562px;
     left: 43.5%;
     margin-left:0px;
     margin-right:0px;
     border-width: 10px;
     border-style: solid;
-    border-color: #fff transparent #fff transparent ;
+    border-color: #71C2FF transparent #71C2FF transparent ;
 }
 
 .arrowTabAkb::after {
     content: "";
     position: absolute;
-    top: 79.5%;
+    top: 562px;
     left: 55.2%;
     margin-left:0px;
     margin-right:0px;
     border-width: 10px;
     border-style: solid;
-    border-color: #fff transparent #fff transparent ;
+    border-color: #71C2FF transparent #71C2FF transparent ;
 }
 
 .arrowTabSelect::after {
     content: "";
     position: absolute;
-    top: 79.5%;
+    top: 562px;
     left: 66.6%;
     margin-left:0px;
     margin-right:0px;
     border-width: 10px;
     border-style: solid;
-    border-color: #fff transparent #fff transparent ;
+    border-color: #71C2FF transparent #71C2FF transparent ;
 }
 
 

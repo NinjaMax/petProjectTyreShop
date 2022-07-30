@@ -1,10 +1,10 @@
-import { ADMIN_ROUTE, BASKET_ROUTE, CATALOG_ROUTE, 
+import { ADMIN_ROUTE, BASKET_ROUTE, CATALOG_TYRES_ROUTE, 
   LOGIN_ROUTE, REGISTRATION_ROUTE, GOODS_ROUTE, 
   MAIN_ROUTE, CONTACT_ROUTE} from './utils/consts';
 import Admin from './pages/Admin';
 import Auth from './pages/Auth';
 import Basket from './pages/Basket';
-import Catalog from './pages/Catalog';
+import CatalogTyres from './pages/CatalogTyres';
 import Contact from './pages/Contact';
 import Goods from './pages/Goods';
 import Main from './pages/Main';
@@ -24,8 +24,8 @@ export const publicRoutes = [
     Component: Basket
   },
   {
-    path: CATALOG_ROUTE,
-    Component: Catalog
+    path: CATALOG_TYRES_ROUTE,
+    Component: CatalogTyres
   },
   {
     path: GOODS_ROUTE,

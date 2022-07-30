@@ -1,0 +1,38 @@
+.catalogTyres {
+    border: rebeccapurple solid 3px;
+    display: grid;
+    grid-template-columns: repeat(3, 30%);
+    grid-template-areas: 
+                    "a a"
+                    "b c"
+                    "d d"
+                    "e e";
+    grid-gap:5px;
+    padding: 5px;
+    height: 600px;
+}
+
+.a {
+    grid-area: a;
+    border: rebeccapurple solid 3px;
+}
+
+.b {
+    grid-area: b;
+    border: rebeccapurple solid 3px;
+}
+
+.c {
+    grid-area: c;
+    border: rebeccapurple solid 3px;
+}
+
+.d {
+    grid-area: d;
+    border: rebeccapurple solid 3px;
+}
+
+.e {
+    grid-area: e;
+    border: rebeccapurple solid 3px;
+}

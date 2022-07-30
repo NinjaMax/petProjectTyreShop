@@ -1,4 +1,4 @@
-.dotReview {
+.dotSite {
     cursor: pointer;
     height: 15px;
     width: 15px;
@@ -10,6 +10,6 @@
   }
   
   /* Add a background color to the active dot/circle */
-  .active, .dotReview:hover {
+  .active, .dotSite:hover {
     background-color: #717171;
   }

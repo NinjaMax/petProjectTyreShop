@@ -2,7 +2,7 @@ import React from 'react';
 import Rating from '../UX/Rating';
 import customerReview from '../../assets/icons/customer64.png';
 import ReviewAnswer from '../Reviews/ReviewAnswer';
-import DotReview from '../Reviews/DotReview';
+import DotSite from '../UX/DotSite';
 import '../../css/Reviews/ReviewStore.css';
 
 
@@ -30,7 +30,7 @@ const ReviewStore = () => {
 
         <div className="dotReviewContainerStore">
             <a href='/#'>Подивитись всі відгуки</a>
-            <DotReview/>
+            <DotSite/>
             <button className='btnStoreReview'>Залишити відгук про магазин</button>     
         </div>
                

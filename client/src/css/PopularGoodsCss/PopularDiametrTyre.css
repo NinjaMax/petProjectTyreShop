@@ -7,11 +7,11 @@
 
 .popularDiametrTyre span {
     border-radius: 25px;
-    background-color:#CADBEA;
+    background-color:#ddd;
     cursor: pointer;
     padding: 8px;
 }
 
 .popularDiametrTyre span:hover {
-    background-color:#ddd;
+    background-color:#fff;
 }

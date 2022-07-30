@@ -4,7 +4,7 @@ import thumbDown from '../../assets/icons/thumbs_down_64red.png';
 import '../../css/Reviews/ReviewsGoods.css';
 import customerReview from '../../assets/icons/customer64.png';
 import Rating from '../UX/Rating';
-import DotReview from '../Reviews/DotReview';
+import DotSite from '../UX/DotSite';
 
 const ReviewsGoods = () => {
     return (
@@ -33,7 +33,7 @@ const ReviewsGoods = () => {
                 </div>
 
                 <div className="dotReviewContainer">
-                  <DotReview/>
+                  <DotSite/>
                 </div>
             </div>
         

@@ -6,11 +6,11 @@
 }
 .popularSizeTyre span {
     border-radius: 25px;
-    background-color:#CADBEA;
+    background-color:#ddd;
     cursor: pointer;
     padding: 6px;
 }
 
 .popularSizeTyre span:hover {
-    background-color:#ddd; 
+    background-color:#fff; 
 }
