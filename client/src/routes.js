@@ -4,7 +4,7 @@ import { ADMIN_ROUTE, BASKET_ROUTE, CATALOG_TYRES_ROUTE,
 import Admin from './pages/Admin';
 import Auth from './pages/Auth';
 import Basket from './pages/Basket';
-import CatalogTyres from './pages/CatalogTyres';
+import CatalogTyresPage from './pages/CatalogTyresPage';
 import Contact from './pages/Contact';
 import Goods from './pages/Goods';
 import Main from './pages/Main';
@@ -25,7 +25,7 @@ export const publicRoutes = [
   },
   {
     path: CATALOG_TYRES_ROUTE,
-    Component: CatalogTyres
+    Component: CatalogTyresPage
   },
   {
     path: GOODS_ROUTE,

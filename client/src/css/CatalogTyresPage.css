@@ -1,15 +1,16 @@
 .catalogTyres {
     border: rebeccapurple solid 3px;
     display: grid;
-    grid-template-columns: repeat(3, 30%);
+    grid-template-columns: repeat(4, 24%);
     grid-template-areas: 
-                    "a a"
-                    "b c"
-                    "d d"
-                    "e e";
+                    "a a a a"
+                    "b c c c"
+                    "d d d d"
+                    "e e e e";
     grid-gap:5px;
+    margin-left: 30px;
+    margin-right: 30px;
     padding: 5px;
-    height: 600px;
 }
 
 .a {
