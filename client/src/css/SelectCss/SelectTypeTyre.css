@@ -1,27 +1,27 @@
-.sortLine {
+.selectTypeTyre {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 10px;
     padding-bottom: 3px;
     margin: 5px;
     
 }
 
-.sortLineItem {
+.selectTypeTyreItem {
     border-bottom: solid #ffff 3px;
 }
 
-.sortLineItem:hover {
+.selectTypeTyreItem:hover {
     /*text-decoration: solid underline #71C2FF 3px;*/
     cursor: pointer;
     border-bottom: #71C2FF solid 3px;
 }
 
-.sortLineItem:after {
+.selectTypeTyreItem:after {
     font-weight: bold;
 }
 
-.inputSortLineItem {
+.inputTypeTyreItem {
     appearance: none;
     border-radius: 50%;
     background-color: #CADBEA;
@@ -33,7 +33,7 @@
 
 }
 
-.inputSortLineItem:checked {
+.inputTypeTyreItem:checked {
     background-color: #71C2FF;
     /*text-decoration-style: double;*/
     /*font-weight: bold;*/

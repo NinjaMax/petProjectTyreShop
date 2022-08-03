@@ -1,0 +1,8 @@
+.filterCatalogTyres {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    border: 2px solid palevioletred;
+    
+}
