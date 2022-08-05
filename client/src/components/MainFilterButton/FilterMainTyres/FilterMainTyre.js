@@ -9,9 +9,11 @@ import CheckboxThornBtn from '../CheckboxThornBtn';
 import '../../../css/FilterMain/FilterMainTyres/FilterMainTyre.css';
 
 const FilterMainTyre = () => {
+    //const width = 100;
     return (
         <div className='filterMain'>
-            <FilterMainBtnTyreWidth/>
+            <FilterMainBtnTyreWidth width={130}>Ширина</FilterMainBtnTyreWidth>
+
             <FilterMainBtnTyreHeight/>
             <FilterMainBtnTyreDiametr/>
             <FilterMainBtnTyreSeason/>

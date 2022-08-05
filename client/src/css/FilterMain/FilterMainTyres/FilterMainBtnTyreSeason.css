@@ -1,3 +1,8 @@
+/* The container <div> - needed to position the dropdown content */
+.dropdownFilterMainThree {
+    position: relative;
+    display: inline-block;
+}
 /* Dropdown Button */
 .dropbtnFilterMainThree {
     /*background-color: #71C2FF;*/
@@ -7,7 +12,7 @@
     border: #CADBEA solid;
     border-width: 0 0 5px 0;
     cursor: pointer;
-    width: 130px;
+    width: 247.4px;
     margin-top: 3px;
 }
 
@@ -36,29 +41,42 @@
 /* The search field when it gets focus/clicked on */
 #myInput:focus {outline: 3px solid #ddd;}
 
-/* The container <div> - needed to position the dropdown content */
-.dropdownFilterMainThree {
-    position: relative;
-    display: inline-block;
-    /*background-color:#0f49f7e3;*/
-}
+
 
 /* Dropdown Content (Hidden by Default) */
 .dropdownContentFilterMainThree {
-    display: block;
+    /*display: block;*/
     position: absolute;
-    background-color: #71C2FF;
-    min-width: 230px;
+    background-color: #ddd;
+    width: 247.4px;
+    height: 400px;
     border: 1px solid #ddd;
     z-index: 1;
 }
+/*dropdown content info*/
+.dropdownContentFilterMainThree .dropdownContentInfo {
+    position: absolute;
+    width: 530px;
+    height: 400px;
+    background-color:#9EB9D3;
+    left: 280px;
+    top: 0px;
+}
 
+/* dropdownContent Options container*/
+.dropdownContentOptions {
+    width:247.4px;
+    height: 400px;
+    overflow: hidden auto;
+}
 /* Links inside the dropdown */
 .dropdownContentFilterMainThree a {
     color: #444B54;
     padding: 12px 16px;
     text-decoration: none;
-    display: block;
+    background-color: #71C2FF;
+    width:247.4px;
+    display: flex;
 }
 
 /* Change color of dropdown links on hover */ 

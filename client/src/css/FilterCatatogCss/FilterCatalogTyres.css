@@ -6,3 +6,10 @@
     border: 2px solid palevioletred;
     
 }
+
+.filterTyresOption {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap:1px;
+}
