@@ -1,9 +1,9 @@
 /* Customize the label (the container) */
-.container {
+.containerCheckbox {
     display: block;
     position: relative;
     padding: 0px 0px 0px 25px;
-    margin: 23px -50px 0px 50px;
+    margin: 22px -50px 0px 0px;
     cursor: pointer;
     font-size: 16px;
     -webkit-user-select: none;
@@ -13,7 +13,7 @@
   }
   
   /* Hide the browser's default checkbox */
-  .container input {
+  .inputCheckboxBtn {
     position: absolute;
     opacity: 0;
     cursor: pointer;
@@ -30,12 +30,21 @@
   }
   
   /* On mouse-over, add a grey background color */
-  .container:hover input ~ .checkmark {
+  /*.containerCheckbox:hover .inputCheckboxBtn {
+    background-color: #ccc;
+  }*/
+
+  /* When the checkbox is checked, add a blue background */
+  /*.inputCheckboxBtn:checked {
+    background-color: #2196F3;
+  }*/
+  /* On mouse-over, add a grey background color */
+  .containerCheckbox:hover .inputCheckboxBtn ~ .checkmark {
     background-color: #ccc;
   }
   
   /* When the checkbox is checked, add a blue background */
-  .container input:checked ~ .checkmark {
+  .inputCheckboxBtn:checked ~ .checkmark {
     background-color: #2196F3;
   }
   
@@ -47,12 +56,12 @@
   }
   
   /* Show the checkmark when checked */
-  .container input:checked ~ .checkmark:after {
+  .inputCheckboxBtn:checked ~ .checkmark:after {
     display: block;
   }
-  
+
   /* Style the checkmark/indicator */
-  .container .checkmark:after {
+  .checkmark:after {
     left: 9px;
     top: 5px;
     width: 5px;

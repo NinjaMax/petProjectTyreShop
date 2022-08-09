@@ -1,16 +1,13 @@
 import {React, useState} from 'react';
 import '../../../css/FilterMain/FilterMainTyres/FilterMainBtnTyreWidth.css';
 
-const FilterMainBtnTyreWidth = ({children, width}) => {
+const FilterMainBtnTyreWidth = ({titleFilter, width}) => {
 
   const [stateClick, setStateClick]=useState(false);
-  
-  console.log(width);
   
   const filterClick = (e) => {
 
     setStateClick(!stateClick);
-    console.log(e.target);
     
   }
 
@@ -19,7 +16,7 @@ const FilterMainBtnTyreWidth = ({children, width}) => {
       <div className="dropdownFilterWidth">
         <button onClick={e=>filterClick(e)} 
           className="dropbtnFilterWidth" style={{"--widthBtn":width}}>
-            {children} <i className='fa fa-caret-down'/>
+            {titleFilter} <i className='fa fa-caret-down'/>
         </button>
           {stateClick?  
           <div id="myDropdown" className="dropdownContentFilterWidth"

@@ -1,0 +1,22 @@
+.chipOptions {
+    background-color:#CADBEA;
+    border-radius: 25px;
+    display: block;
+    cursor: pointer;
+}
+
+.closeChipBtn {
+    color: #444;
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 7px;
+    padding-right: 7px;
+    /*padding: 3px;*/
+    vertical-align:middle;
+}
+.closeChipBtn:hover {
+    /*background-color:rgb(248, 115, 115);*/
+    border-radius:25px;
+    color: rgb(248, 115, 115);
+   
+}

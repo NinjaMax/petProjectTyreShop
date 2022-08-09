@@ -1,12 +1,14 @@
 import React from 'react';
+import '../../../css/FilterMain/FilterMainTyres/FilterMainTyre.css';
+import imageThorn from '../../../assets/icons/imagesThorn_1.png';
 import FilterMainBtnTyreWidth from '../FilterMainTyres/FilterMainBtnTyreWidth';
 import FilterMainBtnTyreHeight from '../FilterMainTyres/FilterMainBtnTyreHeight';
 import FilterMainBtnTyreDiametr from '../FilterMainTyres/FilterMainBtnTyreDiametr';
 import FilterMainBtnTyreSeason from '../FilterMainTyres/FilterMainBtnTyreSeason';
 import FilterMainBtnTyreBrand from '../FilterMainTyres/FilterMainBtnTyreBrand';
 import ButtonAction from '../../Buttons/ButtonAction';
-import CheckboxThornBtn from '../CheckboxThornBtn';
-import '../../../css/FilterMain/FilterMainTyres/FilterMainTyre.css';
+import CheckboxBtn from '../../Select/CheckboxBtn';
+
 
 const FilterMainTyre = () => {
     //const width = 100;
@@ -21,7 +23,7 @@ const FilterMainTyre = () => {
             <div className='btnSelect'>
                 <ButtonAction props={'ПІДІБРАТИ'}/>
             </div>
-            <CheckboxThornBtn/>
+            <CheckboxBtn value={"ship"} titleCheckbox={"Шип"} imageSrc={imageThorn}/>
         </div>
     );
 };
