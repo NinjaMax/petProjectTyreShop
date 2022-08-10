@@ -13,6 +13,7 @@
     width: 181px;
     height: 60px;
     margin-left: 50px;
+    cursor: pointer;
   }
   
   /* Links inside the navbar */

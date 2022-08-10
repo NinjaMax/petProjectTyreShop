@@ -1,11 +1,16 @@
 /*list */
 .selectFilterList {
     background-color:#eee;
-    cursor: pointer;
     margin: 0;
     padding-left: 16px;
+    width: calc(var(--widthBtn)*1px);
 }
-
+.checkedList {
+    background-color:#888;
+    margin: 0;
+    padding-left: 16px;
+    width: calc(var(--widthBtn)*1px);
+}
 /*style list item*/
 .selectFilterListItem {
     cursor: pointer;
@@ -42,6 +47,18 @@
     width: 7px;
 }
 
-.selectFilterListInput:checked .selectFilterListItem {
-    background-color:#888;
+.checkedItem {
+    cursor: pointer;
+    position: relative;
+    padding: 12px 8px 12px 8px;
+    margin-left: 10px;
+    background-color: #888;
+    color: #fff;
+    font-size: 18px;
+    /*transition: 0.2s;*/
+    /* make the list items unselectable */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

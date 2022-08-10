@@ -4,6 +4,7 @@ import customerReview from '../../assets/icons/customer64.png';
 import ReviewAnswer from '../Reviews/ReviewAnswer';
 import DotSite from '../UX/DotSite';
 import '../../css/Reviews/ReviewStore.css';
+import ButtonPrevNext from '../Buttons/ButtonPrevNext';
 
 
 const ReviewStore = () => {
@@ -23,9 +24,7 @@ const ReviewStore = () => {
                     <ReviewAnswer/>
                 </div>
             </div>
-
-            <span className="prevReview" onClick={{}}>&#10094;</span>
-            <span className="nextReview" onClick={{}}>&#10095;</span>
+            <ButtonPrevNext prevBtnLeft={-30} nextBtnRight={-30}/>
         </div>
 
         <div className="dotReviewContainerStore">

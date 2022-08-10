@@ -1,0 +1,34 @@
+/* Next & previous buttons */
+.prevButton, .nextButton {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -30px;
+    padding: 16px;
+    color: #444B54;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 10px;
+    user-select: none;
+  }
+  
+  /* Position the "next button" to the right */
+  .nextButton {
+    position: absolute;
+    right: calc(var(--positRight)*1px);
+    /*border-radius: 10px;*/
+  }
+  
+  /* Position the "previous button" to the left */
+  .prevButton {
+    position: absolute;
+    left: calc(var(--positLeft)*1px);
+    /*border-radius: 3px 0 0 3px;*/
+  }
+  
+  /* On hover, add a black background color with a little bit see-through */
+  .prevButton:hover, .nextButton:hover {
+    background-color: #9EB9D3;
+    color: white;
+  }

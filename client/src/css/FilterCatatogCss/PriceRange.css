@@ -1,0 +1,10 @@
+.containerPriceRangeBox {
+    margin: 3px;
+    border:3px palevioletred;
+}
+
+.priceRangeBox {
+    display: flex;
+    flex-direction: row; 
+    gap: 3px;
+}

@@ -4,6 +4,7 @@ import sliderOne from '../assets/michelintyres.jpg';
 import sliderBoxTopImg from '../assets/pexelsJaePark.jpg';
 import sliderBoxBottomImg from '../assets/pexelsVincenzoMalagoli.jpg';
 import DotSite from './UX/DotSite';
+import ButtonPrevNext from '../components/Buttons/ButtonPrevNext';
 
 const Slider = () => {
     return (
@@ -21,8 +22,7 @@ const Slider = () => {
             <div className="numbertext">3 / 3</div>
             <img src="img3.jpg"  alt='sliderThree'/>
           </div>
-            <span className="prevBtnSlider" onClick={''}>&#10094;</span>
-            <span className="nextBtnslider" onClick={''}>&#10095;</span>
+            <ButtonPrevNext prevBtnLeft={-8} nextBtnRight={-8}/>
         </div>
         <div className='dotContainer'>
           <DotSite/>

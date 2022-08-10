@@ -8,7 +8,7 @@ import '../../css/Catalogs/CatalogTyres.css';
 const CatalogTyres = () => {
     return (
         <div>
-            <h2>PORTFOLIO</h2>
+            <h2>Шини</h2>
             <div className="btnContainerCatalogTyres">
                 <button className="btn active" onClick={"1"}> Show all</button>
                 <button className="btn" onClick={"2"}> Nature</button>

@@ -1,8 +1,9 @@
 import React from 'react';
+import '../../css/Reviews/ReviewsGoods.css';
 import thumbUp from '../../assets/icons/thumbs_up64_1_green.png';
 import thumbDown from '../../assets/icons/thumbs_down_64red.png';
-import '../../css/Reviews/ReviewsGoods.css';
 import customerReview from '../../assets/icons/customer64.png';
+import ButtonPrevNext from '../Buttons/ButtonPrevNext';
 import Rating from '../UX/Rating';
 import DotSite from '../UX/DotSite';
 
@@ -27,9 +28,7 @@ const ReviewsGoods = () => {
                             <img src={thumbDown} alt='thumbDown'/> 0
                         </div>
                     </div>
-
-                    <span className="prevReview" onClick={{}}>&#10094;</span>
-                    <span className="nextReview" onClick={{}}>&#10095;</span>
+                    <ButtonPrevNext prevBtnLeft={-30} nextBtnRight={-30}/>
                 </div>
 
                 <div className="dotReviewContainer">
