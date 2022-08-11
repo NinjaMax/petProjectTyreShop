@@ -1,0 +1,21 @@
+.reviewGoodsOverall {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 20px;
+    border-radius:8px;
+    background-color:#CADBEA;
+    width: 600px;    
+}
+
+.headingGoodsOverall {
+    font-size: 20px;
+}
+
+.headingGoodsOverall span {
+    font-size: 20px;
+}
+
+.headingGoodsOverall p {
+    font-size: 16px;
+}

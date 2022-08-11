@@ -1,0 +1,14 @@
+.ratingOptions {
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    gap: 3px;
+}
+
+.nameRating {
+    width: 104px;
+}
+
+.ratingBoxStar {
+    width: 90px;
+}

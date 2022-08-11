@@ -1,10 +1,17 @@
 .containerPriceRangeBox {
     margin: 3px;
     border:3px palevioletred;
+    text-align:start;
 }
 
 .priceRangeBox {
     display: flex;
     flex-direction: row; 
     gap: 3px;
+    
+}
+
+.priceRangeBox input {
+    width: 115px;
+    margin: 3px;
 }

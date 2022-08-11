@@ -4,6 +4,8 @@ import CatalogTyres from '../components/Catalogs/CatalogTyres';
 import FilterCatalogTyres from '../components/FilterCatalog/FilterCatalogTyres';
 import ReviewsMain from '../components/Reviews/ReviewsMain';
 import ReviewsGoods from '../components/Reviews/ReviewsGoods';
+import ReviewGoodsOverall from '../components/Reviews/ReviewGoodsOverall';
+
 
 const CatalogTyresPage = () => {
     return (
@@ -20,7 +22,9 @@ const CatalogTyresPage = () => {
               <ReviewsGoods/>
           </ReviewsMain>
         </div>
-        <div className='e'>E</div>  
+        <div className='e'>
+          <ReviewGoodsOverall/>
+        </div>  
       </div>
     );
 };

@@ -1,0 +1,8 @@
+.ratingStar {
+    width:fit-content;
+    font-size: 1rem;
+}
+
+.checked {
+    color: orange;
+}

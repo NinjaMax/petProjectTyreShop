@@ -5,7 +5,7 @@
 
 .reviewsGoodsContainer {
     position: relative;
-    background: #CADBEA;
+    background-color: #CADBEA;
     font-family: 'Fredoka', sans-serif;
     border-radius:10px 10px 0 0;
     height: 290.4px;
@@ -71,6 +71,16 @@
   grid-column: 3/5;
   grid-row: 6;
   text-align:right;
+}
+.reviewGoodsExtend {
+  position: absolute;
+  /*margin: 5px;*/
+  padding: 5px;
+  top: 0px;
+  left:650px;
+  width: 230px;
+  /*grid-column: 6;
+  grid-row: 1/6;*/
 }
 
 .thumbGoodsReview img {

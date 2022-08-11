@@ -5,6 +5,7 @@ import ButtonAction from '../Buttons/ButtonAction';
 const PriceRange = () => {
     return (
         <div className='containerPriceRangeBox'>
+            <div> Ціновий діапазон:</div>
             <div className='priceRangeBox'>
                 <input type="number" placeholder='від 1000'/>
                 <input type="number" placeholder='до 50000'/>   

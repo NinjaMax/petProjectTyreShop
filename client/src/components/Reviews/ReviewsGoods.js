@@ -6,6 +6,7 @@ import customerReview from '../../assets/icons/customer64.png';
 import ButtonPrevNext from '../Buttons/ButtonPrevNext';
 import Rating from '../UX/Rating';
 import DotSite from '../UX/DotSite';
+import ReviewsGoodsExtend from '../Reviews/ReviewsGoodsExtend';
 
 const ReviewsGoods = () => {
     return (
@@ -27,6 +28,9 @@ const ReviewsGoods = () => {
                             <img src={thumbUp} alt='thumbUp'/> 0 
                             <img src={thumbDown} alt='thumbDown'/> 0
                         </div>
+                        <div className='reviewGoodsExtend'>
+                            <ReviewsGoodsExtend/>
+                        </div>
                     </div>
                     <ButtonPrevNext prevBtnLeft={-30} nextBtnRight={-30}/>
                 </div>
@@ -34,6 +38,7 @@ const ReviewsGoods = () => {
                 <div className="dotReviewContainer">
                   <DotSite/>
                 </div>
+                
             </div>
         
     );
