@@ -1,11 +1,12 @@
 .reviewGoodsOverall {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    gap: 20px;
-    border-radius:8px;
+    justify-content:space-evenly;
+    gap: 25px;
+    border-radius:10px;
     background-color:#CADBEA;
-    width: 600px;    
+    width: 905px;
+    padding: 10px;    
 }
 
 .headingGoodsOverall {
@@ -17,5 +18,5 @@
 }
 
 .headingGoodsOverall p {
-    font-size: 16px;
+    font-size: 14px;
 }

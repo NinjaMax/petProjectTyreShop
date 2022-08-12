@@ -39,9 +39,16 @@
 
 
 .ratingGoodsReview {
-    text-align: right;
-    grid-column: 3/5;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-end;
+    grid-column: 4/5;
 }
+
+/*.ratingGoodsReview span {
+  
+}*/
+
 .reviewUsesCars {
     grid-column: 1/5;
     grid-row:2;
@@ -75,17 +82,16 @@
 .reviewGoodsExtend {
   position: absolute;
   /*margin: 5px;*/
-  padding: 5px;
+  padding: 8px;
   top: 0px;
-  left:650px;
-  width: 230px;
-  /*grid-column: 6;
-  grid-row: 1/6;*/
-}
-
-.thumbGoodsReview img {
-  width: 30px;
-  height: 30px;
+  left:647px;
+  width: 250px;
+  height: 355px;
+  background-color:#CADBEA;
+  border-radius:0px 10px 10px 0px;
+  border: solid #888;
+  border-width: 0px 0px 0px 3px;
+  /*grid-row: 1/6;*/
 }
 
   /* The dot/bullet/indicator container */

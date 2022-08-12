@@ -11,7 +11,7 @@ const TyresCard = () => {
             <div className="tyresCard">
                 <img id='imgTyres' src={tyres} alt="John" />
                 <a id='tyresName' href="/#">CONTINENTAL CONTICROSSPREMIUMCONTACT 6 UHPD 5P 195/65 R15 105T XL</a>
-                <div className='ratingTyres'><Rating/><a href='/#'>0 отзывов</a></div>
+                <div className='ratingTyres'><Rating numScore={4.8}/><a href='/#'>0 отзывов</a></div>
                 <div className="tyresCardCode">код товара: 0123565447</div>
                 <div className='propsCard'><PropsCardIcons/></div>
                 <div className="tyresCardCountry"><FlagsIcon/></div>

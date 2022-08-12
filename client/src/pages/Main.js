@@ -20,7 +20,7 @@ const Main = () => {
         <Benefits/>
         <ReviewsMain props={'Відгуки'}>
             <ReviewStore/>
-            <ReviewsGoods/>
+            <ReviewsGoods reviewExtend={false}/>
         </ReviewsMain>
         <NewsMainBox/>
     </div>   

@@ -41,11 +41,13 @@
   /* On mouse-over, add a grey background color */
   .containerCheckbox:hover .inputCheckboxBtn ~ .checkmark {
     background-color: #ccc;
+    border-radius:3px;
   }
   
   /* When the checkbox is checked, add a blue background */
   .inputCheckboxBtn:checked ~ .checkmark {
     background-color: #2196F3;
+    border-radius:3px;
   }
   
   /* Create the checkmark/indicator (hidden when not checked) */

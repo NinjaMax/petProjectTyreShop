@@ -5,9 +5,10 @@ import FilterCatalogTyres from '../components/FilterCatalog/FilterCatalogTyres';
 import ReviewsMain from '../components/Reviews/ReviewsMain';
 import ReviewsGoods from '../components/Reviews/ReviewsGoods';
 import ReviewGoodsOverall from '../components/Reviews/ReviewGoodsOverall';
-
+import ReviewsBrandOverall from '../components/Reviews/ReviewsBrandOverall';
 
 const CatalogTyresPage = () => {
+
     return (
       <div className='catalogTyres'>
         <div className='a'>bread crumbs</div>
@@ -19,11 +20,12 @@ const CatalogTyresPage = () => {
         </div>
         <div className='d'>
           <ReviewsMain props={'Відгуки клієнтів'}>
-              <ReviewsGoods/>
+              <ReviewsGoods reviewExtend={true}/>
           </ReviewsMain>
         </div>
         <div className='e'>
           <ReviewGoodsOverall/>
+          <ReviewsBrandOverall/>
         </div>  
       </div>
     );

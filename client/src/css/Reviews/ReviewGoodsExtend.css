@@ -1,10 +1,13 @@
-.heading {
-    font-size: 20px;
-    /*margin-right: 25px;*/
-}
 
-.heading p {
-    font-size: 14px;
+.heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap:5px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-right: 2px;
 }
 
 .ratingList {
@@ -19,4 +22,5 @@
     display:flex;
     flex-direction: row;
     gap: 5px;
+    margin-bottom: 4px;
 }

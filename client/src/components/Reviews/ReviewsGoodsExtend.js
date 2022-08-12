@@ -4,14 +4,11 @@ import Rating from '../UX/Rating';
 import RatingOptions from '../UX/RatingOptions';
 
 const ReviewsGoodsExtend = () => {
-    const avarageRating = 4.5;
-    const avarageReviews = 254;
-
+    
     return (
-        <div >
-            <div className="heading">Рейтинг <span>{avarageRating}</span>
-                <Rating/>
-                <p> середня оцінка основана на {avarageReviews} відгуках.</p>
+        <div>
+            <div className="heading">Рейтинг
+                <Rating numScore={4.8}/>
             </div>
             <div className='ratingList'>
                 <div className='ratingListItems'>

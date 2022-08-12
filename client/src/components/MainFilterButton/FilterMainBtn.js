@@ -16,7 +16,7 @@ const FilterMainBtn = ({children, titleFilter, width, contentInfo}) => {
         <div>
             <div className="dropdownFilterMainBtn">
                 <button onClick={filterClick} 
-                className="dropBtnFilterMainBtn" style={{"--widthBtn":width}}> 
+                  className="dropBtnFilterMainBtn" style={{"--widthBtn":width}}> 
                   {titleFilter} <i className='fa fa-caret-down'/>
                 </button>
                 {stateClick?  
@@ -27,7 +27,7 @@ const FilterMainBtn = ({children, titleFilter, width, contentInfo}) => {
                       {children}
                     </div>
                    {contentInfo?
-                   <div className='dropdownContentInfo' style={{"--widthBtn":width}}>
+                    <div className='dropdownContentInfo' style={{"--widthBtn":width}}>
                       Як дізнатися розмір шини?
                     </div>: null}
                   </div>

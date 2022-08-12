@@ -36,9 +36,10 @@
 }
 
   .ratingStoreReview {
-  
+    display: flex;
+    flex-direction: column;
+    align-items:flex-end;
     grid-column:2/3;
-    text-align: right;
   }
 
   .contentStoreReview {

@@ -1,21 +1,20 @@
 import React from 'react';
 import '../../css/Reviews/ReviewsGoods.css';
-import thumbUp from '../../assets/icons/thumbs_up64_1_green.png';
-import thumbDown from '../../assets/icons/thumbs_down_64red.png';
 import customerReview from '../../assets/icons/customer64.png';
 import ButtonPrevNext from '../Buttons/ButtonPrevNext';
 import Rating from '../UX/Rating';
 import DotSite from '../UX/DotSite';
+import Thumbs from '../UX/Thumbs';
 import ReviewsGoodsExtend from '../Reviews/ReviewsGoodsExtend';
 
-const ReviewsGoods = () => {
+const ReviewsGoods = ({reviewExtend}) => {
     return (
        
             <div className='reviewGoods'>   
                 <div className="reviewsGoodsContainer">
                     <div className="mySlidesGoodsReview">
                         <div className="authorGoodsReview"><img src={customerReview} alt='avatarUser'/> Кирилл Шемендюк</div>
-                        <div className='ratingGoodsReview'>Рейтинг товара: <Rating/></div>
+                        <div className='ratingGoodsReview'>Рейтинг товара:<Rating numScore={4.7}/></div>
                         <div className='reviewUsesCars'>Ездит на: Mercedes benz Gelendwagen GLI 500 </div>
                         <div className='reviewGoodsExpier'>Стаж: 5лет </div>
                         <div className='AddedGoodsReview'>Отзыв о товаре: <a href='/#'>Continental ContiCrossContact All Seasons Verde 195/65 R15 105T XL</a></div>
@@ -25,20 +24,18 @@ const ReviewsGoods = () => {
                         </div>
                         <div className='dateGoodsReview'>12.07.2022</div>
                         <div className='thumbGoodsReview'>
-                            <img src={thumbUp} alt='thumbUp'/> 0 
-                            <img src={thumbDown} alt='thumbDown'/> 0
+                            <Thumbs/>
                         </div>
+                        { reviewExtend?
                         <div className='reviewGoodsExtend'>
                             <ReviewsGoodsExtend/>
-                        </div>
+                        </div>: null}
                     </div>
                     <ButtonPrevNext prevBtnLeft={-30} nextBtnRight={-30}/>
                 </div>
-
                 <div className="dotReviewContainer">
-                  <DotSite/>
-                </div>
-                
+                    <DotSite/>
+                </div>     
             </div>
         
     );

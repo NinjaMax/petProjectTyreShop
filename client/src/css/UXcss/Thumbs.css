@@ -1,0 +1,10 @@
+.thumbs img{
+    width: 30px;
+    height: 30px;
+}
+
+.thumbs img:hover {
+    cursor: pointer;
+    background-color:#fff;
+    border-radius:50%;
+}
