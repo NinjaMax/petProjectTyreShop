@@ -14,7 +14,7 @@ const ReviewStore = () => {
         <div className="reviewsStoreContainer">
             <div className="mySlidesStoreReview">
                 <div className="authorStoreReview"><img src={customerReview} alt='avatarUser'/> Кирилл Шемендюк</div>
-                <div className='ratingStoreReview'>Оценка:<Rating/> </div>
+                <div className='ratingStoreReview'>Оценка:<Rating numScore={4.5}/> </div>
                 <div className='contentStoreReview'>
                      I love you the more in that I believe you had liked me for my own sake and for nothing else.
                      I love you the more in that I believe you had liked me for my own sake and for nothing else

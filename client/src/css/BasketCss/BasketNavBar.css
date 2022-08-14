@@ -1,21 +1,21 @@
 .basketNav {
     /*display: block;*/
-    float: left;
+    /*float: left;*/
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    margin-right: 20px;
+    text-align: center;
+    vertical-align:bottom;
+    /*margin-right: 20px;*/
  
 }
 
 #imgBasketNav {
-    float:right;
+
+    margin-top:8px;
     width: 35px;
     height: 35px;
-    /*border-radius:50%;*/
-    margin-right: 6px;
-    margin-top: 6px;
-    /*background-color:blueviolet; */
+
 }
 
 .basketNav:hover {
@@ -26,15 +26,18 @@
 .basketNavCount {
     /*float:right;*/
     position:absolute;
-    /*margin-top: -3px;
-    margin-left:40px;*/
-    right:20px;
-    width: 20px;
+    top:14px;
+    right:5px;
+    width: 25px;
     height: 20px;
-    border-radius:50%;
+    border-radius:25px;
     background-color:red;
-    text-align: center;
-    vertical-align:middle;
-    padding: 0px;
-    color:#ffff
+    text-align:center;
+    vertical-align:text-top;
+}
+
+.basketNavCount span {
+    color:#ffff;
+    font-weight: bold;
+
 }

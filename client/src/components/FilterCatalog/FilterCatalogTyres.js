@@ -1,8 +1,17 @@
 import {React, useState} from 'react';
 import '../../css/FilterCatatogCss/FilterCatalogTyres.css';
 import imageThorn from '../../assets/icons/imagesThorn_1.png';
+import imageLegkovi from '../../assets/icons/iconsTypeCar/londonCabClear64.png';
+import imagePozashljahovik from '../../assets/icons/iconsTypeCar/pickup.png';
+import imageMikroavtobus from '../../assets/icons/iconsTypeCar/van.png';
+import imageGruzovi from '../../assets/icons/iconsTypeCar/truck.png';
+import imageMoto from '../../assets/icons/iconsTypeCar/scooter.png';
+import imageSH from '../../assets/icons/iconsTypeCar/tractor.png';
+import imageSpectehnika from '../../assets/icons/iconsTypeCar/bulldozer.png';
+import imageWinter from '../../assets/icons/iconsSeasons/seasonWinter.png';
+import imageSummer from '../../assets/icons/iconsSeasons/seasonSummer.png';
+import imageAllSeason from '../../assets/icons/iconsSeasons/seasonAll.png';
 import FilterMainBtn from '../MainFilterButton/FilterMainBtn';
-import SelectFilter from '../Select/SelectFilter';
 import CheckboxBtn from '../Select/CheckboxBtn';
 import Accordion from './Accordion';
 import SelectFilterList from '../Select/SelectFilterList';
@@ -57,11 +66,10 @@ const FilterCatalogTyres = () => {
                 </FilterMainBtn> 
                 <div>
                     <span>Сезон:</span>
-                    <SelectFilter value={'Zimnie'} children={'Зимові'}/>
-                    <SelectFilter value={'Litni'} children={'Літні'}/>
-                    <SelectFilter value={'Vsesezonni'} children={'Всесезонні'}/>
-                </div>
-                <div>
+                    <CheckboxBtn value={'Zimnie'} titleCheckbox={'Зимові'} imageSrc={imageWinter}/>
+                    <CheckboxBtn value={'Litni'} titleCheckbox={'Літні'} imageSrc={imageSummer}/>
+                    <CheckboxBtn value={'Vsesezonni'} titleCheckbox={'Всесезонні'} imageSrc={imageAllSeason}/>
+                    <p/>
                     <CheckboxBtn value={"ship"} titleCheckbox={"Шип"} imageSrc={imageThorn}/>
                 </div>
                 <FilterMainBtn width={247.4} titleFilter={'Бренд'} contentInfo={true}>
@@ -86,13 +94,13 @@ const FilterCatalogTyres = () => {
                     <SelectFilterList value={"Fulda"} items={"Fulda"} checked={handleItem} onChange={handleChange}/>
                 </FilterMainBtn>    
                 <Accordion titleName={"Тип авто"}>
-                    <SelectFilter value={'Legkovi'} children={'Легкові'}/>
-                    <SelectFilter value={'Pozashliahovik'} children={'Позашляховик'}/>
-                    <SelectFilter value={'Mikroavtobus'} children={'Мікроавтобус'}/>
-                    <SelectFilter value={'Gruzovi'} children={'Грузові'}/>
-                    <SelectFilter value={'Moto'} children={'Мото'}/>
-                    <SelectFilter value={'c/x'} children={'с/х'}/>
-                    <SelectFilter value={'Spectehnika'} children={'Спецтехніка'}/>
+                    <CheckboxBtn value={"legkovi"} titleCheckbox={"Легкові"} imageSrc={imageLegkovi}/>
+                    <CheckboxBtn value={"pozashljahovik"} titleCheckbox={"Позашляхлвик"} imageSrc={imagePozashljahovik}/>
+                    <CheckboxBtn value={"mikroavtobus"} titleCheckbox={"Мікроавтобус"} imageSrc={imageMikroavtobus}/>
+                    <CheckboxBtn value={"gruzovi"} titleCheckbox={"Грузові"} imageSrc={imageGruzovi}/>
+                    <CheckboxBtn value={"moto"} titleCheckbox={"Мото"} imageSrc={imageMoto}/>
+                    <CheckboxBtn value={"s/h"} titleCheckbox={"С/х"} imageSrc={imageSH}/>
+                    <CheckboxBtn value={"specteh"} titleCheckbox={"Спецтехніка"} imageSrc={imageSpectehnika}/>
                 </Accordion>
                 <Accordion titleName={"Індекс швидкості"}>
 

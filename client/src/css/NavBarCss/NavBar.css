@@ -5,14 +5,16 @@
     /*font-family: 'Comfortaa', cursive;*/
     font-family: 'Fredoka', sans-serif;
     display:flex;
-    /*flex-direction: row;*/
+    flex-direction: row;
     justify-content:space-around;
+    align-items:center;
+    margin: 0px 20px 0 20px;
     /*position:relative;*/
   }
   .navbar img {
     width: 181px;
     height: 60px;
-    margin-left: 50px;
+    /*margin-left: 50px;*/
     cursor: pointer;
   }
   
