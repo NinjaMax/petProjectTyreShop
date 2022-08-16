@@ -6,7 +6,7 @@ import Auth from './pages/Auth';
 import Basket from './pages/Basket';
 import CatalogTyresPage from './pages/CatalogTyresPage';
 import Contact from './pages/Contact';
-import Goods from './pages/Goods';
+import GoodsPage from './pages/Goods';
 import Main from './pages/Main';
 
 export const authRoutes = [
@@ -30,7 +30,7 @@ export const publicRoutes = [
   {
     path: GOODS_ROUTE,
     //path: GOODS_ROUTE + '/:tyres',
-    Component: Goods
+    Component: GoodsPage
   },
   {
     path: LOGIN_ROUTE,

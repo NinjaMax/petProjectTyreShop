@@ -1,7 +1,58 @@
 .goodsCard {
-  margin-left: 30px;
-  margin-right: 30px;
+  margin-left: 45px;
+  margin-right: 45px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, 100px);
+  grid-template-columns: repeat(4, 24%);
+  grid-template-areas: 
+    "goodsBreadCrumbs goodsBreadCrumbs goodsBreadCrumbs goodsBreadCrumbs"
+    "tabGoods tabGoods tabGoods smallCard"
+    "goodsBenefits goodsBenefits goodsBenefits smallCard"
+    "similarGoods similarGoods similarGoods smallCard"
+    "allSizeModel allSizeModel allSizeModel smallCard"
+    "youWatched youWatched youWatched smallCard"
+    "allModelBrand allModelBrand allModelBrand smallCard";
+  grid-gap:5px;
+  
   background-color:#eee;
+  
+}
+.goodsBreadCrumbs {
+  border: solid peru 3px;
+  grid-area: goodsBreadCrumbs;
+
+}
+
+.goodsBenefits {
+  border: solid peru 3px;
+  grid-area: goodsBenefits;
+}
+
+.tabGoods {
+  border: solid peru 3px;
+  grid-area: tabGoods;
+}
+
+.similarGoods {
+  border: solid peru 3px;
+  grid-area: similarGoods;
+}
+
+.allSizeModel {
+  border: solid peru 3px;
+  grid-area: allSizeModel;
+}
+
+.youWatched {
+  border: solid peru 3px;
+  grid-area: youWatched;
+}
+
+.allModelBrand {
+  border: solid peru 3px;
+  grid-area: allModelBrand;
+}
+
+.smallCard {
+  border: solid peru 3px;
+  grid-area: smallCard;
 }
