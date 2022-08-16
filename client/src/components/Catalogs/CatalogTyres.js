@@ -1,9 +1,10 @@
 import React from 'react';
+import '../../css/Catalogs/CatalogTyres.css';
 import TyresCard from '../Cards/TyresCard';
 import PopularSizeTyre from '../PopularGoods/PopularSizeTyre';
 import PopularDiametrTyre from '../PopularGoods/PopularDiametrTyre';
 import SortLine from '../Sort/SortLine';
-import '../../css/Catalogs/CatalogTyres.css';
+import Pagination from '../Pagination';
 
 const CatalogTyres = () => {
     return (
@@ -27,16 +28,17 @@ const CatalogTyres = () => {
                 <SortLine/>
             </div>
             <div className="rowCatalogTyres">
-                <TyresCard/>
-                <TyresCard/>
-                <TyresCard/>
-                <TyresCard/>
-                <TyresCard/>
-                <TyresCard/>
-                <TyresCard/>
-                <TyresCard/>
-                <TyresCard/>
+                <TyresCard optionsBox={true}/>
+                <TyresCard optionsBox={true}/>
+                <TyresCard optionsBox={true}/>
+                <TyresCard optionsBox={true}/>
+                <TyresCard optionsBox={true}/>
+                <TyresCard optionsBox={true}/>
+                <TyresCard optionsBox={true}/>
+                <TyresCard optionsBox={true}/>
+                <TyresCard optionsBox={true}/>
             </div>
+            <Pagination/>
         </div>
     );
 };

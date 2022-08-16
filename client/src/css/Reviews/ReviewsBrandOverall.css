@@ -1,18 +1,29 @@
 .reviewsBrand {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content:space-around;
     align-items:flex-start;
     padding: 10px;
-    width: 450px;
+    width: 905px;
     background-color:#CADBEA;
     border-radius:10px;
     gap:5px;
 }
 
 .reviewsBrand img {
-    width: 70px;
-    height: 30px;
+    width: 75px;
+    height: 25px;
 }
 
+.reviewBrandList {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    /*justify-content: center;*/
+    /*gap:5px;*/
+}
+
+/*.reviewBrandList span {
+    font-size: 14px;
+}*/
 

@@ -6,10 +6,10 @@ const PromotionBox = () => {
     return (
 
         <div className='promotionBox'>
-                <TyresCard/>  
-                <TyresCard/>  
-                <TyresCard/>  
-                <TyresCard/>  
+                <TyresCard optionsBox={false}/>  
+                <TyresCard optionsBox={false}/>  
+                <TyresCard optionsBox={false}/>  
+                <TyresCard optionsBox={false}/>  
         </div>
         
     );
