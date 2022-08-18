@@ -3,6 +3,7 @@ import '../../css/CardsCss/TyresCard.css';
 import FlagsIcon from '../Cards/FlagsIcon';
 import PropsCardIcons from '../Cards/PropsCardIcons';
 import Rating from '../UX/Rating';
+import OptionsTyreBox from '../Cards/OptionsTyreBox';
 import tyres from '../../assets/autotyrespilotspotps2.png';
 
 const TyresCard = ({optionsBox}) => {
@@ -20,43 +21,7 @@ const TyresCard = ({optionsBox}) => {
                 <p/>    
             </div>
             { optionsBox ?
-            <div className='optionsTyreBox'>   
-                <div className="tooltipCardTyresWidth">
-                    <span>Ширина:195
-                        <span className="tooltipTextCardTyresWidth">Ширина профиля шины</span>
-                    </span>
-                </div>
-                <div className="tooltipCardTyresWidth">
-                    <span>Высота: 65
-                        <span className="tooltipTextCardTyresWidth">Высота профиля шины</span>
-                    </span>
-                </div>
-                <div className="tooltipCardTyresWidth">
-                    <span>Диаметр: R15
-                        <span className="tooltipTextCardTyresWidth">Посадочный диаметр шины</span>                        
-                    </span>
-                </div>
-                <div className="tooltipCardTyresWidth">
-                    <span>Бренд: Continental
-                        <span className="tooltipTextCardTyresWidth">Производитель шины</span>
-                    </span>
-                </div>
-                <div className="tooltipCardTyresWidth">
-                    <span>Сезон: Летние
-                        <span className="tooltipTextCardTyresWidth">Сезон применения шины</span>
-                    </span>
-                </div>
-                <div className="tooltipCardTyresWidth">
-                    <span>Год производства: 2022
-                        <span className="tooltipTextCardTyresWidth">Год производства шины</span>
-                    </span>
-                </div>
-                <div className="tooltipCardTyresWidth">
-                    <span>Страна производства: Германия
-                        <span className="tooltipTextCardTyresWidth">Страна производства шины</span>
-                    </span>
-                </div>
-            </div>
+                <OptionsTyreBox/>
             :null}
             <p/> 
         </div>

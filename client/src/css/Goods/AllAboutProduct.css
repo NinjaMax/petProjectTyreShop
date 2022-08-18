@@ -1,4 +1,41 @@
-.allAboutProduct img {
+.allAboutProduct {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    /*width: 400px;*/
+    border:3px solid blue;
+    gap: 3px;
+}
+
+#productImgGoods {
+    
     width: 400px;
     height: 400px;
+
+}
+
+.allAboutProductInfo {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    border:3px solid red;
+    /*height: 50px;*/
+}
+
+/*.allAboutProductInfo .productInfoProps {
+    width: 35px;
+    height: 35px;
+}
+
+.allAboutProductInfo .productInfoCountry {
+    width: 35px;
+    height: 35px;
+}*/
+
+.productStickerRight {
+    display: flex;
+    flex-direction: column;
+    background-color: #CADBEA;
+    border-radius:8px;
+    padding: 5px;
 }

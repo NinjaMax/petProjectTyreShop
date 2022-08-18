@@ -12,8 +12,8 @@
     "youWatched youWatched youWatched smallCard"
     "allModelBrand allModelBrand allModelBrand smallCard";
   grid-gap:5px;
-  
-  background-color:#eee;
+  border-radius:8px;
+  background-color:#fff;
   
 }
 .goodsBreadCrumbs {
