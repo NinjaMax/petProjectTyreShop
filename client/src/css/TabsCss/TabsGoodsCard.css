@@ -8,60 +8,36 @@
     flex-direction: row;
     gap: 15px;
 }
-/* Style the buttons that are used to open the tab content */
-/*.tabsGoodsCard button {
-    background-color: inherit;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    border: solid #9EB9D3;
-    border-width: 0px 0px 4px 0px;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
-}
-*/
-/*.tabsGoodsCardLinks {
+
+.tabsGoodsCardLinks {
     appearance: none;
     cursor: pointer;
     border: solid #9EB9D3;
     border-width: 0px 0px 4px 0px;
-}*/
-/*
+}
+
 .tabsGoodsCardLinks:hover {
     background-color: #ddd;
     border-bottom: 4px #71C2FF solid;
 }
-*/
-/*
+
+
 .tabsGoodsCard label {
     border: solid #9EB9D3;
     border-width: 0px 0px 4px 0px;
     cursor: pointer;
 }
-*/
-/*
+
+
 .tabsGoodsCard label:hover {
     background-color: #ddd;
     border-bottom: 4px #71C2FF solid;
 }
-*/
-/*
+
+
 .tabsGoodsCard label:active {
     background-color: #ccc;
-}*/
-
-/* Change background color of buttons on hover */
-/*.tabsGoodsCard button:hover {
-    background-color: #ddd;
-    border-bottom: 4px #71C2FF solid;
-}*/
-
-/* Create an active/current tablink class */
-/*.tabsGoodsCard button.active {
-    background-color: #ccc;
-}*/
+}
 
 /* Style the tab content */
 .tabsContentGoodsCard {

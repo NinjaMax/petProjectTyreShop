@@ -2,15 +2,16 @@
   margin-left: 45px;
   margin-right: 45px;
   display: grid;
-  grid-template-columns: repeat(4, 24%);
-  grid-template-areas: 
-    "goodsBreadCrumbs goodsBreadCrumbs goodsBreadCrumbs goodsBreadCrumbs"
-    "tabGoods tabGoods tabGoods smallCard"
-    "goodsBenefits goodsBenefits goodsBenefits smallCard"
-    "similarGoods similarGoods similarGoods smallCard"
-    "allSizeModel allSizeModel allSizeModel smallCard"
-    "youWatched youWatched youWatched smallCard"
-    "allModelBrand allModelBrand allModelBrand smallCard";
+  grid-template-columns: repeat(auto-fill, minmax(320px, 25%));
+  grid-template-rows:minmax(45px, 1fr);
+  /*grid-template-areas: 
+    "goodsBreadCrumbs goodsBreadCrumbs goodsBreadCrumbs"
+    "tabGoods tabGoods tabGoods"
+    "goodsBenefits goodsBenefits goodsBenefits"
+    "similarGoods similarGoods similarGoods"
+    "allSizeModel allSizeModel allSizeModel"
+    "youWatched youWatched youWatched"
+    "allModelBrand allModelBrand allModelBrand";*/
   grid-gap:5px;
   border-radius:8px;
   background-color:#fff;
@@ -18,41 +19,61 @@
 }
 .goodsBreadCrumbs {
   border: solid peru 3px;
-  grid-area: goodsBreadCrumbs;
+  grid-area: 1 / 1 / 1 / 5;
+  /*grid-area: goodsBreadCrumbs;*/
+ 
+}
+.tabGoods {
+  border: solid peru 3px;
+  /*grid-area: tabGoods;*/
+  grid-area: 2 / 1 / 4 / 5;
+}
 
+.tabGoodsActive {
+  border: solid peru 3px;
+  /*grid-area: tabGoods;*/
+  grid-area: 2 / 1 / 4 / 4;
 }
 
 .goodsBenefits {
   border: solid peru 3px;
-  grid-area: goodsBenefits;
-}
+  /*grid-area: goodsBenefits;*/
+  grid-area: 4 / 1 / 4 / 4;
 
-.tabGoods {
-  border: solid peru 3px;
-  grid-area: tabGoods;
 }
 
 .similarGoods {
   border: solid peru 3px;
-  grid-area: similarGoods;
+  /*grid-area: similarGoods;*/
+  grid-area: 5 / 1 / 5 / 4;
 }
 
 .allSizeModel {
   border: solid peru 3px;
-  grid-area: allSizeModel;
-}
-
-.youWatched {
-  border: solid peru 3px;
-  grid-area: youWatched;
+  /*grid-area: allSizeModel;*/
+  grid-area: 6 / 1 / 6 / 4;
 }
 
 .allModelBrand {
   border: solid peru 3px;
-  grid-area: allModelBrand;
+  /*grid-area: allModelBrand;*/
+  grid-area: 7 / 1 / 7 / 5;
 }
+
+.youWatched {
+  border: solid peru 3px;
+  /*grid-area: youWatched;*/
+  grid-area: 8 / 1 / 8 / 5;
+}
+
+
 
 .smallCard {
   border: solid peru 3px;
-  grid-area: smallCard;
+  /*grid-area: smallCard;*/
+  grid-area: 2 / 4 / 5 / 5;
+ 
+}
+.noactive {
+  display: none;
 }

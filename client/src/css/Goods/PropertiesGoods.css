@@ -1,26 +1,23 @@
-.optionsTyreBox {
-    display:none;
-}
-
-.tyresCard:hover .optionsTyreBox {
+.propertiesGoods {
     display:flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 1em;
     width: 300px;
-    margin-left: -16px;
+    /*margin-left: -16px;*/
     border-radius:0px 0px 8px 8px;
     position:absolute;
     background-color:#fff;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    /*box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);*/
+
 }
 
-.tooltipCardTyres {
+.tooltiPropertiesGoods {
     position: relative;
     display: inline-block;
     border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
 }
-.tooltipCardTyres .tooltipTextCardTyres {
+.tooltiPropertiesGoods .tooltiTextPropertiesGoods {
     visibility: hidden;
     width: 120px;
     background-color: #555;
@@ -38,7 +35,7 @@
     transition: opacity 0.3s;
 }
 /* Tooltip arrow */
-.tooltipCardTyres .tooltipTextCardTyres::after {
+.tooltiPropertiesGoods .tooltiTextPropertiesGoods::after {
     content: " ";
     position: absolute;
     top: 50%;
@@ -49,7 +46,7 @@
     border-color: transparent black transparent transparent;
 }
 /* Show the tooltip text when you mouse over the tooltip container */
-.tooltipCardTyres:hover .tooltipTextCardTyres {
+.tooltiPropertiesGoods:hover .tooltiTextPropertiesGoods {
     visibility: visible;
     opacity: 1;
 }
