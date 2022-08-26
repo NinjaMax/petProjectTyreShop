@@ -1,5 +1,6 @@
 import {React, useState} from 'react';
 import '../../css/FilterMain/FilterMainBtn.css';
+import ContentFilterInfo from './ContentFilterInfo';
 //import ChipOptions from '../ChipOptions';
 
 const FilterMainBtn = ({children, titleFilter, width, contentInfo}) => {
@@ -27,9 +28,8 @@ const FilterMainBtn = ({children, titleFilter, width, contentInfo}) => {
                       {children}
                     </div>
                    {contentInfo?
-                    <div className='dropdownContentInfo' style={{"--widthBtn":width}}>
-                      Як дізнатися розмір шини?
-                    </div>: null}
+                    <ContentFilterInfo infoMarking={contentInfo} width={width}/>
+                    : null}
                   </div>
                 : null}
             </div>       

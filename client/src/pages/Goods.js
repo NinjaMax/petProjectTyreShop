@@ -8,7 +8,7 @@ import AllAboutProduct from '../components/Goods/AllAboutProduct';
 import PropertiesGoods from '../components/Goods/PropertiesGoods';
 import ReviewBrandOverall from '../components/Reviews/ReviewsBrandOverall';
 import ReviewGoodsOverall from '../components/Reviews/ReviewGoodsOverall';
-
+import ReviewsGoods from '../components/Reviews/ReviewsGoods';
 
 const GoodsPage = () => {
   const [changeTabGoods, setChangeTabGoods] = useState();
@@ -42,10 +42,15 @@ const GoodsPage = () => {
                 <PropertiesGoods/> 
             :null}
             {changeTabGoods==="vidguki"?
-                <>
-                  <ReviewBrandOverall/>
+                <div className='tabReviewsActive'>
                   <ReviewGoodsOverall/> 
-                </>  
+                  <ReviewBrandOverall/>
+                  <ReviewsGoods/>
+                  <ReviewsGoods/>
+                  <ReviewsGoods/>
+                  <ReviewsGoods/>
+                  <ReviewsGoods/>
+                </div>  
             :null}
             {changeTabGoods==="pitannja"?
                 <span>ПИТАННЯ ТА ВІДПОВІДІ </span>
@@ -67,7 +72,7 @@ const GoodsPage = () => {
       <div className='allModelBrand'>
         all model brand
       </div>
-      <div className={changeTabGoods==="vseProTovar"?"noactive":'smallCard'}>
+      <div className={changeTabGoods==="vseProTovar" ? "noactive":'smallCard'}>
         <TyresCard/>
       </div>
      

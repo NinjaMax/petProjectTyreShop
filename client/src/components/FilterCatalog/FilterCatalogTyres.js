@@ -31,7 +31,7 @@ const FilterCatalogTyres = () => {
                 Фильтр Підбір по авто
             </div>
             <div className='filterTyresOption'>
-                <FilterMainBtn width={247.4} titleFilter={'Ширина'} contentInfo={true}>
+                <FilterMainBtn width={247.4} titleFilter={'Ширина'} contentInfo={'A'}>
                     <SelectFilterList value={"155"} items={"155"} checked={handleItem} onChange={handleChange}/>
                     <SelectFilterList value={"175"} items={"175"} checked={handleItem} onChange={handleChange}/>
                     <SelectFilterList value={"185"} items={"185"} checked={handleItem} onChange={handleChange}/>
@@ -44,7 +44,7 @@ const FilterCatalogTyres = () => {
                     <SelectFilterList value={"255"} items={"255"} checked={handleItem} onChange={handleChange}/>
                     <SelectFilterList value={"265"} items={"265"} checked={handleItem} onChange={handleChange}/>
                 </FilterMainBtn>
-                <FilterMainBtn width={247.4} titleFilter={'Профіль'} contentInfo={true}>
+                <FilterMainBtn width={247.4} titleFilter={'Профіль'} contentInfo={'B'}>
                     <SelectFilterList value={"40"} items={"40"} checked={handleItem} onChange={handleChange}/>
                     <SelectFilterList value={"45"} items={"45"} checked={handleItem} onChange={handleChange}/>
                     <SelectFilterList value={"50"} items={"50"} checked={handleItem} onChange={handleChange}/>
@@ -54,7 +54,7 @@ const FilterCatalogTyres = () => {
                     <SelectFilterList value={"70"} items={"70"} checked={handleItem} onChange={handleChange}/>
                     <SelectFilterList value={"80"} items={"80"} checked={handleItem} onChange={handleChange}/>
                 </FilterMainBtn>
-                <FilterMainBtn width={247.4} titleFilter={'Діаметр'} contentInfo={true}>
+                <FilterMainBtn width={247.4} titleFilter={'Діаметр'} contentInfo={'C'}>
                     <SelectFilterList value={"R13"} items={"R13"} checked={handleItem} onChange={handleChange}/>
                     <SelectFilterList value={"R14"} items={"R14"} checked={handleItem} onChange={handleChange}/>
                     <SelectFilterList value={"R15"} items={"R15"} checked={handleItem} onChange={handleChange}/>

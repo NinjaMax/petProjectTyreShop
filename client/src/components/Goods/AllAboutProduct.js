@@ -32,6 +32,16 @@ const AllAboutProduct = () => {
                 <span>РОЗШИРЕНА ГАРАНТІЯ</span>
                 <span>ПАРТНЕРСЬКА ПРОГРАММА</span>
             </div>
+            <div className='productStickerRight'>
+                <span>Доставка НОВОЮ ПОШТОЮ</span>
+                <span>Самовивіз</span>
+                <span>ОПЛАТА КАРТКОЮ</span>
+            </div>
+            <div className='productStickerRight'>
+                <span>Доставка НОВОЮ ПОШТОЮ</span>
+                <span>Самовивіз</span>
+                <span>ОПЛАТА КАРТКОЮ</span>
+            </div>
         </div>
     );
 };

@@ -17,6 +17,7 @@
   background-color:#fff;
   
 }
+
 .goodsBreadCrumbs {
   border: solid peru 3px;
   grid-area: 1 / 1 / 1 / 5;
@@ -66,14 +67,22 @@
   grid-area: 8 / 1 / 8 / 5;
 }
 
-
-
 .smallCard {
   border: solid peru 3px;
   /*grid-area: smallCard;*/
   grid-area: 2 / 4 / 5 / 5;
- 
+  
 }
+
 .noactive {
   display: none;
+}
+
+.tabReviewsActive {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+  gap: 15px;
+  margin: 15px;
 }
