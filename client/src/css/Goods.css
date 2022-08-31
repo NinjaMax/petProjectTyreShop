@@ -39,7 +39,15 @@
 .goodsBenefits {
   border: solid peru 3px;
   /*grid-area: goodsBenefits;*/
+  grid-area: 4 / 1 / 4 / 5;
+  text-align: center;
+
+}
+.goodsBenefitsNext {
+  border: solid peru 3px;
+  /*grid-area: goodsBenefits;*/
   grid-area: 4 / 1 / 4 / 4;
+  text-align: center;
 
 }
 
@@ -58,24 +66,30 @@
 .allModelBrand {
   border: solid peru 3px;
   /*grid-area: allModelBrand;*/
-  grid-area: 7 / 1 / 7 / 5;
+  grid-area: 7 / 1 / 7 / 4;
 }
 
 .youWatched {
   border: solid peru 3px;
   /*grid-area: youWatched;*/
-  grid-area: 8 / 1 / 8 / 5;
+  grid-area: 8 / 1 / 8 / 4;
 }
 
-.smallCard {
+.smallCardNext {
   border: solid peru 3px;
   /*grid-area: smallCard;*/
-  grid-area: 2 / 4 / 5 / 5;
+  grid-area: 2 / 4 / 9 / 5;
+  /*position: sticky;
+  top:20px;*/
   
 }
 
-.noactive {
-  display: none;
+.smallCardOne {
+  border: solid peru 3px;
+  /*grid-area: smallCard;*/
+  grid-area: 5 / 4 / 9 / 5;
+  /*position: sticky;
+  top: 20px;*/
 }
 
 .tabReviewsActive {

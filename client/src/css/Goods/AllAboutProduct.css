@@ -55,8 +55,9 @@
 
 .productStickerRight span {
     background-color: #CADBEA;
-    border-radius:8px;
+    border-radius:10px;
     padding: 10px;
+    cursor:pointer;
     /*box-shadow: 3px 3px 3px #444B54;*/
 }
 

@@ -1,0 +1,11 @@
+.similarGoods {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
+
+.similarText {
+    font-size: 20px;
+    font-weight: bold;
+}

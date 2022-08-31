@@ -1,7 +1,6 @@
 import {React, useState} from 'react';
 import '../css/Goods.css';
 import BreadCrumbs from '../components/BreadCrumbs';
-import TyresCard from '../components/Cards/TyresCard';
 import TabsGoodsCard from '../components/Tabs/TabsGoodsCard';
 import Benefits from '../components/Benefits';
 import AllAboutProduct from '../components/Goods/AllAboutProduct';
@@ -9,8 +8,12 @@ import PropertiesGoods from '../components/Goods/PropertiesGoods';
 import ReviewBrandOverall from '../components/Reviews/ReviewsBrandOverall';
 import ReviewGoodsOverall from '../components/Reviews/ReviewGoodsOverall';
 import ReviewsGoods from '../components/Reviews/ReviewsGoods';
+import SimilarGoods from '../components/Goods/SimilarGoods';
+import TyreCardSmall from '../components/Cards/TyreCardSmall';
+import AllTyreModelSize from '../components/Goods/AllTyreModelSize';
 
 const GoodsPage = () => {
+  const modelBrand = "CONTICROSSPREMIUMCONTACT";
   const [changeTabGoods, setChangeTabGoods] = useState();
   
   const handleChangeTab = (e) => {
@@ -57,14 +60,17 @@ const GoodsPage = () => {
             :null}
         </TabsGoodsCard>
       </div>
-      <div className='goodsBenefits'>
+      <div className={changeTabGoods==="vseProTovar" ?'goodsBenefits': 'goodsBenefitsNext'}>
         <Benefits/>
       </div>
       <div className='similarGoods'>
-        similar goods
+        <SimilarGoods/>
       </div>
       <div className='allSizeModel'>
-        all size model
+        <div>Усі розміри моделі {modelBrand}</div>
+        <div>
+          <AllTyreModelSize/>
+        </div>
       </div>
       <div className='youWatched'>
         you watched
@@ -72,8 +78,8 @@ const GoodsPage = () => {
       <div className='allModelBrand'>
         all model brand
       </div>
-      <div className={changeTabGoods==="vseProTovar" ? "noactive":'smallCard'}>
-        <TyresCard/>
+      <div className={changeTabGoods==="vseProTovar" ? "smallCardOne":"smallCardNext"}>
+        <TyreCardSmall/>
       </div>
      
     </div>
