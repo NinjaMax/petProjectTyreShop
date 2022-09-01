@@ -1,4 +1,4 @@
-.allTyreModelSize {
+.allModelBrands {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -7,7 +7,7 @@
     padding: 10px;
 }
 
-.allTyreModelSize a {
+.allModelBrands a {
     border-radius: 25px;
     background-color:#fff;
     cursor: pointer;
@@ -15,13 +15,8 @@
     box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.2);
 }
 
-.allTyreModelSize span {
-    font-size: 16px;
-    font-weight: bold;
-    color:#444B54;
-}
 
-.allTyreModelSize a:hover {
-    background-color:#eee;
+.allModelBrands a:hover {
+    background-color:#fff;
     box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.2);
 }

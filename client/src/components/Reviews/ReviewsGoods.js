@@ -3,11 +3,10 @@ import '../../css/Reviews/ReviewsGoods.css';
 import customerReview from '../../assets/icons/customer64.png';
 import ButtonPrevNext from '../Buttons/ButtonPrevNext';
 import Rating from '../UX/Rating';
-import DotSite from '../UX/DotSite';
 import Thumbs from '../UX/Thumbs';
 import ReviewsGoodsExtend from '../Reviews/ReviewsGoodsExtend';
 
-const ReviewsGoods = ({reviewExtend}) => {
+const ReviewsGoods = ({reviewExtend, btnLeft, btnRight}) => {
     return (
        
             <div className='reviewGoods'>   
@@ -31,11 +30,10 @@ const ReviewsGoods = ({reviewExtend}) => {
                             <ReviewsGoodsExtend/>
                         </div>: null}
                     </div>
-                    <ButtonPrevNext prevBtnLeft={-30} nextBtnRight={-30}/>
-                </div>
-                <div className="dotReviewContainer">
-                    <DotSite/>
-                </div>     
+                    {btnLeft & btnRight ?
+                    <ButtonPrevNext prevBtnLeft={btnLeft} nextBtnRight={btnRight}/>
+                    :null} 
+                </div>   
             </div>
         
     );

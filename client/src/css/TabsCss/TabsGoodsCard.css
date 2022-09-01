@@ -1,18 +1,20 @@
 .tabsGoodsCard {
     overflow: hidden;
-    border: 1px solid #ccc;
+    border: solid #ccc;
+    border-width: 0px 0px 2px 0px;
     border-radius:5px 5px 0px 0px;
-    background-color: #9EB9D3;
-    margin: 0px;
+    background-color: #fff;
+    padding: 0px 0px 0px 50px;
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    justify-content:flex-start;
+    gap: 0px;
 }
 
 .tabsGoodsCardLinks {
     appearance: none;
     cursor: pointer;
-    border: solid #9EB9D3;
+    border: solid red;
     border-width: 0px 0px 4px 0px;
 }
 
@@ -23,21 +25,33 @@
 
 
 .tabsGoodsCard label {
-    border: solid #9EB9D3;
+    border: solid #fff;
     border-width: 0px 0px 4px 0px;
     cursor: pointer;
+    width: 250px;
+    height: 40px;
+    padding: 5px;
+    text-align: center;
+    vertical-align:baseline;
 }
 
 
 .tabsGoodsCard label:hover {
     background-color: #ddd;
-    border-bottom: 4px #71C2FF solid;
+    /*border-bottom: 4px #71C2FF solid;*/
 }
 
 
 .tabsGoodsCard label:active {
     background-color: #ccc;
+    border-bottom: 4px #71C2FF solid;
 }
+
+.tabsGoodsCard label:focus {
+    /*background-color: #ccc;*/
+    border-bottom: 4px #71C2FF solid;
+}
+
 
 /* Style the tab content */
 .tabsContentGoodsCard {

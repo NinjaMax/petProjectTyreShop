@@ -11,9 +11,11 @@ import ReviewsGoods from '../components/Reviews/ReviewsGoods';
 import SimilarGoods from '../components/Goods/SimilarGoods';
 import TyreCardSmall from '../components/Cards/TyreCardSmall';
 import AllTyreModelSize from '../components/Goods/AllTyreModelSize';
+import AllModelBrand from '../components/Goods/AllModelBrand';
 
 const GoodsPage = () => {
   const modelBrand = "CONTICROSSPREMIUMCONTACT";
+  const brandName = "Continental";
   const [changeTabGoods, setChangeTabGoods] = useState();
   
   const handleChangeTab = (e) => {
@@ -67,16 +69,15 @@ const GoodsPage = () => {
         <SimilarGoods/>
       </div>
       <div className='allSizeModel'>
-        <div>Усі розміри моделі {modelBrand}</div>
-        <div>
-          <AllTyreModelSize/>
-        </div>
+        <span>Усі розміри моделі {modelBrand}</span>
+        <AllTyreModelSize/>
+      </div>
+      <div className='allModelBrand'>
+        <span>Усі моделі бренда {brandName}</span>
+        <AllModelBrand/>
       </div>
       <div className='youWatched'>
         you watched
-      </div>
-      <div className='allModelBrand'>
-        all model brand
       </div>
       <div className={changeTabGoods==="vseProTovar" ? "smallCardOne":"smallCardNext"}>
         <TyreCardSmall/>

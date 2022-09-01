@@ -7,8 +7,9 @@
     position: relative;
     background-color: #CADBEA;
     font-family: 'Fredoka', sans-serif;
-    border-radius:10px 10px 0 0;
-    height: 290.4px;
+    border-radius:10px 10px 10px 10px;
+    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.2);
+    height: 355px;
   }
   
   /* Slides */
@@ -91,7 +92,7 @@
   border-radius:0px 10px 10px 0px;
   border: solid #888;
   border-width: 0px 0px 0px 3px;
-  /*grid-row: 1/6;*/
+  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.2);
 }
 
   /* The dot/bullet/indicator container */
