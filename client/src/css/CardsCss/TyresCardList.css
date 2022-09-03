@@ -1,0 +1,80 @@
+.tyresCardList {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    width: 900px;
+    height: 140px;
+    margin: auto;
+    /*text-align:left;*/
+    display: grid;
+    grid-template-columns: 12% 87%;
+    overflow:hidden;
+    padding: 1em;
+    pointer-events: all;
+    border-radius: 8px;
+    background-color:#fff;
+    
+}
+
+.tyresCardListBox {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-evenly;
+    align-items:center;
+    flex-wrap: wrap;
+    gap: 5px;
+    grid-column: 2;
+}
+
+ #imgTyresList {
+    width: 100px;
+    height: 100px;
+    grid-column: 1;
+}
+
+.tyresCardList:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    
+}
+
+.tyresCardPriceList {
+    color: #444B54;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 16px;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.tyresCardList a {
+    text-decoration: none;
+    font-size: 14px;
+    color: black;
+}
+
+.tyresCardList a:hover {
+    opacity: 0.7;
+   
+}
+
+.tyresCardCountryList {
+    display: inline;
+    text-align: center;
+}
+
+.propsCardList {
+    text-align: center;
+}
+.ratingTyresList {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items:center;
+    gap:5px;
+    
+}
+.ratingTyresList a {
+    font-size: 15px;
+
+}
+
+.tyresCardCodeList {
+    text-align: center;
+}

@@ -1,10 +1,11 @@
 import React from 'react';
 import '../../css/ButtonsCss/ButtonAction.css';
 
-const ButtonAction = ({props}) => {
+const ButtonAction = ({props, widthBtn}) => {
     return (
         <div >
-            <button id='buttonAction'>{props}</button>
+            <button id='buttonAction' 
+            style={{"--widthBtn":widthBtn}}>{props}</button>
         </div>
     );
 };

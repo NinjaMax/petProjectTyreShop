@@ -5,8 +5,9 @@
 
 .reviewsGoodsContainer {
     position: relative;
-    background-color: #CADBEA;
+    background-color: #fff;
     font-family: 'Fredoka', sans-serif;
+    border: 0.1px solid #ccc;
     border-radius:10px 10px 10px 10px;
     box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.2);
     height: 355px;
@@ -85,12 +86,12 @@
   /*margin: 5px;*/
   padding: 8px;
   top: 0px;
-  left:647px;
+  left:646px;
   width: 250px;
   height: 355px;
-  background-color:#CADBEA;
+  background-color:#fff;
   border-radius:0px 10px 10px 0px;
-  border: solid #888;
+  border: 0.1px solid #ccc;
   border-width: 0px 0px 0px 3px;
   box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.2);
 }

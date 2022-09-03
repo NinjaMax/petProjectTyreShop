@@ -46,30 +46,12 @@
     text-align: center;
 }
 
-.tyresCard button {
-    border: none;
-    outline: 0;
-    display: inline-block;
-    padding: 8px;
-    color: white;
-    background-color: #9C93D1;
-    text-align: center;
-    cursor: pointer;
-    width: 100%;
-    font-size: 18px;
-    border-radius:5px;
-}
-
 .tyresCard a {
     text-decoration: none;
     font-size: 18px;
     color: black;
 }
 
-.tyresCard button:hover {
-    opacity: 0.7;
-    background-color:green;
-}
 .tyresCard a:hover {
     opacity: 0.7;
    
@@ -79,6 +61,7 @@
     display: inline;
     text-align: center;
 }
+
 .propsCard {
     text-align: center;
 }
