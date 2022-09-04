@@ -12,6 +12,7 @@ import SimilarGoods from '../components/Goods/SimilarGoods';
 import TyreCardSmall from '../components/Cards/TyreCardSmall';
 import AllTyreModelSize from '../components/Goods/AllTyreModelSize';
 import AllModelBrand from '../components/Goods/AllModelBrand';
+import ProductPayDel from '../components/Goods/ProductPayDel';
 
 const GoodsPage = () => {
   const modelBrand = "CONTICROSSPREMIUMCONTACT";
@@ -61,6 +62,9 @@ const GoodsPage = () => {
                 <span>ПИТАННЯ ТА ВІДПОВІДІ </span>
             :null}
         </TabsGoodsCard>
+      </div>
+      <div className={changeTabGoods==="vseProTovar" ?'productPayDelGoods' : 'productPayDelGoodsNext'}>
+        <ProductPayDel/>
       </div>
       <div className={changeTabGoods==="vseProTovar" ?'goodsBenefits': 'goodsBenefitsNext'}>
         <Benefits/>

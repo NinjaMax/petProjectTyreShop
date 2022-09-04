@@ -9,6 +9,8 @@ import Rating from '../UX/Rating';
 import PropsCardIcons from '../Cards/PropsCardIcons';
 import FlagsIcon from '../Cards/FlagsIcon';
 import CheckboxBtn from '../Select/CheckboxBtn';
+import TyreMarking from './TyreMarking';
+import SocialMediaLinks from '../SocialMedia/SocialMediaLinks';
 
 
 
@@ -52,37 +54,14 @@ const AllAboutProduct = () => {
                         /> Додати в порівняння   
                     </label>    
                 </div>
+                <SocialMediaLinks/>   
+            </div>
+            <div className='productRightgBox'>
+                <TyreMarking/>
                 <div className='attentionGoods'>
                     ЗВЕРНІТЬ УВАГУ
                     При покупці менше 4-х одиниць товару вартість може бути вище зазначеної. Бувають випадки, коли у нас немає можливості продати менше 4-х одиниць товару.
                     У випадку якщо на складі, у потрібному місті, товару зараз немає - до його вартості додається вартість доставки.
-                </div>
-            </div>
-            <div className='productStickerBox'>
-                <h6>Доставляємо</h6>
-                <div className='productStickerRight'>
-                    <span>Доставка НОВОЮ ПОШТОЮ</span>
-                    <span>Доставка УКР ПОШТОЮ</span>
-                    <span>Доставка САТ</span>
-                    <span>Самовивіз</span>
-                </div>
-                <h6>Приймаємо</h6>
-                <div className='productStickerRight'>    
-                    <span>Готівка</span>
-                    <span>Безготівковий розрахунок</span>
-                    <span>VISA</span>
-                    <span>Mastercard</span>
-                    <span>24 Pay</span>
-                    <span>Mono</span>
-                    <span>Apple Pay</span>
-                    <span>Google Pay</span>
-                </div>
-                <h6>Надаємо</h6>
-                <div className='productStickerRight'>
-                    <span>Гарантію на товари до 3 років</span>
-                    <span>Повернення /обмін протягом 14 днів</span>
-                    <span>Знижки</span>
-                    <span>Сертіфікати на розширенні гарантіі</span>
                 </div>
             </div>
         </div>

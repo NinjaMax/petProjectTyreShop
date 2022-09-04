@@ -29,7 +29,7 @@
     padding: 25px;
     width: 575px;
     /*height: 50px;*/
-    gap:5px;
+    gap:8px;
 }
 
 .allAboutProductInfo .productInfoName {
@@ -38,28 +38,11 @@
 }
 
 
-.productStickerBox {
+.productRightgBox {
     width: 380px;
     overflow: hidden;
     border:3px solid goldenrod;
-}
-.productStickerRight {
-    display: flex;
-    flex-direction:row;
-    flex-wrap: wrap;
-    /*background-color: #CADBEA;
-    border-radius:8px;*/
-    border:3px solid red;
-    padding: 6px;
-    gap:5px;
-}
-
-.productStickerRight span {
-    background-color: #CADBEA;
-    border-radius:10px;
     padding: 10px;
-    cursor:pointer;
-    /*box-shadow: 3px 3px 3px #444B54;*/
 }
 
 .productInfoPrice {

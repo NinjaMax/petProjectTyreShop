@@ -36,17 +36,31 @@
   grid-area: 2 / 1 / 4 / 4;
 }
 
-.goodsBenefits {
+.productPayDelGoods {
   border: solid peru 3px;
   /*grid-area: goodsBenefits;*/
   grid-area: 4 / 1 / 4 / 5;
+  text-align: center;
+}
+
+.productPayDelGoodsNext {
+   border: solid peru 3px;
+  /*grid-area: goodsBenefits;*/
+  grid-area: 4 / 1 / 4 / 4;
+  text-align: center;
+}
+
+.goodsBenefits {
+  border: solid peru 3px;
+  /*grid-area: goodsBenefits;*/
+  grid-area: 5 / 1 / 5 / 5;
   text-align: center;
 
 }
 .goodsBenefitsNext {
   border: solid peru 3px;
   /*grid-area: goodsBenefits;*/
-  grid-area: 4 / 1 / 4 / 4;
+  grid-area: 5 / 1 / 5 / 4;
   text-align: center;
 
 }
@@ -54,13 +68,13 @@
 .similarGoods {
   border: solid peru 3px;
   /*grid-area: similarGoods;*/
-  grid-area: 5 / 1 / 5 / 4;
+  grid-area: 6 / 1 / 6 / 4;
 }
 
 .allSizeModel {
   border: solid peru 3px;
   /*grid-area: allSizeModel;*/
-  grid-area: 6 / 1 / 6 / 4;
+  grid-area: 7 / 1 / 7 / 4;
 }
 
 .allSizeModel span {
@@ -72,7 +86,7 @@
 .allModelBrand {
   border: solid peru 3px;
   /*grid-area: allModelBrand;*/
-  grid-area: 7 / 1 / 7 / 4;
+  grid-area: 8 / 1 / 8 / 4;
 }
 
 .allModelBrand span {
@@ -84,13 +98,13 @@
 .youWatched {
   border: solid peru 3px;
   /*grid-area: youWatched;*/
-  grid-area: 8 / 1 / 8 / 4;
+  grid-area: 9 / 1 / 9 / 4;
 }
 
 .smallCardNext {
   border: solid peru 3px;
   /*grid-area: smallCard;*/
-  grid-area: 2 / 4 / 9 / 5;
+  grid-area: 2 / 4 / 10 / 5;
   /*position: sticky;
   top:20px;*/
   
@@ -99,7 +113,7 @@
 .smallCardOne {
   border: solid peru 3px;
   /*grid-area: smallCard;*/
-  grid-area: 5 / 4 / 9 / 5;
+  grid-area: 6 / 4 / 10 / 5;
   /*position: sticky;
   top: 20px;*/
 }
