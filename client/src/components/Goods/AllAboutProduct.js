@@ -13,7 +13,6 @@ import TyreMarking from './TyreMarking';
 import SocialMediaLinks from '../SocialMedia/SocialMediaLinks';
 
 
-
 const AllAboutProduct = () => {
 
     return (
@@ -40,8 +39,7 @@ const AllAboutProduct = () => {
                     value={"garantia"} 
                     titleCheckbox={"Розширенна Гарантія"} 
                     imageSrc={shieldImg}/>   
-                </div>    
-                
+                </div>        
                 <div className='additionalTools'>
                     <label>
                         <img alt={"obraneImg"}

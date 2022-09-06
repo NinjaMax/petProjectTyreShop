@@ -10,19 +10,19 @@ const Benefits = () => {
             <div className='benefitsBox'>
                 <div className="containerBenefit">
                     <img src={onlineSupport} alt="OnlineSupport"/>
-                    <p><span>Chris Fox.</span> CEO at Mighty Schools.</p>
-                    <p>HTML CSS saved us from a web disaster.</p>
+                    <p><span>Допомога єкспертів</span> Кваліфікована та швидка допомога єкспертів.</p>
+                    <p>Допомога в підборі, допомога в оформленні замовлення.</p>
                 </div>
 
                 <div className="containerBenefit">
                     <img src={fastDelivery} alt="FastDelivery" />
-                    <p><span >Rebecca Flex.</span> CEO at Company.</p>
-                    <p>No one is better than HTML CSS.</p>
+                    <p><span >Оперативна доставка</span> Доставка різними перевізниками: Нова Пошта, САТ, Укр Пошта</p>
+                    <p>Самовивіз зі складу обо курєрська доставка.</p>
                 </div>
                 <div className="containerBenefit">
                     <img src={handShake} alt="Handshake" />
-                    <p><span >Rebecca Flex.</span> CEO at Company.</p>
-                    <p>No one is better than HTML CSS.</p>
+                    <p><span >Нам довіряють.</span> Партнерські відносини з прямими постачальниками.</p>
+                    <p>Позитивні відгуки користувачів.</p>
                 </div>
             </div>
         </div>

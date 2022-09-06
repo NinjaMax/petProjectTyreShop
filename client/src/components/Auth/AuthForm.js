@@ -6,19 +6,19 @@ const AuthForm = () => {
             <div className="container">
               <form action="/action_page.php">
                 <div className="row">
-                  <h2 style="text-align:center">Login with Social Media or Manually</h2>
+                  <h2 >Login with Social Media or Manually</h2>
                   <div className="vl">
                     <span className="vl-innertext">or</span>
                   </div>
 
                   <div className="col">
-                    <a href="#" className="fb btn">
+                    <a href="/#" className="fb btn">
                       <i className="fa fa-facebook fa-fw"></i> Login with Facebook
                     </a>
-                    <a href="#" className="twitter btn">
+                    <a href="/#" className="twitter btn">
                       <i className="fa fa-twitter fa-fw"></i> Login with Twitter
                     </a>
-                    <a href="#" className="google btn">
+                    <a href="/#" className="google btn">
                       <i className="fa fa-google fa-fw"></i> Login with Google+
                     </a>
                   </div>
@@ -40,10 +40,10 @@ const AuthForm = () => {
             <div className="bottom-container">
               <div className="row">
                 <div className="col">
-                  <a href="#" style="color:white" className="btn">Sign up</a>
+                  <a href="/#" className="btn">Sign up</a>
                 </div>
                 <div className="col">
-                  <a href="#" style="color:white" className="btn">Forgot password?</a>
+                  <a href="/#" className="btn">Forgot password?</a>
                 </div>
               </div>
             </div>

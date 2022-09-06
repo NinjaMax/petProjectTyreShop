@@ -3,3 +3,50 @@
     width:300px;
 
 }
+
+.tyreMarkingFuelCount span {
+    position: absolute;
+    top: 485px;
+    right: 293px;
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+
+}
+
+.tyreMarkingWetCount span {
+    position: absolute;
+    top: 486px;
+    right: 148px;
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+}
+
+.tyreMarkingNoiseCount {
+    position: absolute;
+    top: 616px;
+    right: 358px;
+    font-size: 15px;
+    font-weight: bold;
+    color: black;
+}
+
+.tyreMarkingTyreSize span {
+    position: absolute;
+    top: 336px;
+    right: 220px;
+    font-size: 15px;
+    font-weight: bold;
+    color: black;
+}
+
+.tyreMarkingBrandName span {
+    position: absolute;
+    top: 306px;
+    right: 250px;
+    font-size: 15px;
+    font-weight: bold;
+    color: black;
+}
+

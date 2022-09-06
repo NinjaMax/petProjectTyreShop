@@ -1,12 +1,20 @@
-import React from 'react';
+import {React, useState} from 'react';
 import '../../css/Catalogs/CatalogTyres.css';
 import TyresCard from '../Cards/TyresCard';
 import PopularSizeTyre from '../PopularGoods/PopularSizeTyre';
 import PopularDiametrTyre from '../PopularGoods/PopularDiametrTyre';
 import SortLine from '../Sort/SortLine';
 import Pagination from '../Pagination';
+import CheckOrder from '../Modal/CheckOrder';
+import Modal from '../Modal/Modal';
 
 const CatalogTyres = () => {
+    const [active, setActive] = useState(false);
+
+    const checkOrders = () => {
+        setActive(!active);
+    }
+
     return (
         <div>
             <h2>Шини</h2>
@@ -28,16 +36,21 @@ const CatalogTyres = () => {
                 <SortLine/>
             </div>
             <div className="rowCatalogTyres">
-                <TyresCard optionsBox={true}/>
-                <TyresCard optionsBox={true}/>
-                <TyresCard optionsBox={true}/>
-                <TyresCard optionsBox={true}/>
-                <TyresCard optionsBox={true}/>
-                <TyresCard optionsBox={true}/>
-                <TyresCard optionsBox={true}/>
-                <TyresCard optionsBox={true}/>
-                <TyresCard optionsBox={true}/>
+                <TyresCard optionsBox={true} checkOrders={checkOrders}/>
+                <TyresCard optionsBox={true} checkOrders={checkOrders}/>
+                <TyresCard optionsBox={true} checkOrders={checkOrders}/>
+                <TyresCard optionsBox={true} checkOrders={checkOrders}/>
+                <TyresCard optionsBox={true} checkOrders={checkOrders}/>
+                <TyresCard optionsBox={true} checkOrders={checkOrders}/>
+                <TyresCard optionsBox={true} checkOrders={checkOrders}/>
+                <TyresCard optionsBox={true} checkOrders={checkOrders}/>
+                <TyresCard optionsBox={true} checkOrders={checkOrders}/>
             </div>
+            {active?
+                <Modal active={active} setActive={setActive}>
+                    <CheckOrder/> 
+                </Modal>   
+            :null}
             <Pagination/>
         </div>
     );

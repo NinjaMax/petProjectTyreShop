@@ -13,6 +13,7 @@ import TyreCardSmall from '../components/Cards/TyreCardSmall';
 import AllTyreModelSize from '../components/Goods/AllTyreModelSize';
 import AllModelBrand from '../components/Goods/AllModelBrand';
 import ProductPayDel from '../components/Goods/ProductPayDel';
+import YouWatched from '../components/Goods/YouWatched';
 
 const GoodsPage = () => {
   const modelBrand = "CONTICROSSPREMIUMCONTACT";
@@ -81,12 +82,11 @@ const GoodsPage = () => {
         <AllModelBrand/>
       </div>
       <div className='youWatched'>
-        you watched
+        <YouWatched/>
       </div>
       <div className={changeTabGoods==="vseProTovar" ? "smallCardOne":"smallCardNext"}>
         <TyreCardSmall/>
       </div>
-     
     </div>
 
     );

@@ -5,10 +5,12 @@ import tyreMarkingWinter from '../../assets/img/imgTyreMarking/euroMarkingWinter
 const TyreMarking = () => {
     return (
         <div className='tyreMarkingBox'>
-            <img id='imgTyreMarking' src={tyreMarkingWinter}  alt='tyreMarking'/>  
-            <div className='tyreMarkingFuelCount'><span>0</span></div>
-            <div className='tyreMarkingWetCount'><span>0</span></div>
-            <div className='tyreMarkingNoiseCount'><span>0</span></div>
+            <img id='imgTyreMarking' src={tyreMarkingWinter}  alt='tyreMarking'/>
+            <div className='tyreMarkingBrandName'><span>Continental</span></div> 
+            <div className='tyreMarkingTyreSize'><span>315/70 R22.5 105/155 T</span></div> 
+            <div className='tyreMarkingFuelCount'><span>C</span></div>
+            <div className='tyreMarkingWetCount'><span>B</span></div>
+            <div className='tyreMarkingNoiseCount'><span>72</span></div>
         </div>
     );
 };

@@ -7,6 +7,7 @@ const BasketNavBar = () => {
         <div className='basketNav'>
             <img id='imgBasketNav' src={shoppingCart}  alt='basketNav'/>  
             <div className='basketNavCount'><span>20</span></div>
+            
         </div>
     );
 };

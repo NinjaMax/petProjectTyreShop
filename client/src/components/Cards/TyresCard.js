@@ -7,7 +7,9 @@ import OptionsTyreBox from '../Cards/OptionsTyreBox';
 import tyres from '../../assets/autotyrespilotspotps2.png';
 import ButtonAction from '../Buttons/ButtonAction';
 
-const TyresCard = ({optionsBox}) => {
+
+const TyresCard = ({optionsBox, checkOrders}) => {
+
     return (
         <div className="tyresCard">
             <div >
@@ -18,13 +20,13 @@ const TyresCard = ({optionsBox}) => {
                 <div className='propsCard'><PropsCardIcons/></div>
                 <div className="tyresCardCountry"><FlagsIcon/></div>
                 <div className="tyresCardPrice">2005 UAH</div>
-                <ButtonAction props={"КУПИТИ"} widthBtn={260}/>
+                <ButtonAction props={"КУПИТИ"} widthBtn={260} eventItem={checkOrders}/>
                 <p/>    
             </div>
             { optionsBox ?
                 <OptionsTyreBox/>
             :null}
-            <p/> 
+            <p/>     
         </div>
     );
 };

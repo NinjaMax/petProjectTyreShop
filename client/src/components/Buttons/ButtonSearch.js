@@ -1,9 +1,14 @@
 import React from 'react';
 import '../../css/ButtonsCss/ButtonSearch.css';
-const ButtonSearch = () => {
+
+const ButtonSearch = ({clickSearchBtn}) => {
+    
     return (
         <div>
-            <button className="btnSearch">Пошук <i class='fa fa-search'></i></button>
+            <button className="btnSearch"
+            onClick={clickSearchBtn}
+            > Пошук <i class='fa fa-search'></i>
+            </button>
             
         </div>
     );
