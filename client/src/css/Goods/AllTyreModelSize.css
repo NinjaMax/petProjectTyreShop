@@ -7,7 +7,7 @@
     padding: 10px;
 }
 
-.allTyreModelSize a {
+.allTyreModelSize .allTyreModelSizeAnch {
     border-radius: 25px;
     background-color:#fff;
     cursor: pointer;
@@ -21,7 +21,7 @@
     color:#444B54;
 }
 
-.allTyreModelSize a:hover {
+.allTyreModelSize .allTyreModelSizeAnch:hover {
     background-color:#eee;
     box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.2);
 }

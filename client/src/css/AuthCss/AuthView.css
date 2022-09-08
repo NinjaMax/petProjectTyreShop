@@ -28,3 +28,13 @@
     border:#71C2FF solid;
     border-width: 0 0 5px 0;
 }
+
+.authApprove {
+    display: none;
+}
+
+.authApprove.active {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+}

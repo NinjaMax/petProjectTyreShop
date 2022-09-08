@@ -43,13 +43,13 @@
     text-align: center;
 }
 
-.tyresCardList a {
+.tyresCardList .reviewLink {
     text-decoration: none;
     font-size: 14px;
     color: black;
 }
 
-.tyresCardList a:hover {
+.tyresCardList .reviewLink:hover {
     opacity: 0.7;
    
 }
@@ -70,7 +70,7 @@
     gap:5px;
     
 }
-.ratingTyresList a {
+.ratingTyresList .reviewLink {
     font-size: 15px;
 
 }

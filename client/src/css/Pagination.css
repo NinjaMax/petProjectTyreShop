@@ -3,7 +3,7 @@
     text-align: center;
 }
 
-.pagination a {
+.pagination .paginationItem {
     color: black;
     padding: 8px 16px;
     text-decoration: none;
@@ -12,10 +12,10 @@
 }
 
 /* Style the active/current link */
-.pagination a.active {
+.pagination .active {
     background-color: #71c2ff;
     color: white;
 }
 
 /* Add a grey background color on mouse-over */
-.pagination a:hover:not(.active) {background-color: #ddd;}
+.pagination .paginationItem:hover:not(.active) {background-color: #ddd;}

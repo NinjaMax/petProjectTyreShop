@@ -2,9 +2,9 @@ import React from 'react';
 import shoppingCart from '../../assets/icons/shopping_cart64Clear.png';
 import '../../css/BasketCss/BasketNavBar.css';
 
-const BasketNavBar = () => {
+const BasketNavBar = ({setActive}) => {
     return (
-        <div className='basketNav'>
+        <div className='basketNav' onClick={setActive}>
             <img id='imgBasketNav' src={shoppingCart}  alt='basketNav'/>  
             <div className='basketNavCount'><span>20</span></div>
             

@@ -7,7 +7,7 @@
     padding: 10px;
 }
 
-.allModelBrands a {
+.allModelBrands .allModelBrandsAnch {
     border-radius: 25px;
     background-color:#fff;
     cursor: pointer;
@@ -16,7 +16,7 @@
 }
 
 
-.allModelBrands a:hover {
+.allModelBrands .allModelBrandsAnch:hover {
     background-color:#fff;
     box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.2);
 }

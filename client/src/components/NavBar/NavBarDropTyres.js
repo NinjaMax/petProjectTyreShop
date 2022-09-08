@@ -15,34 +15,34 @@ const NavBarDropTyres = () => {
         <div className="rowNavbar">
           <div className="columnNavbar">
             <h4>по сезону</h4>
-              <a href="/#">Літні шини</a>
-              <a href="/#">Зимові шини</a>
-              <a href="/#">Всесезонні шини</a>
+            <a className='columnNavbarAnch' href="/#">Літні шини</a>
+            <a className='columnNavbarAnch' href="/#">Зимові шини</a>
+            <a className='columnNavbarAnch' href="/#">Всесезонні шини</a>
           </div>
           <div className="columnNavbar">
             <h4>по типу транспорту</h4>
-            <a href="/#">легкові</a>
-            <a href="/#">грузові</a>
-            <a href="/#">позашляховик</a>
-            <a href="/#">мікроавтобус</a>
-            <a href="/#">с/х</a>
-            <a href="/#">спецтехніка</a>
-            <a href="/#">мото</a>
+            <a className='columnNavbarAnch' href="/#">легкові</a>
+            <a className='columnNavbarAnch' href="/#">грузові</a>
+            <a className='columnNavbarAnch' href="/#">позашляховик</a>
+            <a className='columnNavbarAnch' href="/#">мікроавтобус</a>
+            <a className='columnNavbarAnch' href="/#">с/х</a>
+            <a className='columnNavbarAnch' href="/#">спецтехніка</a>
+            <a className='columnNavbarAnch' href="/#">мото</a>
           </div>
           <div className="columnNavbar">
             <h4>по діаметру</h4>
-            <a href="/#">R13</a>
-            <a href="/#">R14</a>
-            <a href="/#">R15</a>
-            <a href="/#">R16</a>
-            <a href="/#">R17</a>
-            <a href="/#">R18</a>
-            <a href="/#">R19</a>
-            <a href="/#">R20</a>
-            <a href="/#">R21</a>
-            <a href="/#">R17.5</a>
-            <a href="/#">R19.5</a>
-            <a href="/#">R22.5</a>
+            <a className='columnNavbarAnch' href="/#">R13</a>
+            <a className='columnNavbarAnch' href="/#">R14</a>
+            <a className='columnNavbarAnch' href="/#">R15</a>
+            <a className='columnNavbarAnch' href="/#">R16</a>
+            <a className='columnNavbarAnch' href="/#">R17</a>
+            <a className='columnNavbarAnch' href="/#">R18</a>
+            <a className='columnNavbarAnch' href="/#">R19</a>
+            <a className='columnNavbarAnch' href="/#">R20</a>
+            <a className='columnNavbarAnch' href="/#">R21</a>
+            <a className='columnNavbarAnch' href="/#">R17.5</a>
+            <a className='columnNavbarAnch' href="/#">R19.5</a>
+            <a className='columnNavbarAnch' href="/#">R22.5</a>
           </div>
         </div>
       </div>

@@ -16,6 +16,7 @@ import BasketOrder from '../Basket/BasketOrder';
 
 const NavBar = observer(() => {
     //const {user} = useContext(Context);
+  
   const [activeAuth, setActiveAuth] = useState(false);
   const [searchBtn, setSearchBtn] = useState(false);
   const [activeBasket, setActiveBasket] = useState(false);
@@ -39,8 +40,8 @@ const NavBar = observer(() => {
     <NavBarDropTyres/>
     <NavBarDropTyres/>
     <NavBarDropTyres/>
-    <a href="/#home">Доставка і оплата</a>
-    <a href="/#home">Контакти</a>
+    <a href="/#home" className='anchorBtn'>Доставка і оплата</a>
+    <a href="/#home" className='anchorBtn'>Контакти</a>
     <span href="/#home">067 777 77 77</span>
     <span href="/#news">Більше</span>
     <ButtonSearch clickSearchBtn={clickSearchBtn}/>
@@ -48,13 +49,13 @@ const NavBar = observer(() => {
       <NavBarSearch searchBtn={searchBtn} clickSearchBtn={clickSearchBtn}/>
     :null}
     <FavoriteGoods/>
-    <AuthView/>
+    <AuthView setActive={authActive}/>
     {activeAuth ?
       <Modal active={activeAuth} setActive={authActive}>
-        <AuthForm/>
+        <AuthForm />
       </Modal>
     :null}
-    <BasketNavBar/>
+    <BasketNavBar setActive={openBasket}/>
     { activeBasket ?
       <Modal active={activeBasket} setActive={openBasket}>
         <BasketOrder/>

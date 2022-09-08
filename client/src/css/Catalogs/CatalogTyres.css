@@ -55,7 +55,7 @@ h1 {
 /*}*/
 
 /* Style the buttons */
-.btn {
+.btnCatalor {
   border: none;
   outline: none;
   padding: 12px 16px;
@@ -64,12 +64,12 @@ h1 {
 }
 
 /* Add a grey background color on mouse-over */
-.btn:hover {
+.btnCatalor:hover {
   background-color: #ddd;
 }
 
 /* Add a dark background color to the active button */
-.btn.active {
+.btnCatalor.active {
   background-color: #666;
    color: white;
 }

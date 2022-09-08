@@ -5,8 +5,12 @@ const BreadCrumbs = ({ref, hrefTitle}) => {
     return (
         <div>
             <ul className="breadcrumb">
-                <li><a href="/">Home</a></li>
-                <li><a href="/tyres">Tyres</a></li>
+                <li className='listBreadCrumbs'>
+                    <a  href="/" className='anchBreadCrumbs'>Home</a>
+                </li>
+                <li className='listBreadCrumbs'>
+                    <a href="/tyres" className='anchBreadCrumbs'>Tyres</a>
+                </li>
             </ul>
         </div>
     );

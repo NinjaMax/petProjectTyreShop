@@ -19,7 +19,7 @@
   }
   
   /* Links inside the navbar */
-  .navbar a {
+  .navbar .anchorBtn {
     /*float: left;*/
     font-size: 16px;
     color: #444B54;
@@ -30,7 +30,7 @@
   }
   
   /* Add a red background color to navbar links on hover */
-  .navbar a:hover {
+  .navbar .anchorBtn:hover {
     border: #71C2FF solid;
     border-width:0 0 5px 0;
   }

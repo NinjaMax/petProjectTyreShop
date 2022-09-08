@@ -19,12 +19,12 @@ const CatalogTyres = () => {
         <div>
             <h2>Шини</h2>
             <div className="btnContainerCatalogTyres">
-                <button className="btn active" onClick={"1"}> Show all</button>
-                <button className="btn" onClick={"2"}> Nature</button>
-                <button className="btn" onClick={"3"}> Cars</button>
-                <button className="btn" onClick={"4"}> People</button>
-                <button className="btn" onClick={"3"}> Cars</button>
-                <button className="btn" onClick={"4"}> People</button>
+                <button className="btnCatalor active" onClick={"1"}> Show all</button>
+                <button className="btnCatalor" onClick={"2"}> Nature</button>
+                <button className="btnCatalor" onClick={"3"}> Cars</button>
+                <button className="btnCatalor" onClick={"4"}> People</button>
+                <button className="btnCatalor" onClick={"3"}> Cars</button>
+                <button className="btnCatalor" onClick={"4"}> People</button>
                 <span>Допомогти у підборі? </span>
                 <span>Як підібрати?</span>
             </div>

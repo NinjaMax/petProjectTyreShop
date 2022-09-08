@@ -1,53 +1,49 @@
 import React from 'react';
+import '../../css/AuthCss/AuthForm.css';
 
 const AuthForm = () => {
+
     return (
-        <div>
-            <div className="container">
-              <form action="/action_page.php">
-                <div className="row">
-                  <h2 >Login with Social Media or Manually</h2>
+          <div className='authFormMain'>
+            <div className="containerAuthForm">
+              <form action="">
+                  <div className='titleAuthForm'>Вхід / Реєстрація</div>
                   <div className="vl">
-                    <span className="vl-innertext">or</span>
+                    <span>або</span>
+                  </div>
+                <div className="rowAuthForm">
+                  <div className="colAuthForm">
+                    <a href="/#" className="fb btnAuthForm">
+                      <i className="fa" style={{"color":"red"}}>&#xf39e;</i> Увійти з Facebook
+                    </a>
+                    <a href="/#" className="twitter btnAuthForm">
+                      <i className="fa fa-twitter fa-fw">&#xf09a;</i> Увійти з Twitter
+                    </a>
+                    <a href="/#" className="google btnAuthForm">
+                      <i className="fa fa-google fa-fw">&#xf09a;</i> Увійти з Google+
+                    </a>
                   </div>
 
-                  <div className="col">
-                    <a href="/#" className="fb btn">
-                      <i className="fa fa-facebook fa-fw"></i> Login with Facebook
-                    </a>
-                    <a href="/#" className="twitter btn">
-                      <i className="fa fa-twitter fa-fw"></i> Login with Twitter
-                    </a>
-                    <a href="/#" className="google btn">
-                      <i className="fa fa-google fa-fw"></i> Login with Google+
-                    </a>
-                  </div>
-
-                  <div className="col">
+                  <div className="colAuthForm">
                     <div className="hide-md-lg">
                       <p>Or sign in manually:</p>
                     </div>
 
-                    <input type="text" name="username" placeholder="Username" required/>
-                    <input type="password" name="password" placeholder="Password" required/>
-                    <input type="submit" value="Login"/>
+                    <input className='inputAuthForm' type="text" name="username" placeholder="email або телефон" required/>
+                    <input className='inputAuthForm' type="password" name="password" placeholder="Пароль" required/>
+                    <input className='inputAuthForm' type="submit" value="Увійти"/>
                   </div>
 
                 </div>
               </form>
             </div>
-
-            <div className="bottom-container">
-              <div className="row">
-                <div className="col">
-                  <a href="/#" className="btn">Sign up</a>
-                </div>
-                <div className="col">
-                  <a href="/#" className="btn">Forgot password?</a>
-                </div>
+            <div className="bottomContainer">
+              <div className="rowAuthForm">
+                  <a href="/#" className="btnAuthForm">Зареєструватися</a>
+                  <a href="/#" className="btnAuthForm">Забули пароль?</a>
               </div>
             </div>
-        </div>
+          </div>
     );
 };
 

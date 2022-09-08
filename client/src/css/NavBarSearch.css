@@ -16,9 +16,9 @@
   }
   
   /* The content */
-  .overlay-content {
+  .overlayForm {
     position: relative;
-    top: 46%;
+    top: 15%;
     width: 80%;
     text-align: center;
     margin-top: 30px;
@@ -26,44 +26,73 @@
   }
   
   /* Close button */
-  .overlay .closebtn {
+  .overlayActive .closebtn {
     position: absolute;
     top: 20px;
     right: 45px;
-    font-size: 60px;
+    font-size: 28px;
+    font-weight: bold;
     cursor: pointer;
     color: white;
   }
   
-  .overlay .closebtn:hover {
+  .overlayActive .closebtn:hover {
     color: #ccc;
   }
   
   /* Style the search field */
-  .overlay input[type=text] {
+  .overlayActive input {
     padding: 15px;
-    font-size: 17px;
+    font-size: 16px;
     border: none;
     float: left;
     width: 80%;
-    background: white;
+    background-color: white;
   }
   
-  .overlay input[type=text]:hover {
-    background: #f1f1f1;
+  .overlayActive input:hover {
+    background-color: #ffff;
+
   }
+
+  .overlayActive input:focus {
+    
+    border: 3px solid #ccc;
+  }
+
   
   /* Style the submit button */
-  .overlay button {
+  .overlayActive button {
     float: left;
     width: 20%;
     padding: 15px;
-    background: #ddd;
-    font-size: 17px;
+    background-color: #ddd;
+    font-size: 16px;
     border: none;
     cursor: pointer;
   }
   
-  .overlay button:hover {
-    background: #bbb;
+  .overlayActive button:hover {
+    background-color: #bbb;
+  }
+
+  .overlayActive .outputData {
+    position: absolute;
+    background-color:#ffff;
+    top: 22.8%;
+    right: 10%;
+    width: 80%;
+    /*border-radius: 0px 0px 10px 10px;*/
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    
+  }
+
+  .outputDataItems {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    border-bottom: 2px solid #ccc;
   }

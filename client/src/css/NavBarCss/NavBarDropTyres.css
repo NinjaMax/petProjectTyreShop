@@ -39,7 +39,7 @@
   
   /* Mega Menu header, if needed */
   .dropdownContentNavbar .headerNavbar {
-    background: #71C2FF;
+    background-color: #71C2FF;
     padding: 16px;
     color: #444B54;
   }
@@ -63,7 +63,7 @@
   }
   
   /* Style links inside the columns */
-  .columnNavbar a {
+  .columnNavbar .columnNavbarAnch {
     float: left;
     color: black;
     padding: 16px;
@@ -73,7 +73,7 @@
   }
   
   /* Add a background color on hover */
-  .columnNavbar a:hover {
+  .columnNavbar .columnNavbarAnch:hover {
     background-color: #ddd;
   }
   
