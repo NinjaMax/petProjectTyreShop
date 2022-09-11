@@ -5,10 +5,13 @@ import '../../css/AuthCss/AuthView.css';
 const AuthView = ({setActive}) => {
     return (
         <div className='authView'>
-            <img id='imgCustomerAuth' src={userImg} alt='imgUser'/>
-            <button className='btnAuthView' onClick={setActive}>
-              <span>Мій кабінет</span>
-            </button>
+            <label for='btnAuth'onClick={setActive}>
+                <img id='imgCustomerAuth' src={userImg} alt='imgUser'/>
+            
+                <button className='btnAuthView' name='btnAuth' >
+                    <span>Мій кабінет</span>
+                </button>
+            </label>       
             <div className='authApprove'>
                 <span>Мої покупки</span>
                 <span>Улюбленні товари</span>

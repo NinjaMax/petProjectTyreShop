@@ -1,14 +1,3 @@
-/*.authView {*/
-    /*display:inline;*/
-    /*float: left;*/
-    /*border-radius:50px;*/
-    /*border:#9C93D1 solid 2px;*/
-    /*background-color: #9EB9D3;*/
-    /*padding-right: 50px;*/
-    /*vertical-align:bottom;*/
-    /*text-align: center;*/
-    /*margin-left: -20px;*/
-/*}*/
 
 #imgCustomerAuth {
     width: 35px;
@@ -16,12 +5,16 @@
     border-radius:50%;
     background-color:#9EB9D3;
     margin: 0px;
+    vertical-align: middle;
 }
 
 .btnAuthView {
     border:none;
     vertical-align: middle;
     background-color:#ffff;
+    cursor: pointer;
+    font-family: var(--main-font-family);
+    font-size: 14px;
 }
 
 .btnAuthView:hover {
@@ -37,4 +30,6 @@
     display: flex;
     flex-direction: column;
     align-items:center;
+    font-family: var(--main-font-family);
+    font-size: 14px;
 }

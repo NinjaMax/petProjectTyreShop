@@ -10,8 +10,8 @@ const Benefits = () => {
             <div className='benefitsBox'>
                 <div className="containerBenefit">
                     <img src={onlineSupport} alt="OnlineSupport"/>
-                    <p><span>Допомога єкспертів</span> Кваліфікована та швидка допомога єкспертів.</p>
-                    <p>Допомога в підборі, допомога в оформленні замовлення.</p>
+                    <span>Допомога єкспертів</span> <p/> Кваліфікована та швидка допомога єкспертів.
+                    Допомога в підборі, допомога в оформленні замовлення.
                 </div>
 
                 <div className="containerBenefit">

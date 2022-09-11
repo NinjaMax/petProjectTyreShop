@@ -4,9 +4,7 @@ import '../../css/Reviews/ReviewAnswer.css';
 
 const ReviewAnswer = () => {
     return (
-        <div className='answerBox'>
-            
-            
+        <div className='answerBox'>     
             <div className='answerShopName'>
                 <img id='answerStoreLogo' src={storeLogo} alt='storeLogo'/>
                 SKYSHINA

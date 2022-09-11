@@ -13,7 +13,7 @@ const ReviewStore = () => {
     <div className='reviewStore'>  
         <div className="reviewsStoreContainer">
             <div className="mySlidesStoreReview">
-                <div className="authorStoreReview"><img src={customerReview} alt='avatarUser'/> Кирилл Шемендюк</div>
+                <div className="authorStoreReview"><img className='avatarImg' src={customerReview} alt='avatarUser'/> Кирилл Шемендюк</div>
                 <div className='ratingStoreReview'>Оценка:<Rating numScore={4.5}/> </div>
                 <div className='contentStoreReview'>
                      I love you the more in that I believe you had liked me for my own sake and for nothing else.
@@ -28,7 +28,7 @@ const ReviewStore = () => {
         </div>
 
         <div className="dotReviewContainerStore">
-            <a href='/#'>Подивитись всі відгуки</a>
+            <a className='reviewsAllLink' href='/#'>Подивитись всі відгуки</a>
             <DotSite/>
             <button className='btnStoreReview'>Залишити відгук про магазин</button>     
         </div>

@@ -27,15 +27,20 @@ const TabMain = () => {
         <div id="filterMain" className="tabContentMain">
             <FilterMainTyre/>
         </div>
-        <h5>Популярні розміри&emsp;&emsp;&emsp;&emsp;&emsp;
-            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-            &emsp;&emsp;Популярні діаметри</h5>
-        <div className='popularBox'>
-            <PopularSizeTyre/>
-            <PopularDiametrTyre/>
-        </div>    
+        <div className='popularContainer'>
+            <div className='popularSpan'>
+                <div className='titlePopular'>Популярні розміри</div>
+                <div className='popularBox'>
+                    <PopularSizeTyre/>   
+                </div>
+            </div>
+            <div className='popularSpan'>
+                <div className='titlePopular'>Популярні діаметри</div>
+                <div className='popularBox'>
+                    <PopularDiametrTyre/>
+                </div> 
+            </div>
+        </div>       
     </div>
 
     );

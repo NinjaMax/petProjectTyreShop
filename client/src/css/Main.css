@@ -2,4 +2,11 @@
     display: flex;
     flex-direction: column;
     justify-content:center;
+    
+}
+
+:root {
+    --main-font-family:'Open Sans', sans-serif;
+    /*font-family: 'Open Sans', sans-serif;*/
+    /*font-family: 'Ubuntu', sans-serif;*/
 }

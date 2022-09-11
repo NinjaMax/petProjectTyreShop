@@ -6,6 +6,7 @@
     margin: 22px -50px 0px 0px;
     cursor: pointer;
     font-size: 16px;
+    font-family: var(--main-font-family);
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;

@@ -11,12 +11,15 @@
 
 .headingGoodsOverall {
     font-size: 20px;
+    font-family: var(--main-font-family);
 }
 
 .headingGoodsOverall span {
     font-size: 20px;
+    font-family: var(--main-font-family);
 }
 
 .headingGoodsOverall p {
     font-size: 14px;
+    font-family: var(--main-font-family);
 }

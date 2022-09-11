@@ -12,7 +12,7 @@ const ReviewsGoods = ({reviewExtend, btnLeft, btnRight}) => {
             <div className='reviewGoods'>   
                 <div className="reviewsGoodsContainer">
                     <div className="mySlidesGoodsReview">
-                        <div className="authorGoodsReview"><img src={customerReview} alt='avatarUser'/> Кирилл Шемендюк</div>
+                        <div className="authorGoodsReview"><img className='userImg' src={customerReview} alt='avatarUser'/> Кирилл Шемендюк</div>
                         <div className='ratingGoodsReview'>Рейтинг товара:<Rating numScore={4.7}/></div>
                         <div className='reviewUsesCars'>Ездит на: Mercedes benz Gelendwagen GLI 500 </div>
                         <div className='reviewGoodsExpier'>Стаж: 5лет </div>

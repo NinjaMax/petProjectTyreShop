@@ -9,6 +9,7 @@
 .breadcrumb .listBreadCrumbs {
     display: inline;
     font-size: 18px;
+    font-family: var(--main-font-family);
 }
 
 /* Add a slash symbol (/) before/behind each list item */

@@ -34,6 +34,7 @@
 
 .allAboutProductInfo .productInfoName {
     font-size: 22px;
+    font-family: var(--main-font-family);
     font-weight: bold;
 }
 
@@ -48,6 +49,7 @@
 .productInfoPrice {
     text-align: center;
     font-size: 24px;
+    font-family: var(--main-font-family);
     font-weight: bold;
 }
 
@@ -86,6 +88,7 @@
 .attentionGoods {
     margin-top: 10px;
     font-size: 14px;
+    font-family: var(--main-font-family);
 }
 
 .checkboxGoodsShield {

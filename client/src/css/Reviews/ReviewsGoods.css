@@ -6,7 +6,7 @@
 .reviewsGoodsContainer {
     position: relative;
     background-color: #fff;
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--main-font-family);
     border: 0.1px solid #ccc;
     border-radius:10px 10px 10px 10px;
     box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.2);
@@ -28,17 +28,19 @@
     padding: 5px;
     color: #444B54;
     font:bold;
+    font-size: 15px;
+    font-family: var(--main-font-family);
     grid-column: 1/3;
+
 }
 
-.authorGoodsReview img {
+.authorGoodsReview .userImg {
    width: 35px;
    height: 35px;
    border-radius:50%;
    background-color:#9EB9D3;
-   /*vertical-align:text-bottom;*/
+   vertical-align:middle;
 }
-
 
 .ratingGoodsReview {
     display: flex;
@@ -54,26 +56,36 @@
 .reviewUsesCars {
     grid-column: 1/5;
     grid-row:2;
+    font-size: 15px;
+    font-family: var(--main-font-family);
 }
 
 .reviewGoodsExpier {
   grid-column:1/5;
   grid-row: 3;
+  font-size: 15px;
+  font-family: var(--main-font-family);
 }
 
 .AddedGoodsReview {
     grid-column: 1/5;
     grid-row:4;
+    font-size: 15px;
+    font-family: var(--main-font-family);
 }
 
 .contentGoodsReview {
     grid-column: 1/5;
     grid-row:5;
+    font-size: 15px;
+    font-family: var(--main-font-family);
 }
 
 .dateGoodsReview {
     grid-column: 1/3;
     grid-row: 6;
+    font-size: 15px;
+    font-family: var(--main-font-family);
 }
 
 .thumbGoodsReview {

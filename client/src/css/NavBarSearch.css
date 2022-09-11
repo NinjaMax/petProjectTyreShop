@@ -31,6 +31,7 @@
     top: 20px;
     right: 45px;
     font-size: 28px;
+    font-family: var(--main-font-family);
     font-weight: bold;
     cursor: pointer;
     color: white;
@@ -44,6 +45,7 @@
   .overlayActive input {
     padding: 15px;
     font-size: 16px;
+    font-family: var(--main-font-family);
     border: none;
     float: left;
     width: 80%;
@@ -68,6 +70,7 @@
     padding: 15px;
     background-color: #ddd;
     font-size: 16px;
+    font-family: var(--main-font-family);
     border: none;
     cursor: pointer;
   }

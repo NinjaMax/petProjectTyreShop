@@ -10,6 +10,7 @@
   /* Dropdown button */
   .dropdownNavbar .dropbtnNavbar {
     font-size: 16px;
+    font-family: var(--main-font-family);
     border: none;
     outline: none;
     color: #444B54;

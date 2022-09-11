@@ -12,9 +12,11 @@
   text-align: center;
   /*padding-left: 1rem;*/
   font-size: 20px;
+  font-family: var(--main-font-family);
   font-weight: bold;
   padding-bottom: 20px;
 }
+
 /* style inputs and link buttons */
 .containerAuthForm {
   width: 100%;
@@ -25,6 +27,7 @@
   opacity: 0.85;
   display: inline-block;
   font-size: 17px;
+  font-family: var(--main-font-family);
   line-height: 20px;
   text-decoration: none; /* remove underline from anchors */
   /*color: #fff;*/
@@ -39,6 +42,7 @@
   opacity: 0.85;
   display: inline-block;
   font-size: 17px;
+  font-family: var(--main-font-family);
   line-height: 20px;
   text-decoration: none; /* remove underline from anchors */
   color: #fff;
@@ -53,6 +57,7 @@
   opacity: 0.85;
   display: inline-block;
   font-size: 17px;
+  font-family: var(--main-font-family);
   line-height: 20px;
   text-decoration: none;
  

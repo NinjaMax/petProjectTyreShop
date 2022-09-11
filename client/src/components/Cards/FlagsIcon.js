@@ -5,7 +5,7 @@ import '../../css/CardsCss/FlagIcon.css';
 const FlagsIcon = () => {
     return (
         <div className='flagIcon'>
-            <img src={iconFlag} alt="flags"/>Ukraine 2021
+            <img className='imgFlag' src={iconFlag} alt="flags"/> Ukraine 2021
         </div>
     );
 };

@@ -14,13 +14,13 @@ const AuthForm = () => {
                 <div className="rowAuthForm">
                   <div className="colAuthForm">
                     <a href="/#" className="fb btnAuthForm">
-                      <i className="fa" style={{"color":"red"}}>&#xf39e;</i> Увійти з Facebook
+                      <i className="fa fa-facebook fa-fw"></i> Увійти з Facebook
                     </a>
                     <a href="/#" className="twitter btnAuthForm">
-                      <i className="fa fa-twitter fa-fw">&#xf09a;</i> Увійти з Twitter
+                      <i className="fa fa-twitter fa-fw"></i> Увійти з Twitter
                     </a>
                     <a href="/#" className="google btnAuthForm">
-                      <i className="fa fa-google fa-fw">&#xf09a;</i> Увійти з Google+
+                      <i className="fa fa-google fa-fw"></i> Увійти з Google+
                     </a>
                   </div>
 

@@ -41,5 +41,6 @@
 
 .closeModalBtn span {
     font-size: 22px;
+    font-family: var(--main-font-family);
     font-weight: bold;
 }

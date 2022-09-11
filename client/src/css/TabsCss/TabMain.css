@@ -12,7 +12,7 @@
     overflow: hidden;
     /*border: 1px solid #ccc;*/
     /*border-radius:5px;*/
-    /*background-color: #9EB9D3;*/
+    font-family: var(--main-font-family);
     margin: 10px 10px 5px 10px;
     display: flex;
     flex-direction: row;
@@ -24,6 +24,9 @@
 .tabMain button {
     background-color: #ddd;
     border: #CADBEA solid 5px;
+    font-family: var(--main-font-family);
+    font-size: 16px;
+    font-weight:bolder;
     cursor: pointer;
     width: 150px;
     height: 50px;
@@ -84,8 +87,30 @@
     border-right: none;
 }
 
-.tabMainFilter h5 {
+.popularContainer .titlePopular {
     text-align: center;
+    font-family: var(--main-font-family);
+    font-size: 17px;
+    margin:auto;
+    padding: 5px;
+    background-color:#ccc;
+    border-radius:10px;
+    width:fit-content;
+}
+
+.popularSpan {
+    margin: 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+}
+
+.popularContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items:center;
 }
 
 .popularBox {

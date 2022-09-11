@@ -1,6 +1,5 @@
 .basketNav {
-    /*display: block;*/
-    /*float: left;*/
+  
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -11,7 +10,6 @@
 }
 
 #imgBasketNav {
-
     margin-top:8px;
     width: 35px;
     height: 35px;
@@ -24,10 +22,9 @@
 }
 
 .basketNavCount {
-    /*float:right;*/
     position:absolute;
-    top:14px;
-    right:5px;
+    top:42px;
+    right:28px;
     width: 25px;
     height: 20px;
     border-radius:25px;

@@ -5,7 +5,7 @@ const OptionsTyreBox = () => {
     return (
         <div className='optionsTyreBox'>   
                 <div className="tooltipCardTyres">
-                    <span>Ширина:195
+                    <span>Ширина: 195
                         <span className="tooltipTextCardTyres">Ширина профиля шины</span>
                     </span>
                 </div>

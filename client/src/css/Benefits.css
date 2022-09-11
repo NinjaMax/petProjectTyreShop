@@ -2,14 +2,8 @@
 .benefitsBox{
     display: flex;
     flex-direction: row;
-    /*border:rebeccapurple solid;*/
     justify-content: center;
     gap: 0px;
-    /*align-items:center;*/
-    /*position:relative;*/
-    /*width: 800px;
-    height: 40px;*/
-    /*margin: auto;*/
     overflow: hidden;
 }
 
@@ -23,6 +17,8 @@
     margin: 10px 0;
     width: 400px;
     height: 200px;
+    font-size: 16px;
+    font-family: var(--main-font-family);
 }
 
 /* Clear floats after containers */
@@ -42,7 +38,7 @@
 /* Increase the font-size of a span element */
 .containerBenefit span {
     font-size: 20px;
-    font-family:sans-serif;
+    font-family: var(--main-font-family);
     margin-right: 15px;
 }
 

@@ -8,6 +8,7 @@
 .closeChipBtn {
     color: #444;
     font-size: 20px;
+    font-family: var(--main-font-family);
     font-weight: bold;
     padding-left: 7px;
     padding-right: 7px;

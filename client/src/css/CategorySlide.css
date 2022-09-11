@@ -47,5 +47,7 @@
     width: 100%; /* Full width */
     padding: 20px; /* Some padding */ 
     text-align: center; 
+    font-size: 16px;
+    font-family: var(--main-font-family);
   }
     

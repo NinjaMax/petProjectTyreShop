@@ -1,4 +1,12 @@
-.flagIcon img {
+.flagIcon {
+    font-size: 15px;
+    font-family: var(--main-font-family);
+
+}
+
+.flagIcon .imgFlag {
     width: 33px;
     height: 33px;
+    vertical-align: middle;
+    
 }

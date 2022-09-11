@@ -8,6 +8,7 @@
     cursor: pointer;
     width: calc(var(--widthBtn) *1px);
     font-size: 18px;
+    font-family: var(--main-font-family);
     border-radius:5px;
 }
 

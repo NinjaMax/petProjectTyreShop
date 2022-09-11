@@ -37,7 +37,7 @@
 
 .tyresCardPriceList {
     color: #444B54;
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--main-font-family);
     font-size: 16px;
     font-weight: bolder;
     text-align: center;
@@ -46,6 +46,7 @@
 .tyresCardList .reviewLink {
     text-decoration: none;
     font-size: 14px;
+    font-family: var(--main-font-family);
     color: black;
 }
 
@@ -72,6 +73,7 @@
 }
 .ratingTyresList .reviewLink {
     font-size: 15px;
+    font-family: var(--main-font-family);
 
 }
 

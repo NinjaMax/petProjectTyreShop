@@ -79,6 +79,7 @@
 
 .allSizeModel span {
   font-size: 16px;
+  font-family: var(--main-font-family);
   font-weight: bold;
   margin: 10px 0px 10px 50px;
 }
@@ -91,6 +92,7 @@
 
 .allModelBrand span {
   font-size: 16px;
+  font-family: var(--main-font-family);
   font-weight: bold;
   margin: 10px 0px 10px 50px;
 }

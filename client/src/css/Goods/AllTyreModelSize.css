@@ -17,6 +17,7 @@
 
 .allTyreModelSize span {
     font-size: 16px;
+    font-family: var(--main-font-family);
     font-weight: bold;
     color:#444B54;
 }

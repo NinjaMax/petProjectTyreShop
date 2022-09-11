@@ -9,6 +9,7 @@
     color: #444B54;
     padding: 16px;
     font-size: 16px;
+    font-family: var(--main-font-family);
     border: #CADBEA solid;
     border-width: 0 0 5px 0;
     cursor: pointer;
@@ -36,6 +37,7 @@
   background-position: 14px 12px;
   background-repeat: no-repeat;
   font-size: 16px;
+  font-family: var(--main-font-family);
   padding: 14px 20px 12px 45px;
   border: none;
   border-bottom: 1px solid #ddd;

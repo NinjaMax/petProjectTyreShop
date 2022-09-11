@@ -4,6 +4,7 @@
 
 .newsTitle {
     font-size: 24px;
+    font-family: var(--main-font-family);
     font-weight: bold;
     padding-left: 34px;
 }
@@ -20,6 +21,7 @@
     padding: 0px;
     text-align:left;
     font-size: 14px;
+    font-family: var(--main-font-family);
     cursor: pointer;
     color: #444B54;
     border-radius:5px;
@@ -42,6 +44,7 @@
     border:none;
     border-radius:5px;
     font-size: 18px;
+    font-family: var(--main-font-family);
 }
 
 .btmNewsMainBox:hover {
@@ -76,5 +79,6 @@
     float: right;
     color: white;
     font-size: 35px;
+    font-family: var(--main-font-family);
     cursor: pointer;
 }
