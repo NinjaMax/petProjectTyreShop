@@ -20,7 +20,7 @@ const CatalogTyresPage = () => {
           <CatalogTyres/>
         </div>
         <div className='d'>
-         <ReviewsMain props={'Відгуки клієнтів'}>
+          <ReviewsMain props={'Відгуки клієнтів'}>
             <ReviewsGoods reviewExtend={true}/>
           </ReviewsMain>
         </div>

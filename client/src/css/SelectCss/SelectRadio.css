@@ -1,40 +1,46 @@
-.sortLine {
+.selectRadio {
     display: flex;
-    flex-direction: row;
+    /*flex-direction:row;*/
+    flex-direction: var(--direction);
     gap: 10px;
     padding-bottom: 3px;
     margin: 5px;
+    font-family: var(--main-font-family);
+}
+
+.selectRadioItem {
+    border-bottom: solid #ffff 3px;
     
 }
 
-.sortLineItem {
-    border-bottom: solid #ffff 3px;
-}
-
-.sortLineItem:hover {
+.selectRadioItem:hover {
     /*text-decoration: solid underline #71C2FF 3px;*/
     cursor: pointer;
     border-bottom: #71C2FF solid 3px;
 }
 
-.sortLineItem:after {
+.selectRadioItem:after {
     font-weight: bold;
 }
 
-.inputSortLineItem {
+.inputSelectRadioItem {
     appearance: none;
     border-radius: 50%;
     background-color: #CADBEA;
     width: 16px;
     height: 16px;
-
-    /*border: 2px solid #999;*/
+    vertical-align: top;
+    /*border: 1px solid #444;*/
+    border: 1px solid #999;
     transition: 0.2s all linear;
 
 }
 
-.inputSortLineItem:checked {
-    background-color: #71C2FF;
+.inputSelectRadioItem:checked {
+    /*background-color: #71C2FF;*/
+    background-color: #999;
+    /*border: 5px solid #999;*/
+    border: 4px solid #71C2FF;
     /*text-decoration-style: double;*/
     /*font-weight: bold;*/
 }

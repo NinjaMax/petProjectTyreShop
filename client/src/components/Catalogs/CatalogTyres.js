@@ -3,13 +3,18 @@ import '../../css/Catalogs/CatalogTyres.css';
 import TyresCard from '../Cards/TyresCard';
 import PopularSizeTyre from '../PopularGoods/PopularSizeTyre';
 import PopularDiametrTyre from '../PopularGoods/PopularDiametrTyre';
-import SortLine from '../Sort/SortLine';
+import SelectRadio from '../Select/SelectRadio';
 import Pagination from '../Pagination';
 import CheckOrder from '../Modal/CheckOrder';
 import Modal from '../Modal/Modal';
 
+
 const CatalogTyres = () => {
     const [active, setActive] = useState(false);
+
+   const radioData =[{value: "deshevihDodorogih", radioName: "Від дешевих до дорогих"},
+                {value: "dorogihDeshevih", radioName: "Від дорогих до дешевих"},
+                {value: "poRatingu", radioName: "По рейтингу"}];                       
 
     const checkOrders = () => {
         setActive(!active);
@@ -33,7 +38,9 @@ const CatalogTyres = () => {
                 <div>Популярні діаметри:<PopularDiametrTyre/></div>
             </div> 
             <div>
-                <SortLine/>
+                <SelectRadio radioData={radioData} 
+                    titleRadio={"Сортування:"}
+                    direction={"row"}/>       
             </div>
             <div className="rowCatalogTyres">
                 <TyresCard optionsBox={true} checkOrders={checkOrders}/>

@@ -5,7 +5,10 @@ import '../../css/BasketCss/BasketNavBar.css';
 const BasketNavBar = ({setActive}) => {
     return (
         <div className='basketNav' onClick={setActive}>
-            <img id='imgBasketNav' src={shoppingCart}  alt='basketNav'/>  
+            <a href='/basket'>
+                <img id='imgBasketNav' src={shoppingCart}  alt='basketNav'/>     
+            </a>
+            
             <div className='basketNavCount'><span>20</span></div>
             
         </div>

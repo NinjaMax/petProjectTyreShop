@@ -11,7 +11,6 @@ import AuthForm from '../Auth/AuthForm';
 import FavoriteGoods from '../UX/FavoriteGoods';
 import Modal from '../Modal/Modal';
 import NavBarSearch from '../SearchForm/NavBarSearch';
-import BasketOrder from '../Basket/BasketOrder';
 
 
 const NavBar = observer(() => {
@@ -36,14 +35,16 @@ const NavBar = observer(() => {
   return (
 
   <div className="navbar">
-    <img href='/' src={logoShop} alt='logoShop'/>
+    <a href='/'>
+      <img href='/' src={logoShop} alt='logoShop'/>
+    </a>
     <NavBarDropTyres/>
     <NavBarDropTyres/>
     <NavBarDropTyres/>
     <a href="/#home" className='anchorBtn'>Доставка і оплата</a>
-    <a href="/#home" className='anchorBtn'>Контакти</a>
+    <a href='/contact' className='anchorBtn'>Контакти</a>
     <span href="/#home">067 777 77 77</span>
-    <span href="/#news">Більше</span>
+    <span href="/#">Більше</span>
     <ButtonSearch clickSearchBtn={clickSearchBtn}/>
     {searchBtn? 
       <NavBarSearch searchBtn={searchBtn} clickSearchBtn={clickSearchBtn}/>
@@ -56,11 +57,6 @@ const NavBar = observer(() => {
       </Modal>
     :null}
     <BasketNavBar setActive={openBasket}/>
-    { activeBasket ?
-      <Modal active={activeBasket} setActive={openBasket}>
-        <BasketOrder/>
-      </Modal>
-    :null}
   </div>
 
     );
