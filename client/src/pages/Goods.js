@@ -39,7 +39,7 @@ const GoodsPage = () => {
             onChangeTab: handleChangeTab, checked: changeTabGoods},
             {id:3, titleGoodsTab:"ВІДГУКИ", value:"vidguki", 
             onChangeTab: handleChangeTab, checked: changeTabGoods},
-            {id:3, titleGoodsTab:"ПИТАННЯ ТА ВІДПОВІДІ", value:"pitannja", 
+            {id:4, titleGoodsTab:"ПИТАННЯ ТА ВІДПОВІДІ", value:"pitannja", 
             onChangeTab: handleChangeTab, checked: changeTabGoods}
           ]}>
             {changeTabGoods==="vseProTovar"?

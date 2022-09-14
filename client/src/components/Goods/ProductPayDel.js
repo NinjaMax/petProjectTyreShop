@@ -6,7 +6,7 @@ const ProductPayDel = () => {
 
         <div className='productPayDelBox'>
             <div>
-                <h6>Доставляємо</h6>
+                <h5>Доставляємо</h5>
                 <div className='productPayDelBlock'>
                     <span>Доставка НОВОЮ ПОШТОЮ</span>
                     <span>Доставка УКР ПОШТОЮ</span>
@@ -15,7 +15,7 @@ const ProductPayDel = () => {
                 </div>   
             </div>
             <div>
-                <h6>Приймаємо</h6>
+                <h5>Приймаємо</h5>
                 <div className='productPayDelBlock'>    
                     <span>Готівка</span>
                     <span>Безготівковий розрахунок</span>
@@ -28,7 +28,7 @@ const ProductPayDel = () => {
                 </div>   
             </div>
             <div>
-                <h6>Надаємо</h6>
+                <h5>Надаємо</h5>
                 <div className='productPayDelBlock'>
                     <span>Гарантію на товари до 3 років</span>
                     <span>Повернення /обмін протягом 14 днів</span>

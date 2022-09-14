@@ -10,7 +10,8 @@ const ReviewGoodsOverall = () => {
 
     return (
         <div className='reviewGoodsOverall'>
-            <div className="headingGoodsOverall">Рейтинг моделі
+            <div className="headingGoodsOverall">
+                <span className='headerGoodsOverall'>Рейтинг моделі</span>
                 <Rating numScore={overAllRating}/>
                 <p> середня оцінка основана на {avarageReviews} відгуках.</p>
             </div>

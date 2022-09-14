@@ -6,15 +6,16 @@
     border-radius:10px;
     background-color:#CADBEA;
     width: 905px;
-    padding: 10px;    
+    padding: 10px;
+    font-family: var(--main-font-family);    
 }
 
-.headingGoodsOverall {
-    font-size: 20px;
-    font-family: var(--main-font-family);
-}
+/*.headingGoodsOverall span {
+    font-size: 10px;
+    /*font-family: var(--main-font-family);*/
+/*}*/
 
-.headingGoodsOverall span {
+.headerGoodsOverall {
     font-size: 20px;
     font-family: var(--main-font-family);
 }

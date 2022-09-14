@@ -5,6 +5,7 @@
     flex-wrap: wrap;
     gap: 10px;
     padding: 10px;
+    font-family: var(--main-font-family);
 }
 
 .allModelBrands .allModelBrandsAnch {
@@ -13,10 +14,12 @@
     cursor: pointer;
     padding: 13px;
     box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.2);
+    text-decoration: none;
 }
 
 
 .allModelBrands .allModelBrandsAnch:hover {
     background-color:#fff;
     box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.2);
+    text-decoration: none;
 }

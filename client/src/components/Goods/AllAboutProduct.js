@@ -22,7 +22,7 @@ const AllAboutProduct = () => {
             </div>
             <div className='allAboutProductInfo'>
                 <div className='productInfoName'>CONTINENTAL CONTICROSSPREMIUMCONTACT 6 UHPD 5P 195/65 R15 105T XL</div>
-                <div className='productInfoRating'><Rating numScore={4.8}/><a href='/#'>0 отзывов</a></div>
+                <div className='productInfoRating'><Rating numScore={4.8}/><a className='productInfoRatingLink' href='/#'>0 отзывов</a></div>
                 <div className="productInfoCode">код товара: 0123565447</div>
                 <div className='productInfoProps'><PropsCardIcons/></div>
                 <div className="productInfoCountry"><FlagsIcon/></div>
@@ -41,12 +41,12 @@ const AllAboutProduct = () => {
                     imageSrc={shieldImg}/>   
                 </div>        
                 <div className='additionalTools'>
-                    <label>
+                    <label className='additionalToolsLabel'>
                         <img alt={"obraneImg"}
                         src={heartImg}
                         /> Додати в обране   
                     </label>
-                    <label>
+                    <label className='additionalToolsLabel'>
                         <img alt={"porivnianjaImg"}
                         src={scaleImg}
                         /> Додати в порівняння   

@@ -1,16 +1,18 @@
 .tyresCardList {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    width: 900px;
-    height: 140px;
+    /*width: 500px;*/
+    /*height: 140px;*/
     margin: auto;
     /*text-align:left;*/
     display: grid;
-    grid-template-columns: 12% 87%;
+    grid-template-columns: minmax(103px, 13%) minmax(315px 87%);
+    gap:5px;
     overflow:hidden;
     padding: 1em;
     pointer-events: all;
     border-radius: 8px;
     background-color:#fff;
+    font-family: var(--main-font-family);
     
 }
 
@@ -38,7 +40,7 @@
 .tyresCardPriceList {
     color: #444B54;
     font-family: var(--main-font-family);
-    font-size: 16px;
+    font-size: 17px;
     font-weight: bolder;
     text-align: center;
 }
@@ -79,4 +81,10 @@
 
 .tyresCardCodeList {
     text-align: center;
+    font-family: var(--main-font-family);
+}
+
+#nameCardList {
+    text-decoration: none;
+    font-family: var(--main-font-family);
 }

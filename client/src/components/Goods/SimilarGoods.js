@@ -7,10 +7,10 @@ const SimilarGoods = () => {
         <div>
             <div className='similarText'>Схожі товари</div>
             <div className='similarGoods'>
-                <TyresCardList/>
-                <TyresCardList/>
-                <TyresCardList/>
-                <TyresCardList/>   
+                <TyresCardList forOrder={false}/>
+                <TyresCardList forOrder={false}/>
+                <TyresCardList forOrder={false}/>
+                <TyresCardList forOrder={false}/>   
             </div>
         </div>
     );

@@ -1,0 +1,33 @@
+.countBtnOrder {
+    display: flex;
+    flex-direction: row;
+    gap: 1px;
+}
+
+.countBtnOrderLeft, .countBtnOrderRight, 
+.countGoodsOrder {
+    width: 25px;
+    height: 25px;
+    border:1px solid #999;
+    border-radius:8px;
+    font-weight:bolder;
+    font-size: 18px;
+    font-family: var(--main-font-family);
+    cursor: pointer;
+    text-align: center;
+
+}
+
+.countGoodsOrder {
+    text-align: center;
+    font-size: 16px;
+}
+
+.countBtnOrderLeft:hover, .countBtnOrderRight:hover {
+    background-color:#ddd;
+}
+
+.countBtnOrderLeft:active, .countBtnOrderRight:active {
+    background-color:#71C2FF;
+}
+

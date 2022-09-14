@@ -4,6 +4,8 @@
     border:3px solid goldenrod;
     display: flex;
     flex-direction: row;
+    font-family: var(--main-font-family);
+    
 }
 .productPayDelBlock {
     display: flex;

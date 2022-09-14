@@ -7,7 +7,7 @@ const ButtonSearch = ({clickSearchBtn}) => {
         <div>
             <button className="btnSearch"
             onClick={clickSearchBtn}
-            > Пошук <i class='fa fa-search'></i>
+            > Пошук <i className='fa fa-search'></i>
             </button>
             
         </div>

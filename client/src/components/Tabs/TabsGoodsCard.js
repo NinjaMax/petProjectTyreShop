@@ -7,7 +7,7 @@ const TabsGoodsCard = ({children, itemTab}) => {
         <div>
             <div className="tabsGoodsCard">
                 { itemTab.map((item)=> (
-               <label>
+               <label key={item.value}>
                     <input className="tabsGoodsCardLinks"
                     value={item.value} 
                     onChange={item.onChangeTab}

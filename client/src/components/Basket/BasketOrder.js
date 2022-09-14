@@ -1,9 +1,15 @@
-import React from 'react';
+import {React, useState} from 'react';
 import '../../css/BasketCss/BasketOrder.css';
+import ButtonAction from '../Buttons/ButtonAction';
 import TyresCardList from '../Cards/TyresCardList';
 import SelectRadio from '../Select/SelectRadio';
 
 const BasketOrder = () => {
+    const [delivery, setDelivery] = useState("");
+
+const checkedRadio = (e) => {
+    setDelivery(e.currentTarget.value);
+}
 
 const payData =[{value: "gotivka", radioName: "Готівкою"},
                 {value: "cardVisaMaster", radioName: "Карткою (VISA / MASTERCARD)"},
@@ -27,7 +33,7 @@ const deliveryData = [{value: "samoviviz", radioName: "Самовивіз"},
                     name='basketOrderName' 
                     id='nameOrder' 
                     placeholder="введіть прізвище ім'я по батькові"
-                    minlength="4" maxlength="8" size="30" 
+                    minLength="4" maxLength="8" size="30" 
                     required/>    
                 </div>
                 <div className='basketColmItemLeft'>
@@ -37,7 +43,7 @@ const deliveryData = [{value: "samoviviz", radioName: "Самовивіз"},
                     name='basketOrderPhone' 
                     id='phoneOrder' 
                     placeholder="введіть номер телефону"
-                    minlength="10" maxlength="20" size="30" 
+                    minLength="10" maxLength="20" size="30" 
                     required/>    
                 </div>
                 <div className='basketColmItemLeft'>
@@ -47,7 +53,7 @@ const deliveryData = [{value: "samoviviz", radioName: "Самовивіз"},
                     name='basketOrderEmail' 
                     id='emailOrder' 
                     placeholder="введіть ваш email адрес"
-                    minlength="4" maxlength="30" size="30" 
+                    minLength="4" maxLength="30" size="30" 
                     />    
                 </div>
                 <div className='basketColmItemLeft'>
@@ -63,9 +69,14 @@ const deliveryData = [{value: "samoviviz", radioName: "Самовивіз"},
                     </select>
                 </div>
                 <div className='basketColmItemLeft'>
-                <SelectRadio radioData={deliveryData} 
+                    
+                     <SelectRadio radioData={deliveryData} 
                     titleRadio={"Доставка:"}
-                    direction={"column"}/>
+                    direction={"column"} 
+                    checked={checkedRadio}/>
+                    { delivery === "novaPoshta" ?    
+                     "Розрахунок НОВА ПОШТА" : null}
+    
                 </div>
                 <div className='basketColmItemLeft'>
                     <SelectRadio radioData={payData} 
@@ -78,18 +89,24 @@ const deliveryData = [{value: "samoviviz", radioName: "Самовивіз"},
                 Товар і ціна 
                 остаточна сумма замовлення
                 <div>
-                    <TyresCardList/> 
-                      
+                    <TyresCardList forOrder={true}/>       
                 </div>
-                <span>сумма</span>
-                <span>Всьго</span>
+                <div className='totalCount'>
+                    <span>сумма за товар у кількості 4од: 8020 </span>
+                    <span>Додаткова Гарантія: 350грн</span>
+                    <span>Доставка (Нова Пошта): 150грн </span>
+                    <span>Комісія платіжної системи: 35грн</span>
+                    
+                    <span>Всього: 8185грн</span>   
+                </div>
                 <div className='basketColmItemRight'>
-                    <label for="commentsOrder">Залишити комметр до замовлення:</label>
+                    <label htmfor="commentsOrder">Додати коментар до замовлення:</label>
                     <textarea id="commentsOrder" name="commentsOrder"
-                        rows="5" cols="100">
-                        It was a dark and stormy night...
+                        placeholder='Залишити коментар для замовлення'
+                        rows="5" cols="80">
                     </textarea>
                 </div>
+                <ButtonAction props={"Оформити замовлення"} widthBtn={250}/>
             </div>
         </div>
     );

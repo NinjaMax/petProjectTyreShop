@@ -7,6 +7,7 @@
     border:3px solid blue;
     gap: 3px;
     padding: 3px;
+    font-family: var(--main-font-family);
 }
 .allProductImgBox {
     width: 450px;
@@ -53,19 +54,30 @@
     font-weight: bold;
 }
 
+.productInfoRatingLink {
+    text-decoration: none;
+}
+
 .additionalTools {
     display: flex;
     flex-direction: row;
     justify-content:space-around;
 }
 
-.additionalTools label {
+.additionalToolsLabel {
     cursor: pointer;
+    padding: 6px;
 }
 
 .additionalTools img {
     width: 38px;
     height: 38px;
+    vertical-align: middle;
+}
+
+.additionalToolsLabel:hover {
+    background-color:#ccc;
+    border-radius:25px;
 }
 
 .btnGoodsBox {

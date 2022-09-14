@@ -5,7 +5,7 @@ import '../../css/AuthCss/AuthView.css';
 const AuthView = ({setActive}) => {
     return (
         <div className='authView'>
-            <label for='btnAuth'onClick={setActive}>
+            <label htmfor='btnAuth'onClick={setActive}>
                 <img id='imgCustomerAuth' src={userImg} alt='imgUser'/>
             
                 <button className='btnAuthView' name='btnAuth' >
