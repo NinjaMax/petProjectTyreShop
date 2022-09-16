@@ -11,11 +11,7 @@ import Modal from '../Modal/Modal';
 
 const CatalogTyres = () => {
     const [active, setActive] = useState(false);
-
-   const radioData =[{value: "deshevihDodorogih", radioName: "Від дешевих до дорогих"},
-                {value: "dorogihDeshevih", radioName: "Від дорогих до дешевих"},
-                {value: "poRatingu", radioName: "По рейтингу"}];                       
-
+ 
     const checkOrders = () => {
         setActive(!active);
     }
@@ -37,10 +33,14 @@ const CatalogTyres = () => {
                 <div>Популярні розміри:<PopularSizeTyre/></div>
                 <div>Популярні діаметри:<PopularDiametrTyre/></div>
             </div> 
-            <div>
-                <SelectRadio radioData={radioData} 
-                    titleRadio={"Сортування:"}
-                    direction={"row"}/>       
+            <div className='sortBtnCatalog'>
+                <span>Сортування:</span>
+                <SelectRadio radioData={{value: "deshevihDodorogih", radioName: "Від дешевих до дорогих"}}
+                    direction={"row"}/>
+                <SelectRadio radioData={{value: "dorogihDeshevih", radioName: "Від дорогих до дешевих"}}
+                    direction={"row"}/>
+                <SelectRadio radioData={{value: "poRatingu", radioName: "По рейтингу"}}
+                    direction={"row"}/>               
             </div>
             <div className="rowCatalogTyres">
                 <TyresCard optionsBox={true} checkOrders={checkOrders}/>

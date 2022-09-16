@@ -3,6 +3,7 @@ import '../../css/BasketCss/BasketOrder.css';
 import ButtonAction from '../Buttons/ButtonAction';
 import TyresCardList from '../Cards/TyresCardList';
 import SelectRadio from '../Select/SelectRadio';
+import UserDataInput from './UserDataInput';
 
 const BasketOrder = () => {
     const [delivery, setDelivery] = useState("");
@@ -11,16 +12,6 @@ const checkedRadio = (e) => {
     setDelivery(e.currentTarget.value);
 }
 
-const payData =[{value: "gotivka", radioName: "Готівкою"},
-                {value: "cardVisaMaster", radioName: "Карткою (VISA / MASTERCARD)"},
-                {value: "bezgotivka", radioName: "Безготівковий розрахунок"}];
-
-const deliveryData = [{value: "samoviviz", radioName: "Самовивіз"},
-                      {value: "novaPoshta", radioName: "Нова Пошта"},
-                      {value: "urkPoshta", radioName: "Укр Пошта"}
-
-];
-
     return (
         <div className='basketOrder'>
             <div>Оформлення замовлення</div>
@@ -28,13 +19,9 @@ const deliveryData = [{value: "samoviviz", radioName: "Самовивіз"},
                 данні замовлення
                 <div className='basketColmItemLeft'>
                     <span>Прізвище ім'я та по батькові *</span>
-                    <input className='inputBasketOrderName' 
-                    type='text' 
-                    name='basketOrderName' 
-                    id='nameOrder' 
-                    placeholder="введіть прізвище ім'я по батькові"
-                    minLength="4" maxLength="8" size="30" 
-                    required/>    
+                    <UserDataInput inputItem={{name:'basketOrderName',
+                    discr:"введіть прізвище ім'я по батькові", min:"4",
+                    max:"8", size:"30"}}/>   
                 </div>
                 <div className='basketColmItemLeft'>
                     <span>Номер телефону *</span>
@@ -69,21 +56,43 @@ const deliveryData = [{value: "samoviviz", radioName: "Самовивіз"},
                     </select>
                 </div>
                 <div className='basketColmItemLeft'>
-                    
-                     <SelectRadio radioData={deliveryData} 
-                    titleRadio={"Доставка:"}
-                    direction={"column"} 
-                    checked={checkedRadio}/>
-                    { delivery === "novaPoshta" ?    
-                     "Розрахунок НОВА ПОШТА" : null}
-    
+                    <span>Доставка:</span>
+                    <SelectRadio radioData={{value: "samoviviz", radioName: "Самовивіз"}} 
+                        addOptions={""}
+                        direction={"column"} 
+                        checked={checkedRadio}>
+                    </SelectRadio>
+                    <SelectRadio radioData={{value: "novaPoshta", radioName: "Нова Пошта"}} 
+                        addOptions={delivery === "novaPoshta" ?? false}
+                        direction={"column"} 
+                        checked={checkedRadio}>
+                        { delivery === "novaPoshta" ?    
+                        "Розрахунок НОВА ПОШТА" : null}    
+                    </SelectRadio>
+                    <SelectRadio radioData={{value: "urkPoshta", radioName: "Укр Пошта"}} 
+                        addOptions={""}
+                        direction={"column"} 
+                        checked={checkedRadio}>
+                    </SelectRadio>
                 </div>
                 <div className='basketColmItemLeft'>
-                    <SelectRadio radioData={payData} 
-                    titleRadio={"Оплата:"}
-                    direction={"column"}/> 
-                </div>
-             
+                    <span>Оплата:</span>
+                    <SelectRadio radioData={{value: "gotivka", radioName: "Готівкою"}} 
+                        addOptions={""}
+                        direction={"column"} 
+                        checked={checkedRadio}>
+                    </SelectRadio>
+                    <SelectRadio radioData={{value: "cardVisaMaster", radioName: "Карткою (VISA / MASTERCARD)"}} 
+                        addOptions={""}
+                        direction={"column"} 
+                        checked={checkedRadio}>
+                    </SelectRadio>
+                    <SelectRadio radioData={{value: "bezgotivka", radioName: "Безготівковий розрахунок"}} 
+                        addOptions={""}
+                        direction={"column"} 
+                        checked={checkedRadio}>
+                    </SelectRadio>
+                </div> 
             </div>
             <div className='basketColmRight'>
                 Товар і ціна 

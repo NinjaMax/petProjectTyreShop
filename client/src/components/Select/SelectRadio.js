@@ -1,24 +1,23 @@
 import React from 'react';
 import '../../css/SelectCss/SelectRadio.css';
 
-const SelectRadio = ({radioData, titleRadio, direction, checked}) => {
+const SelectRadio = ({radioData, addOptions, direction, checked, children}) => {
+
     return (
-        <div className='selectRadio' style={{"--direction": direction}}>
-            <span>{titleRadio}</span>
-            {radioData.map((item) => 
-            <div key={item.value}>
+        <div className={addOptions ? 'selectRadioActive':'selectRadio'} 
+            style={{"--direction": direction}}>   
+            <div key={radioData.value}>
                 <label className='selectRadioItem'>
                     <input className='inputSelectRadioItem'
-                        id={item.value}
+                        id={radioData.value}
                         type="radio"
-                        value={item.value}
+                        value={radioData.value}
                         name="selectRadio" 
                         onChange={checked}
-                        /> {item.radioName}
+                    /> {radioData.radioName}            
                 </label>
             </div>
-            )}
-     
+            {children}
         </div>
     );
 };

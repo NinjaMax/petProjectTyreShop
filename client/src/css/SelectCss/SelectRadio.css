@@ -5,18 +5,33 @@
     gap: 10px;
     padding-bottom: 3px;
     margin: 5px;
+    padding: 5px;
+    transition: 0.2s all linear;
     font-family: var(--main-font-family);
 }
-
-.selectRadioItem {
+.selectRadioActive {
+    display: flex;
+    /*flex-direction:row;*/
+    flex-direction: var(--direction);
+    gap: 10px;
+    padding-bottom: 3px;
+    margin: 5px;
+    padding: 5px;
+    font-family: var(--main-font-family);
+    background-color:#CADBEA;
+    border-radius:8px;
+    overflow: hidden;
+    transition: 0.2s all linear;
+}
+/*.selectRadioItem {
     border-bottom: solid #ffff 3px;
     
-}
+}*/
 
-.selectRadioItem:hover {
+.selectRadioItem:hover, .inputSelectRadioItem:hover {
     /*text-decoration: solid underline #71C2FF 3px;*/
     cursor: pointer;
-    border-bottom: #71C2FF solid 3px;
+    /*border-bottom: #71C2FF solid 3px;*/
 }
 
 .selectRadioItem:after {

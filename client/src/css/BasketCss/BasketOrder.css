@@ -1,13 +1,13 @@
 .basketOrder {
     display: grid;
-    grid-template-columns: repeat(2, 50%);
+    grid-template-columns: repeat(2, 48%);
     border:2px solid yellow;
     gap: 20px;
     font-family: var(--main-font-family);
     overflow: hidden;
     margin-left: 40px;
     margin-right: 40px;
-
+    
 }
 
 .basketColmLeft {
@@ -17,6 +17,7 @@
     flex-direction: column;
     align-items:flex-start;
     gap: 5px;
+    margin-left: 20px;
 }
 
 .basketColmRight {

@@ -18,7 +18,7 @@ import YouWatched from '../components/Goods/YouWatched';
 const GoodsPage = () => {
   const modelBrand = "CONTICROSSPREMIUMCONTACT";
   const brandName = "Continental";
-  const [changeTabGoods, setChangeTabGoods] = useState();
+  const [changeTabGoods, setChangeTabGoods] = useState("vseProTovar");
   
   const handleChangeTab = (e) => {
     setChangeTabGoods(e.currentTarget.value);
@@ -32,17 +32,15 @@ const GoodsPage = () => {
       </div>
       <div className={changeTabGoods==="vseProTovar" ? 'tabGoods':'tabGoodsActive'}>
         <TabsGoodsCard
-          itemTab={[
-            {id:1, titleGoodsTab:"ВСЕ ПРО ТОВАР", value:"vseProTovar", 
-            onChangeTab: handleChangeTab, checked: changeTabGoods},
+            itemTab={[{id:1, titleGoodsTab:"ВСЕ ПРО ТОВАР", value:"vseProTovar", 
+            onChangeTab: handleChangeTab, checked: "vseProTovar"},
             {id:2, titleGoodsTab:"ХАРАКТЕРИСТИКИ", value:"charakteristiki", 
             onChangeTab: handleChangeTab, checked: changeTabGoods},
             {id:3, titleGoodsTab:"ВІДГУКИ", value:"vidguki", 
             onChangeTab: handleChangeTab, checked: changeTabGoods},
             {id:4, titleGoodsTab:"ПИТАННЯ ТА ВІДПОВІДІ", value:"pitannja", 
-            onChangeTab: handleChangeTab, checked: changeTabGoods}
-          ]}>
-            {changeTabGoods==="vseProTovar"?
+            onChangeTab: handleChangeTab, checked: changeTabGoods}]}>
+            {changeTabGoods==="vseProTovar" ?
                 <AllAboutProduct/>
             :null}
             {changeTabGoods==="charakteristiki"?

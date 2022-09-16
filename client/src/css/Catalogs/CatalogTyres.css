@@ -53,3 +53,12 @@ h1 {
 .popularCatalogTyre .span {
     width: fit-content;
 }
+
+.sortBtnCatalog {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items:center;
+  gap: 5px;
+  font-family: var(--main-font-family);
+}

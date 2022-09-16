@@ -8,7 +8,9 @@ const Modal = ({active, setActive, children}) => {
             onClick={()=>{setActive(false)}}>
             <div className= {active? 'modalWindowBox active': 'modalWindowBox'} onClick={(e)=>e.stopPropagation()}>
                 <button className='closeModalBtn' 
-                onClick={()=>{setActive(false)}}><span>&#10006;</span></button>
+                    onClick={()=>{setActive(false)}}>
+                    <span>&#10006;</span>
+                </button>
                 {children}   
             </div>       
         </div>
