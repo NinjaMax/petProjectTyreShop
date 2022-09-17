@@ -3,10 +3,13 @@ import '../../css/BasketCss/BasketOrder.css';
 import ButtonAction from '../Buttons/ButtonAction';
 import TyresCardList from '../Cards/TyresCardList';
 import SelectRadio from '../Select/SelectRadio';
-import UserDataInput from './UserDataInput';
+import InputDataText from '../UX/InputDataText';
+import InputDataTel from '../UX/InputDataTel';
 
 const BasketOrder = () => {
     const [delivery, setDelivery] = useState("");
+   // const ref = useRef(null);
+   // const inputRef = useRef(null);
 
 const checkedRadio = (e) => {
     setDelivery(e.currentTarget.value);
@@ -19,29 +22,19 @@ const checkedRadio = (e) => {
                 данні замовлення
                 <div className='basketColmItemLeft'>
                     <span>Прізвище ім'я та по батькові *</span>
-                    <UserDataInput inputItem={{name:'basketOrderName',
-                    discr:"введіть прізвище ім'я по батькові", min:"4",
-                    max:"8", size:"30"}}/>   
+                    <InputDataText inputItem={{name:'basketOrderName',
+                    discr:"введіть прізвище ім'я по батькові",
+                    max:"40", size:"30"}}/>   
                 </div>
                 <div className='basketColmItemLeft'>
                     <span>Номер телефону *</span>
-                    <input className='inputBasketOrderPhone' 
-                    type='number' 
-                    name='basketOrderPhone' 
-                    id='phoneOrder' 
-                    placeholder="введіть номер телефону"
-                    minLength="10" maxLength="20" size="30" 
-                    required/>    
+                    <InputDataTel/>
                 </div>
                 <div className='basketColmItemLeft'>
-                    <span>Ваш email адрес</span>  
-                    <input className='inputBasketOrderEmail' 
-                    type='text' 
-                    name='basketOrderEmail' 
-                    id='emailOrder' 
-                    placeholder="введіть ваш email адрес"
-                    minLength="4" maxLength="30" size="30" 
-                    />    
+                    <span>Ваш email адрес</span>
+                    <InputDataText inputItem={{name:'basketOrderEmail',
+                    discr:"введіть ваш email адрес ---@---",
+                    max:"40", size:"30"}}/>     
                 </div>
                 <div className='basketColmItemLeft'>
                     <label>місто *</label>

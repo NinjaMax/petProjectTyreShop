@@ -1,19 +1,20 @@
 import React from 'react';
 
-const UserDataInput = ({inputItem}) => {
+const InputDataText = ({inputItem}) => {
     return (
         <div>
-            <input className='inputBasketOrderName' 
+            <input className='inputDataText' 
                 type='text' 
                 name={inputItem.name} 
                 id={inputItem.name}  
                 placeholder={inputItem.discr} 
-                minLength={inputItem.min} 
+                minLength="4" 
                 maxLength={inputItem.max} 
                 size={inputItem.size} 
-                required/> 
+                required
+                autoComplete='true'/> 
         </div>
     );
 };
 
-export default UserDataInput;
+export default InputDataText;
