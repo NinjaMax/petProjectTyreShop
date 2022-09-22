@@ -1,29 +1,12 @@
-import {React, useRef} from 'react';
+import {React, memo, useRef} from 'react';
 import '../../css/UXcss/InputDataTel.css';
 import { IMaskInput } from 'react-imask';
 
-const InputDataTel = () => {
-    //const [valueInput, setValueInput] = useState();
+ const InputDataTel = memo(({...props}) => {
+   
     const ref = useRef(null);
     const inputRef = useRef(null);
-
-    //useEffect (() =>{
-    //    setValueInput(acceptInput())
-    //    },[])
-    //
-    const acceptInput = (value) => {
-        //setValueInput(value)
-        console.log(value);
-        return value;
-    };
-
-    console.log(acceptInput);
-    //console.log(valueInput);
-     
-
     
-        //console.log(inputTel);
-        //console.log(valueInput);
         
     return (
 
@@ -32,24 +15,21 @@ const InputDataTel = () => {
             <IMaskInput className='inputDataTel'
                 mask='+{38}(000)000-00-00'
                 radix="."
-                value="___"
+                value="_"
                 unmask={false}
                 lazy={false}
                 ref={ref}
                 inputRef={inputRef} 
-                onAccept={acceptInput}
+                //onAccept={acceptInput}
+                {...props}
                 placeholder='0'
                 required
             />
-            
-           <label className={acceptInput.length > 1 ? 'inputDataTelLabelActive' :'inputDataTelLabel'}>
-                введіть номер телефону
-                <span className='inputDataTelSpan'> *</span>
-            </label>
-           
-               
+                  
         </div>
     );
-};
+}, (prevProps, nextProps) => {
+    console.log(prevProps, nextProps)
+});
 
 export default InputDataTel;
