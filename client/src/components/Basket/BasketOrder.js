@@ -1,4 +1,4 @@
-import {React, useMemo, useState} from 'react';
+import {React, useState} from 'react';
 import '../../css/BasketCss/BasketOrder.css';
 import ButtonAction from '../Buttons/ButtonAction';
 import TyresCardList from '../Cards/TyresCardList';
@@ -8,55 +8,22 @@ import InputDataTel from '../UX/InputDataTel';
 
 const BasketOrder = () => {
     const [delivery, setDelivery] = useState("");
-    const [valueInput, setValueInput] = useState();
-    //const [inputChanged, setInputChanged] = useState(false);
-   // const ref = useRef(null);
-   // const inputRef = useRef(null);
+
    
-  const inputChange = useMemo(() => valueInput ? true : false, [valueInput]);
+    const acceptInput = (value) => {
+  
+       
+   
+        //console.log(mask.masked.rawInputValue + ":rawInput");
+        //console.log(mask.masked.rawInputValue.length + ":rawInputLength");
+        //console.log(mask.masked.unmaskedValue + ":unmaskValue");
+        console.log(value + " :VALUE")
+    };
+       
 
- 
-
-        const acceptInput = (value, mask) => {
-    //setValueInput(mask.value)
-    //const inputLength = {items: mask.unmaskedValue.length }
-    if(mask.masked.rawInputValue.length !== null) {
-       setValueInput(true) 
-    } else {
-        setValueInput(false)
+    const checkedRadio = (e) => {
+        setDelivery(e.currentTarget.value);
     }
-
-     
-    
-    //if (mask.masked.rawInputValue) setValueInput(!valueInput)
-    //if (mask.masked.rawInputValue) setValueInput(!valueInput)
-    //mask.masked.isComplete ?? setValueInput(!valueInput)
-    //mask.unmaskedValue ==="38" ?? setValueInput(!true)
-    //mask.unmaskedValue ==="38" ? setValueInput(!true) : setValueInput(!false)
-     //   setValueInput(true);
-    //if (mask.unmaskedValue ==="38") {
-    //    setValueInput(!true);
-    //} else setValueInput(false);
-    //console.log(value.length);
-    //console.log(mask);
-    console.log(mask.masked.unmaskedValue.length +":lengthunmasked");
-    //console.log(mask.masked.isFilled + ":Filled input");
-    //console.log(mask.masked.isComplete + ":Complete input");
-    console.log(mask.masked.rawInputValue + ":rawInput");
-    //console.log(mask.masked.rawInputValue + ":rawInput");
-    //console.log(mask.masked.rawInputValue.length + ":rawInputLength");
-    //console.log(mask.masked.unmaskedValue + ":unmaskValue");
-    console.log(value)
-    
-    //return valueInput;
-};
-     //console.log(acceptInput);   
-    console.log(inputChange);
-     
-
-const checkedRadio = (e) => {
-    setDelivery(e.currentTarget.value);
-}
 
     return (
         <div className='basketOrder'>
@@ -72,12 +39,9 @@ const checkedRadio = (e) => {
                 <div className='basketColmItemLeft'>
                     <span>Номер телефону *</span>
                     <InputDataTel 
-                    onAccept={acceptInput}
-                    />
-                    <label className={inputChange ? 'inputDataTelLabelActive' : 'inputDataTelLabel'}>
-                    введіть номер телефону
-                    <span className='inputDataTelSpan'> *</span>
-            </label>
+                    onAccept={acceptInput} 
+                    //ref={refComp}
+                    />  
                 </div>
                 <div className='basketColmItemLeft'>
                     <span>Ваш email адрес</span>

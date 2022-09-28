@@ -1,5 +1,5 @@
 .inputDataTel {
-    position: relative;
+    appearance: none;
     font-size: 16px;
     font-family: var(--main-font-family);
     border:solid 3px #ccc;
@@ -7,61 +7,63 @@
     padding: 3px;
 }
 
+.inputDataTel:hover, .inputDataTel:focus {
+ 
+    border: solid 3px #71C2FF;
+
+}
+
+.inputDataTel:hover + .inputDataTelLabel {
+  
+    top: 326px;
+    left: 105px;
+    padding: 1px;
+    font-size: 10px;
+} 
+
+.inputDataTel:focus + .inputDataTelLabel {
+  
+   top: 326px;
+   left: 105px;
+   padding: 1px;
+   font-size: 10px;
+} 
+/*-------------------------------------------------*/
 .inputDataTelLabel {
     position: absolute;
-    top: 333px;
+    top: 332px;
     left: 75px;
     color:#9999;
-    transition: top 0.5s;
+    transition: top 0.2s;
     background-color:#ffff;
-    font-size: 15px;
-    z-index: 1;
+    font-size: 14px;
+    border-radius:5px;
+    padding: 3px;
+    
 }
 
 .inputDataTelLabelActive {
     position: absolute;
-    top: 320px;
-    left: 75px;
+    top: 326px;
+    left: 105px;
     color:#9999;
-    transition: top 0.5s;
+    transition: top 0.2s;
     background-color:#ffff;
+    padding: 1px;
     font-size: 10px;
-    z-index: 1;
+   
 }
+
+.inputDataTelLabel:hover {
+  
+    top: 326px;
+    left: 105px;
+    padding: 1px;
+    font-size: 10px;
+
+} 
 
 .inputDataTelSpan {
     color:red;
 }
 
-.inputDataTelLabel:hover {
-    /*font-size:14px;*/
-    transform: scale(0.5) translate(-100%, -100%);
-    /*top: 322px;
-    left:85px;*/
-}
-
-.inputDataTel:focus + .inputDataTelLabel {
-    transform: scale(0.5) translate(-100%, -100%);
-}
-
-/*.inputDataTel:valid + .inputDataTelLabel, .inputDataTel:invalid + .inputDataTelLabel {
-    transform: scale(0.5) translate(-100%, -100%);
-}*/
-
-
-.inputDataTelLabel:required {
-    transform: scale(1) translate(100%, 100%);
-}
-
-.inputDataTel:hover {
-    background-color: solid 3px #71C2FF;
-}
-
-.inputDataTel:hover + .inputDataTelLabel {
-    transform: scale(0.5) translate(-100%, -100%);
-}
-
-
-.inputDataTelLabel:hover .inputDataTel {
-    background-color: solid 3px #71C2FF;
-}

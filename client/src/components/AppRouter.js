@@ -9,7 +9,7 @@ const AppRouter = () => {
     console.log(user);
     return (
         <Switch>
-            {user.isAuth && authRoutes.map(({path, Component}) => 
+            {authRoutes.map(({path, Component}) => 
             <Route key={path} path={path} component={Component} exact/>)}
             {publicRoutes.map(({path, Component}) => 
             <Route key={path} path={path} component={Component} exact/>)}

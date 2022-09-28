@@ -57,39 +57,3 @@
     gap: 5px;
 }
 
-.inputDataTelLabel {
-    position: absolute;
-    top: 333px;
-    left: 75px;
-    color:#9999;
-    transition: top 0.5s;
-    background-color:#ffff;
-    font-size: 15px;
-    z-index: 1;
-}
-
-.inputDataTelLabelActive {
-    position: absolute;
-    top: 320px;
-    left: 75px;
-    color:#9999;
-    transition: top 0.5s;
-    background-color:#ffff;
-    font-size: 10px;
-    z-index: 1;
-}
-
-.inputDataTelSpan {
-    color:red;
-}
-
-.inputDataTelLabel:hover {
-    /*font-size:14px;*/
-    transform: scale(0.5) translate(-100%, -100%);
-    /*top: 322px;
-    left:85px;*/
-}
-
-.inputDataTel:focus + .inputDataTelLabel {
-    transform: scale(0.5) translate(-100%, -100%);
-}
