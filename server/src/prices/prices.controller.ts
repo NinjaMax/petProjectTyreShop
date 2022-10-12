@@ -1,14 +1,15 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { PricesService } from './prices.service';
-import { CreatePriceDto } from './dto/create-price.dto';
-import { UpdatePriceDto } from './dto/update-price.dto';
+import { CreatePriceTyresDto } from './dto/create-price_tyres.dto';
+import { UpdatePriceTyresDto } from './dto/update-price_tyres.dto';
 
 @Controller('prices')
 export class PricesController {
+  
   constructor(private readonly pricesService: PricesService) {}
 
   @Post()
-  create(@Body() createPriceDto: CreatePriceDto) {
+  create(@Body() createPriceDto: CreatePriceTyresDto) {
     return this.pricesService.create(createPriceDto);
   }
 
@@ -23,7 +24,7 @@ export class PricesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePriceDto: UpdatePriceDto) {
+  update(@Param('id') id: string, @Body() updatePriceDto: UpdatePriceTyresDto) {
     return this.pricesService.update(+id, updatePriceDto);
   }
 

@@ -2,29 +2,37 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { TyresService } from './tyres.service';
 import { CreateTyreDto } from './dto/create-tyre.dto';
 import { UpdateTyreDto } from './dto/update-tyre.dto';
+import { GetTyreDto } from './dto/get-tyre.dto';
+import { CreateStockTyresDto } from '../stock/dto/create-stock_tyres.dto';
 
 @Controller('tyres')
 export class TyresController {
+
   constructor(private readonly tyresService: TyresService) {}
 
   @Post()
   create(@Body() createTyreDto: CreateTyreDto) {
-    return this.tyresService.create(createTyreDto);
+    return this.tyresService.createTyres(createTyreDto);
+  }
+
+  @Post('/stock')
+  createStock(@Body() createTyreDto: CreateTyreDto, createStockDto: CreateStockTyresDto, getTyreDto: GetTyreDto) {
+    return this.tyresService.createTyresStock(createTyreDto, createStockDto, getTyreDto);
   }
 
   @Get()
-  findAll() {
-    return this.tyresService.findAll();
+  findAllTyres() {
+    return this.tyresService.findAllTyres();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.tyresService.findOne(+id);
+  findOne(@Param('id') getTyreDto: GetTyreDto) {
+    return this.tyresService.findTyresById(getTyreDto);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTyreDto: UpdateTyreDto) {
-    return this.tyresService.update(+id, updateTyreDto);
+  update(@Param('id') @Body() updateTyreDto: UpdateTyreDto) {
+    return this.tyresService.updateTyres(updateTyreDto);
   }
 
   @Delete(':id')
