@@ -3,7 +3,7 @@ import { TyresService } from './tyres.service';
 import { CreateTyreDto } from './dto/create-tyre.dto';
 import { UpdateTyreDto } from './dto/update-tyre.dto';
 import { GetTyreDto } from './dto/get-tyre.dto';
-import { CreateStockTyresDto } from '../stock/dto/create-stock_tyres.dto';
+//import { CreateStockTyresDto } from '../stock/dto/create-stock_tyres.dto';
 
 @Controller('tyres')
 export class TyresController {
@@ -16,8 +16,8 @@ export class TyresController {
   }
 
   @Post('/stock')
-  createStock(@Body() createTyreDto: CreateTyreDto, createStockDto: CreateStockTyresDto, getTyreDto: GetTyreDto) {
-    return this.tyresService.createTyresStock(createTyreDto, createStockDto, getTyreDto);
+  createStock(@Body() getTyreDto: GetTyreDto ) {
+    return this.tyresService.createTyresStock(getTyreDto);
   }
 
   @Get()

@@ -3,7 +3,7 @@ import { StockService } from './stock.service';
 import { CreateStockTyresDto } from './dto/create-stock_tyres.dto';
 import { UpdateStockTyresDto } from './dto/update-stock_tyres.dto';
 import { GetStockTyresDto } from './dto/get-stock_tyres.dto';
-import { GetTyreDto } from 'src/tyres/dto/get-tyre.dto';
+//import { GetTyreDto } from 'src/tyres/dto/get-tyre.dto';
 
 @Controller('stock')
 export class StockController {
@@ -11,8 +11,8 @@ export class StockController {
   constructor(private readonly stockService: StockService) {}
 
   @Post()
-  create(@Body() createStockDto: CreateStockTyresDto, getTyreDto: GetTyreDto) {
-    return this.stockService.createStock(createStockDto, getTyreDto);
+  create(@Body() createStockDto: CreateStockTyresDto) {
+    return this.stockService.createStock(createStockDto);
   }
 
   @Get()

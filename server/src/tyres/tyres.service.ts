@@ -5,12 +5,13 @@ import { GetTyreDto } from './dto/get-tyre.dto';
 import { UpdateTyreDto } from './dto/update-tyre.dto';
 import { Tyres } from './entities/tyres.model';
 import { StockService } from '../stock/stock.service';
-import { CreateStockTyresDto } from 'src/stock/dto/create-stock_tyres.dto';
+//import { CreateStockTyresDto } from 'src/stock/dto/create-stock_tyres.dto';
 
 @Injectable()
 export class TyresService {
   constructor(@InjectModel(Tyres) private tyresRepository: typeof Tyres,
-    private stockService: StockService ) {}
+    private stockService: StockService 
+    ) {}
 
   async createTyres(createTyreDto: CreateTyreDto) {
 
@@ -28,13 +29,16 @@ export class TyresService {
     
   }
 
-  async createTyresStock(createTyreDto: CreateTyreDto, createStockDto: CreateStockTyresDto, getTyreDto: GetTyreDto) {
+  async createTyresStock( getTyreDto: GetTyreDto ) {
 
     try {
       
-      const tyres = await this.tyresRepository.findByPk(createTyreDto.id_tyres, {include: {all: true}});
-      const stockCreate = await this.stockService.createStock(createStockDto, getTyreDto);
-      await tyres.$add('stock', [stockCreate]);
+      const tyres = await this.tyresRepository.findByPk(getTyreDto.id_tyres, {include: {all: true}});
+      const stockCreate = await this.stockService.createStock(getTyreDto);
+      await tyres.$add('stock', [getTyreDto.id_tyres]);
+      await tyres.$add('stock', [getTyreDto.id_sup]);
+      await tyres.$add('stock', [getTyreDto.stock]);
+
       tyres.stock.push(stockCreate);
 
       return tyres;
