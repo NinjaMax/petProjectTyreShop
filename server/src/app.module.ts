@@ -13,6 +13,7 @@ import { PricesModule } from './prices/prices.module';
 //import { PropertiesModule } from './properties/properties.module';
 //import { OrdersSuppliersModule } from './orders-suppliers/orders-suppliers.module';
 //import { PostsModule } from './posts/posts.module';
+import { PriceTyres } from './prices/entities/price-tyres.model';
 import { Tyres } from './tyres/entities/tyres.model';
 import { Supplier } from './suppliers/entities/supplier.model';
 import { StockTyres } from './stock/entities/stock-tyres.model';
@@ -35,13 +36,13 @@ import { StockModule } from './stock/stock.module';
       username: configService.get('POSTGRES_USER'),
       password: configService.get('POSTGRES_PASSWORD'),
       database: configService.get('POSTGRES_DB'),
-      models: [Tyres, Supplier, StockTyres],
+      models: [Tyres, Supplier, StockTyres, PriceTyres],
       autoLoadModels: true,
       synchronize: true,
       }), inject: [ConfigService],
     }),
       TyresModule, PricesModule, StockModule,
-      SuppliersModule
+      SuppliersModule,
   ],
   controllers: [],
   providers: [],

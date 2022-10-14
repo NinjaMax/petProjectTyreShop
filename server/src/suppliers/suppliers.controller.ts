@@ -19,8 +19,8 @@ export class SuppliersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') getSupplierDto: GetSupplierDto) {
-    return this.suppliersService.findSupplierById(getSupplierDto);
+  findOne(@Param('id') id: bigint, @Body() getSupplierDto: GetSupplierDto) {
+    return this.suppliersService.findSupplierById(getSupplierDto.id_sup);
   }
 
   @Patch(':id')

@@ -23,10 +23,10 @@ export class StockTyres extends Model<StockTyres, StockTyresConfigAttr> {
     @Column({type: DataType.DATE, unique: false, allowNull: false})
     update_date: Date;
 
-    @BelongsTo( () => Tyres)
+    @BelongsTo( () => Tyres , 'id_tyres')
     tyres: Tyres;
 
-    @BelongsTo( () => Supplier)
+    @BelongsTo( () => Supplier , 'id_sup')
     supplier: Supplier;
 
 

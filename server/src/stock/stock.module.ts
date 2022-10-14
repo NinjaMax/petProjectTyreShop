@@ -6,6 +6,7 @@ import { Tyres } from '../tyres/entities/tyres.model';
 import { StockTyres } from './entities/stock-tyres.model';
 import { Supplier } from '../suppliers/entities/supplier.model';
 import { TyresModule } from '../tyres/tyres.module';
+import { SuppliersModule } from '../suppliers/suppliers.module';
 //import { TyresService } from '../tyres/tyres.service';
 
 @Module({
@@ -13,7 +14,7 @@ import { TyresModule } from '../tyres/tyres.module';
   providers: [StockService],
   imports: [ 
     SequelizeModule.forFeature([StockTyres, Tyres, Supplier]),
-    forwardRef(() => TyresModule),
+    forwardRef(() => TyresModule), SuppliersModule
   ],
   exports: [StockService]
 })

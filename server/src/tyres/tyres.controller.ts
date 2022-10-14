@@ -27,7 +27,7 @@ export class TyresController {
 
   @Get(':id')
   findOne(@Param('id') getTyreDto: GetTyreDto) {
-    return this.tyresService.findTyresById(getTyreDto);
+    return this.tyresService.findTyresById(getTyreDto.id_tyres);
   }
 
   @Patch(':id')

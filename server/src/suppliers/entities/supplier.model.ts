@@ -4,9 +4,9 @@ import { StockTyres } from '../../stock/entities/stock-tyres.model';
 
 
 @Table({tableName: 'suppliers' , updatedAt: false})
-export class Supplier extends Model<Supplier, SuppliersConfigAttr>{
+export class Supplier extends Model<Supplier, SuppliersConfigAttr> {
 
-    @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
+    @Column({type: DataType.BIGINT, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
     id_sup: number;
    
     @Column({type: DataType.STRING, unique: true, allowNull: false})
@@ -15,13 +15,13 @@ export class Supplier extends Model<Supplier, SuppliersConfigAttr>{
     @Column({type: DataType.STRING, unique: false, allowNull: false})
     city: string;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
+    @Column({type: DataType.BIGINT, unique: false, allowNull: true})
     phone: number;
 
-    @Column({type: DataType.STRING, unique: false, allowNull: false})
+    @Column({type: DataType.STRING, unique: false, allowNull: true})
     email: string;
 
-    @HasMany(() => StockTyres)
+    @HasMany(() => StockTyres , 'id_sup')
     stock: StockTyres[];
 
     //@HasMany(() => PriceTyres)

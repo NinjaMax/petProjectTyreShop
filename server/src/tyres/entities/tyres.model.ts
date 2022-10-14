@@ -15,7 +15,7 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
     @Column({type: DataType.DATE, unique: false, allowNull: false})
     update_date: Date;
 
-    @HasMany(() => StockTyres)
+    @HasMany(() => StockTyres , 'id_tyres')
     stock: StockTyres[];
 
     //@HasMany(() => PriceTyres)

@@ -5,6 +5,7 @@ import { UpdateSupplierDto } from './dto/update-supplier.dto';
 import { GetSupplierDto } from './dto/get-supplier.dto';
 import { Supplier } from './entities/supplier.model';
 
+
 @Injectable()
 export class SuppliersService {
   constructor(@InjectModel(Supplier) private suppliersRepository: typeof Supplier) {}
@@ -18,7 +19,7 @@ export class SuppliersService {
 
       return supplier;
 
-    } catch (error) {
+    } catch {
       
       throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
 
@@ -35,7 +36,7 @@ export class SuppliersService {
       
       return supplierAll;
 
-    } catch (error) {
+    } catch {
 
       throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
 
@@ -43,15 +44,30 @@ export class SuppliersService {
     
   }
 
-  async findSupplierById(getSupplierDto: GetSupplierDto) {
+  async findSupplierById(id_sup: number ) {
 
     try {
 
-      const supplierById = await this.suppliersRepository.findByPk(getSupplierDto.id_sup, {include: {all: true}})
+      const supplierById = await this.suppliersRepository.findByPk(id_sup, {include: {all: true}});
       
       return supplierById;
 
-    } catch (error) {
+    } catch {
+
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+    }
+    
+  }
+
+  async findSupplierTitle(getSupplierDto: GetSupplierDto) {
+
+    try {
+
+      const supplierByTitle = await this.suppliersRepository.findOne({where: {name: getSupplierDto.name}})
+      
+      return supplierByTitle;
+
+    } catch {
 
       throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
     }
@@ -64,7 +80,7 @@ export class SuppliersService {
 
       return `This action updates a #${id} supplier`;
 
-    } catch (error) {
+    } catch {
 
       throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
     }
@@ -77,7 +93,7 @@ export class SuppliersService {
 
       return `This action removes a #${id} supplier`;
 
-    } catch (error) {
+    } catch {
 
       throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
       
