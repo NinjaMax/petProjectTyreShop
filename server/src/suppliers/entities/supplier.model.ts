@@ -1,7 +1,7 @@
 import { Column, DataType, Model, Table, HasMany} from "sequelize-typescript";
 import { SuppliersConfigAttr } from '../interfaces/suppliers.interface';
 import { StockTyres } from '../../stock/entities/stock-tyres.model';
-
+import { PriceTyres } from "src/prices/entities/price-tyres.model";
 
 @Table({tableName: 'suppliers' , updatedAt: false})
 export class Supplier extends Model<Supplier, SuppliersConfigAttr> {
@@ -24,6 +24,6 @@ export class Supplier extends Model<Supplier, SuppliersConfigAttr> {
     @HasMany(() => StockTyres , 'id_sup')
     stock: StockTyres[];
 
-    //@HasMany(() => PriceTyres)
-    //price: PriceTyres[];
+    @HasMany(() => PriceTyres, 'id_sup')
+    price: PriceTyres[];
 }

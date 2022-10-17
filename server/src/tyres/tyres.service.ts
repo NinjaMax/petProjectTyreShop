@@ -35,12 +35,12 @@ export class TyresService {
     try {
       
       const tyres = await this.tyresRepository.findByPk(getTyreDto.id_tyres, {include: {all: true}});
-      const supplier = await this.suppliersService.findSupplierById(getTyreDto.id_sup);
-      await tyres.$add('stock', [supplier]);
-      await tyres.$add('stock', [getTyreDto.id_sup]);
-      await tyres.$add('stock', [getTyreDto.stock]);
+      //const supplier = await this.suppliersService.findSupplierById(getTyreDto.id_sup);
+      await tyres.$add('stock', [tyres.id_tyres]);
+      //await tyres.$add('stock', [getTyreDto.id_sup]);
+      //await tyres.$add('stock', [getTyreDto.stock]);
       //await tyres.$add('stock', [getTyreDto.update_date]);
-      tyres.stock.push(supplier);
+      //tyres.stock.push(tyres);
 
       return tyres;
 
@@ -71,11 +71,11 @@ export class TyresService {
     
   }
 
-  async findTyresById(id_tyres: number) {
+  async findTyresById(getTyreDto: GetTyreDto ) {
 
     try {
 
-      const tyresId = await this.tyresRepository.findByPk(id_tyres, {include: {all: true}});
+      const tyresId = await this.tyresRepository.findByPk(getTyreDto.id_tyres, {include: {all: true}});
 
       return tyresId;
 

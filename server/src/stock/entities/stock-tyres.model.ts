@@ -6,9 +6,6 @@ import { Supplier } from '../../suppliers/entities/supplier.model';
 @Table({tableName: 'stock_tyres', createdAt: false, updatedAt: false})
 export class StockTyres extends Model<StockTyres, StockTyresConfigAttr> {
 
-    //@Column({type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true})
-    //id: number;
-    
     @ForeignKey(() => Tyres)
     @Column({type: DataType.INTEGER, unique: true, autoIncrement: false, primaryKey: true})
     id_tyres: number;

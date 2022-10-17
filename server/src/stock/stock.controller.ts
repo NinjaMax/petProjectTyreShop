@@ -10,9 +10,9 @@ export class StockController {
 
   constructor(private readonly stockService: StockService) {}
 
-  @Post()
+  @Post('/tyres')
   create(@Body() createStockDto: CreateStockTyresDto) {
-    return this.stockService.createStock(createStockDto);
+    return this.stockService.createStockTyres(createStockDto);
   }
 
   @Get()

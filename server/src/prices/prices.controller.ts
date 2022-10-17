@@ -8,9 +8,9 @@ export class PricesController {
   
   constructor(private readonly pricesService: PricesService) {}
 
-  @Post()
+  @Post('/tyres')
   create(@Body() createPriceDto: CreatePriceTyresDto) {
-    return this.pricesService.create(createPriceDto);
+    return this.pricesService.createPriceTyres(createPriceDto);
   }
 
   @Get()
