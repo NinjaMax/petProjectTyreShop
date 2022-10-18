@@ -2,6 +2,7 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreatePriceTyresDto } from './dto/create-price_tyres.dto';
 import { UpdatePriceTyresDto } from './dto/update-price_tyres.dto';
+import { GetPriceTyresDto } from './dto/get-price_tyres.dto';
 import { PriceTyres } from '../prices/entities/price-tyres.model';
 import { TyresService } from 'src/tyres/tyres.service';
 import { SuppliersService } from 'src/suppliers/suppliers.service';
@@ -24,7 +25,7 @@ export class PricesService {
 
         const priceCreate = await this.priceTyresRepository.create(createPriceDto);
 
-        const supplier = await this.suppliersService.findSupplierById(createPriceDto.id_sup);
+        const supplier = await this.suppliersService.findSupplierById(createPriceDto);
 
         await tyres.$add('price', [createPriceDto.id_tyres]);
        
@@ -51,7 +52,9 @@ export class PricesService {
 
     try {
 
-      return `This action returns all prices`;
+      const priceTyresAll = await this.priceTyresRepository.findAll({include: {all: true}});
+
+      return priceTyresAll;
 
     } catch (error) {
 
@@ -61,10 +64,13 @@ export class PricesService {
     
   }
 
-  async findOne(id: number) {
+  async findPriceTyresById(getPriceTyresDto: GetPriceTyresDto) {
     try {
 
-      return `This action returns a #${id} price`;
+      const tyresId = await this.priceTyresRepository.findByPk(getPriceTyresDto.id_tyres, {include: {all: true}});
+
+      return tyresId;
+
 
     } catch {
 
@@ -74,11 +80,28 @@ export class PricesService {
     
   }
 
-  async update(id: number, updatePriceDto: UpdatePriceTyresDto) {
+  async updatePriceTyres( updatePriceDto: UpdatePriceTyresDto ) {
 
     try {
 
-      return `This action updates a #${id} price`;
+      const tyresId = await this.priceTyresRepository.findByPk(updatePriceDto.id_tyres, {include: {all: true}});
+      
+      if(tyresId) {
+
+         await this.priceTyresRepository.update(
+        { price_wholesale : updatePriceDto.price_wholesale, 
+          price : updatePriceDto.price, 
+          id_sup : updatePriceDto.id_sup,
+          delivery_price : updatePriceDto.delivery_price, 
+          price_plus_delivery : updatePriceDto.price_plus_delivery,
+          update_date : updatePriceDto.update_date
+        }, {where: {id_tyres : updatePriceDto.id_tyres}});
+
+        const updatePriceTyres = await this.priceTyresRepository.findByPk(updatePriceDto.id_tyres, {include: {all: true}});
+
+        return updatePriceTyres; 
+      }
+      
 
     } catch {
 
@@ -88,11 +111,13 @@ export class PricesService {
     
   }
 
-  async remove(id: number) {
+  async removePrice(getPriceTyresDto: GetPriceTyresDto) {
 
     try {
 
-      return `This action removes a #${id} price`;
+      const removePrice = await this.priceTyresRepository.destroy({where: {id_tyres : getPriceTyresDto.id_tyres}});
+
+      return removePrice;
 
     } catch {
 

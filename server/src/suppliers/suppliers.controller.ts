@@ -18,18 +18,18 @@ export class SuppliersController {
     return this.suppliersService.findAllSupplier();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: bigint, @Body() getSupplierDto: GetSupplierDto) {
-    return this.suppliersService.findSupplierById(getSupplierDto.id_sup);
+  @Get('/id')
+  findOne( @Body() getSupplierDto: GetSupplierDto) {
+    return this.suppliersService.findSupplierById(getSupplierDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSupplierDto: UpdateSupplierDto) {
-    return this.suppliersService.updateSupplier(+id, updateSupplierDto);
+  @Patch('/update')
+  update(@Body() updateSupplierDto: UpdateSupplierDto) {
+    return this.suppliersService.updateSupplier(updateSupplierDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.suppliersService.removeSupplier(+id);
+  @Delete('/remove')
+  remove(@Body() getSupplierDto: GetSupplierDto) {
+    return this.suppliersService.removeSupplier(getSupplierDto);
   }
 }

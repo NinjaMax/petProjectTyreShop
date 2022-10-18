@@ -4,14 +4,10 @@ import { CreateTyreDto } from './dto/create-tyre.dto';
 import { GetTyreDto } from './dto/get-tyre.dto';
 import { UpdateTyreDto } from './dto/update-tyre.dto';
 import { Tyres } from './entities/tyres.model';
-//import { StockService } from '../stock/stock.service';
-import { SuppliersService } from 'src/suppliers/suppliers.service';
-//import { CreateStockTyresDto } from 'src/stock/dto/create-stock_tyres.dto';
 
 @Injectable()
 export class TyresService {
   constructor(@InjectModel(Tyres) private tyresRepository: typeof Tyres,
-    private suppliersService: SuppliersService 
     ) {}
 
   async createTyres(createTyreDto: CreateTyreDto) {
@@ -30,31 +26,6 @@ export class TyresService {
     
   }
 
-  async createTyresStock( getTyreDto: GetTyreDto ) {
-
-    try {
-      
-      const tyres = await this.tyresRepository.findByPk(getTyreDto.id_tyres, {include: {all: true}});
-      //const supplier = await this.suppliersService.findSupplierById(getTyreDto.id_sup);
-      await tyres.$add('stock', [tyres.id_tyres]);
-      //await tyres.$add('stock', [getTyreDto.id_sup]);
-      //await tyres.$add('stock', [getTyreDto.stock]);
-      //await tyres.$add('stock', [getTyreDto.update_date]);
-      //tyres.stock.push(tyres);
-
-      return tyres;
-
-    } catch {
-
-      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
-
-    }
-    
-  }
-
-
-
-
   async findAllTyres() {
 
     try {
@@ -71,7 +42,7 @@ export class TyresService {
     
   }
 
-  async findTyresById(getTyreDto: GetTyreDto ) {
+  async findTyresById(getTyreDto: GetTyreDto) {
 
     try {
 
@@ -91,9 +62,20 @@ export class TyresService {
 
     try {
 
-      const tyresUpdate = await this.tyresRepository.update( {full_name: '0' }, {where: {id_tyres : updateTyreDto.id_tyres}});
+      const tyresId = await this.tyresRepository.findByPk(updateTyreDto.id_tyres, {include: {all: true}});
+      
+      if(tyresId) {
 
-      return tyresUpdate;
+        await this.tyresRepository.update(
+        {  
+          full_name : updateTyreDto.full_name,
+          update_date : updateTyreDto.update_date
+        }, {where: {id_tyres : updateTyreDto.id_tyres}});
+
+        const updateTyres = await this.tyresRepository.findByPk(updateTyreDto.id_tyres, {include: {all: true}});
+
+        return updateTyres; 
+      }
 
     } catch {
 
@@ -103,10 +85,12 @@ export class TyresService {
     
   }
 
-  async remove(id: number) { 
+  async remove(getTyreDto: GetTyreDto) { 
     try {
 
-      return `This action removes a #${id} tyre`;
+      const removeTyres = await this.tyresRepository.destroy({where: {id_tyres : getTyreDto.id_tyres}});
+      
+      return removeTyres;
 
     } catch {
       

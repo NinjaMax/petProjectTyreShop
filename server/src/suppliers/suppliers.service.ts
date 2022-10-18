@@ -25,7 +25,6 @@ export class SuppliersService {
 
     }
     
-
   }
 
   async findAllSupplier() {
@@ -44,11 +43,11 @@ export class SuppliersService {
     
   }
 
-  async findSupplierById(id_sup: number ) {
+  async findSupplierById( getSupplierDto: GetSupplierDto ) {
 
     try {
 
-      const supplierById = await this.suppliersRepository.findByPk(id_sup, {include: {all: true}});
+      const supplierById = await this.suppliersRepository.findByPk(getSupplierDto.id_sup, {include: {all: true}});
       
       return supplierById;
 
@@ -74,11 +73,26 @@ export class SuppliersService {
     
   }
 
-  updateSupplier(id: number, updateSupplierDto: UpdateSupplierDto) {
+  async updateSupplier(updateSupplierDto: UpdateSupplierDto) {
 
     try {
 
-      return `This action updates a #${id} supplier`;
+      const supplierId = await this.suppliersRepository.findByPk(updateSupplierDto.id_sup, {include: {all: true}});
+      
+      if(supplierId) {
+
+        await this.suppliersRepository.update(
+        {  
+          name : updateSupplierDto.name,
+          city : updateSupplierDto.city, 
+          phone : updateSupplierDto.phone,
+          email : updateSupplierDto.email
+        }, {where: {id_sup : updateSupplierDto.id_sup}});
+
+        const updateSupplier = await this.suppliersRepository.findByPk(updateSupplierDto.id_sup, {include: {all: true}});
+
+        return updateSupplier; 
+      }
 
     } catch {
 
@@ -87,11 +101,13 @@ export class SuppliersService {
     
   }
 
-  removeSupplier(id: number) {
+  async removeSupplier(getSupplierDto: GetSupplierDto) {
 
     try {
 
-      return `This action removes a #${id} supplier`;
+      const removeSupplier = await this.suppliersRepository.destroy({where: {id_sup : getSupplierDto.id_sup}});
+      
+      return removeSupplier;
 
     } catch {
 

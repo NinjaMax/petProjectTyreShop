@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { PricesService } from './prices.service';
 import { CreatePriceTyresDto } from './dto/create-price_tyres.dto';
 import { UpdatePriceTyresDto } from './dto/update-price_tyres.dto';
+import { GetPriceTyresDto } from './dto/get-price_tyres.dto';
 
 @Controller('prices')
 export class PricesController {
@@ -18,18 +19,18 @@ export class PricesController {
     return this.pricesService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.pricesService.findOne(+id);
+  @Get('/id')
+  findOne(@Body() getPriceTyresDto : GetPriceTyresDto) {
+    return this.pricesService.findPriceTyresById(getPriceTyresDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePriceDto: UpdatePriceTyresDto) {
-    return this.pricesService.update(+id, updatePriceDto);
+  @Patch('/update')
+  update(@Body() updatePriceDto: UpdatePriceTyresDto) {
+    return this.pricesService.updatePriceTyres(updatePriceDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.pricesService.remove(+id);
+  @Delete('/remove')
+  remove(@Body() getPriceTyresDto: GetPriceTyresDto) {
+    return this.pricesService.removePrice(getPriceTyresDto);
   }
 }

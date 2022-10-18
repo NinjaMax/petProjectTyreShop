@@ -3,10 +3,8 @@ import { InjectModel } from '@nestjs/sequelize';
 import { CreateStockTyresDto } from './dto/create-stock_tyres.dto';
 import { GetStockTyresDto } from './dto/get-stock_tyres.dto';
 import { UpdateStockTyresDto } from './dto/update-stock_tyres.dto';
-//import { GetTyreDto } from '../tyres/dto/get-tyre.dto';
 import { StockTyres } from './entities/stock-tyres.model';
 import { TyresService } from '../tyres/tyres.service';
-//import { Tyres } from 'src/tyres/entities/tyres.model';
 import { SuppliersService } from '../suppliers/suppliers.service';
 
 
@@ -19,7 +17,7 @@ export class StockService {
 
    ) {}
 
-  async createStock(createStockDto: CreateStockTyresDto) {
+  async createStockTyres(createStockDto: CreateStockTyresDto) {
 
     try {
 
@@ -29,23 +27,19 @@ export class StockService {
 
         const stockCreate = await this.stockTyresRepository.create(createStockDto);
 
-        const supplier = await this.suppliersService.findSupplierById(createStockDto.id_sup);
+        const supplier = await this.suppliersService.findSupplierById(createStockDto);
 
         await tyres.$add('stock', [createStockDto.id_tyres]);
-        //await tyres.$add('stock', [createStockDto.stock]);
 
         await supplier.$add('stock', [createStockDto.id_sup]);
-        //await tyres.$add('stock', [createStockDto.update_date]);
+        
         tyres.stock.push(stockCreate);
 
         supplier.stock.push(stockCreate);
 
         return tyres;
 
-      }
-
-      //return 'tyres is not exist';
-      
+      }  
 
     } catch {
 
@@ -87,12 +81,25 @@ export class StockService {
     
   }
 
-  async update(id: number, updateStockDto: UpdateStockTyresDto) {
+  async updateStockTyres(updateStockDto: UpdateStockTyresDto) {
     
     try {
 
-      return `This action updates a #${id} stock`;
+      const tyresId = await this.stockTyresRepository.findByPk(updateStockDto.id_tyres, {include: {all: true}});
+      
+      if(tyresId) {
 
+         await this.stockTyresRepository.update(
+        { stock : updateStockDto.stock, 
+          id_sup : updateStockDto.id_sup,
+          update_date : updateStockDto.update_date
+        }, {where: {id_tyres : updateStockDto.id_tyres}});
+
+        const updateStockTyres = await this.stockTyresRepository.findByPk(updateStockDto.id_tyres, {include: {all: true}});
+
+        return updateStockTyres; 
+      }
+      
     } catch {
 
       throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
@@ -101,11 +108,13 @@ export class StockService {
     
   }
 
-  async remove(id: number) {
+  async removeStock(getStockTyresDto: GetStockTyresDto) {
     
     try {
 
-      return `This action removes a #${id} stock`;
+      const removeStock = await this.stockTyresRepository.destroy({where: {id_tyres : getStockTyresDto.id_tyres}});
+
+      return removeStock;
 
     } catch {
       

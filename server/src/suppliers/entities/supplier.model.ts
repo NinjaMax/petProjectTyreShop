@@ -7,7 +7,7 @@ import { PriceTyres } from "src/prices/entities/price-tyres.model";
 export class Supplier extends Model<Supplier, SuppliersConfigAttr> {
 
     @Column({type: DataType.BIGINT, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
-    id_sup: number;
+    id_sup: bigint;
    
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     name: string;
@@ -16,7 +16,7 @@ export class Supplier extends Model<Supplier, SuppliersConfigAttr> {
     city: string;
 
     @Column({type: DataType.BIGINT, unique: false, allowNull: true})
-    phone: number;
+    phone: bigint;
 
     @Column({type: DataType.STRING, unique: false, allowNull: true})
     email: string;

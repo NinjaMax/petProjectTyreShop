@@ -25,13 +25,13 @@ export class StockController {
     return this.stockService.findStockById(getStockTyresDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStockDto: UpdateStockTyresDto) {
-    return this.stockService.update(+id, updateStockDto);
+  @Patch('/update')
+  update(@Body() updateStockDto: UpdateStockTyresDto) {
+    return this.stockService.updateStockTyres(updateStockDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.stockService.remove(+id);
+  @Delete('/remove')
+  remove(@Body() getStockTyresDto: GetStockTyresDto) {
+    return this.stockService.removeStock(getStockTyresDto);
   }
 }

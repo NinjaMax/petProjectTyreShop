@@ -21,6 +21,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
 import { StockModule } from './stock/stock.module';
+import { ReviewsModule } from './reviews/reviews.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { StockModule } from './stock/stock.module';
     }),
       TyresModule, PricesModule, StockModule,
       SuppliersModule,
+      ReviewsModule,
   ],
   controllers: [],
   providers: [],

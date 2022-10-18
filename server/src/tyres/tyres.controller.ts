@@ -15,11 +15,6 @@ export class TyresController {
     return this.tyresService.createTyres(createTyreDto);
   }
 
-  @Post('/stock')
-  createStock(@Body() getTyreDto: GetTyreDto ) {
-    return this.tyresService.createTyresStock(getTyreDto);
-  }
-
   @Get()
   findAllTyres() {
     return this.tyresService.findAllTyres();
@@ -30,13 +25,13 @@ export class TyresController {
     return this.tyresService.findTyresById(getTyreDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') @Body() updateTyreDto: UpdateTyreDto) {
+  @Patch('/update')
+  update(@Body() updateTyreDto: UpdateTyreDto) {
     return this.tyresService.updateTyres(updateTyreDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tyresService.remove(+id);
+  @Delete('/delete')
+  remove(@Body() getTyreDto: GetTyreDto) {
+    return this.tyresService.remove(getTyreDto);
   }
 }

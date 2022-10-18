@@ -10,15 +10,15 @@ export class PriceTyres extends Model<PriceTyres, PriceTyresConfigAttr>{
    @Column({type: DataType.INTEGER, unique: true, autoIncrement: false, primaryKey: true})
    id_tyres: number;
 
-   @ForeignKey(() => Supplier)
-   @Column({type: DataType.INTEGER})
-   id_sup: number;
-
    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
    price_wholesale: number;
    
    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
    price: number;
+
+   @ForeignKey(() => Supplier)
+   @Column({type: DataType.INTEGER})
+   id_sup: number;
 
    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
    delivery_price: number;

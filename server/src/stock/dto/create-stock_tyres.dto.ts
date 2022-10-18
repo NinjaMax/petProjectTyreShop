@@ -7,5 +7,9 @@ export class CreateStockTyresDto {
 
    readonly full_name: string;
    readonly name: string;
+
+   readonly city: string;
+   readonly phone: bigint;
+   readonly email: string;
     
 }
