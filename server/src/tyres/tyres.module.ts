@@ -5,17 +5,22 @@ import { TyresController } from './tyres.controller';
 import { Tyres } from './entities/tyres.model';
 import { PriceTyres } from '../prices/entities/price-tyres.model';
 import {StockTyres} from '../stock/entities/stock-tyres.model';
-//import { PricesModule } from '../prices/prices.module';
 import { Supplier } from 'src/suppliers/entities/supplier.model';
 import { SuppliersModule } from '../suppliers/suppliers.module';
 import { StockModule } from '../stock/stock.module';
+import { TyreModel } from 'src/properties/entities/tyre-model.model';
+import { TyreBrand } from 'src/properties/entities/tyre-brand.model';
+import { RatingTyres } from 'src/ratings/entities/rating-tyres.model';
+import { ReviewTyres } from 'src/reviews/entities/review-tyres.model';
 
 @Module({
   controllers: [TyresController],
   providers: [TyresService],
   imports: [
-    SequelizeModule.forFeature([Tyres, PriceTyres, StockTyres, Supplier]),
-    forwardRef(() => StockModule), SuppliersModule
+    SequelizeModule.forFeature([Tyres, PriceTyres, StockTyres, Supplier, 
+    TyreModel, TyreBrand, RatingTyres, ReviewTyres]),
+    forwardRef(() => StockModule), SuppliersModule,
+
   ],
   exports: [TyresService]
 })

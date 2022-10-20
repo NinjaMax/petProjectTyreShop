@@ -1,4 +1,4 @@
-export class CreatePropertyDto {
+export class GetPropertyDto {
 
     readonly id: number;
     readonly width: string;

@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 //import { AppController } from './app.controller';
 //import { AppService } from './app.service';
-//import { UsersModule } from './users/users.module';
 import { TyresModule } from './tyres/tyres.module';
 //import { WheelsModule } from './wheels/wheels.module';
 //import { BatteriesModule } from './batteries/batteries.module';
@@ -23,6 +22,13 @@ import { ConfigService } from './config/config.service';
 import { StockModule } from './stock/stock.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { RatingsModule } from './ratings/ratings.module';
+import { RatingTyres } from './ratings/entities/rating-tyres.model';
+import { ReviewTyres } from './reviews/entities/review-tyres.model';
+import { TyreBrand } from './properties/entities/tyre-brand.model';
+import { TyreModel } from './properties/entities/tyre-model.model';
+import { PropertiesModule } from './properties/properties.module';
+import { UsersModule } from './users/users.module';
+//import { Users } from './users/entities/users.model';
 
 @Module({
   imports: [
@@ -38,15 +44,16 @@ import { RatingsModule } from './ratings/ratings.module';
       username: configService.get('POSTGRES_USER'),
       password: configService.get('POSTGRES_PASSWORD'),
       database: configService.get('POSTGRES_DB'),
-      models: [Tyres, Supplier, StockTyres, PriceTyres],
+      models: [Tyres, Supplier, StockTyres, PriceTyres,
+      RatingTyres, ReviewTyres, TyreBrand, TyreModel,
+      ],
       autoLoadModels: true,
       synchronize: true,
       }), inject: [ConfigService],
     }),
       TyresModule, PricesModule, StockModule,
-      SuppliersModule,
-      ReviewsModule,
-      RatingsModule,
+      SuppliersModule, ReviewsModule, RatingsModule,
+      PropertiesModule, UsersModule
   ],
   controllers: [],
   providers: [],

@@ -1,7 +1,9 @@
-import { Column, DataType, Model, Table, BelongsTo, ForeignKey} from "sequelize-typescript";
+import { Column, DataType, Model, Table, BelongsTo, ForeignKey, HasOne} from "sequelize-typescript";
 import { RatingTyresConfigAttr } from "../interfaces/rating-tyres.interface";
 import { Tyres } from "src/tyres/entities/tyres.model";
-import { Supplier } from '../../suppliers/entities/supplier.model';
+import { ReviewTyres } from "src/reviews/entities/review-tyres.model";
+import { TyreModel } from "src/properties/entities/tyre-model.model";
+import { TyreBrand } from "src/properties/entities/tyre-brand.model";
 
 @Table({tableName: 'rating_tyres', createdAt: false, updatedAt: false})
 export class RatingTyres extends Model<RatingTyres, RatingTyresConfigAttr> {
@@ -13,7 +15,7 @@ export class RatingTyres extends Model<RatingTyres, RatingTyresConfigAttr> {
     @Column({type: DataType.INTEGER})
     id_tyres: number;
 
-    @ForeignKey(() => Review)
+    @ForeignKey(() => ReviewTyres)
     @Column({type: DataType.INTEGER})
     id_review: number;
     
@@ -41,13 +43,16 @@ export class RatingTyres extends Model<RatingTyres, RatingTyresConfigAttr> {
     @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     rating_price_quality: number;
 
-    @BelongsTo( () => Tyres , 'id_tyres')
+    @BelongsTo(() => Tyres , 'id_tyres')
     tyres: Tyres;
 
-    @BelongsTo( () => Supplier , 'id_sup')
-    supplier: Supplier;
+    @BelongsTo(() => ReviewTyres , 'id_review')
+    review: ReviewTyres;
 
+    @HasOne(() => TyreModel, 'id_rating')
+    tyre_model: TyreModel;
 
-    
+    @HasOne(() => TyreBrand, 'id_rating')
+    tyre_brand: TyreBrand;
 
 }

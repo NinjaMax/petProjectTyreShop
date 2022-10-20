@@ -1,4 +1,4 @@
-export class CreateReviewDto {
+export class GetReviewDto {
 
     readonly id_tyres: number;
     readonly id_sup: number;
