@@ -22,6 +22,7 @@ import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
 import { StockModule } from './stock/stock.module';
 import { ReviewsModule } from './reviews/reviews.module';
+import { RatingsModule } from './ratings/ratings.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { ReviewsModule } from './reviews/reviews.module';
       TyresModule, PricesModule, StockModule,
       SuppliersModule,
       ReviewsModule,
+      RatingsModule,
   ],
   controllers: [],
   providers: [],
