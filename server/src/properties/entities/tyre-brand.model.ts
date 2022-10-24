@@ -1,7 +1,8 @@
-import { Column, DataType, Model, Table, BelongsToMany, ForeignKey} from "sequelize-typescript";
+import { Column, DataType, Model, Table, HasMany, ForeignKey} from "sequelize-typescript";
 import { TyreBrandConfigAttr } from '../interfaces/tyre-brand.interface';
 import { RatingTyres } from "../../ratings/entities/rating-tyres.model";
 import { Tyres } from "src/tyres/entities/tyres.model";
+import { ReviewTyres } from "src/reviews/entities/review-tyres.model";
 
 @Table({tableName: 'tyre_brand' , updatedAt: false, createdAt: false})
 export class TyreBrand extends Model<TyreBrand, TyreBrandConfigAttr> {
@@ -12,19 +13,13 @@ export class TyreBrand extends Model<TyreBrand, TyreBrandConfigAttr> {
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     brand: string;
 
-    @ForeignKey(() => Tyres)
-    @Column({type: DataType.INTEGER})
-    id_tyres: number;
-
-    @ForeignKey(() => RatingTyres)
-    @Column({type: DataType.INTEGER})
-    id_rating: number;
-
-    @BelongsToMany(() => Tyres , 'id_tyres')
+    @HasMany(() => Tyres , 'id_brand')
     tyres: Tyres[];
 
-    @BelongsToMany(() => RatingTyres , 'id_rating')
-    rating: RatingTyres[];
+    @HasMany(() => RatingTyres , 'id_brand')
+    ratings: RatingTyres[];
 
+    @HasMany(() => ReviewTyres, 'id_brand')
+    reviews: ReviewTyres[];
     
 }

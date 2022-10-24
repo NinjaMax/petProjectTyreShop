@@ -1,9 +1,10 @@
-import { Column, DataType, Model, Table, ForeignKey, BelongsToMany} from "sequelize-typescript";
+import { Column, DataType, Model, Table, ForeignKey, HasMany} from "sequelize-typescript";
 import { TyreModelConfigAttr } from '../interfaces/tyre-model.interface';
 import { RatingTyres } from "../../ratings/entities/rating-tyres.model";
 import { Tyres } from "src/tyres/entities/tyres.model";
+import { ReviewTyres } from "src/reviews/entities/review-tyres.model";
 
-@Table({tableName: 'tyre_model' , updatedAt: false})
+@Table({tableName: 'tyre_model' , updatedAt: false, createdAt: false})
 export class TyreModel extends Model<TyreModel, TyreModelConfigAttr> {
 
     @Column({type: DataType.BIGINT, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
@@ -12,19 +13,14 @@ export class TyreModel extends Model<TyreModel, TyreModelConfigAttr> {
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     model: string;
 
-    @ForeignKey(() => Tyres)
-    @Column({type: DataType.INTEGER})
-    id_tyres: number;
-
-    @ForeignKey(() => RatingTyres)
-    @Column({type: DataType.INTEGER})
-    id_rating: number;
-
-    @BelongsToMany(() => Tyres , 'id_tyres')
+    @HasMany(() => Tyres , 'id_model')
     tyres: Tyres[];
 
-    @BelongsToMany(() => RatingTyres , 'id_rating')
-    rating: RatingTyres[];
+    @HasMany(() => RatingTyres , 'id_model')
+    ratings: RatingTyres[];
+
+    @HasMany(() => ReviewTyres , 'id_model')
+    reviews: ReviewTyres[];
 
     
 }

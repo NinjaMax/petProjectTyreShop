@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ReviewsService } from './reviews.service';
 import { CreateReviewDto } from './dto/create-review.dto';
+import { GetReviewDto } from './dto/get-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 
 @Controller('reviews')
@@ -9,17 +10,17 @@ export class ReviewsController {
 
   @Post()
   create(@Body() createReviewDto: CreateReviewDto) {
-    return this.reviewsService.create(createReviewDto);
+    return this.reviewsService.createReview(createReviewDto);
   }
 
   @Get()
   findAll() {
-    return this.reviewsService.findAll();
+    return this.reviewsService.findAllReviews();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.reviewsService.findOne(+id);
+  findOne(@Param('id') getReviewDto: GetReviewDto) {
+    return this.reviewsService.findReviewById(getReviewDto);
   }
 
   @Patch(':id')
@@ -28,7 +29,7 @@ export class ReviewsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.reviewsService.remove(+id);
+  remove(@Param('id') getReviewDto: GetReviewDto) {
+    return this.reviewsService.removeReview(getReviewDto);
   }
 }

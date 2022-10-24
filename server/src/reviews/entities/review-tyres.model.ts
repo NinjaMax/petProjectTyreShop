@@ -3,6 +3,8 @@ import { ReviewsTyresConfigAttr } from '../interfaces/review-tyres.interface';
 import { Tyres } from "src/tyres/entities/tyres.model";
 import { RatingTyres } from "src/ratings/entities/rating-tyres.model";
 import { Users } from "src/users/entities/users.model";
+import { TyreModel } from "src/properties/entities/tyre-model.model";
+import { TyreBrand } from "src/properties/entities/tyre-brand.model";
 
 @Table({tableName: 'review_tyres', createdAt: true, updatedAt: false})
 export class ReviewTyres extends Model<ReviewTyres, ReviewsTyresConfigAttr> {
@@ -11,14 +13,22 @@ export class ReviewTyres extends Model<ReviewTyres, ReviewsTyresConfigAttr> {
     id_review: number;
 
     @ForeignKey(() => Tyres)
-    @Column({type: DataType.INTEGER, unique: true, autoIncrement: false, allowNull: false})
+    @Column({type: DataType.INTEGER, allowNull: false})
     id_tyres: number;
 
-    @ForeignKey(() => Tyres)
+    @ForeignKey(() => TyreModel)
+    @Column({type: DataType.INTEGER, allowNull: false})
+    id_tyres_model: number;
+
+    @ForeignKey(() => TyreBrand)
+    @Column({type: DataType.INTEGER, allowNull: false})
+    id_tyres_brand: number;
+
+    @ForeignKey(() => Users)
     @Column({type: DataType.INTEGER, unique: true, autoIncrement: false, allowNull: true})
     id_user: number;
     
-    @Column({type: DataType.STRING, unique: false, allowNull: true})
+    @Column({type: DataType.STRING, unique: false, allowNull: false})
     description: string;
 
     @BelongsTo(() => Users , 'id_user')
@@ -29,5 +39,11 @@ export class ReviewTyres extends Model<ReviewTyres, ReviewsTyresConfigAttr> {
 
     @HasOne(() => RatingTyres , 'id_review')
     rating: RatingTyres;
+
+    @BelongsTo(() => TyreModel , 'id_model')
+    model: TyreModel;
+
+    @BelongsTo(() => TyreBrand , 'id_brand')
+    brand: TyreBrand;
 
 }

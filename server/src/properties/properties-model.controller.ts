@@ -19,13 +19,13 @@ export class PropertiesModelController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.propertiesModelService.findOne(+id);
+  findOne(@Param('id') getPropertyDto: GetPropertyDto) {
+    return this.propertiesModelService.findModelById(getPropertyDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePropertyDto: UpdatePropertyDto) {
-    return this.propertiesModelService.update(+id, updatePropertyDto);
+  @Patch('/model/update')
+  update( @Body() updatePropertyDto: UpdatePropertyDto) {
+    return this.propertiesModelService.updateTyreModel(updatePropertyDto);
   }
 
   @Delete(':id')

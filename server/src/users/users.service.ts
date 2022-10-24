@@ -1,26 +1,81 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
 import { CreateUserDto } from './dto/create-user.dto';
+import { GetUserDto } from './dto/get-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Users } from './entities/users.model';
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+
+  constructor(@InjectModel(Users) private usersRepository: typeof Users,
+    ) {}
+
+  async createUser(createUserDto: CreateUserDto) {
+
+    try {
+      
+      const user = await this.usersRepository.create(createUserDto);
+
+      return user;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+    
+
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAlluser() {
+
+    try {
+
+      const usersAll = await this.usersRepository.findAll({include: {all: true}});
+
+      return usersAll;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+
+    }
+
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findUserById(getUserDto: GetUserDto) {
+
+    try {
+
+      const userId = await this.usersRepository.findByPk(getUserDto.id_user, {include: {all: true}});
+
+      return userId;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+
+    }
+
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async removeUser(getUserDto: GetUserDto) {
+
+    try {
+
+      const removeTyres = await this.usersRepository.destroy({where: {id_user : getUserDto.id_user}});
+      
+      return removeTyres;
+
+    } catch {
+      
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+
+    }
   }
 }

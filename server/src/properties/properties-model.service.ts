@@ -4,17 +4,34 @@ import { CreatePropertyDto } from './dto/create-property.dto';
 import { GetPropertyDto } from './dto/get-property.dto';
 import { UpdatePropertyDto } from './dto/update-property.dto';
 import { TyreModel } from './entities/tyre-model.model';
+import { TyresService } from 'src/tyres/tyres.service';
 
 @Injectable()
 export class PropertiesModelService {
-  constructor(@InjectModel(TyreModel) private tyreModelRepository: typeof TyreModel) {}
+  constructor(@InjectModel(TyreModel) private tyreModelRepository: typeof TyreModel, 
+  private tyresService: TyresService) {}
 
   async createTyreModel(createPropertyDto: CreatePropertyDto) {
+ 
     try {
-      
-      const tyreModel = await this.tyreModelRepository.create(createPropertyDto);
 
-      return tyreModel;
+        const tyres = await this.tyresService.findTyresById(createPropertyDto);
+
+       if(tyres) {
+
+        const tyreModel = await this.tyreModelRepository.create(createPropertyDto);
+        
+        await tyreModel.$add('tyres', [createPropertyDto.id_tyres])
+
+        tyreModel.tyres.push(tyres);
+
+        return tyreModel;
+
+      } else {
+
+        return new HttpException(`Data ${createPropertyDto.id_tyres} not found`, HttpStatus.NOT_FOUND);
+
+      }
 
     } catch {
 
@@ -39,12 +56,56 @@ export class PropertiesModelService {
     
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} property`;
+  async findModelById(getPropertyDto: GetPropertyDto) {
+
+    try {
+
+      const modelId = await this.tyreModelRepository.findByPk(getPropertyDto.id, {include: {all: true}});
+
+      return modelId;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+
+    }
   }
 
-  update(id: number, updatePropertyDto: UpdatePropertyDto) {
-    return `This action updates a #${id} property`;
+  async updateTyreModel(updatePropertyDto: UpdatePropertyDto) {
+
+    try {
+
+      const modelTyresId = await this.tyreModelRepository.findByPk(updatePropertyDto.id, {include: {all: true}});
+      const tyresId = await this.tyresService.findTyresById(updatePropertyDto);
+
+      if(modelTyresId) {
+
+        await this.tyreModelRepository.update(
+        { model : updatePropertyDto.model, 
+          id : updatePropertyDto.id,
+          tyres: modelTyresId.tyres
+        }, {where: {id : updatePropertyDto.id}});
+
+        const updateBrand = modelTyresId.tyres.find( item => item.id == updatePropertyDto.id_tyres);
+       
+        if(!updateBrand) {
+
+          await modelTyresId.$add('tyres', [updatePropertyDto.id_tyres])
+          modelTyresId.tyres.push(tyresId);
+
+        }
+
+        const updateTyreModel = await this.tyreModelRepository.findByPk(updatePropertyDto.id, {include: {all: true}});
+
+        return updateTyreModel; 
+
+      }
+      
+    } catch {
+
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+
+    }
   }
 
   async removeTyreModel(getPropertyDto: GetPropertyDto) { 

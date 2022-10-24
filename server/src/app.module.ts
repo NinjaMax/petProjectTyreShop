@@ -28,7 +28,7 @@ import { TyreBrand } from './properties/entities/tyre-brand.model';
 import { TyreModel } from './properties/entities/tyre-model.model';
 import { PropertiesModule } from './properties/properties.module';
 import { UsersModule } from './users/users.module';
-//import { Users } from './users/entities/users.model';
+import { Users } from './users/entities/users.model';
 
 @Module({
   imports: [
@@ -45,7 +45,7 @@ import { UsersModule } from './users/users.module';
       password: configService.get('POSTGRES_PASSWORD'),
       database: configService.get('POSTGRES_DB'),
       models: [Tyres, Supplier, StockTyres, PriceTyres,
-      RatingTyres, ReviewTyres, TyreBrand, TyreModel,
+      RatingTyres, ReviewTyres, TyreBrand, TyreModel, Users,
       ],
       autoLoadModels: true,
       synchronize: true,

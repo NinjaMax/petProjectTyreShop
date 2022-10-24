@@ -1,4 +1,4 @@
-import { Column, DataType, Model, Table, BelongsTo, HasMany} from "sequelize-typescript";
+import { Column, DataType, Model, Table, HasMany} from "sequelize-typescript";
 import { UsersConfigAttr } from "../interfaces/users.interface";
 import { ReviewTyres } from "src/reviews/entities/review-tyres.model";
 

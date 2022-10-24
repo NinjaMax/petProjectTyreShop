@@ -1,9 +1,11 @@
-import { Column, DataType, Model, Table, HasMany, HasOne} from "sequelize-typescript";
+import { Column, DataType, Model, Table, HasMany, BelongsTo, ForeignKey} from "sequelize-typescript";
 import { TyresConfigAttr } from '../interfaces/tyres.interface';
 import { PriceTyres } from "../../prices/entities/price-tyres.model";
 import {StockTyres} from "../../stock/entities/stock-tyres.model";
 import { TyreModel } from "src/properties/entities/tyre-model.model";
 import { TyreBrand } from "src/properties/entities/tyre-brand.model";
+import { ReviewTyres } from "src/reviews/entities/review-tyres.model";
+import { RatingTyres } from "src/ratings/entities/rating-tyres.model";
 
 @Table({tableName: 'tyres' , updatedAt: false})
 export class Tyres extends Model<Tyres, TyresConfigAttr> {
@@ -14,6 +16,14 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     full_name: string;
 
+    @ForeignKey(() => TyreBrand)
+    @Column({type: DataType.INTEGER})
+    id_brand: number;
+
+    @ForeignKey(() => TyreModel)
+    @Column({type: DataType.INTEGER})
+    id_model: number;
+
     @Column({type: DataType.DATE, unique: false, allowNull: false})
     update_date: Date;
 
@@ -23,10 +33,16 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
     @HasMany(() => PriceTyres , 'id_tyres')
     price: PriceTyres[];
 
-    @HasOne(() => TyreModel, 'id_tyres')
+    @HasMany(() => ReviewTyres , 'id_tyres')
+    reviews: ReviewTyres[];
+
+    @HasMany(() => RatingTyres, 'id_tyres')
+    rating: RatingTyres[];
+
+    @BelongsTo(() => TyreModel, 'id_model')
     tyre_model: TyreModel;
 
-    @HasOne(() => TyreBrand, 'id_tyres')
+    @BelongsTo(() => TyreBrand, 'id_brand')
     tyre_brand: TyreBrand;
     
 }

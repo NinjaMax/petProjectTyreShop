@@ -89,7 +89,7 @@ export class StockService {
       
       if(tyresId) {
 
-         await this.stockTyresRepository.update(
+        await this.stockTyresRepository.update(
         { stock : updateStockDto.stock, 
           id_sup : updateStockDto.id_sup,
           update_date : updateStockDto.update_date

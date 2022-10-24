@@ -1,26 +1,81 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus  } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
 import { CreateRatingDto } from './dto/create-rating.dto';
+import { GetRatingDto } from './dto/get-rating.dto';
 import { UpdateRatingDto } from './dto/update-rating.dto';
+import { RatingTyres } from './entities/rating-tyres.model';
 
 @Injectable()
 export class RatingsService {
-  create(createRatingDto: CreateRatingDto) {
-    return 'This action adds a new rating';
+
+  constructor(@InjectModel(RatingTyres) private ratingTyresRepository: typeof RatingTyres,
+  ) {}
+
+  async createRating(createRatingDto: CreateRatingDto) {
+
+    try {
+      
+      const rating = await this.ratingTyresRepository.create(createRatingDto);
+
+      return rating;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+    
   }
 
-  findAll() {
-    return `This action returns all ratings`;
+  async findAllRating() {
+
+    try {
+
+      const ratingsAll = await this.ratingTyresRepository.findAll({include: {all: true}});
+
+      return ratingsAll;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+
+    }
+
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} rating`;
+  async findRatingById(getRatingDto: GetRatingDto) {
+
+    try {
+
+      const ratingId = await this.ratingTyresRepository.findByPk(getRatingDto.id_rating, {include: {all: true}});
+
+      return ratingId;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+
+    }
+
   }
 
   update(id: number, updateRatingDto: UpdateRatingDto) {
     return `This action updates a #${id} rating`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} rating`;
+  async removeRating(getRatingDto: GetRatingDto) {
+
+    try {
+
+      const removeRating = await this.ratingTyresRepository.destroy({where: {id_rating : getRatingDto.id_rating}});
+      
+      return removeRating;
+
+    } catch {
+      
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+
+    }
+
   }
 }

@@ -1,4 +1,4 @@
-export class CreateUserDto {
+export class GetUserDto {
 
     readonly id_user: number;
     readonly name: string;

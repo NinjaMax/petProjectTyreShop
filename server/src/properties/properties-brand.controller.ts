@@ -19,13 +19,13 @@ export class PropertiesBrandController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.propertiesBrandService.findOne(+id);
+  findOne(@Param('id') getPropertyDto: GetPropertyDto) {
+    return this.propertiesBrandService.findBrandById(getPropertyDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePropertyDto: UpdatePropertyDto) {
-    return this.propertiesBrandService.update(+id, updatePropertyDto);
+  @Patch('/brand/update')
+  update( @Body() updatePropertyDto: UpdatePropertyDto) {
+    return this.propertiesBrandService.updateTyreBrand(updatePropertyDto);
   }
 
   @Delete(':id')

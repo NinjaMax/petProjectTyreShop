@@ -29,7 +29,6 @@ export class PricesService {
 
         await tyres.$add('price', [createPriceDto.id_tyres]);
        
-
         await supplier.$add('price', [createPriceDto.id_sup]);
        
         tyres.price.push(priceCreate);
@@ -65,6 +64,7 @@ export class PricesService {
   }
 
   async findPriceTyresById(getPriceTyresDto: GetPriceTyresDto) {
+    
     try {
 
       const tyresId = await this.priceTyresRepository.findByPk(getPriceTyresDto.id_tyres, {include: {all: true}});

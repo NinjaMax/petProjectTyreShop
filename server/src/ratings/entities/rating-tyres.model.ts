@@ -1,4 +1,4 @@
-import { Column, DataType, Model, Table, BelongsTo, ForeignKey, HasOne} from "sequelize-typescript";
+import { Column, DataType, Model, Table, BelongsTo, ForeignKey} from "sequelize-typescript";
 import { RatingTyresConfigAttr } from "../interfaces/rating-tyres.interface";
 import { Tyres } from "src/tyres/entities/tyres.model";
 import { ReviewTyres } from "src/reviews/entities/review-tyres.model";
@@ -43,16 +43,24 @@ export class RatingTyres extends Model<RatingTyres, RatingTyresConfigAttr> {
     @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     rating_price_quality: number;
 
+    @ForeignKey(() => TyreModel)
+    @Column({type: DataType.INTEGER})
+    id_tyre_model: number;
+
+    @ForeignKey(() => TyreBrand)
+    @Column({type: DataType.INTEGER})
+    id_tyre_brand: number;
+
     @BelongsTo(() => Tyres , 'id_tyres')
     tyres: Tyres;
 
     @BelongsTo(() => ReviewTyres , 'id_review')
     review: ReviewTyres;
 
-    @HasOne(() => TyreModel, 'id_rating')
+    @BelongsTo(() => TyreModel, 'id_model')
     tyre_model: TyreModel;
 
-    @HasOne(() => TyreBrand, 'id_rating')
+    @BelongsTo(() => TyreBrand, 'id_brand')
     tyre_brand: TyreBrand;
 
 }

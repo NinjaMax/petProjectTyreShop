@@ -86,6 +86,7 @@ export class TyresService {
   }
 
   async remove(getTyreDto: GetTyreDto) { 
+    
     try {
 
       const removeTyres = await this.tyresRepository.destroy({where: {id_tyres : getTyreDto.id_tyres}});
