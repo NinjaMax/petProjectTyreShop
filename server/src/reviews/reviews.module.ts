@@ -8,14 +8,18 @@ import { RatingTyres } from 'src/ratings/entities/rating-tyres.model';
 import { TyresModule } from 'src/tyres/tyres.module';
 import { RatingsModule } from 'src/ratings/ratings.module';
 import { Users } from 'src/users/entities/users.model';
+import { TyreModel } from 'src/properties/entities/tyre-model.model';
+import { TyreBrand } from 'src/properties/entities/tyre-brand.model';
+import { PropertiesModule } from 'src/properties/properties.module';
 
 
 @Module({
   controllers: [ReviewsController],
   providers: [ReviewsService],
   imports: [ 
-    SequelizeModule.forFeature([ReviewTyres, Tyres, RatingTyres, Users]),
-    TyresModule, RatingsModule
+    SequelizeModule.forFeature([ReviewTyres, Tyres, RatingTyres, Users, 
+    TyreModel, TyreBrand]),
+    TyresModule, RatingsModule, PropertiesModule
   ],
   exports: [ReviewsService]
 })

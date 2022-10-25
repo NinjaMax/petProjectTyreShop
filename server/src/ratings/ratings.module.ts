@@ -15,7 +15,7 @@ import { RatingTyres } from './entities/rating-tyres.model';
   controllers: [RatingsController],
   providers: [RatingsService], 
   imports: [ 
-    SequelizeModule.forFeature([RatingTyres,Tyres, ReviewTyres, TyreBrand,
+    SequelizeModule.forFeature([RatingTyres, Tyres, ReviewTyres, TyreBrand,
     TyreModel]),
     TyresModule,
   ],

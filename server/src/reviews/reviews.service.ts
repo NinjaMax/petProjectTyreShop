@@ -6,6 +6,8 @@ import { GetReviewDto } from './dto/get-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { ReviewTyres } from './entities/review-tyres.model';
 import { TyresService } from 'src/tyres/tyres.service';
+import { PropertiesModelService } from 'src/properties/properties-model.service';
+import { PropertiesBrandService } from 'src/properties/properties-brand.service';
 
 @Injectable()
 export class ReviewsService {
@@ -13,31 +15,47 @@ export class ReviewsService {
   constructor(@InjectModel(ReviewTyres) private reviewTyresRepository: typeof ReviewTyres,
     private ratingsService: RatingsService, 
     private tyresService: TyresService,
+    private tyreBrandService: PropertiesBrandService,
+    private tyreModelService: PropertiesModelService
    ) {}
 
   async createReview(createReviewDto: CreateReviewDto) {
 
     try {
 
-      const tyres = await this.tyresService.findTyresById(createReviewDto);
+      const tyre = await this.tyresService.findTyresById(createReviewDto);
+      const tyreModel = await this.tyreModelService.findModelById(createReviewDto);
+      const tyreBrand = await this.tyreBrandService.findBrandById(createReviewDto);
       
-      if(tyres) {
+      if(tyre && tyreModel && tyreBrand ) {
 
         const reviewCreate = await this.reviewTyresRepository.create(createReviewDto);
-
         const ratingCreate = await this.ratingsService.createRating(createReviewDto);
 
-        await tyres.$add('reviews', [createReviewDto.id_tyres]);
+        await tyre.$add('reviews', [reviewCreate.id_review]);
+        await tyre.$add('rating', [ratingCreate.id_rating])
+        await tyreModel.$add('reviews', [reviewCreate.id_review]);
+        await tyreModel.$add('ratings', [ratingCreate.id_rating]);
+        await tyreBrand.$add('reviews', [reviewCreate.id_review]);
+        await tyreBrand.$add('ratings', [ratingCreate.id_rating]);
+        await ratingCreate.$add('review', [reviewCreate.id_review]);
 
-        await ratingCreate.$add('review', [createReviewDto.id_review]);
+        tyreModel.reviews.push(reviewCreate);
+        tyreModel.ratings.push(ratingCreate);
 
-        tyres.reviews.push(reviewCreate);
+        tyreBrand.reviews.push(reviewCreate);
+        tyreBrand.ratings.push(ratingCreate);
+
+        tyre.reviews.push(reviewCreate);
+        tyre.rating.push(ratingCreate);
 
         ratingCreate.review = reviewCreate;
 
         return reviewCreate;
 
       }  
+
+      new HttpException('Data id: tyres, model, brand not found', HttpStatus.NOT_FOUND);
 
     } catch {
 

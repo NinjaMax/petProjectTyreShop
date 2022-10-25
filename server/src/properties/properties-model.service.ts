@@ -25,13 +25,13 @@ export class PropertiesModelService {
 
         tyreModel.tyres.push(tyres);
 
-        return tyreModel;
+        const tyreModelId = await this.tyreModelRepository.findByPk(createPropertyDto.id, {include: {all: true}})
 
-      } else {
-
-        return new HttpException(`Data ${createPropertyDto.id_tyres} not found`, HttpStatus.NOT_FOUND);
+        return tyreModelId;
 
       }
+
+        return new HttpException(`Data ${createPropertyDto.id_tyres} not found`, HttpStatus.NOT_FOUND);
 
     } catch {
 

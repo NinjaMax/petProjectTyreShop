@@ -35,6 +35,4 @@ export class PriceTyres extends Model<PriceTyres, PriceTyresConfigAttr>{
    @BelongsTo( () => Supplier , 'id_sup')
    supplier: Supplier;
 
-    
-
 }

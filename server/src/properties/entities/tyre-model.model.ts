@@ -7,7 +7,7 @@ import { ReviewTyres } from "src/reviews/entities/review-tyres.model";
 @Table({tableName: 'tyre_model' , updatedAt: false, createdAt: false})
 export class TyreModel extends Model<TyreModel, TyreModelConfigAttr> {
 
-    @Column({type: DataType.BIGINT, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
+    @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
     id: number;
    
     @Column({type: DataType.STRING, unique: true, allowNull: false})

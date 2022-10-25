@@ -15,23 +15,23 @@ export class PropertiesBrandService {
 
     try {
 
-      const tyres = await this.tyresService.findTyresById(createPropertyDto);
+      const tyre = await this.tyresService.findTyresById(createPropertyDto);
 
-      if(tyres) {
+      if(tyre) {
 
         const tyreBrand = await this.tyreBrandRepository.create(createPropertyDto);
         
-        await tyreBrand.$add('tyres', [createPropertyDto.id_tyres])
+        await tyreBrand.$add('tyres', [tyre.id_tyres])
 
-        tyreBrand.tyres.push(tyres);
+        tyreBrand.tyres.push(tyre);
+
+        //const tyreBrandId = await this.tyreBrandRepository.findByPk(createPropertyDto.id, {include: {all: true}})
 
         return tyreBrand;
 
-      } else {
-
-        return new HttpException(`Data ${createPropertyDto.id_tyres} not found`, HttpStatus.NOT_FOUND);
-
       }
+
+      return new HttpException(`Data ${createPropertyDto.id_tyres} is not found`, HttpStatus.NOT_FOUND);
 
     } catch {
 
