@@ -15,21 +15,21 @@ export class PropertiesModelService {
  
     try {
 
-        const tyres = await this.tyresService.findTyresById(createPropertyDto);
+        const tyre = await this.tyresService.findTyresById(createPropertyDto);
 
-       if(tyres) {
+        if(tyre) {
 
-        const tyreModel = await this.tyreModelRepository.create(createPropertyDto);
-        
-        await tyreModel.$add('tyres', [createPropertyDto.id_tyres])
+         const tyreModel = await this.tyreModelRepository.create(createPropertyDto);
+         const createTyreModel = await this.tyreModelRepository.findByPk(tyreModel.id_model, {include: {all: true}})
+         await createTyreModel.$add('tyres', [createPropertyDto.id_tyres])
 
-        tyreModel.tyres.push(tyres);
+         createTyreModel.tyres.push(tyre);
 
-        const tyreModelId = await this.tyreModelRepository.findByPk(createPropertyDto.id, {include: {all: true}})
+         const getTyreModelId = await this.tyreModelRepository.findByPk(createTyreModel.id_model, {include: {all: true}})
 
-        return tyreModelId;
+         return getTyreModelId;
 
-      }
+        }
 
         return new HttpException(`Data ${createPropertyDto.id_tyres} not found`, HttpStatus.NOT_FOUND);
 
@@ -60,7 +60,7 @@ export class PropertiesModelService {
 
     try {
 
-      const modelId = await this.tyreModelRepository.findByPk(getPropertyDto.id, {include: {all: true}});
+      const modelId = await this.tyreModelRepository.findByPk(getPropertyDto.id_model, {include: {all: true}});
 
       return modelId;
 
@@ -75,16 +75,16 @@ export class PropertiesModelService {
 
     try {
 
-      const modelTyresId = await this.tyreModelRepository.findByPk(updatePropertyDto.id, {include: {all: true}});
+      const modelTyresId = await this.tyreModelRepository.findByPk(updatePropertyDto.id_model, {include: {all: true}});
       const tyresId = await this.tyresService.findTyresById(updatePropertyDto);
 
       if(modelTyresId) {
 
         await this.tyreModelRepository.update(
         { model : updatePropertyDto.model, 
-          id : updatePropertyDto.id,
+          id_model : updatePropertyDto.id_model,
           tyres: modelTyresId.tyres
-        }, {where: {id : updatePropertyDto.id}});
+        }, {where: {id_model : updatePropertyDto.id_model}});
 
         const updateBrand = modelTyresId.tyres.find( item => item.id == updatePropertyDto.id_tyres);
        
@@ -95,7 +95,7 @@ export class PropertiesModelService {
 
         }
 
-        const updateTyreModel = await this.tyreModelRepository.findByPk(updatePropertyDto.id, {include: {all: true}});
+        const updateTyreModel = await this.tyreModelRepository.findByPk(updatePropertyDto.id_model, {include: {all: true}});
 
         return updateTyreModel; 
 

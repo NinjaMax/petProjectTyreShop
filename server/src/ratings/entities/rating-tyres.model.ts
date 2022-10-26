@@ -45,11 +45,11 @@ export class RatingTyres extends Model<RatingTyres, RatingTyresConfigAttr> {
 
     @ForeignKey(() => TyreModel)
     @Column({type: DataType.INTEGER})
-    id_tyre_model: number;
+    id_model: number;
 
     @ForeignKey(() => TyreBrand)
     @Column({type: DataType.INTEGER})
-    id_tyre_brand: number;
+    id_brand: number;
 
     @BelongsTo(() => Tyres , 'id_tyres')
     tyres: Tyres;

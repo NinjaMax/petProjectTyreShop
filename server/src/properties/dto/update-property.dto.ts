@@ -4,6 +4,8 @@ import { CreatePropertyDto } from './create-property.dto';
 export class UpdatePropertyDto extends PartialType(CreatePropertyDto) {
 
     readonly id: number;
+    readonly id_brand: number;
+    readonly id_model: number;
     readonly width: string;
     readonly height: string;
     readonly diametr: string;

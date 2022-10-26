@@ -31,6 +31,8 @@ export class ReviewsService {
 
         const reviewCreate = await this.reviewTyresRepository.create(createReviewDto);
         const ratingCreate = await this.ratingsService.createRating(createReviewDto);
+        
+        const newReview = await this.reviewTyresRepository.findByPk(reviewCreate.id_review, {include: {all: true}});
 
         await tyre.$add('reviews', [reviewCreate.id_review]);
         await tyre.$add('rating', [ratingCreate.id_rating])
@@ -38,7 +40,10 @@ export class ReviewsService {
         await tyreModel.$add('ratings', [ratingCreate.id_rating]);
         await tyreBrand.$add('reviews', [reviewCreate.id_review]);
         await tyreBrand.$add('ratings', [ratingCreate.id_rating]);
-        await ratingCreate.$add('review', [reviewCreate.id_review]);
+        await newReview.$add('rating', ratingCreate.id_rating);
+        
+        tyre.reviews.push(reviewCreate);
+        tyre.rating.push(ratingCreate);
 
         tyreModel.reviews.push(reviewCreate);
         tyreModel.ratings.push(ratingCreate);
@@ -46,16 +51,15 @@ export class ReviewsService {
         tyreBrand.reviews.push(reviewCreate);
         tyreBrand.ratings.push(ratingCreate);
 
-        tyre.reviews.push(reviewCreate);
-        tyre.rating.push(ratingCreate);
+        newReview['rating'] = ratingCreate;
 
-        ratingCreate.review = reviewCreate;
+        const getNewReview = await this.reviewTyresRepository.findByPk(reviewCreate.id_review, {include: {all: true}});
 
-        return reviewCreate;
+        return getNewReview;
 
       }  
 
-      new HttpException('Data id: tyres, model, brand not found', HttpStatus.NOT_FOUND);
+      return new HttpException('Data id: tyres or model or brand not found', HttpStatus.NOT_FOUND);
 
     } catch {
 
@@ -73,7 +77,7 @@ export class ReviewsService {
 
       return reviewTyresAll;
 
-    } catch (error) {
+    } catch {
 
       throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
 

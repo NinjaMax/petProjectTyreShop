@@ -1,6 +1,8 @@
 export class GetPropertyDto {
 
     readonly id: number;
+    readonly id_brand: number;
+    readonly id_model: number;
     readonly width: string;
     readonly height: string;
     readonly diametr: string;

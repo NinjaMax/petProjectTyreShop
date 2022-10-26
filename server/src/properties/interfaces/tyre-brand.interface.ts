@@ -1,6 +1,6 @@
 export interface TyreBrandConfigAttr {
 
-    id: number;
+    id_brand: number;
     brand: string;
     
 }

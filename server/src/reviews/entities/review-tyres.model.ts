@@ -18,14 +18,14 @@ export class ReviewTyres extends Model<ReviewTyres, ReviewsTyresConfigAttr> {
 
     @ForeignKey(() => TyreModel)
     @Column({type: DataType.INTEGER, allowNull: false})
-    id_tyres_model: number;
+    id_model: number;
 
     @ForeignKey(() => TyreBrand)
     @Column({type: DataType.INTEGER, allowNull: false})
-    id_tyres_brand: number;
+    id_brand: number;
 
     @ForeignKey(() => Users)
-    @Column({type: DataType.INTEGER, unique: true, autoIncrement: false, allowNull: true})
+    @Column({type: DataType.INTEGER, unique: true, allowNull: true})
     id_user: number;
     
     @Column({type: DataType.STRING, unique: false, allowNull: false})

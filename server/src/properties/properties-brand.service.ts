@@ -20,14 +20,13 @@ export class PropertiesBrandService {
       if(tyre) {
 
         const tyreBrand = await this.tyreBrandRepository.create(createPropertyDto);
-        
-        await tyreBrand.$add('tyres', [tyre.id_tyres])
+        const createTyreBrand = await this.tyreBrandRepository.findByPk(tyreBrand.id_brand, {include: {all: true}});
+        await createTyreBrand.$add('tyres', [createPropertyDto.id_tyres]);
+        createTyreBrand.tyres.push(tyre);
 
-        tyreBrand.tyres.push(tyre);
+        const getTyreBrand = await this.tyreBrandRepository.findByPk(createTyreBrand.id_brand, {include: {all: true}});
 
-        //const tyreBrandId = await this.tyreBrandRepository.findByPk(createPropertyDto.id, {include: {all: true}})
-
-        return tyreBrand;
+        return getTyreBrand;
 
       }
 
@@ -60,7 +59,7 @@ export class PropertiesBrandService {
 
     try {
 
-      const brandId = await this.tyreBrandRepository.findByPk(getPropertyDto.id, {include: {all: true}});
+      const brandId = await this.tyreBrandRepository.findByPk(getPropertyDto.id_brand, {include: {all: true}});
 
       return brandId;
 
@@ -76,27 +75,27 @@ export class PropertiesBrandService {
 
     try {
 
-      const brandTyresId = await this.tyreBrandRepository.findByPk(updatePropertyDto.id, {include: {all: true}});
+      const brandTyresId = await this.tyreBrandRepository.findByPk(updatePropertyDto.id_brand, {include: {all: true}});
       const tyresId = await this.tyresService.findTyresById(updatePropertyDto);
 
       if(brandTyresId) {
 
         await this.tyreBrandRepository.update(
         { brand : updatePropertyDto.brand, 
-          id : updatePropertyDto.id,
+          id_brand : updatePropertyDto.id_brand,
           tyres: brandTyresId.tyres
-        }, {where: {id : updatePropertyDto.id}});
+        }, {where: {id_brand : updatePropertyDto.id_brand}});
 
         const updateBrand = brandTyresId.tyres.find( item => item.id == updatePropertyDto.id_tyres);
        
         if(!updateBrand) {
 
-          await brandTyresId.$add('tyres', [updatePropertyDto.id_tyres])
+          await brandTyresId.$add('tyres', [updatePropertyDto.id_tyres]);
           brandTyresId.tyres.push(tyresId);
 
         }
 
-        const updateTyreBrand = await this.tyreBrandRepository.findByPk(updatePropertyDto.id, {include: {all: true}});
+        const updateTyreBrand = await this.tyreBrandRepository.findByPk(updatePropertyDto.id_brand, {include: {all: true}});
 
         return updateTyreBrand; 
 

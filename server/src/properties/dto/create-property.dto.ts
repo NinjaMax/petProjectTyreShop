@@ -1,5 +1,7 @@
 export class CreatePropertyDto {
 
+    readonly id_brand: number;
+    readonly id_model: number;
     readonly id: number;
     readonly width: string;
     readonly height: string;

@@ -1,6 +1,6 @@
 export interface TyreModelConfigAttr {
 
-    id: number;
+    id_model: number;
     model: string;
     
 }
