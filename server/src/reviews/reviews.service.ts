@@ -22,7 +22,7 @@ export class ReviewsService {
   async createReview(createReviewDto: CreateReviewDto) {
 
     try {
-
+      
       const tyre = await this.tyresService.findTyresById(createReviewDto);
       const tyreModel = await this.tyreModelService.findModelById(createReviewDto);
       const tyreBrand = await this.tyreBrandService.findBrandById(createReviewDto);
@@ -31,7 +31,6 @@ export class ReviewsService {
 
         const reviewCreate = await this.reviewTyresRepository.create(createReviewDto);
         const ratingCreate = await this.ratingsService.createRating(createReviewDto);
-        
         const newReview = await this.reviewTyresRepository.findByPk(reviewCreate.id_review, {include: {all: true}});
 
         await tyre.$add('reviews', [reviewCreate.id_review]);
@@ -40,7 +39,9 @@ export class ReviewsService {
         await tyreModel.$add('ratings', [ratingCreate.id_rating]);
         await tyreBrand.$add('reviews', [reviewCreate.id_review]);
         await tyreBrand.$add('ratings', [ratingCreate.id_rating]);
-        await newReview.$add('rating', ratingCreate.id_rating);
+        await newReview.$set('rating', ratingCreate.id_rating);
+        
+        newReview.rating = ratingCreate;
         
         tyre.reviews.push(reviewCreate);
         tyre.rating.push(ratingCreate);
@@ -50,8 +51,6 @@ export class ReviewsService {
 
         tyreBrand.reviews.push(reviewCreate);
         tyreBrand.ratings.push(ratingCreate);
-
-        newReview['rating'] = ratingCreate;
 
         const getNewReview = await this.reviewTyresRepository.findByPk(reviewCreate.id_review, {include: {all: true}});
 

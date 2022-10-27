@@ -1,4 +1,5 @@
 export class GetRatingDto {
+    
     readonly id_rating: number;
     readonly rating_overall: number;
     readonly rating_dry_road: number;

@@ -3,6 +3,7 @@ import { RatingsService } from './ratings.service';
 import { GetRatingDto } from './dto/get-rating.dto';
 import { CreateRatingDto } from './dto/create-rating.dto';
 import { UpdateRatingDto } from './dto/update-rating.dto';
+//import { CreateReviewDto } from 'src/reviews/dto/create-review.dto';
 
 @Controller('ratings')
 export class RatingsController {
@@ -18,8 +19,8 @@ export class RatingsController {
     return this.ratingsService.findAllRating();
   }
 
-  @Get(':id')
-  findOne(@Param('id') getRatingDto: GetRatingDto) {
+  @Get('/id')
+  findOne(@Body() getRatingDto: GetRatingDto) {
     return this.ratingsService.findRatingById(getRatingDto);
   }
 

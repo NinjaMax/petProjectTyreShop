@@ -1,11 +1,11 @@
 export class CreatePropertyDto {
 
-    readonly id_brand: number;
-    readonly id_model: number;
     readonly id: number;
-    readonly width: string;
-    readonly height: string;
-    readonly diametr: string;
+    readonly id_model: number;
+    readonly id_brand: number;
+    readonly width: number;
+    readonly height: number;
+    readonly diametr: number;
     readonly season: string;
     readonly brand: string;
     readonly model: string;
@@ -13,7 +13,9 @@ export class CreatePropertyDto {
     readonly stud: string;
     readonly xl: string;
     readonly country: string;
-    readonly year: string;
+    readonly year: number;
+    readonly speed_index: number;
+    readonly load_index: number;
     readonly om: string;
     readonly euromark: string;
 

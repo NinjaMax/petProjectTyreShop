@@ -8,9 +8,9 @@ export class CreateReviewDto {
     readonly id: number;
     readonly id_model: number;
     readonly id_brand: number;
-    readonly width: string;
-    readonly height: string;
-    readonly diametr: string;
+    readonly width: number;
+    readonly height: number;
+    readonly diametr: number;
     readonly season: string;
     readonly brand: string;
     readonly model: string;
@@ -18,7 +18,9 @@ export class CreateReviewDto {
     readonly stud: string;
     readonly xl: string;
     readonly country: string;
-    readonly year: string;
+    readonly year: number;
+    readonly speed_index: number;
+    readonly load_index: number;
     readonly om: string;
     readonly euromark: string;
     //readonly name: string;

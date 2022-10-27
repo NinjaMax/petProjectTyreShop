@@ -19,28 +19,28 @@ export class RatingTyres extends Model<RatingTyres, RatingTyresConfigAttr> {
     @Column({type: DataType.INTEGER})
     id_review: number;
     
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
+    @Column({type: DataType.FLOAT, unique: false, allowNull: false})
     rating_overall: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+    @Column({type: DataType.FLOAT, unique: false, allowNull: true})
     rating_dry_road: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+    @Column({type: DataType.FLOAT, unique: false, allowNull: true})
     rating_wet_road: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+    @Column({type: DataType.FLOAT, unique: false, allowNull: true})
     rating_snow_road: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+    @Column({type: DataType.FLOAT, unique: false, allowNull: true})
     rating_ice_road: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+    @Column({type: DataType.FLOAT, unique: false, allowNull: true})
     rating_cross_country: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+    @Column({type: DataType.FLOAT, unique: false, allowNull: true})
     rating_treadwear: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+    @Column({type: DataType.FLOAT, unique: false, allowNull: true})
     rating_price_quality: number;
 
     @ForeignKey(() => TyreModel)

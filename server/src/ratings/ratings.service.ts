@@ -9,6 +9,7 @@ import { RatingTyres } from './entities/rating-tyres.model';
 export class RatingsService {
 
   constructor(@InjectModel(RatingTyres) private ratingTyresRepository: typeof RatingTyres,
+
   ) {}
 
   async createRating(createRatingDto: CreateRatingDto) {
