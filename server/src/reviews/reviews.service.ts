@@ -85,12 +85,12 @@ export class ReviewsService {
   }
 
   async findReviewById(getReviewDto: GetReviewDto) {
+
     try {
 
       const reviewId = await this.reviewTyresRepository.findByPk(getReviewDto.id_review, {include: {all: true}});
 
       return reviewId;
-
 
     } catch {
 

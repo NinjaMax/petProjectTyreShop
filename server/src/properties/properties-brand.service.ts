@@ -37,6 +37,7 @@ export class PropertiesBrandService {
       throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
 
     }
+
   }
 
   async findAllTyreBrand() {
@@ -100,6 +101,8 @@ export class PropertiesBrandService {
         return updateTyreBrand; 
 
       }
+
+      return new HttpException(`Data "id_brand" or "brand" is incorrect or Not Found`, HttpStatus.NOT_FOUND);
       
     } catch {
 

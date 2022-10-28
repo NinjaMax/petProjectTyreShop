@@ -18,8 +18,8 @@ export class PropertiesModelController {
     return this.propertiesModelService.findAllTyreModel();
   }
 
-  @Get(':id')
-  findOne(@Param('id') getPropertyDto: GetPropertyDto) {
+  @Get('/model/id')
+  findOne(@Param() getPropertyDto: GetPropertyDto) {
     return this.propertiesModelService.findModelById(getPropertyDto);
   }
 

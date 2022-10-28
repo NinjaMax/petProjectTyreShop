@@ -29,6 +29,7 @@ import { TyreModel } from './properties/entities/tyre-model.model';
 import { PropertiesModule } from './properties/properties.module';
 import { UsersModule } from './users/users.module';
 import { Users } from './users/entities/users.model';
+import { CategorysModule } from './categorys/categorys.module';
 
 @Module({
   imports: [
@@ -53,7 +54,7 @@ import { Users } from './users/entities/users.model';
     }),
       TyresModule, PricesModule, StockModule,
       SuppliersModule, ReviewsModule, RatingsModule,
-      PropertiesModule, UsersModule
+      PropertiesModule, UsersModule, CategorysModule
   ],
   controllers: [],
   providers: [],

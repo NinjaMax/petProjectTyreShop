@@ -18,7 +18,7 @@ export class PropertiesBrandController {
     return this.propertiesBrandService.findAllTyreBrand();
   }
 
-  @Get(':id')
+  @Get('/model/id')
   findOne(@Param('id') getPropertyDto: GetPropertyDto) {
     return this.propertiesBrandService.findBrandById(getPropertyDto);
   }

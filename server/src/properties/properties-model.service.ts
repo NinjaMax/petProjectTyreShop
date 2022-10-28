@@ -69,6 +69,7 @@ export class PropertiesModelService {
       throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
 
     }
+    
   }
 
   async updateTyreModel(updatePropertyDto: UpdatePropertyDto) {
@@ -100,6 +101,8 @@ export class PropertiesModelService {
         return updateTyreModel; 
 
       }
+
+      return new HttpException(`Data "id_model" or "model" is incorrect or Not Found`, HttpStatus.NOT_FOUND);
       
     } catch {
 
@@ -108,7 +111,8 @@ export class PropertiesModelService {
     }
   }
 
-  async removeTyreModel(getPropertyDto: GetPropertyDto) { 
+  async removeTyreModel(getPropertyDto: GetPropertyDto) {
+
     try {
 
       const removeTyreModel = await this.tyreModelRepository.destroy({where: {id : getPropertyDto.id}});
