@@ -1,4 +1,4 @@
-export class CreateOrderDto {
+export class GetBasketDto {
 
     readonly id_goods: number;
     readonly id_cat: number;
