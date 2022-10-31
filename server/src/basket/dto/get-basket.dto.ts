@@ -5,6 +5,7 @@ export class GetBasketDto {
     readonly goods: number;
     readonly price: number;
     readonly count: number;
+    readonly id_basket: number;
     
     readonly price_wholesale: number;
     //readonly price: number;

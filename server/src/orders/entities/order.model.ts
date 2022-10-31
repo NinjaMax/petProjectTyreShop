@@ -1,13 +1,7 @@
-import { Column, DataType, Model, Table, HasMany, BelongsTo, ForeignKey} from "sequelize-typescript";
+import { Column, DataType, Model, Table, BelongsTo, ForeignKey} from "sequelize-typescript";
 import { Basket } from "src/basket/entities/basket.model";
 import { Users } from "src/users/entities/users.model";
 import { OrdersConfigAttr } from '../interfaces/orders.interface';
-//import { PriceTyres } from "../../prices/entities/price-tyres.model";
-//import {StockTyres} from "../../stock/entities/stock-tyres.model";
-//import { TyreModel } from "src/properties/entities/tyre-model.model";
-//import { TyreBrand } from "src/properties/entities/tyre-brand.model";
-//import { ReviewTyres } from "src/reviews/entities/review-tyres.model";
-//import { RatingTyres } from "src/ratings/entities/rating-tyres.model";
 
 @Table({tableName: 'order' })
 export class Orders extends Model<Orders, OrdersConfigAttr> {
@@ -40,17 +34,14 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
     @Column({type: DataType.INTEGER})
     id_user: number;
 
-    @ForeignKey(() => TyreModel)
+    @ForeignKey(() => Basket)
     @Column({type: DataType.INTEGER})
-    id_model: number;
-
-    @Column({type: DataType.DATE, unique: false, allowNull: false})
-    update_date: Date;
+    id_basket: number;
 
     @BelongsTo(() => Users, 'id_user')
     user: Users;
 
-    @BelongsTo(() => Basket, 'id_brand')
+    @BelongsTo(() => Basket, 'id_basket')
     basket: Basket;
     
 }

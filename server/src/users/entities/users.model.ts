@@ -1,6 +1,8 @@
-import { Column, DataType, Model, Table, HasMany} from "sequelize-typescript";
+import { Column, DataType, Model, Table, HasMany, HasOne} from "sequelize-typescript";
 import { UsersConfigAttr } from "../interfaces/users.interface";
 import { ReviewTyres } from "src/reviews/entities/review-tyres.model";
+import { Orders } from "src/orders/entities/order.model";
+import { Basket } from "src/basket/entities/basket.model";
 
 @Table({tableName: 'user', createdAt: false, updatedAt: false})
 export class Users extends Model<Users, UsersConfigAttr> {
@@ -20,8 +22,21 @@ export class Users extends Model<Users, UsersConfigAttr> {
     @Column({type: DataType.STRING, unique: false, allowNull: true})
     email: string;
 
+    @Column({type: DataType.STRING, unique: false, allowNull: true})
+    token: string;
+
+    @Column({type: DataType.STRING, unique: false, allowNull: false, defaultValue: 'customer'})
+    role: string;
+
     @HasMany(() => ReviewTyres , 'id_user')
     reviews: ReviewTyres[];
+
+    @HasOne(() => Basket, 'id_user')
+    basket: Basket;
+
+    @HasMany(() => Orders , 'id_user')
+    orders: Orders[];
+
     
 
 }
