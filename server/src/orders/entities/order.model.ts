@@ -28,7 +28,7 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
     total: number;
 
     @Column({type: DataType.STRING, unique: false, allowNull: true})
-    comments: string;
+    notes: string;
 
     @ForeignKey(() => Users)
     @Column({type: DataType.INTEGER})
@@ -43,5 +43,8 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
 
     @BelongsTo(() => Basket, 'id_basket')
     basket: Basket;
+
+    //@HasMany(() => Comments, 'id_order_sup')
+    //comments: Comments[];
     
 }

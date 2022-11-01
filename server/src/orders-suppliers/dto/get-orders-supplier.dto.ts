@@ -1,4 +1,4 @@
-export class CreateOrdersSupplierDto {
+export class GetOrdersSuppliersDto {
 
     readonly id_goods: number;
     readonly id_cat: number;
