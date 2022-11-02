@@ -1,17 +1,7 @@
 import { Module } from '@nestjs/common';
-//import { AppController } from './app.controller';
-//import { AppService } from './app.service';
 import { TyresModule } from './tyres/tyres.module';
-//import { WheelsModule } from './wheels/wheels.module';
-//import { BatteriesModule } from './batteries/batteries.module';
-//import { OilsModule } from './oils/oils.module';
 import { SuppliersModule } from './suppliers/suppliers.module';
-//import { BasketModule } from './basket/basket.module';
-//import { OrdersModule } from './orders/orders.module';
 import { PricesModule } from './prices/prices.module';
-//import { PropertiesModule } from './properties/properties.module';
-//import { OrdersSuppliersModule } from './orders-suppliers/orders-suppliers.module';
-//import { PostsModule } from './posts/posts.module';
 import { PriceTyres } from './prices/entities/price-tyres.model';
 import { Tyres } from './tyres/entities/tyres.model';
 import { Supplier } from './suppliers/entities/supplier.model';
@@ -30,6 +20,17 @@ import { PropertiesModule } from './properties/properties.module';
 import { UsersModule } from './users/users.module';
 import { Users } from './users/entities/users.model';
 import { CategorysModule } from './categorys/categorys.module';
+import { CommentsModule } from './comments/comments.module';
+import { StorageModule } from './storage/storage.module';
+import { SalesModule } from './sales/sales.module';
+import { CashboxModule } from './cashbox/cashbox.module';
+import { BalanceModule } from './balance/balance.module';
+import { PaynmentModule } from './paynment/paynment.module';
+import { ExpensesModule } from './expenses/expenses.module';
+import { ServicesModule } from './add_services/services.module';
+import { WheelsModule } from './wheels/wheels.module';
+import { BatteriesModule } from './batteries/batteries.module';
+import { OilsModule } from './oils/oils.module';
 
 @Module({
   imports: [
@@ -52,9 +53,12 @@ import { CategorysModule } from './categorys/categorys.module';
       synchronize: true,
       }), inject: [ConfigService],
     }),
-      TyresModule, PricesModule, StockModule,
-      SuppliersModule, ReviewsModule, RatingsModule,
-      PropertiesModule, UsersModule, CategorysModule
+      TyresModule, WheelsModule, BatteriesModule, OilsModule,
+      PricesModule, StockModule, SuppliersModule, ReviewsModule,
+      RatingsModule, PropertiesModule, UsersModule, 
+      CategorysModule, CommentsModule, StorageModule, 
+      SalesModule, CashboxModule, BalanceModule, 
+      PaynmentModule, ExpensesModule, ServicesModule
   ],
   controllers: [],
   providers: [],

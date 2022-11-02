@@ -1,5 +1,6 @@
 export class GetOrdersSuppliersDto {
 
+    readonly id_order_sup: number;
     readonly id_goods: number;
     readonly id_cat: number;
     readonly goods: string;

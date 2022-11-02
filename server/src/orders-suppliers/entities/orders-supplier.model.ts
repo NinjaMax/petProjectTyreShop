@@ -1,4 +1,5 @@
-import { Column, DataType, Model, Table, BelongsTo, ForeignKey} from "sequelize-typescript";
+import { Column, DataType, Model, Table, BelongsTo, ForeignKey, HasMany} from "sequelize-typescript";
+import { Comments } from "src/comments/entities/comment.entity";
 import { Supplier } from "src/suppliers/entities/supplier.model";
 import { Users } from "src/users/entities/users.model";
 import { OrdersSupConfigAttr } from '../interfaces/order-sup.interface';
@@ -47,7 +48,7 @@ export class OrdersSupplier extends Model<OrdersSupplier, OrdersSupConfigAttr> {
     @BelongsTo(() => Supplier, 'id_sup')
     supplier: Supplier;
 
-    //@HasMany(() => Comments, 'id_order_sup')
-    //comments: Comments[];
+    @HasMany(() => Comments, 'id_order_sup')
+    comments: Comments[];
     
 }
