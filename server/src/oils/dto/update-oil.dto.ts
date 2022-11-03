@@ -1,4 +1,9 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateOilDto } from './create-oil.dto';
 
-export class UpdateOilDto extends PartialType(CreateOilDto) {}
+export class UpdateOilDto extends PartialType(CreateOilDto) {
+
+    readonly id_oil: number;
+    readonly full_name: string;
+    
+}

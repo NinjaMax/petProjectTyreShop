@@ -2,6 +2,9 @@ import { Column, DataType, Model, Table, HasMany} from "sequelize-typescript";
 import { SuppliersConfigAttr } from '../interfaces/suppliers.interface';
 import { StockTyres } from '../../stock/entities/stock-tyres.model';
 import { PriceTyres } from "src/prices/entities/price-tyres.model";
+import { PriceWheels } from "src/prices/entities/price-wheels.model";
+import { PriceBatteries } from "src/prices/entities/price-battery.model";
+import { PriceOil } from "src/prices/entities/price-oils.model";
 
 @Table({tableName: 'suppliers' , updatedAt: false})
 export class Supplier extends Model<Supplier, SuppliersConfigAttr> {
@@ -25,5 +28,15 @@ export class Supplier extends Model<Supplier, SuppliersConfigAttr> {
     stock: StockTyres[];
 
     @HasMany(() => PriceTyres, 'id_sup')
-    price: PriceTyres[];
+    price_tyres: PriceTyres[];
+
+    @HasMany(() => PriceWheels, 'id_sup')
+    price_wheels: PriceWheels[];
+
+    @HasMany(() => PriceBatteries, 'id_sup')
+    price_batteries: PriceBatteries[];
+
+    @HasMany(() => PriceOil, 'id_sup')
+    price_oils: PriceOil[];
+
 }

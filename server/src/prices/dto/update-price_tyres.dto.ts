@@ -1,7 +1,7 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreatePriceTyresDto } from './create-price_tyres.dto';
+import { CreatePriceDto } from './create-price.dto';
 
-export class UpdatePriceTyresDto extends PartialType(CreatePriceTyresDto) {
+export class UpdatePriceTyresDto extends PartialType(CreatePriceDto) {
 
     readonly price_wholesale: number;
     readonly price: number;

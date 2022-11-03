@@ -27,6 +27,4 @@ export class StockTyres extends Model<StockTyres, StockTyresConfigAttr> {
     supplier: Supplier;
 
 
-    
-
 }

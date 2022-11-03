@@ -1,21 +1,21 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreatePriceTyresDto } from './dto/create-price_tyres.dto';
+import { CreatePriceDto } from './dto/create-price.dto';
 import { UpdatePriceTyresDto } from './dto/update-price_tyres.dto';
-import { GetPriceTyresDto } from './dto/get-price_tyres.dto';
-import { PriceTyres } from '../prices/entities/price-tyres.model';
+import { GetPriceDto } from './dto/get-price.dto';
+import { PriceTyres } from './entities/price-tyres.model';
 import { TyresService } from 'src/tyres/tyres.service';
 import { SuppliersService } from 'src/suppliers/suppliers.service';
 
 @Injectable()
-export class PricesService {
+export class PriceTyresService {
 
   constructor(@InjectModel(PriceTyres) private priceTyresRepository: typeof PriceTyres,
   private tyresService: TyresService, 
   private suppliersService : SuppliersService 
   ) {}
 
-  async createPriceTyres(createPriceDto: CreatePriceTyresDto) {
+  async createPriceTyres(createPriceDto: CreatePriceDto) {
     
     try {
 
@@ -29,11 +29,11 @@ export class PricesService {
 
         await tyres.$add('price', [createPriceDto.id_tyres]);
        
-        await supplier.$add('price', [createPriceDto.id_sup]);
+        await supplier.$add('price_tyres', [createPriceDto.id_sup]);
        
         tyres.price.push(priceCreate);
 
-        supplier.price.push(priceCreate);
+        supplier.price_tyres.push(priceCreate);
 
         return tyres;
 
@@ -63,11 +63,11 @@ export class PricesService {
     
   }
 
-  async findPriceTyresById(getPriceTyresDto: GetPriceTyresDto) {
+  async findPriceTyresById(getPriceDto: GetPriceDto) {
     
     try {
 
-      const tyresId = await this.priceTyresRepository.findByPk(getPriceTyresDto.id_tyres, {include: {all: true}});
+      const tyresId = await this.priceTyresRepository.findByPk(getPriceDto.id_tyres, {include: {all: true}});
 
       return tyresId;
 
@@ -111,11 +111,11 @@ export class PricesService {
     
   }
 
-  async removePrice(getPriceTyresDto: GetPriceTyresDto) {
+  async removePrice(getPriceDto: GetPriceDto) {
 
     try {
 
-      const removePrice = await this.priceTyresRepository.destroy({where: {id_tyres : getPriceTyresDto.id_tyres}});
+      const removePrice = await this.priceTyresRepository.destroy({where: {id_tyres : getPriceDto.id_tyres}});
 
       return removePrice;
 

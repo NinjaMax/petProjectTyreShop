@@ -1,6 +1,9 @@
-export class CreateStockTyresDto {
+export class CreateStockDto {
 
    readonly id_tyres: number;
+   readonly id_wheel: number;
+   readonly id_oil: number;
+   readonly id_battery: number;
    readonly id_sup: number;
    readonly stock: number;
    readonly update_date: Date;

@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { BatteriesService } from './batteries.service';
 import { CreateBatteryDto } from './dto/create-battery.dto';
+import { GetBatteryDto } from './dto/get-battery.dto';
 import { UpdateBatteryDto } from './dto/update-battery.dto';
 
 @Controller('batteries')
@@ -9,17 +10,17 @@ export class BatteriesController {
 
   @Post()
   create(@Body() createBatteryDto: CreateBatteryDto) {
-    return this.batteriesService.create(createBatteryDto);
+    return this.batteriesService.createBattery(createBatteryDto);
   }
 
   @Get()
   findAll() {
-    return this.batteriesService.findAll();
+    return this.batteriesService.findAllBatteries();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.batteriesService.findOne(+id);
+  @Get('/id')
+  findOne(@Param() getBatteryDto: GetBatteryDto) {
+    return this.batteriesService.findBatteryById(getBatteryDto);
   }
 
   @Patch(':id')
@@ -27,8 +28,8 @@ export class BatteriesController {
     return this.batteriesService.update(+id, updateBatteryDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.batteriesService.remove(+id);
+  @Delete('/remove')
+  remove(@Param() getBatteryDto: GetBatteryDto) {
+    return this.batteriesService.removeBattery(getBatteryDto);
   }
 }

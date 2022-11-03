@@ -1,4 +1,4 @@
-export class CreatePriceTyresDto {
+export class CreatePriceDto {
 
     readonly price_wholesale: number;
     readonly price: number;
@@ -7,6 +7,9 @@ export class CreatePriceTyresDto {
     readonly update_date: Date;
 
     readonly id_tyres: number;
+    readonly id_wheel: number;
+    readonly id_oil: number;
+    readonly id_battery: number;
     readonly id_sup: number;
     readonly full_name: string;
     readonly name: string;

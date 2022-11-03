@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ExpensesService } from './expenses.service';
 import { CreateExpenseDto } from './dto/create-expense.dto';
+import { GetExpenseDto } from './dto/get-expense.dto';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
 
 @Controller('expenses')
@@ -9,17 +10,17 @@ export class ExpensesController {
 
   @Post()
   create(@Body() createExpenseDto: CreateExpenseDto) {
-    return this.expensesService.create(createExpenseDto);
+    return this.expensesService.createExpense(createExpenseDto);
   }
 
   @Get()
   findAll() {
-    return this.expensesService.findAll();
+    return this.expensesService.findAllExpense();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.expensesService.findOne(+id);
+  @Get('/id')
+  findOne(@Param() getExpenseDto: GetExpenseDto) {
+    return this.expensesService.findExpenseById(getExpenseDto);
   }
 
   @Patch(':id')
@@ -27,8 +28,8 @@ export class ExpensesController {
     return this.expensesService.update(+id, updateExpenseDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.expensesService.remove(+id);
+  @Delete('/remove')
+  remove(@Param() getExpenseDto: GetExpenseDto) {
+    return this.expensesService.removeExpense(getExpenseDto);
   }
 }

@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { OilsService } from './oils.service';
 import { CreateOilDto } from './dto/create-oil.dto';
+import { GetOilDto } from './dto/get-oil.dto';
 import { UpdateOilDto } from './dto/update-oil.dto';
 
 @Controller('oils')
@@ -9,17 +10,17 @@ export class OilsController {
 
   @Post()
   create(@Body() createOilDto: CreateOilDto) {
-    return this.oilsService.create(createOilDto);
+    return this.oilsService.createOil(createOilDto);
   }
 
   @Get()
   findAll() {
-    return this.oilsService.findAll();
+    return this.oilsService.findAllOils();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.oilsService.findOne(+id);
+  @Get('/id')
+  findOne(@Param() getOilDto: GetOilDto) {
+    return this.oilsService.findOilById(getOilDto);
   }
 
   @Patch(':id')
@@ -27,8 +28,8 @@ export class OilsController {
     return this.oilsService.update(+id, updateOilDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.oilsService.remove(+id);
+  @Delete('/remove')
+  remove(@Param() getOilDto: GetOilDto) {
+    return this.oilsService.removeOil(getOilDto);
   }
 }

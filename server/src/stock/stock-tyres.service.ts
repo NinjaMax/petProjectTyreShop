@@ -1,7 +1,7 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreateStockTyresDto } from './dto/create-stock_tyres.dto';
-import { GetStockTyresDto } from './dto/get-stock_tyres.dto';
+import { CreateStockDto } from './dto/create-stock_tyres.dto';
+import { GetStockDto } from './dto/get-stock_tyres.dto';
 import { UpdateStockTyresDto } from './dto/update-stock_tyres.dto';
 import { StockTyres } from './entities/stock-tyres.model';
 import { TyresService } from '../tyres/tyres.service';
@@ -9,7 +9,7 @@ import { SuppliersService } from '../suppliers/suppliers.service';
 
 
 @Injectable()
-export class StockService {
+export class StockTyresService {
 
   constructor(@InjectModel(StockTyres) private stockTyresRepository: typeof StockTyres,
     private tyresService: TyresService, 
@@ -17,7 +17,7 @@ export class StockService {
 
    ) {}
 
-  async createStockTyres(createStockDto: CreateStockTyresDto) {
+  async createStockTyre(createStockDto: CreateStockDto) {
 
     try {
 
@@ -65,13 +65,13 @@ export class StockService {
     
   }
 
-  async findStockById(getStockTyresDto : GetStockTyresDto) {
+  async findStockTyreById(getStockTyresDto : GetStockDto) {
 
     try {
 
-      const stockbyId = await this.stockTyresRepository.findByPk(getStockTyresDto.id_tyres, {include: {all: true}});
+      const stockTyreById = await this.stockTyresRepository.findByPk(getStockTyresDto.id_tyres, {include: {all: true}});
 
-      return stockbyId;
+      return stockTyreById;
 
     } catch {
 
@@ -108,13 +108,13 @@ export class StockService {
     
   }
 
-  async removeStock(getStockTyresDto: GetStockTyresDto) {
+  async removeStock(getStockDto: GetStockDto) {
     
     try {
 
-      const removeStock = await this.stockTyresRepository.destroy({where: {id_tyres : getStockTyresDto.id_tyres}});
+      const removeStockTyre = await this.stockTyresRepository.destroy({where: {id_tyres : getStockDto.id_tyres}});
 
-      return removeStock;
+      return removeStockTyre;
 
     } catch {
       

@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ServicesService } from './services.service';
 import { CreateServiceDto } from './dto/create-service.dto';
+import { GetServiceDto } from './dto/get-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 
 @Controller('services')
@@ -9,17 +10,17 @@ export class ServicesController {
 
   @Post()
   create(@Body() createServiceDto: CreateServiceDto) {
-    return this.servicesService.create(createServiceDto);
+    return this.servicesService.createService(createServiceDto);
   }
 
   @Get()
   findAll() {
-    return this.servicesService.findAll();
+    return this.servicesService.findAllService();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.servicesService.findOne(+id);
+  @Get('/id')
+  findOne(@Param() getServiceDto: GetServiceDto) {
+    return this.servicesService.findServiceById(getServiceDto);
   }
 
   @Patch(':id')
@@ -27,8 +28,8 @@ export class ServicesController {
     return this.servicesService.update(+id, updateServiceDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.servicesService.remove(+id);
+  @Delete('/remove')
+  remove(@Param() getServiceDto: GetServiceDto) {
+    return this.servicesService.removeService(getServiceDto);
   }
 }
