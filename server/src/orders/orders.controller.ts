@@ -23,12 +23,12 @@ export class OrdersController {
     return this.ordersService.findOrderById(getOrdersDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.ordersService.update(+id, updateOrderDto);
+  @Patch('/update')
+  update(@Param() @Body() updateOrderDto: UpdateOrderDto) {
+    return this.ordersService.updateOrder(updateOrderDto);
   }
 
-  @Delete('remove')
+  @Delete('/remove')
   remove(@Param() getOrdersDto: GetOrdersDto) {
     return this.ordersService.removeOrder(getOrdersDto);
   }

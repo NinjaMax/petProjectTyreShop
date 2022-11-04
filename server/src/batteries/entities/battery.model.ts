@@ -1,6 +1,7 @@
 import { Column, DataType, Model, Table, BelongsTo, HasMany, ForeignKey} from "sequelize-typescript";
 import { Category } from "src/categorys/entities/category.entity";
 import { PriceBatteries } from "src/prices/entities/price-battery.model";
+import { StockBatteries } from "src/stock/entities/stock-batteries.model";
 import { BatteryConfigAttr } from '../interfaces/batteries.interface';
 
 @Table({tableName: 'batterie', createdAt: false})

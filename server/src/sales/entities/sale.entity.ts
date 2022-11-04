@@ -2,7 +2,7 @@ import { Column, DataType, Model, Table, BelongsTo, ForeignKey, HasMany} from "s
 import {SalesConfigAttr} from "../interfaces/sales-interface";
 import { Orders } from "src/orders/entities/order.model";
 import { Users } from "src/users/entities/users.model";
-import { Comments } from "src/comments/entities/comment.entity";
+import { Comments } from "src/comments/entities/comment.model";
 
 @Table({tableName: 'sale'})
 export class Sales extends Model<Sales, SalesConfigAttr> {
@@ -40,7 +40,7 @@ export class Sales extends Model<Sales, SalesConfigAttr> {
     @BelongsTo( () => Users , 'id_user')
     user: Users;
 
-    @BelongsTo( () => Orders , 'id_sup')
+    @BelongsTo( () => Orders , 'id_order')
     order: Orders;
 
     @HasMany( () => Comments, 'id_sale')

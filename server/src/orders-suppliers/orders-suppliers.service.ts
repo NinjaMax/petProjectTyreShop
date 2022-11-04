@@ -1,5 +1,6 @@
 import { Injectable, HttpException, HttpStatus  } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { OrdersService } from 'src/orders/orders.service';
 import { CreateOrdersSupplierDto } from './dto/create-orders-supplier.dto';
 import { GetOrdersSuppliersDto } from './dto/get-orders-supplier.dto';
 import { UpdateOrdersSupplierDto } from './dto/update-orders-supplier.dto';
@@ -9,14 +10,24 @@ import { OrdersSupplier } from './entities/orders-supplier.model';
 export class OrdersSuppliersService {
 
   constructor(@InjectModel(OrdersSupplier) private ordersSupRepository: typeof OrdersSupplier,
-    ) {}
+    private ordersService: OrdersService
+  ) {}
 
   async createOrderSup(createOrdersSupplierDto: CreateOrdersSupplierDto) {
     
     try {
       
+      const order = await this.ordersService.findOrderById(createOrdersSupplierDto);
       const orderSup = await this.ordersSupRepository.create(createOrdersSupplierDto);
 
+      if(order) {
+        
+        const orderSupId = await this.ordersSupRepository.findByPk(orderSup.id_order_sup);
+        await order.$add('order_sup', [orderSupId.id_order_sup]);
+        order.order_sup.push(orderSupId);
+
+        return orderSupId;
+      }
       return orderSup;
 
     } catch {

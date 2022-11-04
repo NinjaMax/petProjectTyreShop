@@ -2,8 +2,10 @@ export interface BasketConfigAttr {
     
     id_goods: number;
     id_cat: number;
-    goods: number;
+    goods: string;
     price: number;
-    count: number;
+    total: number;
+    quantity: number;
+    notes: string;
     
 }

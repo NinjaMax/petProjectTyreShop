@@ -5,6 +5,9 @@ import { PriceTyres } from "src/prices/entities/price-tyres.model";
 import { PriceWheels } from "src/prices/entities/price-wheels.model";
 import { PriceBatteries } from "src/prices/entities/price-battery.model";
 import { PriceOil } from "src/prices/entities/price-oils.model";
+import { StockWheels } from "src/stock/entities/stock-wheels.model";
+import { StockBatteries } from "src/stock/entities/stock-batteries.model";
+import { StockOils } from "src/stock/entities/stock-oils.model";
 
 @Table({tableName: 'suppliers' , updatedAt: false})
 export class Supplier extends Model<Supplier, SuppliersConfigAttr> {
@@ -24,8 +27,17 @@ export class Supplier extends Model<Supplier, SuppliersConfigAttr> {
     @Column({type: DataType.STRING, unique: false, allowNull: true})
     email: string;
 
-    @HasMany(() => StockTyres , 'id_sup')
-    stock: StockTyres[];
+    @HasMany(() => StockTyres, 'id_sup')
+    stock_tyres: StockTyres[];
+
+    @HasMany(() => StockWheels, 'id_sup')
+    stock_wheels: StockWheels[];
+
+    @HasMany(() => StockBatteries, 'id_sup')
+    stock_batteries: StockBatteries[];
+
+    @HasMany(() => StockOils, 'id_sup')
+    stock_oils: StockOils[];
 
     @HasMany(() => PriceTyres, 'id_sup')
     price_tyres: PriceTyres[];

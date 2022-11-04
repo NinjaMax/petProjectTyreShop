@@ -1,23 +1,55 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { OrdersSuppliersService } from 'src/orders-suppliers/orders-suppliers.service';
+import { OrdersService } from 'src/orders/orders.service';
+import { UsersService } from 'src/users/users.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { GetCommentDto } from './dto/get-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
-import { Comments } from './entities/comment.entity';
+import { Comments } from './entities/comment.model';
 
 @Injectable()
 export class CommentsService {
 
   constructor(@InjectModel(Comments) private commentsRepository: typeof Comments, 
+  private ordersService: OrdersService,  
+  private orderSuppliersService: OrdersSuppliersService,
+  private usersService: UsersService
   ) {}
 
   async createComment(createCommentDto: CreateCommentDto) {
 
     try {
-      
-      const comment = await this.commentsRepository.create(createCommentDto);
 
-      return comment;
+      const user = await this.usersService.findUserById(createCommentDto);
+      const order = await this.ordersService.findOrderById(createCommentDto);
+      const orderSup = await this.orderSuppliersService.findOrderSupById(createCommentDto);
+      
+      if(user && order) {
+        const commentOrder = await this.commentsRepository.create(createCommentDto);
+        await user.$add('comments', [commentOrder.id_comment]);
+        await order.$add('comments', [commentOrder.id_comment]);
+
+        user.comments.push(commentOrder);
+        order.comments.push(commentOrder);
+
+
+        return commentOrder;
+      }
+
+      if(user && orderSup) {
+       const commentOrderSup = await this.commentsRepository.create(createCommentDto);
+       await user.$add('comments', [commentOrderSup.id_comment]);
+       await orderSup.$add('comments', [commentOrderSup.id_comment]);
+
+       user.comments.push(commentOrderSup);
+       order.comments.push(commentOrderSup);
+
+       return commentOrderSup; 
+      }
+      
+
+      return new HttpException(`Data user "User ID or Order ID" is incorrect or not found`, HttpStatus.NOT_FOUND);;
 
     } catch {
 

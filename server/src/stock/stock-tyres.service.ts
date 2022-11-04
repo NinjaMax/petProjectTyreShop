@@ -35,7 +35,7 @@ export class StockTyresService {
         
         tyres.stock.push(stockCreate);
 
-        supplier.stock.push(stockCreate);
+        supplier.stock_tyres.push(stockCreate);
 
         return tyres;
 
@@ -108,7 +108,7 @@ export class StockTyresService {
     
   }
 
-  async removeStock(getStockDto: GetStockDto) {
+  async removeStockTyre(getStockDto: GetStockDto) {
     
     try {
 

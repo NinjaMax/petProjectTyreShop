@@ -28,7 +28,7 @@ export class Basket extends Model<Basket, BasketConfigAttr> {
     total: number;
 
     @Column({type: DataType.STRING, unique: false, allowNull: true})
-    comments: string;
+    notes: string;
 
     @ForeignKey(() => Users)
     @Column({type: DataType.INTEGER})

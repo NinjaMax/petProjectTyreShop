@@ -1,5 +1,7 @@
-import { Column, DataType, Model, Table, BelongsTo, ForeignKey} from "sequelize-typescript";
+import { Column, DataType, Model, Table, BelongsTo, HasMany, ForeignKey} from "sequelize-typescript";
 import { Basket } from "src/basket/entities/basket.model";
+import { Comments } from "src/comments/entities/comment.model";
+import { OrdersSupplier } from "src/orders-suppliers/entities/orders-supplier.model";
 import { Users } from "src/users/entities/users.model";
 import { OrdersConfigAttr } from '../interfaces/orders.interface';
 
@@ -20,6 +22,9 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
 
     @Column({type: DataType.INTEGER, unique: false, allowNull: false})
     quantity: number;
+
+    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
+    reserve: number;
 
     @Column({type: DataType.INTEGER, unique: false, allowNull: false})
     price: number;
@@ -44,7 +49,10 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
     @BelongsTo(() => Basket, 'id_basket')
     basket: Basket;
 
-    //@HasMany(() => Comments, 'id_order_sup')
-    //comments: Comments[];
+    @HasMany(() => Comments, 'id_order')
+    comments: Comments[];
+
+    @HasMany(() => OrdersSupplier, 'id_order_sup')
+    order_sup: OrdersSupplier[];
     
 }

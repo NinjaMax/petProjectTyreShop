@@ -2,8 +2,11 @@ export interface OrdersConfigAttr {
     
     id_goods: number;
     id_cat: number;
-    goods: number;
+    goods: string;
     price: number;
-    count: number;
+    reserve: number;
+    quantity: number;
+    total: number;
+    notes: string;
     
 }

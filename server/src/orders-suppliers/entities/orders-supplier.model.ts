@@ -1,5 +1,6 @@
 import { Column, DataType, Model, Table, BelongsTo, ForeignKey, HasMany} from "sequelize-typescript";
-import { Comments } from "src/comments/entities/comment.entity";
+import { Comments } from "src/comments/entities/comment.model";
+import { Orders } from "src/orders/entities/order.model";
 import { Supplier } from "src/suppliers/entities/supplier.model";
 import { Users } from "src/users/entities/users.model";
 import { OrdersSupConfigAttr } from '../interfaces/order-sup.interface';
@@ -38,12 +39,19 @@ export class OrdersSupplier extends Model<OrdersSupplier, OrdersSupConfigAttr> {
     @Column({type: DataType.INTEGER})
     id_user: number;
 
+    @ForeignKey(() => Orders)
+    @Column({type: DataType.INTEGER})
+    id_order: number;
+
     @ForeignKey(() => Supplier)
     @Column({type: DataType.INTEGER})
     id_sup: number;
 
     @BelongsTo(() => Users, 'id_user')
     user: Users;
+
+    @BelongsTo(() => Orders, 'id_order')
+    order: Orders;
 
     @BelongsTo(() => Supplier, 'id_sup')
     supplier: Supplier;
