@@ -6,6 +6,8 @@ export class CreateStockDto {
    readonly id_battery: number;
    readonly id_sup: number;
    readonly stock: number;
+   readonly reserve: number;
+   readonly remainder: number;
    readonly update_date: Date;
 
    readonly full_name: string;

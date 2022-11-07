@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { CreateStorageDto } from './dto/create-storage.dto';
 import { GetStorageDto } from './dto/get-storage.dto';
 import { UpdateStorageDto } from './dto/update-storage.dto';
-import { Storage } from './entities/storage.entity';
+import { Storage } from './entities/storage.model';
 
 @Injectable()
 export class StorageService {

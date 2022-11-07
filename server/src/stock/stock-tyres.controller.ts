@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { StockTyresService } from './stock-tyres.service';
-import { CreateStockDto } from './dto/create-stock_tyres.dto';
-import { UpdateStockTyresDto } from './dto/update-stock_tyres.dto';
-import { GetStockDto } from './dto/get-stock_tyres.dto';
+import { CreateStockDto } from './dto/create-stock.dto';
+import { UpdateStockDto } from './dto/update-stock.dto';
+import { GetStockDto } from './dto/get-stock.dto';
 
 @Controller('stock')
 export class StockTyresController {
@@ -25,7 +25,7 @@ export class StockTyresController {
   }
 
   @Patch('/update')
-  update(@Body() updateStockDto: UpdateStockTyresDto) {
+  update(@Body() updateStockDto: UpdateStockDto) {
     return this.stockTyresService.updateStockTyres(updateStockDto);
   }
 

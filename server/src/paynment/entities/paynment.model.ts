@@ -1,7 +1,7 @@
 import {Column, DataType, Model, Table, ForeignKey, BelongsTo } from "sequelize-typescript";
 import { PaynmentConfigAttr } from "../interfaces/paynment.interface";
-import { Cashbox } from "src/cashbox/entities/cashbox.entity";
-import { Sales } from "src/sales/entities/sale.entity";
+import { Cashbox } from "src/cashbox/entities/cashbox.model";
+import { Sales } from "src/sales/entities/sale.model";
 import { Orders } from "src/orders/entities/order.model";
 import { OrdersSupplier } from "src/orders-suppliers/entities/orders-supplier.model";
 

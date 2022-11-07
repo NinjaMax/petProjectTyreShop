@@ -1,6 +1,6 @@
 import { Column, DataType, Model, Table, HasMany, BelongsTo, ForeignKey} from "sequelize-typescript";
 import { ExpenseConfigAttr } from '../interfaces/expense.interface';
-import { Cashbox } from "src/cashbox/entities/cashbox.entity";
+import { Cashbox } from "src/cashbox/entities/cashbox.model";
 
 @Table({tableName: 'expense' })
 export class Expense extends Model<Expense, ExpenseConfigAttr> {

@@ -3,7 +3,7 @@ import { Orders } from '../../orders/entities/order.model';
 import { Users } from "src/users/entities/users.model";
 import { CommentsConfigAttr } from '../interfaces/comments.interface';
 import { OrdersSupplier } from "src/orders-suppliers/entities/orders-supplier.model";
-import { Sales } from "src/sales/entities/sale.entity";
+import { Sales } from "src/sales/entities/sale.model";
 
 @Table({tableName: 'comment' })
 export class Comments extends Model<Comments, CommentsConfigAttr> {

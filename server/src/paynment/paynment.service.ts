@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { CreatePaynmentDto } from './dto/create-paynment.dto';
 import { GetPaynmentDto } from './dto/get-paynment.dto';
 import { UpdatePaynmentDto } from './dto/update-paynment.dto';
-import { Paynment } from './entities/paynment.entity';
+import { Paynment } from './entities/paynment.model';
 
 @Injectable()
 export class PaynmentService {

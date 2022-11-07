@@ -1,9 +1,11 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateStockDto } from './create-stock_tyres.dto';
+import { CreateStockDto } from './create-stock.dto';
 
-export class UpdateStockTyresDto extends PartialType(CreateStockDto) {
+export class UpdateStockDto extends PartialType(CreateStockDto) {
     
     readonly stock: number;
+    readonly reserve: number;
+    readonly remainder: number;
     readonly id_tyres: number;
     readonly id_wheel: number;
     readonly id_oil: number;

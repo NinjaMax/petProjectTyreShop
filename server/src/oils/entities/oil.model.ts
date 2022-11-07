@@ -1,5 +1,5 @@
 import { Column, DataType, Model, Table, BelongsTo, HasMany, ForeignKey} from "sequelize-typescript";
-import { Category } from "src/categorys/entities/category.entity";
+import { Category } from "src/categorys/entities/category.model";
 import { PriceOil } from "src/prices/entities/price-oils.model";
 import { StockOils } from "src/stock/entities/stock-oils.model";
 import { OilConfigAttr } from '../interfaces/oil.interface';

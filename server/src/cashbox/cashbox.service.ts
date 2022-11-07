@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { CreateCashboxDto } from './dto/create-cashbox.dto';
 import { GetCashboxDto } from './dto/get-cashbox.dto';
 import { UpdateCashboxDto } from './dto/update-cashbox.dto';
-import { Cashbox } from './entities/cashbox.entity';
+import { Cashbox } from './entities/cashbox.model';
 
 @Injectable()
 export class CashboxService {

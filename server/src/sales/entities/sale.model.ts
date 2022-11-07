@@ -1,8 +1,10 @@
-import { Column, DataType, Model, Table, BelongsTo, ForeignKey, HasMany} from "sequelize-typescript";
+import { Column, DataType, Model, Table, BelongsTo, BelongsToMany, ForeignKey, HasMany} from "sequelize-typescript";
 import {SalesConfigAttr} from "../interfaces/sales-interface";
 import { Orders } from "src/orders/entities/order.model";
 import { Users } from "src/users/entities/users.model";
 import { Comments } from "src/comments/entities/comment.model";
+import { SaleStorage } from "./sales-storage.model";
+import { Storage } from "src/storage/entities/storage.model";
 
 @Table({tableName: 'sale'})
 export class Sales extends Model<Sales, SalesConfigAttr> {
@@ -33,10 +35,6 @@ export class Sales extends Model<Sales, SalesConfigAttr> {
     @Column({type: DataType.INTEGER, unique: false, allowNull: false})
     total: number;
 
-    @Column({type: DataType.STRING, unique: false, allowNull: false})
-    storage: string;
-
-
     @BelongsTo( () => Users , 'id_user')
     user: Users;
 
@@ -48,5 +46,8 @@ export class Sales extends Model<Sales, SalesConfigAttr> {
 
     //@HasMany( () => Paynments, 'id_sale')
     //paynments: Paynments[];
+
+    @BelongsToMany(() => Storage, () => SaleStorage)
+    storage: Storage[];
 }
 

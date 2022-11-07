@@ -1,8 +1,8 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreateStockDto } from './dto/create-stock_tyres.dto';
-import { GetStockDto } from './dto/get-stock_tyres.dto';
-import { UpdateStockTyresDto } from './dto/update-stock_tyres.dto';
+import { CreateStockDto } from './dto/create-stock.dto';
+import { GetStockDto } from './dto/get-stock.dto';
+import { UpdateStockDto } from './dto/update-stock.dto';
 import { SuppliersService } from '../suppliers/suppliers.service';
 import { StockBatteries } from './entities/stock-batteries.model';
 import { BatteriesService } from 'src/batteries/batteries.service';
@@ -80,7 +80,7 @@ export class StockBatteriesService {
     
   }
 
-  async updateStockBattery(updateStockDto: UpdateStockTyresDto) {
+  async updateStockBattery(updateStockDto: UpdateStockDto) {
     
     try {
 

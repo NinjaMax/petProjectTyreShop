@@ -1,5 +1,5 @@
 import { Column, DataType, Model, Table, HasMany} from "sequelize-typescript";
-import { Sales } from "src/sales/entities/sale.entity";
+import { Sales } from "src/sales/entities/sale.model";
 import { Orders } from '../../orders/entities/order.model';
 
 import { ServicesConfigAttr } from '../interfaces/services.interface';

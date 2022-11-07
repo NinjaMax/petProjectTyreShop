@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { CreateSaleDto } from './dto/create-sale.dto';
 import { GetSaleDto } from './dto/get-sale.dto';
 import { UpdateSaleDto } from './dto/update-sale.dto';
-import { Sales } from './entities/sale.entity';
+import { Sales } from './entities/sale.model';
 
 @Injectable()
 export class SalesService {
