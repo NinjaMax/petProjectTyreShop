@@ -32,7 +32,11 @@ export class Sales extends Model<Sales, SalesConfigAttr> {
     @Column({type: DataType.INTEGER, unique: false, allowNull: false})
     price: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
+    @Column({type: DataType.BIGINT, unique: false, allowNull: false, 
+        set() {
+            this.setDataValue('total', this.getDataValue('price') * this.getDataValue('quantity'));
+        }
+    })
     total: number;
 
     @BelongsTo( () => Users , 'id_user')

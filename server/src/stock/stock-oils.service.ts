@@ -89,9 +89,12 @@ export class StockOilsService {
       if(oilId) {
 
         await this.stockOilsRepository.update(
-        { stock : updateStockDto.stock, 
-          id_sup : updateStockDto.id_sup,
-          update_date : updateStockDto.update_date
+        {   
+            stock : updateStockDto.stock, 
+            reserve : updateStockDto.reserve,
+            remainder : updateStockDto.remainder,
+            id_sup : updateStockDto.id_sup,
+            update_date : updateStockDto.update_date
         }, {where: {id_oil : updateStockDto.id_oil}});
 
         const updateStockOils = await this.stockOilsRepository.findByPk(updateStockDto.id_oil, {include: {all: true}});

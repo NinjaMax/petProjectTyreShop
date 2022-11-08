@@ -89,9 +89,11 @@ export class StockWheelsService {
       if(wheelId) {
 
         await this.stockWheelsRepository.update(
-        { stock : updateStockDto.stock, 
-          id_sup : updateStockDto.id_sup,
-          update_date : updateStockDto.update_date
+        {   stock : updateStockDto.stock,
+            reserve : updateStockDto.reserve,
+            remainder : updateStockDto.remainder,
+            id_sup : updateStockDto.id_sup,
+            update_date : updateStockDto.update_date
         }, {where: {id_wheel : updateStockDto.id_wheel}});
 
         const updateStockWheel = await this.stockWheelsRepository.findByPk(updateStockDto.id_wheel, {include: {all: true}});

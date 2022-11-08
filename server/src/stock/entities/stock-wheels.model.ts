@@ -2,6 +2,7 @@ import { Column, DataType, Model, Table, BelongsTo, ForeignKey} from "sequelize-
 import {StockWheelsConfigAttr} from "../interfaces/stock-wheels.interface";
 import { Supplier } from '../../suppliers/entities/supplier.model';
 import { Wheel } from "src/wheels/entities/wheel.model";
+import { Storage } from "src/storage/entities/storage.model";
 
 @Table({tableName: 'stock_wheel', createdAt: false, updatedAt: false})
 export class StockWheels extends Model<StockWheels, StockWheelsConfigAttr> {
@@ -13,9 +14,34 @@ export class StockWheels extends Model<StockWheels, StockWheelsConfigAttr> {
     @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     stock: number;
 
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true,
+        set () {
+
+            const getRemainder : number = this.getDataValue('stock') ?? this.getDataValue('stock') - this.getDataValue('reserve');
+            const getReserve : number = this.getDataValue('stock') - this.getDataValue('remainder');
+            
+            if( getRemainder < 0 ) {
+                this.setDataValue('reserve', getReserve - getRemainder);
+                this.setDataValue('remainder', 0 ); 
+                return `You can not set more "reserve" because does not have remainder. "Remainder 0".`;
+            } else {
+                
+                this.setDataValue('remainder', getRemainder );
+            }          
+        }
+    })
+    reserve: number;
+
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+    remainder: number; 
+
     @ForeignKey(() => Supplier)
     @Column({type: DataType.INTEGER})
     id_sup: number;
+
+    @ForeignKey(() => Storage)
+    @Column({type: DataType.INTEGER})
+    id_storage: number;
 
     @Column({type: DataType.DATE, unique: false, allowNull: false})
     update_date: Date;
@@ -26,5 +52,7 @@ export class StockWheels extends Model<StockWheels, StockWheelsConfigAttr> {
     @BelongsTo( () => Supplier , 'id_sup')
     supplier: Supplier;
 
+    @BelongsTo( () => Storage , 'id_storage')
+    storage: Storage;
 
 }

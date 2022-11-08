@@ -89,9 +89,12 @@ export class StockBatteriesService {
       if(batteryId) {
 
         await this.stockBatteriesRepository.update(
-        { stock : updateStockDto.stock, 
-          id_sup : updateStockDto.id_sup,
-          update_date : updateStockDto.update_date
+        { 
+            stock : updateStockDto.stock,
+            reserve : updateStockDto.reserve,
+            remainder : updateStockDto.remainder, 
+            id_sup : updateStockDto.id_sup,
+            update_date : updateStockDto.update_date
         }, {where: {id_battery : updateStockDto.id_battery}});
 
         const updateStockBatteries = await this.stockBatteriesRepository.findByPk(updateStockDto.id_battery, {include: {all: true}});

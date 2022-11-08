@@ -29,7 +29,11 @@ export class OrdersSupplier extends Model<OrdersSupplier, OrdersSupConfigAttr> {
     @Column({type: DataType.INTEGER, unique: false, allowNull: false})
     price: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
+    @Column({type: DataType.BIGINT, unique: false, allowNull: false, 
+        set() {
+            this.setDataValue('total', this.getDataValue('price') * this.getDataValue('quantity'));
+        }
+    })
     total: number;
 
     @Column({type: DataType.STRING, unique: false, allowNull: true})

@@ -90,7 +90,9 @@ export class StockTyresService {
       if(tyresId) {
 
         await this.stockTyresRepository.update(
-        { stock : updateStockDto.stock, 
+        { stock : updateStockDto.stock,
+          reserve : updateStockDto.reserve,
+          remainder : updateStockDto.remainder,
           id_sup : updateStockDto.id_sup,
           update_date : updateStockDto.update_date
         }, {where: {id_tyres : updateStockDto.id_tyres}});
