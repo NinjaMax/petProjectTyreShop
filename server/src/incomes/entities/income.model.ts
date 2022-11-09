@@ -1,26 +1,20 @@
 import { Column, DataType, Model, Table, HasMany} from "sequelize-typescript";
-import { ExpenseConfigAttr } from '../interfaces/expense.interface';
+import { IncomeConfigAttr } from '../interfaces/income.interface';
 import { Paynment } from "src/paynment/entities/paynment.model";
 
-@Table({tableName: 'expense' })
-export class Expense extends Model<Expense, ExpenseConfigAttr> {
+@Table({tableName: 'income' })
+export class Incomes extends Model<Incomes, IncomeConfigAttr> {
 
     @Column({type: DataType.BIGINT, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
-    id_expense: number;
+    id_income: number;
    
     @Column({type: DataType.STRING, unique: true, allowNull: false})
-    expense: string;
-
-    @Column({type: DataType.INTEGER})
-    price: number;
+    income: string;
 
     @Column({type: DataType.STRING, unique: false, allowNull: true})
     notes: string;
 
-    @Column({type: DataType.STRING, unique: false, allowNull: false})
-    status: string;
-
-    @HasMany( () => Paynment , 'id_expense')
+    @HasMany( () => Paynment , 'id_income')
     paynment: Paynment[];
     
 }

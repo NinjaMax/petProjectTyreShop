@@ -6,26 +6,33 @@ import { GetPriceDto } from './dto/get-price.dto';
 import { SuppliersService } from 'src/suppliers/suppliers.service';
 import { PriceWheels } from './entities/price-wheels.model';
 import { WheelsService } from 'src/wheels/wheels.service';
+import { StorageService } from 'src/storage/storage.service';
 
 @Injectable()
 export class PriceWheelsService {
 
   constructor(@InjectModel(PriceWheels) private priceWheelsRepository: typeof PriceWheels,
-  private wheelsService: WheelsService, 
-  private suppliersService : SuppliersService 
+    private wheelsService: WheelsService, 
+    private suppliersService : SuppliersService,
+    private storageService: StorageService 
   ) {}
 
   async createPriceWheels(createPriceDto: CreatePriceDto) {
     
     try {
+      
 
       const wheel = await this.wheelsService.findWheelById(createPriceDto);
+      const storage = await this.storageService.findStorageById(createPriceDto);
       
       if(wheel) {
 
         const priceCreate = await this.priceWheelsRepository.create(createPriceDto);
 
         const supplier = await this.suppliersService.findSupplierById(createPriceDto);
+        
+        await storage.$add('price_wheels', [priceCreate.id_wheel]);
+        storage.price_wheels.push(priceCreate);
 
         await wheel.$add('price', [createPriceDto.id_wheel]);
        

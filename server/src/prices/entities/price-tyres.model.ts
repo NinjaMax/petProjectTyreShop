@@ -2,6 +2,7 @@ import {Column, DataType, Model, Table, ForeignKey, BelongsTo } from "sequelize-
 import { Tyres } from "../../tyres/entities/tyres.model";
 import { Supplier } from '../../suppliers/entities/supplier.model';
 import { PriceTyresConfigAttr } from "../interfaces/price-tyres.interface";
+import { Storage } from "src/storage/entities/storage.model";
 
 @Table({tableName: 'price_tyres', createdAt: false, updatedAt: false})
 export class PriceTyres extends Model<PriceTyres, PriceTyresConfigAttr>{ 
@@ -20,6 +21,10 @@ export class PriceTyres extends Model<PriceTyres, PriceTyresConfigAttr>{
    @Column({type: DataType.INTEGER})
    id_sup: number;
 
+   @ForeignKey(() => Storage)
+   @Column({type: DataType.INTEGER})
+   id_storage: number;
+
    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
    delivery_price: number;
 
@@ -34,5 +39,8 @@ export class PriceTyres extends Model<PriceTyres, PriceTyresConfigAttr>{
 
    @BelongsTo( () => Supplier , 'id_sup')
    supplier: Supplier;
+
+   @BelongsTo( () => Storage , 'id_storage')
+   storage: Storage;
 
 }

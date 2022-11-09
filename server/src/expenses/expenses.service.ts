@@ -3,13 +3,13 @@ import { InjectModel } from '@nestjs/sequelize';
 import { CreateExpenseDto } from './dto/create-expense.dto';
 import { GetExpenseDto } from './dto/get-expense.dto';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
-import { Expense } from './entities/expense.entity';
+import { Expense } from './entities/expense.model';
 
 @Injectable()
 export class ExpensesService {
 
   constructor(@InjectModel(Expense) private expenseRepository: typeof Expense,
-    ) {}
+  ) {}
 
   async createExpense(createExpenseDto: CreateExpenseDto) {
 

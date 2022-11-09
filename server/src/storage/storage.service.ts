@@ -45,7 +45,7 @@ export class StorageService {
 
     try {
       
-      const storageById = await this.storageRepository.findByPk(getStorageDto.id_storage, {include: {all: true}});
+      const storageById = await this.storageRepository.findByPk(getStorageDto.id_storage, {include: {all: true}} );
 
       return storageById;
 

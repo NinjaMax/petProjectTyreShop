@@ -6,13 +6,15 @@ import { UpdateStockDto } from './dto/update-stock.dto';
 import { SuppliersService } from '../suppliers/suppliers.service';
 import { StockOils } from './entities/stock-oils.model';
 import { OilsService } from 'src/oils/oils.service';
+import { StorageService } from 'src/storage/storage.service';
 
 @Injectable()
 export class StockOilsService {
 
   constructor(@InjectModel(StockOils) private stockOilsRepository: typeof StockOils,
     private oilsService: OilsService, 
-    private suppliersService : SuppliersService
+    private suppliersService : SuppliersService,
+    private storageService: StorageService 
 
    ) {}
 
@@ -21,12 +23,16 @@ export class StockOilsService {
     try {
 
       const oil = await this.oilsService.findOilById(createStockDto);
-      
+      const storage = await this.storageService.findStorageById(createStockDto);
+
       if (oil) {
 
         const stockCreate = await this.stockOilsRepository.create(createStockDto);
 
         const supplier = await this.suppliersService.findSupplierById(createStockDto);
+
+        await storage.$add('stock_oils', [stockCreate.id_oil]);
+        storage.stock_oils.push(stockCreate);
 
         await oil.$add('stock', [createStockDto.id_oil]);
 

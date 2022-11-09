@@ -24,9 +24,47 @@ export class SalesService {
     try {
 
       const sale = await this.salesRepository.create(createSaleDto);
-      const wheelStockBalance = await this.stockWheelsService.updateStockWheel(createSaleDto);
+      
+      const tyreStock = await this.stockTyresService.findStockTyreById(createSaleDto);
+      const wheelStock = await this.stockWheelsService.findStockWheelById(createSaleDto);
+      const batteryStock = await this.stockBatteriesService.findStockBatteryById(createSaleDto);
+      const oilStock = await this.stockOilsService.findStockOilById(createSaleDto);
+      
+      if(tyreStock) {
 
-      return sale;
+        await tyreStock.decrement('stock', {by: createSaleDto.quantity});
+        await tyreStock.reload();
+
+        return sale;
+
+      }
+
+      if(wheelStock) {
+
+        await wheelStock.decrement('stock', {by: createSaleDto.quantity});
+        await wheelStock.reload();
+
+        return sale;
+
+      }
+
+      if(batteryStock) {
+
+        await batteryStock.decrement('stock', {by: createSaleDto.quantity});
+        await batteryStock.reload();
+
+        return sale;
+
+      }
+
+      if(oilStock) {
+
+        await oilStock.decrement('stock', {by: createSaleDto.quantity});
+        await oilStock.reload();
+
+        return sale;
+
+      }
 
     } catch {
 

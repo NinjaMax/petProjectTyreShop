@@ -8,6 +8,10 @@ import { StockTyres } from "src/stock/entities/stock-tyres.model";
 import { StockWheels } from "src/stock/entities/stock-wheels.model";
 import { StockBatteries } from "src/stock/entities/stock-batteries.model";
 import { StockOils } from "src/stock/entities/stock-oils.model";
+import { PriceTyres } from "src/prices/entities/price-tyres.model";
+import { PriceWheels } from "src/prices/entities/price-wheels.model";
+import { PriceBatteries } from "src/prices/entities/price-battery.model";
+import { PriceOil } from "src/prices/entities/price-oils.model";
 
 @Table({tableName: 'storage' , createdAt: false, updatedAt: false})
 export class Storage extends Model<Storage, StorageConfigAttr> {
@@ -31,16 +35,28 @@ export class Storage extends Model<Storage, StorageConfigAttr> {
     @BelongsToMany(() => Sales, () => OrderStorage)
     sales: Sales[];
 
-    @HasMany(() => StockTyres)
-    stock_tyres: StockTyres;
+    @HasMany(() => StockTyres, 'id_storage')
+    stock_tyres: StockTyres[];
 
-    @HasMany(() => StockWheels)
-    stock_wheels: StockWheels;
+    @HasMany(() => PriceTyres, 'id_storage')
+    price_tyres: PriceTyres[];
 
-    @HasMany(() => StockBatteries)
-    stock_batteries: StockBatteries;
+    @HasMany(() => StockWheels, 'id_storage')
+    stock_wheels: StockWheels[];
 
-    @HasMany(() => StockOils)
-    stock_oils: StockOils;
+    @HasMany(() => PriceWheels, 'id_storage')
+    price_wheels: PriceWheels[];
+
+    @HasMany(() => StockBatteries, 'id_storage')
+    stock_batteries: StockBatteries[];
+
+    @HasMany(() => PriceBatteries, 'id_storage')
+    price_batteries: PriceBatteries[];
+
+    @HasMany(() => StockOils, 'id_storage')
+    stock_oils: StockOils[];
+
+    @HasMany(() => PriceOil, 'id_storage')
+    price_oils: PriceOil[];
 
 }

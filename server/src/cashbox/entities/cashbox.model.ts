@@ -1,6 +1,7 @@
 import {Column, DataType, Model, Table, HasMany } from "sequelize-typescript";
 import { CashboxConfigAttr } from "../interfaces/cashbox.interface";
 import { Paynment } from "src/paynment/entities/paynment.model";
+import { Expense } from "src/expenses/entities/expense.model";
 
 @Table({tableName: 'Cashbox', createdAt: false, updatedAt: false})
 export class Cashbox extends Model<Cashbox, CashboxConfigAttr>{ 
@@ -12,13 +13,10 @@ export class Cashbox extends Model<Cashbox, CashboxConfigAttr>{
    cashbox: string;
    
    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
-   amount: number;
+   funds: number;
 
    @HasMany( () => Paynment , 'id_cashbox')
    paynment: Paynment[];
-
-   //@HasMany( () => Paynment , 'id_cashbox')
-   //paynment: Paynment[];
 
 }
 

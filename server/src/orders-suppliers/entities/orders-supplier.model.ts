@@ -1,6 +1,7 @@
 import { Column, DataType, Model, Table, BelongsTo, ForeignKey, HasMany} from "sequelize-typescript";
 import { Comments } from "src/comments/entities/comment.model";
 import { Orders } from "src/orders/entities/order.model";
+import { Paynment } from "src/paynment/entities/paynment.model";
 import { Supplier } from "src/suppliers/entities/supplier.model";
 import { Users } from "src/users/entities/users.model";
 import { OrdersSupConfigAttr } from '../interfaces/order-sup.interface';
@@ -62,5 +63,8 @@ export class OrdersSupplier extends Model<OrdersSupplier, OrdersSupConfigAttr> {
 
     @HasMany(() => Comments, 'id_order_sup')
     comments: Comments[];
+
+    @HasMany(() => Paynment, 'id_order_sup')
+    paynment: Paynment[];
     
 }

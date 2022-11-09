@@ -5,6 +5,7 @@ export class CreateStockDto {
    readonly id_oil: number;
    readonly id_battery: number;
    readonly id_sup: number;
+   
    readonly stock: number;
    readonly reserve: number;
    readonly remainder: number;
@@ -12,6 +13,13 @@ export class CreateStockDto {
 
    readonly full_name: string;
    readonly name: string;
+
+   readonly id_storage: number;
+   readonly id_goods: number;
+   readonly goods: string;
+   readonly quantity: number;
+   readonly price: number;
+   readonly storage: string;
 
    readonly city: string;
    readonly phone: bigint;

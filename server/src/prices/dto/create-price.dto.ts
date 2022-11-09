@@ -11,6 +11,13 @@ export class CreatePriceDto {
     readonly id_oil: number;
     readonly id_battery: number;
     readonly id_sup: number;
+
+    readonly id_storage: number;
+    readonly id_goods: number;
+    readonly goods: string;
+    readonly quantity: number;
+    readonly storage: string;
+    
     readonly full_name: string;
     readonly name: string;
     readonly city: string;

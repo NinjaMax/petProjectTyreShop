@@ -31,6 +31,7 @@ import { ServicesModule } from './add_services/services.module';
 import { WheelsModule } from './wheels/wheels.module';
 import { BatteriesModule } from './batteries/batteries.module';
 import { OilsModule } from './oils/oils.module';
+import { IncomesModule } from './incomes/incomes.module';
 
 @Module({
   imports: [
@@ -58,7 +59,7 @@ import { OilsModule } from './oils/oils.module';
       RatingsModule, PropertiesModule, UsersModule, 
       CategorysModule, CommentsModule, StorageModule, 
       SalesModule, CashboxModule, BalanceModule, 
-      PaynmentModule, ExpensesModule, ServicesModule
+      PaynmentModule, ExpensesModule, ServicesModule, IncomesModule
   ],
   controllers: [],
   providers: [],

@@ -1,6 +1,10 @@
 import { Injectable, HttpException, HttpStatus  } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { BasketService } from 'src/basket/basket.service';
+import { StockBatteriesService } from 'src/stock/stock-batteries.service';
+import { StockOilsService } from 'src/stock/stock-oils.service';
+import { StockTyresService } from 'src/stock/stock-tyres.service';
+import { StockWheelsService } from 'src/stock/stock-wheels.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { GetOrdersDto } from './dto/get-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
@@ -10,7 +14,12 @@ import { Orders } from './entities/order.model';
 export class OrdersService {
 
   constructor(@InjectModel(Orders) private ordersRepository: typeof Orders,
-    private basketService: BasketService  
+    private basketService: BasketService,
+    private stockTyresService: StockTyresService,
+    private stockWheelsService: StockWheelsService,
+    private stockBatteriesService: StockBatteriesService,
+    private stockOilsService: StockOilsService
+
   ) {}
 
   async createOrder(createOrderDto: CreateOrderDto) {
@@ -18,6 +27,10 @@ export class OrdersService {
     try {
 
       const basket = await this.basketService.findBasketById(createOrderDto);
+      const tyreStock = await this.stockTyresService.findStockTyreById(createOrderDto);
+      const wheelStock = await this.stockWheelsService.findStockWheelById(createOrderDto);
+      const batteryStock = await this.stockBatteriesService.findStockBatteryById(createOrderDto);
+      const oilStock = await this.stockOilsService.findStockOilById(createOrderDto);
       
       const order = await this.ordersRepository.create(createOrderDto);
 
@@ -30,7 +43,43 @@ export class OrdersService {
         return orderId;
       }
 
-      return order;
+      if(tyreStock) {
+
+        await tyreStock.increment('reserve', {by: createOrderDto.quantity});
+        await tyreStock.reload();
+
+        return order;
+
+      }
+
+      if(wheelStock) {
+
+        await wheelStock.increment('reserve', {by: createOrderDto.quantity});
+        await wheelStock.reload();
+
+        return order;
+
+      }
+
+      if(batteryStock) {
+
+        await batteryStock.increment('reserve', {by: createOrderDto.quantity});
+        await batteryStock.reload();
+
+        return order;
+
+      }
+
+      if(oilStock) {
+
+        await oilStock.increment('reserve', {by: createOrderDto.quantity});
+        await oilStock.reload();
+
+        return order;
+
+      }
+
+      //return order;
 
     } catch {
 

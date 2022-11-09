@@ -6,13 +6,15 @@ import { GetPriceDto } from './dto/get-price.dto';
 import { SuppliersService } from 'src/suppliers/suppliers.service';
 import { PriceOil } from './entities/price-oils.model';
 import { OilsService } from 'src/oils/oils.service';
+import { StorageService } from 'src/storage/storage.service';
 
 @Injectable()
 export class PriceOilsService {
 
   constructor(@InjectModel(PriceOil) private priceOilsRepository: typeof PriceOil,
-  private oilsService: OilsService, 
-  private suppliersService : SuppliersService 
+    private oilsService: OilsService, 
+    private suppliersService : SuppliersService,
+    private storageService: StorageService  
   ) {}
 
   async createPriceOils(createPriceDto: CreatePriceDto) {
@@ -20,12 +22,16 @@ export class PriceOilsService {
     try {
 
       const oil = await this.oilsService.findOilById(createPriceDto);
-      
+      const storage = await this.storageService.findStorageById(createPriceDto);
+
       if(oil) {
 
         const priceCreate = await this.priceOilsRepository.create(createPriceDto);
 
         const supplier = await this.suppliersService.findSupplierById(createPriceDto);
+
+        await storage.$add('price_oils', [priceCreate.id_oil]);
+        storage.price_oils.push(priceCreate);
 
         await oil.$add('price', [createPriceDto.id_oil]);
        

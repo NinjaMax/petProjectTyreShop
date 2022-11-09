@@ -2,6 +2,7 @@ import { Column, DataType, Model, Table, BelongsTo, HasMany, ForeignKey, Belongs
 import { Basket } from "src/basket/entities/basket.model";
 import { Comments } from "src/comments/entities/comment.model";
 import { OrdersSupplier } from "src/orders-suppliers/entities/orders-supplier.model";
+import { Paynment } from "src/paynment/entities/paynment.model";
 import { Storage } from "src/storage/entities/storage.model";
 import { Users } from "src/users/entities/users.model";
 import { OrdersConfigAttr } from '../interfaces/orders.interface';
@@ -60,6 +61,9 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
 
     @HasMany(() => OrdersSupplier, 'id_order_sup')
     order_sup: OrdersSupplier[];
+
+    @HasMany(() => Paynment, 'id_order')
+    paynment: Paynment[];
 
     @BelongsToMany(() => Storage, () => OrderStorage)
     storage: Storage[];

@@ -40,7 +40,7 @@ export class StockWheels extends Model<StockWheels, StockWheelsConfigAttr> {
     id_sup: number;
 
     @ForeignKey(() => Storage)
-    @Column({type: DataType.INTEGER})
+    @Column({type: DataType.INTEGER, defaultValue: 2})
     id_storage: number;
 
     @Column({type: DataType.DATE, unique: false, allowNull: false})
