@@ -24,7 +24,6 @@ import { CommentsModule } from './comments/comments.module';
 import { StorageModule } from './storage/storage.module';
 import { SalesModule } from './sales/sales.module';
 import { CashboxModule } from './cashbox/cashbox.module';
-import { BalanceModule } from './balance/balance.module';
 import { PaynmentModule } from './paynment/paynment.module';
 import { ExpensesModule } from './expenses/expenses.module';
 import { ServicesModule } from './add_services/services.module';
@@ -32,6 +31,32 @@ import { WheelsModule } from './wheels/wheels.module';
 import { BatteriesModule } from './batteries/batteries.module';
 import { OilsModule } from './oils/oils.module';
 import { IncomesModule } from './incomes/incomes.module';
+import { PriceWheels } from './prices/entities/price-wheels.model';
+import { PriceBatteries } from './prices/entities/price-battery.model';
+import { PriceOil } from './prices/entities/price-oils.model';
+import { StockWheels } from './stock/entities/stock-wheels.model';
+import { StockBatteries } from './stock/entities/stock-batteries.model';
+import { StockOils } from './stock/entities/stock-oils.model';
+import { Wheel } from './wheels/entities/wheel.model';
+import { Battery } from './batteries/entities/battery.model';
+import { Oil } from './oils/entities/oil.model';
+import { Comments } from './comments/entities/comment.model';
+import { Expense } from './expenses/entities/expense.model';
+import { Incomes } from './incomes/entities/income.model';
+import { Category } from './categorys/entities/category.model';
+import { Sales } from './sales/entities/sale.model';
+import { Cashbox } from './cashbox/entities/cashbox.model';
+import { Paynment } from './paynment/entities/paynment.model';
+import { Service } from './add_services/entities/service.model';
+import { OrdersModule } from './orders/orders.module';
+import { OrdersSuppliersModule } from './orders-suppliers/orders-suppliers.module';
+import { Orders } from './orders/entities/order.model';
+import { OrdersSupplier } from './orders-suppliers/entities/orders-supplier.model';
+import { SaleStorage } from './sales/entities/sales-storage.model';
+import { OrderStorage } from './orders/entities/order-storage.model';
+import { Storage } from './storage/entities/storage.model';
+import { BasketModule } from './basket/basket.module';
+import { Basket } from './basket/entities/basket.model';
 
 @Module({
   imports: [
@@ -47,8 +72,13 @@ import { IncomesModule } from './incomes/incomes.module';
       username: configService.get('POSTGRES_USER'),
       password: configService.get('POSTGRES_PASSWORD'),
       database: configService.get('POSTGRES_DB'),
-      models: [Tyres, Supplier, StockTyres, PriceTyres,
-      RatingTyres, ReviewTyres, TyreBrand, TyreModel, Users,
+      models: [Tyres, Wheel, Battery, Oil, Supplier, Comments,
+        Expense, Incomes, Category, Sales, Cashbox, Paynment,
+        StockTyres, StockWheels, StockBatteries, StockOils, 
+        PriceTyres, PriceWheels, PriceBatteries, PriceOil,
+        RatingTyres, ReviewTyres, TyreBrand, TyreModel, 
+        Users, Service, Orders, OrdersSupplier, 
+        SaleStorage, OrderStorage, Storage, Basket
       ],
       autoLoadModels: true,
       synchronize: true,
@@ -58,8 +88,9 @@ import { IncomesModule } from './incomes/incomes.module';
       PricesModule, StockModule, SuppliersModule, ReviewsModule,
       RatingsModule, PropertiesModule, UsersModule, 
       CategorysModule, CommentsModule, StorageModule, 
-      SalesModule, CashboxModule, BalanceModule, 
-      PaynmentModule, ExpensesModule, ServicesModule, IncomesModule
+      SalesModule, CashboxModule, PaynmentModule, 
+      ExpensesModule, ServicesModule, IncomesModule, 
+      OrdersModule, OrdersSuppliersModule, BasketModule
   ],
   controllers: [],
   providers: [],

@@ -12,6 +12,7 @@ import { PriceTyres } from "src/prices/entities/price-tyres.model";
 import { PriceWheels } from "src/prices/entities/price-wheels.model";
 import { PriceBatteries } from "src/prices/entities/price-battery.model";
 import { PriceOil } from "src/prices/entities/price-oils.model";
+import { SaleStorage } from "src/sales/entities/sales-storage.model";
 
 @Table({tableName: 'storage' , createdAt: false, updatedAt: false})
 export class Storage extends Model<Storage, StorageConfigAttr> {
@@ -32,7 +33,7 @@ export class Storage extends Model<Storage, StorageConfigAttr> {
     @BelongsToMany(() => Orders, () => OrderStorage)
     orders: Orders[];
 
-    @BelongsToMany(() => Sales, () => OrderStorage)
+    @BelongsToMany(() => Sales, () => SaleStorage)
     sales: Sales[];
 
     @HasMany(() => StockTyres, 'id_storage')

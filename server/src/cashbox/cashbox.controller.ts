@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { CashboxService } from './cashbox.service';
 import { CreateCashboxDto } from './dto/create-cashbox.dto';
+import { GetCashboxDto } from './dto/get-cashbox.dto';
 import { UpdateCashboxDto } from './dto/update-cashbox.dto';
 
 @Controller('cashbox')
@@ -9,17 +10,17 @@ export class CashboxController {
 
   @Post()
   create(@Body() createCashboxDto: CreateCashboxDto) {
-    return this.cashboxService.create(createCashboxDto);
+    return this.cashboxService.createCashbox(createCashboxDto);
   }
 
-  @Get()
+  @Get('/all')
   findAll() {
-    return this.cashboxService.findAll();
+    return this.cashboxService.findAllCashbox();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.cashboxService.findOne(+id);
+  @Get('/id')
+  findOne(@Param() getCashboxDto: GetCashboxDto) {
+    return this.cashboxService.findCashboxById(getCashboxDto);
   }
 
   @Patch(':id')
@@ -27,8 +28,8 @@ export class CashboxController {
     return this.cashboxService.update(+id, updateCashboxDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cashboxService.remove(+id);
+  @Delete('/remove')
+  remove(@Param() getCashboxDto: GetCashboxDto) {
+    return this.cashboxService.removeCashbox(getCashboxDto);
   }
 }

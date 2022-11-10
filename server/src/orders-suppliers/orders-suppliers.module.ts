@@ -3,13 +3,14 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { OrdersSuppliersService } from './orders-suppliers.service';
 import { OrdersSuppliersController } from './orders-suppliers.controller';
 import { OrdersSupplier } from './entities/orders-supplier.model';
+import { OrdersModule } from 'src/orders/orders.module';
 
 @Module({
   controllers: [OrdersSuppliersController],
   providers: [OrdersSuppliersService],
   imports: [
     SequelizeModule.forFeature([OrdersSupplier]),
-    
+    OrdersModule
   ],
   exports:[OrdersSuppliersService],
 })
