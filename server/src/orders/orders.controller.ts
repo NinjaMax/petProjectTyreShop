@@ -19,7 +19,7 @@ export class OrdersController {
   }
 
   @Get('/id')
-  findOne(@Param() getOrdersDto: GetOrdersDto) {
+  findOne(@Param() @Body() getOrdersDto: GetOrdersDto) {
     return this.ordersService.findOrderById(getOrdersDto);
   }
 
@@ -29,7 +29,7 @@ export class OrdersController {
   }
 
   @Delete('/remove')
-  remove(@Param() getOrdersDto: GetOrdersDto) {
+  remove(@Param()  @Body() getOrdersDto: GetOrdersDto) {
     return this.ordersService.removeOrder(getOrdersDto);
   }
 }

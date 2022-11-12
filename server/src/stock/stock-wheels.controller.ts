@@ -20,7 +20,7 @@ export class StockWheelsController {
   }
 
   @Get('/wheels/id')
-  findOne(@Param() getStockDto : GetStockDto) {
+  findOne(@Param() @Body() getStockDto : GetStockDto) {
     return this.stockWheelsService.findStockWheelById(getStockDto);
   }
 

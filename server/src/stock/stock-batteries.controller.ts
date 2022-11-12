@@ -20,7 +20,7 @@ export class StockBatteriesController {
   }
 
   @Get('/battery/id')
-  findOne(@Param() getStockDto : GetStockDto) {
+  findOne(@Param() @Body() getStockDto : GetStockDto) {
     return this.stockBatteriesService.findStockBatteryById(getStockDto);
   }
 

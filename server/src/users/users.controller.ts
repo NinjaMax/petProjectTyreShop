@@ -18,8 +18,8 @@ export class UsersController {
     return this.usersService.findAlluser();
   }
 
-  @Get(':id')
-  findOne(@Param('id') getUseDto: GetUserDto) {
+  @Get('/id')
+  findOne(@Param() @Body() getUseDto: GetUserDto) {
     return this.usersService.findUserById(getUseDto);
   }
 
@@ -28,8 +28,8 @@ export class UsersController {
     return this.usersService.update(+id, updateUserDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') getUseDto: GetUserDto) {
+  @Delete('/remove')
+  remove(@Param() @Body() getUseDto: GetUserDto) {
     return this.usersService.removeUser(getUseDto);
   }
 }

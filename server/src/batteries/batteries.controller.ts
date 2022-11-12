@@ -19,17 +19,17 @@ export class BatteriesController {
   }
 
   @Get('/id')
-  findOne(@Param() getBatteryDto: GetBatteryDto) {
+  findOne(@Param() @Body() getBatteryDto: GetBatteryDto) {
     return this.batteriesService.findBatteryById(getBatteryDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBatteryDto: UpdateBatteryDto) {
-    return this.batteriesService.update(+id, updateBatteryDto);
+  @Patch('/id')
+  update(@Param() id: number, @Body() updateBatteryDto: UpdateBatteryDto) {
+    return this.batteriesService.update(id, updateBatteryDto);
   }
 
   @Delete('/remove')
-  remove(@Param() getBatteryDto: GetBatteryDto) {
+  remove(@Param() @Body() getBatteryDto: GetBatteryDto) {
     return this.batteriesService.removeBattery(getBatteryDto);
   }
 }

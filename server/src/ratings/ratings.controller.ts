@@ -29,8 +29,8 @@ export class RatingsController {
     return this.ratingsService.update(+id, updateRatingDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') getRatingDto: GetRatingDto) {
+  @Delete('/remove')
+  remove(@Param() @Body() getRatingDto: GetRatingDto) {
     return this.ratingsService.removeRating(getRatingDto);
   }
 }

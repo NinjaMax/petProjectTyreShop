@@ -14,7 +14,7 @@ export class StockBatteries extends Model<StockBatteries, StockBatteriesConfigAt
     @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     stock: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true,
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0,
         set () {
 
             const getRemainder : number = this.getDataValue('stock') - this.getDataValue('reserve');
@@ -32,7 +32,7 @@ export class StockBatteries extends Model<StockBatteries, StockBatteriesConfigAt
     })
     reserve: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0})
     remainder: number;
 
     @ForeignKey(() => Supplier)

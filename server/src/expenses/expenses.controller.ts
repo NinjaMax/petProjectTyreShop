@@ -19,7 +19,7 @@ export class ExpensesController {
   }
 
   @Get('/id')
-  findOne(@Param() getExpenseDto: GetExpenseDto) {
+  findOne(@Param() @Body() getExpenseDto: GetExpenseDto) {
     return this.expensesService.findExpenseById(getExpenseDto);
   }
 
@@ -29,7 +29,7 @@ export class ExpensesController {
   }
 
   @Delete('/remove')
-  remove(@Param() getExpenseDto: GetExpenseDto) {
+  remove(@Param() @Body() getExpenseDto: GetExpenseDto) {
     return this.expensesService.removeExpense(getExpenseDto);
   }
 }

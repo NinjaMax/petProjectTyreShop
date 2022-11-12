@@ -48,9 +48,6 @@ export class Sales extends Model<Sales, SalesConfigAttr> {
     @HasMany( () => Comments, 'id_sale')
     comments: Comments[];
 
-    //@HasMany( () => Paynments, 'id_sale')
-    //paynments: Paynments[];
-
     @BelongsToMany(() => Storage, () => SaleStorage)
     storage: Storage[];
 }

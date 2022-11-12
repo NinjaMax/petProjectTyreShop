@@ -18,18 +18,21 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
     id_cat: number;
    
     @Column({type: DataType.INTEGER, unique: false, allowNull: false})
-    id_goods: number;
+    id: number;
 
     @Column({type: DataType.STRING, unique: false, allowNull: false})
     goods: string;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
+    @Column({type: DataType.INTEGER, unique: false, allowNull: false, defaultValue: 0})
     quantity: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
+    @Column({type: DataType.INTEGER, unique: false, allowNull: false, 
+        set() {
+            this.setDataValue('total', this.getDataValue('quantity'));
+        }})
     reserve: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
+    @Column({type: DataType.INTEGER, unique: false, allowNull: false, defaultValue: 0})
     price: number;
 
     @Column({type: DataType.BIGINT, unique: false, allowNull: false, 

@@ -19,7 +19,7 @@ export class CommentsController {
   }
 
   @Get('/id')
-  findOne(@Param() getCommentDto: GetCommentDto) {
+  findOne(@Param() @Body() getCommentDto: GetCommentDto) {
     return this.commentsService.findCommentById(getCommentDto);
   }
 
@@ -29,7 +29,7 @@ export class CommentsController {
   }
 
   @Delete('/remove')
-  remove(@Param() getCommentDto: GetCommentDto) {
+  remove(@Param() @Body() getCommentDto: GetCommentDto) {
     return this.commentsService.removeComment(getCommentDto);
   }
 }

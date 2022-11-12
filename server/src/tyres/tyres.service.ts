@@ -46,7 +46,7 @@ export class TyresService {
 
     try {
 
-      const tyresId = await this.tyresRepository.findByPk(getTyreDto.id_tyres, {include: {all: true}});
+      const tyresId = await this.tyresRepository.findByPk(getTyreDto.id, {include: {all: true}});
 
       return tyresId;
 
@@ -70,7 +70,7 @@ export class TyresService {
         {  
           full_name : updateTyreDto.full_name,
           update_date : updateTyreDto.update_date
-        }, {where: {id_tyres : updateTyreDto.id_tyres}});
+        }, {where: {id : updateTyreDto.id}});
 
         const updateTyres = await this.tyresRepository.findByPk(updateTyreDto.id_tyres, {include: {all: true}});
 
@@ -89,7 +89,7 @@ export class TyresService {
     
     try {
 
-      const removeTyres = await this.tyresRepository.destroy({where: {id_tyres : getTyreDto.id_tyres}});
+      const removeTyres = await this.tyresRepository.destroy({where: {id : getTyreDto.id}});
       
       return removeTyres;
 

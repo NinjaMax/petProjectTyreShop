@@ -14,7 +14,7 @@ export class StockWheels extends Model<StockWheels, StockWheelsConfigAttr> {
     @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     stock: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true,
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0,
         set () {
 
             const getRemainder : number = this.getDataValue('stock') ?? this.getDataValue('stock') - this.getDataValue('reserve');
@@ -32,7 +32,7 @@ export class StockWheels extends Model<StockWheels, StockWheelsConfigAttr> {
     })
     reserve: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0})
     remainder: number; 
 
     @ForeignKey(() => Supplier)
@@ -40,7 +40,7 @@ export class StockWheels extends Model<StockWheels, StockWheelsConfigAttr> {
     id_sup: number;
 
     @ForeignKey(() => Storage)
-    @Column({type: DataType.INTEGER, defaultValue: 2})
+    @Column({type: DataType.INTEGER})
     id_storage: number;
 
     @Column({type: DataType.DATE, unique: false, allowNull: false})

@@ -19,7 +19,7 @@ export class SalesController {
   }
 
   @Get('/id')
-  findOne(@Param() getSaleDto: GetSaleDto) {
+  findOne(@Param() @Body() getSaleDto: GetSaleDto) {
     return this.salesService.findSaleById(getSaleDto);
   }
 
@@ -29,7 +29,7 @@ export class SalesController {
   }
 
   @Delete('/remove')
-  remove(@Param() getSaleDto: GetSaleDto) {
+  remove(@Param() @Body() getSaleDto: GetSaleDto) {
     return this.salesService.removeSale(getSaleDto);
   }
 }

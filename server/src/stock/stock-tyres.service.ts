@@ -23,16 +23,16 @@ export class StockTyresService {
     try {
 
       const tyres = await this.tyresService.findTyresById(createStockDto);
-      const storage = await this.storageService.findStorageById(createStockDto);
+      //const storage = await this.storageService.findStorageById(createStockDto);
 
       if(tyres) {
 
         const stockCreate = await this.stockTyresRepository.create(createStockDto);
-
+        
         const supplier = await this.suppliersService.findSupplierById(createStockDto);
         
-        await storage.$add('stock_tyres', [stockCreate.id_tyres]);
-        storage.stock_tyres.push(stockCreate);
+        //await storage.$add('stock_tyres', [stockCreate.id_tyres]);
+        //storage.stock_tyres.push(stockCreate);
 
         await tyres.$add('stock', [createStockDto.id_tyres]);
 
@@ -45,6 +45,8 @@ export class StockTyresService {
         return tyres;
 
       }  
+      
+      throw new HttpException('Data not found', HttpStatus.NOT_FOUND);
 
     } catch {
 
@@ -74,7 +76,7 @@ export class StockTyresService {
 
     try {
 
-      const stockTyreById = await this.stockTyresRepository.findByPk(getStockTyresDto.id_tyres, {include: {all: true}});
+      const stockTyreById = await this.stockTyresRepository.findByPk(getStockTyresDto.id, {include: {all: true}});
 
       return stockTyreById;
 
@@ -100,7 +102,7 @@ export class StockTyresService {
           remainder : updateStockDto.remainder,
           id_sup : updateStockDto.id_sup,
           update_date : updateStockDto.update_date
-        }, {where: {id_tyres : updateStockDto.id_tyres}});
+        }, {where: {id : updateStockDto.id}});
 
         const updateStockTyres = await this.stockTyresRepository.findByPk(updateStockDto.id_tyres, {include: {all: true}});
 
@@ -119,7 +121,7 @@ export class StockTyresService {
     
     try {
 
-      const removeStockTyre = await this.stockTyresRepository.destroy({where: {id_tyres : getStockDto.id_tyres}});
+      const removeStockTyre = await this.stockTyresRepository.destroy({where: {id : getStockDto.id}});
 
       return removeStockTyre;
 

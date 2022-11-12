@@ -17,24 +17,20 @@ import { SaleStorage } from "src/sales/entities/sales-storage.model";
 @Table({tableName: 'storage' , createdAt: false, updatedAt: false})
 export class Storage extends Model<Storage, StorageConfigAttr> {
 
-    @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
+    @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
     id_storage: number;
 
-    @Column({type: DataType.STRING, unique: false, allowNull: false, defaultValue: "Supplier Storage"})
+    @Column({type: DataType.STRING, unique: false, allowNull: false})
     storage: string;
-
-    @ForeignKey(() => OrdersSupplier)
-    @Column({type: DataType.BIGINT, unique: true, allowNull: true})
-    id_order_sup: number;
-
-    @BelongsTo(() => OrdersSupplier , 'id_sup')
-    order_sup: OrdersSupplier;
 
     @BelongsToMany(() => Orders, () => OrderStorage)
     orders: Orders[];
 
     @BelongsToMany(() => Sales, () => SaleStorage)
     sales: Sales[];
+
+    @HasMany(() => OrdersSupplier, 'id_storage')
+    order_sup: OrdersSupplier[];
 
     @HasMany(() => StockTyres, 'id_storage')
     stock_tyres: StockTyres[];

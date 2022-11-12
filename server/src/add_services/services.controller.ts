@@ -19,7 +19,7 @@ export class ServicesController {
   }
 
   @Get('/id')
-  findOne(@Param() getServiceDto: GetServiceDto) {
+  findOne(@Param() @Body() getServiceDto: GetServiceDto) {
     return this.servicesService.findServiceById(getServiceDto);
   }
 
@@ -29,7 +29,7 @@ export class ServicesController {
   }
 
   @Delete('/remove')
-  remove(@Param() getServiceDto: GetServiceDto) {
+  remove(@Param() @Body() getServiceDto: GetServiceDto) {
     return this.servicesService.removeService(getServiceDto);
   }
 }

@@ -9,12 +9,12 @@ export class StockTyres extends Model<StockTyres, StockTyresConfigAttr> {
 
     @ForeignKey(() => Tyres)
     @Column({type: DataType.INTEGER, unique: true, autoIncrement: false, primaryKey: true})
-    id_tyres: number;
+    id: number;
     
     @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     stock: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true,
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0,
         set () {
 
             const getRemainder : number = this.getDataValue('stock') - this.getDataValue('reserve');
@@ -32,7 +32,7 @@ export class StockTyres extends Model<StockTyres, StockTyresConfigAttr> {
     })
     reserve: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0})
     remainder: number;  
 
     @ForeignKey(() => Supplier)
@@ -40,7 +40,7 @@ export class StockTyres extends Model<StockTyres, StockTyresConfigAttr> {
     id_sup: number;
 
     @ForeignKey(() => Storage)
-    @Column({type: DataType.INTEGER})
+    @Column({type: DataType.INTEGER, defaultValue: 1})
     id_storage: number;
 
     @Column({type: DataType.DATE, unique: false, allowNull: false})

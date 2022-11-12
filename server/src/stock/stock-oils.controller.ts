@@ -20,7 +20,7 @@ export class StockOilsController {
   }
 
   @Get('/oils/id')
-  findOne(@Param() getStockDto : GetStockDto) {
+  findOne(@Param() @Body() getStockDto : GetStockDto) {
     return this.stockOilsService.findStockOilById(getStockDto);
   }
 

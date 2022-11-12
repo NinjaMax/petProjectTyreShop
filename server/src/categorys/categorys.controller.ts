@@ -4,7 +4,7 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { GetCategoryDto } from './dto/get-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 
-@Controller('categorys')
+@Controller('categories')
 export class CategorysController {
   constructor(private readonly categorysService: CategorysService) {}
 

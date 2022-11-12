@@ -19,7 +19,7 @@ export class OilsController {
   }
 
   @Get('/id')
-  findOne(@Param() getOilDto: GetOilDto) {
+  findOne(@Param() @Body() getOilDto: GetOilDto) {
     return this.oilsService.findOilById(getOilDto);
   }
 
@@ -29,7 +29,7 @@ export class OilsController {
   }
 
   @Delete('/remove')
-  remove(@Param() getOilDto: GetOilDto) {
+  remove(@Param() @Body() getOilDto: GetOilDto) {
     return this.oilsService.removeOil(getOilDto);
   }
 }

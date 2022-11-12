@@ -19,7 +19,7 @@ export class PaynmentController {
   }
 
   @Get('/id')
-  findOne(@Param('id') getPaynmentDto: GetPaynmentDto) {
+  findOne(@Param() @Body()getPaynmentDto: GetPaynmentDto) {
     return this.paynmentService.findPaynmentById(getPaynmentDto);
   }
 
@@ -28,8 +28,8 @@ export class PaynmentController {
     return this.paynmentService.update(+id, updatePaynmentDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') getPaynmentDto: GetPaynmentDto) {
+  @Delete('/id')
+  remove(@Param() @Body() getPaynmentDto: GetPaynmentDto) {
     return this.paynmentService.removePaynment(getPaynmentDto);
   }
 }

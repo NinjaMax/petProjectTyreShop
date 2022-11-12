@@ -5,6 +5,7 @@ import { StockBatteriesService } from 'src/stock/stock-batteries.service';
 import { StockOilsService } from 'src/stock/stock-oils.service';
 import { StockTyresService } from 'src/stock/stock-tyres.service';
 import { StockWheelsService } from 'src/stock/stock-wheels.service';
+import { TyresService } from 'src/tyres/tyres.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { GetOrdersDto } from './dto/get-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
@@ -18,13 +19,15 @@ export class OrdersService {
     private stockTyresService: StockTyresService,
     private stockWheelsService: StockWheelsService,
     private stockBatteriesService: StockBatteriesService,
-    private stockOilsService: StockOilsService
+    private stockOilsService: StockOilsService,
+    //private tyresService: TyresService
 
   ) {}
 
   async createOrder(createOrderDto: CreateOrderDto) {
 
     try {
+      //const tyres = await this.tyresService.findTyresById(createOrderDto);
 
       const basket = await this.basketService.findBasketById(createOrderDto);
       const tyreStock = await this.stockTyresService.findStockTyreById(createOrderDto);
@@ -79,7 +82,7 @@ export class OrdersService {
 
       }
 
-      //return order;
+      return order;
 
     } catch {
 
@@ -129,7 +132,7 @@ export class OrdersService {
       if(ordersId) {
 
         await this.ordersRepository.update(
-        { id_goods : updateOrderDto.id_goods, 
+        { id : updateOrderDto.id, 
           id_cat : updateOrderDto.id_cat,
           goods : updateOrderDto.goods,
           quantity : updateOrderDto.quantity,

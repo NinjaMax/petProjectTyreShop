@@ -19,7 +19,7 @@ export class CashboxController {
   }
 
   @Get('/id')
-  findOne(@Param() getCashboxDto: GetCashboxDto) {
+  findOne(@Param() @Body() getCashboxDto: GetCashboxDto) {
     return this.cashboxService.findCashboxById(getCashboxDto);
   }
 
@@ -29,7 +29,7 @@ export class CashboxController {
   }
 
   @Delete('/remove')
-  remove(@Param() getCashboxDto: GetCashboxDto) {
+  remove(@Param() @Body() getCashboxDto: GetCashboxDto) {
     return this.cashboxService.removeCashbox(getCashboxDto);
   }
 }

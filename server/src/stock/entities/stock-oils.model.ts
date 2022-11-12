@@ -14,7 +14,7 @@ export class StockOils extends Model<StockOils, StockOilsConfigAttr> {
     @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     stock: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true,
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0,
         set () {
 
             const getRemainder : number = this.getDataValue('stock') - this.getDataValue('reserve');
@@ -32,7 +32,7 @@ export class StockOils extends Model<StockOils, StockOilsConfigAttr> {
     })
     reserve: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0})
     remainder: number;
 
     @ForeignKey(() => Supplier)

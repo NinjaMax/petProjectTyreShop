@@ -19,7 +19,7 @@ export class BasketController {
   }
 
   @Get()
-  findOne(@Param() getBasketDto: GetBasketDto) {
+  findOne(@Param() @Body() getBasketDto: GetBasketDto) {
     return this.basketService.findBasketById(getBasketDto);
   }
 
@@ -29,7 +29,7 @@ export class BasketController {
   }
 
   @Delete('remove')
-  remove(@Param() getBasketDto: GetBasketDto) {
+  remove(@Param() @Body() getBasketDto: GetBasketDto) {
     return this.basketService.removeBasket(getBasketDto);
   }
 }

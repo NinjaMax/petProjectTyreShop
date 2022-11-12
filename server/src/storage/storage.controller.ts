@@ -19,17 +19,17 @@ export class StorageController {
   }
 
   @Get('/id')
-  findOne(@Param() getStorageDto: GetStorageDto) {
+  findOne(@Param() @Body() getStorageDto: GetStorageDto) {
     return this.storageService.findStorageById(getStorageDto);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStorageDto: UpdateStorageDto) {
+  update(@Param() id: string, @Body() updateStorageDto: UpdateStorageDto) {
     return this.storageService.update(+id, updateStorageDto);
   }
 
   @Delete('/remove')
-  remove(@Param() getStorageDto: GetStorageDto) {
+  remove(@Param() @Body() getStorageDto: GetStorageDto) {
     return this.storageService.removeStorage(getStorageDto);
   }
 }

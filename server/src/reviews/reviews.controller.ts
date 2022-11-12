@@ -18,8 +18,8 @@ export class ReviewsController {
     return this.reviewsService.findAllReviews();
   }
 
-  @Get(':id')
-  findOne(@Param('id') getReviewDto: GetReviewDto) {
+  @Get('/id')
+  findOne(@Param() @Body()getReviewDto: GetReviewDto) {
     return this.reviewsService.findReviewById(getReviewDto);
   }
 
@@ -28,8 +28,8 @@ export class ReviewsController {
     return this.reviewsService.update(+id, updateReviewDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') getReviewDto: GetReviewDto) {
+  @Delete('/remove')
+  remove(@Param() @Body() getReviewDto: GetReviewDto) {
     return this.reviewsService.removeReview(getReviewDto);
   }
 }

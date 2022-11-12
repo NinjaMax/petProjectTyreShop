@@ -28,8 +28,8 @@ export class PropertiesModelController {
     return this.propertiesModelService.updateTyreModel(updatePropertyDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') getPropertyDto: GetPropertyDto) {
+  @Delete('/remove')
+  remove(@Param() @Body() getPropertyDto: GetPropertyDto) {
     return this.propertiesModelService.removeTyreModel(getPropertyDto);
   }
 }

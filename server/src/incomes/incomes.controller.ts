@@ -19,7 +19,7 @@ export class IncomesController {
   }
 
   @Get('/id')
-  findOne(@Param() getIncomeDto: GetIncomeDto) {
+  findOne(@Param() @Body() getIncomeDto: GetIncomeDto) {
     return this.incomesService.findIncomeById(getIncomeDto);
   }
 
@@ -29,7 +29,7 @@ export class IncomesController {
   }
 
   @Delete('/remove')
-  remove(@Param() getIncomeDto: GetIncomeDto) {
+  remove(@Param() @Body() getIncomeDto: GetIncomeDto) {
     return this.incomesService.removeIncome(getIncomeDto);
   }
 }

@@ -6,6 +6,7 @@ export class CreatePriceDto {
     readonly price_plus_delivery: number;
     readonly update_date: Date;
 
+    readonly id: number;
     readonly id_tyres: number;
     readonly id_wheel: number;
     readonly id_oil: number;

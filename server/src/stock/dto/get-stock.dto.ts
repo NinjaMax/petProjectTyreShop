@@ -1,5 +1,6 @@
 export class GetStockDto {
 
+   readonly id: number;
    readonly id_tyres: number;
    readonly id_wheel: number;
    readonly id_oil: number;
