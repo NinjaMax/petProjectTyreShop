@@ -1,6 +1,6 @@
 import { Column, DataType, Model, Table, ForeignKey, HasMany} from "sequelize-typescript";
-import { TyreModelConfigAttr } from '../interfaces/tyre-model.interface';
-import { RatingTyres } from "../../ratings/entities/rating-tyres.model";
+import { TyreModelConfigAttr } from '../../interfaces/tyres/tyre-model.interface';
+import { RatingTyres } from "../../../ratings/entities/rating-tyres.model";
 import { Tyres } from "src/tyres/entities/tyres.model";
 import { ReviewTyres } from "src/reviews/entities/review-tyres.model";
 

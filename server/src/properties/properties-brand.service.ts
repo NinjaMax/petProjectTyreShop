@@ -4,7 +4,7 @@ import { TyresService } from 'src/tyres/tyres.service';
 import { CreatePropertyDto } from './dto/create-property.dto';
 import { GetPropertyDto } from './dto/get-property.dto';
 import { UpdatePropertyDto } from './dto/update-property.dto';
-import { TyreBrand } from './entities/tyre-brand.model';
+import { TyreBrand } from './entities/tyres/tyre-brand.model';
 
 @Injectable()
 export class PropertiesBrandService {
@@ -21,7 +21,7 @@ export class PropertiesBrandService {
 
         const tyreBrand = await this.tyreBrandRepository.create(createPropertyDto);
         const createTyreBrand = await this.tyreBrandRepository.findByPk(tyreBrand.id_brand, {include: {all: true}});
-        await createTyreBrand.$add('tyres', [createPropertyDto.id_tyres]);
+        await createTyreBrand.$add('tyres', [createPropertyDto.id]);
         createTyreBrand.tyres.push(tyre);
 
         const getTyreBrand = await this.tyreBrandRepository.findByPk(createTyreBrand.id_brand, {include: {all: true}});
@@ -30,7 +30,7 @@ export class PropertiesBrandService {
 
       }
 
-      return new HttpException(`Data ${createPropertyDto.id_tyres} is not found`, HttpStatus.NOT_FOUND);
+      return new HttpException(`Data ${createPropertyDto.id} is not found`, HttpStatus.NOT_FOUND);
 
     } catch {
 
@@ -87,11 +87,11 @@ export class PropertiesBrandService {
           tyres: brandTyresId.tyres
         }, {where: {id_brand : updatePropertyDto.id_brand}});
 
-        const updateBrand = brandTyresId.tyres.find( item => item.id == updatePropertyDto.id_tyres);
+        const updateBrand = brandTyresId.tyres.find( item => item.id == updatePropertyDto.id);
        
         if(!updateBrand) {
 
-          await brandTyresId.$add('tyres', [updatePropertyDto.id_tyres]);
+          await brandTyresId.$add('tyres', [updatePropertyDto.id]);
           brandTyresId.tyres.push(tyresId);
 
         }

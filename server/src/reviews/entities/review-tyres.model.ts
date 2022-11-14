@@ -3,8 +3,8 @@ import { ReviewsTyresConfigAttr } from '../interfaces/review-tyres.interface';
 import { Tyres } from "src/tyres/entities/tyres.model";
 import { RatingTyres } from "src/ratings/entities/rating-tyres.model";
 import { Users } from "src/users/entities/users.model";
-import { TyreModel } from "src/properties/entities/tyre-model.model";
-import { TyreBrand } from "src/properties/entities/tyre-brand.model";
+import { TyreModel } from "src/properties/entities/tyres/tyre-model.model";
+import { TyreBrand } from "src/properties/entities/tyres/tyre-brand.model";
 
 @Table({tableName: 'review_tyres', createdAt: true, updatedAt: false})
 export class ReviewTyres extends Model<ReviewTyres, ReviewsTyresConfigAttr> {
@@ -14,7 +14,7 @@ export class ReviewTyres extends Model<ReviewTyres, ReviewsTyresConfigAttr> {
 
     @ForeignKey(() => Tyres)
     @Column({type: DataType.INTEGER, allowNull: false})
-    id_tyres: number;
+    id: number;
 
     @ForeignKey(() => TyreModel)
     @Column({type: DataType.INTEGER, allowNull: false})
@@ -34,7 +34,7 @@ export class ReviewTyres extends Model<ReviewTyres, ReviewsTyresConfigAttr> {
     @BelongsTo(() => Users , 'id_user')
     user: Users;
 
-    @BelongsTo(() => Tyres , 'id_tyres')
+    @BelongsTo(() => Tyres , 'id')
     tyres: Tyres;
 
     @HasOne(() => RatingTyres , 'id_review')

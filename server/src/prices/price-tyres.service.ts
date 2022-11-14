@@ -30,10 +30,10 @@ export class PriceTyresService {
 
         const supplier = await this.suppliersService.findSupplierById(createPriceDto);
 
-        await storage.$add('price_tyres', [priceCreate.id_tyres]);
+        await storage.$add('price_tyres', [priceCreate.id]);
         storage.price_tyres.push(priceCreate);
 
-        await tyres.$add('price', [createPriceDto.id_tyres]);
+        await tyres.$add('price', [createPriceDto.id]);
        
         await supplier.$add('price_tyres', [createPriceDto.id_sup]);
        
@@ -73,7 +73,7 @@ export class PriceTyresService {
     
     try {
 
-      const tyresId = await this.priceTyresRepository.findByPk(getPriceDto.id_tyres, {include: {all: true}});
+      const tyresId = await this.priceTyresRepository.findByPk(getPriceDto.id, {include: {all: true}});
 
       return tyresId;
 
@@ -90,7 +90,7 @@ export class PriceTyresService {
 
     try {
 
-      const tyresId = await this.priceTyresRepository.findByPk(updatePriceDto.id_tyres, {include: {all: true}});
+      const tyresId = await this.priceTyresRepository.findByPk(updatePriceDto.id, {include: {all: true}});
       
       if(tyresId) {
 
@@ -101,9 +101,9 @@ export class PriceTyresService {
           delivery_price : updatePriceDto.delivery_price, 
           price_plus_delivery : updatePriceDto.price_plus_delivery,
           update_date : updatePriceDto.update_date
-        }, {where: {id_tyres : updatePriceDto.id_tyres}});
+        }, {where: {id : updatePriceDto.id}});
 
-        const updatePriceTyres = await this.priceTyresRepository.findByPk(updatePriceDto.id_tyres, {include: {all: true}});
+        const updatePriceTyres = await this.priceTyresRepository.findByPk(updatePriceDto.id, {include: {all: true}});
 
         return updatePriceTyres; 
       }
@@ -121,7 +121,7 @@ export class PriceTyresService {
 
     try {
 
-      const removePrice = await this.priceTyresRepository.destroy({where: {id_tyres : getPriceDto.id_tyres}});
+      const removePrice = await this.priceTyresRepository.destroy({where: {id : getPriceDto.id}});
 
       return removePrice;
 

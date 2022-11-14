@@ -6,7 +6,7 @@ export class GetSupplierDto {
     readonly phone: bigint;
     readonly email: string;
     
-    readonly id_tyres: number;
+    readonly id: number;
     readonly update_date: Date;
 
 }

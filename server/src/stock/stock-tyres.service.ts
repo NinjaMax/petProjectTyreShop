@@ -6,7 +6,7 @@ import { UpdateStockDto } from './dto/update-stock.dto';
 import { StockTyres } from './entities/stock-tyres.model';
 import { TyresService } from '../tyres/tyres.service';
 import { SuppliersService } from '../suppliers/suppliers.service';
-import { StorageService } from 'src/storage/storage.service';
+//import { StorageService } from 'src/storage/storage.service';
 
 
 @Injectable()
@@ -15,7 +15,7 @@ export class StockTyresService {
   constructor(@InjectModel(StockTyres) private stockTyresRepository: typeof StockTyres,
     private tyresService: TyresService, 
     private suppliersService : SuppliersService,
-    private storageService: StorageService
+    //private storageService: StorageService
    ) {}
 
   async createStockTyre(createStockDto: CreateStockDto) {
@@ -34,7 +34,7 @@ export class StockTyresService {
         //await storage.$add('stock_tyres', [stockCreate.id_tyres]);
         //storage.stock_tyres.push(stockCreate);
 
-        await tyres.$add('stock', [createStockDto.id_tyres]);
+        await tyres.$add('stock', [createStockDto.id]);
 
         await supplier.$add('stock', [createStockDto.id_sup]);
         
@@ -45,7 +45,7 @@ export class StockTyresService {
         return tyres;
 
       }  
-      
+
       throw new HttpException('Data not found', HttpStatus.NOT_FOUND);
 
     } catch {
@@ -72,11 +72,11 @@ export class StockTyresService {
     
   }
 
-  async findStockTyreById(getStockTyresDto : GetStockDto) {
+  async findStockTyreById(getStockDto : GetStockDto) {
 
     try {
 
-      const stockTyreById = await this.stockTyresRepository.findByPk(getStockTyresDto.id, {include: {all: true}});
+      const stockTyreById = await this.stockTyresRepository.findByPk(getStockDto.id, {include: {all: true}});
 
       return stockTyreById;
 
@@ -92,7 +92,7 @@ export class StockTyresService {
     
     try {
 
-      const tyresId = await this.stockTyresRepository.findByPk(updateStockDto.id_tyres, {include: {all: true}});
+      const tyresId = await this.stockTyresRepository.findByPk(updateStockDto.id, {include: {all: true}});
       
       if(tyresId) {
 
@@ -104,7 +104,7 @@ export class StockTyresService {
           update_date : updateStockDto.update_date
         }, {where: {id : updateStockDto.id}});
 
-        const updateStockTyres = await this.stockTyresRepository.findByPk(updateStockDto.id_tyres, {include: {all: true}});
+        const updateStockTyres = await this.stockTyresRepository.findByPk(updateStockDto.id, {include: {all: true}});
 
         return updateStockTyres; 
       }

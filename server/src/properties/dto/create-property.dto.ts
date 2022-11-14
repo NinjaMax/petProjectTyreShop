@@ -19,7 +19,7 @@ export class CreatePropertyDto {
     readonly om: string;
     readonly euromark: string;
 
-    readonly id_tyres: number;
+    //readonly id_tyres: number;
     readonly id_sup: number;
     readonly update_date: Date;
     readonly full_name: string;

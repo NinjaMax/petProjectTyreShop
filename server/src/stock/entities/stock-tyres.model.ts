@@ -15,24 +15,51 @@ export class StockTyres extends Model<StockTyres, StockTyresConfigAttr> {
     stock: number;
 
     @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0,
-        set () {
-
-            const getRemainder : number = this.getDataValue('stock') - this.getDataValue('reserve');
-            const getReserve : number = this.getDataValue('stock') - this.getDataValue('remainder');
+        
+    //    get () {
+    //        const getStock : number = this.getDataValue('stock');
+    //        let reserve: number = this.getDataValue('reserve');
+    //        const getRemainder : number = this.getDataValue('stock') - reserve;
+    //        let getReserve : number = this.getDataValue('stock') - this.getDataValue('remainder');
+//
+    //        if( getRemainder >= reserve && getStock !== 0)  {
+    //            //reserve = getRemainder
+    //            return reserve;
+    //        } 
+    //        if( getRemainder < reserve && getStock !== 0) {
+    //            reserve = reserve - (reserve - getRemainder);
+    //          return reserve;  
+    //        }
             
-            if( getRemainder < 0 ) {
-                this.setDataValue('reserve', getReserve - getRemainder);
-                this.setDataValue('remainder', 0 ); 
-                return `You can not set more "reserve" because does not have remainder. "Remainder 0".`;
-            } else {
-                
-                this.setDataValue('remainder', getRemainder );
-            }          
-        }
+    //    },
+
+    //    set (reserve: number) {
+    
+    //            this.setDataValue('reserve', reserve);
+               
+    //        }  
+
     })
     reserve: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0})
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0,     
+        
+        get () {
+            const getRemainder : number = this.getDataValue('stock') - this.getDataValue('reserve');
+
+            return getRemainder;
+        },
+        set (getRemainder) {
+
+            if( getRemainder < 0 ) {
+                this.setDataValue('remainder', 0 ); 
+                return `You can not set more "reserve" because does not have remainder. "Remainder 0".`;
+            } 
+            
+        this.setDataValue('remainder', getRemainder );
+                 
+        }
+    })
     remainder: number;  
 
     @ForeignKey(() => Supplier)
@@ -46,7 +73,7 @@ export class StockTyres extends Model<StockTyres, StockTyresConfigAttr> {
     @Column({type: DataType.DATE, unique: false, allowNull: false})
     update_date: Date;
 
-    @BelongsTo( () => Tyres , 'id_tyres')
+    @BelongsTo( () => Tyres , 'id')
     tyres: Tyres;
 
     @BelongsTo( () => Supplier , 'id_sup')

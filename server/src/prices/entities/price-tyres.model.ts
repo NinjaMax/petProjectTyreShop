@@ -9,7 +9,7 @@ export class PriceTyres extends Model<PriceTyres, PriceTyresConfigAttr>{
     
    @ForeignKey(() => Tyres)
    @Column({type: DataType.INTEGER, unique: true, autoIncrement: false, primaryKey: true})
-   id_tyres: number;
+   id: number;
 
    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
    price_wholesale: number;
@@ -22,7 +22,7 @@ export class PriceTyres extends Model<PriceTyres, PriceTyresConfigAttr>{
    id_sup: number;
 
    @ForeignKey(() => Storage)
-   @Column({type: DataType.INTEGER})
+   @Column({type: DataType.INTEGER, defaultValue: 1})
    id_storage: number;
 
    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
@@ -34,7 +34,7 @@ export class PriceTyres extends Model<PriceTyres, PriceTyresConfigAttr>{
    @Column({type: DataType.DATE, unique: false, allowNull: false})
    update_date: Date;
 
-   @BelongsTo( () => Tyres , 'id_tyres')
+   @BelongsTo( () => Tyres , 'id')
    tyres: Tyres;
 
    @BelongsTo( () => Supplier , 'id_sup')

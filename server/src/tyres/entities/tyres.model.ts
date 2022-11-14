@@ -2,8 +2,8 @@ import { Column, DataType, Model, Table, HasMany, BelongsTo, ForeignKey} from "s
 import { TyresConfigAttr } from '../interfaces/tyres.interface';
 import { PriceTyres } from "../../prices/entities/price-tyres.model";
 import {StockTyres} from "../../stock/entities/stock-tyres.model";
-import { TyreModel } from "src/properties/entities/tyre-model.model";
-import { TyreBrand } from "src/properties/entities/tyre-brand.model";
+import { TyreModel } from "src/properties/entities/tyres/tyre-model.model";
+import { TyreBrand } from "src/properties/entities/tyres/tyre-brand.model";
 import { ReviewTyres } from "src/reviews/entities/review-tyres.model";
 import { RatingTyres } from "src/ratings/entities/rating-tyres.model";
 import { Category } from "src/categorys/entities/category.model";
@@ -32,16 +32,16 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
     @Column({type: DataType.DATE, unique: false, allowNull: false})
     update_date: Date;
 
-    @HasMany(() => StockTyres , 'id_tyres')
+    @HasMany(() => StockTyres , 'id')
     stock: StockTyres[];
 
-    @HasMany(() => PriceTyres , 'id_tyres')
+    @HasMany(() => PriceTyres , 'id')
     price: PriceTyres[];
 
-    @HasMany(() => ReviewTyres , 'id_tyres')
+    @HasMany(() => ReviewTyres , 'id')
     reviews: ReviewTyres[];
 
-    @HasMany(() => RatingTyres, 'id_tyres')
+    @HasMany(() => RatingTyres, 'id')
     rating: RatingTyres[];
 
     @BelongsTo(() => TyreModel, 'id_model')

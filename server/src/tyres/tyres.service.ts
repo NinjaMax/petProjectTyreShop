@@ -62,7 +62,7 @@ export class TyresService {
 
     try {
 
-      const tyresId = await this.tyresRepository.findByPk(updateTyreDto.id_tyres, {include: {all: true}});
+      const tyresId = await this.tyresRepository.findByPk(updateTyreDto.id, {include: {all: true}});
       
       if(tyresId) {
 
@@ -72,7 +72,7 @@ export class TyresService {
           update_date : updateTyreDto.update_date
         }, {where: {id : updateTyreDto.id}});
 
-        const updateTyres = await this.tyresRepository.findByPk(updateTyreDto.id_tyres, {include: {all: true}});
+        const updateTyres = await this.tyresRepository.findByPk(updateTyreDto.id, {include: {all: true}});
 
         return updateTyres; 
       }

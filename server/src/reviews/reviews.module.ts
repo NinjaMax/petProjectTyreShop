@@ -8,8 +8,8 @@ import { RatingTyres } from 'src/ratings/entities/rating-tyres.model';
 import { TyresModule } from 'src/tyres/tyres.module';
 import { RatingsModule } from 'src/ratings/ratings.module';
 import { Users } from 'src/users/entities/users.model';
-import { TyreModel } from 'src/properties/entities/tyre-model.model';
-import { TyreBrand } from 'src/properties/entities/tyre-brand.model';
+import { TyreModel } from 'src/properties/entities/tyres/tyre-model.model';
+import { TyreBrand } from 'src/properties/entities/tyres/tyre-brand.model';
 import { PropertiesModule } from 'src/properties/properties.module';
 
 

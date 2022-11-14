@@ -8,8 +8,8 @@ import { Tyres } from 'src/tyres/entities/tyres.model';
 import { RatingTyres } from 'src/ratings/entities/rating-tyres.model';
 import { TyresModule } from 'src/tyres/tyres.module';
 import { RatingsModule } from 'src/ratings/ratings.module';
-import { TyreModel } from './entities/tyre-model.model';
-import { TyreBrand } from './entities/tyre-brand.model';
+import { TyreModel } from './entities/tyres/tyre-model.model';
+import { TyreBrand } from './entities/tyres/tyre-brand.model';
 import { ReviewTyres } from 'src/reviews/entities/review-tyres.model';
 
 @Module({

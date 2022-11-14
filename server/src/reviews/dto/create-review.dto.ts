@@ -1,6 +1,6 @@
 export class CreateReviewDto {
 
-    readonly id_tyres: number;
+    //readonly id_tyres: number;
     readonly id_review: number;
     readonly discription: string;
     readonly id_sup: number;

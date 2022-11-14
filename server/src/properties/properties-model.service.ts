@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { CreatePropertyDto } from './dto/create-property.dto';
 import { GetPropertyDto } from './dto/get-property.dto';
 import { UpdatePropertyDto } from './dto/update-property.dto';
-import { TyreModel } from './entities/tyre-model.model';
+import { TyreModel } from './entities/tyres/tyre-model.model';
 import { TyresService } from 'src/tyres/tyres.service';
 
 @Injectable()
@@ -21,7 +21,7 @@ export class PropertiesModelService {
 
          const tyreModel = await this.tyreModelRepository.create(createPropertyDto);
          const createTyreModel = await this.tyreModelRepository.findByPk(tyreModel.id_model, {include: {all: true}})
-         await createTyreModel.$add('tyres', [createPropertyDto.id_tyres])
+         await createTyreModel.$add('tyres', [createPropertyDto.id])
 
          createTyreModel.tyres.push(tyre);
 
@@ -31,7 +31,7 @@ export class PropertiesModelService {
 
         }
 
-        return new HttpException(`Data ${createPropertyDto.id_tyres} not found`, HttpStatus.NOT_FOUND);
+        return new HttpException(`Data ${createPropertyDto.id} not found`, HttpStatus.NOT_FOUND);
 
     } catch {
 
@@ -87,11 +87,11 @@ export class PropertiesModelService {
           tyres: modelTyresId.tyres
         }, {where: {id_model : updatePropertyDto.id_model}});
 
-        const updateBrand = modelTyresId.tyres.find( item => item.id == updatePropertyDto.id_tyres);
+        const updateBrand = modelTyresId.tyres.find( item => item.id == updatePropertyDto.id);
        
         if(!updateBrand) {
 
-          await modelTyresId.$add('tyres', [updatePropertyDto.id_tyres])
+          await modelTyresId.$add('tyres', [updatePropertyDto.id])
           modelTyresId.tyres.push(tyresId);
 
         }

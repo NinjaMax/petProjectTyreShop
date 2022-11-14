@@ -19,7 +19,7 @@ export class UpdateOrderDto extends PartialType(CreateOrderDto) {
     //readonly price_plus_delivery: number;
     //readonly update_date: Date;
 
-    readonly id_tyres: number;
+    readonly id: number;
     //readonly id_sup: number;
     //readonly full_name: string;
     //readonly name: string;

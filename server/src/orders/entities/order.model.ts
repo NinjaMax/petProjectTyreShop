@@ -14,30 +14,40 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
     @Column({type: DataType.BIGINT, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_order: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     id_cat: number;
    
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     id: number;
 
-    @Column({type: DataType.STRING, unique: false, allowNull: false})
+    @Column({type: DataType.STRING, unique: false, allowNull: true})
     goods: string;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false, defaultValue: 0})
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0})
     quantity: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false, 
-        set() {
-            this.setDataValue('total', this.getDataValue('quantity'));
-        }})
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true,  defaultValue: 0, 
+        get() {
+            const getReserve: number = this.getDataValue('quantity'); 
+            return getReserve;
+        },
+        set(getReserve) {
+            this.setDataValue('reserve', getReserve);
+        }
+    })
     reserve: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false, defaultValue: 0})
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     price: number;
 
-    @Column({type: DataType.BIGINT, unique: false, allowNull: false, 
-        set() {
-            this.setDataValue('total', this.getDataValue('price') * this.getDataValue('quantity'));
+    @Column({type: DataType.BIGINT, unique: false, allowNull: true, 
+        
+        get() {
+            const getTotal: number = this.getDataValue('price') * this.getDataValue('quantity'); 
+            return getTotal;
+        },
+        set(getTotal) {
+            this.setDataValue('total', getTotal);
         }
     })
     total: number;

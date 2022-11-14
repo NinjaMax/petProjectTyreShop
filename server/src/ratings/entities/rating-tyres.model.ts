@@ -2,8 +2,8 @@ import { Column, DataType, Model, Table, BelongsTo, ForeignKey} from "sequelize-
 import { RatingTyresConfigAttr } from "../interfaces/rating-tyres.interface";
 import { Tyres } from "src/tyres/entities/tyres.model";
 import { ReviewTyres } from "src/reviews/entities/review-tyres.model";
-import { TyreModel } from "src/properties/entities/tyre-model.model";
-import { TyreBrand } from "src/properties/entities/tyre-brand.model";
+import { TyreModel } from "src/properties/entities/tyres/tyre-model.model";
+import { TyreBrand } from "src/properties/entities/tyres/tyre-brand.model";
 
 @Table({tableName: 'rating_tyres', createdAt: false, updatedAt: false})
 export class RatingTyres extends Model<RatingTyres, RatingTyresConfigAttr> {
@@ -13,7 +13,7 @@ export class RatingTyres extends Model<RatingTyres, RatingTyresConfigAttr> {
 
     @ForeignKey(() => Tyres)
     @Column({type: DataType.INTEGER})
-    id_tyres: number;
+    id: number;
 
     @ForeignKey(() => ReviewTyres)
     @Column({type: DataType.INTEGER})
@@ -51,7 +51,7 @@ export class RatingTyres extends Model<RatingTyres, RatingTyresConfigAttr> {
     @Column({type: DataType.INTEGER})
     id_brand: number;
 
-    @BelongsTo(() => Tyres , 'id_tyres')
+    @BelongsTo(() => Tyres , 'id')
     tyres: Tyres;
 
     @BelongsTo(() => ReviewTyres , 'id_review')

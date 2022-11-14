@@ -5,7 +5,7 @@ import { StockBatteriesService } from 'src/stock/stock-batteries.service';
 import { StockOilsService } from 'src/stock/stock-oils.service';
 import { StockTyresService } from 'src/stock/stock-tyres.service';
 import { StockWheelsService } from 'src/stock/stock-wheels.service';
-import { TyresService } from 'src/tyres/tyres.service';
+//import { TyresService } from 'src/tyres/tyres.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { GetOrdersDto } from './dto/get-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
@@ -47,11 +47,26 @@ export class OrdersService {
       }
 
       if(tyreStock) {
+        const orderId = await this.ordersRepository.findByPk(order.id_order);    
+        if(tyreStock.remainder < createOrderDto.quantity && tyreStock.stock !==0) {
+          const newReserve = createOrderDto.quantity - (createOrderDto.quantity - tyreStock.remainder);
+          await tyreStock.increment('reserve', {by: newReserve});
+          await tyreStock.reload();
+          await orderId.$add('storage', [tyreStock.storage]);
+          orderId.storage.push(tyreStock.storage);
 
-        await tyreStock.increment('reserve', {by: createOrderDto.quantity});
-        await tyreStock.reload();
+          return orderId;
+        }
+        if(tyreStock.remainder > createOrderDto.quantity && tyreStock.stock !==0) {
+          const orderId = await this.ordersRepository.findByPk(order.id_order);    
+          await tyreStock.increment('reserve', {by: createOrderDto.quantity});
+          await tyreStock.reload();
+          await orderId.$add('storage', [tyreStock.storage]);
+          orderId.storage.push(tyreStock.storage);
 
-        return order;
+          return orderId;
+        }
+        
 
       }
 
