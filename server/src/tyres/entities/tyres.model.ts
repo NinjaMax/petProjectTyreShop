@@ -1,4 +1,4 @@
-import { Column, DataType, Model, Table, HasMany, BelongsTo, ForeignKey} from "sequelize-typescript";
+import { Column, DataType, Model, Table, HasMany, BelongsTo, BelongsToMany, ForeignKey} from "sequelize-typescript";
 import { TyresConfigAttr } from '../interfaces/tyres.interface';
 import { PriceTyres } from "../../prices/entities/price-tyres.model";
 import {StockTyres} from "../../stock/entities/stock-tyres.model";
@@ -7,6 +7,8 @@ import { TyreBrand } from "src/properties/entities/tyres/tyre-brand.model";
 import { ReviewTyres } from "src/reviews/entities/review-tyres.model";
 import { RatingTyres } from "src/ratings/entities/rating-tyres.model";
 import { Category } from "src/categorys/entities/category.model";
+import { Orders_Goods } from "src/orders/entities/order-goods.model";
+import { Orders } from "src/orders/entities/order.model";
 
 @Table({tableName: 'tyres' , updatedAt: false})
 export class Tyres extends Model<Tyres, TyresConfigAttr> {
@@ -52,5 +54,8 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
 
     @BelongsTo(() => Category, 'id_cat')
     category: Category;
+
+    //@BelongsToMany(() => Orders, () => OrdersGoods)
+    //orders: Orders[];
     
 }

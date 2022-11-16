@@ -47,7 +47,8 @@ export class OrdersService {
       }
 
       if(tyreStock) {
-        const orderId = await this.ordersRepository.findByPk(order.id_order);    
+        const orderId = await this.ordersRepository.findByPk(order.id_order); 
+
         if(tyreStock.remainder < createOrderDto.quantity && tyreStock.stock !==0) {
           const newReserve = createOrderDto.quantity - (createOrderDto.quantity - tyreStock.remainder);
           await tyreStock.increment('reserve', {by: newReserve});
@@ -57,6 +58,7 @@ export class OrdersService {
 
           return orderId;
         }
+
         if(tyreStock.remainder > createOrderDto.quantity && tyreStock.stock !==0) {
           const orderId = await this.ordersRepository.findByPk(order.id_order);    
           await tyreStock.increment('reserve', {by: createOrderDto.quantity});
@@ -66,8 +68,12 @@ export class OrdersService {
 
           return orderId;
         }
-        
 
+        if(tyreStock.remainder == 0) {
+          //orderId.storage[Storage.length];
+          return `You can not set more "reserve" because does not have remainder. "Remainder 0".`;
+        }
+        
       }
 
       if(wheelStock) {
@@ -148,14 +154,7 @@ export class OrdersService {
 
         await this.ordersRepository.update(
         { id : updateOrderDto.id, 
-          id_cat : updateOrderDto.id_cat,
-          goods : updateOrderDto.goods,
-          quantity : updateOrderDto.quantity,
-          price : updateOrderDto.price,
-          reserve : updateOrderDto.reserve,
-          total: updateOrderDto.total,
           notes: updateOrderDto.notes,
-
         }, {where: {id_order : updateOrderDto.id_order}});
 
         const updateStockOrder = await this.ordersRepository.findByPk(updateOrderDto.id_order, {include: {all: true}});

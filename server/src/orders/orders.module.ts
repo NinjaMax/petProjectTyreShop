@@ -8,14 +8,14 @@ import { Orders } from './entities/order.model';
 import { StockModule } from 'src/stock/stock.module';
 import { BasketModule } from 'src/basket/basket.module';
 import { UsersModule } from 'src/users/users.module';
-import { OrderStorage } from './entities/order-storage.model';
+import { Order_Storage } from './entities/order-storage.model';
 import { TyresModule } from 'src/tyres/tyres.module';
 
 @Module({
   controllers: [OrdersController],
   providers: [OrdersService],
   imports: [
-    SequelizeModule.forFeature([Orders, OrderStorage]),
+    SequelizeModule.forFeature([Orders, Order_Storage]),
     BasketModule, StockModule, UsersModule, TyresModule
   ],
   exports:[OrdersService],

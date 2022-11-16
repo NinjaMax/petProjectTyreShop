@@ -2,7 +2,7 @@ import { Column, DataType, Model, Table, BelongsTo, ForeignKey, BelongsToMany, H
 import { StorageConfigAttr } from '../interfaces/storage.interface';
 import { OrdersSupplier } from "src/orders-suppliers/entities/orders-supplier.model";
 import { Orders } from "src/orders/entities/order.model";
-import { OrderStorage } from "src/orders/entities/order-storage.model";
+import { Order_Storage } from "src/orders/entities/order-storage.model";
 import { Sales } from "src/sales/entities/sale.model";
 import { StockTyres } from "src/stock/entities/stock-tyres.model";
 import { StockWheels } from "src/stock/entities/stock-wheels.model";
@@ -23,7 +23,7 @@ export class Storage extends Model<Storage, StorageConfigAttr> {
     @Column({type: DataType.STRING, unique: false, allowNull: false})
     storage: string;
 
-    @BelongsToMany(() => Orders, () => OrderStorage)
+    @BelongsToMany(() => Orders, () => Order_Storage)
     orders: Orders[];
 
     @BelongsToMany(() => Sales, () => SaleStorage)

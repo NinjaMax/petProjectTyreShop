@@ -53,7 +53,7 @@ import { OrdersSuppliersModule } from './orders-suppliers/orders-suppliers.modul
 import { Orders } from './orders/entities/order.model';
 import { OrdersSupplier } from './orders-suppliers/entities/orders-supplier.model';
 import { SaleStorage } from './sales/entities/sales-storage.model';
-import { OrderStorage } from './orders/entities/order-storage.model';
+import { Order_Storage } from './orders/entities/order-storage.model';
 import { Storage } from './storage/entities/storage.model';
 import { BasketModule } from './basket/basket.module';
 import { Basket } from './basket/entities/basket.model';
@@ -78,7 +78,7 @@ import { Basket } from './basket/entities/basket.model';
         PriceTyres, PriceWheels, PriceBatteries, PriceOil,
         RatingTyres, ReviewTyres, TyreBrand, TyreModel, 
         Users, Service, Orders, OrdersSupplier, 
-        SaleStorage, OrderStorage, Storage, Basket
+        SaleStorage, Order_Storage, Storage, Basket
       ],
       autoLoadModels: true,
       synchronize: true,

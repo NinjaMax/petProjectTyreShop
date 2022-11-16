@@ -14,32 +14,7 @@ export class StockTyres extends Model<StockTyres, StockTyresConfigAttr> {
     @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     stock: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0,
-        
-    //    get () {
-    //        const getStock : number = this.getDataValue('stock');
-    //        let reserve: number = this.getDataValue('reserve');
-    //        const getRemainder : number = this.getDataValue('stock') - reserve;
-    //        let getReserve : number = this.getDataValue('stock') - this.getDataValue('remainder');
-//
-    //        if( getRemainder >= reserve && getStock !== 0)  {
-    //            //reserve = getRemainder
-    //            return reserve;
-    //        } 
-    //        if( getRemainder < reserve && getStock !== 0) {
-    //            reserve = reserve - (reserve - getRemainder);
-    //          return reserve;  
-    //        }
-            
-    //    },
-
-    //    set (reserve: number) {
-    
-    //            this.setDataValue('reserve', reserve);
-               
-    //        }  
-
-    })
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0})
     reserve: number;
 
     @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0,     

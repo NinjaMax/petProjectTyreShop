@@ -1,5 +1,7 @@
-import { Column, DataType, Model, Table, BelongsTo, HasMany, ForeignKey} from "sequelize-typescript";
+import { Column, DataType, Model, Table, BelongsTo, BelongsToMany, HasMany, ForeignKey} from "sequelize-typescript";
 import { Category } from "src/categorys/entities/category.model";
+import { Orders_Goods } from "src/orders/entities/order-goods.model";
+import { Orders } from "src/orders/entities/order.model";
 import { PriceOil } from "src/prices/entities/price-oils.model";
 import { StockOils } from "src/stock/entities/stock-oils.model";
 import { OilConfigAttr } from '../interfaces/oil.interface';
@@ -25,5 +27,8 @@ export class Oil extends Model<Oil, OilConfigAttr> {
 
     @HasMany(() => StockOils, 'id_oil')
     stock: StockOils[];
+
+    //@BelongsToMany(() => Orders, () => OrdersGoods)
+    //orders: Orders[];
    
 }

@@ -9,7 +9,7 @@ export class Category extends Model<Category, CategoryConfigAttr> {
     id_cat: number;
 
     @Column({type: DataType.STRING, unique: true, allowNull: false})
-    category: string;
+    category: string[];
 
     @HasMany(() => Tyres, 'id_cat')
     tyres: Tyres[];
