@@ -1,13 +1,14 @@
-import { Column, DataType, Model, Table, BelongsTo, HasMany, ForeignKey, BelongsToMany} from "sequelize-typescript";
+import { BelongsToManyAddAssociationsMixin } from "sequelize";
+import { Column, DataType, Model, Table, BelongsTo, HasMany, ForeignKey, BelongsToMany, BelongsToAssociation } from "sequelize-typescript";
 import { Basket } from "src/basket/entities/basket.model";
 import { Comments } from "src/comments/entities/comment.model";
 import { OrdersSupplier } from "src/orders-suppliers/entities/orders-supplier.model";
 import { Paynment } from "src/paynment/entities/paynment.model";
 import { Storage } from "src/storage/entities/storage.model";
-import { Tyres } from "src/tyres/entities/tyres.model";
+//import { Tyres } from "src/tyres/entities/tyres.model";
 import { Users } from "src/users/entities/users.model";
 import { OrdersConfigAttr } from '../interfaces/orders.interface';
-import { Orders_Goods } from "./order-goods.model";
+//import { Orders_Goods } from "./order-goods.model";
 import { Order_Storage } from "./order-storage.model";
 
 @Table({tableName: 'order' })
@@ -20,11 +21,11 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
     notes: string;
 
     @ForeignKey(() => Users)
-    @Column({type: DataType.INTEGER})
+    @Column({type: DataType.INTEGER, allowNull: true})
     id_user: number;
 
     @ForeignKey(() => Basket)
-    @Column({type: DataType.INTEGER})
+    @Column({type: DataType.INTEGER, allowNull: true})
     id_basket: number;
 
     @BelongsTo(() => Users, 'id_user')
@@ -36,7 +37,7 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
     @HasMany(() => Comments, 'id_order')
     comments: Comments[];
 
-    @HasMany(() => OrdersSupplier, 'id_order_sup')
+    @HasMany(() => OrdersSupplier, 'id_order')
     order_sup: OrdersSupplier[];
 
     @HasMany(() => Paynment, 'id_order')
@@ -44,8 +45,9 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
 
     @BelongsToMany(() => Storage, () => Order_Storage)
     storage: Storage[];
-
-    @BelongsToMany(() => Tyres, () => Orders_Goods)
-    goods: Tyres[];
+    addStorages: BelongsToManyAddAssociationsMixin<Storage, number>;
+    
+    //@BelongsToMany(() => Tyres, () => Orders_Goods)
+    //goods: Tyres[];
     
 }

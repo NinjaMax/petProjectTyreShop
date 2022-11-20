@@ -7,8 +7,8 @@ import { TyreBrand } from "src/properties/entities/tyres/tyre-brand.model";
 import { ReviewTyres } from "src/reviews/entities/review-tyres.model";
 import { RatingTyres } from "src/ratings/entities/rating-tyres.model";
 import { Category } from "src/categorys/entities/category.model";
-import { Orders_Goods } from "src/orders/entities/order-goods.model";
-import { Orders } from "src/orders/entities/order.model";
+//import { Orders_Goods } from "src/orders/entities/order-goods.model";
+//import { Orders } from "src/orders/entities/order.model";
 
 @Table({tableName: 'tyres' , updatedAt: false})
 export class Tyres extends Model<Tyres, TyresConfigAttr> {

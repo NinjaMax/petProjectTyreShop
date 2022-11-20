@@ -6,7 +6,7 @@ export class CreateCommentDto {
     readonly id_order: number;
     readonly id_order_sup: number;
     readonly id_sale: number;
-
+    readonly id_order_storage: number;
     readonly id_goods: number;
     readonly id_cat: number;
     readonly goods: string;

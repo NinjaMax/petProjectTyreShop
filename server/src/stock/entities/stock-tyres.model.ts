@@ -17,7 +17,7 @@ export class StockTyres extends Model<StockTyres, StockTyresConfigAttr> {
     @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0})
     reserve: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0,     
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true,     
         
         get () {
             const getRemainder : number = this.getDataValue('stock') - this.getDataValue('reserve');
@@ -26,7 +26,7 @@ export class StockTyres extends Model<StockTyres, StockTyresConfigAttr> {
         },
         set (getRemainder) {
 
-            if( getRemainder < 0 ) {
+            if( getRemainder <= 0 ) {
                 this.setDataValue('remainder', 0 ); 
                 return `You can not set more "reserve" because does not have remainder. "Remainder 0".`;
             } 

@@ -9,6 +9,7 @@ export class CreateOrdersSupplierDto {
 
     readonly id_order: number;
     readonly id_basket: number;
+    readonly id_order_storage: number;
     
     readonly reserve: number;
     readonly quantity: number;

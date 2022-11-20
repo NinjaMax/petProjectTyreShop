@@ -5,7 +5,7 @@ export class CreatePaynmentDto {
     readonly price: number;
     readonly notes: string;
     readonly status: string;
-
+    readonly id_order_storage: number;
     readonly id_order: number;
     readonly id_order_sup: number;
     readonly id_goods: number;

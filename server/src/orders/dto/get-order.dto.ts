@@ -12,6 +12,7 @@ export class GetOrdersDto {
     
     //readonly price_wholesale: number;
     readonly id_basket: number;
+    readonly id_order_storage: number;
     //readonly delivery_price: number;
     //readonly price_plus_delivery: number;
     //readonly update_date: Date;

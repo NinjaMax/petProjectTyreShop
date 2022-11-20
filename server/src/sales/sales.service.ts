@@ -32,7 +32,11 @@ export class SalesService {
       
       if(tyreStock) {
 
-        await tyreStock.decrement('stock', {by: createSaleDto.quantity});
+        const salesId = await this.salesRepository.findByPk(sale.id_sale);
+
+        await tyreStock.decrement(['stock','reserve'], {by: createSaleDto.quantity});
+        await salesId.$add('storage', [tyreStock.storage]);
+        salesId.storage.push(tyreStock.storage);
         await tyreStock.reload();
 
         return sale;
@@ -41,7 +45,11 @@ export class SalesService {
 
       if(wheelStock) {
 
-        await wheelStock.decrement('stock', {by: createSaleDto.quantity});
+        const salesId = await this.salesRepository.findByPk(sale.id_sale);
+
+        await wheelStock.decrement(['stock','reserve'], {by: createSaleDto.quantity});
+        await salesId.$add('storage', [wheelStock.storage]);
+        salesId.storage.push(wheelStock.storage);
         await wheelStock.reload();
 
         return sale;
@@ -50,7 +58,11 @@ export class SalesService {
 
       if(batteryStock) {
 
-        await batteryStock.decrement('stock', {by: createSaleDto.quantity});
+        const salesId = await this.salesRepository.findByPk(sale.id_sale);
+
+        await batteryStock.decrement(['stock', 'reserve'], {by: createSaleDto.quantity});
+        await salesId.$add('storage', [batteryStock.storage]);
+        salesId.storage.push(batteryStock.storage);
         await batteryStock.reload();
 
         return sale;
@@ -59,7 +71,11 @@ export class SalesService {
 
       if(oilStock) {
 
-        await oilStock.decrement('stock', {by: createSaleDto.quantity});
+        const salesId = await this.salesRepository.findByPk(sale.id_sale);
+
+        await oilStock.decrement(['stock', 'reserve'], {by: createSaleDto.quantity});
+        await salesId.$add('storage', [oilStock.storage]);
+        salesId.storage.push(oilStock.storage);
         await oilStock.reload();
 
         return sale;

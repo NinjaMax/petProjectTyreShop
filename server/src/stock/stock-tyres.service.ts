@@ -6,7 +6,7 @@ import { UpdateStockDto } from './dto/update-stock.dto';
 import { StockTyres } from './entities/stock-tyres.model';
 import { TyresService } from '../tyres/tyres.service';
 import { SuppliersService } from '../suppliers/suppliers.service';
-//import { StorageService } from 'src/storage/storage.service';
+import { StorageService } from 'src/storage/storage.service';
 
 
 @Injectable()
@@ -15,7 +15,7 @@ export class StockTyresService {
   constructor(@InjectModel(StockTyres) private stockTyresRepository: typeof StockTyres,
     private tyresService: TyresService, 
     private suppliersService : SuppliersService,
-    //private storageService: StorageService
+    private storageService: StorageService
    ) {}
 
   async createStockTyre(createStockDto: CreateStockDto) {
@@ -23,7 +23,7 @@ export class StockTyresService {
     try {
 
       const tyres = await this.tyresService.findTyresById(createStockDto);
-      //const storage = await this.storageService.findStorageById(createStockDto);
+      const storage = await this.storageService.findStorageById(createStockDto);
 
       if(tyres) {
 
@@ -31,8 +31,8 @@ export class StockTyresService {
         
         const supplier = await this.suppliersService.findSupplierById(createStockDto);
         
-        //await storage.$add('stock_tyres', [stockCreate.id_tyres]);
-        //storage.stock_tyres.push(stockCreate);
+        await storage.$add('stock_tyres', [stockCreate.id]);
+        storage.stock_tyres.push(stockCreate);
 
         await tyres.$add('stock', [createStockDto.id]);
 
