@@ -4,6 +4,7 @@ import {
     InferCreationAttributes,
     CreationOptional,
     Association,
+    NonAttribute,
     BelongsToMany,
     BelongsToManySetAssociationsMixin,
     BelongsToManyAddAssociationMixin,
@@ -14,31 +15,34 @@ import {
     } from "sequelize";
 import { Storage } from "src/storage/entities/storage.model";
 
-export interface OrdersConfigAttr 
-extends Model <InferAttributes<OrdersConfigAttr>, InferCreationAttributes<OrdersConfigAttr>> 
+export class OrdersConfigAttr 
+extends Model <InferAttributes<OrdersConfigAttr, { omit: 'storage_orders' }>, 
+InferCreationAttributes<OrdersConfigAttr,  { omit: 'storage_orders' }>> 
 {
     
-    id_order: CreationOptional<number>;
-    id: number;
-    id_storage: number;
+    declare id_order: CreationOptional<number>;
+    declare id: number;
+    declare id_storage: number;
     //goods: string;
-    price: number;
-    reserve: number;
-    quantity: number;
-    total: number;
-    notes: string;
+    declare price: number;
+    declare reserve: number;
+    declare quantity: number;
+    declare total: number;
+    declare notes: string;
     //storage: Storage[];
 
-    addStorage: BelongsToManyAddAssociationMixin<Storage, number>;
-    addStorages: BelongsToManyAddAssociationsMixin<Storage, number>;
+    declare addStorage: BelongsToManyAddAssociationMixin<Storage, number>;
+    declare addStorages: BelongsToManyAddAssociationsMixin<Storage, number>;
     
-    setStorages: BelongsToManySetAssociationsMixin<Storage, number>;
-    removeStorage: BelongsToManyRemoveAssociationMixin<Storage, number>;
-    removeStorages: BelongsToManyRemoveAssociationsMixin<Storage, number>;
-    countStorages: BelongsToManyCountAssociationsMixin;
-    //declare readonly storage?: Storage[];
-    //associations: {
-    //    storage: Association<OrdersConfigAttr, Storage>;
-    //};
+    declare setStorages: BelongsToManySetAssociationsMixin<Storage, number>;
+    declare removeStorage: BelongsToManyRemoveAssociationMixin<Storage, number>;
+    declare removeStorages: BelongsToManyRemoveAssociationsMixin<Storage, number>;
+    declare countStorages: BelongsToManyCountAssociationsMixin;
+
+    declare storage_orders?: NonAttribute<Storage[]>;
+    //declare readonly storage_orders?: Storage[];
+    declare static associations: {
+        storage_orders: Association<OrdersConfigAttr, Storage>;
+    };
  
 }

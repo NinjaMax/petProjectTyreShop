@@ -40,7 +40,7 @@ export class OrdersService {
       const wheelStock = await this.stockWheelsService.findStockWheelById(createOrderDto);
       const batteryStock = await this.stockBatteriesService.findStockBatteryById(createOrderDto);
       const oilStock = await this.stockOilsService.findStockOilById(createOrderDto);
-      //const storageStorage  = await this.storageService.findStorageById(createOrderDto);
+      const storageStorage  = await this.storageService.findStorageById(createOrderDto);
       const order = await this.ordersRepository.create(createOrderDto);
       //const orderStorage = await this.orderStorageService.createOrderStorage(createOrderDto);
 
@@ -62,25 +62,12 @@ export class OrdersService {
           const newReserve = createOrderDto.quantity - (createOrderDto.quantity - tyreStock.remainder);
           await tyreStock.increment('reserve', {by: newReserve});
           await tyreStock.reload();
-          await orderId.$add('storage', [tyreStock.storage]);
-          orderId.storage.push(tyreStock.storage);
-          await orderId.$add('storage', newReserve, {through: { quantity: newReserve}});
-          //await orderStorage.$set('id_order', orderId.id_order);
-          //const orderStorage = await this.orderStorageService.findOrderStorageById(orderId.id_order);
-          await orderId.addStorages( tyreStock.storage.id, {through: { quantity: newReserve}} );
-          console.log(newReserve + "NEW RESERVE");
-          //orderId?.setOrders()
-          //order.setStorages()
-          //orderId.$set('storage', [createOrderDto.quantity], {through:{ quantity: createOrderDto.quantity}} );
-          //await orderStorage.$set('id', createOrderDto.id);
-          //await orderStorage.$set('quantity', createOrderDto.quantity, {through: { quantity: createOrderDto.quantity}});
-          //await orderStorage.$set('reserve', newReserve);
-          //await orderStorage.$set('price', priceTyre.price);
-          //orderStorage.id = createOrderDto.id;
-          //orderStorage.quantity = createOrderDto.quantity;
-          //orderStorage.reserve = newReserve;
-          //orderStorage.price = priceTyre.price;
-          //orderStorage.save();
+          await orderId.increment('reserve', {by: newReserve});
+          await orderId.reload();
+          await orderId.$add('storage_orders', [tyreStock.storage], 
+            {through: {quantity: createOrderDto.quantity, id: createOrderDto.id}});
+          orderId.storage_orders.push(tyreStock.storage);
+          await orderId.reload();
 
           return orderId;
         }
@@ -89,32 +76,12 @@ export class OrdersService {
           const orderId = await this.ordersRepository.findByPk(order.id_order);    
           await tyreStock.increment('reserve', {by: createOrderDto.quantity});
           await tyreStock.reload();
-          await orderId.$add('storage', [tyreStock.storage]);
-          orderId.storage.push(tyreStock.storage);
-          
-
-          await orderId.addStorages( tyreStock.storage.id, {through: { quantity: createOrderDto.quantity}} );
-          //const orderStorage = await this.orderStorageService.findOrderStorageById(orderId.id_order);
-          //orderId.$set( 'storage', createOrderDto.quantity, {through: { quantity: 4}});
-          //await orderId.setStorages( tyreStock.storage.id, {through: { quantity: 4}} );
-          console.log(createOrderDto.quantity + "QUANTITY");
-          //orderStorage.update(
-          //  { id : createOrderDto.id,
-          //    quantity: createOrderDto.quantity,
-          //    reserve: createOrderDto.quantity,
-          //    price: priceTyre.price,
-          //    id_order: orderStorage.id_order,
-          //  }
-          //)
-          //await orderStorage.$set('id', createOrderDto.id);
-          //orderStorage.set('quantity', createOrderDto.quantity, {raw: true});
-          //await orderStorage.$set('reserve', createOrderDto.quantity);
-          //await orderStorage.$set('price', priceTyre.price);
-          //orderStorage.id = createOrderDto.id;
-          //orderStorage.quantity = createOrderDto.quantity;
-          //orderStorage.reserve = createOrderDto.quantity;
-          //orderStorage.price = priceTyre.price;
-          //orderStorage.save();
+          await orderId.increment('reserve', {by: createOrderDto.quantity})
+          await orderId.reload();
+          await orderId.$add('storage_orders', [tyreStock.storage], 
+            {through: {quantity: createOrderDto.quantity, id: createOrderDto.id}});
+          orderId.storage_orders.push(tyreStock.storage);
+          await orderId.reload();
 
           return orderId;
         }

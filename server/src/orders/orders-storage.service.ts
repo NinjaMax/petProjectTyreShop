@@ -82,9 +82,9 @@ export class OrdersStorageService {
 
         await this.orderStorageRepository.update(
         { id : updateOrderDto.id,
-          quantity: updateOrderDto.quantity,
-          reserve: updateOrderDto.reserve,
-          price: updateOrderDto.price
+          //quantity: updateOrderDto.quantity,
+          //reserve: updateOrderDto.reserve,
+          //price: updateOrderDto.price
         }, {where: {id_order : updateOrderDto.id_order}});
 
         const updateStockOrder = await this.orderStorageRepository.findByPk(updateOrderDto.id_order, {include: {all: true}});

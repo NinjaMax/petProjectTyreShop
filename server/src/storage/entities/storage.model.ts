@@ -14,7 +14,7 @@ import { PriceBatteries } from "src/prices/entities/price-battery.model";
 import { PriceOil } from "src/prices/entities/price-oils.model";
 import { SaleStorage } from "src/sales/entities/sales-storage.model";
 
-@Table({tableName: 'storage' , createdAt: false, updatedAt: false})
+@Table({tableName: 'storage', createdAt: false, updatedAt: false})
 export class Storage extends Model<Storage, StorageConfigAttr> {
 
     @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
