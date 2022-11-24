@@ -20,7 +20,7 @@ export class StockTyresController {
   }
 
   @Get('/id')
-  findOne(@Param() @Body() getStockDto : GetStockDto) {
+  findOne( @Body() getStockDto : GetStockDto) {
     return this.stockTyresService.findStockTyreById(getStockDto);
   }
 

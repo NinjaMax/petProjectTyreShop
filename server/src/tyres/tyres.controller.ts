@@ -11,7 +11,7 @@ export class TyresController {
   constructor(private readonly tyresService: TyresService) {}
 
   @Post()
-  create(@Body() createTyreDto: CreateTyreDto) {
+  createTyres(@Body() createTyreDto: CreateTyreDto) {
     return this.tyresService.createTyres(createTyreDto);
   }
 
@@ -21,12 +21,12 @@ export class TyresController {
   }
 
   @Get('/id')
-  findOne(@Body() getTyreDto: GetTyreDto) {
+  findTyresById(@Body() getTyreDto: GetTyreDto) {
     return this.tyresService.findTyresById(getTyreDto);
   }
 
   @Patch('/update')
-  update(@Body() updateTyreDto: UpdateTyreDto) {
+  updateTyres(@Body() updateTyreDto: UpdateTyreDto) {
     return this.tyresService.updateTyres(updateTyreDto);
   }
 

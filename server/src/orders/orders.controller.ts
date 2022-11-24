@@ -9,27 +9,32 @@ export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto) {
+  createOrder(@Body() createOrderDto: CreateOrderDto) {
     return this.ordersService.createOrder(createOrderDto);
   }
 
+  @Post('/add')
+  addGoodsToOrder(@Body() createOrderDto: CreateOrderDto) {
+    return this.ordersService.addGoodsToOrder(createOrderDto);
+  }
+
   @Get()
-  findAll() {
+  findAllorders() {
     return this.ordersService.findAllorders();
   }
 
   @Get('/id')
-  findOne(@Param() @Body() getOrdersDto: GetOrdersDto) {
+  findOrderById( @Body() getOrdersDto: GetOrdersDto ) {
     return this.ordersService.findOrderById(getOrdersDto);
   }
 
   @Patch('/update')
-  update(@Param() @Body() updateOrderDto: UpdateOrderDto) {
+  updateOrder(@Body() updateOrderDto: UpdateOrderDto) {
     return this.ordersService.updateOrder(updateOrderDto);
   }
 
   @Delete('/remove')
-  remove(@Param()  @Body() getOrdersDto: GetOrdersDto) {
+  removeOrder(@Param()  @Body() getOrdersDto: GetOrdersDto) {
     return this.ordersService.removeOrder(getOrdersDto);
   }
 }

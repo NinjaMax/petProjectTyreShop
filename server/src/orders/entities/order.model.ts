@@ -22,29 +22,29 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
     @Column({type: DataType.STRING, unique: false, allowNull: true})
     notes: string;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
-    id: number;
+    // @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+    // id: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0})
-    quantity: number;
+    // @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0})
+    // quantity: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true,  defaultValue: 0})
-    reserve: number;
+    // @Column({type: DataType.INTEGER, unique: false, allowNull: true,  defaultValue: 0})
+    // reserve: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0})
-    price: number;
+    // @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0})
+    // price: number;
 
-    @Column({type: DataType.BIGINT, unique: false, allowNull: true, 
+    // @Column({type: DataType.BIGINT, unique: false, allowNull: true, 
         
-        get() {
-            const getTotal: number = this.getDataValue('price') * this.getDataValue('quantity'); 
-            return getTotal;
-        },
-        set(getTotal) {
-            this.setDataValue('total', getTotal);
-        }
-    })
-    total: number;
+    //     get() {
+    //         const getTotal: number = this.getDataValue('price') * this.getDataValue('quantity'); 
+    //         return getTotal;
+    //     },
+    //     set(getTotal) {
+    //         this.setDataValue('total', getTotal);
+    //     }
+    // })
+    // total: number;
 
     @ForeignKey(() => Users)
     @Column({type: DataType.INTEGER, allowNull: true})
@@ -71,13 +71,5 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
 
     @BelongsToMany(() => Storage, {through: () => Order_Storage})
     storage_orders: Storage[];
-    
-    //addStorages(storage_orders: Storage[], arg1: { through: { quantity: number; }; }) {
-    //    throw new Error('Method not implemented.');
-    //  }
-    //addStorages: BelongsToManyAddAssociationsMixin<Storage, number>;
-    
-    //@BelongsToMany(() => Tyres, () => Orders_Goods)
-    //goods: Tyres[];
     
 }
