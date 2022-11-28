@@ -19,7 +19,7 @@ export class StorageController {
   }
 
   @Get('/id')
-  findOne(@Param() @Body() getStorageDto: GetStorageDto) {
+  findOne(@Body() getStorageDto: GetStorageDto) {
     return this.storageService.findStorageById(getStorageDto);
   }
 
@@ -29,7 +29,7 @@ export class StorageController {
   }
 
   @Delete('/remove')
-  remove(@Param() @Body() getStorageDto: GetStorageDto) {
+  remove(@Body() getStorageDto: GetStorageDto) {
     return this.storageService.removeStorage(getStorageDto);
   }
 }

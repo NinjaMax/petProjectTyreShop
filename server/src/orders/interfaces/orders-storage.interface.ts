@@ -9,5 +9,5 @@ export interface OrdersStorageConfigAttr
     reserve: number;
     quantity: number;
     total: number;
-    notes: string;
+
 }

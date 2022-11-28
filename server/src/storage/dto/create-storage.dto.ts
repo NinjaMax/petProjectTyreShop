@@ -1,6 +1,6 @@
 export class CreateStorageDto {
 
-    readonly id_goods: number;
+    //readonly id_storage: number;
     readonly storage: string;
 
 }

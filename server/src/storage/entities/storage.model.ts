@@ -20,14 +20,8 @@ export class Storage extends Model<Storage, StorageConfigAttr> {
     @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
     id_storage: number;
 
-    @Column({type: DataType.STRING, unique: false, allowNull: false})
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
     storage: string;
-
-    @BelongsToMany(() => Orders, () => Order_Storage)
-    orders: Orders[];
-
-    @BelongsToMany(() => Sales, () => SaleStorage)
-    sales: Sales[];
 
     @HasMany(() => OrdersSupplier, 'id_storage')
     order_sup: OrdersSupplier[];
@@ -56,4 +50,12 @@ export class Storage extends Model<Storage, StorageConfigAttr> {
     @HasMany(() => PriceOil, 'id_storage')
     price_oils: PriceOil[];
 
+    @HasMany(() => Order_Storage, 'id_storage')
+    order_storage: Order_Storage[];
+
+    @BelongsToMany(() => Sales, () => SaleStorage)
+    sales: Sales[];
+
+    //@BelongsToMany(() => Orders, { through: { model: () => Order_Storage, unique: false}})
+    //orders: Orders[];
 }

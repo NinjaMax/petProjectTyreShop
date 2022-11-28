@@ -22,29 +22,8 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
     @Column({type: DataType.STRING, unique: false, allowNull: true})
     notes: string;
 
-    // @Column({type: DataType.INTEGER, unique: false, allowNull: true})
-    // id: number;
-
-    // @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0})
-    // quantity: number;
-
-    // @Column({type: DataType.INTEGER, unique: false, allowNull: true,  defaultValue: 0})
-    // reserve: number;
-
-    // @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0})
-    // price: number;
-
-    // @Column({type: DataType.BIGINT, unique: false, allowNull: true, 
-        
-    //     get() {
-    //         const getTotal: number = this.getDataValue('price') * this.getDataValue('quantity'); 
-    //         return getTotal;
-    //     },
-    //     set(getTotal) {
-    //         this.setDataValue('total', getTotal);
-    //     }
-    // })
-    // total: number;
+    @Column({type: DataType.STRING, unique: false, allowNull: false})
+    status: string;
 
     @ForeignKey(() => Users)
     @Column({type: DataType.INTEGER, allowNull: true})
@@ -63,13 +42,16 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
     @HasMany(() => Comments, 'id_order')
     comments: Comments[];
 
+    @HasMany(() => Order_Storage, 'id_order')
+    order_storage: Order_Storage[];
+
     @HasMany(() => OrdersSupplier, 'id_order')
     order_sup: OrdersSupplier[];
 
     @HasMany(() => Paynment, 'id_order')
     paynment: Paynment[];
 
-    @BelongsToMany(() => Storage, {through: () => Order_Storage})
-    storage_orders: Storage[];
+    //@BelongsToMany(() => Storage, { through: { model: () => Order_Storage, unique: false}})
+    //storage_orders: Storage[];
     
 }

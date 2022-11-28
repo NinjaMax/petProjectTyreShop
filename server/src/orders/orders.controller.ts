@@ -19,8 +19,8 @@ export class OrdersController {
   }
 
   @Get()
-  findAllorders() {
-    return this.ordersService.findAllorders();
+  findAllOrders() {
+    return this.ordersService.findAllOrders();
   }
 
   @Get('/id')
@@ -34,7 +34,7 @@ export class OrdersController {
   }
 
   @Delete('/remove')
-  removeOrder(@Param()  @Body() getOrdersDto: GetOrdersDto) {
+  removeOrder( @Body() getOrdersDto: GetOrdersDto) {
     return this.ordersService.removeOrder(getOrdersDto);
   }
 }
