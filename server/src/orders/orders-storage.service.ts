@@ -78,7 +78,7 @@ export class OrdersStorageService {
     try {
       
       const orderStorageOne = await this.ordersStorageRepository.findOne(
-        {where: {order_index: getOrdersDto.order_index, id: getOrdersDto.id}});
+        {where: {id_order_storage: getOrdersDto.id_order_storage}});
 
       return orderStorageOne;
 
@@ -98,10 +98,7 @@ export class OrdersStorageService {
             storage_index: updateOrderDto.storage_index, 
             quantity: updateOrderDto.quantity,
             price: updateOrderDto.price
-            },{where:{ 
-                [Op.or]:
-                [{id_order_storage: updateOrderDto.id_order_storage},
-                {id: updateOrderDto.id}]}}
+            },{where:{id_order_storage: updateOrderDto.id_order_storage}}
         );
 
         return orderStorageUpdate;

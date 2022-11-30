@@ -6,8 +6,7 @@ import { OrdersStorageConfigAttr } from '../interfaces/orders-storage.interface'
 @Table({tableName: 'order_storage' , createdAt: false, updatedAt: false})
 export class Order_Storage extends Model<Order_Storage, OrdersStorageConfigAttr> {
 
-    //@Unique()
-    @Column({type: DataType.INTEGER, unique: true, allowNull: true, primaryKey: true, autoIncrement:true})
+    @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_order_storage: number;
 
     @ForeignKey(() => Orders)
