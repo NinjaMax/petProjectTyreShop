@@ -1,5 +1,6 @@
 import { Injectable, HttpException, HttpStatus  } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { Op } from 'sequelize';
 import { Order_Storage } from '../orders/entities/order-storage.model';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { GetOrdersDto } from './dto/get-order.dto';
@@ -42,6 +43,21 @@ export class OrdersStorageService {
     }
   }
 
+  async findAllOrdersStorageId(getOrdersDto: GetOrdersDto) {
+
+    try {
+      
+      const orderStorageAllId = await this.ordersStorageRepository.findAll({where:{id_order: getOrdersDto.id_order}});
+
+      return orderStorageAllId;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+  }
+
   async findOrderStorageById(getOrdersDto: GetOrdersDto) {
 
     try {
@@ -57,8 +73,45 @@ export class OrdersStorageService {
     }
   }
 
-  update(updateOrderDto: UpdateOrderDto) {
-    return `This action updates a # ordersSupplier`;
+  async findOrderStorageOne(getOrdersDto: GetOrdersDto) {
+
+    try {
+      
+      const orderStorageOne = await this.ordersStorageRepository.findOne(
+        {where: {order_index: getOrdersDto.order_index, id: getOrdersDto.id}});
+
+      return orderStorageOne;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+  }
+
+  async updateOrderStorage(updateOrderDto: UpdateOrderDto) {
+    
+    try {
+        const orderStorageUpdate = await this.ordersStorageRepository.update(
+            {id: updateOrderDto.id,
+            order_index: updateOrderDto.order_index,
+            storage_index: updateOrderDto.storage_index, 
+            quantity: updateOrderDto.quantity,
+            price: updateOrderDto.price
+            },{where:{ 
+                [Op.or]:
+                [{id_order_storage: updateOrderDto.id_order_storage},
+                {id: updateOrderDto.id}]}}
+        );
+
+        return orderStorageUpdate;
+
+    } catch {
+
+        throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+    
   }
 
   async removeOrderSup(getOrdersDto: GetOrdersDto) {

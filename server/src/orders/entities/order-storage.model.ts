@@ -7,11 +7,11 @@ import { OrdersStorageConfigAttr } from '../interfaces/orders-storage.interface'
 export class Order_Storage extends Model<Order_Storage, OrdersStorageConfigAttr> {
 
     //@Unique()
-    @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
+    @Column({type: DataType.INTEGER, unique: true, allowNull: true, primaryKey: true, autoIncrement:true})
     id_order_storage: number;
 
     @ForeignKey(() => Orders)
-    @Column({type: DataType.BIGINT, unique: false, allowNull: true})
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     id_order: number;
 
     @ForeignKey(() => Storage)
@@ -20,6 +20,12 @@ export class Order_Storage extends Model<Order_Storage, OrdersStorageConfigAttr>
 
     @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     id: number;
+
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+    order_index: number;
+
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+    storage_index: number;
 
     @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     quantity: number;

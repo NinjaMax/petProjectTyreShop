@@ -25,6 +25,9 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
     @Column({type: DataType.STRING, unique: false, allowNull: false})
     status: string;
 
+    //@Column({type: DataType.BOOLEAN, unique: false, allowNull: false, defaultValue: false})
+    //placed: boolean;
+
     @ForeignKey(() => Users)
     @Column({type: DataType.INTEGER, allowNull: true})
     id_user: number;

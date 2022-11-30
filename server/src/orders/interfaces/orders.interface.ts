@@ -10,6 +10,7 @@ export interface OrdersConfigAttr
     reserve: number;
     quantity: number;
     total: number;
-    notes: string; 
+    notes: string;
+    status: string; 
  
 }

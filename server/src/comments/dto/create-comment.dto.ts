@@ -15,12 +15,15 @@ export class CreateCommentDto {
     readonly quantity: number;
     readonly reserve: number;
     readonly notes: string;
-    
+    readonly status: string;
     readonly id_basket: number;
 
     readonly name: string;
     readonly full_name: string;
     readonly phone: bigint;
     readonly email:string;
+    readonly storage_index: number;
+    readonly order_index: number;
+    readonly id: number;
 
 }   

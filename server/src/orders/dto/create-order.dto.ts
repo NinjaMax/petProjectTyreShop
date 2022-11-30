@@ -28,5 +28,9 @@ export class CreateOrderDto {
     readonly stock: number;
     readonly remainder: number;
     readonly name: string;
-
+    readonly status: string;
+    readonly storage_index: number;
+    readonly order_index: number;
+    readonly n: number;
+    readonly id_user: number;
 }

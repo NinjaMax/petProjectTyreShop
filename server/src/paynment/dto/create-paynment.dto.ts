@@ -23,5 +23,8 @@ export class CreatePaynmentDto {
     readonly id_cashbox: number;
     readonly cashbox: string;
     readonly funds: number;
+    readonly storage_index: number;
+    readonly order_index: number;
+    readonly id: number;
 
 }

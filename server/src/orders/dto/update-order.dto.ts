@@ -12,7 +12,7 @@ export class UpdateOrderDto extends PartialType(CreateOrderDto) {
     readonly total: number;
     readonly notes: string;
     readonly reserve: number;
-
+    readonly status: string;
     //readonly price_wholesale: number;
     readonly id_basket: number;
     readonly id_order_storage: number;
