@@ -41,6 +41,26 @@ export class StorageService {
     }
   }
 
+  async findAllStorageStock() {
+
+    try {
+      
+      const storageAllStock = await this.storageRepository.findAll(
+        {where: {stock_tyres: {include: {all: true}},
+        stock_wheels: {include: {all: true}},
+        stock_batteries: {include: {all: true}},
+        stock_oils: {include: {all: true}}}}
+        );
+
+      return storageAllStock;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+  }
+
   async findStorageById(getStorageDto: GetStorageDto) {
 
     try {

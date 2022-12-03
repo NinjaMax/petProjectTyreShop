@@ -8,6 +8,7 @@ import { PriceOil } from "src/prices/entities/price-oils.model";
 import { StockWheels } from "src/stock/entities/stock-wheels.model";
 import { StockBatteries } from "src/stock/entities/stock-batteries.model";
 import { StockOils } from "src/stock/entities/stock-oils.model";
+import { OrdersSupplier } from "src/orders-suppliers/entities/orders-supplier.model";
 
 @Table({tableName: 'suppliers' , updatedAt: false})
 export class Supplier extends Model<Supplier, SuppliersConfigAttr> {
@@ -50,5 +51,8 @@ export class Supplier extends Model<Supplier, SuppliersConfigAttr> {
 
     @HasMany(() => PriceOil, 'id_sup')
     price_oils: PriceOil[];
+
+    @HasMany(() => OrdersSupplier, 'id_sup')
+    orders_sup: OrdersSupplier[];
 
 }

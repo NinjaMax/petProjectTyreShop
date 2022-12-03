@@ -57,6 +57,7 @@ import { Order_Storage } from './orders/entities/order-storage.model';
 import { Storage } from './storage/entities/storage.model';
 import { BasketModule } from './basket/basket.module';
 import { Basket } from './basket/entities/basket.model';
+import { OrdersSupStorage } from './orders-suppliers/entities/orders-sup-storage.model';
 
 @Module({
   imports: [
@@ -78,7 +79,8 @@ import { Basket } from './basket/entities/basket.model';
         PriceTyres, PriceWheels, PriceBatteries, PriceOil,
         RatingTyres, ReviewTyres, TyreBrand, TyreModel, 
         Users, Service, Orders, OrdersSupplier, 
-        SaleStorage, Order_Storage, Storage, Basket
+        OrdersSupStorage, SaleStorage, Order_Storage, 
+        Storage, Basket
       ],
       autoLoadModels: true,
       synchronize: true,
@@ -90,7 +92,7 @@ import { Basket } from './basket/entities/basket.model';
       CategorysModule, CommentsModule, StorageModule, 
       SalesModule, CashboxModule, PaynmentModule, 
       ExpensesModule, ServicesModule, IncomesModule, 
-      OrdersModule, OrdersSuppliersModule, BasketModule
+      OrdersModule, OrdersSuppliersModule, BasketModule,
   ],
   controllers: [],
   providers: [],

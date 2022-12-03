@@ -13,5 +13,7 @@ export class GetOrdersSuppliersDto {
     
     readonly reserve: number;
     readonly quantity: number;
+    readonly id_order_sup_storage: number;
+    readonly order_sup: number; 
 
 }

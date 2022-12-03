@@ -2,9 +2,11 @@ import { Column, DataType, Model, Table, BelongsTo, ForeignKey, HasMany} from "s
 import { Comments } from "src/comments/entities/comment.model";
 import { Orders } from "src/orders/entities/order.model";
 import { Paynment } from "src/paynment/entities/paynment.model";
+//import { Storage } from "src/storage/entities/storage.model";
 import { Supplier } from "src/suppliers/entities/supplier.model";
 import { Users } from "src/users/entities/users.model";
 import { OrdersSupConfigAttr } from '../interfaces/order-sup.interface';
+import { OrdersSupStorage } from "./orders-sup-storage.model";
 
 @Table({tableName: 'order_supplier'})
 export class OrdersSupplier extends Model<OrdersSupplier, OrdersSupConfigAttr> {
@@ -12,30 +14,11 @@ export class OrdersSupplier extends Model<OrdersSupplier, OrdersSupConfigAttr> {
     @Column({type: DataType.BIGINT, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_order_sup: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
-    id_cat: number;
-   
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
-    id_goods: number;
+    @Column({type: DataType.STRING, unique: false, allowNull: false})
+    delivery: string;
 
     @Column({type: DataType.STRING, unique: false, allowNull: false})
-    goods: string;
-
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
-    quantity: number;
-
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
-    reserve: number;
-
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
-    price: number;
-
-    @Column({type: DataType.BIGINT, unique: false, allowNull: false, 
-        set() {
-            this.setDataValue('total', this.getDataValue('price') * this.getDataValue('quantity'));
-        }
-    })
-    total: number;
+    status: string;
 
     @Column({type: DataType.STRING, unique: false, allowNull: true})
     notes: string;
@@ -52,11 +35,18 @@ export class OrdersSupplier extends Model<OrdersSupplier, OrdersSupConfigAttr> {
     @Column({type: DataType.INTEGER})
     id_sup: number;
 
+    //@ForeignKey(() => Storage)
+    //@Column({type: DataType.INTEGER})
+    //id_storage: number;
+
     @BelongsTo(() => Users, 'id_user')
     user: Users;
 
     @BelongsTo(() => Orders, 'id_order')
     order: Orders;
+
+    //@BelongsTo(() => Storage, 'id_storage')
+    //storage: Storage;
 
     @BelongsTo(() => Supplier, 'id_sup')
     supplier: Supplier;
@@ -66,5 +56,8 @@ export class OrdersSupplier extends Model<OrdersSupplier, OrdersSupConfigAttr> {
 
     @HasMany(() => Paynment, 'id_order_sup')
     paynment: Paynment[];
+
+    @HasMany(() => OrdersSupStorage, 'id_order_sup')
+    orders_sup_storage: OrdersSupStorage[];
     
 }

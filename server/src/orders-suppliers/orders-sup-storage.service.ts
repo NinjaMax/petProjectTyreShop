@@ -4,27 +4,28 @@ import { OrdersService } from 'src/orders/orders.service';
 import { CreateOrdersSupplierDto } from './dto/create-orders-supplier.dto';
 import { GetOrdersSuppliersDto } from './dto/get-orders-supplier.dto';
 import { UpdateOrdersSupplierDto } from './dto/update-orders-supplier.dto';
-import { OrdersSupplier } from './entities/orders-supplier.model';
+import { OrdersSupStorage } from './entities/orders-sup-storage.model';
+//import { OrdersSupplier } from './entities/orders-supplier.model';
 
 @Injectable()
-export class OrdersSuppliersService {
+export class OrdersSupStorageService {
 
-  constructor(@InjectModel(OrdersSupplier) private ordersSupRepository: typeof OrdersSupplier,
+  constructor(@InjectModel(OrdersSupStorage) private ordersSupStorageRepository: typeof OrdersSupStorage,
     private ordersService: OrdersService
   ) {}
 
-  async createOrderSup(createOrdersSupplierDto: CreateOrdersSupplierDto) {
+  async createOrderSupStorage(createOrdersSupplierDto: CreateOrdersSupplierDto) {
     
     try {
       
       const order = await this.ordersService.findOrderById(createOrdersSupplierDto);
-      const orderSup = await this.ordersSupRepository.create(createOrdersSupplierDto);
+      const orderSup = await this.ordersSupStorageRepository.create(createOrdersSupplierDto);
 
       if(order) {
         
-        const orderSupId = await this.ordersSupRepository.findByPk(orderSup.id_order_sup);
-        await order.$add('order_sup_storage', [orderSupId.id_order_sup]);
-        //order.order_sup_storage.push(orderSupId);
+        const orderSupId = await this.ordersSupStorageRepository.findByPk(orderSup.id_order_sup);
+        await order.$add('order_sup', [orderSupId.id_order_sup]);
+        //order.order_sup.push(orderSupId);
 
         return orderSupId;
       }
@@ -38,11 +39,11 @@ export class OrdersSuppliersService {
     }
   }
 
-  async findAllOrdersSup() {
+  async findAllOrdersSupStorage() {
 
     try {
       
-      const orderSupAll = await this.ordersSupRepository.findAll({include:{all: true}});
+      const orderSupAll = await this.ordersSupStorageRepository.findAll({include:{all: true}});
 
       return orderSupAll;
 
@@ -53,11 +54,11 @@ export class OrdersSuppliersService {
     }
   }
 
-  async findOrderSupById(getOrdersSupDto: GetOrdersSuppliersDto) {
+  async findOrderSupStorageById(getOrdersSupDto: GetOrdersSuppliersDto) {
 
     try {
       
-      const orderSupId = await this.ordersSupRepository.findByPk(getOrdersSupDto.id_order_sup, {include: {all: true}});
+      const orderSupId = await this.ordersSupStorageRepository.findByPk(getOrdersSupDto.id_order_sup, {include: {all: true}});
 
       return orderSupId;
 
@@ -72,11 +73,11 @@ export class OrdersSuppliersService {
     return `This action updates a #${id} ordersSupplier`;
   }
 
-  async removeOrderSup(getOrdersSupDto: GetOrdersSuppliersDto) {
+  async removeOrderSupStorage(getOrdersSupDto: GetOrdersSuppliersDto) {
 
     try {
       
-      const orderSup = await this.ordersSupRepository.destroy({where: {id_order_sup: getOrdersSupDto.id_order_sup}});
+      const orderSup = await this.ordersSupStorageRepository.destroy({where: {id_order_sup: getOrdersSupDto.id_order_sup}});
 
       return orderSup;
 

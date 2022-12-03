@@ -4,9 +4,11 @@ import { Column, DataType, Model, Table, BelongsTo, HasMany, ForeignKey, Belongs
 //import sequelize from "sequelize/types/sequelize";
 import { Basket } from "src/basket/entities/basket.model";
 import { Comments } from "src/comments/entities/comment.model";
+//import { OrdersSupStorage } from "src/orders-suppliers/entities/orders-sup-storage.model";
 import { OrdersSupplier } from "src/orders-suppliers/entities/orders-supplier.model";
 import { Paynment } from "src/paynment/entities/paynment.model";
-import { Storage } from "src/storage/entities/storage.model";
+import { Sales } from "src/sales/entities/sale.model";
+//import { Storage } from "src/storage/entities/storage.model";
 //import { Tyres } from "src/tyres/entities/tyres.model";
 import { Users } from "src/users/entities/users.model";
 import { OrdersConfigAttr } from '../interfaces/orders.interface';
@@ -18,6 +20,9 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
     
     @Column({type: DataType.BIGINT, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_order: number;
+
+    @Column({type: DataType.STRING, unique: false, allowNull: false})
+    delivery: string;
 
     @Column({type: DataType.STRING, unique: false, allowNull: true})
     notes: string;
@@ -53,6 +58,9 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
 
     @HasMany(() => Paynment, 'id_order')
     paynment: Paynment[];
+
+    @HasMany(() => Sales, 'id_order')
+    sales: Sales[];
 
     //@BelongsToMany(() => Storage, { through: { model: () => Order_Storage, unique: false}})
     //storage_orders: Storage[];

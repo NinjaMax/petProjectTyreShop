@@ -4,6 +4,7 @@ import { ReviewTyres } from "src/reviews/entities/review-tyres.model";
 import { Orders } from "src/orders/entities/order.model";
 import { Basket } from "src/basket/entities/basket.model";
 import { Comments } from "src/comments/entities/comment.model";
+import { OrdersSupplier } from "src/orders-suppliers/entities/orders-supplier.model";
 
 @Table({tableName: 'user', createdAt: false, updatedAt: false})
 export class Users extends Model<Users, UsersConfigAttr> {
@@ -40,5 +41,8 @@ export class Users extends Model<Users, UsersConfigAttr> {
 
     @HasMany(() => Comments, 'id_user')
     comments: Comments[];
+
+    @HasMany(() => OrdersSupplier, 'id_user')
+    orders_sup: OrdersSupplier[];
 
 }

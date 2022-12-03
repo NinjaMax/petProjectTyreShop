@@ -1,7 +1,7 @@
 import { Column, DataType, Model, Table, BelongsTo, ForeignKey, BelongsToMany, HasMany} from "sequelize-typescript";
 import { StorageConfigAttr } from '../interfaces/storage.interface';
-import { OrdersSupplier } from "src/orders-suppliers/entities/orders-supplier.model";
-import { Orders } from "src/orders/entities/order.model";
+//import { OrdersSupplier } from "src/orders-suppliers/entities/orders-supplier.model";
+//import { Orders } from "src/orders/entities/order.model";
 import { Order_Storage } from "src/orders/entities/order-storage.model";
 import { Sales } from "src/sales/entities/sale.model";
 import { StockTyres } from "src/stock/entities/stock-tyres.model";
@@ -13,6 +13,7 @@ import { PriceWheels } from "src/prices/entities/price-wheels.model";
 import { PriceBatteries } from "src/prices/entities/price-battery.model";
 import { PriceOil } from "src/prices/entities/price-oils.model";
 import { SaleStorage } from "src/sales/entities/sales-storage.model";
+import { OrdersSupStorage } from "src/orders-suppliers/entities/orders-sup-storage.model";
 
 @Table({tableName: 'storage', createdAt: false, updatedAt: false})
 export class Storage extends Model<Storage, StorageConfigAttr> {
@@ -23,8 +24,8 @@ export class Storage extends Model<Storage, StorageConfigAttr> {
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     storage: string;
 
-    @HasMany(() => OrdersSupplier, 'id_storage')
-    order_sup: OrdersSupplier[];
+    @HasMany(() => OrdersSupStorage, 'id_storage')
+    order_sup_storage: OrdersSupStorage[];
 
     @HasMany(() => StockTyres, 'id_storage')
     stock_tyres: StockTyres[];

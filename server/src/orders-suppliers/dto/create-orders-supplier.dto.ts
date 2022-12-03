@@ -15,5 +15,6 @@ export class CreateOrdersSupplierDto {
     readonly quantity: number;
     readonly order_index: number;
     readonly storage_index: number;
-    
+    readonly id_order_sup_storage: number;
+    readonly order_sup: number;    
 }
