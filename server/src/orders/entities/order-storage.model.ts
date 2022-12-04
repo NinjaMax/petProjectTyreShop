@@ -21,6 +21,9 @@ export class Order_Storage extends Model<Order_Storage, OrdersStorageConfigAttr>
     id: number;
 
     @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+    id_supplier: number;
+
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     order_index: number;
 
     @Column({type: DataType.INTEGER, unique: false, allowNull: true})

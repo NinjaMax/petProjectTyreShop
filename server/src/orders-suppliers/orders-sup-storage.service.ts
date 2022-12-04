@@ -18,18 +18,8 @@ export class OrdersSupStorageService {
     
     try {
       
-      const order = await this.ordersService.findOrderById(createOrdersSupplierDto);
       const orderSup = await this.ordersSupStorageRepository.create(createOrdersSupplierDto);
 
-      if(order) {
-        
-        const orderSupId = await this.ordersSupStorageRepository.findByPk(orderSup.id_order_sup);
-        await order.$add('order_sup', [orderSupId.id_order_sup]);
-        //order.order_sup.push(orderSupId);
-
-        return orderSupId;
-      }
-      
       return orderSup;
 
     } catch {

@@ -45,7 +45,7 @@ export class WheelsService {
 
     try {
       
-      const wheelById = await this.wheelRepository.findByPk(getWheelDto.id_wheel, {include: {all: true}});
+      const wheelById = await this.wheelRepository.findByPk(getWheelDto.id, {include: {all: true}});
 
       return wheelById;
 
@@ -64,7 +64,7 @@ export class WheelsService {
 
     try {
       
-      const wheelRemove = await this.wheelRepository.destroy({where: {id_wheel: getWheelDto.id_wheel}});
+      const wheelRemove = await this.wheelRepository.destroy({where: {id: getWheelDto.id}});
 
       return wheelRemove;
 

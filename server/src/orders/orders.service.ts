@@ -12,7 +12,7 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { GetOrdersDto } from './dto/get-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { Orders } from './entities/order.model';
-import { OrdersConfigAttr } from './interfaces/orders.interface';
+//import { OrdersConfigAttr } from './interfaces/orders.interface';
 import { OrdersStorageService } from './orders-storage.service';
 
 @Injectable()

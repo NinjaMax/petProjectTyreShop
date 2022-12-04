@@ -30,10 +30,10 @@ export class StockWheelsService {
 
         const supplier = await this.suppliersService.findSupplierById(createStockDto);
 
-        await storage.$add('stock_wheels', [stockCreate.id_wheel]);
+        await storage.$add('stock_wheels', [stockCreate.id]);
         storage.stock_wheels.push(stockCreate);
 
-        await wheel.$add('stock', [createStockDto.id_wheel]);
+        await wheel.$add('stock', [createStockDto.id]);
 
         await supplier.$add('stock_wheels', [createStockDto.id_sup]);
         
@@ -73,7 +73,7 @@ export class StockWheelsService {
 
     try {
 
-      const stockWheelById = await this.stockWheelsRepository.findByPk(getStockTyresDto.id_wheel, {include: {all: true}});
+      const stockWheelById = await this.stockWheelsRepository.findByPk(getStockTyresDto.id, {include: {all: true}});
 
       return stockWheelById;
 
@@ -89,7 +89,7 @@ export class StockWheelsService {
     
     try {
 
-      const wheelId = await this.stockWheelsRepository.findByPk(updateStockDto.id_wheel, {include: {all: true}});
+      const wheelId = await this.stockWheelsRepository.findByPk(updateStockDto.id, {include: {all: true}});
       
       if(wheelId) {
 
@@ -99,7 +99,7 @@ export class StockWheelsService {
             remainder : updateStockDto.remainder,
             id_sup : updateStockDto.id_sup,
             update_date : updateStockDto.update_date
-        }, {where: {id_wheel : updateStockDto.id_wheel}});
+        }, {where: {id : updateStockDto.id}});
 
         const updateStockWheel = await this.stockWheelsRepository.findByPk(updateStockDto.id_wheel, {include: {all: true}});
 
@@ -118,7 +118,7 @@ export class StockWheelsService {
     
     try {
 
-      const removeStockWheel = await this.stockWheelsRepository.destroy({where: {id_wheel : getStockDto.id_wheel}});
+      const removeStockWheel = await this.stockWheelsRepository.destroy({where: {id : getStockDto.id}});
 
       return removeStockWheel;
 

@@ -1,6 +1,6 @@
 import { Injectable, HttpException, HttpStatus  } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { Op } from 'sequelize';
+//import { Op } from 'sequelize';
 import { Order_Storage } from '../orders/entities/order-storage.model';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { GetOrdersDto } from './dto/get-order.dto';
@@ -79,6 +79,22 @@ export class OrdersStorageService {
       
       const orderStorageOne = await this.ordersStorageRepository.findOne(
         {where: {id_order_storage: getOrdersDto.id_order_storage}});
+
+      return orderStorageOne;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+  }
+
+  async findGoodsOrderStorage(getOrdersDto: GetOrdersDto) {
+
+    try {
+      
+      const orderStorageOne = await this.ordersStorageRepository.findAll(
+        {where: {id_order: getOrdersDto.id_order}});
 
       return orderStorageOne;
 

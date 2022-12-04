@@ -10,7 +10,7 @@ export class StockWheelsController {
   constructor(private readonly stockWheelsService: StockWheelsService) {}
 
   @Post('/wheels')
-  create(@Body() createStockDto: CreateStockDto) {
+  createStockWheel(@Body() createStockDto: CreateStockDto) {
     return this.stockWheelsService.createStockWheel(createStockDto);
   }
 
@@ -20,7 +20,7 @@ export class StockWheelsController {
   }
 
   @Get('/wheels/id')
-  findOne(@Param() @Body() getStockDto : GetStockDto) {
+  findOne( @Body() getStockDto : GetStockDto) {
     return this.stockWheelsService.findStockWheelById(getStockDto);
   }
 

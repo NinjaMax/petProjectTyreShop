@@ -20,6 +20,6 @@ import { OrdersStorageService } from './orders-storage.service';
     BasketModule, StockModule, UsersModule, TyresModule,
     PricesModule, StorageModule
   ],
-  exports:[OrdersService],
+  exports:[OrdersService, OrdersStorageService],
 })
 export class OrdersModule {}

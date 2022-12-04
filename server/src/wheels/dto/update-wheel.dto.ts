@@ -3,7 +3,7 @@ import { CreateWheelDto } from './create-wheel.dto';
 
 export class UpdateWheelDto extends PartialType(CreateWheelDto) {
 
-    readonly id_wheel: number;
+    readonly id: number;
     readonly full_name: string;
     
 }

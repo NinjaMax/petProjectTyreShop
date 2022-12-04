@@ -9,26 +9,26 @@ export class StockWheels extends Model<StockWheels, StockWheelsConfigAttr> {
 
     @ForeignKey(() => Wheel)
     @Column({type: DataType.INTEGER, unique: true, autoIncrement: false, primaryKey: true})
-    id_wheel: number;
+    id: number;
     
     @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     stock: number;
 
     @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0,
-        set () {
+    //     set () {
 
-            const getRemainder : number = this.getDataValue('stock') ?? this.getDataValue('stock') - this.getDataValue('reserve');
-            const getReserve : number = this.getDataValue('stock') - this.getDataValue('remainder');
+    //         const getRemainder : number = this.getDataValue('stock') ?? this.getDataValue('stock') - this.getDataValue('reserve');
+    //         const getReserve : number = this.getDataValue('stock') - this.getDataValue('remainder');
             
-            if( getRemainder < 0 ) {
-                this.setDataValue('reserve', getReserve - getRemainder);
-                this.setDataValue('remainder', 0 ); 
-                return `You can not set more "reserve" because does not have remainder. "Remainder 0".`;
-            } else {
+    //         if( getRemainder < 0 ) {
+    //             this.setDataValue('reserve', getReserve - getRemainder);
+    //             this.setDataValue('remainder', 0 ); 
+    //             return `You can not set more "reserve" because does not have remainder. "Remainder 0".`;
+    //         } else {
                 
-                this.setDataValue('remainder', getRemainder );
-            }          
-        }
+    //             this.setDataValue('remainder', getRemainder );
+    //         }          
+    //     }
     })
     reserve: number;
 
@@ -46,7 +46,7 @@ export class StockWheels extends Model<StockWheels, StockWheelsConfigAttr> {
     @Column({type: DataType.DATE, unique: false, allowNull: false})
     update_date: Date;
 
-    @BelongsTo( () => Wheel , 'id_wheel')
+    @BelongsTo( () => Wheel , 'id')
     wheel: Wheel;
 
     @BelongsTo( () => Supplier , 'id_sup')

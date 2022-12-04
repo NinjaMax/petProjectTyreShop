@@ -1,5 +1,5 @@
 export interface WheelConfigAttr {
 
-    id_wheel: number;
+    id: number;
     full_name: string;
 }

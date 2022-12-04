@@ -6,11 +6,11 @@ import { PriceWheels } from "src/prices/entities/price-wheels.model";
 import { StockWheels } from "src/stock/entities/stock-wheels.model";
 import { WheelConfigAttr } from '../interfaces/wheel.interface';
 
-@Table({tableName: 'wheel', createdAt: false})
+@Table({tableName: 'wheel', updatedAt: false})
 export class Wheel extends Model<Wheel, WheelConfigAttr> {
 
     @Column({type: DataType.BIGINT, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
-    id_wheel: number;
+    id: number;
 
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     full_name: string;
@@ -19,13 +19,16 @@ export class Wheel extends Model<Wheel, WheelConfigAttr> {
     @Column({type: DataType.INTEGER})
     id_cat: number;
 
+    @Column({type: DataType.DATE, unique: false, allowNull: false})
+    update_date: Date;
+
     @BelongsTo(() => Category, 'id_cat')
     category: Category;
 
-    @HasMany(() => StockWheels , 'id_wheel')
+    @HasMany(() => StockWheels , 'id')
     stock: StockWheels[];
 
-    @HasMany(() => PriceWheels , 'id_wheel')
+    @HasMany(() => PriceWheels , 'id')
     price: PriceWheels[];
 
     //@BelongsToMany(() => Orders, () => OrdersGoods)

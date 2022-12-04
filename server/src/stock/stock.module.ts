@@ -15,9 +15,13 @@ import { StockBatteries } from './entities/stock-batteries.model';
 import { StockWheelsService } from './stock-wheels.service';
 import { StockOilsService } from './stock-oils.service';
 import { StockBatteriesService } from './stock-batteries.service';
+import { StockWheelsController } from './stock-wheels.controller';
+import { StockBatteriesController } from './stock-batteries.controller';
+import { StockOilsController } from './stock-oils.controller';
 
 @Module({
-  controllers: [StockTyresController],
+  controllers: [StockTyresController, StockWheelsController,
+    StockBatteriesController, StockOilsController],
   providers: [StockTyresService, StockWheelsService, 
     StockOilsService, StockBatteriesService],
   imports: [ 
