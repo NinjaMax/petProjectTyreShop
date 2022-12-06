@@ -9,8 +9,13 @@ export class OrdersSuppliersController {
   constructor(private readonly ordersSuppliersService: OrdersSuppliersService) {}
 
   @Post()
-  create(@Body() createOrdersSupplierDto: CreateOrdersSupplierDto) {
+  createOrderSup(@Body() createOrdersSupplierDto: CreateOrdersSupplierDto) {
     return this.ordersSuppliersService.createOrderSup(createOrdersSupplierDto);
+  }
+
+  @Post('/add')
+  addGoodsToOrderSup(@Body() createOrdersSupplierDto: CreateOrdersSupplierDto) {
+    return this.ordersSuppliersService.addGoodsToOrderSup(createOrdersSupplierDto);
   }
 
   @Get()

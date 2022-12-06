@@ -91,8 +91,6 @@ export class OrdersService {
 
     try {
 
-      
-
       if( createOrderDto.id_order_storage ) {
 
         await this.ordersStorageService.updateOrderStorage(createOrderDto);

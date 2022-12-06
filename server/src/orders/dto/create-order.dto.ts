@@ -2,10 +2,10 @@ export class CreateOrderDto {
 
     readonly id_order: number;
     readonly id: number;
-    readonly id_goods: number;
-    readonly id_cat: number;
+    //readonly id_goods: number;
+    //readonly id_cat: number;
     readonly id_stock: number;
-    readonly goods: string;
+    //readonly goods: string;
     readonly price: number;
     readonly reserve: number;
     readonly quantity: number;

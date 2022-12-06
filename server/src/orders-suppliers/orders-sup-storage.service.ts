@@ -29,6 +29,31 @@ export class OrdersSupStorageService {
     }
   }
 
+  async createOrderSupStorageNew(
+    arr: any
+    //id: number, 
+    //quantity: number,
+    //price: number,
+    //order_sup_index: number,
+    //id_order: number
+    ) {
+    
+    try {
+      
+      const orderSup = await this.ordersSupStorageRepository.bulkCreate(
+        arr, { fields: ['id_order', 'id', 'quantity', 'price'] }
+        //{id, quantity, price, id_order}
+        );
+
+      return orderSup;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+  }
+
   async findAllOrdersSupStorage() {
 
     try {

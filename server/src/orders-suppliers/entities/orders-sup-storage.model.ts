@@ -11,16 +11,19 @@ export class OrdersSupStorage extends Model<OrdersSupStorage, OrdersSupStorConfi
     @Column({type: DataType.BIGINT, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_order_sup_storage: number;
    
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     id: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     quantity: number;
 
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+    price_wholesale: number;
+
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     price: number;
 
-    @Column({type: DataType.BIGINT, unique: false, allowNull: false, 
+    @Column({type: DataType.BIGINT, unique: false, allowNull: true, 
         set() {
             this.setDataValue('total', this.getDataValue('price') * this.getDataValue('quantity'));
         }
@@ -38,9 +41,11 @@ export class OrdersSupStorage extends Model<OrdersSupStorage, OrdersSupStorConfi
     @Column({type: DataType.INTEGER, allowNull: true})
     id_order_sup: number;
 
-    //@ForeignKey(() => Orders)
-    //@Column({type: DataType.INTEGER, allowNull: true})
-    //id_order: number;
+    @Column({type: DataType.INTEGER, allowNull: false})
+    order_sup_index: number;
+
+    @Column({type: DataType.INTEGER, allowNull: true})
+    id_order: number;
 
     @BelongsTo(() => Storage, 'id_storage')
     storage: Storage;

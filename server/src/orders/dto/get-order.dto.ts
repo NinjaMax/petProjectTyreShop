@@ -2,8 +2,8 @@ export class GetOrdersDto {
    
     readonly id_order: number;
     readonly id: number;
-    readonly id_cat: number;
-    readonly goods: string;
+    //readonly id_cat: number;
+    //readonly goods: string;
     readonly price: number;
     readonly total: number;
     readonly quantity: number;

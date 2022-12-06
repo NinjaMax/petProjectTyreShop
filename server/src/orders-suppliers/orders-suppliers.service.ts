@@ -21,41 +21,81 @@ export class OrdersSuppliersService {
     
     try {
       
+      
+      
       const order = await this.ordersService.findOrderById(createOrdersSupplierDto);
-      const orderSup = await this.ordersSupRepository.create(createOrdersSupplierDto);
 
-      if(createOrdersSupplierDto.id_order) {
+      if(order) {
         
-        const orderSupId = await this.ordersSupRepository.findByPk(orderSup.id_order_sup);
+        //const orderSupId = await this.ordersSupRepository.findByPk(orderSup.id_order_sup);
         
         const orderGoods = await this.ordersStorageService.findGoodsOrderStorage(createOrdersSupplierDto);
+        
         const ordersGoodsIdSup = orderGoods.map(item => item.id_supplier);
         const idSuppliers = Array.from(new Set(ordersGoodsIdSup));
         
-        for( let i = 0; i < idSuppliers.length; i++ ) {
-
-          const filterSup = orderGoods.filter(item => item.id_supplier == idSuppliers[i]);
+        //for( let i = 0; i < idSuppliers.length; i++ ) {
+          const orderSup = await this.ordersSupRepository.bulkCreate(
+            Array.from(orderGoods), 
+           { fields: ["id_order", "id_supplier", 
+           "delivery", "status", "notes"] }
+        
+          );
+          //orderSupNew.id_order = order.id_order;
+          //orderSupNew.id_order = 2;
           
-          if(filterSup[0].id_supplier == idSuppliers[0]) {
-            await orderSupId.$add('order', order.id_order);
-            await orderSupId.$add('orders_sup_storage', orderGoods[0]);
-            await orderSupId.$add('supplier', orderGoods[0].id_supplier);
+          //const filterSupOne = orderGoods.filter(item => item.id_supplier == idSuppliers[i]);
+          //const filterSupOther = orderGoods.filter(item => item.id_supplier !== idSuppliers[0]);
+          //orderSupNew.id_supplier = filterSupOne[i].id_supplier;
+          //return filterSup;
+          //for(let j = 0; j < filterSupOne.length; j++) {
+            //await this.ordersSupStorageService.createOrderSupStorage(filterSupOne[j]);
+
+          //   const orderSupStore = await this.ordersSupStorageService.createOrderSupStorageNew(
+          //     orderGoods
+          //   // filterSupOne[j].id, 
+          //   // filterSupOne[j].quantity,
+          //   // filterSupOne[j].price,
             
-            orderSupId.reload();
-
-            return orderSupId;
-          }
+          //   // order.id_order
+          // );
           
-          const orderSupNew = await this.ordersSupRepository.create(createOrdersSupplierDto);
-          await orderSupNew.$add('order', order.id_order);
-          await orderSupNew.$add('orders_sup_storage', orderGoods[i]);
-          await orderSupNew.$add('supplier', orderGoods[i].id_supplier);
+          // return orderSupStore;
+         // }
           
-          await orderSupNew.reload();
+        //}  
+          // if(filterSupOne) {
+          //   await orderSupId.$add('order', order.id_order);
+          //   await orderSupId.$add('orders_sup_storage', filterSupOne);
+          //   await orderSupId.$add('supplier', orderGoods[0].id_supplier);
+            
+          //   orderSupId.reload();
 
-          return orderSupNew;
-        }
-      }
+          //   return orderSupId;
+          // }
+
+          // for( let i = 0; i < idSuppliers.length; i++ ) {
+          // if(filterSupOther)  {
+          //   const orderSupNew = await this.ordersSupRepository.create(createOrdersSupplierDto);
+          //   const newOrderSupStorege = await this.ordersSupStorageService.createOrderSupStorageNew(
+
+          //   );
+          //   await orderSupNew.$add('order', order.id_order);
+          //   await orderSupNew.$add('orders_sup_storage', filterSupOther);
+          //   await orderSupNew.$add('supplier', filterSupOther.id_supplier);
+          
+          //   await orderSupNew.reload();
+
+          //   //return orderSupNew;
+          // }
+          // }
+          return orderSup;
+      } 
+      //else {
+      //  const orderSup = await this.ordersSupRepository.create(createOrdersSupplierDto);
+      //  return orderSup;
+      //}
+      return 'DO NOT WORK';
 
     } catch {
 
@@ -64,23 +104,11 @@ export class OrdersSuppliersService {
     }
   }
 
-  async addGoodsOrderSup(createOrdersSupplierDto: CreateOrdersSupplierDto) {
+  async addGoodsToOrderSup(createOrdersSupplierDto: CreateOrdersSupplierDto) {
     
     try {
       
-      const order = await this.ordersService.findOrderById(createOrdersSupplierDto);
-      const orderSup = await this.ordersSupRepository.create(createOrdersSupplierDto);
-
-      if(order) {
-        
-        const orderSupId = await this.ordersSupRepository.findByPk(orderSup.id_order_sup);
-        await orderSupId.$add('order', order.id_order);
-        //order.order_sup_storage.push(orderSupId);
-
-        return orderSupId;
-      }
       
-      return orderSup;
 
     } catch {
 

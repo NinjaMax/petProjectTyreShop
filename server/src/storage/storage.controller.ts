@@ -18,10 +18,10 @@ export class StorageController {
     return this.storageService.findAllStorage();
   }
 
-  // @Get('/stock')
-  // findAllStorageStock() {
-  //   return this.storageService.findAllStorageStock();
-  // }
+  @Get('/stock')
+  findAllStorageStock() {
+    return this.storageService.findAllStorageStock();
+  }
 
   @Get('/id')
   findOne(@Body() getStorageDto: GetStorageDto) {

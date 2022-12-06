@@ -14,10 +14,10 @@ export class OrdersSupplier extends Model<OrdersSupplier, OrdersSupConfigAttr> {
     @Column({type: DataType.BIGINT, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_order_sup: number;
 
-    @Column({type: DataType.STRING, unique: false, allowNull: false})
+    @Column({type: DataType.STRING, unique: false, allowNull: true})
     delivery: string;
 
-    @Column({type: DataType.STRING, unique: false, allowNull: false})
+    @Column({type: DataType.STRING, unique: false, allowNull: true, defaultValue: 'NEW'})
     status: string;
 
     @Column({type: DataType.STRING, unique: false, allowNull: true})
@@ -33,7 +33,7 @@ export class OrdersSupplier extends Model<OrdersSupplier, OrdersSupConfigAttr> {
 
     @ForeignKey(() => Supplier)
     @Column({type: DataType.INTEGER})
-    id_sup: number;
+    id_supplier: number;
 
     //@ForeignKey(() => Storage)
     //@Column({type: DataType.INTEGER})
