@@ -48,7 +48,7 @@ export class OrdersSupplier extends Model<OrdersSupplier, OrdersSupConfigAttr> {
     //@BelongsTo(() => Storage, 'id_storage')
     //storage: Storage;
 
-    @BelongsTo(() => Supplier, 'id_sup')
+    @BelongsTo(() => Supplier, 'id_supplier')
     supplier: Supplier;
 
     @HasMany(() => Comments, 'id_order_sup')

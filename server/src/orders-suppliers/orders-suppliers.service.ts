@@ -1,5 +1,6 @@
 import { Injectable, HttpException, HttpStatus  } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { format } from 'path';
 import { OrdersStorageService } from 'src/orders/orders-storage.service';
 import { OrdersService } from 'src/orders/orders.service';
 import { CreateOrdersSupplierDto } from './dto/create-orders-supplier.dto';
@@ -21,80 +22,45 @@ export class OrdersSuppliersService {
     
     try {
       
-      
-      
       const order = await this.ordersService.findOrderById(createOrdersSupplierDto);
 
       if(order) {
         
         //const orderSupId = await this.ordersSupRepository.findByPk(orderSup.id_order_sup);
-        
         const orderGoods = await this.ordersStorageService.findGoodsOrderStorage(createOrdersSupplierDto);
-        
+        //const orderId = await this.ordersService.findOrderById(createOrdersSupplierDto);
         const ordersGoodsIdSup = orderGoods.map(item => item.id_supplier);
         const idSuppliers = Array.from(new Set(ordersGoodsIdSup));
         
-        //for( let i = 0; i < idSuppliers.length; i++ ) {
-          const orderSup = await this.ordersSupRepository.bulkCreate(
-            Array.from(orderGoods), 
+        for( let i = 0; i < idSuppliers.length; i++ ) {
+          await this.ordersSupRepository.create(
+           { id_order: order.id_order,
+            id_supplier: idSuppliers[i] },
            { fields: ["id_order", "id_supplier", 
            "delivery", "status", "notes"] }
-        
           );
-          //orderSupNew.id_order = order.id_order;
-          //orderSupNew.id_order = 2;
-          
-          //const filterSupOne = orderGoods.filter(item => item.id_supplier == idSuppliers[i]);
-          //const filterSupOther = orderGoods.filter(item => item.id_supplier !== idSuppliers[0]);
-          //orderSupNew.id_supplier = filterSupOne[i].id_supplier;
-          //return filterSup;
-          //for(let j = 0; j < filterSupOne.length; j++) {
-            //await this.ordersSupStorageService.createOrderSupStorage(filterSupOne[j]);
 
-          //   const orderSupStore = await this.ordersSupStorageService.createOrderSupStorageNew(
-          //     orderGoods
-          //   // filterSupOne[j].id, 
-          //   // filterSupOne[j].quantity,
-          //   // filterSupOne[j].price,
-            
-          //   // order.id_order
-          // );
-          
-          // return orderSupStore;
-         // }
-          
-        //}  
-          // if(filterSupOne) {
-          //   await orderSupId.$add('order', order.id_order);
-          //   await orderSupId.$add('orders_sup_storage', filterSupOne);
-          //   await orderSupId.$add('supplier', orderGoods[0].id_supplier);
-            
-          //   orderSupId.reload();
+        }
+        
+ 
+          for(let j = 0; j < orderGoods.length; j++) {
 
-          //   return orderSupId;
-          // }
+            await this.ordersSupStorageService.createOrderSupStorageNew(
+              orderGoods[j].id,
+              orderGoods[j].id_order,
+              orderGoods[j].id_supplier,
+              orderGoods[j].quantity,
+              orderGoods[j].price,
+              orderGoods[j].storage_index 
+             );
 
-          // for( let i = 0; i < idSuppliers.length; i++ ) {
-          // if(filterSupOther)  {
-          //   const orderSupNew = await this.ordersSupRepository.create(createOrdersSupplierDto);
-          //   const newOrderSupStorege = await this.ordersSupStorageService.createOrderSupStorageNew(
+         }
 
-          //   );
-          //   await orderSupNew.$add('order', order.id_order);
-          //   await orderSupNew.$add('orders_sup_storage', filterSupOther);
-          //   await orderSupNew.$add('supplier', filterSupOther.id_supplier);
-          
-          //   await orderSupNew.reload();
+        const orderSupAll = await this.ordersSupRepository.findAll({include:{all: true}});
+        return orderSupAll;  
 
-          //   //return orderSupNew;
-          // }
-          // }
-          return orderSup;
       } 
-      //else {
-      //  const orderSup = await this.ordersSupRepository.create(createOrdersSupplierDto);
-      //  return orderSup;
-      //}
+
       return 'DO NOT WORK';
 
     } catch {

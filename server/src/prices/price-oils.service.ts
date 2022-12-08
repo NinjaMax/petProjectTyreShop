@@ -35,7 +35,7 @@ export class PriceOilsService {
 
         await oil.$add('price', [createPriceDto.id_oil]);
        
-        await supplier.$add('price_oils', [createPriceDto.id_sup]);
+        await supplier.$add('price_oils', [createPriceDto.id_supplier]);
        
         oil.price.push(priceCreate);
 
@@ -97,7 +97,7 @@ export class PriceOilsService {
          await this.priceOilsRepository.update(
         { price_wholesale : updatePriceDto.price_wholesale, 
           price : updatePriceDto.price, 
-          id_sup : updatePriceDto.id_sup,
+          id_supplier : updatePriceDto.id_supplier,
           delivery_price : updatePriceDto.delivery_price, 
           price_plus_delivery : updatePriceDto.price_plus_delivery,
           update_date : updatePriceDto.update_date

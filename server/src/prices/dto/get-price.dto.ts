@@ -11,7 +11,7 @@ export class GetPriceDto {
     readonly id_wheel: number;
     readonly id_oil: number;
     readonly id_battery: number;
-    readonly id_sup: number;
+    readonly id_supplier: number;
     readonly full_name: string;
     readonly name: string;
     

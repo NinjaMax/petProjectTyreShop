@@ -14,7 +14,7 @@ import { OrdersSupplier } from "src/orders-suppliers/entities/orders-supplier.mo
 export class Supplier extends Model<Supplier, SuppliersConfigAttr> {
 
     @Column({type: DataType.BIGINT, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
-    id_sup: bigint;
+    id_supplier: bigint;
    
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     name: string;
@@ -28,31 +28,31 @@ export class Supplier extends Model<Supplier, SuppliersConfigAttr> {
     @Column({type: DataType.STRING, unique: false, allowNull: true})
     email: string;
 
-    @HasMany(() => StockTyres, 'id_sup')
+    @HasMany(() => StockTyres, 'id_supplier')
     stock_tyres: StockTyres[];
 
-    @HasMany(() => StockWheels, 'id_sup')
+    @HasMany(() => StockWheels, 'id_supplier')
     stock_wheels: StockWheels[];
 
-    @HasMany(() => StockBatteries, 'id_sup')
+    @HasMany(() => StockBatteries, 'id_supplier')
     stock_batteries: StockBatteries[];
 
-    @HasMany(() => StockOils, 'id_sup')
+    @HasMany(() => StockOils, 'id_supplier')
     stock_oils: StockOils[];
 
-    @HasMany(() => PriceTyres, 'id_sup')
+    @HasMany(() => PriceTyres, 'id_supplier')
     price_tyres: PriceTyres[];
 
-    @HasMany(() => PriceWheels, 'id_sup')
+    @HasMany(() => PriceWheels, 'id_supplier')
     price_wheels: PriceWheels[];
 
-    @HasMany(() => PriceBatteries, 'id_sup')
+    @HasMany(() => PriceBatteries, 'id_supplier')
     price_batteries: PriceBatteries[];
 
-    @HasMany(() => PriceOil, 'id_sup')
+    @HasMany(() => PriceOil, 'id_supplier')
     price_oils: PriceOil[];
 
-    @HasMany(() => OrdersSupplier, 'id_sup')
+    @HasMany(() => OrdersSupplier, 'id_supplier')
     orders_sup: OrdersSupplier[];
 
 }

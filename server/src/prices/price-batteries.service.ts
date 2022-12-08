@@ -35,7 +35,7 @@ export class PriceBatteryService {
 
         await battery.$add('price', [createPriceDto.id_battery]);
        
-        await supplier.$add('price_batteries', [createPriceDto.id_sup]);
+        await supplier.$add('price_batteries', [createPriceDto.id_supplier]);
        
         battery.price.push(priceCreate);
 
@@ -97,7 +97,7 @@ export class PriceBatteryService {
          await this.priceBatteryRepository.update(
         { price_wholesale : updatePriceDto.price_wholesale, 
           price : updatePriceDto.price, 
-          id_sup : updatePriceDto.id_sup,
+          id_supplier : updatePriceDto.id_supplier,
           delivery_price : updatePriceDto.delivery_price, 
           price_plus_delivery : updatePriceDto.price_plus_delivery,
           update_date : updatePriceDto.update_date

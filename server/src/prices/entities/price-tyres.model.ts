@@ -19,7 +19,7 @@ export class PriceTyres extends Model<PriceTyres, PriceTyresConfigAttr>{
 
    @ForeignKey(() => Supplier)
    @Column({type: DataType.INTEGER})
-   id_sup: number;
+   id_supplier: number;
 
    @ForeignKey(() => Storage)
    @Column({type: DataType.INTEGER, defaultValue: 1})
@@ -37,7 +37,7 @@ export class PriceTyres extends Model<PriceTyres, PriceTyresConfigAttr>{
    @BelongsTo( () => Tyres , 'id')
    tyres: Tyres;
 
-   @BelongsTo( () => Supplier , 'id_sup')
+   @BelongsTo( () => Supplier , 'id_supplier')
    supplier: Supplier;
 
    @BelongsTo( () => Storage , 'id_storage')

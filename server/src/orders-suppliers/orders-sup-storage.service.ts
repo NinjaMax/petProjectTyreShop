@@ -30,19 +30,26 @@ export class OrdersSupStorageService {
   }
 
   async createOrderSupStorageNew(
-    arr: any
-    //id: number, 
-    //quantity: number,
-    //price: number,
-    //order_sup_index: number,
-    //id_order: number
+    
+    id: number,
+    id_order: number,
+    id_supplier: number,
+    quantity: number,
+    price: number,
+    storage_index: number
     ) {
     
     try {
       
-      const orderSup = await this.ordersSupStorageRepository.bulkCreate(
-        arr, { fields: ['id_order', 'id', 'quantity', 'price'] }
-        //{id, quantity, price, id_order}
+      const orderSup = await this.ordersSupStorageRepository.create(
+        { id, 
+        id_order,
+        id_supplier, 
+        quantity,
+        price,
+        storage_index },
+        { fields: ['id','id_order', 'id_supplier',
+         'quantity', 'price', 'storage_index'] }
         );
 
       return orderSup;

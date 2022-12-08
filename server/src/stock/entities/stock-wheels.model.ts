@@ -37,7 +37,7 @@ export class StockWheels extends Model<StockWheels, StockWheelsConfigAttr> {
 
     @ForeignKey(() => Supplier)
     @Column({type: DataType.INTEGER})
-    id_sup: number;
+    id_supplier: number;
 
     @ForeignKey(() => Storage)
     @Column({type: DataType.INTEGER})
@@ -49,7 +49,7 @@ export class StockWheels extends Model<StockWheels, StockWheelsConfigAttr> {
     @BelongsTo( () => Wheel , 'id')
     wheel: Wheel;
 
-    @BelongsTo( () => Supplier , 'id_sup')
+    @BelongsTo( () => Supplier , 'id_supplier')
     supplier: Supplier;
 
     @BelongsTo( () => Storage , 'id_storage')

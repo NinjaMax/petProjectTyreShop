@@ -33,15 +33,21 @@ export class OrdersSupStorage extends Model<OrdersSupStorage, OrdersSupStorConfi
     @Column({type: DataType.STRING, unique: false, allowNull: true})
     notes: string;
 
+    @Column({type: DataType.INTEGER, allowNull: true})
+    id_supplier: number;
+
     @ForeignKey(() => Storage)
     @Column({type: DataType.INTEGER, allowNull: true})
     id_storage: number;
+
+    @Column({type: DataType.INTEGER, allowNull: true})
+    storage_index: number;
 
     @ForeignKey(() => OrdersSupplier)
     @Column({type: DataType.INTEGER, allowNull: true})
     id_order_sup: number;
 
-    @Column({type: DataType.INTEGER, allowNull: false})
+    @Column({type: DataType.INTEGER, allowNull: true})
     order_sup_index: number;
 
     @Column({type: DataType.INTEGER, allowNull: true})
@@ -52,8 +58,5 @@ export class OrdersSupStorage extends Model<OrdersSupStorage, OrdersSupStorConfi
 
     @BelongsTo(() => OrdersSupplier, 'id_order_sup')
     order_sup: OrdersSupplier;
-
-    //@BelongsTo(() => Orders, 'id_order')
-    //order: Orders;
     
 }

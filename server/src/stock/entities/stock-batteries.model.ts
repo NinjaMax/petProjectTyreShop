@@ -37,7 +37,7 @@ export class StockBatteries extends Model<StockBatteries, StockBatteriesConfigAt
 
     @ForeignKey(() => Supplier)
     @Column({type: DataType.INTEGER})
-    id_sup: number;
+    id_supplier: number;
 
     @ForeignKey(() => Storage)
     @Column({type: DataType.INTEGER})
@@ -49,7 +49,7 @@ export class StockBatteries extends Model<StockBatteries, StockBatteriesConfigAt
     @BelongsTo( () => Battery , 'id_battery')
     battery: Battery;
 
-    @BelongsTo( () => Supplier , 'id_sup')
+    @BelongsTo( () => Supplier , 'id_supplier')
     supplier: Supplier;
 
     @BelongsTo( () => Storage , 'id_storage')

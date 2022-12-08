@@ -36,7 +36,7 @@ export class StockBatteriesService {
 
         await battery.$add('stock', [createStockDto.id_battery]);
 
-        await supplier.$add('stock_batteries', [createStockDto.id_sup]);
+        await supplier.$add('stock_batteries', [createStockDto.id_supplier]);
         
         battery.stock.push(stockCreate);
 
@@ -99,7 +99,7 @@ export class StockBatteriesService {
             stock : updateStockDto.stock,
             reserve : updateStockDto.reserve,
             remainder : updateStockDto.remainder, 
-            id_sup : updateStockDto.id_sup,
+            id_supplier : updateStockDto.id_supplier,
             update_date : updateStockDto.update_date
         }, {where: {id_battery : updateStockDto.id_battery}});
 

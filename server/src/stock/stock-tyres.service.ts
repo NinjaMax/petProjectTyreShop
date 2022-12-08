@@ -36,7 +36,7 @@ export class StockTyresService {
 
         await tyres.$add('stock', [createStockDto.id]);
 
-        await supplier.$add('stock', [createStockDto.id_sup]);
+        await supplier.$add('stock', [createStockDto.id_supplier]);
         
         tyres.stock.push(stockCreate);
 
@@ -100,7 +100,7 @@ export class StockTyresService {
         { stock : updateStockDto.stock,
           reserve : updateStockDto.reserve,
           remainder : updateStockDto.remainder,
-          id_sup : updateStockDto.id_sup,
+          id_supplier : updateStockDto.id_supplier,
           update_date : updateStockDto.update_date
         }, {where: {id : updateStockDto.id}});
 

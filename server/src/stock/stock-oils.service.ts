@@ -36,7 +36,7 @@ export class StockOilsService {
 
         await oil.$add('stock', [createStockDto.id_oil]);
 
-        await supplier.$add('stock_oils', [createStockDto.id_sup]);
+        await supplier.$add('stock_oils', [createStockDto.id_supplier]);
         
      oil.stock.push(stockCreate);
 
@@ -99,7 +99,7 @@ export class StockOilsService {
             stock : updateStockDto.stock, 
             reserve : updateStockDto.reserve,
             remainder : updateStockDto.remainder,
-            id_sup : updateStockDto.id_sup,
+            id_supplier : updateStockDto.id_supplier,
             update_date : updateStockDto.update_date
         }, {where: {id_oil : updateStockDto.id_oil}});
 

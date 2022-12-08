@@ -19,7 +19,7 @@ export class PriceOil extends Model<PriceOil, PriceOilsConfigAttr>{
 
    @ForeignKey(() => Supplier)
    @Column({type: DataType.INTEGER})
-   id_sup: number;
+   id_supplier: number;
 
    @ForeignKey(() => Storage)
    @Column({type: DataType.INTEGER})
@@ -37,7 +37,7 @@ export class PriceOil extends Model<PriceOil, PriceOilsConfigAttr>{
    @BelongsTo( () => Oil , 'id_oil')
    oil: Oil;
 
-   @BelongsTo( () => Supplier , 'id_sup')
+   @BelongsTo( () => Supplier , 'id_supplier')
    supplier: Supplier;
 
    @BelongsTo( () => Storage , 'id_storage')

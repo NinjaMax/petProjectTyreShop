@@ -47,7 +47,7 @@ export class SuppliersService {
 
     try {
 
-      const supplierById = await this.suppliersRepository.findByPk(getSupplierDto.id_sup, {include: {all: true}});
+      const supplierById = await this.suppliersRepository.findByPk(getSupplierDto.id_supplier, {include: {all: true}});
       
       return supplierById;
 
@@ -77,7 +77,7 @@ export class SuppliersService {
 
     try {
 
-      const supplierId = await this.suppliersRepository.findByPk(updateSupplierDto.id_sup, {include: {all: true}});
+      const supplierId = await this.suppliersRepository.findByPk(updateSupplierDto.id_supplier, {include: {all: true}});
       
       if(supplierId) {
 
@@ -87,9 +87,9 @@ export class SuppliersService {
           city : updateSupplierDto.city, 
           phone : updateSupplierDto.phone,
           email : updateSupplierDto.email
-        }, {where: {id_sup : updateSupplierDto.id_sup}});
+        }, {where: {id_supplier : updateSupplierDto.id_supplier}});
 
-        const updateSupplier = await this.suppliersRepository.findByPk(updateSupplierDto.id_sup, {include: {all: true}});
+        const updateSupplier = await this.suppliersRepository.findByPk(updateSupplierDto.id_supplier, {include: {all: true}});
 
         return updateSupplier; 
       }
@@ -105,7 +105,7 @@ export class SuppliersService {
 
     try {
 
-      const removeSupplier = await this.suppliersRepository.destroy({where: {id_sup : getSupplierDto.id_sup}});
+      const removeSupplier = await this.suppliersRepository.destroy({where: {id_supplier : getSupplierDto.id_supplier}});
       
       return removeSupplier;
 

@@ -5,7 +5,7 @@ export class CreateStockDto {
    readonly id_wheel: number;
    readonly id_oil: number;
    readonly id_battery: number;
-   readonly id_sup: number;
+   readonly id_supplier: number;
    
    readonly stock: number;
    readonly reserve: number;

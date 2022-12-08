@@ -19,7 +19,7 @@ export class PriceWheels extends Model<PriceWheels, PriceWheelsConfigAttr>{
 
    @ForeignKey(() => Supplier)
    @Column({type: DataType.INTEGER})
-   id_sup: number;
+   id_supplier: number;
 
    @ForeignKey(() => Storage)
    @Column({type: DataType.INTEGER})
@@ -37,7 +37,7 @@ export class PriceWheels extends Model<PriceWheels, PriceWheelsConfigAttr>{
    @BelongsTo( () => Wheel , 'id_wheel')
    wheel: Wheel;
 
-   @BelongsTo( () => Supplier , 'id_sup')
+   @BelongsTo( () => Supplier , 'id_supplier')
    supplier: Supplier;
 
    @BelongsTo( () => Storage , 'id_storage')

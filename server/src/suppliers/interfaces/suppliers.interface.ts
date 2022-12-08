@@ -1,6 +1,6 @@
 export interface SuppliersConfigAttr {
     
-    id_sup: number;
+    id_supplier: number;
     name: string;
     city: string;
     phone: bigint;

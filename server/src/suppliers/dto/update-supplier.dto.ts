@@ -3,7 +3,7 @@ import { CreateSupplierDto } from './create-supplier.dto';
 
 export class UpdateSupplierDto extends PartialType(CreateSupplierDto) {
 
-    readonly id_sup: number;
+    readonly id_supplier: number;
     readonly name: string;
     readonly city: string;
     readonly phone: bigint;

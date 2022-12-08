@@ -5,6 +5,6 @@ export class GetTyreDto {
     readonly full_name: string;
     //readonly name: string;
     readonly update_date: Date;
-    readonly id_sup: number;
+    readonly id_supplier: number;
     
 }

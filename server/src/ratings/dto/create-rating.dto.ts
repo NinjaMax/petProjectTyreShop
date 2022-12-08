@@ -3,7 +3,7 @@ export class CreateRatingDto {
     readonly id_review: number;
     readonly id: number;
     //readonly id_tyres: number;
-    readonly id_sup: number;
+    readonly id_supplier: number;
     readonly full_name: string;
     readonly update_date: Date;
     readonly rating_overall: number;
