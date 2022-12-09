@@ -1,5 +1,7 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { OrdersStorageService } from 'src/orders/orders-storage.service';
+import { OrdersService } from 'src/orders/orders.service';
 import { StockBatteriesService } from 'src/stock/stock-batteries.service';
 import { StockOilsService } from 'src/stock/stock-oils.service';
 import { StockTyresService } from 'src/stock/stock-tyres.service';
@@ -8,22 +10,78 @@ import { CreateSaleDto } from './dto/create-sale.dto';
 import { GetSaleDto } from './dto/get-sale.dto';
 import { UpdateSaleDto } from './dto/update-sale.dto';
 import { Sales } from './entities/sale.model';
+import { SalesStorageService } from './sales-storage.service';
 
 @Injectable()
 export class SalesService {
 
   constructor(@InjectModel(Sales) private salesRepository: typeof Sales,
+    private ordersService: OrdersService,
+    private ordersStorageService: OrdersStorageService,
+    private salesStorageService: SalesStorageService,
     private stockTyresService: StockTyresService,
     private stockWheelsService: StockWheelsService,
     private stockBatteriesService: StockBatteriesService,
     private stockOilsService: StockOilsService 
   ) {}
-
+  
   async createSale(createSaleDto: CreateSaleDto) {
 
     try {
 
-      const sale = await this.salesRepository.create(createSaleDto);
+      const order = await this.ordersService.findOrderById(createSaleDto);
+
+      if(order) {
+        
+        const orderGoods = await this.ordersStorageService.findGoodsOrderStorage(createSaleDto);
+        const ordersGoodsIdSup = orderGoods.map(item => item.id_supplier);
+        const idSuppliers = Array.from(new Set(ordersGoodsIdSup));
+        
+        for( let i = 0; i < idSuppliers.length; i++ ) {
+          await this.salesRepository.create(
+           { id_order: order.id_order,
+            delivery: order.delivery,
+            id_user: order.id_user,
+            notes: order.notes  },
+           { fields: ["id_order", "id_user", 
+           "delivery", "notes"] }
+          );
+
+        }
+        
+        for(let j = 0; j < orderGoods.length; j++) {
+
+          await this.salesStorageService.createSalesStorageNew(
+            orderGoods[j].id,
+            orderGoods[j].id_order,
+            orderGoods[j].id_supplier,
+            orderGoods[j].quantity,
+            orderGoods[j].price,
+            //orderGoods[j].storage_index 
+          );
+
+        }
+
+
+      } else {
+
+        const sale = await this.salesRepository.create(createSaleDto);
+      
+        return sale; 
+      }
+
+    } catch {
+
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+      
+    }
+  }
+
+  async createAddSale(createSaleDto: CreateSaleDto) {
+
+    try {
+
+      //const sale = await this.salesRepository.create(createSaleDto);
       
       const tyreStock = await this.stockTyresService.findStockTyreById(createSaleDto);
       const wheelStock = await this.stockWheelsService.findStockWheelById(createSaleDto);
@@ -32,10 +90,11 @@ export class SalesService {
       
       if(tyreStock) {
 
-        const salesId = await this.salesRepository.findByPk(sale.id_sale);
+        const salesId = await this.salesRepository.findByPk(createSaleDto.id_sale);
 
         await tyreStock.decrement(['stock','reserve'], {by: createSaleDto.quantity});
         await salesId.$add('storage', [tyreStock.storage]);
+
         salesId.storage.push(tyreStock.storage);
         await tyreStock.reload();
 

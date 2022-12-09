@@ -4,7 +4,7 @@ import { CreateOrdersSupplierDto } from './create-orders-supplier.dto';
 export class UpdateOrdersSupplierDto extends PartialType(CreateOrdersSupplierDto) {
 
     readonly id_order_sup: number;
-    //readonly id_goods: number;
+    readonly id_storage: number;
     //readonly id_cat: number;
     //readonly goods: string;
     readonly price: number;
@@ -16,5 +16,7 @@ export class UpdateOrdersSupplierDto extends PartialType(CreateOrdersSupplierDto
     
     readonly reserve: number;
     readonly quantity: number;
-
+    readonly price_wholesale: number;
+    readonly order_sup_index: number;
+    readonly storage_index: number;
 }

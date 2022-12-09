@@ -7,9 +7,9 @@ export class UpdateStockDto extends PartialType(CreateStockDto) {
     readonly reserve: number;
     readonly remainder: number;
     //readonly id_tyres: number;
-    readonly id_wheel: number;
-    readonly id_oil: number;
-    readonly id_battery: number;
+    // readonly id_wheel: number;
+    // readonly id_oil: number;
+    // readonly id_battery: number;
     readonly update_date: Date;
 
 }

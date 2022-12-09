@@ -1,5 +1,6 @@
 import { Injectable, HttpException, HttpStatus  } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { Op } from 'sequelize';
 import { OrdersService } from 'src/orders/orders.service';
 import { CreateOrdersSupplierDto } from './dto/create-orders-supplier.dto';
 import { GetOrdersSuppliersDto } from './dto/get-orders-supplier.dto';
@@ -76,6 +77,38 @@ export class OrdersSupStorageService {
     }
   }
 
+  async findAllOrdersSupStorageByOrd(getOrdersSupDto: GetOrdersSuppliersDto) {
+
+    try {
+      
+      const orderSupAllByOrder = await this.ordersSupStorageRepository.findAll(
+        {where: { id_order: getOrdersSupDto.id_order }});
+
+      return orderSupAllByOrder;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+  }
+
+  async findOrdersSupStorageByOrdSup(getOrdersSupDto: GetOrdersSuppliersDto) {
+
+    try {
+      
+      const orderSupAllByOrderSup = await this.ordersSupStorageRepository.findOne(
+        { where: { order_sup_index: getOrdersSupDto.id_order_sup }});
+
+      return orderSupAllByOrderSup;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+  }
+
   async findOrderSupStorageById(getOrdersSupDto: GetOrdersSuppliersDto) {
 
     try {
@@ -91,8 +124,30 @@ export class OrdersSupStorageService {
     }
   }
 
-  update(id: number, updateOrdersSupplierDto: UpdateOrdersSupplierDto) {
-    return `This action updates a #${id} ordersSupplier`;
+  async updateOrderSupStorage(updateOrdersSupplierDto: UpdateOrdersSupplierDto) {
+    
+    try {
+        const orderStorageUpdate = await this.ordersSupStorageRepository.update(
+            {id: updateOrdersSupplierDto.id,
+            order_sup_index: updateOrdersSupplierDto.order_sup_index,
+            storage_index: updateOrdersSupplierDto.storage_index,
+            id_order_sup: updateOrdersSupplierDto.id_order_sup,
+            id_storage: updateOrdersSupplierDto.id_storage, 
+            quantity: updateOrdersSupplierDto.quantity,
+            price: updateOrdersSupplierDto.price,
+            price_wholesale: updateOrdersSupplierDto.price_wholesale
+
+            },{where:{id_order_sup_storage: updateOrdersSupplierDto.id_order_sup_storage}}
+        );
+
+        return orderStorageUpdate;
+
+    } catch {
+
+        throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+    
   }
 
   async removeOrderSupStorage(getOrdersSupDto: GetOrdersSuppliersDto) {

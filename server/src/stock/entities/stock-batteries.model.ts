@@ -9,7 +9,7 @@ export class StockBatteries extends Model<StockBatteries, StockBatteriesConfigAt
 
     @ForeignKey(() => Battery)
     @Column({type: DataType.INTEGER, unique: true, autoIncrement: false, primaryKey: true})
-    id_battery: number;
+    id: number;
     
     @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     stock: number;

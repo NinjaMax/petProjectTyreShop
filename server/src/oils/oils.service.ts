@@ -45,7 +45,7 @@ export class OilsService {
 
     try {
       
-      const oilById = await this.oilRepository.findByPk(getOilDto.id_oil, {include: {all: true}});
+      const oilById = await this.oilRepository.findByPk(getOilDto.id, {include: {all: true}});
 
       return oilById;
 
@@ -64,7 +64,7 @@ export class OilsService {
 
     try {
       
-      const oilRemove = await this.oilRepository.destroy({where: {id_oil: getOilDto.id_oil}});
+      const oilRemove = await this.oilRepository.destroy({where: {id: getOilDto.id}});
 
       return oilRemove;
 

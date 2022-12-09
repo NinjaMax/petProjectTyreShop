@@ -1,10 +1,14 @@
 export interface SalesConfigAttr {
 
-    id_goods: number;
-    goods: string;
+    id: number;
+    id_order: number;
+    id_user: number;
+    delivery: string;
+    status: string;
+    notes: string;
     quantity: number;
     price: number;
     total: number;
-    storage: string;
+    storage: number;
 
 }

@@ -1,6 +1,6 @@
 export class CreateOilDto {
 
-    readonly id_oil: number;
+    readonly id: number;
     readonly full_name: string;
     
 }

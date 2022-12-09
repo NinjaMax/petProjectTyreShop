@@ -6,7 +6,29 @@ import { Sales } from "./sale.model";
 export class SaleStorage extends Model<SaleStorage> {
 
     @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
-    id_order_storage: number;
+    id_sales_storage: number;
+
+    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
+    id: number;
+
+    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
+    quantity: number;
+
+    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
+    price: number;
+
+    @Column({type: DataType.BIGINT, unique: false, allowNull: false, 
+        set() {
+            this.setDataValue('total', this.getDataValue('price') * this.getDataValue('quantity'));
+        }
+    })
+    total: number;
+
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+    id_supplier: number;
+
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+    id_order: number;
 
     @ForeignKey(() => Sales)
     @Column({type: DataType.BIGINT, unique: true, allowNull: true})

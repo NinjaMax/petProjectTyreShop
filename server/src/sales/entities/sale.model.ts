@@ -12,6 +12,15 @@ export class Sales extends Model<Sales, SalesConfigAttr> {
     @Column({type: DataType.BIGINT, unique: true, autoIncrement: true, primaryKey: true})
     id_sale: number;
 
+    @Column({type: DataType.STRING, unique: false, allowNull: false})
+    status: string;
+
+    @Column({type: DataType.STRING, unique: false, allowNull: true})
+    notes: string;
+
+    @Column({type: DataType.STRING, unique: false, allowNull: true})
+    delivery: string;
+
     @ForeignKey(() => Orders)
     @Column({type: DataType.INTEGER})
     id_order: number;
@@ -19,25 +28,6 @@ export class Sales extends Model<Sales, SalesConfigAttr> {
     @ForeignKey(() => Users)
     @Column({type: DataType.INTEGER})
     id_user: number;
-    
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
-    id_goods: number;
-
-    @Column({type: DataType.STRING, unique: false, allowNull: false})
-    goods: string;
-
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
-    quantity: number;
-
-    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
-    price: number;
-
-    @Column({type: DataType.BIGINT, unique: false, allowNull: false, 
-        set() {
-            this.setDataValue('total', this.getDataValue('price') * this.getDataValue('quantity'));
-        }
-    })
-    total: number;
 
     @BelongsTo( () => Users , 'id_user')
     user: Users;

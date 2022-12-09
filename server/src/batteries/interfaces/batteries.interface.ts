@@ -1,6 +1,6 @@
 export interface BatteryConfigAttr {
 
-    id_battery: number;
+    id: number;
     full_name: string;
 
 }

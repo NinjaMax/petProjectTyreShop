@@ -3,7 +3,7 @@ import { CreateOilDto } from './create-oil.dto';
 
 export class UpdateOilDto extends PartialType(CreateOilDto) {
 
-    readonly id_oil: number;
+    readonly id: number;
     readonly full_name: string;
     
 }

@@ -10,7 +10,7 @@ import { BatteryConfigAttr } from '../interfaces/batteries.interface';
 export class Battery extends Model<Battery, BatteryConfigAttr> {
 
     @Column({type: DataType.BIGINT, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
-    id_battery: number;
+    id: number;
 
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     full_name: string;

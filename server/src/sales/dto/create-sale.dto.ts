@@ -1,18 +1,21 @@
 export class CreateSaleDto {
     
     readonly id: number;
-    readonly id_goods: number;
-    readonly goods: string;
+    readonly id_sale: number;
+    readonly id_order: number;
+    readonly status: string;
+    readonly delivery: string;
     readonly quantity: number;
     readonly price: number;
     readonly total: number;
-    readonly storage: string;
+    readonly storage: number;
 
-    //readonly id_tyres: number;
-    readonly id_wheel: number;
-    readonly id_oil: number;
-    readonly id_battery: number;
-    readonly id_sup: number;
+    readonly notes: string; 
+    readonly id_basket: number;
+    readonly id_order_storage: number;
+    readonly storage_index: number;
+    readonly order_index: number;
+    readonly id_supplier: number;
     readonly stock: number;
     readonly reserve: number;
     readonly remainder: number;

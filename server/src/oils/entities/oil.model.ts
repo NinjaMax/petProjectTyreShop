@@ -10,7 +10,7 @@ import { OilConfigAttr } from '../interfaces/oil.interface';
 export class Oil extends Model<Oil, OilConfigAttr> {
 
     @Column({type: DataType.BIGINT, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
-    id_oil: number;
+    id: number;
 
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     full_name: string;

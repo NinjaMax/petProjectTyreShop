@@ -31,10 +31,10 @@ export class StockOilsService {
 
         const supplier = await this.suppliersService.findSupplierById(createStockDto);
 
-        await storage.$add('stock_oils', [stockCreate.id_oil]);
+        await storage.$add('stock_oils', [stockCreate.id]);
         storage.stock_oils.push(stockCreate);
 
-        await oil.$add('stock', [createStockDto.id_oil]);
+        await oil.$add('stock', [createStockDto.id]);
 
         await supplier.$add('stock_oils', [createStockDto.id_supplier]);
         
@@ -74,7 +74,7 @@ export class StockOilsService {
 
     try {
 
-      const stockOilById = await this.stockOilsRepository.findByPk(getStockTyresDto.id_oil, {include: {all: true}});
+      const stockOilById = await this.stockOilsRepository.findByPk(getStockTyresDto.id, {include: {all: true}});
 
       return stockOilById;
 
@@ -90,7 +90,7 @@ export class StockOilsService {
     
     try {
 
-      const oilId = await this.stockOilsRepository.findByPk(updateStockDto.id_oil, {include: {all: true}});
+      const oilId = await this.stockOilsRepository.findByPk(updateStockDto.id, {include: {all: true}});
       
       if(oilId) {
 
@@ -101,9 +101,9 @@ export class StockOilsService {
             remainder : updateStockDto.remainder,
             id_supplier : updateStockDto.id_supplier,
             update_date : updateStockDto.update_date
-        }, {where: {id_oil : updateStockDto.id_oil}});
+        }, {where: {id : updateStockDto.id}});
 
-        const updateStockOils = await this.stockOilsRepository.findByPk(updateStockDto.id_oil, {include: {all: true}});
+        const updateStockOils = await this.stockOilsRepository.findByPk(updateStockDto.id, {include: {all: true}});
 
         return updateStockOils; 
       }
@@ -120,7 +120,7 @@ export class StockOilsService {
     
     try {
 
-      const removeStockOils = await this.stockOilsRepository.destroy({where: {id_oil : getStockDto.id_oil}});
+      const removeStockOils = await this.stockOilsRepository.destroy({where: {id: getStockDto.id}});
 
       return removeStockOils;
 

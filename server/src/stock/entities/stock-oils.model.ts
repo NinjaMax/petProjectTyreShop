@@ -9,7 +9,7 @@ export class StockOils extends Model<StockOils, StockOilsConfigAttr> {
 
     @ForeignKey(() => Oil)
     @Column({type: DataType.INTEGER, unique: true, autoIncrement: false, primaryKey: true})
-    id_oil: number;
+    id: number;
     
     @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     stock: number;

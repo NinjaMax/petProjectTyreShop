@@ -1,5 +1,5 @@
 export class GetBatteryDto {
 
-    readonly id_battery: number;
+    readonly id: number;
     readonly full_name: string;
 }

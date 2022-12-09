@@ -1,6 +1,6 @@
 export interface OilConfigAttr {
 
-    id_oil: number;
+    id: number;
     full_name: string;
 
 }

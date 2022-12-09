@@ -14,6 +14,6 @@ import { OrdersSupStorageService } from './orders-sup-storage.service';
     SequelizeModule.forFeature([OrdersSupplier, OrdersSupStorage]),
     OrdersModule
   ],
-  exports:[OrdersSuppliersService],
+  exports:[OrdersSuppliersService, OrdersSupStorageService],
 })
 export class OrdersSuppliersModule {}

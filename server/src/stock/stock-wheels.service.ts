@@ -101,7 +101,7 @@ export class StockWheelsService {
             update_date : updateStockDto.update_date
         }, {where: {id : updateStockDto.id}});
 
-        const updateStockWheel = await this.stockWheelsRepository.findByPk(updateStockDto.id_wheel, {include: {all: true}});
+        const updateStockWheel = await this.stockWheelsRepository.findByPk(updateStockDto.id, {include: {all: true}});
 
         return updateStockWheel; 
       }
@@ -118,7 +118,7 @@ export class StockWheelsService {
     
     try {
 
-      const removeStockWheel = await this.stockWheelsRepository.destroy({where: {id : getStockDto.id}});
+      const removeStockWheel = await this.stockWheelsRepository.destroy({where: {id: getStockDto.id}});
 
       return removeStockWheel;
 

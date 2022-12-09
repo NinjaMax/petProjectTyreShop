@@ -45,7 +45,7 @@ export class BatteriesService {
 
     try {
       
-      const batteryById = await this.batteryRepository.findByPk(getBatteryDto.id_battery, {include: {all: true}});
+      const batteryById = await this.batteryRepository.findByPk(getBatteryDto.id, {include: {all: true}});
 
       return batteryById;
 
@@ -64,7 +64,7 @@ export class BatteriesService {
 
     try {
       
-      const batteryRemove = await this.batteryRepository.destroy({where: {id_battery: getBatteryDto.id_battery}});
+      const batteryRemove = await this.batteryRepository.destroy({where: {id: getBatteryDto.id}});
 
       return batteryRemove;
 

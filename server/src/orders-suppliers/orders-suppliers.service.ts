@@ -1,6 +1,5 @@
 import { Injectable, HttpException, HttpStatus  } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { format } from 'path';
 import { OrdersStorageService } from 'src/orders/orders-storage.service';
 import { OrdersService } from 'src/orders/orders.service';
 import { CreateOrdersSupplierDto } from './dto/create-orders-supplier.dto';
@@ -26,9 +25,7 @@ export class OrdersSuppliersService {
 
       if(order) {
         
-        //const orderSupId = await this.ordersSupRepository.findByPk(orderSup.id_order_sup);
         const orderGoods = await this.ordersStorageService.findGoodsOrderStorage(createOrdersSupplierDto);
-        //const orderId = await this.ordersService.findOrderById(createOrdersSupplierDto);
         const ordersGoodsIdSup = orderGoods.map(item => item.id_supplier);
         const idSuppliers = Array.from(new Set(ordersGoodsIdSup));
         
@@ -42,26 +39,29 @@ export class OrdersSuppliersService {
 
         }
         
- 
-          for(let j = 0; j < orderGoods.length; j++) {
+        for(let j = 0; j < orderGoods.length; j++) {
 
-            await this.ordersSupStorageService.createOrderSupStorageNew(
-              orderGoods[j].id,
-              orderGoods[j].id_order,
-              orderGoods[j].id_supplier,
-              orderGoods[j].quantity,
-              orderGoods[j].price,
-              orderGoods[j].storage_index 
-             );
+          await this.ordersSupStorageService.createOrderSupStorageNew(
+            orderGoods[j].id,
+            orderGoods[j].id_order,
+            orderGoods[j].id_supplier,
+            orderGoods[j].quantity,
+            orderGoods[j].price,
+            orderGoods[j].storage_index 
+          );
 
-         }
+        }
 
         const orderSupAll = await this.ordersSupRepository.findAll({include:{all: true}});
         return orderSupAll;  
 
-      } 
+      } else {
 
-      return 'DO NOT WORK';
+        const orderSup = await this.ordersSupRepository.create(createOrdersSupplierDto);
+
+        return orderSup;
+
+      }
 
     } catch {
 
@@ -73,8 +73,42 @@ export class OrdersSuppliersService {
   async addGoodsToOrderSup(createOrdersSupplierDto: CreateOrdersSupplierDto) {
     
     try {
-      
-      
+
+      const findByOrderSup = await this.ordersSupStorageService.
+      findOrdersSupStorageByOrdSup(createOrdersSupplierDto);
+      const findByIdOrder = await this.ordersSupStorageService.
+      findAllOrdersSupStorageByOrd(createOrdersSupplierDto);
+
+      if(findByOrderSup) {
+        const orderSup = await this.ordersSupRepository.findByPk(
+          createOrdersSupplierDto.id_order_sup);
+        await orderSup.$add('orders_sup_storage', findByOrderSup);
+        await orderSup.reload();
+        
+        return orderSup;
+
+      }
+
+      if(findByIdOrder) {
+
+        const orderSupByOrder = await this.ordersSupRepository.
+        findAll({where:{id_order: createOrdersSupplierDto.id_order}});
+        const ordersGoodsIdSup = findByIdOrder.map(item => item.id_supplier);
+        const idSuppliers = Array.from(new Set(ordersGoodsIdSup));
+
+        for( let i = 0; i < idSuppliers.length; i++) {
+          let orderSupStorageGoods = findByIdOrder.filter(
+            item => item.id_supplier == idSuppliers[i]);
+          let orderSup = await this.ordersSupRepository.findOne(
+            {where:{id_supplier: idSuppliers[i]}} );
+
+          await orderSup.$add('orders_sup_storage', orderSupStorageGoods);
+          
+        }
+
+        return orderSupByOrder;
+
+      }
 
     } catch {
 
