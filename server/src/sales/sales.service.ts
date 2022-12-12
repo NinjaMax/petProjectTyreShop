@@ -33,35 +33,36 @@ export class SalesService {
 
       if(order) {
         
-        const orderGoods = await this.ordersStorageService.findGoodsOrderStorage(createSaleDto);
-        const ordersGoodsIdSup = orderGoods.map(item => item.id_supplier);
-        const idSuppliers = Array.from(new Set(ordersGoodsIdSup));
+        const orderStorageGoods = await this.ordersStorageService.
+        findAllGoodsOrderStorage(createSaleDto);
+        //const ordersGoodsIdSup = orderStorageGoods.map(item => item.id_supplier);
+        //const idSuppliers = Array.from(new Set(ordersGoodsIdSup));
         
-        for( let i = 0; i < idSuppliers.length; i++ ) {
-          await this.salesRepository.create(
+        const newSale = await this.salesRepository.create(
            { id_order: order.id_order,
             delivery: order.delivery,
             id_user: order.id_user,
-            notes: order.notes  },
-           { fields: ["id_order", "id_user", 
-           "delivery", "notes"] }
+            notes: order.notes,
+            },
+           { fields: ["id_order", "delivery", "id_user", 
+            "notes"] }
           );
-
-        }
         
-        for(let j = 0; j < orderGoods.length; j++) {
+        for(let j = 0; j < orderStorageGoods.length; j++) {
 
           await this.salesStorageService.createSalesStorageNew(
-            orderGoods[j].id,
-            orderGoods[j].id_order,
-            orderGoods[j].id_supplier,
-            orderGoods[j].quantity,
-            orderGoods[j].price,
-            //orderGoods[j].storage_index 
+            orderStorageGoods[j].id,
+            orderStorageGoods[j].id_order,
+            orderStorageGoods[j].id_supplier,
+            orderStorageGoods[j].quantity,
+            orderStorageGoods[j].price,
+            newSale.id_sale,
+            orderStorageGoods[j].id_storage
           );
 
         }
 
+        return newSale;
 
       } else {
 
@@ -77,69 +78,68 @@ export class SalesService {
     }
   }
 
-  async createAddSale(createSaleDto: CreateSaleDto) {
+  async addGoodsSale(createSaleDto: CreateSaleDto) {
 
     try {
 
-      //const sale = await this.salesRepository.create(createSaleDto);
+      const findSale = await this.salesRepository.findByPk(createSaleDto.id_sale);
+      const findSalesStorage = await this.salesStorageService.
+      findAllSalesStorageByOrd(createSaleDto);
+      //const findSaleStorageSale = await this.salesStorageService.
+      //findAllSaleStorageBySale(createSaleDto);
+
+      if(findSale || findSalesStorage) { 
+        for( let i = 0; i < findSalesStorage.length; i++) {
+
+          let tyreStock = await this.stockTyresService.
+          findStockTyreByIdForSale(findSalesStorage[i].id);
+          let wheelStock = await this.stockWheelsService.
+          findStockWheelByIdForSale(findSalesStorage[i].id);
+          let batteryStock = await this.stockBatteriesService.
+          findStockBatteryByIdForSale(findSalesStorage[i].id);
+          let oilStock = await this.stockOilsService.
+          findStockOilByIdForSale(findSalesStorage[i].id);
+
+          findSalesStorage[i].id_storage = findSalesStorage[i].storage_index;
+          await findSale.$add('sales_storage', findSalesStorage[i]);
       
-      const tyreStock = await this.stockTyresService.findStockTyreById(createSaleDto);
-      const wheelStock = await this.stockWheelsService.findStockWheelById(createSaleDto);
-      const batteryStock = await this.stockBatteriesService.findStockBatteryById(createSaleDto);
-      const oilStock = await this.stockOilsService.findStockOilById(createSaleDto);
-      
-      if(tyreStock) {
+          if(tyreStock) {
 
-        const salesId = await this.salesRepository.findByPk(createSaleDto.id_sale);
+            await tyreStock.decrement(['stock','reserve'], {by: createSaleDto.quantity});
 
-        await tyreStock.decrement(['stock','reserve'], {by: createSaleDto.quantity});
-        await salesId.$add('storage', [tyreStock.storage]);
+            await tyreStock.reload();  
 
-        salesId.storage.push(tyreStock.storage);
-        await tyreStock.reload();
+          }
 
-        return sale;
+          if(wheelStock) {
 
+            await wheelStock.decrement(['stock','reserve'], {by: createSaleDto.quantity});
+
+            await wheelStock.reload();
+
+          }
+
+          if(batteryStock) {
+
+            await batteryStock.decrement(['stock', 'reserve'], {by: createSaleDto.quantity});
+
+            await batteryStock.reload();
+
+          }
+
+          if(oilStock) {
+
+            await oilStock.decrement(['stock', 'reserve'], {by: createSaleDto.quantity});
+
+            await oilStock.reload(); 
+
+          }
+        }
+        
+        return findSale;
       }
 
-      if(wheelStock) {
-
-        const salesId = await this.salesRepository.findByPk(sale.id_sale);
-
-        await wheelStock.decrement(['stock','reserve'], {by: createSaleDto.quantity});
-        await salesId.$add('storage', [wheelStock.storage]);
-        salesId.storage.push(wheelStock.storage);
-        await wheelStock.reload();
-
-        return sale;
-
-      }
-
-      if(batteryStock) {
-
-        const salesId = await this.salesRepository.findByPk(sale.id_sale);
-
-        await batteryStock.decrement(['stock', 'reserve'], {by: createSaleDto.quantity});
-        await salesId.$add('storage', [batteryStock.storage]);
-        salesId.storage.push(batteryStock.storage);
-        await batteryStock.reload();
-
-        return sale;
-
-      }
-
-      if(oilStock) {
-
-        const salesId = await this.salesRepository.findByPk(sale.id_sale);
-
-        await oilStock.decrement(['stock', 'reserve'], {by: createSaleDto.quantity});
-        await salesId.$add('storage', [oilStock.storage]);
-        salesId.storage.push(oilStock.storage);
-        await oilStock.reload();
-
-        return sale;
-
-      }
+      return "ORDER DOESN'T EXIST";
 
     } catch {
 

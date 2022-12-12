@@ -9,8 +9,13 @@ export class SalesController {
   constructor(private readonly salesService: SalesService) {}
 
   @Post()
-  create(@Body() createSaleDto: CreateSaleDto) {
+  createSale(@Body() createSaleDto: CreateSaleDto) {
     return this.salesService.createSale(createSaleDto);
+  }
+
+  @Post('/add')
+  addGoodsSale(@Body() createSaleDto: CreateSaleDto) {
+    return this.salesService.addGoodsSale(createSaleDto);
   }
 
   @Get()

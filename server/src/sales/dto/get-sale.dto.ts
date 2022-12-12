@@ -7,7 +7,7 @@ export class GetSaleDto {
     readonly quantity: number;
     readonly price: number;
     readonly total: number;
-    readonly storage: number;
+    //readonly storage: number;
     readonly id_order: number;
     readonly id_sales_storage: number;
 

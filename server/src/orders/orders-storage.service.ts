@@ -89,7 +89,7 @@ export class OrdersStorageService {
     }
   }
 
-  async findGoodsOrderStorage(getOrdersDto: GetOrdersDto) {
+  async findAllGoodsOrderStorage(getOrdersDto: GetOrdersDto) {
 
     try {
       
@@ -113,7 +113,8 @@ export class OrdersStorageService {
             order_index: updateOrderDto.order_index,
             storage_index: updateOrderDto.storage_index, 
             quantity: updateOrderDto.quantity,
-            price: updateOrderDto.price
+            price: updateOrderDto.price,
+            id_supplier: updateOrderDto.id_supplier
             },{where:{id_order_storage: updateOrderDto.id_order_storage}}
         );
 

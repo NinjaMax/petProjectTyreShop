@@ -1,4 +1,4 @@
-import { Column, DataType, Model, Table, ForeignKey} from "sequelize-typescript";
+import { Column, BelongsTo, DataType, Model, Table, ForeignKey} from "sequelize-typescript";
 import { Storage } from "../../storage/entities/storage.model";
 import { Sales } from "./sale.model";
 
@@ -30,13 +30,25 @@ export class SaleStorage extends Model<SaleStorage> {
     @Column({type: DataType.INTEGER, unique: false, allowNull: true})
     id_order: number;
 
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+    sale_index: number;
+
     @ForeignKey(() => Sales)
     @Column({type: DataType.BIGINT, unique: true, allowNull: true})
     id_sale: number;
 
+    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+    storage_index: number;
+
     @ForeignKey(() => Storage)
     @Column({type: DataType.BIGINT, unique: true, allowNull: true})
     id_storage: number;
+
+    @BelongsTo(() => Sales, 'id_sale')
+    sale: Sales;
+
+    @BelongsTo(() => Storage, 'id_storage')
+    storage: Storage;
 
    
 }

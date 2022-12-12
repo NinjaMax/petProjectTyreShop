@@ -38,6 +38,8 @@ export class SalesStorageService {
     id_supplier: number,
     quantity: number,
     price: number,
+    sale_index: number,
+    storage_index: number
     ) {
     
     try {
@@ -48,9 +50,11 @@ export class SalesStorageService {
         id_supplier, 
         quantity,
         price,
+        sale_index,
+        storage_index
         },
         { fields: ['id','id_order', 'id_supplier',
-         'quantity', 'price'] }
+         'quantity', 'price', 'sale_index'] }
         );
 
       return orderSup;
@@ -93,11 +97,11 @@ export class SalesStorageService {
     }
   }
 
-  async findSaleStorageBySale(getSaleDto: GetSaleDto) {
+  async findAllSaleStorageBySale(getSaleDto: GetSaleDto) {
 
     try {
       
-      const saleStorageBySale = await this.salesStorageRepository.findOne(
+      const saleStorageBySale = await this.salesStorageRepository.findAll(
         { where: { id_sale: getSaleDto.id_sale }});
 
       return saleStorageBySale;

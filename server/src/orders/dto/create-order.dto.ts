@@ -5,7 +5,7 @@ export class CreateOrderDto {
     //readonly id_goods: number;
     //readonly id_cat: number;
     readonly id_stock: number;
-    //readonly goods: string;
+    readonly id_supplier: number;
     readonly price: number;
     readonly reserve: number;
     readonly quantity: number;

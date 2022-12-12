@@ -12,7 +12,7 @@ export class Sales extends Model<Sales, SalesConfigAttr> {
     @Column({type: DataType.BIGINT, unique: true, autoIncrement: true, primaryKey: true})
     id_sale: number;
 
-    @Column({type: DataType.STRING, unique: false, allowNull: false})
+    @Column({type: DataType.STRING, unique: false, allowNull: false, defaultValue: "NEW"})
     status: string;
 
     @Column({type: DataType.STRING, unique: false, allowNull: true})
@@ -38,7 +38,7 @@ export class Sales extends Model<Sales, SalesConfigAttr> {
     @HasMany( () => Comments, 'id_sale')
     comments: Comments[];
 
-    @BelongsToMany(() => Storage, () => SaleStorage)
-    storage: Storage[];
+    @HasMany(() => SaleStorage, 'id_sale')
+    sales_storage: Storage[];
 }
 

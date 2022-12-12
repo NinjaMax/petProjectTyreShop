@@ -25,7 +25,7 @@ export class OrdersSuppliersService {
 
       if(order) {
         
-        const orderGoods = await this.ordersStorageService.findGoodsOrderStorage(createOrdersSupplierDto);
+        const orderGoods = await this.ordersStorageService.findAllGoodsOrderStorage(createOrdersSupplierDto);
         const ordersGoodsIdSup = orderGoods.map(item => item.id_supplier);
         const idSuppliers = Array.from(new Set(ordersGoodsIdSup));
         

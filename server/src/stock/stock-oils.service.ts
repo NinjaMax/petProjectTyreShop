@@ -86,6 +86,22 @@ export class StockOilsService {
     
   }
 
+  async findStockOilByIdForSale(id : number) {
+
+    try {
+
+      const stockOilById = await this.stockOilsRepository.findByPk(id, {include: {all: true}});
+
+      return stockOilById;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+      
+    }
+    
+  }
+
   async updateStockOil(updateStockDto: UpdateStockDto) {
     
     try {

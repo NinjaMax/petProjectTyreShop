@@ -86,6 +86,22 @@ export class StockBatteriesService {
     
   }
 
+  async findStockBatteryByIdForSale(id : number) {
+
+    try {
+
+      const stockBatteryById = await this.stockBatteriesRepository.findByPk(id, {include: {all: true}});
+
+      return stockBatteryById;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+      
+    }
+    
+  }
+
   async updateStockBattery(updateStockDto: UpdateStockDto) {
     
     try {

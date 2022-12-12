@@ -85,6 +85,22 @@ export class StockWheelsService {
     
   }
 
+  async findStockWheelByIdForSale(id : number) {
+
+    try {
+
+      const stockWheelById = await this.stockWheelsRepository.findByPk(id, {include: {all: true}});
+
+      return stockWheelById;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+      
+    }
+    
+  }
+
   async updateStockWheel(updateStockDto: UpdateStockDto) {
     
     try {

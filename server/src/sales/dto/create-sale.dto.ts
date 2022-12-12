@@ -8,7 +8,8 @@ export class CreateSaleDto {
     readonly quantity: number;
     readonly price: number;
     readonly total: number;
-    readonly storage: number;
+    //readonly storage: number;
+    readonly id_sales_storage: number;
 
     readonly notes: string; 
     readonly id_basket: number;
