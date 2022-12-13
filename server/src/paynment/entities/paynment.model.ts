@@ -6,15 +6,13 @@ import { Orders } from "src/orders/entities/order.model";
 import { OrdersSupplier } from "src/orders-suppliers/entities/orders-supplier.model";
 import { Incomes } from "src/incomes/entities/income.model";
 import { Expense } from "src/expenses/entities/expense.model";
+import { Contract } from "src/contract/entities/contract.model";
 
 @Table({tableName: 'paynment'})
 export class Paynment extends Model<Paynment, PaynmentConfigAttr>{ 
     
    @Column({type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true})
    id_paynment: number;
-
-   @Column({type: DataType.STRING, unique: false, allowNull: true})
-   type_paynment: string;
 
    @Column({type: DataType.INTEGER, unique: false, allowNull: false})
    price: number;
@@ -37,6 +35,10 @@ export class Paynment extends Model<Paynment, PaynmentConfigAttr>{
    @Column({type: DataType.INTEGER})
    id_order_sup: number;
 
+   @ForeignKey(() => Contract)
+   @Column({type: DataType.INTEGER})
+   id_contract: number;
+
    @ForeignKey(() => Incomes)
    @Column({type: DataType.INTEGER})
    id_income: number;
@@ -45,11 +47,11 @@ export class Paynment extends Model<Paynment, PaynmentConfigAttr>{
    @Column({type: DataType.INTEGER})
    id_expense: number;
 
+   @BelongsTo( () => Expense , 'id_expense')
+   expenses: Expense;
+
    @BelongsTo( () => Cashbox , 'id_cashbox')
    cashbox: Cashbox;
-
-   @BelongsTo( () => Sales , 'id_sale')
-   sale: Sales;
 
    @BelongsTo( () => Orders , 'id_order')
    order: Orders;
@@ -60,7 +62,7 @@ export class Paynment extends Model<Paynment, PaynmentConfigAttr>{
    @BelongsTo( () => Incomes , 'id_income')
    incomes: Incomes;
 
-   @BelongsTo( () => Expense , 'id_expense')
-   expenses: Expense;
+   @BelongsTo( () => Contract , 'id_contract')
+   contract: Contract;
 
 }

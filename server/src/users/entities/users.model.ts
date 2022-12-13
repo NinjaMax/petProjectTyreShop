@@ -5,6 +5,7 @@ import { Orders } from "src/orders/entities/order.model";
 import { Basket } from "src/basket/entities/basket.model";
 import { Comments } from "src/comments/entities/comment.model";
 import { OrdersSupplier } from "src/orders-suppliers/entities/orders-supplier.model";
+import { Contract } from "src/contract/entities/contract.model";
 
 @Table({tableName: 'user', createdAt: false, updatedAt: false})
 export class Users extends Model<Users, UsersConfigAttr> {
@@ -44,5 +45,8 @@ export class Users extends Model<Users, UsersConfigAttr> {
 
     @HasMany(() => OrdersSupplier, 'id_user')
     orders_sup: OrdersSupplier[];
+
+    @HasMany(() => Contract, 'id_user')
+    contract: Contract[];
 
 }

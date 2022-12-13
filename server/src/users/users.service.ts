@@ -1,5 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { ContractService } from 'src/contract/contract.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { GetUserDto } from './dto/get-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -9,6 +10,7 @@ import { Users } from './entities/users.model';
 export class UsersService {
 
   constructor(@InjectModel(Users) private usersRepository: typeof Users,
+    private contractService: ContractService
     ) {}
 
   async createUser(createUserDto: CreateUserDto) {
@@ -16,6 +18,12 @@ export class UsersService {
     try {
       
       const user = await this.usersRepository.create(createUserDto);
+
+      const contractUser = await this.contractService.create(createUserDto);
+
+      user.$add('contract', contractUser);
+
+      user.reload();
 
       return user;
 

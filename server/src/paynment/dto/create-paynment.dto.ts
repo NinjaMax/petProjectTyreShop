@@ -28,5 +28,8 @@ export class CreatePaynmentDto {
     readonly id: number;
     readonly id_order_sup_storage: number;
     readonly order_sup: number; 
+    readonly id_contract: number; 
+    readonly name: string;
+    readonly balance: number;
 
 }

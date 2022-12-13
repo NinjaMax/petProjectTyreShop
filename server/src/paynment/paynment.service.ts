@@ -1,6 +1,7 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CashboxService } from 'src/cashbox/cashbox.service';
+import { ContractService } from 'src/contract/contract.service';
 import { ExpensesService } from 'src/expenses/expenses.service';
 import { IncomesService } from 'src/incomes/incomes.service';
 import { OrdersSuppliersService } from 'src/orders-suppliers/orders-suppliers.service';
@@ -18,7 +19,8 @@ export class PaynmentService {
     private ordersSupService: OrdersSuppliersService,
     private cashboxService: CashboxService,
     private expensesService: ExpensesService,
-    private incomesService: IncomesService 
+    private incomesService: IncomesService,
+    private contractService: ContractService 
   ) {}
 
   async createPaynment(createPaynmentDto: CreatePaynmentDto) {
@@ -30,9 +32,10 @@ export class PaynmentService {
       const cashBox = await this.cashboxService.findCashboxById(createPaynmentDto);
       const income = await this.incomesService.findIncomeById(createPaynmentDto);
       const expense = await this.expensesService.findExpenseById(createPaynmentDto);
+      const contract = await this.contractService.findContractById(createPaynmentDto);
       const paynment = await this.paynmentRepository.create(createPaynmentDto);
       
-      if( createPaynmentDto.type_paynment == 'rate' ) {
+      if( expense ) {
 
         const paynmentIdExp = await this.paynmentRepository.findByPk(paynment.id_paynment);
 
@@ -40,19 +43,22 @@ export class PaynmentService {
           await order.$add('paynment', paynmentIdExp.id_paynment);
           order.paynment.push(paynmentIdExp);
         }
+
         if(orderSup) {
           await orderSup.$add('paynment', paynmentIdExp.id_paynment);
           orderSup.paynment.push(paynmentIdExp);
         }
+
         await expense.$add('paynment', paynmentIdExp.id_paynment);
-        expense.paynment.push(paynmentIdExp);
+        //expense.paynment.push(paynmentIdExp);
+        await contract.decrement('balance', {by: paynmentIdExp.price});
         await cashBox.decrement('funds', {by: paynmentIdExp.price});
         await cashBox.reload();
 
         return paynmentIdExp;
       }
 
-      if( createPaynmentDto.type_paynment == 'coming' ) {
+      if( income ) {
         
         const paynmentIdInc = await this.paynmentRepository.findByPk(paynment.id_paynment);
         
@@ -60,12 +66,15 @@ export class PaynmentService {
           await order.$add('paynment', paynmentIdInc.id_paynment);
           order.paynment.push(paynmentIdInc);
         }
+
         if(orderSup) {
           await orderSup.$add('paynment', paynmentIdInc.id_paynment);
           orderSup.paynment.push(paynmentIdInc);
         }
+
         await income.$add('paynment', paynmentIdInc.id_paynment);
-        income.paynment.push(paynmentIdInc);
+        //income.paynment.push(paynmentIdInc);
+        await contract.increment('balance', {by: paynmentIdInc.price});
         await cashBox.increment('funds', {by: paynmentIdInc.price});
         await cashBox.reload();
 

@@ -50,5 +50,4 @@ export class SaleStorage extends Model<SaleStorage> {
     @BelongsTo(() => Storage, 'id_storage')
     storage: Storage;
 
-   
 }
