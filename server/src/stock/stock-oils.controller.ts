@@ -10,27 +10,27 @@ export class StockOilsController {
   constructor(private readonly stockOilsService: StockOilsService) {}
 
   @Post('/oils')
-  create(@Body() createStockDto: CreateStockDto) {
+  createStockOils(@Body() createStockDto: CreateStockDto) {
     return this.stockOilsService.createStockOils(createStockDto);
   }
 
   @Get('/oils')
-  findAll() {
+  findAllStock() {
     return this.stockOilsService.findAllStock();
   }
 
   @Get('/oils/id')
-  findOne(@Param() @Body() getStockDto : GetStockDto) {
+  findStockOilById(@Param() @Body() getStockDto : GetStockDto) {
     return this.stockOilsService.findStockOilById(getStockDto);
   }
 
   @Patch('/oils/update')
-  update(@Body() updateStockDto: UpdateStockDto) {
+  updateStockOil(@Body() updateStockDto: UpdateStockDto) {
     return this.stockOilsService.updateStockOil(updateStockDto);
   }
 
   @Delete('/oils/remove')
-  remove(@Body() getStockDto: GetStockDto) {
+  removeStockOil(@Body() getStockDto: GetStockDto) {
     return this.stockOilsService.removeStockOil(getStockDto);
   }
 }

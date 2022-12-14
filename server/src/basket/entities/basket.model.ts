@@ -2,6 +2,7 @@ import { Column, DataType, Model, Table, HasOne, BelongsTo, ForeignKey} from "se
 import { Orders } from '../../orders/entities/order.model';
 import { Users } from "src/users/entities/users.model";
 import { BasketConfigAttr } from '../interfaces/basket.interface';
+import { Customer } from "src/customers/entities/customer.model";
 
 @Table({tableName: 'basket' })
 export class Basket extends Model<Basket, BasketConfigAttr> {
@@ -38,8 +39,15 @@ export class Basket extends Model<Basket, BasketConfigAttr> {
     @Column({type: DataType.INTEGER})
     id_user: number;
 
+    @ForeignKey(() => Customer)
+    @Column({type: DataType.INTEGER})
+    id_customer: number;
+
     @BelongsTo(() => Users, 'id_user')
     user: Users;
+
+    @BelongsTo(() => Customer, 'id_customer')
+    customer: Customer;
 
     @HasOne(() => Orders, 'id_basket')
     order: Orders;

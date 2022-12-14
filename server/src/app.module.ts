@@ -60,6 +60,8 @@ import { Basket } from './basket/entities/basket.model';
 import { OrdersSupStorage } from './orders-suppliers/entities/orders-sup-storage.model';
 import { ContractModule } from './contract/contract.module';
 import { Contract } from './contract/entities/contract.model';
+import { CustomersModule } from './customers/customers.module';
+import { Customer } from './customers/entities/customer.model';
 
 @Module({
   imports: [
@@ -82,7 +84,7 @@ import { Contract } from './contract/entities/contract.model';
         RatingTyres, ReviewTyres, TyreBrand, TyreModel, 
         Users, Service, Orders, OrdersSupplier, 
         OrdersSupStorage, SaleStorage, Order_Storage, 
-        Storage, Basket, Contract
+        Storage, Basket, Contract, Customer
       ],
       autoLoadModels: true,
       synchronize: true,
@@ -95,7 +97,7 @@ import { Contract } from './contract/entities/contract.model';
       SalesModule, CashboxModule, PaynmentModule, 
       ExpensesModule, ServicesModule, IncomesModule, 
       OrdersModule, OrdersSuppliersModule, BasketModule, 
-      ContractModule,
+      ContractModule, CustomersModule,
   ],
   controllers: [],
   providers: [],

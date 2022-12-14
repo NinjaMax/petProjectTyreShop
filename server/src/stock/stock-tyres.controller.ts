@@ -10,27 +10,27 @@ export class StockTyresController {
   constructor(private readonly stockTyresService: StockTyresService) {}
 
   @Post('/tyres')
-  create(@Body() createStockDto: CreateStockDto) {
+  createStockTyre(@Body() createStockDto: CreateStockDto) {
     return this.stockTyresService.createStockTyre(createStockDto);
   }
 
   @Get('/tyres')
-  findAll() {
+  findAllStock() {
     return this.stockTyresService.findAllStock();
   }
 
   @Get('/id')
-  findOne( @Body() getStockDto : GetStockDto) {
+  findStockTyreById( @Body() getStockDto : GetStockDto) {
     return this.stockTyresService.findStockTyreById(getStockDto);
   }
 
   @Patch('/update')
-  update(@Body() updateStockDto: UpdateStockDto) {
+  updateStockTyres(@Body() updateStockDto: UpdateStockDto) {
     return this.stockTyresService.updateStockTyres(updateStockDto);
   }
 
   @Delete('/remove')
-  remove(@Body() getStockDto: GetStockDto) {
+  removeStockTyre(@Body() getStockDto: GetStockDto) {
     return this.stockTyresService.removeStockTyre(getStockDto);
   }
 }

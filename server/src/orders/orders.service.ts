@@ -87,6 +87,21 @@ export class OrdersService {
     }
   }
 
+  async findOrderByCustomer(getOrdersDto: GetOrdersDto) {
+
+    try {
+      
+      const orderCustomer = await this.ordersRepository.findOne({where: {id_customer: getOrdersDto.id_customer}});
+
+      return orderCustomer;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+  }
+
   async createGoodsToOrder(createOrderDto: CreateOrderDto) {
 
     try {

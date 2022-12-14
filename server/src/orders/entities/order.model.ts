@@ -4,6 +4,7 @@ import { Column, DataType, Model, Table, BelongsTo, HasMany, ForeignKey, Belongs
 //import sequelize from "sequelize/types/sequelize";
 import { Basket } from "src/basket/entities/basket.model";
 import { Comments } from "src/comments/entities/comment.model";
+import { Customer } from "src/customers/entities/customer.model";
 //import { OrdersSupStorage } from "src/orders-suppliers/entities/orders-sup-storage.model";
 import { OrdersSupplier } from "src/orders-suppliers/entities/orders-supplier.model";
 import { Paynment } from "src/paynment/entities/paynment.model";
@@ -30,6 +31,13 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
     @Column({type: DataType.STRING, unique: false, allowNull: false})
     status: string;
 
+    @ForeignKey(() => Customer)
+    @Column({type: DataType.INTEGER, allowNull: true})
+    id_customer: number;
+
+    @Column({type: DataType.INTEGER, allowNull: false})
+    id_contract: number;
+
     @ForeignKey(() => Users)
     @Column({type: DataType.INTEGER, allowNull: true})
     id_user: number;
@@ -40,6 +48,9 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
 
     @BelongsTo(() => Users, 'id_user')
     user: Users;
+
+    @BelongsTo(() => Customer, 'id_customer')
+    customer: Customer;
 
     @BelongsTo(() => Basket, 'id_basket')
     basket: Basket;

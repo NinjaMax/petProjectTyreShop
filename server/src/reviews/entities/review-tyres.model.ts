@@ -5,6 +5,7 @@ import { RatingTyres } from "src/ratings/entities/rating-tyres.model";
 import { Users } from "src/users/entities/users.model";
 import { TyreModel } from "src/properties/entities/tyres/tyre-model.model";
 import { TyreBrand } from "src/properties/entities/tyres/tyre-brand.model";
+import { Customer } from "src/customers/entities/customer.model";
 
 @Table({tableName: 'review_tyres', createdAt: true, updatedAt: false})
 export class ReviewTyres extends Model<ReviewTyres, ReviewsTyresConfigAttr> {
@@ -24,6 +25,10 @@ export class ReviewTyres extends Model<ReviewTyres, ReviewsTyresConfigAttr> {
     @Column({type: DataType.INTEGER, allowNull: false})
     id_brand: number;
 
+    @ForeignKey(() => Customer)
+    @Column({type: DataType.INTEGER, unique: true, allowNull: true})
+    id_customer: number;
+
     @ForeignKey(() => Users)
     @Column({type: DataType.INTEGER, unique: true, allowNull: true})
     id_user: number;
@@ -31,19 +36,22 @@ export class ReviewTyres extends Model<ReviewTyres, ReviewsTyresConfigAttr> {
     @Column({type: DataType.STRING, unique: false, allowNull: false})
     description: string;
 
-    @BelongsTo(() => Users , 'id_user')
+    @BelongsTo(() => Users, 'id_user')
     user: Users;
 
-    @BelongsTo(() => Tyres , 'id')
+    @BelongsTo(() => Customer, 'id_customer')
+    customer: Customer;
+
+    @BelongsTo(() => Tyres, 'id')
     tyres: Tyres;
 
-    @HasOne(() => RatingTyres , 'id_review')
+    @HasOne(() => RatingTyres, 'id_review')
     rating: RatingTyres;
 
-    @BelongsTo(() => TyreModel , 'id_model')
+    @BelongsTo(() => TyreModel, 'id_model')
     model: TyreModel;
 
-    @BelongsTo(() => TyreBrand , 'id_brand')
+    @BelongsTo(() => TyreBrand, 'id_brand')
     brand: TyreBrand;
 
 }

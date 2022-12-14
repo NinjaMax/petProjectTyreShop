@@ -8,6 +8,7 @@ import { ReviewTyres } from './entities/review-tyres.model';
 import { TyresService } from 'src/tyres/tyres.service';
 import { PropertiesModelService } from 'src/properties/properties-model.service';
 import { PropertiesBrandService } from 'src/properties/properties-brand.service';
+import { CustomersService } from 'src/customers/customers.service';
 
 @Injectable()
 export class ReviewsService {
@@ -16,7 +17,8 @@ export class ReviewsService {
     private ratingsService: RatingsService, 
     private tyresService: TyresService,
     private tyreBrandService: PropertiesBrandService,
-    private tyreModelService: PropertiesModelService
+    private tyreModelService: PropertiesModelService,
+    private customersService: CustomersService
    ) {}
 
   async createReview(createReviewDto: CreateReviewDto) {
@@ -26,6 +28,8 @@ export class ReviewsService {
       const tyre = await this.tyresService.findTyresById(createReviewDto);
       const tyreModel = await this.tyreModelService.findModelById(createReviewDto);
       const tyreBrand = await this.tyreBrandService.findBrandById(createReviewDto);
+      //const customer = await this.customersService.findCustomerById(createReviewDto);
+
       
       if(tyre && tyreModel && tyreBrand ) {
 
@@ -40,7 +44,7 @@ export class ReviewsService {
         await tyreBrand.$add('reviews', [reviewCreate.id_review]);
         await tyreBrand.$add('ratings', [ratingCreate.id_rating]);
         await newReview.$set('rating', ratingCreate.id_rating);
-        
+        //await reviewCreate.$add('customer', customer.id_customer);
         newReview.rating = ratingCreate;
         
         tyre.reviews.push(reviewCreate);
@@ -52,9 +56,12 @@ export class ReviewsService {
         tyreBrand.reviews.push(reviewCreate);
         tyreBrand.ratings.push(ratingCreate);
 
-        const getNewReview = await this.reviewTyresRepository.findByPk(reviewCreate.id_review, {include: {all: true}});
+        reviewCreate.reload();
 
-        return getNewReview;
+        //const getNewReview = await this.reviewTyresRepository.findByPk(reviewCreate.id_review, {include: {all: true}});
+
+        //return getNewReview;
+        return reviewCreate;
 
       }  
 

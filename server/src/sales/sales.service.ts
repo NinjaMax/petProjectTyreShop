@@ -1,5 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { ContractService } from 'src/contract/contract.service';
 import { OrdersStorageService } from 'src/orders/orders-storage.service';
 import { OrdersService } from 'src/orders/orders.service';
 import { StockBatteriesService } from 'src/stock/stock-batteries.service';
@@ -22,7 +23,8 @@ export class SalesService {
     private stockTyresService: StockTyresService,
     private stockWheelsService: StockWheelsService,
     private stockBatteriesService: StockBatteriesService,
-    private stockOilsService: StockOilsService 
+    private stockOilsService: StockOilsService,
+    private contractService: ContractService
   ) {}
   
   async createSale(createSaleDto: CreateSaleDto) {
@@ -85,8 +87,8 @@ export class SalesService {
       const findSale = await this.salesRepository.findByPk(createSaleDto.id_sale);
       const findSalesStorage = await this.salesStorageService.
       findAllSalesStorageByOrd(createSaleDto);
-      //const findSaleStorageSale = await this.salesStorageService.
-      //findAllSaleStorageBySale(createSaleDto);
+      const contractCustomer = await this.contractService.
+      findContractById(createSaleDto);
 
       if(findSale || findSalesStorage) { 
         for( let i = 0; i < findSalesStorage.length; i++) {
@@ -99,14 +101,16 @@ export class SalesService {
           findStockBatteryByIdForSale(findSalesStorage[i].id);
           let oilStock = await this.stockOilsService.
           findStockOilByIdForSale(findSalesStorage[i].id);
+          
 
           findSalesStorage[i].id_storage = findSalesStorage[i].storage_index;
           await findSale.$add('sales_storage', findSalesStorage[i]);
+          await contractCustomer.decrement('balance', {by: findSalesStorage[i].total });
       
           if(tyreStock) {
 
             await tyreStock.decrement(['stock','reserve'], {by: createSaleDto.quantity});
-
+            
             await tyreStock.reload();  
 
           }
@@ -114,7 +118,7 @@ export class SalesService {
           if(wheelStock) {
 
             await wheelStock.decrement(['stock','reserve'], {by: createSaleDto.quantity});
-
+            contractCustomer
             await wheelStock.reload();
 
           }
@@ -122,7 +126,7 @@ export class SalesService {
           if(batteryStock) {
 
             await batteryStock.decrement(['stock', 'reserve'], {by: createSaleDto.quantity});
-
+            contractCustomer
             await batteryStock.reload();
 
           }
@@ -130,7 +134,7 @@ export class SalesService {
           if(oilStock) {
 
             await oilStock.decrement(['stock', 'reserve'], {by: createSaleDto.quantity});
-
+            contractCustomer
             await oilStock.reload(); 
 
           }

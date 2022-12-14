@@ -33,4 +33,5 @@ export class CreateOrderDto {
     readonly order_index: number;
     readonly n: number;
     readonly id_user: number;
+    readonly id_customer: number;
 }

@@ -11,6 +11,8 @@ import { Users } from 'src/users/entities/users.model';
 import { TyreModel } from 'src/properties/entities/tyres/tyre-model.model';
 import { TyreBrand } from 'src/properties/entities/tyres/tyre-brand.model';
 import { PropertiesModule } from 'src/properties/properties.module';
+import { CustomersModule } from 'src/customers/customers.module';
+import { UsersModule } from 'src/users/users.module';
 
 
 @Module({
@@ -19,7 +21,8 @@ import { PropertiesModule } from 'src/properties/properties.module';
   imports: [ 
     SequelizeModule.forFeature([ReviewTyres, Tyres, RatingTyres, Users, 
     TyreModel, TyreBrand]),
-    TyresModule, RatingsModule, PropertiesModule
+    TyresModule, RatingsModule, PropertiesModule, CustomersModule,
+    UsersModule
   ],
   exports: [ReviewsService]
 })

@@ -11,13 +11,14 @@ import { StockModule } from 'src/stock/stock.module';
 import { SaleStorage } from './entities/sales-storage.model';
 import { OrdersModule } from 'src/orders/orders.module';
 import { SalesStorageService } from './sales-storage.service';
+import { ContractModule } from 'src/contract/contract.module';
 
 @Module({
   controllers: [SalesController],
   providers: [SalesService, SalesStorageService],
   imports: [ 
     SequelizeModule.forFeature([Sales, SaleStorage]),
-    StockModule, OrdersModule
+    StockModule, OrdersModule, ContractModule
   ],
   exports: [SalesService]
 })

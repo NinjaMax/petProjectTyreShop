@@ -7,6 +7,8 @@ import { StockTyres } from './entities/stock-tyres.model';
 import { TyresService } from '../tyres/tyres.service';
 import { SuppliersService } from '../suppliers/suppliers.service';
 import { StorageService } from 'src/storage/storage.service';
+//import { OrdersSuppliersService } from 'src/orders-suppliers/orders-suppliers.service';
+import { OrdersSupStorageService } from 'src/orders-suppliers/orders-sup-storage.service';
 
 
 @Injectable()
@@ -44,7 +46,13 @@ export class StockTyresService {
 
         return tyres;
 
-      }  
+      }
+      
+      if(storage.storage == "Main Storage") {
+        await storage.decrement()
+        OrdersSupStorageService
+
+      }
 
       throw new HttpException('Data not found', HttpStatus.NOT_FOUND);
 

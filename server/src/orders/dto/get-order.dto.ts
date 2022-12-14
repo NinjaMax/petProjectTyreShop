@@ -15,6 +15,7 @@ export class GetOrdersDto {
     readonly id_order_storage: number;
     readonly storage_index: number;
     readonly order_index: number;
+    readonly id_customer: number;
     //readonly delivery_price: number;
     //readonly price_plus_delivery: number;
     //readonly update_date: Date;

@@ -1,7 +1,7 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateContractDto } from './dto/create-contract.dto';
-import { GetContractDto } from './dto/get-contract';
+import { GetContractDto } from './dto/get-contract.dto';
 import { UpdateContractDto } from './dto/update-contract.dto';
 import { Contract } from './entities/contract.model';
 
@@ -49,6 +49,21 @@ export class ContractService {
       const contractById = await this.contractRepository.findByPk(getContractDto.id_contract, {include: {all: true}});
 
       return contractById;
+
+    } catch (error) {
+
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+
+    }
+  }
+
+  async findAllContractByCustomer(getContractDto: GetContractDto) {
+
+    try {
+
+      const contractByCustomer = await this.contractRepository.findAll({where: {id_customer: getContractDto.id_customer}});
+
+      return contractByCustomer;
 
     } catch (error) {
 
