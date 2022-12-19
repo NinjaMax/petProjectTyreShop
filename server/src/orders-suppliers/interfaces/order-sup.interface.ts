@@ -6,7 +6,7 @@ export interface OrdersSupConfigAttr {
     id_order: number;
 
     id_supplier: number;
-
+    id_contract: number;
     id_storage: number;
     storage_index: number;
     id_order_sup: number;

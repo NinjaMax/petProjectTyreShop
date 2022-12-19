@@ -28,7 +28,7 @@ export class ReviewsService {
       const tyre = await this.tyresService.findTyresById(createReviewDto);
       const tyreModel = await this.tyreModelService.findModelById(createReviewDto);
       const tyreBrand = await this.tyreBrandService.findBrandById(createReviewDto);
-      //const customer = await this.customersService.findCustomerById(createReviewDto);
+      const customer = await this.customersService.findCustomerById(createReviewDto);
 
       
       if(tyre && tyreModel && tyreBrand ) {
@@ -44,7 +44,7 @@ export class ReviewsService {
         await tyreBrand.$add('reviews', [reviewCreate.id_review]);
         await tyreBrand.$add('ratings', [ratingCreate.id_rating]);
         await newReview.$set('rating', ratingCreate.id_rating);
-        //await reviewCreate.$add('customer', customer.id_customer);
+        await reviewCreate.$add('customer', customer.id_customer);
         newReview.rating = ratingCreate;
         
         tyre.reviews.push(reviewCreate);

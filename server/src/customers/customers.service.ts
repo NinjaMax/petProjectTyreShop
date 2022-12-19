@@ -20,7 +20,7 @@ export class CustomersService {
       
       const customer = await this.customersRepository.create(createCustomerDto);
 
-      const contractUser = await this.contractService.create(createCustomerDto);
+      const contractUser = await this.contractService.createContract(createCustomerDto);
 
       customer.$add('contract', contractUser);
 

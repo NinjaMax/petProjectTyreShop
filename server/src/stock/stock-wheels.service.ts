@@ -7,6 +7,8 @@ import { SuppliersService } from '../suppliers/suppliers.service';
 import { StockWheels } from './entities/stock-wheels.model';
 import { WheelsService } from 'src/wheels/wheels.service';
 import { StorageService } from 'src/storage/storage.service';
+//import { ContractService } from 'src/contract/contract.service';
+//import { OrdersSupStorageService } from 'src/orders-suppliers/orders-sup-storage.service';
 
 @Injectable()
 export class StockWheelsService {
@@ -14,7 +16,9 @@ export class StockWheelsService {
   constructor(@InjectModel(StockWheels) private stockWheelsRepository: typeof StockWheels,
     private wheelsService: WheelsService, 
     private suppliersService : SuppliersService,
-    private storageService: StorageService 
+    private storageService: StorageService,
+    //private ordersSupStorageService: OrdersSupStorageService,
+    //private contractService: ContractService 
    ) {}
 
   async createStockWheel(createStockDto: CreateStockDto) {
@@ -52,6 +56,38 @@ export class StockWheelsService {
     }
     
   }
+
+  // async createStockWheelByOrderSup(createStockDto: CreateStockDto) {
+
+  //   try {
+
+  //     const wheelsStock = await this.stockWheelsRepository.findByPk(createStockDto.id);
+  //     const contractSupplier = await this.contractService.findContractById(createStockDto);
+  //     const orderSupStorage = await this.ordersSupStorageService.
+  //     findOrderSupStorageById(createStockDto);
+
+  //     if(wheelsStock) {
+        
+  //       await wheelsStock.increment('stock', {by: orderSupStorage.quantity });
+  //       await contractSupplier.decrement('balance', 
+  //       {by: orderSupStorage.price_wholesale * orderSupStorage.quantity});
+  //       orderSupStorage.id_storage = null;
+  //       orderSupStorage.save();
+  //       wheelsStock.reload();
+
+  //       return wheelsStock;
+
+  //     }
+
+  //     throw new HttpException('Data not found', HttpStatus.NOT_FOUND);
+
+  //   } catch {
+
+  //     throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+      
+  //   }
+    
+  // }
 
   async findAllStock() {
 

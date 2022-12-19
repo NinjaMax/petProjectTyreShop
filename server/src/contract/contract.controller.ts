@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ContractService } from './contract.service';
 import { CreateContractDto } from './dto/create-contract.dto';
+import { GetContractDto } from './dto/get-contract.dto';
 import { UpdateContractDto } from './dto/update-contract.dto';
 
 @Controller('contract')
@@ -8,18 +9,18 @@ export class ContractController {
   constructor(private readonly contractService: ContractService) {}
 
   @Post()
-  create(@Body() createContractDto: CreateContractDto) {
-    return this.contractService.create(createContractDto);
+  createContract(@Body() createContractDto: CreateContractDto) {
+    return this.contractService.createContract(createContractDto);
   }
 
   @Get()
-  findAll() {
-    return this.contractService.findAll();
+  findAllContract() {
+    return this.contractService.findAllContract();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.contractService.findOne(+id);
+  @Get('/id')
+  findContractById( getContractDto: GetContractDto) {
+    return this.contractService.findContractById(getContractDto);
   }
 
   @Patch(':id')
@@ -27,8 +28,8 @@ export class ContractController {
     return this.contractService.update(+id, updateContractDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.contractService.remove(+id);
+  @Delete('/id')
+  removeContract( getContractDto: GetContractDto) {
+    return this.contractService.removeContract(getContractDto);
   }
 }

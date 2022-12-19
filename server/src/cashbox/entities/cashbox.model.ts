@@ -11,7 +11,7 @@ export class Cashbox extends Model<Cashbox, CashboxConfigAttr>{
    @Column({type: DataType.STRING, unique: true, allowNull: false})
    cashbox: string;
    
-   @Column({type: DataType.INTEGER, unique: false, allowNull: false})
+   @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0})
    funds: number;
 
    @HasMany( () => Paynment , 'id_cashbox')

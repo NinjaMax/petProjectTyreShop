@@ -2,7 +2,7 @@ import { Column, DataType, Model, Table, HasMany} from "sequelize-typescript";
 import { ExpenseConfigAttr } from '../interfaces/expense.interface';
 import { Paynment } from "src/paynment/entities/paynment.model";
 
-@Table({tableName: 'expense' })
+@Table({tableName: 'expense',  createdAt: false, updatedAt: false })
 export class Expense extends Model<Expense, ExpenseConfigAttr> {
 
     @Column({type: DataType.BIGINT, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})

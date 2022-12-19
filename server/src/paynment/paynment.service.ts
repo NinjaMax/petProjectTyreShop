@@ -42,6 +42,7 @@ export class PaynmentService {
         if(order) {
           await order.$add('paynment', paynmentIdExp.id_paynment);
           order.paynment.push(paynmentIdExp);
+          
         }
 
         if(orderSup) {
@@ -53,8 +54,9 @@ export class PaynmentService {
         //expense.paynment.push(paynmentIdExp);
         await contract.decrement('balance', {by: paynmentIdExp.price});
         await cashBox.decrement('funds', {by: paynmentIdExp.price});
+        await contract.reload();
         await cashBox.reload();
-
+        
         return paynmentIdExp;
       }
 
@@ -76,6 +78,7 @@ export class PaynmentService {
         //income.paynment.push(paynmentIdInc);
         await contract.increment('balance', {by: paynmentIdInc.price});
         await cashBox.increment('funds', {by: paynmentIdInc.price});
+        await contract.reload();
         await cashBox.reload();
 
         return paynmentIdInc;

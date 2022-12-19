@@ -5,5 +5,8 @@ export class CreateSupplierDto {
     readonly city: string;
     readonly phone: bigint;
     readonly email: string;
+    
+    readonly id_contract: number;
+    readonly balance: number;
 
 }

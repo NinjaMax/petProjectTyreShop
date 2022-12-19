@@ -18,7 +18,8 @@ import { StockBatteriesService } from './stock-batteries.service';
 import { StockWheelsController } from './stock-wheels.controller';
 import { StockBatteriesController } from './stock-batteries.controller';
 import { StockOilsController } from './stock-oils.controller';
-import { ContractModule } from 'src/contract/contract.module';
+//import { ContractModule } from 'src/contract/contract.module';
+//import { OrdersSuppliersModule } from 'src/orders-suppliers/orders-suppliers.module';
 
 @Module({
   controllers: [StockTyresController, StockWheelsController,
@@ -29,7 +30,7 @@ import { ContractModule } from 'src/contract/contract.module';
     SequelizeModule.forFeature([StockTyres, StockWheels, StockOils,
     StockBatteries]),
     forwardRef(() => TyresModule), SuppliersModule, StorageModule,
-    WheelsModule, OilsModule, BatteriesModule, ContractModule
+    WheelsModule, OilsModule, BatteriesModule
   ],
   exports: [StockTyresService, StockWheelsService, 
     StockOilsService, StockBatteriesService]

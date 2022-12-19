@@ -109,6 +109,22 @@ export class OrdersSupStorageService {
     }
   }
 
+  async findAllOrdersSupStorageByOrdSup(getOrdersSupDto: GetOrdersSuppliersDto) {
+
+    try {
+      
+      const orderSupAllByOrderSup = await this.ordersSupStorageRepository.findAll(
+        { where: { id_order_sup: getOrdersSupDto.id_order_sup }});
+
+      return orderSupAllByOrderSup;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+  }
+
   async findOrderSupStorageById(getOrdersSupDto: GetOrdersSuppliersDto) {
 
     try {

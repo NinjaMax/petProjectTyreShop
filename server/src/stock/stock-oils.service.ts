@@ -7,6 +7,8 @@ import { SuppliersService } from '../suppliers/suppliers.service';
 import { StockOils } from './entities/stock-oils.model';
 import { OilsService } from 'src/oils/oils.service';
 import { StorageService } from 'src/storage/storage.service';
+//import { ContractService } from 'src/contract/contract.service';
+//import { OrdersSupStorageService } from 'src/orders-suppliers/orders-sup-storage.service';
 
 @Injectable()
 export class StockOilsService {
@@ -14,7 +16,9 @@ export class StockOilsService {
   constructor(@InjectModel(StockOils) private stockOilsRepository: typeof StockOils,
     private oilsService: OilsService, 
     private suppliersService : SuppliersService,
-    private storageService: StorageService 
+    private storageService: StorageService
+    //private ordersSupStorageService: OrdersSupStorageService,
+    //private contractService: ContractService
 
    ) {}
 
@@ -53,6 +57,38 @@ export class StockOilsService {
     }
     
   }
+
+  // async createStockOilByOrderSup(createStockDto: CreateStockDto) {
+
+  //   try {
+
+  //     const oilStock = await this.stockOilsRepository.findByPk(createStockDto.id);
+  //     const contractSupplier = await this.contractService.findContractById(createStockDto);
+  //     const orderSupStorage = await this.ordersSupStorageService.
+  //     findOrderSupStorageById(createStockDto);
+
+  //     if(oilStock) {
+        
+  //       await oilStock.increment('stock', {by: orderSupStorage.quantity });
+  //       await contractSupplier.decrement('balance', 
+  //       {by: orderSupStorage.price_wholesale * orderSupStorage.quantity});
+  //       orderSupStorage.id_storage = null;
+  //       orderSupStorage.save();
+  //       oilStock.reload();
+
+  //       return oilStock;
+
+  //     }
+
+  //     throw new HttpException('Data not found', HttpStatus.NOT_FOUND);
+
+  //   } catch {
+
+  //     throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+      
+  //   }
+    
+  // }
 
   async findAllStock() {
 

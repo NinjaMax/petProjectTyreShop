@@ -106,6 +106,7 @@ export class SalesService {
           findSalesStorage[i].id_storage = findSalesStorage[i].storage_index;
           await findSale.$add('sales_storage', findSalesStorage[i]);
           await contractCustomer.decrement('balance', {by: findSalesStorage[i].total });
+          await contractCustomer.reload();
       
           if(tyreStock) {
 
@@ -118,7 +119,7 @@ export class SalesService {
           if(wheelStock) {
 
             await wheelStock.decrement(['stock','reserve'], {by: createSaleDto.quantity});
-            contractCustomer
+            
             await wheelStock.reload();
 
           }
@@ -126,7 +127,7 @@ export class SalesService {
           if(batteryStock) {
 
             await batteryStock.decrement(['stock', 'reserve'], {by: createSaleDto.quantity});
-            contractCustomer
+            
             await batteryStock.reload();
 
           }
@@ -134,7 +135,7 @@ export class SalesService {
           if(oilStock) {
 
             await oilStock.decrement(['stock', 'reserve'], {by: createSaleDto.quantity});
-            contractCustomer
+            
             await oilStock.reload(); 
 
           }

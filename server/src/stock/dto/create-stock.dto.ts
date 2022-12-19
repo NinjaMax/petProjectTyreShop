@@ -16,6 +16,16 @@ export class CreateStockDto {
    readonly name: string;
 
    readonly id_storage: number;
+   readonly id_order_sup: number;
+   readonly notes: string;
+   readonly total: number;
+   readonly id_order: number;
+   readonly id_basket: number; 
+   readonly id_order_sup_storage: number;
+   readonly order_sup: number;
+   readonly id_contract: number;
+   readonly balance: number; 
+   readonly id_customer: number;
    //readonly id_goods: number;
    //readonly goods: string;
    readonly quantity: number;

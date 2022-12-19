@@ -19,7 +19,7 @@ export class UsersService {
       
       const user = await this.usersRepository.create(createUserDto);
 
-      const contractUser = await this.contractService.create(createUserDto);
+      const contractUser = await this.contractService.createContract(createUserDto);
 
       user.$add('contract', contractUser);
 

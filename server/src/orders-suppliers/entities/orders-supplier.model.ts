@@ -35,9 +35,8 @@ export class OrdersSupplier extends Model<OrdersSupplier, OrdersSupConfigAttr> {
     @Column({type: DataType.INTEGER})
     id_supplier: number;
 
-    //@ForeignKey(() => Storage)
-    //@Column({type: DataType.INTEGER})
-    //id_storage: number;
+    @Column({type: DataType.INTEGER, allowNull: false, defaultValue: 0})
+    id_contract: number;
 
     @BelongsTo(() => Users, 'id_user')
     user: Users;

@@ -1,7 +1,12 @@
 import { Injectable, HttpException, HttpStatus  } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { ContractService } from 'src/contract/contract.service';
 import { OrdersStorageService } from 'src/orders/orders-storage.service';
 import { OrdersService } from 'src/orders/orders.service';
+import { StockBatteriesService } from 'src/stock/stock-batteries.service';
+import { StockOilsService } from 'src/stock/stock-oils.service';
+import { StockTyresService } from 'src/stock/stock-tyres.service';
+import { StockWheelsService } from 'src/stock/stock-wheels.service';
 import { CreateOrdersSupplierDto } from './dto/create-orders-supplier.dto';
 import { GetOrdersSuppliersDto } from './dto/get-orders-supplier.dto';
 import { UpdateOrdersSupplierDto } from './dto/update-orders-supplier.dto';
@@ -14,7 +19,12 @@ export class OrdersSuppliersService {
   constructor(@InjectModel(OrdersSupplier) private ordersSupRepository: typeof OrdersSupplier,
     private ordersService: OrdersService,
     private ordersSupStorageService: OrdersSupStorageService,
-    private ordersStorageService: OrdersStorageService
+    private ordersStorageService: OrdersStorageService,
+    private stockTyresService: StockTyresService,
+    private stockBatteriesService: StockBatteriesService,
+    private stockOilsService: StockOilsService,
+    private stockWheelsService: StockWheelsService,
+    private contractService: ContractService
   ) {}
 
   async createOrderSup(createOrdersSupplierDto: CreateOrdersSupplierDto) {
@@ -32,9 +42,10 @@ export class OrdersSuppliersService {
         for( let i = 0; i < idSuppliers.length; i++ ) {
           await this.ordersSupRepository.create(
            { id_order: order.id_order,
-            id_supplier: idSuppliers[i] },
+            id_supplier: idSuppliers[i],
+            id_contract: 0 },
            { fields: ["id_order", "id_supplier", 
-           "delivery", "status", "notes"] }
+           "delivery", "status", "notes", "id_contract"] }
           );
 
         }
@@ -83,6 +94,7 @@ export class OrdersSuppliersService {
         const orderSup = await this.ordersSupRepository.findByPk(
           createOrdersSupplierDto.id_order_sup);
         await orderSup.$add('orders_sup_storage', findByOrderSup);
+        await findByOrderSup.$add('storage', findByOrderSup.storage_index);
         await orderSup.reload();
         
         return orderSup;
@@ -103,12 +115,98 @@ export class OrdersSuppliersService {
             {where:{id_supplier: idSuppliers[i]}} );
 
           await orderSup.$add('orders_sup_storage', orderSupStorageGoods);
+          await orderSupStorageGoods[i].$add('storage', findByIdOrder[i].storage_index);
           
         }
 
         return orderSupByOrder;
 
       }
+
+    } catch {
+
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+  }
+
+  async addGoodsToStock(createOrdersSupplierDto: CreateOrdersSupplierDto) {
+    
+    try {
+
+      const goodsOrderSup = await this.ordersSupStorageService.
+      findAllOrdersSupStorageByOrdSup(createOrdersSupplierDto);
+      const contractSupplier = await this.contractService.findContractById(createOrdersSupplierDto);
+
+        for(let i = 0; i < goodsOrderSup.length; i++) {
+
+          let tyresStock = await this.stockTyresService.
+          findStockTyreByIdForSale(goodsOrderSup[i].id);
+          let batteryStock = await this.stockBatteriesService.
+          findStockBatteryByIdForSale(goodsOrderSup[i].id);
+          let oilStock = await this.stockOilsService.
+          findStockOilByIdForSale(goodsOrderSup[i].id);
+          let wheelsStock = await this.stockWheelsService.
+          findStockWheelByIdForSale(goodsOrderSup[i].id);
+
+          if(tyresStock) {
+        
+            await tyresStock.increment('stock', {by: goodsOrderSup[i].quantity });
+            await contractSupplier.decrement('balance', 
+            {by: goodsOrderSup[i].price_wholesale * goodsOrderSup[i].quantity});
+            goodsOrderSup[i].id_storage = null;
+            goodsOrderSup[i].save();
+            await tyresStock.reload();
+            await contractSupplier.reload();
+    
+            return tyresStock;
+    
+          }
+
+          if(batteryStock) {
+        
+            await batteryStock.increment('stock', {by: goodsOrderSup[i].quantity });
+            await contractSupplier.decrement('balance', 
+            {by: goodsOrderSup[i].price_wholesale * goodsOrderSup[i].quantity});
+            goodsOrderSup[i].id_storage = null;
+            goodsOrderSup[i].save();
+            await batteryStock.reload();
+            await contractSupplier.reload();
+
+            return batteryStock;
+    
+          }
+
+          if(oilStock) {
+        
+            await oilStock.increment('stock', {by: goodsOrderSup[i].quantity });
+            await contractSupplier.decrement('balance', 
+            {by: goodsOrderSup[i].price_wholesale * goodsOrderSup[i].quantity});
+            goodsOrderSup[i].id_storage = null;
+            goodsOrderSup[i].save();
+            await oilStock.reload();
+            await contractSupplier.reload();
+    
+            return oilStock;
+    
+          }
+
+          if(wheelsStock) {
+        
+            await wheelsStock.increment('stock', {by: goodsOrderSup[i].quantity });
+            await contractSupplier.decrement('balance', 
+            {by: goodsOrderSup[i].price_wholesale * goodsOrderSup[i].quantity});
+            goodsOrderSup[i].id_storage = null;
+            goodsOrderSup[i].save();
+            await wheelsStock.reload();
+            await contractSupplier.reload();
+    
+            return wheelsStock;
+    
+          }
+
+          
+        }
 
     } catch {
 

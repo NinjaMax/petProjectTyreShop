@@ -18,6 +18,11 @@ export class OrdersSuppliersController {
     return this.ordersSuppliersService.addGoodsToOrderSup(createOrdersSupplierDto);
   }
 
+  @Post('/add/stock')
+  addGoodsToStock(@Body() createOrdersSupplierDto: CreateOrdersSupplierDto) {
+    return this.ordersSuppliersService.addGoodsToStock(createOrdersSupplierDto);
+  }
+
   @Get()
   findAll() {
     return this.ordersSuppliersService.findAllOrdersSup();

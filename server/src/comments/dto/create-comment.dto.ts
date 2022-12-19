@@ -27,5 +27,6 @@ export class CreateCommentDto {
     readonly id: number;
     readonly id_order_sup_storage: number;
     readonly order_sup: number; 
+    readonly id_customer: number;
 
 }   

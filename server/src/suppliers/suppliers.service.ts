@@ -4,18 +4,25 @@ import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { UpdateSupplierDto } from './dto/update-supplier.dto';
 import { GetSupplierDto } from './dto/get-supplier.dto';
 import { Supplier } from './entities/supplier.model';
+import { ContractService } from 'src/contract/contract.service';
 
 
 @Injectable()
 export class SuppliersService {
-  constructor(@InjectModel(Supplier) private suppliersRepository: typeof Supplier) {}
-
+  constructor(@InjectModel(Supplier) private suppliersRepository: typeof Supplier, 
+    private contractService: ContractService) {}
 
   async createSupplier(createSupplierDto: CreateSupplierDto) {
 
     try {
 
       const supplier = await this.suppliersRepository.create(createSupplierDto);
+
+      const contractUser = await this.contractService.createContract(createSupplierDto);
+
+      supplier.$add('contract', contractUser);
+
+      supplier.reload();
 
       return supplier;
 

@@ -7,6 +7,8 @@ import { SuppliersService } from '../suppliers/suppliers.service';
 import { StockBatteries } from './entities/stock-batteries.model';
 import { BatteriesService } from 'src/batteries/batteries.service';
 import { StorageService } from 'src/storage/storage.service';
+//import { ContractService } from 'src/contract/contract.service';
+//import { OrdersSupStorageService } from 'src/orders-suppliers/orders-sup-storage.service';
 
 @Injectable()
 export class StockBatteriesService {
@@ -14,7 +16,9 @@ export class StockBatteriesService {
   constructor(@InjectModel(StockBatteries) private stockBatteriesRepository: typeof StockBatteries,
     private batteriesService: BatteriesService, 
     private suppliersService : SuppliersService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    //private ordersSupStorageService: OrdersSupStorageService,
+    //private contractService: ContractService
 
    ) {}
 
@@ -53,6 +57,38 @@ export class StockBatteriesService {
     }
     
   }
+
+  // async createStockBatteryByOrderSup(createStockDto: CreateStockDto) {
+
+  //   try {
+
+  //     const batteryStock = await this.stockBatteriesRepository.findByPk(createStockDto.id);
+  //     const contractSupplier = await this.contractService.findContractById(createStockDto);
+  //     const orderSupStorage = await this.ordersSupStorageService.
+  //     findOrderSupStorageById(createStockDto);
+
+  //     if(batteryStock) {
+        
+  //       await batteryStock.increment('stock', {by: orderSupStorage.quantity });
+  //       await contractSupplier.decrement('balance', 
+  //       {by: orderSupStorage.price_wholesale * orderSupStorage.quantity});
+  //       orderSupStorage.id_storage = null;
+  //       orderSupStorage.save();
+  //       batteryStock.reload();
+
+  //       return batteryStock;
+
+  //     }
+
+  //     throw new HttpException('Data not found', HttpStatus.NOT_FOUND);
+
+  //   } catch {
+
+  //     throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+      
+  //   }
+    
+  // }
 
   async findAllStock() {
 

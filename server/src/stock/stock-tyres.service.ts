@@ -8,7 +8,8 @@ import { TyresService } from '../tyres/tyres.service';
 import { SuppliersService } from '../suppliers/suppliers.service';
 import { StorageService } from 'src/storage/storage.service';
 //import { OrdersSuppliersService } from 'src/orders-suppliers/orders-suppliers.service';
-import { OrdersSupStorageService } from 'src/orders-suppliers/orders-sup-storage.service';
+//import { OrdersSupStorageService } from 'src/orders-suppliers/orders-sup-storage.service';
+//import { ContractService } from 'src/contract/contract.service';
 
 
 @Injectable()
@@ -17,7 +18,9 @@ export class StockTyresService {
   constructor(@InjectModel(StockTyres) private stockTyresRepository: typeof StockTyres,
     private tyresService: TyresService, 
     private suppliersService : SuppliersService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    //private ordersSupStorageService: OrdersSupStorageService,
+    //private contracService: ContractService
    ) {}
 
   async createStockTyre(createStockDto: CreateStockDto) {
@@ -47,12 +50,6 @@ export class StockTyresService {
         return tyres;
 
       }
-      
-      if(storage.storage == "Main Storage") {
-        await storage.decrement()
-        OrdersSupStorageService
-
-      }
 
       throw new HttpException('Data not found', HttpStatus.NOT_FOUND);
 
@@ -63,6 +60,38 @@ export class StockTyresService {
     }
     
   }
+
+  // async createStockTyreByOrderSup(createStockDto: CreateStockDto) {
+
+  //   try {
+
+  //     const tyresStock = await this.stockTyresRepository.findByPk(createStockDto.id);
+  //     const contractSupplier = await this.contracService.findContractById(createStockDto);
+  //     const orderSupStorage = await this.ordersSupStorageService.
+  //     findOrderSupStorageById(createStockDto);
+
+  //     if(tyresStock) {
+        
+  //       await tyresStock.increment('stock', {by: orderSupStorage.quantity });
+  //       await contractSupplier.decrement('balance', 
+  //       {by: orderSupStorage.price_wholesale * orderSupStorage.quantity});
+  //       orderSupStorage.id_storage = null;
+  //       orderSupStorage.save();
+  //       tyresStock.reload();
+
+  //       return tyresStock;
+
+  //     }
+
+  //     throw new HttpException('Data not found', HttpStatus.NOT_FOUND);
+
+  //   } catch {
+
+  //     throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+      
+  //   }
+    
+  // }
 
   async findAllStock() {
 

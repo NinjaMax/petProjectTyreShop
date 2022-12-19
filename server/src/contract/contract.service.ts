@@ -11,11 +11,13 @@ export class ContractService {
   constructor(@InjectModel(Contract) private contractRepository: typeof Contract
   ) {}
 
-  async create( createContractDto:CreateContractDto ) {
+  async createContract( createContractDto:CreateContractDto ) {
 
      try {
 
       const contract = await this.contractRepository.create(createContractDto);
+      contract.name = createContractDto.name + " Main Contract";
+      contract.save();
 
       return contract;
 

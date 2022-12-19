@@ -24,7 +24,7 @@ export class Paynment extends Model<Paynment, PaynmentConfigAttr>{
    status: string;
 
    @ForeignKey(() => Cashbox)
-   @Column({type: DataType.INTEGER})
+   @Column({type: DataType.INTEGER, allowNull: false})
    id_cashbox: number;
 
    @ForeignKey(() => Orders)
