@@ -62,42 +62,42 @@ import { ContractModule } from './contract/contract.module';
 import { Contract } from './contract/entities/contract.model';
 import { CustomersModule } from './customers/customers.module';
 import { Customer } from './customers/entities/customer.model';
+import { UploaderModule } from './uploader/uploader.module';
 
 @Module({
   imports: [
     
     SequelizeModule.forRootAsync({
-      imports: [ConfigModule.register(
-      { folder: './config' }
-      ),],
+      imports: [ConfigModule.register({ folder: './config' }),],
       useFactory:  (configService: ConfigService) => ({
-      dialect: 'postgres',
-      host: configService.get('POSTGRES_HOST'),
-      port: +configService.get('POSTGRES_PORT'),
-      username: configService.get('POSTGRES_USER'),
-      password: configService.get('POSTGRES_PASSWORD'),
-      database: configService.get('POSTGRES_DB'),
-      models: [Tyres, Wheel, Battery, Oil, Supplier, Comments,
-        Expense, Incomes, Category, Sales, Cashbox, Paynment,
-        StockTyres, StockWheels, StockBatteries, StockOils, 
-        PriceTyres, PriceWheels, PriceBatteries, PriceOil,
-        RatingTyres, ReviewTyres, TyreBrand, TyreModel, 
-        Users, Service, Orders, OrdersSupplier, 
-        OrdersSupStorage, SaleStorage, Order_Storage, 
-        Storage, Basket, Contract, Customer
-      ],
-      autoLoadModels: true,
-      synchronize: true,
+        dialect: 'postgres',
+        host: configService.get('POSTGRES_HOST'),
+        port: +configService.get('POSTGRES_PORT'),
+        username: configService.get('POSTGRES_USER'),
+        password: configService.get('POSTGRES_PASSWORD'),
+        database: configService.get('POSTGRES_DB'),
+        models: [Tyres, Wheel, Battery, Oil, Supplier, Comments,
+          Expense, Incomes, Category, Sales, Cashbox, Paynment,
+          StockTyres, StockWheels, StockBatteries, StockOils, 
+          PriceTyres, PriceWheels, PriceBatteries, PriceOil,
+          RatingTyres, ReviewTyres, TyreBrand, TyreModel, 
+          Users, Service, Orders, OrdersSupplier, 
+          OrdersSupStorage, SaleStorage, Order_Storage, 
+          Storage, Basket, Contract, Customer
+        ],
+        autoLoadModels: true,
+        synchronize: true,
       }), inject: [ConfigService],
     }),
-      TyresModule, WheelsModule, BatteriesModule, OilsModule,
-      PricesModule, StockModule, SuppliersModule, ReviewsModule,
-      RatingsModule, PropertiesModule, UsersModule, 
-      CategorysModule, CommentsModule, StorageModule, 
-      SalesModule, CashboxModule, PaynmentModule, 
-      ExpensesModule, ServicesModule, IncomesModule, 
-      OrdersModule, OrdersSuppliersModule, BasketModule, 
-      ContractModule, CustomersModule,
+
+    TyresModule, WheelsModule, BatteriesModule, OilsModule,
+    PricesModule, StockModule, SuppliersModule, ReviewsModule,
+    RatingsModule, PropertiesModule, UsersModule, 
+    CategorysModule, CommentsModule, StorageModule, 
+    SalesModule, CashboxModule, PaynmentModule, 
+    ExpensesModule, ServicesModule, IncomesModule, 
+    OrdersModule, OrdersSuppliersModule, BasketModule, 
+    ContractModule, CustomersModule, UploaderModule,
   ],
   controllers: [],
   providers: [],
