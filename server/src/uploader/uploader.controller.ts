@@ -8,41 +8,66 @@ import { UploaderService } from './uploader.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CreateUploaderDto } from './dto/create-uploader.dto';
 import { UpdateUploaderDto } from './dto/update-uploader.dto';
+import { diskStorage } from 'multer';
+import { XMLParser } from 'fast-xml-parser';
+import { readFile } from 'fs';
+import * as fs from 'fs';
 
 @Controller('uploader')
 export class UploaderController {
   constructor(private readonly uploaderService: UploaderService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor( 'file'))
-  uploadFileAndPassValidation(
+  @UseInterceptors(FileInterceptor( 'file', {
+    storage: diskStorage({
+      destination: './downloads',
+      filename: (req, file, cb) => {
+
+        if(file.mimetype.indexOf('xml')) {
+          file.mimetype = 'xml'
+        }
+        const fileName: string = file.originalname;
+        const newFileName: string = fileName;
+        cb(null, `${newFileName}`)
+      }
+    })
+    } 
+  ))
+  async uploadFileAndPassValidation(
     @Body() body: CreateUploaderDto, 
     @UploadedFile(
-      // new ParseFilePipe({
-      //   validators: [
-      //     new MaxFileSizeValidator({ maxSize: 10000000 }),
-      //     new FileTypeValidator({ fileType: 'xml' }),
-      //   ]
-      //   }) 
-      // )
-      // file: Express.Multer.File,
-      new ParseFilePipeBuilder()
-      .addFileTypeValidator({
-        fileType: 'file/xml',
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 10000000 }),
+          new FileTypeValidator({ fileType: 'xml' }),
+        ]
       })
-      .addMaxSizeValidator({
-        maxSize: 10000000
-      })
-      .build({
-        errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
-      }),
-      
-    ) file: Express.Multer.File,
-    ) 
-  {
-    return { body, file: file, };
-  }
 
+    ) file: Express.Multer.File,
+  )
+  {
+    let xmlFile =  readFile('./downloads/' + file.originalname, 'utf-8',(err, data: Buffer) => {
+
+      if (err) throw err;
+      //console.log("XMLFILE" + data.toString('utf-8'));
+      //const newData: string = data.toString('utf-8');
+
+      //return newData;
+    })
+
+    console.log( xmlFile);
+
+    const options = {
+      ignoreAttributes : false
+    };
+  
+    const parser = new XMLParser(options);
+    let jsonObj = parser.parse(`${xmlFile}`);
+
+    console.log( jsonObj);
+
+    return { body, file: file, jsonObj};
+  }
 
   @Get()
   findAll() {
