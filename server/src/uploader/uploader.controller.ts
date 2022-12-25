@@ -3,7 +3,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete,
    FileTypeValidator,
    ParseFilePipeBuilder,
    HttpStatus,
-   Header, } from '@nestjs/common';
+   Header,
+   PipeTransform,
+   UsePipes, } from '@nestjs/common';
 import { Express } from 'express';
 import { UploaderService } from './uploader.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -13,23 +15,28 @@ import { diskStorage } from 'multer';
 import { XMLParser } from 'fast-xml-parser';
 import { readFile } from 'fs';
 import * as fs from 'fs';
-import { DEFAULT_ENCODING } from 'crypto';
+import { Readable } from 'stream';
+import { TransformDataPipe } from './uploaderPipe';
+
 
 @Controller('uploader')
 export class UploaderController {
   constructor(private readonly uploaderService: UploaderService) {}
 
   @Post()
-  @Header('Content-Transfer-Encoding', 'none')
+  @Header('Content-Type', 'multipart/form-data')
   @UseInterceptors(FileInterceptor( 'file', {
     storage: diskStorage({
       destination: './downloads',
       filename: (req, file, cb) => {
 
         if(file.mimetype.indexOf('xml')) {
-          file.mimetype = 'xml'
+          file.mimetype = 'text/xml',
+          
           file.encoding = 'utf-8'
         }
+        console.log('interceptor:', JSON.stringify(req.body));
+        req.setEncoding('utf-8');
         
         const fileName: string = file.originalname;
         const newFileName: string = fileName;
@@ -47,19 +54,32 @@ export class UploaderController {
           new MaxFileSizeValidator({ maxSize: 10000000 }),
           new FileTypeValidator({ fileType: 'xml' }),
         ]
-      })
+      }),
 
     ) file: Express.Multer.File,
+    @UsePipes(new TransformDataPipe({
+      
+    }))
   )
   {
-    //let xmlFile: string;
+    
+    fs.appendFile('./downloads/' + file.originalname, 'Привет','utf-8', (err) => {
+      if (err) throw err;
+  
+      console.log('Done');
+    });
+
+    console.log(body);
+
     fs.readFile('./downloads/' + file.originalname, 'utf-8',(err, data: Buffer) => {
 
       if (err) throw err;
       //console.log("XMLFILE" + data.toString('utf-8'));
-      //const xmlFile: string = data.toString('utf-8', 3, data.length );
-      console.log(data);
-      //console.log(xmlFile);
+      const xmlFile: string = data.toString('utf8', 3, data.length );
+      
+      
+      console.log(JSON.stringify(xmlFile));
+    
 
       const alwaysArray = [
         "xml.items.item",
@@ -90,21 +110,7 @@ export class UploaderController {
       let neWjsonObj = JSON.stringify(jsonObj, null);
       
       console.log(neWjsonObj);     
-      //const newData: string = data.toString('utf-8');
-
-      //return xmlFile;
     })
-
-    //console.log(xmlFile);
-
-    // const options = {
-    //   ignoreAttributes : false
-    // };
-  
-    // const parser = new XMLParser(options);
-    // let jsonObj = parser.parse(`${xmlFile}`);
-
-    //console.log( jsonObj);
 
     return { body, file: file,};
   }
@@ -129,3 +135,7 @@ export class UploaderController {
     return this.uploaderService.remove(+id);
   }
 }
+function getReadableStreamSomehow() {
+  throw new Error('Function not implemented.');
+}
+
