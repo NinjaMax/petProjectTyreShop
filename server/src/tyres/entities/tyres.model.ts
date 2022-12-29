@@ -19,6 +19,9 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     full_name: string;
 
+    @Column({type: DataType.DATE, unique: false, allowNull: false})
+    update_date: Date;
+
     @ForeignKey(() => TyreBrand)
     @Column({type: DataType.INTEGER})
     id_brand: number;
@@ -30,9 +33,6 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
     @ForeignKey(() => Category)
     @Column({type: DataType.INTEGER, defaultValue: 1})
     id_cat: number;
-
-    @Column({type: DataType.DATE, unique: false, allowNull: false})
-    update_date: Date;
 
     @HasMany(() => StockTyres , 'id')
     stock: StockTyres[];

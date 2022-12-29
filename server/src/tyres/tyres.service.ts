@@ -26,6 +26,28 @@ export class TyresService {
     
   }
 
+  async createTyresFromPrice(
+    id: number, 
+    full_name : string, 
+    update_date : Date, 
+    id_brand: number, 
+    id_model: number) {
+
+    try {
+      
+      const tyresFromPrice = await this.tyresRepository.create(
+        {id, full_name, update_date, id_brand, id_model});
+
+      return tyresFromPrice;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+    
+  }
+
   async findAllTyres() {
 
     try {
