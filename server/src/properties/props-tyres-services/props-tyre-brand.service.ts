@@ -1,10 +1,10 @@
 import { Injectable, HttpException, HttpStatus  } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { TyresService } from 'src/tyres/tyres.service';
-import { CreatePropertyDto } from './dto/create-property.dto';
-import { GetPropertyDto } from './dto/get-property.dto';
-import { UpdatePropertyDto } from './dto/update-property.dto';
-import { TyreBrand } from './entities/tyres/tyre-brand.model';
+import { CreatePropertyDto } from '../dto/create-property.dto';
+import { GetPropertyDto } from '../dto/get-property.dto';
+import { UpdatePropertyDto } from '../dto/update-property.dto';
+import { TyreBrand } from '../entities/tyres/tyre-brand.model';
 
 @Injectable()
 export class PropertiesBrandService {
@@ -15,22 +15,42 @@ export class PropertiesBrandService {
 
     try {
 
-      const tyre = await this.tyresService.findTyresById(createPropertyDto);
+      const tyreId = await this.tyresService.findTyresById(createPropertyDto);
 
-      if(tyre) {
+      if(tyreId) {
 
         const tyreBrand = await this.tyreBrandRepository.create(createPropertyDto);
         const createTyreBrand = await this.tyreBrandRepository.findByPk(tyreBrand.id_brand, {include: {all: true}});
         await createTyreBrand.$add('tyres', [createPropertyDto.id]);
-        createTyreBrand.tyres.push(tyre);
+        createTyreBrand.tyres.push(tyreId);
 
-        const getTyreBrand = await this.tyreBrandRepository.findByPk(createTyreBrand.id_brand, {include: {all: true}});
+        createTyreBrand.reload();
 
-        return getTyreBrand;
+        return createTyreBrand;
+
+      } else {
+
+        const tyreBrand = await this.tyreBrandRepository.create(createPropertyDto);
+
+        return tyreBrand;
 
       }
 
-      return new HttpException(`Data ${createPropertyDto.id} is not found`, HttpStatus.NOT_FOUND);
+    } catch {
+
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+
+  }
+
+  async createTyreBrandFromPrice(id_brand: number, brand: string) {
+
+    try {
+
+      const createTyreBrand = await this.tyreBrandRepository.create({id_brand, brand});
+
+      return createTyreBrand;
 
     } catch {
 

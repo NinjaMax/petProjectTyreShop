@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PropertiesBrandController } from './properties-brand.controller';
-import { PropertiesBrandService } from './properties-brand.service';
+import { PropertiesBrandController } from './props-tyres-controllers/props-tyre-brand.controller';
+import { PropertiesBrandService } from './props-tyres-services/props-tyre-brand.service';
 
 describe('PropertiesController', () => {
   let controller: PropertiesBrandController;

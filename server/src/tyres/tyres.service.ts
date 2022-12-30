@@ -34,11 +34,31 @@ export class TyresService {
     id_model: number) {
 
     try {
+
+      const tyresIdFromPrice = await this.tyresRepository.findByPk(id, {include: {all: true}});
       
-      const tyresFromPrice = await this.tyresRepository.create(
+      if(tyresIdFromPrice) {
+
+        await this.tyresRepository.update(
+          { id: id, 
+            full_name : full_name,
+            update_date : update_date,
+            id_brand: id_brand,
+            id_model: id_model
+          }, {where: {id : id}});
+
+        tyresIdFromPrice.save();
+
+        return tyresIdFromPrice;
+
+      } else {
+
+        const tyresFromPrice = await this.tyresRepository.create(
         {id, full_name, update_date, id_brand, id_model});
 
-      return tyresFromPrice;
+        return tyresFromPrice;
+
+      } 
 
     } catch {
 
@@ -94,9 +114,10 @@ export class TyresService {
           update_date : updateTyreDto.update_date
         }, {where: {id : updateTyreDto.id}});
 
-        const updateTyres = await this.tyresRepository.findByPk(updateTyreDto.id, {include: {all: true}});
+        tyresId.save();
+        //const updateTyres = await this.tyresRepository.findByPk(updateTyreDto.id, {include: {all: true}});
 
-        return updateTyres; 
+        return tyresId; 
       }
 
     } catch {

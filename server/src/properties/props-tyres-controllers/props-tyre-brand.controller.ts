@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { PropertiesBrandService } from './properties-brand.service';
-import { CreatePropertyDto } from './dto/create-property.dto';
-import { UpdatePropertyDto } from './dto/update-property.dto';
-import { GetPropertyDto } from './dto/get-property.dto';
+import { PropertiesBrandService } from '../props-tyres-services/props-tyre-brand.service';
+import { CreatePropertyDto } from '../dto/create-property.dto';
+import { UpdatePropertyDto } from '../dto/update-property.dto';
+import { GetPropertyDto } from '../dto/get-property.dto';
 
 @Controller('properties')
 export class PropertiesBrandController {

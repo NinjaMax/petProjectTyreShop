@@ -6,8 +6,8 @@ import { GetReviewDto } from './dto/get-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { ReviewTyres } from './entities/review-tyres.model';
 import { TyresService } from 'src/tyres/tyres.service';
-import { PropertiesModelService } from 'src/properties/properties-model.service';
-import { PropertiesBrandService } from 'src/properties/properties-brand.service';
+import { PropertiesModelService } from 'src/properties/props-tyres-services/props-tyre-model.service';
+import { PropertiesBrandService } from 'src/properties/props-tyres-services/props-tyre-brand.service';
 import { CustomersService } from 'src/customers/customers.service';
 
 @Injectable()

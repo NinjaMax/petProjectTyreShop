@@ -1,9 +1,9 @@
 import { Injectable, HttpException, HttpStatus  } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreatePropertyDto } from './dto/create-property.dto';
-import { GetPropertyDto } from './dto/get-property.dto';
-import { UpdatePropertyDto } from './dto/update-property.dto';
-import { TyreModel } from './entities/tyres/tyre-model.model';
+import { CreatePropertyDto } from '../dto/create-property.dto';
+import { GetPropertyDto } from '../dto/get-property.dto';
+import { UpdatePropertyDto } from '../dto/update-property.dto';
+import { TyreModel } from '../entities/tyres/tyre-model.model';
 import { TyresService } from 'src/tyres/tyres.service';
 
 @Injectable()
@@ -15,23 +15,41 @@ export class PropertiesModelService {
  
     try {
 
-        const tyre = await this.tyresService.findTyresById(createPropertyDto);
+        const tyreId = await this.tyresService.findTyresById(createPropertyDto);
 
-        if(tyre) {
+        if(tyreId) {
 
          const tyreModel = await this.tyreModelRepository.create(createPropertyDto);
          const createTyreModel = await this.tyreModelRepository.findByPk(tyreModel.id_model, {include: {all: true}})
          await createTyreModel.$add('tyres', [createPropertyDto.id])
 
-         createTyreModel.tyres.push(tyre);
+         createTyreModel.tyres.push(tyreId);
+          
+         createTyreModel.reload();
 
-         const getTyreModelId = await this.tyreModelRepository.findByPk(createTyreModel.id_model, {include: {all: true}})
+         return createTyreModel;
 
-         return getTyreModelId;
+        } else {
 
+          const newTyreModel = await this.tyreModelRepository.create(createPropertyDto);
+
+          return newTyreModel;
         }
 
-        return new HttpException(`Data ${createPropertyDto.id} not found`, HttpStatus.NOT_FOUND);
+    } catch {
+
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+  }
+
+  async createTyreModelFromPrice(id_model: number, model: string) {
+ 
+    try {
+
+      const tyreModel = await this.tyreModelRepository.create({id_model, model});
+         
+      return tyreModel;
 
     } catch {
 

@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { PropertiesBrandService } from './properties-brand.service';
-import { PropertiesBrandController } from './properties-brand.controller';
-import { PropertiesModelController } from './properties-model.controller';
-import { PropertiesModelService } from './properties-model.service';
+import { PropertiesBrandService } from './props-tyres-services/props-tyre-brand.service';
+import { PropertiesBrandController } from './props-tyres-controllers/props-tyre-brand.controller';
+import { PropertiesModelController } from './props-tyres-controllers/props-tyre-model.controller';
+import { PropertiesModelService } from './props-tyres-services/props-tyre-model.service';
 import { Tyres } from 'src/tyres/entities/tyres.model';
 import { RatingTyres } from 'src/ratings/entities/rating-tyres.model';
 import { TyresModule } from 'src/tyres/tyres.module';
