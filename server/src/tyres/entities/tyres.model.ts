@@ -7,8 +7,24 @@ import { TyreBrand } from "src/properties/entities/tyres/tyre-brand.model";
 import { ReviewTyres } from "src/reviews/entities/review-tyres.model";
 import { RatingTyres } from "src/ratings/entities/rating-tyres.model";
 import { Category } from "src/categorys/entities/category.model";
-//import { Orders_Goods } from "src/orders/entities/order-goods.model";
-//import { Orders } from "src/orders/entities/order.model";
+import { TyreCountry } from "src/properties/entities/tyres/tyre-country.model";
+import { TyreDemo } from "src/properties/entities/tyres/tyre-demo.model";
+import { TyreDiameter } from "src/properties/entities/tyres/tyre-diameter.model";
+import { TyreHeight } from "src/properties/entities/tyres/tyre-height.model";
+import { TyreHomologation } from "src/properties/entities/tyres/tyre-homologation.model";
+import { TyreLoadIndex } from "src/properties/entities/tyres/tyre-loadIndex.model";
+import { TyreParams } from "src/properties/entities/tyres/tyre-params.model";
+import { TyreReinforce } from "src/properties/entities/tyres/tyre-reinforce.model";
+import { TyreRunFlat } from "src/properties/entities/tyres/tyre-runFlat.model";
+import { TyreSeal } from "src/properties/entities/tyres/tyre-seal.model";
+import { TyreSeason } from "src/properties/entities/tyres/tyre-season.model";
+import { TyreSilent } from "src/properties/entities/tyres/tyre-silent.model";
+import { TyreSizeDigits } from "src/properties/entities/tyres/tyre-sizeDigits.model";
+import { TyreSpeedIndex } from "src/properties/entities/tyres/tyre-speedIndex.model";
+import { TyreStudded } from "src/properties/entities/tyres/tyre-studded.model";
+import { TyreVehicleType } from "src/properties/entities/tyres/tyre-vehicleType.model";
+import { TyreWidth } from "src/properties/entities/tyres/tyre-width.model";
+import { TyreYear } from "src/properties/entities/tyres/tyre-year.model";
 
 @Table({tableName: 'tyres' , updatedAt: false})
 export class Tyres extends Model<Tyres, TyresConfigAttr> {
@@ -46,16 +62,67 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
     @HasMany(() => RatingTyres, 'id')
     rating: RatingTyres[];
 
-    @BelongsTo(() => TyreModel, 'id_model')
-    tyre_model: TyreModel;
+    @BelongsTo(() => Category, 'id_cat')
+    category: Category;
+
+    @BelongsTo(() => TyreParams, 'id_params')
+    params: TyreParams;
 
     @BelongsTo(() => TyreBrand, 'id_brand')
     tyre_brand: TyreBrand;
 
-    @BelongsTo(() => Category, 'id_cat')
-    category: Category;
+    @BelongsTo(() => TyreModel, 'id_model')
+    tyre_model: TyreModel;
 
-    //@BelongsToMany(() => Orders, () => OrdersGoods)
-    //orders: Orders[];
+    @BelongsTo(() => TyreSeason, 'id_season')
+    season: TyreSeason;
+
+    @BelongsTo(() => TyreWidth, 'id_width')
+    width: TyreWidth;
+
+    @BelongsTo(() => TyreHeight, 'id_height')
+    height: TyreHeight;
+
+    @BelongsTo(() => TyreDiameter, 'id_diameter')
+    diameter: TyreDiameter;
+
+    @BelongsTo(() => TyreLoadIndex, 'id_load_index')
+    load_index: TyreLoadIndex;
+
+    @BelongsTo(() => TyreSpeedIndex, 'id_speed_index')
+    speed_index: TyreSpeedIndex;
+
+    @BelongsTo(() => TyreCountry, 'id_country')
+    country: TyreCountry;
+
+    @BelongsTo(() => TyreYear, 'id_year')
+    year: TyreYear;
+
+    @BelongsTo(() => TyreVehicleType, 'id_vehicle_type')
+    vehicle_type: TyreVehicleType;
+    
+    @BelongsTo(() => TyreReinforce, 'id_reinforce')
+    reinforce: TyreReinforce;
+
+    @BelongsTo(() => TyreRunFlat, 'id_run_flat')
+    run_flat: TyreRunFlat;
+
+    @BelongsTo(() => TyreStudded, 'id_studded')
+    studded: TyreStudded;
+
+    @BelongsTo(() => TyreHomologation, 'id_homologation')
+    homologation: TyreHomologation;
+
+    @BelongsTo(() => TyreDemo, 'id_demo')
+    demo: TyreDemo;
+
+    @BelongsTo(() => TyreSizeDigits, 'id_size_digits')
+    size_digits: TyreSizeDigits;
+
+    @BelongsTo(() => TyreSeal, 'id_seal')
+    seal: TyreSeal;
+    
+    @BelongsTo(() => TyreSilent, 'id_silent')
+    silent: TyreSilent;
     
 }

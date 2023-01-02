@@ -100,6 +100,22 @@ export class TyresService {
    
   }
 
+  async findTyresByIdPrice(id: number) {
+
+    try {
+
+      const tyresId = await this.tyresRepository.findByPk(id, {include: {all: true}});
+
+      return tyresId;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+
+    }
+   
+  }
+
   async updateTyres(updateTyreDto: UpdateTyreDto) {
 
     try {
