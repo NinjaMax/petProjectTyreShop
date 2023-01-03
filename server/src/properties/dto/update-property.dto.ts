@@ -27,7 +27,7 @@ export class UpdatePropertyDto extends PartialType(CreatePropertyDto) {
     readonly country_manufacturer: string;
     readonly country_manufacturer_ua: string;
     readonly id_year: number;
-    readonly year: number;
+    readonly manufacture_year: number;
     readonly id_speed_index: number;
     readonly speed_index: string;
     readonly speed_index_with_desc: string;
@@ -50,6 +50,8 @@ export class UpdatePropertyDto extends PartialType(CreatePropertyDto) {
     readonly vehicle_type_ua: string;
     readonly id_params: number;
     readonly params: string;
+    readonly id_bolt_count_pcd: number;
+    readonly bolt_count_pcd: string;
     //readonly id_tyres: number;
     readonly id_supplier: number;
     readonly update_date: Date;

@@ -108,9 +108,9 @@ export class PropsTyreCountryService {
 
     try {
 
-      const tyreAllBrand = await this.tyreCountryRepository.findAll({include: {all: true}});
+      const tyreAllCountry = await this.tyreCountryRepository.findAll({include: {all: true}});
 
-      return tyreAllBrand;
+      return tyreAllCountry;
 
     } catch {
 
@@ -121,12 +121,10 @@ export class PropsTyreCountryService {
   }
 
   async findTyreCountryById(getPropertyDto: GetPropertyDto) {
-
     try {
+      const countryId = await this.tyreCountryRepository.findByPk(getPropertyDto.id_country, {include: {all: true}});
 
-      const brandId = await this.tyreCountryRepository.findByPk(getPropertyDto.id_country, {include: {all: true}});
-
-      return brandId;
+      return countryId;
 
     } catch {
 
@@ -166,9 +164,9 @@ export class PropsTyreCountryService {
 
     try {
 
-      const removeTyreBrand = await this.tyreCountryRepository.destroy({where: {id_country : getPropertyDto.id_country}});
+      const removeTyreCountrys = await this.tyreCountryRepository.destroy({where: {id_country : getPropertyDto.id_country}});
       
-      return removeTyreBrand;
+      return removeTyreCountrys;
 
     } catch {
       

@@ -11,7 +11,7 @@ export class WheelModel extends Model<WheelModel, WheelPropsConfigAttr> {
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     model: string;
 
-    @HasMany(() => Wheel, 'id_wheel_model')
+    @HasMany(() => Wheel, 'id_model')
     wheels: Wheel[];
     
 }

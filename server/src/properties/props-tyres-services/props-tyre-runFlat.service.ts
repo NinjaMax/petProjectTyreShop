@@ -157,9 +157,9 @@ export class PropsTyreRunFlatService {
 
     try {
 
-      const removeTyreRunFlat = await this.tyreRunFlatRepository.destroy({where: {id_run_flat: getPropertyDto.id_run_flat}});
+      const removeTyreRunFlats = await this.tyreRunFlatRepository.destroy({where: {id_run_flat: getPropertyDto.id_run_flat}});
       
-      return removeTyreRunFlat;
+      return removeTyreRunFlats;
 
     } catch {
       

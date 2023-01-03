@@ -11,7 +11,7 @@ export class WheelPcd2 extends Model<WheelPcd2, WheelPropsConfigAttr> {
     @Column({type: DataType.INTEGER, unique: true, allowNull: false})
     pcd2: number;
 
-    @HasMany(() => Wheel, 'id_wheel_pcd2')
+    @HasMany(() => Wheel, 'id_pcd2')
     wheels: Wheel[];
     
 }

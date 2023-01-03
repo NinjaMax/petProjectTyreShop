@@ -11,7 +11,7 @@ export class WheelEt extends Model<WheelEt, WheelPropsConfigAttr> {
     @Column({type: DataType.INTEGER, unique: true, allowNull: false})
     et: number;
 
-    @HasMany(() => Wheel, 'id_wheel_et')
+    @HasMany(() => Wheel, 'id_et')
     wheels: Wheel[];
     
 }

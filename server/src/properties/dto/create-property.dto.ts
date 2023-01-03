@@ -24,7 +24,7 @@ export class CreatePropertyDto {
     readonly country_manufacturer: string;
     readonly country_manufacturer_ua: string;
     readonly id_year: number;
-    readonly year: number;
+    readonly manufacture_year: number;
     readonly id_speed_index: number;
     readonly speed_index: string;
     readonly speed_index_with_desc: string;
@@ -47,6 +47,27 @@ export class CreatePropertyDto {
     readonly vehicle_type_ua: string;
     readonly id_params: number;
     readonly params: string;
+    readonly id_bolt_count: number;
+    readonly bolt_count: number;
+    readonly id_bolt_count_pcd: number;
+    readonly bolt_count_pcd: string;
+    readonly id_wheel_brand: number;
+    readonly id_color: number;
+    readonly color: string;
+    readonly color_short: string;
+    readonly id_dia: number;
+    readonly dia: number;
+    readonly id_et: number;
+    readonly et: number;
+    readonly id_pcd: number;
+    readonly pcd: number;
+    readonly id_pcd2: number;
+    readonly pcd2: number;
+    readonly id_type: number;
+    
+
+
+
     //readonly id_tyres: number;
     readonly id_supplier: number;
     readonly update_date: Date;

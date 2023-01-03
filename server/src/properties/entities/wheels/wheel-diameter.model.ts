@@ -11,7 +11,7 @@ export class WheelDiameter extends Model<WheelDiameter, WheelPropsConfigAttr> {
     @Column({type: DataType.INTEGER, unique: true, allowNull: false})
     diameter: number;
 
-    @HasMany(() => Wheel, 'id_wheel_diameter')
+    @HasMany(() => Wheel, 'id_diameter')
     wheels: Wheel[];
     
 }

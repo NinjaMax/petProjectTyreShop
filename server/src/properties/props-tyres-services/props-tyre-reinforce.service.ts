@@ -157,9 +157,9 @@ export class PropsTyreReinforceService {
 
     try {
 
-      const removeTyreReinforce = await this.tyreReinforceRepository.destroy({where: {id_reinforce: getPropertyDto.id_reinforce}});
+      const removeTyreReinforces = await this.tyreReinforceRepository.destroy({where: {id_reinforce: getPropertyDto.id_reinforce}});
       
-      return removeTyreReinforce;
+      return removeTyreReinforces;
 
     } catch {
       

@@ -157,9 +157,9 @@ export class PropsTyreHeightService {
 
     try {
 
-      const removeTyreHeight = await this.tyreHeightRepository.destroy({where: {id_height : getPropertyDto.id_height}});
+      const removeTyreHeights = await this.tyreHeightRepository.destroy({where: {id_height : getPropertyDto.id_height}});
       
-      return removeTyreHeight;
+      return removeTyreHeights;
 
     } catch {
       

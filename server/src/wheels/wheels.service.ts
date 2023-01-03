@@ -56,6 +56,21 @@ export class WheelsService {
     }
   }
 
+  async findWheelByIdPrice(id: number) {
+
+    try {
+      
+      const wheelById = await this.wheelRepository.findByPk(id, {include: {all: true}});
+
+      return wheelById;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+  }
+
   update(id: number, updateWheelDto: UpdateWheelDto) {
     return `This action updates a #${id} wheel`;
   }

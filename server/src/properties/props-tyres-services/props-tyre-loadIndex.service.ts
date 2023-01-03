@@ -160,9 +160,9 @@ export class PropsTyreLoadIndexService {
 
     try {
 
-      const removeTyreLoadIndex = await this.tyreLoadIndexRepository.destroy({where: {id_load_index: getPropertyDto.id_load_index}});
+      const removeTyreLoadIndexes = await this.tyreLoadIndexRepository.destroy({where: {id_load_index: getPropertyDto.id_load_index}});
       
-      return removeTyreLoadIndex;
+      return removeTyreLoadIndexes;
 
     } catch {
       

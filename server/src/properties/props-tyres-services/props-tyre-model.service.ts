@@ -133,9 +133,9 @@ export class PropertiesModelService {
 
     try {
 
-      const removeTyreModel = await this.tyreModelRepository.destroy({where: {id : getPropertyDto.id}});
+      const removeTyreModels = await this.tyreModelRepository.destroy({where: {id : getPropertyDto.id}});
       
-      return removeTyreModel;
+      return removeTyreModels;
 
     } catch {
       

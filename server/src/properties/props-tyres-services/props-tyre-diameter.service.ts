@@ -158,9 +158,9 @@ export class PropsTyrDiametrService {
 
     try {
 
-      const removeTyreDiameter = await this.tyreDiameterRepository.destroy({where: {id_diameter: getPropertyDto.id_diameter}});
+      const removeTyreDiameters = await this.tyreDiameterRepository.destroy({where: {id_diameter: getPropertyDto.id_diameter}});
       
-      return removeTyreDiameter;
+      return removeTyreDiameters;
 
     } catch {
       

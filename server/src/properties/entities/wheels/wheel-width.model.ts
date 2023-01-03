@@ -11,7 +11,7 @@ export class WheelWidth extends Model<WheelWidth, WheelPropsConfigAttr> {
     @Column({type: DataType.INTEGER, unique: true, allowNull: false})
     width: number;
 
-    @HasMany(() => Wheel, 'id_wheel_width')
+    @HasMany(() => Wheel, 'id_width')
     wheels: Wheel[];
     
 }

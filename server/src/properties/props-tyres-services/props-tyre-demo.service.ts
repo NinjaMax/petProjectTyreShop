@@ -159,9 +159,9 @@ export class PropsTyreDemoService {
 
     try {
 
-      const removeDemoTyre = await this.tyreDemoRepository.destroy({where: {id_demo: getPropertyDto.id_demo}});
+      const removeDemoTyres = await this.tyreDemoRepository.destroy({where: {id_demo: getPropertyDto.id_demo}});
       
-      return removeDemoTyre;
+      return removeDemoTyres;
 
     } catch {
       

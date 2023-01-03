@@ -6,12 +6,12 @@ import { WheelPropsConfigAttr } from "src/properties/interfaces/wheels/wheel-pro
 export class WheelBrand extends Model<WheelBrand, WheelPropsConfigAttr> {
 
     @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
-    id_wheel_brand: number;
+    id_brand: number;
    
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     brand: string;
 
-    @HasMany(() => Wheel, 'id_wheel_brand')
+    @HasMany(() => Wheel, 'id_brand')
     wheels: Wheel[];
     
 }

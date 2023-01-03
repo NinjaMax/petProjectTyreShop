@@ -157,9 +157,9 @@ export class PropsTyreHomologationService {
 
     try {
 
-      const removeTyreHomologation = await this.tyreHomologationRepository.destroy({where: {id_homologation: getPropertyDto.id_homologation}});
+      const removeTyreHomologations = await this.tyreHomologationRepository.destroy({where: {id_homologation: getPropertyDto.id_homologation}});
       
-      return removeTyreHomologation;
+      return removeTyreHomologations;
 
     } catch {
       

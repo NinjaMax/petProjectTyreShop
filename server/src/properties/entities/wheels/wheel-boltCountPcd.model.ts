@@ -11,7 +11,7 @@ export class WheelBoltCountPcd extends Model<WheelBoltCountPcd, WheelPropsConfig
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     bolt_count_pcd: string;
 
-    @HasMany(() => Wheel, 'id_wheel_brand')
+    @HasMany(() => Wheel, 'id_bolt_count_pcd')
     wheels: Wheel[];
     
 }

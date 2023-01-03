@@ -135,9 +135,9 @@ export class PropertiesBrandService {
 
     try {
 
-      const removeTyreBrand = await this.tyreBrandRepository.destroy({where: {id : getPropertyDto.id}});
+      const removeTyreBrands = await this.tyreBrandRepository.destroy({where: {id : getPropertyDto.id}});
       
-      return removeTyreBrand;
+      return removeTyreBrands;
 
     } catch {
       

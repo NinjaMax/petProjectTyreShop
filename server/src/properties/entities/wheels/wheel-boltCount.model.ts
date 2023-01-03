@@ -3,7 +3,7 @@ import { Wheel } from "src/wheels/entities/wheel.model";
 import { WheelPropsConfigAttr } from "src/properties/interfaces/wheels/wheel-props.interface";
 
 @Table({tableName: 'wheel_bolt_count' , updatedAt: false, createdAt: false})
-export class WheelBrand extends Model<WheelBrand, WheelPropsConfigAttr> {
+export class WheelBoltCount extends Model<WheelBoltCount, WheelPropsConfigAttr> {
 
     @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_bolt_count: number;
