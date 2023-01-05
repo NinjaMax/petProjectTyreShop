@@ -11,39 +11,39 @@ export class PropsTyreSeasonService {
   constructor(@InjectModel(TyreSeason) private tyreSeasonRepository: typeof TyreSeason,
   private tyresService: TyresService) {}
 
-  async createTyreCountry(createPropertyDto: CreatePropertyDto) {
+  async createTyreSeason(createPropertyDto: CreatePropertyDto) {
 
     try {
     
-        const tyreId = await this.tyresService.findTyresById(createPropertyDto);
-        const tyreSeason = await this.tyreSeasonRepository.findOne(
+      const tyreId = await this.tyresService.findTyresById(createPropertyDto);
+      const tyreSeason = await this.tyreSeasonRepository.findOne(
         { where: { season: createPropertyDto.season } })
 
         if(tyreId && tyreSeason) {
 
-            const updateSeason = await this.tyreSeasonRepository.update({
-             season: createPropertyDto.season}, {where: {id_season: tyreSeason.id_season}});
-            await tyreId.$set('season', updateSeason);
+          const updateSeason = await this.tyreSeasonRepository.update({
+           season: createPropertyDto.season}, {where: {id_season: tyreSeason.id_season}});
+          await tyreId.$set('season', updateSeason);
             //tyreId.country = tyreCountry;
             //updateCountry.reload();
 
-            return updateSeason;
+          return updateSeason;
 
         } else if(tyreId && !tyreSeason) {
 
-            const newTyreSeason = await this.tyreSeasonRepository.create(createPropertyDto);
+          const newTyreSeason = await this.tyreSeasonRepository.create(createPropertyDto);
 
-            await tyreId.$set('season', newTyreSeason);
+          await tyreId.$set('season', newTyreSeason);
             //tyreId.country = tyreCountry;
             //tyreCountry.reload();
 
-            return newTyreSeason;
+          return newTyreSeason;
 
         } else {
 
-            const tyreSeason = await this.tyreSeasonRepository.create(createPropertyDto);
+          const tyreSeason = await this.tyreSeasonRepository.create(createPropertyDto);
 
-            return tyreSeason;
+          return tyreSeason;
         }
 
     } catch {
@@ -54,7 +54,8 @@ export class PropsTyreSeasonService {
 
   }
 
-  async createTyreSeasonFromPrice( id: number, season: string) {
+  async createTyreSeasonFromPrice( id: number, id_season: number,
+    season: string, season_ua: string) {
 
     try {
 
@@ -65,7 +66,8 @@ export class PropsTyreSeasonService {
         if(tyreId && tyreSeason) {
 
             const updateSeason = await this.tyreSeasonRepository.update({
-             season: season}, {where: {id_season: tyreSeason.id_season}});
+             season: season, season_ua: season_ua}, 
+             {where: {id_season: tyreSeason.id_season}});
             await tyreId.$set('season', updateSeason);
             //tyreId.country = tyreCountry;
             //updateCountry.reload();
@@ -74,7 +76,8 @@ export class PropsTyreSeasonService {
 
         } else if(tyreId && !tyreSeason) {
 
-            const newTyreSeason = await this.tyreSeasonRepository.create({season});
+            const newTyreSeason = await this.tyreSeasonRepository.create(
+              {id_season, season});
 
             await tyreId.$set('season', newTyreSeason);
             //tyreId.country = tyreCountry;
@@ -84,7 +87,8 @@ export class PropsTyreSeasonService {
 
         } else {
 
-            const tyreSeason = await this.tyreSeasonRepository.create({season});
+            const tyreSeason = await this.tyreSeasonRepository.create(
+              {id_season, season, season_ua});
 
             return tyreSeason;
         }

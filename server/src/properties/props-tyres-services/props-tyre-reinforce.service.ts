@@ -11,7 +11,7 @@ export class PropsTyreReinforceService {
   constructor(@InjectModel(TyreReinforce) private tyreReinforceRepository: typeof TyreReinforce,
   private tyresService: TyresService) {}
 
-  async createTyreCountry(createPropertyDto: CreatePropertyDto) {
+  async createTyreReinforce(createPropertyDto: CreatePropertyDto) {
 
     try {
     
@@ -54,7 +54,7 @@ export class PropsTyreReinforceService {
 
   }
 
-  async createTyreCountryFromPrice( id: number, reinforce: string) {
+  async createTyreReinforceFromPrice( id: number, reinforce: string) {
 
     try {
 

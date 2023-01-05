@@ -61,6 +61,48 @@ export class StockTyresService {
     
   }
 
+  async createStockTyreFromPrice(id: number, stock: number, 
+    id_supplier: number) {
+
+    try {
+
+      const tyreId = await this.tyresService.findTyresByIdPrice(id);
+      const tyreStock = await this.stockTyresRepository.findByPk(id);
+      const supplier = await this.suppliersService.findSupplierByIdPrice(
+        id_supplier);
+
+      if(tyreStock.id_supplier == supplier.id) {
+
+        const updateStock = await this.stockTyresRepository.update({
+          stock: stock, id_supplier: supplier.id}, 
+          {where: {id: tyreStock.id}});
+        //await tyreId.$set('stock', updateStock);
+        //tyreId.country = tyreCountry;
+        //updateCountry.reload();
+
+        return updateStock;
+
+      } else if(tyreId && !tyreStock) {
+
+        const newTyreStock = await this.stockTyresRepository.create(
+          {id, stock, id_supplier});
+
+        await tyreId.$add('stock', newTyreStock);
+        //tyreId.country = tyreCountry;
+        //tyreCountry.reload();
+
+        return newTyreStock;
+
+      }
+
+    } catch {
+
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+  
+    }
+
+  }
+
   // async createStockTyreByOrderSup(createStockDto: CreateStockDto) {
 
   //   try {

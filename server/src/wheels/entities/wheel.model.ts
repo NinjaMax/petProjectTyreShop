@@ -26,12 +26,70 @@ export class Wheel extends Model<Wheel, WheelConfigAttr> {
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     full_name: string;
 
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    full_name_color: string;
+
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    full_name_hotline: string;
+
     @ForeignKey(() => Category)
     @Column({type: DataType.INTEGER})
     id_cat: number;
 
     @Column({type: DataType.DATE, unique: false, allowNull: false})
     update_date: Date;
+
+    @ForeignKey(() => WheelBrand)
+    @Column({type: DataType.INTEGER})
+    id_brand: number;
+
+    @ForeignKey(() => WheelModel)
+    @Column({type: DataType.INTEGER})
+    id_model: number;
+
+    @ForeignKey(() => WheelBoltCount)
+    @Column({type: DataType.INTEGER})
+    id_bolt_count: number;
+
+    @ForeignKey(() => WheelBoltCountPcd)
+    @Column({type: DataType.INTEGER})
+    id_bolt_count_pcd: number;
+
+    @ForeignKey(() => WheelColor)
+    @Column({type: DataType.INTEGER})
+    id_color: number;
+
+    @ForeignKey(() => WheelDia)
+    @Column({type: DataType.INTEGER})
+    id_dia: number;
+
+    @ForeignKey(() => WheelDiameter)
+    @Column({type: DataType.INTEGER})
+    id_diameter: number;
+
+    @ForeignKey(() => WheelEt)
+    @Column({type: DataType.INTEGER})
+    id_et: number;
+
+    @ForeignKey(() => WheelPcd)
+    @Column({type: DataType.INTEGER})
+    id_pcd: number;
+
+    @ForeignKey(() => WheelPcd2)
+    @Column({type: DataType.INTEGER})
+    id_pcd2: number;
+
+    @ForeignKey(() => WheelSizeDigits)
+    @Column({type: DataType.INTEGER})
+    id_size_digits: number;
+
+    @ForeignKey(() => WheelType)
+    @Column({type: DataType.INTEGER})
+    id_type: number;
+
+    @ForeignKey(() => WheelWidth)
+    @Column({type: DataType.INTEGER})
+    id_width: number;
 
     @BelongsTo(() => Category, 'id_cat')
     category: Category;

@@ -28,7 +28,8 @@ export class TyresService {
 
   async createTyresFromPrice(
     id: number, 
-    full_name : string, 
+    full_name : string,
+    photo_url: string, 
     update_date : Date, 
     id_brand: number, 
     id_model: number) {
@@ -43,6 +44,7 @@ export class TyresService {
           { id: id, 
             full_name : full_name,
             update_date : update_date,
+            photo_url: photo_url,
             id_brand: id_brand,
             id_model: id_model
           }, {where: {id : id}});
@@ -54,7 +56,7 @@ export class TyresService {
       } else {
 
         const tyresFromPrice = await this.tyresRepository.create(
-        {id, full_name, update_date, id_brand, id_model});
+        {id, full_name, photo_url, update_date, id_brand, id_model});
 
         return tyresFromPrice;
 

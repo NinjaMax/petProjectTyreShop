@@ -56,7 +56,7 @@ export class PropsTyreVehicleTypeService {
 
   }
 
-  async createTyreVehicleTypeFromPrice( id: number,
+  async createTyreVehicleTypeFromPrice( id: number, id_vehicle_type: number,
     vehicle_type: string, vehicle_type_ua: string) {
 
     try {
@@ -80,7 +80,7 @@ export class PropsTyreVehicleTypeService {
         } else if(tyreId && !tyreVehicleType) {
 
             const newTyreVehicleType = await this.tyreVehicleTypeRepository.create(
-            {vehicle_type, vehicle_type_ua});
+            {id_vehicle_type, vehicle_type, vehicle_type_ua});
 
             await tyreId.$set('vehicle_type', newTyreVehicleType);
             //tyreId.country = tyreCountry;
@@ -91,7 +91,7 @@ export class PropsTyreVehicleTypeService {
         } else {
 
             const tyreVehicleType = await this.tyreVehicleTypeRepository.create(
-                {vehicle_type, vehicle_type_ua});
+                {id_vehicle_type, vehicle_type, vehicle_type_ua});
 
             return tyreVehicleType;
         }

@@ -25,6 +25,37 @@ export class CategorysService {
     }
   }
 
+  async createCategoryFromPrice(category: string) {
+
+    try {
+      
+      const findCategory = await this.categoryRepository.findOne(
+       {where:{category: category}});
+
+      if(findCategory) {
+
+        const updateCategory = await this.categoryRepository.update(
+          {category: category},
+          {where:{id_cat: findCategory.id_cat}}
+        );
+
+        return updateCategory;
+
+      } else {
+
+        const categoryNew = await this.categoryRepository.create({category});
+        
+        return categoryNew;
+
+      }
+
+    } catch {
+
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+  }
+
   async findAllCategory() {
 
     try {

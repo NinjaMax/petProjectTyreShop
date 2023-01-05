@@ -9,7 +9,7 @@ export class PriceWheels extends Model<PriceWheels, PriceWheelsConfigAttr>{
     
    @ForeignKey(() => Wheel)
    @Column({type: DataType.INTEGER, unique: true, autoIncrement: false, primaryKey: true})
-   id_wheel: number;
+   id: number;
 
    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
    price_wholesale: number;
@@ -34,7 +34,7 @@ export class PriceWheels extends Model<PriceWheels, PriceWheelsConfigAttr>{
    @Column({type: DataType.DATE, unique: false, allowNull: false})
    update_date: Date;
 
-   @BelongsTo( () => Wheel , 'id_wheel')
+   @BelongsTo( () => Wheel , 'id')
    wheel: Wheel;
 
    @BelongsTo( () => Supplier , 'id_supplier')

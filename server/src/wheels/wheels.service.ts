@@ -26,6 +26,47 @@ export class WheelsService {
     }
   }
 
+  async createWheelFromPrice(
+    id: number, 
+    full_name : string, 
+    update_date : Date, 
+    id_brand: number, 
+    id_model: number) {
+
+    try {
+
+      const wheelIdFromPrice = await this.wheelRepository.findByPk(id, {include: {all: true}});
+      
+      if(wheelIdFromPrice) {
+
+        await this.wheelRepository.update(
+          { id: id, 
+            full_name : full_name,
+            update_date : update_date,
+            id_brand: id_brand,
+            id_model: id_model
+          }, {where: {id : id}});
+
+        wheelIdFromPrice.save();
+
+        return wheelIdFromPrice;
+
+      } else {
+
+        const tyresFromPrice = await this.wheelRepository.create(
+        {id, full_name, update_date, id_brand, id_model});
+
+        return tyresFromPrice;
+
+      } 
+
+    } catch {
+
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+  }
+
   async findAllWheels() {
 
     try {

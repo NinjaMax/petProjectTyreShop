@@ -24,6 +24,7 @@ export interface TyrePropsConfigAttr {
     seal: string;
     id_season: number;
     season: string;
+    season_ua: string;
     id_silent: number;
     silent: string;
     id_size_digits: number;

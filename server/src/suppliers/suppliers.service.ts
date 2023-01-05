@@ -34,6 +34,46 @@ export class SuppliersService {
     
   }
 
+  async createSupplierFromPrice(id_supplier: number, name: string,
+     city: string, city_ua: string) {
+
+    try {
+
+      const supplierId = await this.suppliersRepository.findByPk(id_supplier);
+
+      if(supplierId) {
+
+        const updateSup = await this.suppliersRepository.update(
+          {id_supplier: id_supplier, name: name, city: city, 
+            city_ua: city_ua},
+          {where:{id_supplier: supplierId.id_supplier}}
+        );
+
+        return updateSup;
+
+      } else {
+
+        const supplierNew = await this.suppliersRepository.create(
+          {id_supplier, name, city, city_ua});
+
+        const contractUser = await this.contractService.
+        createContractFromPrice(name);
+
+        supplierNew.$add('contract', contractUser);
+
+        supplierNew.reload();
+
+        return supplierNew;
+      }
+      
+    } catch {
+      
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+
+    }
+    
+  }
+
   async findAllSupplier() {
 
     try {
@@ -55,6 +95,21 @@ export class SuppliersService {
     try {
 
       const supplierById = await this.suppliersRepository.findByPk(getSupplierDto.id_supplier, {include: {all: true}});
+      
+      return supplierById;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+    }
+    
+  }
+
+  async findSupplierByIdPrice(id_supplier: number) {
+
+    try {
+
+      const supplierById = await this.suppliersRepository.findByPk(id_supplier, {include: {all: true}});
       
       return supplierById;
 

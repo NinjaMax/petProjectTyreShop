@@ -63,6 +63,24 @@ import { Contract } from './contract/entities/contract.model';
 import { CustomersModule } from './customers/customers.module';
 import { Customer } from './customers/entities/customer.model';
 import { UploaderModule } from './uploader/uploader.module';
+import { TyreYear } from './properties/entities/tyres/tyre-year.model';
+import { TyreWidth } from './properties/entities/tyres/tyre-width.model';
+import { TyreVehicleType } from './properties/entities/tyres/tyre-vehicleType.model';
+import { TyreStudded } from './properties/entities/tyres/tyre-studded.model';
+import { TyreSpeedIndex } from './properties/entities/tyres/tyre-speedIndex.model';
+import { TyreSizeDigits } from './properties/entities/tyres/tyre-sizeDigits.model';
+import { TyreSilent } from './properties/entities/tyres/tyre-silent.model';
+import { TyreSeason } from './properties/entities/tyres/tyre-season.model';
+import { TyreSeal } from './properties/entities/tyres/tyre-seal.model';
+import { TyreRunFlat } from './properties/entities/tyres/tyre-runFlat.model';
+import { TyreReinforce } from './properties/entities/tyres/tyre-reinforce.model';
+import { TyreParams } from './properties/entities/tyres/tyre-params.model';
+import { TyreLoadIndex } from './properties/entities/tyres/tyre-loadIndex.model';
+import { TyreHomologation } from './properties/entities/tyres/tyre-homologation.model';
+import { TyreHeight } from './properties/entities/tyres/tyre-height.model';
+import { TyreDiameter } from './properties/entities/tyres/tyre-diameter.model';
+import { TyreDemo } from './properties/entities/tyres/tyre-demo.model';
+import { TyreCountry } from './properties/entities/tyres/tyre-country.model';
 
 @Module({
   imports: [
@@ -80,10 +98,15 @@ import { UploaderModule } from './uploader/uploader.module';
           Expense, Incomes, Category, Sales, Cashbox, Paynment,
           StockTyres, StockWheels, StockBatteries, StockOils, 
           PriceTyres, PriceWheels, PriceBatteries, PriceOil,
-          RatingTyres, ReviewTyres, TyreBrand, TyreModel, 
+          RatingTyres, ReviewTyres, TyreBrand, TyreModel,
+          TyreCountry, TyreDemo, TyreDiameter, TyreHeight, 
+          TyreHomologation, TyreLoadIndex, TyreParams,
+          TyreReinforce, TyreRunFlat, TyreSeal, TyreSeason,
+          TyreSilent, TyreSizeDigits, TyreSpeedIndex, 
+          TyreStudded, TyreVehicleType, TyreWidth, TyreYear,
           Users, Service, Orders, OrdersSupplier, 
           OrdersSupStorage, SaleStorage, Order_Storage, 
-          Storage, Basket, Contract, Customer
+          Storage, Basket, Contract, Customer,
         ],
         autoLoadModels: true,
         synchronize: true,

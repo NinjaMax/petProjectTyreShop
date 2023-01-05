@@ -11,6 +11,9 @@ export class TyreSeason extends Model<TyreSeason, TyrePropsConfigAttr> {
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     season: string;
 
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    season_ua: string;
+
     @HasMany(() => Tyres , 'id_season')
     tyres: Tyres[];
     

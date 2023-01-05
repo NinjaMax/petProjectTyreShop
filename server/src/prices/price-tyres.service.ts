@@ -53,6 +53,54 @@ export class PriceTyresService {
     
   }
 
+  async createPriceTyresFromPrice(
+    id: number,
+    price_wholesale: number,
+    price: number,
+    delivery_price: number,
+    price_plus_delivery: number,
+    id_supplier: number,
+    update_date: Date
+    ) {
+    
+    try {
+
+      const tyresById = await this.tyresService.findTyresByIdPrice(id);
+      const priceById = await this.priceTyresRepository.findByPk(id);
+
+      if(tyresById && priceById) {
+
+        const updatePriceTyre = await this.priceTyresRepository.update(
+          { id: id,
+            price_wholesale: price_wholesale,
+            price: price,
+            delivery_price: delivery_price,
+            price_plus_delivery: price_plus_delivery,
+            id_supplier: id_supplier,
+            update_date: update_date}, 
+          {where:{id: priceById.id}}
+        );
+
+        return updatePriceTyre;
+
+      } else {
+
+        const createNewPrice = await this.priceTyresRepository.create(
+          {id, price_wholesale, price, delivery_price, 
+            price_plus_delivery, id_supplier, update_date});
+        
+        return createNewPrice;
+
+      }
+
+    } catch {
+      
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+
+    }
+    
+  }
+
   async findAll() {
 
     try {

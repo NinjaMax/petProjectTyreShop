@@ -31,7 +31,7 @@ export class PriceWheelsService {
 
         const supplier = await this.suppliersService.findSupplierById(createPriceDto);
         
-        await storage.$add('price_wheels', [priceCreate.id_wheel]);
+        await storage.$add('price_wheels', [priceCreate.id]);
         storage.price_wheels.push(priceCreate);
 
         await wheel.$add('price', [createPriceDto.id_wheel]);
@@ -44,6 +44,55 @@ export class PriceWheelsService {
 
         return wheel;
 
+      }
+
+    } catch {
+      
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+
+    }
+    
+  }
+
+  async createPriceTyresFromPrice(
+    id: number,
+    price_wholesale: number,
+    price: number,
+    delivery_price: number,
+    price_plus_delivery: number,
+    id_supplier: number,
+    update_date: Date
+    ) {
+    
+    try {
+
+      const tyresById = await this.wheelsService.findWheelByIdPrice(id);
+      const priceById = await this.priceWheelsRepository.findByPk(id);
+
+      if(tyresById && priceById) {
+
+        const updatePriceTyre = await this.priceWheelsRepository.update(
+          { id: id,
+            price_wholesale: price_wholesale,
+            price: price,
+            delivery_price: delivery_price,
+            price_plus_delivery: price_plus_delivery,
+            id_supplier: id_supplier,
+            update_date: update_date}, 
+          {where:{id: priceById.id}}
+        );
+
+        return updatePriceTyre;
+
+      } else {
+
+        const createNewPrice = await this.priceWheelsRepository.create(
+          {id, price_wholesale, price, delivery_price, 
+            price_plus_delivery,
+            id_supplier, update_date});
+        
+        return createNewPrice;
+        
       }
 
     } catch {
@@ -102,7 +151,7 @@ export class PriceWheelsService {
           delivery_price : updatePriceDto.delivery_price, 
           price_plus_delivery : updatePriceDto.price_plus_delivery,
           update_date : updatePriceDto.update_date
-        }, {where: {id_wheel : updatePriceDto.id_wheel}});
+        }, {where: {id: updatePriceDto.id}});
 
         const updatePriceWheels = await this.priceWheelsRepository.findByPk(updatePriceDto.id_wheel, {include: {all: true}});
 
@@ -122,7 +171,7 @@ export class PriceWheelsService {
 
     try {
 
-      const removePriceWheels = await this.priceWheelsRepository.destroy({where: {id_wheel : getPriceDto.id_wheel}});
+      const removePriceWheels = await this.priceWheelsRepository.destroy({where: {id: getPriceDto.id}});
 
       return removePriceWheels;
 

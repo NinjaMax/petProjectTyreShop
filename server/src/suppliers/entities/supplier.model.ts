@@ -15,13 +15,16 @@ import { Contract } from "src/contract/entities/contract.model";
 export class Supplier extends Model<Supplier, SuppliersConfigAttr> {
 
     @Column({type: DataType.BIGINT, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
-    id_supplier: bigint;
+    id_supplier: number;
    
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     name: string;
 
     @Column({type: DataType.STRING, unique: false, allowNull: false})
     city: string;
+
+    @Column({type: DataType.STRING, unique: false, allowNull: false})
+    city_ua: string;
 
     @Column({type: DataType.BIGINT, unique: false, allowNull: true})
     phone: bigint;

@@ -15,7 +15,7 @@ export interface WheelPropsConfigAttr {
     diameter: number;
     id_et: number;
     et: number;
-    id_wheel_model: number;
+    id_model: number;
     model: string;
     id_pcd: number;
     pcd: number;

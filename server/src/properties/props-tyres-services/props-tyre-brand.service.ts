@@ -7,7 +7,7 @@ import { UpdatePropertyDto } from '../dto/update-property.dto';
 import { TyreBrand } from '../entities/tyres/tyre-brand.model';
 
 @Injectable()
-export class PropertiesBrandService {
+export class PropsBrandService {
   constructor(@InjectModel(TyreBrand) private tyreBrandRepository: typeof TyreBrand,
   private tyresService: TyresService) {}
 
@@ -44,18 +44,45 @@ export class PropertiesBrandService {
 
   }
 
-  async createTyreBrandFromPrice(id_brand: number, brand: string) {
+  async createTyreBrandFromPrice(id: number, id_brand: number, brand: string) {
 
     try {
 
-      const createTyreBrand = await this.tyreBrandRepository.create({id_brand, brand});
+      const tyreId = await this.tyresService.findTyresByIdPrice(id);
+      const tyreBrand = await this.tyreBrandRepository.findOne(
+      { where: { brand: brand } })
 
-      return createTyreBrand;
+      if(tyreId && tyreBrand) {
+
+          const updateBrand = await this.tyreBrandRepository.update({
+           brand: brand}, {where: {id_brand: tyreBrand.id_brand}});
+          await tyreId.$set('tyre_brand', updateBrand);
+          //tyreId.country = tyreCountry;
+          //updateCountry.reload();
+
+          return updateBrand;
+
+      } else if(tyreId && !tyreBrand) {
+
+          const newTyreBrand = await this.tyreBrandRepository.create({id_brand, brand});
+
+          await tyreId.$set('tyre_brand', newTyreBrand);
+          //tyreId.country = tyreCountry;
+          //tyreCountry.reload();
+
+          return newTyreBrand;
+
+      } else {
+
+          const tyreBrand = await this.tyreBrandRepository.create({id_brand, brand});
+
+          return tyreBrand;
+      }
 
     } catch {
 
-      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
-
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+  
     }
 
   }

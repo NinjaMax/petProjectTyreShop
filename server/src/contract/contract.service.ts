@@ -29,6 +29,24 @@ export class ContractService {
   
   }
 
+  async createContractFromPrice(name: string) {
+
+    try {
+
+      const contract = await this.contractRepository.create({name});
+      contract.name = name + " Main Contract";
+      contract.save();
+
+      return contract;
+
+    } catch (error) {
+
+     throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+
+   }
+ 
+ }
+
   async findAllContract() {
 
     try {

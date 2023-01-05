@@ -7,7 +7,7 @@ import { UpdatePropertyDto } from '../dto/update-property.dto';
 import { TyreParams } from '../entities/tyres/tyre-params.model';
 
 @Injectable()
-export class PropsTyreLoadIndexService {
+export class PropsTyreParamsService {
   constructor(@InjectModel(TyreParams) private tyreParamsRepository: typeof TyreParams,
   private tyresService: TyresService) {}
 

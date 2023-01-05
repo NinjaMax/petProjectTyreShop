@@ -47,8 +47,80 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
     id_model: number;
 
     @ForeignKey(() => Category)
-    @Column({type: DataType.INTEGER, defaultValue: 1})
+    @Column({type: DataType.INTEGER})
     id_cat: number;
+
+    @ForeignKey(() => TyreParams)
+    @Column({type: DataType.INTEGER})
+    id_params: number;
+
+    @ForeignKey(() => TyreSeason)
+    @Column({type: DataType.INTEGER})
+    id_season: number;
+
+    @ForeignKey(() => TyreWidth)
+    @Column({type: DataType.INTEGER})
+    id_width: number;
+
+    @ForeignKey(() => TyreHeight)
+    @Column({type: DataType.INTEGER})
+    id_height: number;
+
+    @ForeignKey(() => TyreDiameter)
+    @Column({type: DataType.INTEGER})
+    id_diameter: number;
+
+    @ForeignKey(() => TyreLoadIndex)
+    @Column({type: DataType.INTEGER})
+    id_load_index: number;
+
+    @ForeignKey(() => TyreSpeedIndex)
+    @Column({type: DataType.INTEGER})
+    id_speed_index: number;
+
+    @ForeignKey(() => TyreCountry)
+    @Column({type: DataType.INTEGER})
+    id_country: number;
+
+    @ForeignKey(() => TyreYear)
+    @Column({type: DataType.INTEGER})
+    id_year: number;
+
+    @ForeignKey(() => TyreVehicleType)
+    @Column({type: DataType.INTEGER})
+    id_vehicle_type: number;
+
+    @ForeignKey(() => TyreReinforce)
+    @Column({type: DataType.INTEGER})
+    id_reinforce: number;
+
+    @ForeignKey(() => TyreRunFlat)
+    @Column({type: DataType.INTEGER})
+    id_run_flat: number;
+
+    @ForeignKey(() => TyreStudded)
+    @Column({type: DataType.INTEGER})
+    id_studded: number;
+
+    @ForeignKey(() => TyreHomologation)
+    @Column({type: DataType.INTEGER})
+    id_homologation: number;
+
+    @ForeignKey(() => TyreDemo)
+    @Column({type: DataType.INTEGER})
+    id_demo: number;
+
+    @ForeignKey(() => TyreSizeDigits)
+    @Column({type: DataType.INTEGER})
+    id_size_digits: number;
+
+    @ForeignKey(() => TyreSeal)
+    @Column({type: DataType.INTEGER})
+    id_seal: number;
+
+    @ForeignKey(() => TyreSilent)
+    @Column({type: DataType.INTEGER})
+    id_silent: number;
 
     @HasMany(() => StockTyres , 'id')
     stock: StockTyres[];
