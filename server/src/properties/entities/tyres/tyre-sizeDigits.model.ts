@@ -5,7 +5,7 @@ import { TyrePropsConfigAttr } from "src/properties/interfaces/tyres/tyre-props.
 @Table({tableName: 'tyre_size_digits' , updatedAt: false, createdAt: false})
 export class TyreSizeDigits extends Model<TyreSizeDigits, TyrePropsConfigAttr> {
 
-    @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
+    @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_size_digits: number;
    
     @Column({type: DataType.INTEGER, unique: true, allowNull: false})

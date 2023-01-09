@@ -71,30 +71,31 @@ export class PropsTyreCountryService {
              country_manufacturer: country_manufacturer,
              country_manufacturer_ua: country_manufacturer_ua
             }, {where: {id_country: tyreCountry.id_country}});
-            await tyreId.$set('country', updateCountry);
+            //await tyreId.$set('country', updateCountry);
             //tyreId.country = tyreCountry;
             //updateCountry.reload();
 
             return updateCountry;
 
-        } else if(tyreId && !tyreCountry) {
+        } else {
 
-            const newTyreCountry = await this.tyreCountryRepository.create(
+          const newTyreCountry = await this.tyreCountryRepository.create(
             {country_manufacturer, country_manufacturer_ua});
 
-            await tyreId.$set('country', newTyreCountry);
+          //await tyreId.$set('country', newTyreCountry.id_country);
             //tyreId.country = tyreCountry;
             //tyreCountry.reload();
 
-            return newTyreCountry;
+          return newTyreCountry;
 
-        } else {
+        } 
+        // else {
 
-            const tyreCountry = await this.tyreCountryRepository.create(
-                {country_manufacturer, country_manufacturer_ua});
+        //     const tyreCountry = await this.tyreCountryRepository.create(
+        //         {country_manufacturer, country_manufacturer_ua});
 
-            return tyreCountry;
-        }
+        //     return tyreCountry;
+        // }
 
     } catch {
 

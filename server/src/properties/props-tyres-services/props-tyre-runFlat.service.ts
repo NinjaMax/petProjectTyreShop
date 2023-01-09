@@ -66,28 +66,29 @@ export class PropsTyreRunFlatService {
 
             const updateRunFlat = await this.tyreRunFlatRepository.update({
              run_flat: run_flat}, {where: {id_run_flat: tyreRunFlat.id_run_flat}});
-            await tyreId.$set('run_flat', updateRunFlat);
+            //await tyreId.$set('run_flat', updateRunFlat);
             //tyreId.country = tyreCountry;
             //updateCountry.reload();
 
             return updateRunFlat;
 
-        } else if(tyreId && !tyreRunFlat) {
+        } else {
 
             const newTyreRunFlat = await this.tyreRunFlatRepository.create({run_flat});
 
-            await tyreId.$set('run_flat', newTyreRunFlat);
+            //await tyreId.$set('run_flat', newTyreRunFlat.id_run_flat);
             //tyreId.country = tyreCountry;
             //tyreCountry.reload();
 
             return newTyreRunFlat;
 
-        } else {
+        } 
+        // else {
 
-            const tyreRunFlat = await this.tyreRunFlatRepository.create({run_flat});
+        //     const tyreRunFlat = await this.tyreRunFlatRepository.create({run_flat});
 
-            return tyreRunFlat;
-        }
+        //     return tyreRunFlat;
+        // }
 
     } catch {
 

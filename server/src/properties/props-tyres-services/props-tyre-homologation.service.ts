@@ -65,29 +65,31 @@ export class PropsTyreHomologationService {
         if(tyreId && tyreHomologation) {
 
             const updateHomologation = await this.tyreHomologationRepository.update({
-             homologation: homologation}, {where: {id_homologation: tyreHomologation.id_homologation}});
-            await tyreId.$set('height', updateHomologation);
+             homologation: homologation}, 
+             {where: {id_homologation: tyreHomologation.id_homologation}});
+            //await tyreId.$set('homologation', updateHomologation);
             //tyreId.country = tyreCountry;
             //updateCountry.reload();
 
             return updateHomologation;
 
-        } else if(tyreId && !tyreHomologation) {
+        } else {
 
             const newTyreHomologation = await this.tyreHomologationRepository.create({homologation});
 
-            await tyreId.$set('height', newTyreHomologation);
+            //await tyreId.$set('homologation', newTyreHomologation.id_homologation);
             //tyreId.country = tyreCountry;
             //tyreCountry.reload();
 
             return newTyreHomologation;
 
-        } else {
+        } 
+        // else {
 
-            const tyreHomologation = await this.tyreHomologationRepository.create({homologation});
+        //     const tyreHomologation = await this.tyreHomologationRepository.create({homologation});
 
-            return tyreHomologation;
-        }
+        //     return tyreHomologation;
+        // }
 
     } catch {
 

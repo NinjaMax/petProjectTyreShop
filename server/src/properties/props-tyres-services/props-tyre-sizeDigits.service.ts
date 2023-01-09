@@ -66,28 +66,29 @@ export class PropsTyreSizeDigitsService {
 
             const updateSizeDigits = await this.tyreCountryRepository.update({
              size_only_digits: size_only_digits}, {where: {id_size_digits: tyreSizeDigits.id_size_digits}});
-            await tyreId.$set('size_digits', updateSizeDigits);
+            //await tyreId.$set('size_digits', updateSizeDigits);
             //tyreId.country = tyreCountry;
             //updateCountry.reload();
 
             return updateSizeDigits;
 
-        } else if(tyreId && !tyreSizeDigits) {
+        } else {
 
             const newTyreSizeDigits = await this.tyreCountryRepository.create({size_only_digits});
 
-            await tyreId.$set('size_digits', newTyreSizeDigits);
+            //await tyreId.$set('size_digits', newTyreSizeDigits.id_size_digits);
             //tyreId.country = tyreCountry;
             //tyreCountry.reload();
 
             return newTyreSizeDigits;
 
-        } else {
+        } 
+        // else {
 
-            const tyreSizeDigits = await this.tyreCountryRepository.create({size_only_digits});
+        //     const tyreSizeDigits = await this.tyreCountryRepository.create({size_only_digits});
 
-            return tyreSizeDigits;
-        }
+        //     return tyreSizeDigits;
+        // }
 
     } catch {
 

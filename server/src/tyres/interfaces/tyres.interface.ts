@@ -5,6 +5,7 @@ export interface TyresConfigAttr {
     photo_url: string;
     id_brand: number;
     id_model: number;
+    id_cat: number;
     update_date: Date;
     
 }

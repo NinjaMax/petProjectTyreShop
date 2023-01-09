@@ -35,6 +35,9 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     full_name: string;
 
+    @Column({type: DataType.STRING, unique: false, allowNull: true})
+    photo_url: string;
+
     @Column({type: DataType.DATE, unique: false, allowNull: false})
     update_date: Date;
 

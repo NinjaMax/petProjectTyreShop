@@ -20,9 +20,9 @@ export class SuppliersService {
 
       const contractUser = await this.contractService.createContract(createSupplierDto);
 
-      supplier.$add('contract', contractUser);
+      await supplier.$add('contract', contractUser);
 
-      supplier.reload();
+      await supplier.reload();
 
       return supplier;
 
@@ -39,27 +39,27 @@ export class SuppliersService {
 
     try {
 
-      const supplierId = await this.suppliersRepository.findByPk(id_supplier);
+      let supplierId = await this.suppliersRepository.findByPk(id_supplier);
 
       if(supplierId) {
 
-        const updateSup = await this.suppliersRepository.update(
-          {id_supplier: id_supplier, name: name, city: city, 
+        await this.suppliersRepository.update(
+          { name: name, city: city, 
             city_ua: city_ua},
           {where:{id_supplier: supplierId.id_supplier}}
         );
 
-        return updateSup;
+        return supplierId;
 
       } else {
 
-        const supplierNew = await this.suppliersRepository.create(
+        let supplierNew = await this.suppliersRepository.create(
           {id_supplier, name, city, city_ua});
 
-        const contractUser = await this.contractService.
-        createContractFromPrice(name);
+        let contractSupplier = await this.contractService.
+        createContractFromPrice(id_supplier, name);
 
-        supplierNew.$add('contract', contractUser);
+        supplierNew.$add('contract', contractSupplier);
 
         supplierNew.reload();
 

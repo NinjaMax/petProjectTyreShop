@@ -49,12 +49,12 @@ export class UploaderController {
         ]
       })
     ) file: Express.Multer.File,
-    @Res({ passthrough: true }) res: Response  
+    //@Res({ passthrough: true }) res: Response  
   )
   {    
-    await this.uploaderService.parseTyresPrice(file.path);
+   return await this.uploaderService.parseTyresPrice(file.path);
 
-    return { 'The price has already uploaded': body, file: file};
+   // return { 'The price has already uploaded': body, file: file};
   }
 
   @Get()

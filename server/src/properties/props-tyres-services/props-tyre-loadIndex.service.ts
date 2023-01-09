@@ -68,29 +68,32 @@ export class PropsTyreLoadIndexService {
         if(tyreId && tyreLoadIndex) {
 
             const updateLoadIndex = await this.tyreLoadIndexRepository.update({
-             load_index: load_index}, {where: {id_load_index: tyreLoadIndex.id_load_index}});
-            await tyreId.$set('load_index', updateLoadIndex);
+             load_index: load_index, load_index_with_desc: load_index_with_desc},
+              {where: {id_load_index: tyreLoadIndex.id_load_index}});
+            //await tyreId.$set('load_index', updateLoadIndex);
             //tyreId.country = tyreCountry;
             //updateCountry.reload();
 
             return updateLoadIndex;
 
-        } else if(tyreId && !tyreLoadIndex) {
+        } else {
 
-            const newTyreloadIndex = await this.tyreLoadIndexRepository.create({load_index});
+            const newTyreloadIndex = await this.tyreLoadIndexRepository.create({load_index,
+            load_index_with_desc});
 
-            await tyreId.$set('load_index', newTyreloadIndex);
+            //await tyreId.$set('load_index', newTyreloadIndex.id_load_index);
             //tyreId.country = tyreCountry;
             //tyreCountry.reload();
 
             return newTyreloadIndex;
 
-        } else {
+        } 
+        // else {
 
-            const tyreLoadIndex = await this.tyreLoadIndexRepository.create({load_index});
+        //     const tyreLoadIndex = await this.tyreLoadIndexRepository.create({load_index});
 
-            return tyreLoadIndex;
-        }
+        //     return tyreLoadIndex;
+        // }
 
     } catch {
 

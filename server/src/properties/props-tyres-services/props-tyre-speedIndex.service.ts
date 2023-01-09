@@ -71,30 +71,31 @@ export class PropsTyreSpeedIndexService {
              speed_index: speed_index,
              speed_index_with_desc: speed_index_with_desc
             }, {where: {id_speed_index: tyreSpeedIndex.id_speed_index}});
-            await tyreId.$set('speed_index', updateSpeedIndex);
+            //await tyreId.$set('speed_index', updateSpeedIndex);
             //tyreId.country = tyreCountry;
             //updateCountry.reload();
 
             return updateSpeedIndex;
 
-        } else if(tyreId && !tyreSpeedIndex) {
+        } else {
 
             const newTyreSpeedIndex = await this.tyreSpeedIndexRepository.create(
             {speed_index, speed_index_with_desc});
 
-            await tyreId.$set('country', newTyreSpeedIndex);
+            //await tyreId.$set('speed_index', newTyreSpeedIndex.id_speed_index);
             //tyreId.country = tyreCountry;
             //tyreCountry.reload();
 
             return newTyreSpeedIndex;
 
-        } else {
+        } 
+        // else {
 
-            const tyreSpeedIndex = await this.tyreSpeedIndexRepository.create(
-                {speed_index, speed_index_with_desc});
+        //     const tyreSpeedIndex = await this.tyreSpeedIndexRepository.create(
+        //         {speed_index, speed_index_with_desc});
 
-            return tyreSpeedIndex;
-        }
+        //     return tyreSpeedIndex;
+        // }
 
     } catch {
 

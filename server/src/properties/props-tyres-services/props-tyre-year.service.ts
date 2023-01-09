@@ -66,28 +66,29 @@ export class PropsTyreYearService {
 
             const updateYear = await this.tyreYearRepository.update({
              manufacture_year: manufacture_year}, {where: {id_year: tyreYear.id_year}});
-            await tyreId.$set('year', updateYear);
+            //await tyreId.$set('year', updateYear);
             //tyreId.country = tyreCountry;
             //updateCountry.reload();
 
             return updateYear;
 
-        } else if(tyreId && !tyreYear) {
+        } else {
 
             const newTyreYear = await this.tyreYearRepository.create({manufacture_year});
 
-            await tyreId.$set('year', newTyreYear);
+            //await tyreId.$set('year', newTyreYear.id_year);
             //tyreId.country = tyreCountry;
             //tyreCountry.reload();
 
             return newTyreYear;
 
-        } else {
+        } 
+        // else {
 
-            const tyreYear = await this.tyreYearRepository.create({manufacture_year});
+        //     const tyreYear = await this.tyreYearRepository.create({manufacture_year});
 
-            return tyreYear;
-        }
+        //     return tyreYear;
+        // }
 
     } catch {
 

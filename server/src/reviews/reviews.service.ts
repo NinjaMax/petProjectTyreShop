@@ -6,8 +6,8 @@ import { GetReviewDto } from './dto/get-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { ReviewTyres } from './entities/review-tyres.model';
 import { TyresService } from 'src/tyres/tyres.service';
-import { PropertiesModelService } from 'src/properties/props-tyres-services/props-tyre-model.service';
-import { PropertiesBrandService } from 'src/properties/props-tyres-services/props-tyre-brand.service';
+import { PropsModelService } from 'src/properties/props-tyres-services/props-tyre-model.service';
+import { PropsBrandService } from 'src/properties/props-tyres-services/props-tyre-brand.service';
 import { CustomersService } from 'src/customers/customers.service';
 
 @Injectable()
@@ -16,8 +16,8 @@ export class ReviewsService {
   constructor(@InjectModel(ReviewTyres) private reviewTyresRepository: typeof ReviewTyres,
     private ratingsService: RatingsService, 
     private tyresService: TyresService,
-    private tyreBrandService: PropertiesBrandService,
-    private tyreModelService: PropertiesModelService,
+    private tyreBrandService: PropsBrandService,
+    private tyreModelService: PropsModelService,
     private customersService: CustomersService
    ) {}
 

@@ -8,7 +8,7 @@ export class TyreRunFlat extends Model<TyreRunFlat, TyrePropsConfigAttr> {
     @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_run_flat: number;
    
-    @Column({type: DataType.STRING, unique: true, allowNull: true})
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
     run_flat: string;
 
     @HasMany(() => Tyres , 'id_run_flat')

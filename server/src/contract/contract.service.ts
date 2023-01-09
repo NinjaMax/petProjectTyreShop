@@ -15,11 +15,11 @@ export class ContractService {
 
      try {
 
-      const contract = await this.contractRepository.create(createContractDto);
-      contract.name = createContractDto.name + " Main Contract";
-      contract.save();
+      const contractNew = await this.contractRepository.create(createContractDto);
+      contractNew.name = createContractDto.name + " Основний договір";
+      contractNew.save();
 
-      return contract;
+      return contractNew;
 
     } catch (error) {
 
@@ -29,23 +29,38 @@ export class ContractService {
   
   }
 
-  async createContractFromPrice(name: string) {
+  async createContractFromPrice(id_supplier: number, name: string) {
 
     try {
 
-      const contract = await this.contractRepository.create({name});
-      contract.name = name + " Main Contract";
-      contract.save();
+      let findContract = await this.contractRepository.findOne(
+        {where: {id_supplier: id_supplier}});
 
-      return contract;
+      if(findContract){
+
+        //const contractSupplier = await this.contractRepository.update(
+        //  {id_supplier: id_supplier}, {where:{id_supplier: id_supplier}});
+
+        return findContract;
+
+      } else {
+
+        let contractPrice = await this.contractRepository.create({name});
+
+        contractPrice.name = name + " Основний договір";
+        contractPrice.save();
+        //await contractPrice.$add('supplier', id_supplier);
+
+        return contractPrice; 
+      }
+      
 
     } catch (error) {
 
      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
-
-   }
- 
- }
+    
+    }
+  }
 
   async findAllContract() {
 

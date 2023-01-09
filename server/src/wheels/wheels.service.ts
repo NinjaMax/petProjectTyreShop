@@ -28,7 +28,9 @@ export class WheelsService {
 
   async createWheelFromPrice(
     id: number, 
-    full_name : string, 
+    full_name : string,
+    full_name_color: string,
+    full_name_hotline: string,
     update_date : Date, 
     id_brand: number, 
     id_model: number) {
@@ -42,6 +44,8 @@ export class WheelsService {
         await this.wheelRepository.update(
           { id: id, 
             full_name : full_name,
+            full_name_color: full_name_color,
+            full_name_hotline: full_name_hotline,
             update_date : update_date,
             id_brand: id_brand,
             id_model: id_model
@@ -54,7 +58,8 @@ export class WheelsService {
       } else {
 
         const tyresFromPrice = await this.wheelRepository.create(
-        {id, full_name, update_date, id_brand, id_model});
+        {id, full_name, full_name_color, full_name_hotline,
+           update_date, id_brand, id_model});
 
         return tyresFromPrice;
 

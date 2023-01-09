@@ -11,7 +11,7 @@ export class TyreVehicleType extends Model<TyreVehicleType, TyrePropsConfigAttr>
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     vehicle_type: string;
 
-    @Column({type: DataType.STRING, unique: true, allowNull: true})
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
     vehicle_type_ua: string;
 
     @HasMany(() => Tyres , 'id_vehicle_type')

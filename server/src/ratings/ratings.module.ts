@@ -9,14 +9,14 @@ import { TyreModel } from 'src/properties/entities/tyres/tyre-model.model';
 import { TyresModule } from 'src/tyres/tyres.module';
 import { RatingTyres } from './entities/rating-tyres.model';
 import { ReviewsModule } from 'src/reviews/reviews.module';
-import { PropertiesTyreModule } from 'src/properties/propertiesTyre.module';
+//import { PropertiesTyreModule } from 'src/properties/propertiesTyre.module';
 
 @Module({
   controllers: [RatingsController],
   providers: [RatingsService], 
   imports: [ 
     SequelizeModule.forFeature([RatingTyres, Tyres, ReviewTyres, TyreBrand,
-    TyreModel]), PropertiesTyreModule,
+    TyreModel]),
     TyresModule, forwardRef(() => ReviewsModule)
   ],
   exports: [RatingsService]

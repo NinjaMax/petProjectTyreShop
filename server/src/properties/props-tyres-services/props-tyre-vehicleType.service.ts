@@ -31,22 +31,24 @@ export class PropsTyreVehicleTypeService {
 
             return updateVehicleType;
 
-        } else if(tyreId && !tyreVehicleType) {
+        } else {
 
-            const newTyreVehicleType = await this.tyreVehicleTypeRepository.create(createPropertyDto);
+            const newTyreVehicleType = await this.tyreVehicleTypeRepository.
+            create(createPropertyDto);
 
-            await tyreId.$set('vehicle_type', newTyreVehicleType);
+            await tyreId.$set('vehicle_type', newTyreVehicleType.id_vehicle_type);
             //tyreId.country = tyreCountry;
             //tyreCountry.reload();
 
             return newTyreVehicleType;
 
-        } else {
+        } 
+        // else {
 
-            const tyreVehicleType = await this.tyreVehicleTypeRepository.create(createPropertyDto);
+        //     const tyreVehicleType = await this.tyreVehicleTypeRepository.create(createPropertyDto);
 
-            return tyreVehicleType;
-        }
+        //     return tyreVehicleType;
+        // }
 
     } catch {
 
@@ -71,30 +73,31 @@ export class PropsTyreVehicleTypeService {
             vehicle_type:vehicle_type,
              vehicle_type_ua: vehicle_type_ua
             }, {where: {id_vehicle_type: tyreVehicleType.id_vehicle_type}});
-            await tyreId.$set('vehicle_type', updateVehicleType);
+            //await tyreId.$set('vehicle_type', updateVehicleType);
             //tyreId.country = tyreCountry;
             //updateCountry.reload();
 
             return updateVehicleType;
 
-        } else if(tyreId && !tyreVehicleType) {
+        } else {
 
             const newTyreVehicleType = await this.tyreVehicleTypeRepository.create(
             {id_vehicle_type, vehicle_type, vehicle_type_ua});
 
-            await tyreId.$set('vehicle_type', newTyreVehicleType);
+            //await tyreId.$set('vehicle_type', newTyreVehicleType.id_vehicle_type);
             //tyreId.country = tyreCountry;
             //tyreCountry.reload();
 
             return newTyreVehicleType;
 
-        } else {
+        } 
+        // else {
 
-            const tyreVehicleType = await this.tyreVehicleTypeRepository.create(
-                {id_vehicle_type, vehicle_type, vehicle_type_ua});
+        //     const tyreVehicleType = await this.tyreVehicleTypeRepository.create(
+        //         {id_vehicle_type, vehicle_type, vehicle_type_ua});
 
-            return tyreVehicleType;
-        }
+        //     return tyreVehicleType;
+        // }
 
     } catch {
 

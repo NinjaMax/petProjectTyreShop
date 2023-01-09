@@ -8,6 +8,7 @@ import { PricesModule } from 'src/prices/prices.module';
 import { StockModule } from 'src/stock/stock.module';
 import { SuppliersModule } from 'src/suppliers/suppliers.module';
 import { PropertiesModule } from 'src/properties/properties.module';
+import { CategorysModule } from 'src/categorys/categorys.module';
 
 @Module({
   controllers: [UploaderController],
@@ -15,7 +16,7 @@ import { PropertiesModule } from 'src/properties/properties.module';
   imports: [MulterModule.register({
     dest: './upload_prices',
   }), TyresModule, PricesModule, StockModule,
-   SuppliersModule, PropertiesModule],
+   SuppliersModule, PropertiesModule, CategorysModule],
   exports: [UploaderService]
 })
 export class UploaderModule {}

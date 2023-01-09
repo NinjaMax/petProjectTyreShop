@@ -81,6 +81,19 @@ import { TyreHeight } from './properties/entities/tyres/tyre-height.model';
 import { TyreDiameter } from './properties/entities/tyres/tyre-diameter.model';
 import { TyreDemo } from './properties/entities/tyres/tyre-demo.model';
 import { TyreCountry } from './properties/entities/tyres/tyre-country.model';
+import { WheelBrand } from './properties/entities/wheels/wheel-brand.model';
+import { WheelModel } from './properties/entities/wheels/wheel-model.model';
+import { WheelWidth } from './properties/entities/wheels/wheel-width.model';
+import { WheelType } from './properties/entities/wheels/wheel-type.model';
+import { WheelEt } from './properties/entities/wheels/wheel-et.model';
+import { WheelDiameter } from './properties/entities/wheels/wheel-diameter.model';
+import { WheelDia } from './properties/entities/wheels/wheel-dia.model';
+import { WheelColor } from './properties/entities/wheels/wheel-color.model';
+import { WheelSizeDigits } from './properties/entities/wheels/wheel-sizeDigits.model';
+import { WheelPcd2 } from './properties/entities/wheels/wheel-pcd2.model';
+import { WheelBoltCountPcd } from './properties/entities/wheels/wheel-boltCountPcd.model';
+import { WheelBoltCount } from './properties/entities/wheels/wheel-boltCount.model';
+import { WheelPcd } from './properties/entities/wheels/wheel-pcd.model';
 
 @Module({
   imports: [
@@ -104,6 +117,10 @@ import { TyreCountry } from './properties/entities/tyres/tyre-country.model';
           TyreReinforce, TyreRunFlat, TyreSeal, TyreSeason,
           TyreSilent, TyreSizeDigits, TyreSpeedIndex, 
           TyreStudded, TyreVehicleType, TyreWidth, TyreYear,
+          WheelBrand, WheelModel, WheelBoltCount, WheelPcd,
+          WheelBoltCountPcd, WheelPcd2, WheelSizeDigits,
+          WheelColor, WheelDia, WheelDiameter, WheelEt,
+          WheelType, WheelWidth,
           Users, Service, Orders, OrdersSupplier, 
           OrdersSupStorage, SaleStorage, Order_Storage, 
           Storage, Basket, Contract, Customer,

@@ -1,12 +1,12 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { PropertiesModelService } from '../props-tyres-services/props-tyre-model.service';
+import { PropsModelService } from '../props-tyres-services/props-tyre-model.service';
 import { CreatePropertyDto } from '../dto/create-property.dto';
 import { GetPropertyDto } from '../dto/get-property.dto';
 import { UpdatePropertyDto } from '../dto/update-property.dto';
 
 @Controller('properties')
 export class PropertiesModelController {
-  constructor(private readonly propertiesModelService: PropertiesModelService) {}
+  constructor(private readonly propertiesModelService: PropsModelService) {}
 
   @Post('/model')
   create(@Body() createPropertyDto: CreatePropertyDto) {

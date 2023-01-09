@@ -39,12 +39,13 @@ export class PropsTyreParamsService {
 
             return newTyreParams;
 
-        } else {
+        } 
+        // else {
 
-            const tyreParams = await this.tyreParamsRepository.create(createPropertyDto);
+        //     const tyreParams = await this.tyreParamsRepository.create(createPropertyDto);
 
-            return tyreParams;
-        }
+        //     return tyreParams;
+        // }
 
     } catch {
 
@@ -66,28 +67,29 @@ export class PropsTyreParamsService {
 
             const updateParams = await this.tyreParamsRepository.update({
              params: params}, {where: {params: tyreParams.id_params}});
-            await tyreId.$set('params', updateParams);
+            //await tyreId.$set('params', updateParams);
             //tyreId.country = tyreCountry;
             //updateCountry.reload();
 
             return updateParams;
 
-        } else if(tyreId && !tyreParams) {
+        } else {
 
             const newTyreParams = await this.tyreParamsRepository.create({params});
 
-            await tyreId.$set('params', newTyreParams);
+            //await tyreId.$set('params', newTyreParams.id_params);
             //tyreId.country = tyreCountry;
             //tyreCountry.reload();
 
             return newTyreParams;
 
-        } else {
+        } 
+        // else {
 
-            const tyreParams = await this.tyreParamsRepository.create({params});
+        //     const tyreParams = await this.tyreParamsRepository.create({params});
 
-            return tyreParams;
-        }
+        //     return tyreParams;
+        // }
 
     } catch {
 

@@ -29,22 +29,23 @@ export class PropsTyreStuddedService {
 
             return updateStudded;
 
-        } else if(tyreId && !tyreStudded) {
+        } else {
 
             const newTyreStudded = await this.tyreStuddedRepository.create(createPropertyDto);
 
-            await tyreId.$set('studded', newTyreStudded);
+            await tyreId.$set('studded', newTyreStudded.id_studded);
             //tyreId.country = tyreCountry;
             //tyreCountry.reload();
 
             return newTyreStudded;
 
-        } else {
+        } 
+        // else {
 
-            const tyreStudded = await this.tyreStuddedRepository.create(createPropertyDto);
+        //     const tyreStudded = await this.tyreStuddedRepository.create(createPropertyDto);
 
-            return tyreStudded;
-        }
+        //     return tyreStudded;
+        // }
 
     } catch {
 
@@ -66,29 +67,30 @@ export class PropsTyreStuddedService {
 
             const updateStudded = await this.tyreStuddedRepository.update({
              studded: studded}, {where: {id_studded: tyreStudded.id_studded}});
-            await tyreId.$set('studded', updateStudded);
+            //await tyreId.$set('studded', updateStudded);
             //tyreId.country = tyreCountry;
             //updateCountry.reload();
 
             return updateStudded;
 
-        } else if(tyreId && !tyreStudded) {
+        } else {
 
             const newTyreStudded = await this.tyreStuddedRepository.create(
             {studded});
 
-            await tyreId.$set('country', newTyreStudded);
+            //await tyreId.$set('studded', newTyreStudded.id_studded);
             //tyreId.country = tyreCountry;
             //tyreCountry.reload();
 
             return newTyreStudded;
 
-        } else {
+        } 
+        // else {
 
-            const tyreStudded = await this.tyreStuddedRepository.create({studded});
+        //     const tyreStudded = await this.tyreStuddedRepository.create({studded});
 
-            return tyreStudded;
-        }
+        //     return tyreStudded;
+        // }
 
     } catch {
 

@@ -22,9 +22,9 @@ export class CustomersService {
 
       const contractUser = await this.contractService.createContract(createCustomerDto);
 
-      customer.$add('contract', contractUser);
+      await customer.$add('contract', contractUser);
 
-      customer.reload();
+      await customer.reload();
 
       return customer;
 

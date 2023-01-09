@@ -11,7 +11,7 @@ export class TyreSpeedIndex extends Model<TyreSpeedIndex, TyrePropsConfigAttr> {
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     speed_index: string;
 
-    @Column({type: DataType.STRING, unique: true, allowNull: true})
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
     speed_index_with_desc: string;
 
     @HasMany(() => Tyres , 'id_speed_index')

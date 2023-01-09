@@ -20,7 +20,8 @@ export class PropsBrandService {
       if(tyreId) {
 
         const tyreBrand = await this.tyreBrandRepository.create(createPropertyDto);
-        const createTyreBrand = await this.tyreBrandRepository.findByPk(tyreBrand.id_brand, {include: {all: true}});
+        const createTyreBrand = await this.tyreBrandRepository.findByPk(
+          tyreBrand.id_brand, {include: {all: true}});
         await createTyreBrand.$add('tyres', [createPropertyDto.id]);
         createTyreBrand.tyres.push(tyreId);
 
@@ -49,35 +50,35 @@ export class PropsBrandService {
     try {
 
       const tyreId = await this.tyresService.findTyresByIdPrice(id);
-      const tyreBrand = await this.tyreBrandRepository.findOne(
-      { where: { brand: brand } })
+      const tyreBrand = await this.tyreBrandRepository.findByPk(id_brand);
 
       if(tyreId && tyreBrand) {
 
           const updateBrand = await this.tyreBrandRepository.update({
            brand: brand}, {where: {id_brand: tyreBrand.id_brand}});
-          await tyreId.$set('tyre_brand', updateBrand);
+          //await tyreId.$add('tyre_brand', updateBrand);
           //tyreId.country = tyreCountry;
           //updateCountry.reload();
 
           return updateBrand;
 
-      } else if(tyreId && !tyreBrand) {
+      } else {
 
           const newTyreBrand = await this.tyreBrandRepository.create({id_brand, brand});
 
-          await tyreId.$set('tyre_brand', newTyreBrand);
+          //await newTyreBrand.$add('tyres', [tyreId.id]);
           //tyreId.country = tyreCountry;
           //tyreCountry.reload();
 
           return newTyreBrand;
 
-      } else {
+      } 
+      // else {
 
-          const tyreBrand = await this.tyreBrandRepository.create({id_brand, brand});
+      //     const tyreBrand = await this.tyreBrandRepository.create({id_brand, brand});
 
-          return tyreBrand;
-      }
+      //     return tyreBrand;
+      // }
 
     } catch {
 

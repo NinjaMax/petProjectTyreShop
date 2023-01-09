@@ -56,6 +56,6 @@ import { PropertiesTyreModule } from './propertiesTyre.module';
     SequelizeModule.forFeature([]),
     PropertiesTyreModule, 
   ],
-  exports: []
+  exports: [PropertiesTyreModule]
 })
 export class PropertiesModule {}

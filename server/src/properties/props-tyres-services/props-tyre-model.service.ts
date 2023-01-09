@@ -48,35 +48,35 @@ export class PropsModelService {
     try {
   
       const tyreId = await this.tyresService.findTyresByIdPrice(id);
-      const tyreModel = await this.tyreModelRepository.findOne(
-      { where: { model: model } })
+      const tyreModel = await this.tyreModelRepository.findByPk(id_model);
   
       if(tyreId && tyreModel) {
   
         const updateModel = await this.tyreModelRepository.update({
             model: model}, {where: {id_model: tyreModel.id_model}});
-        await tyreId.$set('tyre_model', updateModel);
+        //await tyreId.$set('tyre_model', updateModel);
             //tyreId.country = tyreCountry;
             //updateCountry.reload();
   
         return updateModel;
   
-      } else if(tyreId && !tyreModel) {
+      } else {
   
         const newTyreModel = await this.tyreModelRepository.create({id_model, model});
   
-        await tyreId.$set('tyre_model', newTyreModel);
+        //await tyreId.$set('tyre_model', newTyreModel.id_model);
             //tyreId.country = tyreCountry;
             //tyreCountry.reload();
   
         return newTyreModel;
   
-      } else {
+      } 
+      // else {
   
-        const tyreModel = await this.tyreModelRepository.create({id_model, model});
+      //   const tyreModel = await this.tyreModelRepository.create({id_model, model});
   
-        return tyreModel;
-      }
+      //   return tyreModel;
+      // }
   
     } catch {
   

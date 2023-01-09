@@ -41,7 +41,7 @@ export class StockTyresService {
 
         await tyres.$add('stock', [createStockDto.id]);
 
-        await supplier.$add('stock', [createStockDto.id_supplier]);
+        await supplier.$add('stock_tyres', [createStockDto.id_supplier]);
         
         tyres.stock.push(stockCreate);
 
@@ -82,12 +82,12 @@ export class StockTyresService {
 
         return updateStock;
 
-      } else if(tyreId && !tyreStock) {
+      } else {
 
         const newTyreStock = await this.stockTyresRepository.create(
           {id, stock, id_supplier});
-
-        await tyreId.$add('stock', newTyreStock);
+        await supplier.$add('stock_tyres', [supplier.id_supplier]);
+        //await tyreId.$add('stock', newTyreStock);
         //tyreId.country = tyreCountry;
         //tyreCountry.reload();
 

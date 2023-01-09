@@ -66,28 +66,29 @@ export class PropsTyreHeightService {
 
             const updateHeight = await this.tyreHeightRepository.update({
              height: height}, {where: {id_height: tyreHeight.id_height}});
-            await tyreId.$set('height', updateHeight);
+            //await tyreId.$set('height', updateHeight);
             //tyreId.country = tyreCountry;
             //updateCountry.reload();
 
             return updateHeight;
 
-        } else if(tyreId && !tyreHeight) {
+        } else {
 
             const newTyreHeight = await this.tyreHeightRepository.create({height});
 
-            await tyreId.$set('height', newTyreHeight);
+            //await tyreId.$set('height', newTyreHeight.id_height);
             //tyreId.country = tyreCountry;
             //tyreCountry.reload();
 
             return newTyreHeight;
 
-        } else {
+        } 
+        // else {
 
-            const tyreHeight = await this.tyreHeightRepository.create({height});
+        //     const tyreHeight = await this.tyreHeightRepository.create({height});
 
-            return tyreHeight;
-        }
+        //     return tyreHeight;
+        // }
 
     } catch {
 

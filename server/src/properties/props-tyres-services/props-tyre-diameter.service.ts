@@ -66,29 +66,30 @@ export class PropsTyrDiametrService {
 
             const updateDiameter = await this.tyreDiameterRepository.update({
              diameter: diameter}, {where: {id_diameter: tyreDiameter.id_diameter}});
-            await tyreId.$set('diameter', updateDiameter);
+            //await tyreId.$set('diameter', updateDiameter);
             //tyreId.country = tyreCountry;
             //updateCountry.reload();
 
             return updateDiameter;
 
-        } else if(tyreId && !tyreDiameter) {
+        } else {
 
             const newTyreDiameter = await this.tyreDiameterRepository.create(
             {diameter});
 
-            await tyreId.$set('country', newTyreDiameter);
+            //await tyreId.$set('diameter', newTyreDiameter.id_diameter);
             //tyreId.country = tyreCountry;
             //tyreCountry.reload();
 
             return newTyreDiameter;
 
-        } else {
+        } 
+        // else {
 
-            const tyreDiameter = await this.tyreDiameterRepository.create({diameter});
+        //     const tyreDiameter = await this.tyreDiameterRepository.create({diameter});
 
-            return tyreDiameter;
-        }
+        //     return tyreDiameter;
+        // }
 
     } catch {
 

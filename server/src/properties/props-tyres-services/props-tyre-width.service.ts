@@ -66,29 +66,30 @@ export class PropsTyreWidthService {
 
             const updateWidth = await this.tyreCountryRepository.update({
              width: width}, {where: {id_width: tyreWidth.id_width}});
-            await tyreId.$set('width', updateWidth);
+            //await tyreId.$set('width', updateWidth);
             //tyreId.country = tyreCountry;
             //updateCountry.reload();
 
             return updateWidth;
 
-        } else if(tyreId && !tyreWidth) {
+        } else {
 
             const newTyreWidth = await this.tyreCountryRepository.create(
             {width});
 
-            await tyreId.$set('width', newTyreWidth);
+            //await tyreId.$set('width', newTyreWidth.id_width);
             //tyreId.country = tyreCountry;
             //tyreCountry.reload();
 
             return newTyreWidth;
 
-        } else {
+        } 
+        // else {
 
-            const tyreWidth = await this.tyreCountryRepository.create({width});
+        //     const tyreWidth = await this.tyreCountryRepository.create({width});
 
-            return tyreWidth;
-        }
+        //     return tyreWidth;
+        // }
 
     } catch {
 

@@ -29,22 +29,23 @@ export class PropsTyreSeasonService {
 
           return updateSeason;
 
-        } else if(tyreId && !tyreSeason) {
+        } else {
 
           const newTyreSeason = await this.tyreSeasonRepository.create(createPropertyDto);
 
-          await tyreId.$set('season', newTyreSeason);
+          await tyreId.$set('season', newTyreSeason.id_season);
             //tyreId.country = tyreCountry;
             //tyreCountry.reload();
 
           return newTyreSeason;
 
-        } else {
+        } 
+        // else {
 
-          const tyreSeason = await this.tyreSeasonRepository.create(createPropertyDto);
+        //   const tyreSeason = await this.tyreSeasonRepository.create(createPropertyDto);
 
-          return tyreSeason;
-        }
+        //   return tyreSeason;
+        // }
 
     } catch {
 
@@ -68,30 +69,31 @@ export class PropsTyreSeasonService {
             const updateSeason = await this.tyreSeasonRepository.update({
              season: season, season_ua: season_ua}, 
              {where: {id_season: tyreSeason.id_season}});
-            await tyreId.$set('season', updateSeason);
+            //await tyreId.$set('season', updateSeason);
             //tyreId.country = tyreCountry;
             //updateCountry.reload();
 
             return updateSeason;
 
-        } else if(tyreId && !tyreSeason) {
+        } else {
 
             const newTyreSeason = await this.tyreSeasonRepository.create(
-              {id_season, season});
+              {id_season, season, season_ua});
 
-            await tyreId.$set('season', newTyreSeason);
+            //await tyreId.$set('season', newTyreSeason.id_season);
             //tyreId.country = tyreCountry;
             //tyreCountry.reload();
 
             return newTyreSeason;
 
-        } else {
+        } 
+        // else {
 
-            const tyreSeason = await this.tyreSeasonRepository.create(
-              {id_season, season, season_ua});
+        //     const tyreSeason = await this.tyreSeasonRepository.create(
+        //       {id_season, season, season_ua});
 
-            return tyreSeason;
-        }
+        //     return tyreSeason;
+        // }
 
     } catch {
 

@@ -66,28 +66,29 @@ export class PropsTyreReinforceService {
 
             const updateReinforce = await this.tyreReinforceRepository.update({
              reinforce: reinforce}, {where: {id_reinforce: tyreReinforce.id_reinforce}});
-            await tyreId.$set('reinforce', updateReinforce);
+            //await tyreId.$set('reinforce', updateReinforce);
             //tyreId.country = tyreCountry;
             //updateCountry.reload();
 
             return updateReinforce;
 
-        } else if(tyreId && !tyreReinforce) {
+        } else {
 
             const newTyreReinforce = await this.tyreReinforceRepository.create({reinforce});
 
-            await tyreId.$set('reinforce', newTyreReinforce);
+            //await tyreId.$set('reinforce', newTyreReinforce.id_reinforce);
             //tyreId.country = tyreCountry;
             //tyreCountry.reload();
 
             return newTyreReinforce;
 
-        } else {
+        } 
+        // else {
 
-            const tyreReinforce = await this.tyreReinforceRepository.create({reinforce});
+        //     const tyreReinforce = await this.tyreReinforceRepository.create({reinforce});
 
-            return tyreReinforce;
-        }
+        //     return tyreReinforce;
+        // }
 
     } catch {
 

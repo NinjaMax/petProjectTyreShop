@@ -66,30 +66,28 @@ export class PropsTyreDemoService {
         if(tyreId && tyreDemo) {
 
             const updateDemo = await this.tyreDemoRepository.update({
-             demo: demo
-            }, {where: {id_demo: tyreDemo.id_demo}});
-            await tyreId.$set('demo', updateDemo);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
+             demo: demo}, {where: {id_demo: tyreDemo.id_demo}});
+            //await tyreId.$set('demo', updateDemo);
 
             return updateDemo;
 
-        } else if(tyreId && !tyreDemo) {
+        } else {
 
             const newTyreDemo = await this.tyreDemoRepository.create({demo});
 
-            await tyreId.$set('demo', newTyreDemo);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
+            //await tyreId.$set('demo', newTyreDemo.id_demo);
+           
+            //await tyreId.reload();
 
             return newTyreDemo;
 
-        } else {
+        } 
+        // else {
 
-            const tyreDemo = await this.tyreDemoRepository.create({demo});
+        //     const tyreDemo = await this.tyreDemoRepository.create({demo});
 
-            return tyreDemo;
-        }
+        //     return tyreDemo;
+        // }
 
     } catch {
 

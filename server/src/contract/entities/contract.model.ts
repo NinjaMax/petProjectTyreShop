@@ -11,11 +11,11 @@ export class Contract extends Model<Contract, ContractConfigAttr>{
    @Column({type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true})
    id_contract: number;
 
-   @Column({type: DataType.STRING, unique: false, allowNull: false, 
-    defaultValue: "Main Contract"})
+   @Column({type: DataType.STRING, unique: false, allowNull: false})
    name: string;
 
-   @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+   @Column({type: DataType.INTEGER, unique: false, allowNull: true, 
+      defaultValue: 0})
    balance: number;
 
    @ForeignKey(() => Users)

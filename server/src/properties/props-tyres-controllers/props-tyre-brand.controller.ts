@@ -1,12 +1,12 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { PropertiesBrandService } from '../props-tyres-services/props-tyre-brand.service';
+import { PropsBrandService } from '../props-tyres-services/props-tyre-brand.service';
 import { CreatePropertyDto } from '../dto/create-property.dto';
 import { UpdatePropertyDto } from '../dto/update-property.dto';
 import { GetPropertyDto } from '../dto/get-property.dto';
 
 @Controller('properties')
 export class PropertiesBrandController {
-  constructor(private readonly propertiesBrandService: PropertiesBrandService) {}
+  constructor(private readonly propertiesBrandService: PropsBrandService) {}
 
   @Post('/brand')
   create(@Body() createPropertyDto: CreatePropertyDto) {

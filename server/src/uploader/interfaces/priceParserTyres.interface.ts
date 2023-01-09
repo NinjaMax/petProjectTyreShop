@@ -20,4 +20,5 @@ export class PriceParserTyresOptions {
           if( this.alwaysArray.indexOf(item) !== -1) return true;
         }
     };
+    
 }

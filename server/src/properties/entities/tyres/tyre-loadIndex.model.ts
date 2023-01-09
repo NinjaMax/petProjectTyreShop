@@ -11,7 +11,7 @@ export class TyreLoadIndex extends Model<TyreLoadIndex, TyrePropsConfigAttr> {
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     load_index: string;
 
-    @Column({type: DataType.STRING, unique: true, allowNull: true})
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
     load_index_with_desc: string;
 
     @HasMany(() => Tyres , 'id_load_index')

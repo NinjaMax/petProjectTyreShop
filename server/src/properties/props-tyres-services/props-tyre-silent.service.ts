@@ -58,36 +58,37 @@ export class PropsTyreSilentService {
 
     try {
 
-        const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const tyreSilent = await this.tyreSilentRepository.findOne(
-        { where: { silent: silent } })
+      const tyreId = await this.tyresService.findTyresByIdPrice(id);
+      const tyreSilent = await this.tyreSilentRepository.findOne(
+      { where: { silent: silent } })
 
-        if(tyreId && tyreSilent) {
+      if(tyreId && tyreSilent) {
 
-            const updateSilent = await this.tyreSilentRepository.update({
-             silent: silent}, {where: {id_silent: tyreSilent.id_silent}});
-            await tyreId.$set('country', updateSilent);
+        const updateSilent = await this.tyreSilentRepository.update({
+          silent: silent}, {where: {id_silent: tyreSilent.id_silent}});
+        //await tyreId.$set('silent', updateSilent);
             //tyreId.country = tyreCountry;
             //updateCountry.reload();
 
-            return updateSilent;
+        return updateSilent;
 
-        } else if(tyreId && !tyreSilent) {
+      } else {
 
-            const newTyreSilent = await this.tyreSilentRepository.create({silent});
+        const newTyreSilent = await this.tyreSilentRepository.create({silent});
 
-            await tyreId.$set('country', newTyreSilent);
+        //await tyreId.$set('silent', newTyreSilent.id_silent);
             //tyreId.country = tyreCountry;
             //tyreCountry.reload();
 
-            return newTyreSilent;
+        return newTyreSilent;
 
-        } else {
+      } 
+        // else {
 
-            const tyreSilent = await this.tyreSilentRepository.create({silent});
+        //     const tyreSilent = await this.tyreSilentRepository.create({silent});
 
-            return tyreSilent;
-        }
+        //     return tyreSilent;
+        // }
 
     } catch {
 
