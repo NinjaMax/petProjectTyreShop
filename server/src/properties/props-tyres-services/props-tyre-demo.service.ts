@@ -59,29 +59,34 @@ export class PropsTyreDemoService {
 
     try {
 
-        const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const tyreDemo = await this.tyreDemoRepository.findOne(
-        { where: { demo: demo } })
+        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
+        const [tyreDemo, created] = await this.tyreDemoRepository.findOrCreate(
+        { where: { demo: demo }, defaults: {demo: demo}})
 
-        if(tyreId && tyreDemo) {
+        if(created || !created) {
+          await tyreDemo.$set('tyres', id);
+        }
+        // if(tyreId && tyreDemo) {
 
-            const updateDemo = await this.tyreDemoRepository.update({
-             demo: demo}, {where: {id_demo: tyreDemo.id_demo}});
-            //await tyreId.$set('demo', updateDemo);
+        //     const updateDemo = await this.tyreDemoRepository.update({
+        //      demo: demo}, {where: {id_demo: tyreDemo.id_demo}});
+        //     //await tyreId.$set('demo', updateDemo);
 
-            return updateDemo;
+        //     return updateDemo;
 
-        } else {
+        // } 
+        
+        // else {
 
-            const newTyreDemo = await this.tyreDemoRepository.create({demo});
+        //     const newTyreDemo = await this.tyreDemoRepository.create({demo});
 
-            //await tyreId.$set('demo', newTyreDemo.id_demo);
+        //     //await tyreId.$set('demo', newTyreDemo.id_demo);
            
-            //await tyreId.reload();
+        //     //await tyreId.reload();
 
-            return newTyreDemo;
+        //     return newTyreDemo;
 
-        } 
+        // } 
         // else {
 
         //     const tyreDemo = await this.tyreDemoRepository.create({demo});

@@ -58,32 +58,38 @@ export class PropsTyrDiametrService {
 
     try {
 
-        const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const tyreDiameter = await this.tyreDiameterRepository.findOne(
-        { where: { diameter: diameter } })
+        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
+        const [tyreDiameter, created] = await this.tyreDiameterRepository.findOrCreate(
+        { where: { diameter: diameter }, defaults: {diameter: diameter}})
 
-        if(tyreId && tyreDiameter) {
+        if(created || !created) {
 
-            const updateDiameter = await this.tyreDiameterRepository.update({
-             diameter: diameter}, {where: {id_diameter: tyreDiameter.id_diameter}});
-            //await tyreId.$set('diameter', updateDiameter);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
+          await tyreDiameter.$set('tyres', id);
+          
+        }
+        // if(tyreId && tyreDiameter) {
 
-            return updateDiameter;
+        //     const updateDiameter = await this.tyreDiameterRepository.update({
+        //      diameter: diameter}, {where: {id_diameter: tyreDiameter.id_diameter}});
+        //     //await tyreId.$set('diameter', updateDiameter);
+        //     //tyreId.country = tyreCountry;
+        //     //updateCountry.reload();
 
-        } else {
+        //     return updateDiameter;
 
-            const newTyreDiameter = await this.tyreDiameterRepository.create(
-            {diameter});
+        // } 
+        // else {
 
-            //await tyreId.$set('diameter', newTyreDiameter.id_diameter);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
+        //     const newTyreDiameter = await this.tyreDiameterRepository.create(
+        //     {diameter});
 
-            return newTyreDiameter;
+        //     //await tyreId.$set('diameter', newTyreDiameter.id_diameter);
+        //     //tyreId.country = tyreCountry;
+        //     //tyreCountry.reload();
 
-        } 
+        //     return newTyreDiameter;
+
+        // } 
         // else {
 
         //     const tyreDiameter = await this.tyreDiameterRepository.create({diameter});

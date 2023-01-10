@@ -58,31 +58,37 @@ export class PropsTyreRunFlatService {
 
     try {
 
-        const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const tyreRunFlat = await this.tyreRunFlatRepository.findOne(
-        { where: { run_flat: run_flat } })
+        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
+        const [tyreRunFlat, created] = await this.tyreRunFlatRepository.findOrCreate(
+        { where: { run_flat: run_flat}, defaults: {run_flat: run_flat}});
 
-        if(tyreId && tyreRunFlat) {
+        if(created || !created) {
 
-            const updateRunFlat = await this.tyreRunFlatRepository.update({
-             run_flat: run_flat}, {where: {id_run_flat: tyreRunFlat.id_run_flat}});
-            //await tyreId.$set('run_flat', updateRunFlat);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
+          await tyreRunFlat.$set('tyres', id);
+          
+        }
 
-            return updateRunFlat;
+        // if(tyreId && tyreRunFlat) {
 
-        } else {
+        //     const updateRunFlat = await this.tyreRunFlatRepository.update({
+        //      run_flat: run_flat}, {where: {id_run_flat: tyreRunFlat.id_run_flat}});
+        //     //await tyreId.$set('run_flat', updateRunFlat);
+        //     //tyreId.country = tyreCountry;
+        //     //updateCountry.reload();
 
-            const newTyreRunFlat = await this.tyreRunFlatRepository.create({run_flat});
+        //     return updateRunFlat;
 
-            //await tyreId.$set('run_flat', newTyreRunFlat.id_run_flat);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
+        // } else {
 
-            return newTyreRunFlat;
+        //     const newTyreRunFlat = await this.tyreRunFlatRepository.create({run_flat});
 
-        } 
+        //     //await tyreId.$set('run_flat', newTyreRunFlat.id_run_flat);
+        //     //tyreId.country = tyreCountry;
+        //     //tyreCountry.reload();
+
+        //     return newTyreRunFlat;
+
+        // } 
         // else {
 
         //     const tyreRunFlat = await this.tyreRunFlatRepository.create({run_flat});

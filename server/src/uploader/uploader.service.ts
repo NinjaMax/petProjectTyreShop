@@ -77,7 +77,7 @@ export class UploaderService extends PriceParserTyresOptions {
     
     try {
       
-      fs.readFile(join(process.cwd(), path),
+     fs.readFile(join(process.cwd(), path),
       (err, data) =>{
         if (err) {
           throw err;   
@@ -85,10 +85,33 @@ export class UploaderService extends PriceParserTyresOptions {
 
         const parser = new XMLParser(this.optionsTyresParse);
         let jsObj = parser.parse(data);
-           
-          jsObj.xml.items.item.map(priceItem => {
+        //for( let i:number = 0; i < jsObj.xml.items.item.length; i++) {
+        jsObj.xml.items.item.forEach((item) => {
+            
+          
           //console.log('POSITION', priceItem)
-          this.parceAddtoDb(priceItem);
+          //for( let i:number = 0; i < jsObj.xml.items.item.length; i++) {
+          //this.parceAddtoDb(jsObj.xml.items.item[i]);
+          this.parceAddtoDb(item);
+          //     this.categoryService.createCategoryFromPrice(
+          //      arr[index].price_list_type
+          //  )
+        
+          //   this.categoryService.createCategoryFromPrice(
+          //     jsObj.xml.items.item[index].price_list_type
+          // )
+          
+          // this.supplierService.createSupplierFromPrice(
+          //   jsObj.xml.items.item[i].provider_id, 
+          //   jsObj.xml.items.item[i].provider, 
+          //   jsObj.xml.items.item[i].city, 
+          //   jsObj.xml.items.item[i].city_ua
+          // )
+          //}
+          //)
+        //}
+          
+
           // this.categoryService.createCategoryFromPrice(
           //   priceItem.price_list_type
           // )
@@ -212,7 +235,7 @@ export class UploaderService extends PriceParserTyresOptions {
           //   priceItem.update_date,
           // )
           
-          }
+         }
 
         );
    
@@ -228,131 +251,135 @@ export class UploaderService extends PriceParserTyresOptions {
       
     }
     
-   }  
-  
-   async parceAddtoDb(item) {
-    this.categoryService.createCategoryFromPrice(
+  }  
+  //{ price_list_type: string; provider_id: number; provider: string; city: string; city_ua: string; id: number; brand_id: number; brand: string; model_id: number; model: string; country_manufacturer: string; country_manufacturer_ua: string; demo: string; diameter: number; height: number; homologation: string; load_index: string; load_index_with_desc: string; params: string; reinforce: string; run_flat: string; seal: string; season_id: number; season: string; season_ua: string; silent: string; size_only_digits: number; speed_index: string; speed_index_with_desc: string; studded: string; vehicle_type_id: number; vehicle_type: string; vehicle_type_ua: string; width: number; manufacture_year: number; full_name: string; photo_url: string; update_date: Date; in_stock: number; user_price_wholesale: number; user_price: number; user_delivery_price: number; user_price_plus_user_delivery_price: number; }
+  async parceAddtoDb(item) {
+
+    await this.tyresservice.createTyresFromPrice(
+      item.id, 
+      item.full_name, 
+      item.photo_url,
+      item.update_date,
+      
+    )
+   
+    await this.categoryService.createCategoryFromPrice(
+      item.id,
       item.price_list_type
     )
-    this.supplierService.createSupplierFromPrice(
+    
+    await this.supplierService.createSupplierFromPrice(
       item.provider_id, 
       item.provider, 
       item.city, 
       item.city_ua
     )
-    this.propsBrandService.createTyreBrandFromPrice(
+
+    await this.propsBrandService.createTyreBrandFromPrice(
       item.id, 
       item.brand_id, 
       item.brand
     ) 
-    this.propsTyreModel.createTyreModelFromPrice(
+    await this.propsTyreModel.createTyreModelFromPrice(
       item.id,
       item.model_id,
       item.model
     )
-    this.propsTyreCountry.createTyreCountryFromPrice(
+    await this.propsTyreCountry.createTyreCountryFromPrice(
       item.id,
       item.country_manufacturer,
     item.country_manufacturer_ua
     )
-    this.propsTyreDemo.createTyreDemoFromPrice(
+    await this.propsTyreDemo.createTyreDemoFromPrice(
       item.id,
       item.demo,
     )
-    this.propsTyreDiameter.createTyreDiameterFromPrice(
-      item.id,
-      item.diameter,
-    )
-    this.propsTyreHeight.createTyreHeightFromPrice(
-      item.id,
-      item.height,
-    )
-    this.propsTyreHomologation.createTyreHomologationFromPrice(
-      item.id,
-      item.homologation,
-    )
-    this.propsTyreLoadIndex.createLoadIndexFromPrice(
-      item.id,
-      item.load_index,
-      item.load_index_with_desc
-    )
+    // this.propsTyreDiameter.createTyreDiameterFromPrice(
+    //   item.id,
+    //   item.diameter,
+    // )
+    // this.propsTyreHeight.createTyreHeightFromPrice(
+    //   item.id,
+    //   item.height,
+    // )
+    // this.propsTyreHomologation.createTyreHomologationFromPrice(
+    //   item.id,
+    //   item.homologation,
+    // )
+    // this.propsTyreLoadIndex.createLoadIndexFromPrice(
+    //   item.id,
+    //   item.load_index,
+    //   item.load_index_with_desc
+    // )
    
-    this.propsTyreParams.createParamsFromPrice(
-      item.id,
-      item.params,
-    )
-    this.propsTyreReinforce.createTyreReinforceFromPrice(
-      item.id,
-      item.reinforce,
-    )
-    this.propsTyreRunFlat.createTyreRunFlatFromPrice(
-      item.id,
-      item.run_flat
-    )
-    this.propsTyreSeal.createTyreSealFromPrice(
-      item.id,
-      item.seal
-    )
-    this.propsTyreSeason.createTyreSeasonFromPrice(
-      item.id,
-      item.season_id,
-      item.season,
-      item.season_ua
-    )
-    this.propsTyreSilent.createTyreSilentFromPrice(
-      item.id,
-      item.silent
-    )
-    this.propsTyreSizeDigits.createTyreSizeDigitsFromPrice(
-      item.id,
-      item.size_only_digits
-    )
-    this.propsTyreSpeedIndex.createTyreSpeedIndexFromPrice(
-      item.id,
-      item.speed_index,
-      item.speed_index_with_desc
-    )
-    this.propsTyreStudded.createTyreStuddedFromPrice(
-      item.id,
-      item.studded
-    )
-    this.propsTyreVehicleType.createTyreVehicleTypeFromPrice(
-      item.id,
-      item.vehicle_type_id,
-      item.vehicle_type,
-      item.vehicle_type_ua,
-    )
-    this.propsTyreWidth.createTyreWidthFromPrice(
-      item.id,
-      item.width,
-    )
-    this.propsTyreYear.createTyreYearFromPrice(
-      item.id,
-      item.manufacture_year
-    )
-    this.tyresservice.createTyresFromPrice(
-      item.id, 
-      item.full_name, 
-      item.photo_url,
-      item.update_date,
-      item.brand_id,
-      item.model_id,
-      item.price_list_type 
-    )
-     this.stockTyresService.createStockTyreFromPrice(
-      item.id,
-      item.in_stock,
-      item.provider_id
-    )
-    this.priceTyreService.createPriceTyresFromPrice(
-      item.id,
-      item.user_price_wholesale,
-      item.user_price,
-      item.user_delivery_price,
-      item.user_price_plus_user_delivery_price,
-      item.provider_id,
-      item.update_date,
-    )
+    // this.propsTyreParams.createParamsFromPrice(
+    //   item.id,
+    //   item.params,
+    // )
+    // this.propsTyreReinforce.createTyreReinforceFromPrice(
+    //   item.id,
+    //   item.reinforce,
+    // )
+    // this.propsTyreRunFlat.createTyreRunFlatFromPrice(
+    //   item.id,
+    //   item.run_flat
+    // )
+    // this.propsTyreSeal.createTyreSealFromPrice(
+    //   item.id,
+    //   item.seal
+    // )
+    // this.propsTyreSeason.createTyreSeasonFromPrice(
+    //   item.id,
+    //   item.season_id,
+    //   item.season,
+    //   item.season_ua
+    // )
+    // this.propsTyreSilent.createTyreSilentFromPrice(
+    //   item.id,
+    //   item.silent
+    // )
+    // this.propsTyreSizeDigits.createTyreSizeDigitsFromPrice(
+    //   item.id,
+    //   item.size_only_digits
+    // )
+    // this.propsTyreSpeedIndex.createTyreSpeedIndexFromPrice(
+    //   item.id,
+    //   item.speed_index,
+    //   item.speed_index_with_desc
+    // )
+    // this.propsTyreStudded.createTyreStuddedFromPrice(
+    //   item.id,
+    //   item.studded
+    // )
+    // this.propsTyreVehicleType.createTyreVehicleTypeFromPrice(
+    //   item.id,
+    //   item.vehicle_type_id,
+    //   item.vehicle_type,
+    //   item.vehicle_type_ua,
+    // )
+    // this.propsTyreWidth.createTyreWidthFromPrice(
+    //   item.id,
+    //   item.width,
+    // )
+    // this.propsTyreYear.createTyreYearFromPrice(
+    //   item.id,
+    //   item.manufacture_year
+    // )
+  
+    //  this.stockTyresService.createStockTyreFromPrice(
+    //   item.id,
+    //   item.in_stock,
+    //   item.provider_id
+    // )
+    // this.priceTyreService.createPriceTyresFromPrice(
+    //   item.id,
+    //   item.user_price_wholesale,
+    //   item.user_price,
+    //   item.user_delivery_price,
+    //   item.user_price_plus_user_delivery_price,
+    //   item.provider_id,
+    //   item.update_date,
+    // )
    }
 
   

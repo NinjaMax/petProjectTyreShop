@@ -59,31 +59,37 @@ export class PropsTyreParamsService {
 
     try {
 
-        const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const tyreParams = await this.tyreParamsRepository.findOne(
-        { where: { params: params } })
+        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
+        const [tyreParams, created] = await this.tyreParamsRepository.findOrCreate(
+        { where: { params: params}, defaults: {params: params}});
 
-        if(tyreId && tyreParams) {
+        if(created || !created) {
 
-            const updateParams = await this.tyreParamsRepository.update({
-             params: params}, {where: {params: tyreParams.id_params}});
-            //await tyreId.$set('params', updateParams);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
+          await tyreParams.$set('tyres', id);
+          
+        }
 
-            return updateParams;
+        // if(tyreId && tyreParams) {
 
-        } else {
+        //     const updateParams = await this.tyreParamsRepository.update({
+        //      params: params}, {where: {params: tyreParams.id_params}});
+        //     //await tyreId.$set('params', updateParams);
+        //     //tyreId.country = tyreCountry;
+        //     //updateCountry.reload();
 
-            const newTyreParams = await this.tyreParamsRepository.create({params});
+        //     return updateParams;
 
-            //await tyreId.$set('params', newTyreParams.id_params);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
+        // } else {
 
-            return newTyreParams;
+        //     const newTyreParams = await this.tyreParamsRepository.create({params});
 
-        } 
+        //     //await tyreId.$set('params', newTyreParams.id_params);
+        //     //tyreId.country = tyreCountry;
+        //     //tyreCountry.reload();
+
+        //     return newTyreParams;
+
+        // } 
         // else {
 
         //     const tyreParams = await this.tyreParamsRepository.create({params});

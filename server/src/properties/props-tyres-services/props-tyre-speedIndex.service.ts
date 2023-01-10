@@ -61,34 +61,43 @@ export class PropsTyreSpeedIndexService {
 
     try {
 
-        const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const tyreSpeedIndex = await this.tyreSpeedIndexRepository.findOne(
-        { where: { speed_index: speed_index } })
+        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
+        const [tyreSpeedIndex, created] = await this.tyreSpeedIndexRepository.findOrCreate(
+        { where: { speed_index: speed_index}, 
+          defaults: {
+            speed_index: speed_index, 
+            speed_index_with_desc: speed_index_with_desc}
+        });
 
-        if(tyreId && tyreSpeedIndex) {
+        if(created || !created) {
 
-            const updateSpeedIndex = await this.tyreSpeedIndexRepository.update({
-             speed_index: speed_index,
-             speed_index_with_desc: speed_index_with_desc
-            }, {where: {id_speed_index: tyreSpeedIndex.id_speed_index}});
-            //await tyreId.$set('speed_index', updateSpeedIndex);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
+          await tyreSpeedIndex.$set('tyres', id); 
 
-            return updateSpeedIndex;
+        }
+        // if(tyreId && tyreSpeedIndex) {
 
-        } else {
+        //     const updateSpeedIndex = await this.tyreSpeedIndexRepository.update({
+        //      speed_index: speed_index,
+        //      speed_index_with_desc: speed_index_with_desc
+        //     }, {where: {id_speed_index: tyreSpeedIndex.id_speed_index}});
+        //     //await tyreId.$set('speed_index', updateSpeedIndex);
+        //     //tyreId.country = tyreCountry;
+        //     //updateCountry.reload();
 
-            const newTyreSpeedIndex = await this.tyreSpeedIndexRepository.create(
-            {speed_index, speed_index_with_desc});
+        //     return updateSpeedIndex;
 
-            //await tyreId.$set('speed_index', newTyreSpeedIndex.id_speed_index);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
+        // } else {
 
-            return newTyreSpeedIndex;
+        //     const newTyreSpeedIndex = await this.tyreSpeedIndexRepository.create(
+        //     {speed_index, speed_index_with_desc});
 
-        } 
+        //     //await tyreId.$set('speed_index', newTyreSpeedIndex.id_speed_index);
+        //     //tyreId.country = tyreCountry;
+        //     //tyreCountry.reload();
+
+        //     return newTyreSpeedIndex;
+
+        // } 
         // else {
 
         //     const tyreSpeedIndex = await this.tyreSpeedIndexRepository.create(

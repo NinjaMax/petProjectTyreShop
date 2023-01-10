@@ -58,31 +58,36 @@ export class PropsTyreReinforceService {
 
     try {
 
-        const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const tyreReinforce = await this.tyreReinforceRepository.findOne(
-        { where: { reinforce: reinforce } })
+        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
+        const [tyreReinforce, created] = await this.tyreReinforceRepository.findOrCreate(
+        { where: { reinforce: reinforce}, defaults: {reinforce: reinforce}});
 
-        if(tyreId && tyreReinforce) {
+        if(created || !created) {
 
-            const updateReinforce = await this.tyreReinforceRepository.update({
-             reinforce: reinforce}, {where: {id_reinforce: tyreReinforce.id_reinforce}});
-            //await tyreId.$set('reinforce', updateReinforce);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
+          await tyreReinforce.$set('tyres', id);
+        
+        }
+        // if(tyreId && tyreReinforce) {
 
-            return updateReinforce;
+        //     const updateReinforce = await this.tyreReinforceRepository.update({
+        //      reinforce: reinforce}, {where: {id_reinforce: tyreReinforce.id_reinforce}});
+        //     //await tyreId.$set('reinforce', updateReinforce);
+        //     //tyreId.country = tyreCountry;
+        //     //updateCountry.reload();
 
-        } else {
+        //     return updateReinforce;
 
-            const newTyreReinforce = await this.tyreReinforceRepository.create({reinforce});
+        // } else {
 
-            //await tyreId.$set('reinforce', newTyreReinforce.id_reinforce);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
+        //     const newTyreReinforce = await this.tyreReinforceRepository.create({reinforce});
 
-            return newTyreReinforce;
+        //     //await tyreId.$set('reinforce', newTyreReinforce.id_reinforce);
+        //     //tyreId.country = tyreCountry;
+        //     //tyreCountry.reload();
 
-        } 
+        //     return newTyreReinforce;
+
+        // } 
         // else {
 
         //     const tyreReinforce = await this.tyreReinforceRepository.create({reinforce});

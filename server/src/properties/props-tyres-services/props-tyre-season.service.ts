@@ -60,33 +60,43 @@ export class PropsTyreSeasonService {
 
     try {
 
-        const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const tyreSeason = await this.tyreSeasonRepository.findOne(
-        { where: { season: season } })
+        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
+        const [tyreSeason, created] = await this.tyreSeasonRepository.findOrCreate(
+        { where: { season: season}, 
+          defaults: {
+            id_season: id_season,
+            season: season,
+            season_ua: season_ua}}
+          );
 
-        if(tyreId && tyreSeason) {
+          if(created || !created) {
+            
+            await tyreSeason.$set('tyres', id);
 
-            const updateSeason = await this.tyreSeasonRepository.update({
-             season: season, season_ua: season_ua}, 
-             {where: {id_season: tyreSeason.id_season}});
-            //await tyreId.$set('season', updateSeason);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
+          }
+        // if(tyreId && tyreSeason) {
 
-            return updateSeason;
+        //     const updateSeason = await this.tyreSeasonRepository.update({
+        //      season: season, season_ua: season_ua}, 
+        //      {where: {id_season: tyreSeason.id_season}});
+        //     //await tyreId.$set('season', updateSeason);
+        //     //tyreId.country = tyreCountry;
+        //     //updateCountry.reload();
 
-        } else {
+        //     return updateSeason;
 
-            const newTyreSeason = await this.tyreSeasonRepository.create(
-              {id_season, season, season_ua});
+        // } else {
 
-            //await tyreId.$set('season', newTyreSeason.id_season);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
+        //     const newTyreSeason = await this.tyreSeasonRepository.create(
+        //       {id_season, season, season_ua});
 
-            return newTyreSeason;
+        //     //await tyreId.$set('season', newTyreSeason.id_season);
+        //     //tyreId.country = tyreCountry;
+        //     //tyreCountry.reload();
 
-        } 
+        //     return newTyreSeason;
+
+        // } 
         // else {
 
         //     const tyreSeason = await this.tyreSeasonRepository.create(

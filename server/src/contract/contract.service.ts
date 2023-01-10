@@ -49,7 +49,7 @@ export class ContractService {
 
         contractPrice.name = name + " Основний договір";
         contractPrice.save();
-        //await contractPrice.$add('supplier', id_supplier);
+        await contractPrice.$set('supplier', id_supplier);
 
         return contractPrice; 
       }

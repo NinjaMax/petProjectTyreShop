@@ -59,32 +59,38 @@ export class PropsTyreStuddedService {
 
     try {
 
-        const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const tyreStudded = await this.tyreStuddedRepository.findOne(
-        { where: { studded: studded } })
+        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
+        const [tyreStudded, created] = await this.tyreStuddedRepository.findOrCreate(
+        { where: { studded: studded}, defaults: {studded: studded}});
 
-        if(tyreId && tyreStudded) {
+        if(created || !created) {
 
-            const updateStudded = await this.tyreStuddedRepository.update({
-             studded: studded}, {where: {id_studded: tyreStudded.id_studded}});
-            //await tyreId.$set('studded', updateStudded);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
+          await tyreStudded.$set('tyres', id);
 
-            return updateStudded;
+        }
 
-        } else {
+        // if(tyreId && tyreStudded) {
 
-            const newTyreStudded = await this.tyreStuddedRepository.create(
-            {studded});
+        //     const updateStudded = await this.tyreStuddedRepository.update({
+        //      studded: studded}, {where: {id_studded: tyreStudded.id_studded}});
+        //     //await tyreId.$set('studded', updateStudded);
+        //     //tyreId.country = tyreCountry;
+        //     //updateCountry.reload();
 
-            //await tyreId.$set('studded', newTyreStudded.id_studded);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
+        //     return updateStudded;
 
-            return newTyreStudded;
+        // } else {
 
-        } 
+        //     const newTyreStudded = await this.tyreStuddedRepository.create(
+        //     {studded});
+
+        //     //await tyreId.$set('studded', newTyreStudded.id_studded);
+        //     //tyreId.country = tyreCountry;
+        //     //tyreCountry.reload();
+
+        //     return newTyreStudded;
+
+        // } 
         // else {
 
         //     const tyreStudded = await this.tyreStuddedRepository.create({studded});

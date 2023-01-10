@@ -67,31 +67,21 @@ export class StockTyresService {
     try {
 
       const tyreId = await this.tyresService.findTyresByIdPrice(id);
-      const tyreStock = await this.stockTyresRepository.findByPk(id);
-      const supplier = await this.suppliersService.findSupplierByIdPrice(
-        id_supplier);
+      const [tyreStock, created] = await this.stockTyresRepository.findOrCreate(
+        {where:{id: id}, 
+        defaults:{
+          id: id,
+          stock: stock,
+          id_supplier: id_supplier
+        }});
 
-      if(tyreStock.id_supplier == supplier.id) {
+      if(!created) {
 
         const updateStock = await this.stockTyresRepository.update({
-          stock: stock, id_supplier: supplier.id}, 
+          stock: stock, id_supplier: id_supplier}, 
           {where: {id: tyreStock.id}});
-        //await tyreId.$set('stock', updateStock);
-        //tyreId.country = tyreCountry;
-        //updateCountry.reload();
 
         return updateStock;
-
-      } else {
-
-        const newTyreStock = await this.stockTyresRepository.create(
-          {id, stock, id_supplier});
-        await supplier.$add('stock_tyres', [supplier.id_supplier]);
-        //await tyreId.$add('stock', newTyreStock);
-        //tyreId.country = tyreCountry;
-        //tyreCountry.reload();
-
-        return newTyreStock;
 
       }
 

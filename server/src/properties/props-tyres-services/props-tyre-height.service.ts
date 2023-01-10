@@ -58,31 +58,41 @@ export class PropsTyreHeightService {
 
     try {
 
-        const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const tyreHeight = await this.tyreHeightRepository.findOne(
-        { where: { height: height } })
+        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
+        const [tyreHeight, created] = await this.tyreHeightRepository.findOrCreate(
+        { where: { height: height}, defaults: {height: height}});
 
-        if(tyreId && tyreHeight) {
+        if(created || !created) {
 
-            const updateHeight = await this.tyreHeightRepository.update({
-             height: height}, {where: {id_height: tyreHeight.id_height}});
-            //await tyreId.$set('height', updateHeight);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
+          await tyreHeight.$set('tyres', id);
 
-            return updateHeight;
+        }
 
-        } else {
 
-            const newTyreHeight = await this.tyreHeightRepository.create({height});
 
-            //await tyreId.$set('height', newTyreHeight.id_height);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
+        // if(tyreId && tyreHeight) {
 
-            return newTyreHeight;
+        //     const updateHeight = await this.tyreHeightRepository.update({
+        //      height: height}, {where: {id_height: tyreHeight.id_height}});
+        //     //await tyreId.$set('height', updateHeight);
+        //     //tyreId.country = tyreCountry;
+        //     //updateCountry.reload();
 
-        } 
+        //     return updateHeight;
+
+        // } 
+        
+        // else {
+
+        //     const newTyreHeight = await this.tyreHeightRepository.create({height});
+
+        //     //await tyreId.$set('height', newTyreHeight.id_height);
+        //     //tyreId.country = tyreCountry;
+        //     //tyreCountry.reload();
+
+        //     return newTyreHeight;
+
+        // } 
         // else {
 
         //     const tyreHeight = await this.tyreHeightRepository.create({height});

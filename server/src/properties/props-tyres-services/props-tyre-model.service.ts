@@ -47,30 +47,42 @@ export class PropsModelService {
 
     try {
   
-      const tyreId = await this.tyresService.findTyresByIdPrice(id);
-      const tyreModel = await this.tyreModelRepository.findByPk(id_model);
+      //const tyreId = await this.tyresService.findTyresByIdPrice(id);
+      const [tyreModel, created] = await this.tyreModelRepository.findOrCreate(
+        {where: {id_model: id_model}, defaults: {model: model}});
+      
+        if(created) {
+
+          await tyreModel.$add('tyres', id);
+
+        } else { 
+
+          await tyreModel.$set('tyres', id);
+
+        }
   
-      if(tyreId && tyreModel) {
+      // if(tyreId && tyreModel) {
   
-        const updateModel = await this.tyreModelRepository.update({
-            model: model}, {where: {id_model: tyreModel.id_model}});
-        //await tyreId.$set('tyre_model', updateModel);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
+      //   const updateModel = await this.tyreModelRepository.update({
+      //       model: model}, {where: {id_model: tyreModel.id_model}});
+      //   //await tyreId.$set('tyre_model', updateModel);
+      //       //tyreId.country = tyreCountry;
+      //       //updateCountry.reload();
   
-        return updateModel;
+      //   return updateModel;
   
-      } else {
+      // } 
+      // else {
   
-        const newTyreModel = await this.tyreModelRepository.create({id_model, model});
+      //   const newTyreModel = await this.tyreModelRepository.create({id_model, model});
   
-        //await tyreId.$set('tyre_model', newTyreModel.id_model);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
+      //   //await tyreId.$set('tyre_model', newTyreModel.id_model);
+      //       //tyreId.country = tyreCountry;
+      //       //tyreCountry.reload();
   
-        return newTyreModel;
+      //   return newTyreModel;
   
-      } 
+      // } 
       // else {
   
       //   const tyreModel = await this.tyreModelRepository.create({id_model, model});

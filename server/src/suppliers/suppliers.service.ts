@@ -38,33 +38,49 @@ export class SuppliersService {
      city: string, city_ua: string) {
 
     try {
+      const [supplierFind, created] = await this.suppliersRepository.findOrCreate({
+        where:{id_supplier: id_supplier}, 
+        defaults:{
+          name: name,
+          city: city,
+          city_ua: city_ua
+        }
+      });
 
-      let supplierId = await this.suppliersRepository.findByPk(id_supplier);
-
-      if(supplierId) {
-
-        await this.suppliersRepository.update(
-          { name: name, city: city, 
-            city_ua: city_ua},
-          {where:{id_supplier: supplierId.id_supplier}}
-        );
-
-        return supplierId;
-
+      if(!created) {
+        return supplierFind;
       } else {
-
-        let supplierNew = await this.suppliersRepository.create(
-          {id_supplier, name, city, city_ua});
-
         let contractSupplier = await this.contractService.
         createContractFromPrice(id_supplier, name);
 
-        supplierNew.$add('contract', contractSupplier);
-
-        supplierNew.reload();
-
-        return supplierNew;
+        return contractSupplier;
       }
+      // let supplierId = await this.suppliersRepository.findByPk(id_supplier);
+
+      // if(supplierId) {
+
+      //   await this.suppliersRepository.update(
+      //     { name: name, city: city, 
+      //       city_ua: city_ua},
+      //     {where:{id_supplier: supplierId.id_supplier}}
+      //   );
+
+      //   return supplierId;
+
+      // } else {
+
+      //   let supplierNew = await this.suppliersRepository.create(
+      //     {id_supplier, name, city, city_ua});
+
+      //   let contractSupplier = await this.contractService.
+      //   createContractFromPrice(id_supplier, name);
+
+        //await supplierNew.$add('contract', contractSupplier);
+
+        //supplierNew.reload();
+
+       //return supplierNew;
+      //}
       
     } catch {
       

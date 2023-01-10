@@ -49,30 +49,46 @@ export class PropsBrandService {
 
     try {
 
-      const tyreId = await this.tyresService.findTyresByIdPrice(id);
-      const tyreBrand = await this.tyreBrandRepository.findByPk(id_brand);
+      //const tyreId = await this.tyresService.findTyresByIdPrice(id);
+      const [tyreBrand, created] = await this.tyreBrandRepository.findOrCreate(
+        {where: {id_brand: id_brand}, 
+        defaults:{
+          id_brand: id_brand,
+          brand: brand
+        }});
 
-      if(tyreId && tyreBrand) {
+        if(created) {
 
-          const updateBrand = await this.tyreBrandRepository.update({
-           brand: brand}, {where: {id_brand: tyreBrand.id_brand}});
-          //await tyreId.$add('tyre_brand', updateBrand);
-          //tyreId.country = tyreCountry;
-          //updateCountry.reload();
+          await tyreBrand.$add('tyres', id);
 
-          return updateBrand;
+        } else {
 
-      } else {
+          await tyreBrand.$set('tyres', id)
 
-          const newTyreBrand = await this.tyreBrandRepository.create({id_brand, brand});
+        }
 
-          //await newTyreBrand.$add('tyres', [tyreId.id]);
-          //tyreId.country = tyreCountry;
-          //tyreCountry.reload();
+      // if(tyreId && tyreBrand) {
 
-          return newTyreBrand;
+      //     const updateBrand = await this.tyreBrandRepository.update({
+      //      brand: brand}, {where: {id_brand: tyreBrand.id_brand}});
+      //     //await tyreId.$add('tyre_brand', updateBrand);
+      //     //tyreId.country = tyreCountry;
+      //     //updateCountry.reload();
 
-      } 
+      //     return updateBrand;
+
+      //} 
+      // else {
+
+      //     const newTyreBrand = await this.tyreBrandRepository.create({id_brand, brand});
+
+      //     //await newTyreBrand.$add('tyres', [tyreId.id]);
+      //     //tyreId.country = tyreCountry;
+      //     //tyreCountry.reload();
+
+      //     return newTyreBrand;
+
+      //} 
       // else {
 
       //     const tyreBrand = await this.tyreBrandRepository.create({id_brand, brand});

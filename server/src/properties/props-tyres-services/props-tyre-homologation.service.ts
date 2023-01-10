@@ -58,32 +58,39 @@ export class PropsTyreHomologationService {
 
     try {
 
-        const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const tyreHomologation = await this.tyreHomologationRepository.findOne(
-        { where: { homologation: homologation } })
+        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
+        const [tyreHomologation, created] = await this.tyreHomologationRepository.findOrCreate(
+        { where: { homologation: homologation}, defaults: {homologation: homologation}});
 
-        if(tyreId && tyreHomologation) {
+        if(created || !created) {
 
-            const updateHomologation = await this.tyreHomologationRepository.update({
-             homologation: homologation}, 
-             {where: {id_homologation: tyreHomologation.id_homologation}});
-            //await tyreId.$set('homologation', updateHomologation);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
+          await tyreHomologation.$set('tyres', id);
+          
+        }
 
-            return updateHomologation;
+        // if(tyreId && tyreHomologation) {
 
-        } else {
+        //     const updateHomologation = await this.tyreHomologationRepository.update({
+        //      homologation: homologation}, 
+        //      {where: {id_homologation: tyreHomologation.id_homologation}});
+        //     //await tyreId.$set('homologation', updateHomologation);
+        //     //tyreId.country = tyreCountry;
+        //     //updateCountry.reload();
 
-            const newTyreHomologation = await this.tyreHomologationRepository.create({homologation});
+        //     return updateHomologation;
 
-            //await tyreId.$set('homologation', newTyreHomologation.id_homologation);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
+        // } 
+        // else {
 
-            return newTyreHomologation;
+        //     const newTyreHomologation = await this.tyreHomologationRepository.create({homologation});
 
-        } 
+        //     //await tyreId.$set('homologation', newTyreHomologation.id_homologation);
+        //     //tyreId.country = tyreCountry;
+        //     //tyreCountry.reload();
+
+        //     return newTyreHomologation;
+
+        // } 
         // else {
 
         //     const tyreHomologation = await this.tyreHomologationRepository.create({homologation});

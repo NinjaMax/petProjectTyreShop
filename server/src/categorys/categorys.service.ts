@@ -25,33 +25,23 @@ export class CategorysService {
     }
   }
 
-  async createCategoryFromPrice(category: string) {
+  async createCategoryFromPrice(id: number, category: string) {
 
     try {
       
-      let findCategory = await this.categoryRepository.findOne(
+      const [findCategory, created] = await this.categoryRepository.findOrCreate(
        {where:{category: category}});
+      
+       if(created) {
 
-      if(findCategory) {
+        await findCategory.$add('tyres', id);
 
-        await this.categoryRepository.update(
-          {category: category},
-          {where:{id_cat: findCategory.id_cat}}
-        );
-        
-        findCategory.reload();
-        
-        return findCategory;
+       } else {
 
-      } else {
+        await findCategory.$set('tyres', id);
 
-        let categoryNew = await this.categoryRepository.create({category});
-        categoryNew.reload();
-
-        return categoryNew;
-
-      }
-
+       }
+      
     } catch {
 
       throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);

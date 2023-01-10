@@ -58,32 +58,38 @@ export class PropsTyreWidthService {
 
     try {
 
-        const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const tyreWidth = await this.tyreCountryRepository.findOne(
-        { where: { width: width } })
+        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
+        const [tyreWidth, created] = await this.tyreCountryRepository.findOrCreate(
+        { where: { width: width}, defaults: {width: width}});
 
-        if(tyreId && tyreWidth) {
+        if(created || !created) {
 
-            const updateWidth = await this.tyreCountryRepository.update({
-             width: width}, {where: {id_width: tyreWidth.id_width}});
-            //await tyreId.$set('width', updateWidth);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
+          await tyreWidth.$set('tyres', id);
 
-            return updateWidth;
+        }
 
-        } else {
+        // if(tyreId && tyreWidth) {
 
-            const newTyreWidth = await this.tyreCountryRepository.create(
-            {width});
+        //     const updateWidth = await this.tyreCountryRepository.update({
+        //      width: width}, {where: {id_width: tyreWidth.id_width}});
+        //     //await tyreId.$set('width', updateWidth);
+        //     //tyreId.country = tyreCountry;
+        //     //updateCountry.reload();
 
-            //await tyreId.$set('width', newTyreWidth.id_width);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
+        //     return updateWidth;
 
-            return newTyreWidth;
+        // } else {
 
-        } 
+        //     const newTyreWidth = await this.tyreCountryRepository.create(
+        //     {width});
+
+        //     //await tyreId.$set('width', newTyreWidth.id_width);
+        //     //tyreId.country = tyreCountry;
+        //     //tyreCountry.reload();
+
+        //     return newTyreWidth;
+
+        // } 
         // else {
 
         //     const tyreWidth = await this.tyreCountryRepository.create({width});

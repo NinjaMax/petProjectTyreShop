@@ -65,10 +65,19 @@ export class PriceTyresService {
     
     try {
 
-      const tyresById = await this.tyresService.findTyresByIdPrice(id);
-      const priceById = await this.priceTyresRepository.findByPk(id);
+      const [priceById, created] = await this.priceTyresRepository.findOrCreate(
+        {where: {id: id}, 
+        defaults:{
+          id: id,
+          price_wholesale: price_wholesale,
+          price: price,
+          delivery_price: delivery_price,
+          price_plus_delivery: price_plus_delivery,
+          id_supplier: id_supplier,
+          update_date: update_date
+        }});
 
-      if(tyresById && priceById) {
+      if(!created) {
 
         const updatePriceTyre = await this.priceTyresRepository.update(
           { id: id,
@@ -83,15 +92,7 @@ export class PriceTyresService {
 
         return updatePriceTyre;
 
-      } else {
-
-        const createNewPrice = await this.priceTyresRepository.create(
-          {id, price_wholesale, price, delivery_price, 
-            price_plus_delivery, id_supplier, update_date});
-        
-        return createNewPrice;
-
-      }
+      } 
 
     } catch {
       
