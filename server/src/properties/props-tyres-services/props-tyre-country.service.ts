@@ -61,52 +61,18 @@ export class PropsTyreCountryService {
 
     try {
 
-        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const [tyreCountry, created] = await this.tyreCountryRepository.findOrCreate(
-        { where: { country_manufacturer: country_manufacturer }, 
+      const [tyreCountry, created] = await this.tyreCountryRepository.findOrCreate(
+        {where: {country_manufacturer: country_manufacturer}, 
           defaults:{
             country_manufacturer: country_manufacturer,
             country_manufacturer_ua: country_manufacturer_ua
-          } })
+      }});
 
-          if(created || !created) {
+      if(created || !created) {
 
-            await tyreCountry.$set('tyres', id);
+        await tyreCountry.$add('tyres', id);
             
-          } 
-
-        // if(tyreId && tyreCountry) {
-
-        //     const updateCountry = await this.tyreCountryRepository.update({
-        //      country_manufacturer: country_manufacturer,
-        //      country_manufacturer_ua: country_manufacturer_ua
-        //     }, {where: {id_country: tyreCountry.id_country}});
-        //     //await tyreId.$set('country', updateCountry);
-        //     //tyreId.country = tyreCountry;
-        //     //updateCountry.reload();
-
-        //     return updateCountry;
-
-        //} 
-        // else {
-
-        //   const newTyreCountry = await this.tyreCountryRepository.create(
-        //     {country_manufacturer, country_manufacturer_ua});
-
-        //   //await tyreId.$set('country', newTyreCountry.id_country);
-        //     //tyreId.country = tyreCountry;
-        //     //tyreCountry.reload();
-
-        //   return newTyreCountry;
-
-        // } 
-        // else {
-
-        //     const tyreCountry = await this.tyreCountryRepository.create(
-        //         {country_manufacturer, country_manufacturer_ua});
-
-        //     return tyreCountry;
-        // }
+      }
 
     } catch {
 

@@ -60,50 +60,19 @@ export class PropsTyreSeasonService {
 
     try {
 
-        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const [tyreSeason, created] = await this.tyreSeasonRepository.findOrCreate(
-        { where: { season: season}, 
+      const [tyreSeason, created] = await this.tyreSeasonRepository.findOrCreate(
+        {where: { season: season}, 
           defaults: {
             id_season: id_season,
             season: season,
             season_ua: season_ua}}
-          );
+      );
 
-          if(created || !created) {
+      if(created || !created) {
             
-            await tyreSeason.$set('tyres', id);
+        await tyreSeason.$add('tyres', id);
 
-          }
-        // if(tyreId && tyreSeason) {
-
-        //     const updateSeason = await this.tyreSeasonRepository.update({
-        //      season: season, season_ua: season_ua}, 
-        //      {where: {id_season: tyreSeason.id_season}});
-        //     //await tyreId.$set('season', updateSeason);
-        //     //tyreId.country = tyreCountry;
-        //     //updateCountry.reload();
-
-        //     return updateSeason;
-
-        // } else {
-
-        //     const newTyreSeason = await this.tyreSeasonRepository.create(
-        //       {id_season, season, season_ua});
-
-        //     //await tyreId.$set('season', newTyreSeason.id_season);
-        //     //tyreId.country = tyreCountry;
-        //     //tyreCountry.reload();
-
-        //     return newTyreSeason;
-
-        // } 
-        // else {
-
-        //     const tyreSeason = await this.tyreSeasonRepository.create(
-        //       {id_season, season, season_ua});
-
-        //     return tyreSeason;
-        // }
+      }
 
     } catch {
 

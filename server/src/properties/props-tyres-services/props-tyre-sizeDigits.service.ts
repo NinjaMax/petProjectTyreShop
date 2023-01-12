@@ -58,43 +58,16 @@ export class PropsTyreSizeDigitsService {
 
     try {
 
-        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const [tyreSizeDigits, created] = await this.tyreCountryRepository.findOrCreate(
-        { where: { size_only_digits: size_only_digits}, 
-          defaults: {size_only_digits: size_only_digits}});
+      const [tyreSizeDigits, created] = await this.tyreCountryRepository.findOrCreate(
+        {where: {size_only_digits: size_only_digits}, 
+          defaults: {size_only_digits: size_only_digits}}
+      );  
         
-        if(created || !created) {
+      if(created || !created) {
           
-          await tyreSizeDigits.$set('tyres', id);
+        await tyreSizeDigits.$add('tyres', id);
 
-        }
-        // if(tyreId && tyreSizeDigits) {
-
-        //     const updateSizeDigits = await this.tyreCountryRepository.update({
-        //      size_only_digits: size_only_digits}, {where: {id_size_digits: tyreSizeDigits.id_size_digits}});
-        //     //await tyreId.$set('size_digits', updateSizeDigits);
-        //     //tyreId.country = tyreCountry;
-        //     //updateCountry.reload();
-
-        //     return updateSizeDigits;
-
-        // } else {
-
-        //     const newTyreSizeDigits = await this.tyreCountryRepository.create({size_only_digits});
-
-        //     //await tyreId.$set('size_digits', newTyreSizeDigits.id_size_digits);
-        //     //tyreId.country = tyreCountry;
-        //     //tyreCountry.reload();
-
-        //     return newTyreSizeDigits;
-
-        // } 
-        // else {
-
-        //     const tyreSizeDigits = await this.tyreCountryRepository.create({size_only_digits});
-
-        //     return tyreSizeDigits;
-        // }
+      }
 
     } catch {
 

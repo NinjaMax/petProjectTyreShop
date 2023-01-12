@@ -24,8 +24,6 @@ export class PropsTyrDiametrService {
             const updateDiameter = await this.tyreDiameterRepository.update({
              diameter: createPropertyDto.diameter}, {where: {id_diameter: tyreDiameter.id_diameter}});
             await tyreId.$set('diameter', updateDiameter);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
 
             return updateDiameter;
 
@@ -34,8 +32,6 @@ export class PropsTyrDiametrService {
             const newTyreDiameter = await this.tyreDiameterRepository.create(createPropertyDto);
 
             await tyreId.$set('diameter', newTyreDiameter);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
 
             return newTyreDiameter;
 
@@ -58,45 +54,16 @@ export class PropsTyrDiametrService {
 
     try {
 
-        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const [tyreDiameter, created] = await this.tyreDiameterRepository.findOrCreate(
-        { where: { diameter: diameter }, defaults: {diameter: diameter}})
+      const [tyreDiameter, created] = await this.tyreDiameterRepository.findOrCreate(
+        {where: {diameter: diameter}, defaults: {diameter: +diameter}}
+      );
 
-        if(created || !created) {
+      if(created || !created) {
 
-          await tyreDiameter.$set('tyres', id);
+        await tyreDiameter.$add('tyres', id);
           
-        }
-        // if(tyreId && tyreDiameter) {
-
-        //     const updateDiameter = await this.tyreDiameterRepository.update({
-        //      diameter: diameter}, {where: {id_diameter: tyreDiameter.id_diameter}});
-        //     //await tyreId.$set('diameter', updateDiameter);
-        //     //tyreId.country = tyreCountry;
-        //     //updateCountry.reload();
-
-        //     return updateDiameter;
-
-        // } 
-        // else {
-
-        //     const newTyreDiameter = await this.tyreDiameterRepository.create(
-        //     {diameter});
-
-        //     //await tyreId.$set('diameter', newTyreDiameter.id_diameter);
-        //     //tyreId.country = tyreCountry;
-        //     //tyreCountry.reload();
-
-        //     return newTyreDiameter;
-
-        // } 
-        // else {
-
-        //     const tyreDiameter = await this.tyreDiameterRepository.create({diameter});
-
-        //     return tyreDiameter;
-        // }
-
+      }
+    
     } catch {
 
       throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);

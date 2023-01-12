@@ -59,41 +59,16 @@ export class PropsTyreDemoService {
 
     try {
 
-        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const [tyreDemo, created] = await this.tyreDemoRepository.findOrCreate(
-        { where: { demo: demo }, defaults: {demo: demo}})
+      const [tyreDemo, created] = await this.tyreDemoRepository.findOrCreate(
+        {where: {demo: demo}, defaults: {demo: demo}}
+      );
 
-        if(created || !created) {
-          await tyreDemo.$set('tyres', id);
-        }
-        // if(tyreId && tyreDemo) {
+      if(created || !created) {
 
-        //     const updateDemo = await this.tyreDemoRepository.update({
-        //      demo: demo}, {where: {id_demo: tyreDemo.id_demo}});
-        //     //await tyreId.$set('demo', updateDemo);
+        await tyreDemo.$add('tyres', id);
 
-        //     return updateDemo;
-
-        // } 
-        
-        // else {
-
-        //     const newTyreDemo = await this.tyreDemoRepository.create({demo});
-
-        //     //await tyreId.$set('demo', newTyreDemo.id_demo);
-           
-        //     //await tyreId.reload();
-
-        //     return newTyreDemo;
-
-        // } 
-        // else {
-
-        //     const tyreDemo = await this.tyreDemoRepository.create({demo});
-
-        //     return tyreDemo;
-        // }
-
+      }
+      
     } catch {
 
       throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);

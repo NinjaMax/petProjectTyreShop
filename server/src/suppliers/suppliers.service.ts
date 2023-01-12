@@ -41,6 +41,7 @@ export class SuppliersService {
       const [supplierFind, created] = await this.suppliersRepository.findOrCreate({
         where:{id_supplier: id_supplier}, 
         defaults:{
+          id_supplier: id_supplier,
           name: name,
           city: city,
           city_ua: city_ua
@@ -48,8 +49,11 @@ export class SuppliersService {
       });
 
       if(!created) {
+
         return supplierFind;
+
       } else {
+        
         let contractSupplier = await this.contractService.
         createContractFromPrice(id_supplier, name);
 

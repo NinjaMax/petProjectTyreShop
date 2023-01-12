@@ -30,49 +30,33 @@ export class TyresService {
     id: number, 
     full_name: string,
     photo_url: string, 
-    update_date: Date, 
+    //update_date: Date, 
     ) {
 
     try {
 
       const [tyresIdFromPrice, created] = await this.tyresRepository.findOrCreate(
-        {where: {id}, 
+        {where: {id: id}, 
           defaults: {
             id: id,
             full_name: full_name, 
             photo_url: photo_url,
-            update_date: update_date,
+            //update_date: update_date,
           }});
         
       if(!created) {
 
+        // await tyresIdFromPrice.update(
+        //   {
+        //   full_name: full_name, 
+        //   photo_url: photo_url,
+        //   update_date: update_date},
+        //   {where: {id: id}}
+        // );
+
         return tyresIdFromPrice;
 
       }
-      
-      // if(tyresIdFromPrice) {
-
-      //   await this.tyresRepository.update(
-      //     {  
-      //       full_name : full_name,
-      //       update_date : update_date,
-      //       photo_url: photo_url,
-      //       id_cat: id_cat
-      //     }, {where: {id: id}});
-
-      //   //tyresIdFromPrice.save();
-
-      //   return tyresIdFromPrice;
-
-      // } else {
-
-      //   let tyresFromPrice = await this.tyresRepository.create(
-      //   {id, full_name, photo_url, update_date, id_brand, id_model,
-      //     id_cat});
-
-      //   return tyresFromPrice;
-
-      //} 
 
     } catch {
 
@@ -142,7 +126,7 @@ export class TyresService {
         {  
           full_name : updateTyreDto.full_name,
           photo_url: updateTyreDto.photo_url,
-          update_date : updateTyreDto.update_date
+          //update_date : updateTyreDto.update_date
         }, {where: {id : updateTyreDto.id}});
 
         tyresId.save();

@@ -58,44 +58,15 @@ export class PropsTyreWidthService {
 
     try {
 
-        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const [tyreWidth, created] = await this.tyreCountryRepository.findOrCreate(
-        { where: { width: width}, defaults: {width: width}});
+      const [tyreWidth, created] = await this.tyreCountryRepository.findOrCreate(
+        {where: {width: width}, defaults: {width: width}}
+      );
 
-        if(created || !created) {
+      if(created || !created) {
 
-          await tyreWidth.$set('tyres', id);
+        await tyreWidth.$add('tyres', id);
 
-        }
-
-        // if(tyreId && tyreWidth) {
-
-        //     const updateWidth = await this.tyreCountryRepository.update({
-        //      width: width}, {where: {id_width: tyreWidth.id_width}});
-        //     //await tyreId.$set('width', updateWidth);
-        //     //tyreId.country = tyreCountry;
-        //     //updateCountry.reload();
-
-        //     return updateWidth;
-
-        // } else {
-
-        //     const newTyreWidth = await this.tyreCountryRepository.create(
-        //     {width});
-
-        //     //await tyreId.$set('width', newTyreWidth.id_width);
-        //     //tyreId.country = tyreCountry;
-        //     //tyreCountry.reload();
-
-        //     return newTyreWidth;
-
-        // } 
-        // else {
-
-        //     const tyreWidth = await this.tyreCountryRepository.create({width});
-
-        //     return tyreWidth;
-        // }
+      }
 
     } catch {
 

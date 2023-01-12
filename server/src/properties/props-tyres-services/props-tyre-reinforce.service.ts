@@ -58,43 +58,16 @@ export class PropsTyreReinforceService {
 
     try {
 
-        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const [tyreReinforce, created] = await this.tyreReinforceRepository.findOrCreate(
-        { where: { reinforce: reinforce}, defaults: {reinforce: reinforce}});
+      const [tyreReinforce, created] = await this.tyreReinforceRepository.findOrCreate(
+        {where: {reinforce: reinforce}, defaults: {reinforce: reinforce}}
+      );
 
-        if(created || !created) {
+      if(created || !created) {
 
-          await tyreReinforce.$set('tyres', id);
+        await tyreReinforce.$add('tyres', id);
         
-        }
-        // if(tyreId && tyreReinforce) {
-
-        //     const updateReinforce = await this.tyreReinforceRepository.update({
-        //      reinforce: reinforce}, {where: {id_reinforce: tyreReinforce.id_reinforce}});
-        //     //await tyreId.$set('reinforce', updateReinforce);
-        //     //tyreId.country = tyreCountry;
-        //     //updateCountry.reload();
-
-        //     return updateReinforce;
-
-        // } else {
-
-        //     const newTyreReinforce = await this.tyreReinforceRepository.create({reinforce});
-
-        //     //await tyreId.$set('reinforce', newTyreReinforce.id_reinforce);
-        //     //tyreId.country = tyreCountry;
-        //     //tyreCountry.reload();
-
-        //     return newTyreReinforce;
-
-        // } 
-        // else {
-
-        //     const tyreReinforce = await this.tyreReinforceRepository.create({reinforce});
-
-        //     return tyreReinforce;
-        // }
-
+      }
+        
     } catch {
 
       throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);

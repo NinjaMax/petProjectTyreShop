@@ -24,8 +24,6 @@ export class PropsTyreSilentService {
             const updateSilent = await this.tyreSilentRepository.update({
              silent: createPropertyDto.silent}, {where: {id_silent: tyreSilent.id_silent}});
             await tyreId.$set('silent', updateSilent);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
 
             return updateSilent;
 
@@ -34,8 +32,6 @@ export class PropsTyreSilentService {
             const newTyreSilent = await this.tyreSilentRepository.create(createPropertyDto);
 
             await tyreId.$set('silent', newTyreSilent);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
 
             return newTyreSilent;
 
@@ -58,43 +54,15 @@ export class PropsTyreSilentService {
 
     try {
 
-      //const tyreId = await this.tyresService.findTyresByIdPrice(id);
       const [tyreSilent, created] = await this.tyreSilentRepository.findOrCreate(
-      { where: { silent: silent}, defaults: {silent: silent}});
+        {where: {silent: silent}, defaults: {silent: silent}}
+      );
 
       if(created || !created) {
 
-        await tyreSilent.$set('tyres', id);
+        await tyreSilent.$add('tyres', id);
         
       }
-
-      // if(tyreId && tyreSilent) {
-
-      //   const updateSilent = await this.tyreSilentRepository.update({
-      //     silent: silent}, {where: {id_silent: tyreSilent.id_silent}});
-      //   //await tyreId.$set('silent', updateSilent);
-      //       //tyreId.country = tyreCountry;
-      //       //updateCountry.reload();
-
-      //   return updateSilent;
-
-      // } else {
-
-      //   const newTyreSilent = await this.tyreSilentRepository.create({silent});
-
-      //   //await tyreId.$set('silent', newTyreSilent.id_silent);
-      //       //tyreId.country = tyreCountry;
-      //       //tyreCountry.reload();
-
-      //   return newTyreSilent;
-
-      // } 
-        // else {
-
-        //     const tyreSilent = await this.tyreSilentRepository.create({silent});
-
-        //     return tyreSilent;
-        // }
 
     } catch {
 

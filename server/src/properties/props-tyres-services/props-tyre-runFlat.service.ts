@@ -24,8 +24,6 @@ export class PropsTyreRunFlatService {
             const updateRunFlat = await this.tyreRunFlatRepository.update({
              run_flat: createPropertyDto.run_flat}, {where: {id_run_flat: tyreRunFlat.id_run_flat}});
             await tyreId.$set('run_flat', updateRunFlat);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
 
             return updateRunFlat;
 
@@ -34,8 +32,6 @@ export class PropsTyreRunFlatService {
             const newTyreRunFlat = await this.tyreRunFlatRepository.create(createPropertyDto);
 
             await tyreId.$set('country', newTyreRunFlat);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
 
             return newTyreRunFlat;
 
@@ -58,43 +54,15 @@ export class PropsTyreRunFlatService {
 
     try {
 
-        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const [tyreRunFlat, created] = await this.tyreRunFlatRepository.findOrCreate(
-        { where: { run_flat: run_flat}, defaults: {run_flat: run_flat}});
+      const [tyreRunFlat, created] = await this.tyreRunFlatRepository.findOrCreate(
+        {where: {run_flat: run_flat}, defaults: {run_flat: run_flat}}
+      );
 
-        if(created || !created) {
+      if(created || !created) {
 
-          await tyreRunFlat.$set('tyres', id);
+        await tyreRunFlat.$add('tyres', id);
           
-        }
-
-        // if(tyreId && tyreRunFlat) {
-
-        //     const updateRunFlat = await this.tyreRunFlatRepository.update({
-        //      run_flat: run_flat}, {where: {id_run_flat: tyreRunFlat.id_run_flat}});
-        //     //await tyreId.$set('run_flat', updateRunFlat);
-        //     //tyreId.country = tyreCountry;
-        //     //updateCountry.reload();
-
-        //     return updateRunFlat;
-
-        // } else {
-
-        //     const newTyreRunFlat = await this.tyreRunFlatRepository.create({run_flat});
-
-        //     //await tyreId.$set('run_flat', newTyreRunFlat.id_run_flat);
-        //     //tyreId.country = tyreCountry;
-        //     //tyreCountry.reload();
-
-        //     return newTyreRunFlat;
-
-        // } 
-        // else {
-
-        //     const tyreRunFlat = await this.tyreRunFlatRepository.create({run_flat});
-
-        //     return tyreRunFlat;
-        // }
+      }
 
     } catch {
 

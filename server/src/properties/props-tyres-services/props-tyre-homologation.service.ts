@@ -58,45 +58,16 @@ export class PropsTyreHomologationService {
 
     try {
 
-        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const [tyreHomologation, created] = await this.tyreHomologationRepository.findOrCreate(
-        { where: { homologation: homologation}, defaults: {homologation: homologation}});
+      const [tyreHomologation, created] = await this.tyreHomologationRepository.findOrCreate(
+        {where: {homologation: homologation}, 
+        defaults: {homologation: homologation}}
+      );
 
-        if(created || !created) {
+      if(created || !created) {
 
-          await tyreHomologation.$set('tyres', id);
+        await tyreHomologation.$add('tyres', id);
           
-        }
-
-        // if(tyreId && tyreHomologation) {
-
-        //     const updateHomologation = await this.tyreHomologationRepository.update({
-        //      homologation: homologation}, 
-        //      {where: {id_homologation: tyreHomologation.id_homologation}});
-        //     //await tyreId.$set('homologation', updateHomologation);
-        //     //tyreId.country = tyreCountry;
-        //     //updateCountry.reload();
-
-        //     return updateHomologation;
-
-        // } 
-        // else {
-
-        //     const newTyreHomologation = await this.tyreHomologationRepository.create({homologation});
-
-        //     //await tyreId.$set('homologation', newTyreHomologation.id_homologation);
-        //     //tyreId.country = tyreCountry;
-        //     //tyreCountry.reload();
-
-        //     return newTyreHomologation;
-
-        // } 
-        // else {
-
-        //     const tyreHomologation = await this.tyreHomologationRepository.create({homologation});
-
-        //     return tyreHomologation;
-        // }
+      }
 
     } catch {
 

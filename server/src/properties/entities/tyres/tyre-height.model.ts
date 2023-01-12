@@ -9,7 +9,7 @@ export class TyreHeight extends Model<TyreHeight, TyrePropsConfigAttr> {
     id_height: number;
    
     @Column({type: DataType.INTEGER, unique: true, allowNull: false})
-    height: number;
+    height: number | string;
 
     @HasMany(() => Tyres , 'id_height')
     tyres: Tyres[];

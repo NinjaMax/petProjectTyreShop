@@ -26,8 +26,6 @@ export class PropsTyreVehicleTypeService {
              vehicle_type_ua: createPropertyDto.vehicle_type_ua
             }, {where: {id_vehicle_type: tyreVehicleType.id_vehicle_type}});
             await tyreId.$set('vehicle_type', updateVehicleType);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
 
             return updateVehicleType;
 
@@ -37,18 +35,11 @@ export class PropsTyreVehicleTypeService {
             create(createPropertyDto);
 
             await tyreId.$set('vehicle_type', newTyreVehicleType.id_vehicle_type);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
+
 
             return newTyreVehicleType;
 
-        } 
-        // else {
-
-        //     const tyreVehicleType = await this.tyreVehicleTypeRepository.create(createPropertyDto);
-
-        //     return tyreVehicleType;
-        // }
+        }
 
     } catch {
 
@@ -63,52 +54,21 @@ export class PropsTyreVehicleTypeService {
 
     try {
 
-        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const [tyreVehicleType, created] = await this.tyreVehicleTypeRepository.findOrCreate(
-        { where: { vehicle_type: vehicle_type}, 
+      const [tyreVehicleType, created] = await this.tyreVehicleTypeRepository.findOrCreate(
+        {where: {vehicle_type: vehicle_type}, 
           defaults: {
             id_vehicle_type: id_vehicle_type,
             vehicle_type: vehicle_type,
             vehicle_type_ua: vehicle_type_ua
-          }});
-        
-        if(created || !created) {
-
-          await tyreVehicleType.$set('tyres', id);
-
+          }
         }
+      );
+        
+      if(created || !created) {
 
-        // if(tyreId && tyreVehicleType) {
+        await tyreVehicleType.$add('tyres', id);
 
-        //     const updateVehicleType = await this.tyreVehicleTypeRepository.update({
-        //     vehicle_type:vehicle_type,
-        //      vehicle_type_ua: vehicle_type_ua
-        //     }, {where: {id_vehicle_type: tyreVehicleType.id_vehicle_type}});
-        //     //await tyreId.$set('vehicle_type', updateVehicleType);
-        //     //tyreId.country = tyreCountry;
-        //     //updateCountry.reload();
-
-        //     return updateVehicleType;
-
-        // } else {
-
-        //     const newTyreVehicleType = await this.tyreVehicleTypeRepository.create(
-        //     {id_vehicle_type, vehicle_type, vehicle_type_ua});
-
-        //     //await tyreId.$set('vehicle_type', newTyreVehicleType.id_vehicle_type);
-        //     //tyreId.country = tyreCountry;
-        //     //tyreCountry.reload();
-
-        //     return newTyreVehicleType;
-
-        // } 
-        // // else {
-
-        // //     const tyreVehicleType = await this.tyreVehicleTypeRepository.create(
-        // //         {id_vehicle_type, vehicle_type, vehicle_type_ua});
-
-        // //     return tyreVehicleType;
-        // // }
+      }
 
     } catch {
 

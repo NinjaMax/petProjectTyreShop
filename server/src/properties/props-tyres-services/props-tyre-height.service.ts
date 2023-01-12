@@ -34,8 +34,6 @@ export class PropsTyreHeightService {
             const newTyreHeight = await this.tyreHeightRepository.create(createPropertyDto);
 
             await tyreId.$set('height', newTyreHeight);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
 
             return newTyreHeight;
 
@@ -54,51 +52,19 @@ export class PropsTyreHeightService {
 
   }
 
-  async createTyreHeightFromPrice( id: number, height: number) {
+  async createTyreHeightFromPrice( id: number, height: number|string) {
 
     try {
 
-        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const [tyreHeight, created] = await this.tyreHeightRepository.findOrCreate(
-        { where: { height: height}, defaults: {height: height}});
+      const [tyreHeight, created] = await this.tyreHeightRepository.findOrCreate(
+        {where: {height: height}, defaults: {height: height}}
+      );
 
-        if(created || !created) {
+      if(created || !created) {
 
-          await tyreHeight.$set('tyres', id);
+        await tyreHeight.$add('tyres', id);
 
-        }
-
-
-
-        // if(tyreId && tyreHeight) {
-
-        //     const updateHeight = await this.tyreHeightRepository.update({
-        //      height: height}, {where: {id_height: tyreHeight.id_height}});
-        //     //await tyreId.$set('height', updateHeight);
-        //     //tyreId.country = tyreCountry;
-        //     //updateCountry.reload();
-
-        //     return updateHeight;
-
-        // } 
-        
-        // else {
-
-        //     const newTyreHeight = await this.tyreHeightRepository.create({height});
-
-        //     //await tyreId.$set('height', newTyreHeight.id_height);
-        //     //tyreId.country = tyreCountry;
-        //     //tyreCountry.reload();
-
-        //     return newTyreHeight;
-
-        // } 
-        // else {
-
-        //     const tyreHeight = await this.tyreHeightRepository.create({height});
-
-        //     return tyreHeight;
-        // }
+      }
 
     } catch {
 

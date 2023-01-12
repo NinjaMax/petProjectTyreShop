@@ -49,52 +49,17 @@ export class PropsBrandService {
 
     try {
 
-      //const tyreId = await this.tyresService.findTyresByIdPrice(id);
       const [tyreBrand, created] = await this.tyreBrandRepository.findOrCreate(
         {where: {id_brand: id_brand}, 
-        defaults:{
-          id_brand: id_brand,
-          brand: brand
-        }});
-
-        if(created) {
-
-          await tyreBrand.$add('tyres', id);
-
-        } else {
-
-          await tyreBrand.$set('tyres', id)
-
+          defaults: {id_brand: id_brand, brand: brand}
         }
+      );
 
-      // if(tyreId && tyreBrand) {
+      if(created || !created) {
 
-      //     const updateBrand = await this.tyreBrandRepository.update({
-      //      brand: brand}, {where: {id_brand: tyreBrand.id_brand}});
-      //     //await tyreId.$add('tyre_brand', updateBrand);
-      //     //tyreId.country = tyreCountry;
-      //     //updateCountry.reload();
+        await tyreBrand.$add('tyres', id);
 
-      //     return updateBrand;
-
-      //} 
-      // else {
-
-      //     const newTyreBrand = await this.tyreBrandRepository.create({id_brand, brand});
-
-      //     //await newTyreBrand.$add('tyres', [tyreId.id]);
-      //     //tyreId.country = tyreCountry;
-      //     //tyreCountry.reload();
-
-      //     return newTyreBrand;
-
-      //} 
-      // else {
-
-      //     const tyreBrand = await this.tyreBrandRepository.create({id_brand, brand});
-
-      //     return tyreBrand;
-      // }
+      }
 
     } catch {
 

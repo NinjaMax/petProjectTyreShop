@@ -58,43 +58,15 @@ export class PropsTyreSealService {
 
     try {
 
-        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const [tyreSeal, created] = await this.tyreSealRepository.findOrCreate(
-        { where: { seal: seal}, defaults: {seal: seal}});
+      const [tyreSeal, created] = await this.tyreSealRepository.findOrCreate(
+        {where: {seal: seal}, defaults: {seal: seal}}
+      );
 
-        if(created || !created) {
+      if(created || !created) {
 
-          await tyreSeal.$set('tyres', id);
+        await tyreSeal.$add('tyres', id);
           
-        }
-
-        // if(tyreId && tyreSeal) {
-
-        //     const updateSeal = await this.tyreSealRepository.update({
-        //      seal: seal}, {where: {id_seal: tyreSeal.id_seal}});
-        //     //await tyreId.$set('seal', updateSeal);
-        //     //tyreId.country = tyreCountry;
-        //     //updateCountry.reload();
-
-        //     return updateSeal;
-
-        // } else {
-
-        //     const newTyreSeal = await this.tyreSealRepository.create({seal});
-
-        //     //await tyreId.$set('seal', newTyreSeal.id_seal);
-        //     //tyreId.country = tyreCountry;
-        //     //tyreCountry.reload();
-
-        //     return newTyreSeal;
-
-        // } 
-        // else {
-
-        //     const tyreSeal = await this.tyreSealRepository.create({seal});
-
-        //     return tyreSeal;
-        // }
+      }
 
     } catch {
 

@@ -34,12 +34,9 @@ export class ContractService {
     try {
 
       let findContract = await this.contractRepository.findOne(
-        {where: {id_supplier: id_supplier}});
+        {where: {id_supplier: +id_supplier}});
 
       if(findContract){
-
-        //const contractSupplier = await this.contractRepository.update(
-        //  {id_supplier: id_supplier}, {where:{id_supplier: id_supplier}});
 
         return findContract;
 

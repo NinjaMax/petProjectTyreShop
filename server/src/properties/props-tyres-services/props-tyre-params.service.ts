@@ -24,8 +24,6 @@ export class PropsTyreParamsService {
             const updateParams = await this.tyreParamsRepository.update({
              params: createPropertyDto.params}, {where: {id_params: tyreParams.id_params}});
             await tyreId.$set('params', updateParams);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
 
             return updateParams;
 
@@ -34,18 +32,10 @@ export class PropsTyreParamsService {
             const newTyreParams = await this.tyreParamsRepository.create(createPropertyDto);
 
             await tyreId.$set('params', newTyreParams);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
 
             return newTyreParams;
 
-        } 
-        // else {
-
-        //     const tyreParams = await this.tyreParamsRepository.create(createPropertyDto);
-
-        //     return tyreParams;
-        // }
+        }
 
     } catch {
 
@@ -59,43 +49,15 @@ export class PropsTyreParamsService {
 
     try {
 
-        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const [tyreParams, created] = await this.tyreParamsRepository.findOrCreate(
-        { where: { params: params}, defaults: {params: params}});
+      const [tyreParams, created] = await this.tyreParamsRepository.findOrCreate(
+        {where: {params: params}, defaults: {params: params}}
+      );
 
-        if(created || !created) {
+      if(created || !created) {
 
-          await tyreParams.$set('tyres', id);
+        await tyreParams.$add('tyres', id);
           
-        }
-
-        // if(tyreId && tyreParams) {
-
-        //     const updateParams = await this.tyreParamsRepository.update({
-        //      params: params}, {where: {params: tyreParams.id_params}});
-        //     //await tyreId.$set('params', updateParams);
-        //     //tyreId.country = tyreCountry;
-        //     //updateCountry.reload();
-
-        //     return updateParams;
-
-        // } else {
-
-        //     const newTyreParams = await this.tyreParamsRepository.create({params});
-
-        //     //await tyreId.$set('params', newTyreParams.id_params);
-        //     //tyreId.country = tyreCountry;
-        //     //tyreCountry.reload();
-
-        //     return newTyreParams;
-
-        // } 
-        // else {
-
-        //     const tyreParams = await this.tyreParamsRepository.create({params});
-
-        //     return tyreParams;
-        // }
+      }
 
     } catch {
 

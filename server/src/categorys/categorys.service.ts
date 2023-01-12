@@ -30,17 +30,14 @@ export class CategorysService {
     try {
       
       const [findCategory, created] = await this.categoryRepository.findOrCreate(
-       {where:{category: category}});
+       {where:{category: category}, defaults: {category: category}}
+      );
       
-       if(created) {
+      if(created || !created) {
 
         await findCategory.$add('tyres', id);
 
-       } else {
-
-        await findCategory.$set('tyres', id);
-
-       }
+      }
       
     } catch {
 

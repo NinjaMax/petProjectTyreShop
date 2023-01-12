@@ -59,44 +59,15 @@ export class PropsTyreStuddedService {
 
     try {
 
-        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const [tyreStudded, created] = await this.tyreStuddedRepository.findOrCreate(
-        { where: { studded: studded}, defaults: {studded: studded}});
+      const [tyreStudded, created] = await this.tyreStuddedRepository.findOrCreate(
+        {where: {studded: studded}, defaults: {studded: studded}}
+      );
 
-        if(created || !created) {
+      if(created || !created) {
 
-          await tyreStudded.$set('tyres', id);
+        await tyreStudded.$add('tyres', id);
 
-        }
-
-        // if(tyreId && tyreStudded) {
-
-        //     const updateStudded = await this.tyreStuddedRepository.update({
-        //      studded: studded}, {where: {id_studded: tyreStudded.id_studded}});
-        //     //await tyreId.$set('studded', updateStudded);
-        //     //tyreId.country = tyreCountry;
-        //     //updateCountry.reload();
-
-        //     return updateStudded;
-
-        // } else {
-
-        //     const newTyreStudded = await this.tyreStuddedRepository.create(
-        //     {studded});
-
-        //     //await tyreId.$set('studded', newTyreStudded.id_studded);
-        //     //tyreId.country = tyreCountry;
-        //     //tyreCountry.reload();
-
-        //     return newTyreStudded;
-
-        // } 
-        // else {
-
-        //     const tyreStudded = await this.tyreStuddedRepository.create({studded});
-
-        //     return tyreStudded;
-        // }
+      }
 
     } catch {
 

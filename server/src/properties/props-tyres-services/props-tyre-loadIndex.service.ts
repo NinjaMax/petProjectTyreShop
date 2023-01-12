@@ -61,46 +61,19 @@ export class PropsTyreLoadIndexService {
 
     try {
 
-        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const [tyreLoadIndex, created] = await this.tyreLoadIndexRepository.findOrCreate(
+      const [tyreLoadIndex, created] = await this.tyreLoadIndexRepository.findOrCreate(
         { where: {load_index: load_index}, 
-          defaults: {load_index: load_index, load_index_with_desc: load_index_with_desc}});
+          defaults: {load_index: load_index, 
+            load_index_with_desc: load_index_with_desc
+          }
+        }
+      );
         
-        if(created || !created) {
+      if(created || !created) {
 
-          await tyreLoadIndex.$set('tyres', id);
+        await tyreLoadIndex.$add('tyres', id);
           
-        }    
-        // if(tyreId && tyreLoadIndex) {
-
-        //     const updateLoadIndex = await this.tyreLoadIndexRepository.update({
-        //      load_index: load_index, load_index_with_desc: load_index_with_desc},
-        //       {where: {id_load_index: tyreLoadIndex.id_load_index}});
-        //     //await tyreId.$set('load_index', updateLoadIndex);
-        //     //tyreId.country = tyreCountry;
-        //     //updateCountry.reload();
-
-        //     return updateLoadIndex;
-
-        // } 
-        // else {
-
-        //     const newTyreloadIndex = await this.tyreLoadIndexRepository.create({load_index,
-        //     load_index_with_desc});
-
-        //     //await tyreId.$set('load_index', newTyreloadIndex.id_load_index);
-        //     //tyreId.country = tyreCountry;
-        //     //tyreCountry.reload();
-
-        //     return newTyreloadIndex;
-
-        // } 
-        // else {
-
-        //     const tyreLoadIndex = await this.tyreLoadIndexRepository.create({load_index});
-
-        //     return tyreLoadIndex;
-        // }
+      }
 
     } catch {
 

@@ -58,44 +58,17 @@ export class PropsTyreYearService {
 
     try {
 
-        //const tyreId = await this.tyresService.findTyresByIdPrice(id);
-        const [tyreYear, created] = await this.tyreYearRepository.findOrCreate(
-        { where: {manufacture_year: manufacture_year}, 
-          defaults: {manufacture_year: manufacture_year}});
-        
-        if(created || !created) {
-
-          await tyreYear.$set('tyres', id);
-
+      const [tyreYear, created] = await this.tyreYearRepository.findOrCreate(
+        {where: {manufacture_year: manufacture_year}, 
+          defaults: {manufacture_year: manufacture_year}
         }
+      );
+        
+      if(created || !created) {
 
-        // if(tyreId && tyreYear) {
+        await tyreYear.$add('tyres', id);
 
-        //     const updateYear = await this.tyreYearRepository.update({
-        //      manufacture_year: manufacture_year}, {where: {id_year: tyreYear.id_year}});
-        //     //await tyreId.$set('year', updateYear);
-        //     //tyreId.country = tyreCountry;
-        //     //updateCountry.reload();
-
-        //     return updateYear;
-
-        // } else {
-
-        //     const newTyreYear = await this.tyreYearRepository.create({manufacture_year});
-
-        //     //await tyreId.$set('year', newTyreYear.id_year);
-        //     //tyreId.country = tyreCountry;
-        //     //tyreCountry.reload();
-
-        //     return newTyreYear;
-
-        // } 
-        // else {
-
-        //     const tyreYear = await this.tyreYearRepository.create({manufacture_year});
-
-        //     return tyreYear;
-        // }
+      }
 
     } catch {
 

@@ -47,48 +47,16 @@ export class PropsModelService {
 
     try {
   
-      //const tyreId = await this.tyresService.findTyresByIdPrice(id);
       const [tyreModel, created] = await this.tyreModelRepository.findOrCreate(
-        {where: {id_model: id_model}, defaults: {model: model}});
+        {where: {id_model: id_model}, 
+        defaults: {id_model: id_model, model: model}}
+      );
       
-        if(created) {
+      if(created || !created) {
 
-          await tyreModel.$add('tyres', id);
+        await tyreModel.$add('tyres', id);
 
-        } else { 
-
-          await tyreModel.$set('tyres', id);
-
-        }
-  
-      // if(tyreId && tyreModel) {
-  
-      //   const updateModel = await this.tyreModelRepository.update({
-      //       model: model}, {where: {id_model: tyreModel.id_model}});
-      //   //await tyreId.$set('tyre_model', updateModel);
-      //       //tyreId.country = tyreCountry;
-      //       //updateCountry.reload();
-  
-      //   return updateModel;
-  
-      // } 
-      // else {
-  
-      //   const newTyreModel = await this.tyreModelRepository.create({id_model, model});
-  
-      //   //await tyreId.$set('tyre_model', newTyreModel.id_model);
-      //       //tyreId.country = tyreCountry;
-      //       //tyreCountry.reload();
-  
-      //   return newTyreModel;
-  
-      // } 
-      // else {
-  
-      //   const tyreModel = await this.tyreModelRepository.create({id_model, model});
-  
-      //   return tyreModel;
-      // }
+      }
   
     } catch {
   

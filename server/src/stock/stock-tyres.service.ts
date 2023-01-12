@@ -62,27 +62,29 @@ export class StockTyresService {
   }
 
   async createStockTyreFromPrice(id: number, stock: number, 
-    id_supplier: number) {
+    id_supplier: number, update_date: Date) {
 
     try {
-
-      const tyreId = await this.tyresService.findTyresByIdPrice(id);
+      
       const [tyreStock, created] = await this.stockTyresRepository.findOrCreate(
-        {where:{id: id}, 
+        {where:{id: +id}, 
         defaults:{
-          id: id,
-          stock: stock,
-          id_supplier: id_supplier
+          id: +id,
+          stock: +stock,
+          id_supplier: +id_supplier,
+          update_date: update_date
         }});
 
       if(!created) {
 
-        const updateStock = await this.stockTyresRepository.update({
-          stock: stock, id_supplier: id_supplier}, 
-          {where: {id: tyreStock.id}});
+        await tyreStock.update(
+          {stock: +stock, 
+            id_supplier: +id_supplier,
+            update_date: update_date}, 
+          {where: {id: +id}}
+        );
 
-        return updateStock;
-
+        return tyreStock;
       }
 
     } catch {
