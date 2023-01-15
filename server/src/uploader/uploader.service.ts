@@ -32,7 +32,8 @@ import { PropsTyreHeightService } from 'src/properties/props-tyres-services/prop
 import { PropsTyrDiametrService } from 'src/properties/props-tyres-services/props-tyre-diameter.service';
 import { PropsTyreDemoService } from 'src/properties/props-tyres-services/props-tyre-demo.service';
 import { PropsTyreCountryService } from 'src/properties/props-tyres-services/props-tyre-country.service';
-import { timeEnd } from 'console';
+
+import {XmlStream} from 'xml-stream';
 
 @Injectable()
 export class UploaderService extends PriceParserTyresOptions {
@@ -85,11 +86,43 @@ export class UploaderService extends PriceParserTyresOptions {
             }
           }
         );
-      stream.on('data', (chunk) => {
-          console.log('Chunk size', chunk.toString());
+      
+      stream.on('data', (data) => {
+         // do{
+          //if(data) {
+            // let chunkCopy = data.toString().slice();
+            // //do {
+            
+            //   let chunkStart = data.toString().indexOf('<item>');
+            //   let nextChunk = data.toString().indexOf('</item>');
+            //   let chunkEnd = data.toString().indexOf('<item>', nextChunk);
+            // //   for(let i = 0; i < data.toString().length; i++){
+            //   let chunkCutStart = data.toString().slice(chunkStart);
+            //   //let chunkCutEnd = chunkCopy.toString().slice(chunkEnd);
+            // //let chunkCut = data.toString().slice(chunkStart, chunkEnd);
+            // let chunkCutEnd = chunkCutStart.toString().slice(chunkEnd);
+            // //   //let chunk = data.toString().split('</item>');
+            //   //let chunk = data.toString().padStart(nextChunk,'</item>');
+            //   console.log('CHUNK START:', chunkStart);
+            //   console.log('CHUNK NEXT:', nextChunk);
+            //   console.log('CHUNK END:', chunkEnd);
+            //   console.log('CHUNK PART:', chunkCutEnd);
+
+              // let xmlData = JSON.stringify(data.toString(), ['<item/>'])
+              // let newData = JSON.parse(xmlData)
+              // //console.log('JSON STRIN', )
+              // console.log('JSON PARCE', newData)
+            // }
+            // }while(data != null);
+          //}
+        //  
+            
+          
+          
+
           // const parser = new XMLParser(this.optionsTyresParse);
           // let jsObj = parser.parse(data);
-        
+          // console.log( jsObj.xml.items.item);
         
           // // newJSOBJ.forEach((item) => {
           //   jsObj.xml.items.item.forEach((item) => {
