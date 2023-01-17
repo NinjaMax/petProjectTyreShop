@@ -4,7 +4,6 @@ import { UpdateUploaderDto } from './dto/update-uploader.dto';
 import * as fs from 'fs';
 import { join } from 'path';
 import { PriceParserTyresOptions } from './interfaces/priceParserTyres.interface';
-import { XMLParser } from 'fast-xml-parser';
 import { TyresService } from 'src/tyres/tyres.service';
 import { SuppliersService } from 'src/suppliers/suppliers.service';
 import { StockTyresService } from 'src/stock/stock-tyres.service';
@@ -32,8 +31,12 @@ import { PropsTyreHeightService } from 'src/properties/props-tyres-services/prop
 import { PropsTyrDiametrService } from 'src/properties/props-tyres-services/props-tyre-diameter.service';
 import { PropsTyreDemoService } from 'src/properties/props-tyres-services/props-tyre-demo.service';
 import { PropsTyreCountryService } from 'src/properties/props-tyres-services/props-tyre-country.service';
+import { ItemPriceTyresConfigAttr } from './interfaces/priceItemTyre.interface';
+import { Parser } from 'node-expat';
+import { XmlStream } from 'xml-stream';
+import {RdfXmlParser} from "rdfxml-streaming-parser";
+import { XmlReader } from 'xml-reader'
 
-import {XmlStream} from 'xml-stream';
 
 @Injectable()
 export class UploaderService extends PriceParserTyresOptions {
@@ -65,75 +68,219 @@ export class UploaderService extends PriceParserTyresOptions {
     private propsTyreVehicleType: PropsTyreVehicleTypeService,
     private propsTyreWidth: PropsTyreWidthService,
     private propsTyreYear: PropsTyreYearService,
-
-
-
-
   ) {super()}
 
   create(createUploaderDto: CreateUploaderDto) {
     return 'This action adds a new uploader';
   }
 
+  
+  //{ price_list_type: string; provider_id: number; provider: string; city: string; city_ua: string; id: number; brand_id: number; brand: string; model_id: number; model: string; country_manufacturer: string; country_manufacturer_ua: string; demo: string; diameter: number; height: number; homologation: string; load_index: string; load_index_with_desc: string; params: string; reinforce: string; run_flat: string; seal: string; season_id: number; season: string; season_ua: string; silent: string; size_only_digits: number; speed_index: string; speed_index_with_desc: string; studded: string; vehicle_type_id: number; vehicle_type: string; vehicle_type_ua: string; width: number; manufacture_year: number; full_name: string; photo_url: string; update_date: Date; in_stock: number; user_price_wholesale: number; user_price: number; user_delivery_price: number; user_price_plus_user_delivery_price: number; }
+     parceAddtoDb(item: ItemPriceTyresConfigAttr) {
+
+     this.tyresservice.createTyresFromPrice(
+      +item.id, 
+      item.full_name, 
+      item.photo_url,
+      //item.update_date,
+      
+    );
+   
+     this.categoryService.createCategoryFromPrice(
+      item.id,
+      item.price_list_type
+    );
+    
+     this.supplierService.createSupplierFromPrice(
+      item.provider_id, 
+      item.provider,
+      item.city, 
+      item.city_ua
+    );
+
+     this.propsBrandService.createTyreBrandFromPrice(
+      item.id, 
+      item.brand_id, 
+      item.brand
+    );
+
+     this.propsTyreModel.createTyreModelFromPrice(
+      item.id,
+      item.model_id,
+      String(item.model)
+    );
+     this.propsTyreCountry.createTyreCountryFromPrice(
+      item.id,
+      item.country_manufacturer,
+      item.country_manufacturer_ua
+    );
+     this.propsTyreDemo.createTyreDemoFromPrice(
+      item.id,
+      item.demo,
+    );
+
+     this.propsTyreDiameter.createTyreDiameterFromPrice(
+      item.id,
+      Number(item.diameter),
+    );
+
+     this.propsTyreHeight.createTyreHeightFromPrice(
+      item.id,
+      Number(item.height),
+    );
+
+     this.propsTyreHomologation.createTyreHomologationFromPrice(
+      item.id,
+      item.homologation
+    );
+
+     this.propsTyreLoadIndex.createLoadIndexFromPrice(
+      item.id,
+      String(item.load_index),
+      item.load_index_with_desc
+    );
+   
+     this.propsTyreParams.createParamsFromPrice(
+      item.id,
+      item.params
+    );
+
+     this.propsTyreReinforce.createTyreReinforceFromPrice(
+      item.id,
+      item.reinforce,
+    );
+
+    this.propsTyreRunFlat.createTyreRunFlatFromPrice(
+      item.id,
+      item.run_flat
+    );
+
+     this.propsTyreSeal.createTyreSealFromPrice(
+      item.id,
+      item.seal
+    );
+
+     this.propsTyreSeason.createTyreSeasonFromPrice(
+      item.id,
+      item.season_id,
+      item.season,
+      item.season_ua
+    );
+
+     this.propsTyreSilent.createTyreSilentFromPrice(
+      item.id,
+      item.silent
+    );
+
+     this.propsTyreSizeDigits.createTyreSizeDigitsFromPrice(
+      item.id,
+      item.size_only_digits
+    );
+
+     this.propsTyreSpeedIndex.createTyreSpeedIndexFromPrice(
+      item.id,
+      item.speed_index,
+      item.speed_index_with_desc
+    );
+
+     this.propsTyreStudded.createTyreStuddedFromPrice(
+      item.id,
+      item.studded
+    );
+
+     this.propsTyreVehicleType.createTyreVehicleTypeFromPrice(
+      item.id,
+      +item.vehicle_type_id,
+      item.vehicle_type,
+      item.vehicle_type_ua,
+    );
+
+     this.propsTyreWidth.createTyreWidthFromPrice(
+      item.id,
+      item.width,
+    );
+
+     this.propsTyreYear.createTyreYearFromPrice(
+      item.id,
+      Number(item.manufacture_year)
+    );
+
+     this.stockTyresService.createStockTyreFromPrice(
+      item.id,
+      item.in_stock,
+      item.provider_id,
+      item.update_date,
+    );
+     this.priceTyreService.createPriceTyresFromPrice(
+      item.id,
+      item.user_price_wholesale,
+      item.user_price,
+      item.user_delivery_price,
+      item.user_price_plus_user_delivery_price,
+      item.provider_id,
+      item.update_date,
+    );
+
+    return  'Price added to DATA BASE';
+
+  }
+
   async parseTyresPrice(path: string) {
     
     try {
-      
-      const stream = fs.createReadStream(join(process.cwd(), path));
-      stream.on('error',(err) =>{
-            if (err) {
-              throw err;  
-            }
-          }
-        );
-      
-      stream.on('data', (data) => {
-         // do{
-          //if(data) {
-            // let chunkCopy = data.toString().slice();
-            // //do {
-            
-            //   let chunkStart = data.toString().indexOf('<item>');
-            //   let nextChunk = data.toString().indexOf('</item>');
-            //   let chunkEnd = data.toString().indexOf('<item>', nextChunk);
-            // //   for(let i = 0; i < data.toString().length; i++){
-            //   let chunkCutStart = data.toString().slice(chunkStart);
-            //   //let chunkCutEnd = chunkCopy.toString().slice(chunkEnd);
-            // //let chunkCut = data.toString().slice(chunkStart, chunkEnd);
-            // let chunkCutEnd = chunkCutStart.toString().slice(chunkEnd);
-            // //   //let chunk = data.toString().split('</item>');
-            //   //let chunk = data.toString().padStart(nextChunk,'</item>');
-            //   console.log('CHUNK START:', chunkStart);
-            //   console.log('CHUNK NEXT:', nextChunk);
-            //   console.log('CHUNK END:', chunkEnd);
-            //   console.log('CHUNK PART:', chunkCutEnd);
 
-              // let xmlData = JSON.stringify(data.toString(), ['<item/>'])
-              // let newData = JSON.parse(xmlData)
-              // //console.log('JSON STRIN', )
-              // console.log('JSON PARCE', newData)
-            // }
-            // }while(data != null);
-          //}
-        //  
-            
-          
-          
+      let items = [];
+      let item = [[]];
 
-          // const parser = new XMLParser(this.optionsTyresParse);
-          // let jsObj = parser.parse(data);
-          // console.log( jsObj.xml.items.item);
+      const stream = fs.createReadStream(join(process.cwd(), path))
+
+      const xmlStream = new Parser('UTF-8');
+
+      stream.pipe(xmlStream);
+      xmlStream.on('startElement', function (name) {
+
+        item.push([name]);
+
+      });
+
+      xmlStream.on('text', function (text) {
         
-          // // newJSOBJ.forEach((item) => {
-          //   jsObj.xml.items.item.forEach((item) => {
-          //     this.parceAddtoDb(item);
-          //   }
-          // );
-          //console.timeEnd('End Parser');
-        }   
+        // if(!text.toString()) {
+        //   item[item.length - 1].push('Null');
+        //  } else {
+          item[item.length - 1].push(text.toString());
+        //}
+        
+      });
+
+      xmlStream.on('endElement', function (name) { 
+
+        if(name.toString() =='item') {
+
+          items.push(Object.fromEntries(item));
+
+        }
        
-      );
-      stream.on('end', () => console.log('End Stream Parser'));
+        if(name.toString() =='xml') {
+
+         console.log('END ELEMENT', items);
+
+          items.forEach((item) => {
+            this.parceAddtoDb(item);
+          }
+          );
+
+          console.log('Adding to database completed.')
+        } 
+      });
+
+      xmlStream.on('error', function (error) {
+        console.error(error);
+      });
+      
+      xmlStream.on('end', function () {
+        console.log('END XML');
+      });
     
     return `Price File ${path} has been succeeded upload`
        
@@ -144,154 +291,6 @@ export class UploaderService extends PriceParserTyresOptions {
     }
     
   }  
-  //{ price_list_type: string; provider_id: number; provider: string; city: string; city_ua: string; id: number; brand_id: number; brand: string; model_id: number; model: string; country_manufacturer: string; country_manufacturer_ua: string; demo: string; diameter: number; height: number; homologation: string; load_index: string; load_index_with_desc: string; params: string; reinforce: string; run_flat: string; seal: string; season_id: number; season: string; season_ua: string; silent: string; size_only_digits: number; speed_index: string; speed_index_with_desc: string; studded: string; vehicle_type_id: number; vehicle_type: string; vehicle_type_ua: string; width: number; manufacture_year: number; full_name: string; photo_url: string; update_date: Date; in_stock: number; user_price_wholesale: number; user_price: number; user_delivery_price: number; user_price_plus_user_delivery_price: number; }
-  async parceAddtoDb(item) {
-
-    await this.tyresservice.createTyresFromPrice(
-      +item.id, 
-      item.full_name, 
-      item.photo_url,
-      //item.update_date,
-      
-    )
-   
-    await this.categoryService.createCategoryFromPrice(
-      item.id,
-      item.price_list_type
-    )
-    
-    await this.supplierService.createSupplierFromPrice(
-      item.provider_id, 
-      item.provider,
-      item.city, 
-      item.city_ua
-    )
-
-    await this.propsBrandService.createTyreBrandFromPrice(
-      item.id, 
-      item.brand_id, 
-      item.brand
-    ) 
-
-    await this.propsTyreModel.createTyreModelFromPrice(
-      item.id,
-      item.model_id,
-      String(item.model)
-    )
-    await this.propsTyreCountry.createTyreCountryFromPrice(
-      item.id,
-      item.country_manufacturer,
-      item.country_manufacturer_ua
-    )
-    await this.propsTyreDemo.createTyreDemoFromPrice(
-      item.id,
-      item.demo,
-    )
-
-    await this.propsTyreDiameter.createTyreDiameterFromPrice(
-      item.id,
-      Number(item.diameter),
-    )
-
-     this.propsTyreHeight.createTyreHeightFromPrice(
-      item.id,
-      Number(item.height),
-    )
-
-    await this.propsTyreHomologation.createTyreHomologationFromPrice(
-      item.id,
-      item.homologation
-    )
-
-    await this.propsTyreLoadIndex.createLoadIndexFromPrice(
-      item.id,
-      String(item.load_index),
-      item.load_index_with_desc
-    )
-   
-    await this.propsTyreParams.createParamsFromPrice(
-      item.id,
-      item.params
-    )
-
-    await this.propsTyreReinforce.createTyreReinforceFromPrice(
-      item.id,
-      item.reinforce,
-    )
-
-    await this.propsTyreRunFlat.createTyreRunFlatFromPrice(
-      item.id,
-      item.run_flat
-    )
-
-    await this.propsTyreSeal.createTyreSealFromPrice(
-      item.id,
-      item.seal
-    )
-
-    await this.propsTyreSeason.createTyreSeasonFromPrice(
-      item.id,
-      item.season_id,
-      item.season,
-      item.season_ua
-    )
-
-    await this.propsTyreSilent.createTyreSilentFromPrice(
-      item.id,
-      item.silent
-    )
-
-    await this.propsTyreSizeDigits.createTyreSizeDigitsFromPrice(
-      item.id,
-      item.size_only_digits
-    )
-
-    await this.propsTyreSpeedIndex.createTyreSpeedIndexFromPrice(
-      item.id,
-      item.speed_index,
-      item.speed_index_with_desc
-    )
-
-    await this.propsTyreStudded.createTyreStuddedFromPrice(
-      item.id,
-      item.studded
-    )
-
-    await this.propsTyreVehicleType.createTyreVehicleTypeFromPrice(
-      item.id,
-      +item.vehicle_type_id,
-      item.vehicle_type,
-      item.vehicle_type_ua,
-    )
-
-    await this.propsTyreWidth.createTyreWidthFromPrice(
-      item.id,
-      item.width,
-    )
-
-    await this.propsTyreYear.createTyreYearFromPrice(
-      item.id,
-      Number(item.manufacture_year)
-    )
-
-    await this.stockTyresService.createStockTyreFromPrice(
-      item.id,
-      item.in_stock,
-      item.provider_id,
-      item.update_date,
-    )
-    await this.priceTyreService.createPriceTyresFromPrice(
-      item.id,
-      item.user_price_wholesale,
-      item.user_price,
-      item.user_delivery_price,
-      item.user_price_plus_user_delivery_price,
-      item.provider_id,
-      item.update_date,
-    )
-
-    
-  }
 
   findAll() {
     return `This action returns all uploader`;
@@ -309,3 +308,8 @@ export class UploaderService extends PriceParserTyresOptions {
     return `This action removes a #${id} uploader`;
   }
 }
+
+// function parceAddtoDb(entity: any): void {
+//   throw new Error('Function not implemented.');
+// }
+
