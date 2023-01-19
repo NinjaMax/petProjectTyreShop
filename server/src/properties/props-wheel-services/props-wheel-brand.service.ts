@@ -54,40 +54,20 @@ export class PropsWheelBrandService {
 
   }
 
-  async createWheelBrandFromPrice( id: number, brand: string) {
+  async createWheelBrandFromPrice(id: number, id_brand: number, brand: string) {
 
     try {
 
-        const wheelId = await this.wheelsService.findWheelByIdPrice(id);
-        const wheelBrand = await this.wheelBrandRepository.findOne(
-        { where: { brand: brand } })
+      const [tyreHomologation, created] = await this.wheelBrandRepository.findOrCreate(
+        {where: {id: id}, 
+        defaults: {id_brand: id_brand, brand: brand}}
+      );
 
-        if(wheelId && wheelBrand) {
+      if(created || !created) {
 
-            const updateBrand = await this.wheelBrandRepository.update({
-             brand: brand}, {where: {id_brand: wheelBrand.id_brand}});
-            await wheelId.$set('brand', updateBrand);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
-
-            return updateBrand;
-
-        } else if(wheelId && !wheelBrand) {
-
-            const newWheelBrand = await this.wheelBrandRepository.create({brand});
-
-            await wheelId.$set('brand', newWheelBrand);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
-
-            return newWheelBrand;
-
-        } else {
-
-            const wheelBrand = await this.wheelBrandRepository.create({brand});
-
-            return wheelBrand;
-        }
+        await tyreHomologation.$add('tyres', id);
+          
+      }
 
     } catch {
 

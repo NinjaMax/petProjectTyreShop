@@ -1,7 +1,6 @@
 import { Column, DataType, Model, Table, HasMany} from "sequelize-typescript";
 import { Tyres } from "src/tyres/entities/tyres.model";
 import { TyrePropsConfigAttr } from "src/properties/interfaces/tyres/tyre-props.interface";
-import { truncate } from "fs/promises";
 
 @Table({tableName: 'tyre_year' , updatedAt: false, createdAt: false})
 export class TyreYear extends Model<TyreYear, TyrePropsConfigAttr> {

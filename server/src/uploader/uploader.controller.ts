@@ -48,13 +48,9 @@ export class UploaderController {
           new FileTypeValidator({ fileType: 'xml' }),
         ]
       })
-    ) file: Express.Multer.File,
-    //@Res({ passthrough: true }) res: Response  
-  )
-  {    
-   return await this.uploaderService.parseTyresPrice(file.path);
-
-   // return { 'The price has already uploaded': body, file: file};
+    ) file: Express.Multer.File, 
+  ) {    
+    return await this.uploaderService.parseTyresPrice(file.path);
   }
 
   @Get()

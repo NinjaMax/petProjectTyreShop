@@ -52,7 +52,7 @@ export class PropsTyreHeightService {
 
   }
 
-  async createTyreHeightFromPrice( id: number, height: number|string) {
+  async createTyreHeightFromPrice( id: number, height: number) {
 
     try {
 

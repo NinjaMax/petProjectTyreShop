@@ -6,7 +6,7 @@ export class GetPropertyDto {
     readonly id_width: number;
     readonly width: number;
     readonly id_height: number;
-    readonly height: number|string;
+    readonly height: number;
     readonly id_diameter: number;
     readonly diameter: number;
     readonly id_season: number;

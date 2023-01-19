@@ -8,7 +8,7 @@ export interface TyrePropsConfigAttr {
     id_diameter: number;
     diameter: number;
     id_height: number;
-    height: number|string;
+    height: number;
     id_homologation: number;
     homologation: string;
     id_load_index: number;

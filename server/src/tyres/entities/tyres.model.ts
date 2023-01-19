@@ -38,8 +38,8 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
     @Column({type: DataType.STRING, unique: false, allowNull: true})
     photo_url: string;
 
-    // @Column({type: DataType.DATE, unique: false, allowNull: true})
-    // update_date: Date;
+    @Column({type: DataType.DATE, unique: false, allowNull: true})
+    update_date: Date;
 
     @ForeignKey(() => TyreBrand)
     @Column({type: DataType.INTEGER})

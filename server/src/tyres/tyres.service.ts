@@ -30,7 +30,7 @@ export class TyresService {
     id: number, 
     full_name: string,
     photo_url: string, 
-    //update_date: Date, 
+    update_date: Date, 
     ) {
 
     try {
@@ -41,18 +41,18 @@ export class TyresService {
             id: id,
             full_name: full_name, 
             photo_url: photo_url,
-            //update_date: update_date,
+            update_date: update_date,
           }});
         
       if(!created) {
 
-        // await tyresIdFromPrice.update(
-        //   {
-        //   full_name: full_name, 
-        //   photo_url: photo_url,
-        //   update_date: update_date},
-        //   {where: {id: id}}
-        // );
+        await tyresIdFromPrice.update(
+          {
+          full_name: full_name, 
+          photo_url: photo_url,
+          update_date: update_date},
+          {where: {id: id}}
+        );
 
         return tyresIdFromPrice;
 

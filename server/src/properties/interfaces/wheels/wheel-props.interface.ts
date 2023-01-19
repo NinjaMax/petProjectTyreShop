@@ -5,6 +5,7 @@ export interface WheelPropsConfigAttr {
     id_bolt_count_pcd: number;
     bolt_count_pcd: string;
     id_wheel_brand: number;
+    id_brand: number;
     brand: string;
     id_color: number;
     color: string;

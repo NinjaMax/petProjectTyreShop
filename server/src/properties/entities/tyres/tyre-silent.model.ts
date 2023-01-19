@@ -8,7 +8,7 @@ export class TyreSilent extends Model<TyreSilent, TyrePropsConfigAttr> {
     @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_silent: number;
    
-    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    @Column({type: DataType.STRING, unique: true, allowNull: true})
     silent: string;
 
     @HasMany(() => Tyres , 'id_silent')
