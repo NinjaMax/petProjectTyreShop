@@ -54,7 +54,7 @@ export class PropsTyreWidthService {
 
   }
 
-  async createTyreWidthFromPrice( id: number, width: number) {
+  async createTyreWidthFromPrice( id: number, width: string) {
 
     try {
 

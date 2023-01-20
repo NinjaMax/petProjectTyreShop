@@ -54,7 +54,7 @@ export class PropsWheelWidthService {
 
   }
 
-  async createWheelWidthFromPrice( id: number, width: number) {
+  async createWheelWidthFromPrice( id: number, width: string) {
 
     try {
 

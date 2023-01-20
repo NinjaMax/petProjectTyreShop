@@ -123,7 +123,7 @@ export class UploaderPaprserService {
         
         stream.on('end', ()=> console.log('END'));
         
-        return `Price File ${path} has been succeeded upload, parse and added to Database`
+        //return `Price File ${path} has been succeeded upload, parse and added to Database`
          
     } catch {
         

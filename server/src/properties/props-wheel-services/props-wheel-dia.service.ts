@@ -54,7 +54,7 @@ export class PropsWheelDiaService {
 
   }
 
-  async createWheelDiaFromPrice( id: number, dia: number) {
+  async createWheelDiaFromPrice( id: number, dia: string) {
 
     try {
 

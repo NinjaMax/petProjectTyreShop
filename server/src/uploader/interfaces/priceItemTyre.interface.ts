@@ -13,8 +13,8 @@ export interface ItemPriceTyresConfigAttr {
     country_manufacturer: string;
     country_manufacturer_ua: string;
     demo: string;
-    diameter: number;
-    height: number;
+    diameter: string;
+    height: string;
     homologation: string;
     load_index: string;
     load_index_with_desc: string;
@@ -33,7 +33,7 @@ export interface ItemPriceTyresConfigAttr {
     vehicle_type_id: number;
     vehicle_type: string;
     vehicle_type_ua: string;
-    width: number;
+    width: string;
     manufacture_year: number;
     full_name: string;
     photo_url: string;

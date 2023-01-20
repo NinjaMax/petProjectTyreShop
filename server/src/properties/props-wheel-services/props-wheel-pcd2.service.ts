@@ -54,7 +54,7 @@ export class PropsWheelPcd2Service {
 
   }
 
-  async createWheelPcd2FromPrice( id: number, pcd2: number) {
+  async createWheelPcd2FromPrice( id: number, pcd2: string) {
 
     try {
 

@@ -50,12 +50,12 @@ export class PropsTyrDiametrService {
 
   }
 
-  async createTyreDiameterFromPrice( id: number, diameter: number) {
+  async createTyreDiameterFromPrice( id: number, diameter: string) {
 
     try {
 
       const [tyreDiameter, created] = await this.tyreDiameterRepository.findOrCreate(
-        {where: {diameter: diameter}, defaults: {diameter: +diameter}}
+        {where: {diameter: diameter}, defaults: {diameter: diameter}}
       );
 
       if(created || !created) {

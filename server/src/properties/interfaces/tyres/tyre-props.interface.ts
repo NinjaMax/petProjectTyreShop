@@ -6,9 +6,9 @@ export interface TyrePropsConfigAttr {
     id_demo: number;
     demo: string;
     id_diameter: number;
-    diameter: number;
+    diameter: string;
     id_height: number;
-    height: number;
+    height: string;
     id_homologation: number;
     homologation: string;
     id_load_index: number;
@@ -38,7 +38,7 @@ export interface TyrePropsConfigAttr {
     vehicle_type: string;
     vehicle_type_ua: string;
     id_width: number;
-    width: number;
+    width: string;
     id_year: number;
     manufacture_year: number;
 

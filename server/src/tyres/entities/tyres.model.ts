@@ -31,6 +31,9 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
 
     @Column({type: DataType.BIGINT, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
     id: number;
+
+    // @Column({type: DataType.BIGINT, unique: true, allowNull: true})
+    // id_goods_provider: number;
    
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     full_name: string;

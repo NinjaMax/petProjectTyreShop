@@ -4,11 +4,11 @@ export class CreatePropertyDto {
     readonly id_model: number;
     readonly id_brand: number;
     readonly id_width: number;
-    readonly width: number;
+    readonly width: string;
     readonly id_height: number;
-    readonly height: number;
+    readonly height: string;
     readonly id_diameter: number;
-    readonly diameter: number;
+    readonly diameter: string;
     readonly id_season: number;
     readonly season: string;
     readonly brand: string;
@@ -48,7 +48,7 @@ export class CreatePropertyDto {
     readonly id_params: number;
     readonly params: string;
     readonly id_bolt_count: number;
-    readonly bolt_count: number;
+    readonly bolt_count: string;
     readonly id_bolt_count_pcd: number;
     readonly bolt_count_pcd: string;
     readonly id_wheel_brand: number;
@@ -56,13 +56,13 @@ export class CreatePropertyDto {
     readonly color: string;
     readonly color_short: string;
     readonly id_dia: number;
-    readonly dia: number;
+    readonly dia: string;
     readonly id_et: number;
-    readonly et: number;
+    readonly et: string;
     readonly id_pcd: number;
-    readonly pcd: number;
+    readonly pcd: string;
     readonly id_pcd2: number;
-    readonly pcd2: number;
+    readonly pcd2: string;
     readonly id_type: number;
     
 

@@ -54,7 +54,7 @@ export class PropsWheelBoltCountService {
 
   }
 
-  async createWheelBoltCountFromPrice( id: number, bolt_count: number) {
+  async createWheelBoltCountFromPrice( id: number, bolt_count: string) {
 
     try {
 

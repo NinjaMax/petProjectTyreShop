@@ -55,6 +55,8 @@ export class UploaderService {
     try {
 
       this.uploaderParser.parserTyres(path);
+
+      return `Price File ${path} has been succeeded upload, parse and added to Database`
        
     } catch {
       

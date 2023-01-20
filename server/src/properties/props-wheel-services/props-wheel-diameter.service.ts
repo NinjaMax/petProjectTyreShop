@@ -53,7 +53,7 @@ export class PropsWheelDiameterService {
 
   }
 
-  async createWheelDiameterFromPrice( id: number, diameter: number) {
+  async createWheelDiameterFromPrice( id: number, diameter: string) {
 
     try {
 

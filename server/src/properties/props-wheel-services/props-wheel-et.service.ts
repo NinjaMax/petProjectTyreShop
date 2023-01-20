@@ -54,7 +54,7 @@ export class PropsWheelEtService {
 
   }
 
-  async createWheelEtFromPrice( id: number, et: number) {
+  async createWheelEtFromPrice( id: number, et: string) {
 
     try {
 

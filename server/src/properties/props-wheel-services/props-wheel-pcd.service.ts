@@ -54,7 +54,7 @@ export class PropsWheelPcdService {
 
   }
 
-  async createWheelColorFromPrice(id: number, pcd: number) {
+  async createWheelColorFromPrice(id: number, pcd: string) {
 
     try {
 

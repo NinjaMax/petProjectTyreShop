@@ -8,8 +8,8 @@ export class WheelWidth extends Model<WheelWidth, WheelPropsConfigAttr> {
     @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_width: number;
    
-    @Column({type: DataType.INTEGER, unique: true, allowNull: false})
-    width: number;
+    @Column({type: DataType.STRING, unique: true, allowNull: true})
+    width: string;
 
     @HasMany(() => Wheel, 'id_width')
     wheels: Wheel[];
