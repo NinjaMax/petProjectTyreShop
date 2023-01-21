@@ -72,7 +72,8 @@ export class UploaderPaprserService {
 
     try {
       
-      const stream = fs.createReadStream(join(process.cwd(), path));
+      const stream = fs.createReadStream(join(process.cwd(), path),
+      {highWaterMark: 9000});
 
         const items = [];
         let item = [[]];

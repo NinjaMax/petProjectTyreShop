@@ -82,8 +82,3 @@ export class UploaderService {
     return `This action removes a #${id} uploader`;
   }
 }
-
-// function parceAddtoDb(entity: any): void {
-//   throw new Error('Function not implemented.');
-// }
-
