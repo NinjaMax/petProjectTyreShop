@@ -8,10 +8,10 @@ export class WheelDia extends Model<WheelDia, WheelPropsConfigAttr> {
     @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_dia: number;
    
-    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    @Column({type: DataType.STRING, unique: true, allowNull: true})
     dia: string;
 
-    @HasMany(() => Wheel, 'id_wheel_dia')
+    @HasMany(() => Wheel, 'id_dia')
     wheels: Wheel[];
     
 }

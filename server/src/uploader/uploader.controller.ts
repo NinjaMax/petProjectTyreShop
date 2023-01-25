@@ -15,7 +15,7 @@ export class UploaderController {
   constructor(private readonly uploaderService: UploaderService,
   ) {}
 
-  @Post()
+  @Post('/tyres')
   @Header('Content-Type', 'multipart/form-data')
   @Header('Accept-Charset', 'utf-8')
   @UseInterceptors(FileInterceptor( 'file', 
@@ -26,9 +26,7 @@ export class UploaderController {
         filename: (req, file, cb) => {
 
           if(!file.mimetype.includes('xml')) {
-
            throw "not supported format"
-
           }
 
           const fileName: string = file.originalname;
@@ -39,8 +37,8 @@ export class UploaderController {
       })
     } 
   ))
-  async uploadFileAndPassValidation(
-    @Body() body: CreateUploaderDto, 
+  async uploadTyreFileAndPassValidation(
+    //@Body() body: CreateUploaderDto, 
     @UploadedFile(
       new ParseFilePipe({
         validators: [
@@ -51,6 +49,42 @@ export class UploaderController {
     ) file: Express.Multer.File, 
   ) {    
     return await this.uploaderService.parseTyresPrice(file.path);
+  }
+
+  @Post('/wheels')
+  @Header('Content-Type', 'multipart/form-data')
+  @Header('Accept-Charset', 'utf-8')
+  @UseInterceptors(FileInterceptor( 'file', 
+    {
+      
+      storage: diskStorage({
+        destination: './upload_prices',
+        filename: (req, file, cb) => {
+
+          if(!file.mimetype.includes('xml')) {
+           throw "not supported format"
+          }
+
+          const fileName: string = file.originalname;
+          const newFileName: string = fileName;
+          cb(null, `${newFileName}`)
+        }, 
+        
+      })
+    } 
+  ))
+  async uploadWheelsFileAndPassValidation(
+    //@Body() body: CreateUploaderDto, 
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 15000000 }),
+          new FileTypeValidator({ fileType: 'xml' }),
+        ]
+      })
+    ) file: Express.Multer.File, 
+  ) {    
+    return await this.uploaderService.parseWheelsPrice(file.path);
   }
 
   @Get()

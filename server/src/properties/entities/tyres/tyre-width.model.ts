@@ -8,7 +8,7 @@ export class TyreWidth extends Model<TyreWidth, TyrePropsConfigAttr> {
     @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_width: number;
    
-    @Column({type: DataType.STRING, unique: true, allowNull: true})
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
     width: string;
 
     @HasMany(() => Tyres , 'id_width')

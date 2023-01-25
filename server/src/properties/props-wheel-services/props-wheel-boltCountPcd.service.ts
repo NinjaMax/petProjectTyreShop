@@ -59,36 +59,17 @@ export class PropsWheelBoltCountPcdService {
 
     try {
 
-        const wheelId = await this.wheelsService.findWheelByIdPrice(id);
-        const wheelBoltCountPcd = await this.wheelBoltCountPcdRepository.findOne(
-        { where: { bolt_count_pcd: bolt_count_pcd } })
-
-        if(wheelId && wheelBoltCountPcd) {
-
-            const updateBoltCountPcd = await this.wheelBoltCountPcdRepository.update({
-             bolt_count_pcd: bolt_count_pcd}, {where: {id_bolt_count_pcd: wheelBoltCountPcd.id_bolt_count_pcd}});
-            await wheelId.$set('bolt_count_pcd', updateBoltCountPcd);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
-
-            return updateBoltCountPcd;
-
-        } else if(wheelId && !wheelBoltCountPcd) {
-
-            const newWheelBoltCountPcd = await this.wheelBoltCountPcdRepository.create({bolt_count_pcd});
-
-            await wheelId.$set('bolt_count_pcd', newWheelBoltCountPcd);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
-
-            return newWheelBoltCountPcd;
-
-        } else {
-
-            const wheelBoltCountPcd = await this.wheelBoltCountPcdRepository.create({bolt_count_pcd});
-
-            return wheelBoltCountPcd;
+      const [wheelBoltCountPcd, created] = await this.wheelBoltCountPcdRepository.findOrCreate(
+        {where: {bolt_count_pcd: bolt_count_pcd}, 
+          defaults: {bolt_count_pcd: bolt_count_pcd}
         }
+      );
+
+      if(created || !created) {
+
+        await wheelBoltCountPcd.$add('wheels', id);
+
+      }
 
     } catch {
 

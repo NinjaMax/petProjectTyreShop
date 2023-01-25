@@ -8,10 +8,10 @@ export class TyreCountry extends Model<TyreCountry, TyrePropsConfigAttr> {
     @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_country: number;
    
-    @Column({type: DataType.STRING, unique: true, allowNull: true})
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
     country_manufacturer: string;
 
-    @Column({type: DataType.STRING, unique: true, allowNull: true})
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
     country_manufacturer_ua: string;
 
     @HasMany(() => Tyres , 'id_country')

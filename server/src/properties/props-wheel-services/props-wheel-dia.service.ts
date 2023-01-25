@@ -58,36 +58,15 @@ export class PropsWheelDiaService {
 
     try {
 
-        const wheelId = await this.wheelsService.findWheelByIdPrice(id);
-        const wheelDia = await this.wheelDiaRepository.findOne(
-        { where: { dia: dia } })
+      const [wheelDia, created] = await this.wheelDiaRepository.findOrCreate(
+        {where: {dia: dia}, defaults: {dia: dia}}
+      );
 
-        if(wheelId && wheelDia) {
+      if(created || !created) {
 
-            const updateDia = await this.wheelDiaRepository.update({
-             dia: dia}, {where: {id_dia: wheelDia.id_dia}});
-            await wheelId.$set('dia', updateDia);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
+        await wheelDia.$add('wheels', id);
 
-            return updateDia;
-
-        } else if(wheelId && !wheelDia) {
-
-            const newWheelDia = await this.wheelDiaRepository.create({dia});
-
-            await wheelId.$set('dia', newWheelDia);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
-
-            return newWheelDia;
-
-        } else {
-
-            const wheelDia = await this.wheelDiaRepository.create({dia});
-
-            return wheelDia;
-        }
+      }
 
     } catch {
 

@@ -1,18 +1,23 @@
 module.exports = {
   apps : [{
     name: 'app',
-    script: 'ts-node',
+    script: 'main.ts',
     args: './main.ts',
+    //cwd: '/server',
     //watch: true,
+    exec_mode: 'fork',
     ignore_watch: ['node_modules', 'client'],
     //watch_delay: 1000,
-    //node_args: ["port=4000"],
+    //node_args: ["port=4000", "version=0.0.1"],
+    //node_args: [ "version=0.0.1"],
     interpreter: 'node',
+    interpreter_args: '--require ts-node/register --require tsconfig-paths/register',
     //interpreter_args: "--harmony", 
     env: {
-      PORT: '4000',
-      NODE_ENV: "development",
-      version: '0.0.1'
+      //PORT: '4000',
+      NODE_ENV: "dev-config",
+      //host: 'localhost',
+      //version: '0.0.1'
     },
     
   }, 

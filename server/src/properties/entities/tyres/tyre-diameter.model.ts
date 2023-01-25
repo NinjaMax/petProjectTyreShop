@@ -8,7 +8,7 @@ export class TyreDiameter extends Model<TyreDiameter, TyrePropsConfigAttr> {
     @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_diameter: number;
    
-    @Column({type: DataType.STRING, unique: true, allowNull: true})
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
     diameter: string;
 
     @HasMany(() => Tyres , 'id_diameter')

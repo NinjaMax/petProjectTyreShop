@@ -65,8 +65,8 @@ export class PriceTyresService {
     
     try {
 
-      const [priceById, created] = await this.priceTyresRepository.findOrCreate(
-        {where: {id: +id}, 
+      const [priceTyreById, created] = await this.priceTyresRepository.findOrCreate(
+        {where: {id: +id, id_storage: 1}, 
         defaults:{
           id: +id,
           price_wholesale: +price_wholesale,
@@ -79,16 +79,16 @@ export class PriceTyresService {
 
       if(!created) {
         
-        await priceById.update({
+        await priceTyreById.update({
           price_wholesale: +price_wholesale,
           price: +price,
           delivery_price: +delivery_price,
           price_plus_delivery: +price_plus_delivery,
           id_supplier: +id_supplier,
           update_date: update_date}, 
-        {where:{id: priceById.id}});
+        {where:{id: priceTyreById.id}});
 
-        return priceById;
+        return priceTyreById;
       } 
 
     } catch {

@@ -35,8 +35,6 @@ export class PropsWheelSizeDigitsService {
             const newWheelSizeDigits = await this.wheelSizeDigitsRepository.create(createPropertyDto);
 
             await wheelId.$set('size_digits', newWheelSizeDigits);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
 
             return newWheelSizeDigits;
 
@@ -59,39 +57,16 @@ export class PropsWheelSizeDigitsService {
 
     try {
 
-        const wheelId = await this.wheelsService.findWheelByIdPrice(id);
-        const wheelSizeDigits = await this.wheelSizeDigitsRepository.findOne(
-        { where: { size_only_digits: size_only_digits } })
+      const [wheelSize_only_digits, created] = await this.wheelSizeDigitsRepository.findOrCreate(
+        {where: {size_only_digits: size_only_digits}, 
+        defaults: {size_only_digits: size_only_digits}}
+      );
 
-        if(wheelId && wheelSizeDigits) {
+      if(created || !created) {
 
-            const updateSizeDigits = await this.wheelSizeDigitsRepository.update({
-            size_only_digits: size_only_digits}, 
-            {where: {id_size_digits: wheelSizeDigits.id_size_digits}});
-            await wheelId.$set('size_digits', updateSizeDigits);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
+        await wheelSize_only_digits.$add('wheels', id);
 
-            return updateSizeDigits;
-
-        } else if(wheelId && !wheelSizeDigits) {
-
-            const newWheelSizeDigits = await this.wheelSizeDigitsRepository.create(
-                {size_only_digits});
-
-            await wheelId.$set('size_digits', newWheelSizeDigits);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
-
-            return newWheelSizeDigits;
-
-        } else {
-
-            const wheelSizeDigits = await this.wheelSizeDigitsRepository.create(
-                {size_only_digits});
-
-            return wheelSizeDigits;
-        }
+      }
 
     } catch {
 

@@ -26,11 +26,14 @@ export class Wheel extends Model<Wheel, WheelConfigAttr> {
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     full_name: string;
 
-    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    @Column({type: DataType.STRING, unique: true, allowNull: true})
     full_name_color: string;
 
-    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    @Column({type: DataType.STRING, unique: true, allowNull: true})
     full_name_hotline: string;
+
+    @Column({type: DataType.STRING, unique: false, allowNull: true})
+    photo_url: string;
 
     @ForeignKey(() => Category)
     @Column({type: DataType.INTEGER})

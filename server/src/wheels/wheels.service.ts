@@ -31,39 +31,38 @@ export class WheelsService {
     full_name : string,
     full_name_color: string,
     full_name_hotline: string,
+    photo_url: string,
     update_date : Date, 
-    id_brand: number, 
-    id_model: number) {
+    ) {
 
     try {
 
-      const wheelIdFromPrice = await this.wheelRepository.findByPk(id, {include: {all: true}});
-      
-      if(wheelIdFromPrice) {
-
-        await this.wheelRepository.update(
-          { id: id, 
-            full_name : full_name,
+      const [wheelsIdFromPrice, created] = await this.wheelRepository.findOrCreate(
+        {where: {id: id}, 
+          defaults: {
+            id: id,
+            full_name: full_name,
             full_name_color: full_name_color,
-            full_name_hotline: full_name_hotline,
-            update_date : update_date,
-            id_brand: id_brand,
-            id_model: id_model
-          }, {where: {id : id}});
+            full_name_hotline: full_name_hotline, 
+            photo_url: photo_url,
+            update_date: update_date,
+          }});
+        
+      if(!created) {
 
-        wheelIdFromPrice.save();
+        await wheelsIdFromPrice.update(
+          {
+          full_name: full_name,
+          full_name_color: full_name_color,
+          full_name_hotline: full_name_hotline, 
+          photo_url: photo_url,
+          update_date: update_date},
+          {where: {id: wheelsIdFromPrice.id}}
+        );
 
-        return wheelIdFromPrice;
+        return wheelsIdFromPrice;
 
-      } else {
-
-        const tyresFromPrice = await this.wheelRepository.create(
-        {id, full_name, full_name_color, full_name_hotline,
-           update_date, id_brand, id_model});
-
-        return tyresFromPrice;
-
-      } 
+      }
 
     } catch {
 

@@ -57,6 +57,40 @@ export class StockWheelsService {
     
   }
 
+  async createStockWheelFromPrice(id: number, stock: number, 
+    id_supplier: number, update_date: Date) {
+
+    try {
+      
+      const [WheelStock, created] = await this.stockWheelsRepository.findOrCreate(
+        {where:{id: +id, id_storage: 1}, 
+        defaults:{
+          id: +id,
+          stock: +stock,
+          id_supplier: +id_supplier,
+          update_date: update_date
+        }});
+
+      if(!created) {
+
+        await WheelStock.update(
+          {stock: +stock, 
+            id_supplier: +id_supplier,
+            update_date: update_date}, 
+          {where: {id: +id}}
+        );
+
+        return WheelStock;
+      }
+
+    } catch {
+
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+  
+    }
+
+  }
+
   // async createStockWheelByOrderSup(createStockDto: CreateStockDto) {
 
   //   try {

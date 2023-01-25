@@ -8,7 +8,7 @@ export class WheelBoltCount extends Model<WheelBoltCount, WheelPropsConfigAttr> 
     @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_bolt_count: number;
    
-    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    @Column({type: DataType.STRING, unique: true, allowNull: true})
     bolt_count: string;
 
     @HasMany(() => Wheel, 'id_bolt_count')

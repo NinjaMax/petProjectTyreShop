@@ -10,14 +10,17 @@ import { PropertiesModule } from 'src/properties/properties.module';
 import { CategorysModule } from 'src/categorys/categorys.module';
 import { AddTyresToDbService } from './addTyresToDataBase.service';
 import { UploaderPaprserService } from './uploaderParser.service';
+import { AddWheelsToDbService } from './addWheelToDataBase.service';
+import { WheelsModule } from 'src/wheels/wheels.module';
 
 @Module({
   controllers: [UploaderController],
-  providers: [UploaderService, AddTyresToDbService, UploaderPaprserService], 
+  providers: [UploaderService, AddTyresToDbService,AddWheelsToDbService,
+     UploaderPaprserService], 
   imports: [MulterModule.register({
     dest: './upload_prices',
-  }), TyresModule, PricesModule, StockModule,
-   SuppliersModule, PropertiesModule, CategorysModule],
+  }), TyresModule, PricesModule, StockModule, WheelsModule,
+     SuppliersModule, PropertiesModule, CategorysModule],
   exports: [UploaderService]
 })
 export class UploaderModule {}

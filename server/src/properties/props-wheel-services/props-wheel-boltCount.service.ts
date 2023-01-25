@@ -58,41 +58,22 @@ export class PropsWheelBoltCountService {
 
     try {
 
-        const wheelId = await this.wheelsService.findWheelByIdPrice(id);
-        const wheelBoltCount = await this.wheelBoltCountRepository.findOne(
-        { where: { bolt_count: bolt_count } })
-
-        if(wheelId && wheelBoltCount) {
-
-            const updateBoltCount = await this.wheelBoltCountRepository.update({
-             bolt_count: bolt_count}, {where: {id_bolt_count: wheelBoltCount.id_bolt_count}});
-            await wheelId.$set('bolt_count', updateBoltCount);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
-
-            return updateBoltCount;
-
-        } else if(wheelId && !wheelBoltCount) {
-
-            const newWheelBoltCount = await this.wheelBoltCountRepository.create({bolt_count});
-
-            await wheelId.$set('bolt_count', newWheelBoltCount);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
-
-            return newWheelBoltCount;
-
-        } else {
-
-            const wheelBoltCount = await this.wheelBoltCountRepository.create({bolt_count});
-
-            return wheelBoltCount;
+      const [wheelBoltCount, created] = await this.wheelBoltCountRepository.findOrCreate(
+        {where: {bolt_count: bolt_count}, 
+          defaults: {bolt_count: bolt_count}
         }
+      );
+
+      if(created || !created) {
+
+        await wheelBoltCount.$add('wheels', id);
+
+      }
 
     } catch {
 
-      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
-
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+  
     }
 
   }

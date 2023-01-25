@@ -54,40 +54,19 @@ export class PropsWheelPcdService {
 
   }
 
-  async createWheelColorFromPrice(id: number, pcd: string) {
+  async createWheelPcdFromPrice(id: number, pcd: string) {
 
     try {
 
-        const wheelId = await this.wheelsService.findWheelByIdPrice(id);
-        const wheelPcd = await this.wheelPcdRepository.findOne(
-        { where: { pcd: pcd } })
+      const [wheelPcd, created] = await this.wheelPcdRepository.findOrCreate(
+        {where: {pcd: pcd}, defaults: {pcd: pcd}}
+      );
 
-        if(wheelId && wheelPcd) {
+      if(created || !created) {
 
-            const updatePcd = await this.wheelPcdRepository.update({
-             pcd: pcd }, {where: {id_pcd: wheelPcd.id_pcd}});
-            await wheelId.$set('pcd', updatePcd);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
+        await wheelPcd.$add('wheels', id);
 
-            return updatePcd;
-
-        } else if(wheelId && !wheelPcd) {
-
-            const newWheelPcd = await this.wheelPcdRepository.create({pcd});
-
-            await wheelId.$set('color', newWheelPcd);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
-
-            return newWheelPcd;
-
-        } else {
-
-            const wheelPcd = await this.wheelPcdRepository.create({pcd});
-
-            return wheelPcd;
-        }
+      }
 
     } catch {
 

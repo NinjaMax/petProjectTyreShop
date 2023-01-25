@@ -58,38 +58,15 @@ export class PropsWheelTypeService {
 
     try {
 
-        const wheelId = await this.wheelsService.findWheelByIdPrice(id);
-        const wheelType = await this.wheelTypeRepository.findOne(
-        { where: { type: type } })
+      const [wheelType, created] = await this.wheelTypeRepository.findOrCreate(
+        {where: {id_type: id_type}, defaults: {id_type: id_type, type: type}}
+      );
 
-        if(wheelId && wheelType) {
+      if(created || !created) {
 
-            const updateType = await this.wheelTypeRepository.update({
-             type: type}, {where: {id_type: wheelType.id_type}});
-            await wheelId.$set('type', updateType);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
+        await wheelType.$add('wheels', id);
 
-            return updateType;
-
-        } else if(wheelId && !wheelType) {
-
-            const newWheelType = await this.wheelTypeRepository.create(
-                {id_type, type});
-
-            await wheelId.$set('type', newWheelType);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
-
-            return newWheelType;
-
-        } else {
-
-            const wheelType = await this.wheelTypeRepository.create(
-                {id_type, type});
-
-            return wheelType;
-        }
+      }
 
     } catch {
 

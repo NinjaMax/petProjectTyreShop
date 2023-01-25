@@ -8,7 +8,7 @@ import { PriceBatteryConfigAttr } from "../interfaces/price-battery.interface";
 export class PriceBatteries extends Model<PriceBatteries, PriceBatteryConfigAttr>{ 
     
    @ForeignKey(() => Battery)
-   @Column({type: DataType.INTEGER, unique: true, autoIncrement: false, primaryKey: true})
+   @Column({type: DataType.INTEGER, unique: false, autoIncrement: false, primaryKey: true})
    id_battery: number;
 
    @Column({type: DataType.INTEGER, unique: false, allowNull: true})

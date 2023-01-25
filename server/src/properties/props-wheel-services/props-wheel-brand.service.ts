@@ -54,20 +54,22 @@ export class PropsWheelBrandService {
 
   }
 
-  async createWheelBrandFromPrice(id: number, id_brand: number, brand: string) {
+  async createWheelBrandFromPrice(id: number, brand: string) {
 
     try {
 
-      const [tyreHomologation, created] = await this.wheelBrandRepository.findOrCreate(
-        {where: {id: id}, 
-        defaults: {id_brand: id_brand, brand: brand}}
+      const [wheelBrand, created] = await this.wheelBrandRepository.findOrCreate(
+        {where: {brand: brand}, 
+          defaults: {brand: brand}
+        }
       );
 
       if(created || !created) {
 
-        await tyreHomologation.$add('tyres', id);
-          
+        await wheelBrand.$add('wheels', id);
+
       }
+
 
     } catch {
 

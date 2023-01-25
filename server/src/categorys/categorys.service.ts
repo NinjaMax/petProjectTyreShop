@@ -46,6 +46,27 @@ export class CategorysService {
     }
   }
 
+  async createCategoryWheelFromPrice(id: number, category: string) {
+
+    try {
+      
+      const [findCategory, created] = await this.categoryRepository.findOrCreate(
+       {where:{category: category}, defaults: {category: category}}
+      );
+      
+      if(created || !created) {
+
+        await findCategory.$add('wheels', id);
+
+      }
+      
+    } catch {
+
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+  }
+
   async findAllCategory() {
 
     try {

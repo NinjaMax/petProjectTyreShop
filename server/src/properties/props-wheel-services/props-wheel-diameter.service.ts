@@ -57,36 +57,15 @@ export class PropsWheelDiameterService {
 
     try {
 
-        const wheelId = await this.wheelsService.findWheelByIdPrice(id);
-        const wheelDiameter = await this.wheelDiameterRepository.findOne(
-        { where: { diameter: diameter } })
+      const [wheelDiameter, created] = await this.wheelDiameterRepository.findOrCreate(
+        {where: {diameter: diameter}, defaults: {diameter: diameter}}
+      );
 
-        if(wheelId && wheelDiameter) {
+      if(created || !created) {
 
-            const updateDiameter = await this.wheelDiameterRepository.update({
-             diameter: diameter}, {where: {id_diameter: wheelDiameter.id_diameter}});
-            await wheelId.$set('diameter', updateDiameter);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
+        await wheelDiameter.$add('wheels', id);
 
-            return updateDiameter;
-
-        } else if(wheelId && !wheelDiameter) {
-
-            const newWheelDiameter = await this.wheelDiameterRepository.create({diameter});
-
-            await wheelId.$set('diameter', newWheelDiameter);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
-
-            return newWheelDiameter;
-
-        } else {
-
-            const wheelDiameter = await this.wheelDiameterRepository.create({diameter});
-
-            return wheelDiameter;
-        }
+      }
 
     } catch {
 

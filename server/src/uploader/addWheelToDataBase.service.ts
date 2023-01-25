@@ -1,223 +1,168 @@
 import { Injectable,  HttpException, HttpStatus } from '@nestjs/common';
-import { TyresService } from 'src/tyres/tyres.service';
 import { SuppliersService } from 'src/suppliers/suppliers.service';
-import { StockTyresService } from 'src/stock/stock-tyres.service';
-import { PriceTyresService } from 'src/prices/price-tyres.service';
-//import { StockWheelsService } from 'src/stock/stock-wheels.service';
-//import { PriceWheelsService } from 'src/prices/price-wheels.service';
 import { CategorysService } from 'src/categorys/categorys.service';
-import { PropsBrandService } from 'src/properties/props-tyres-services/props-tyre-brand.service';
-import { PropsTyreYearService } from 'src/properties/props-tyres-services/props-tyre-year.service';
-import { PropsTyreWidthService } from 'src/properties/props-tyres-services/props-tyre-width.service';
-import { PropsTyreVehicleTypeService } from 'src/properties/props-tyres-services/props-tyre-vehicleType.service';
-import { PropsTyreStuddedService } from 'src/properties/props-tyres-services/props-tyre-studded.service';
-import { PropsTyreSpeedIndexService } from 'src/properties/props-tyres-services/props-tyre-speedIndex.service';
-import { PropsTyreSizeDigitsService } from 'src/properties/props-tyres-services/props-tyre-sizeDigits.service';
-import { PropsTyreSilentService } from 'src/properties/props-tyres-services/props-tyre-silent.service';
-import { PropsTyreSeasonService } from 'src/properties/props-tyres-services/props-tyre-season.service';
-import { PropsTyreSealService } from 'src/properties/props-tyres-services/props-tyre-seal.service';
-import { PropsTyreRunFlatService } from 'src/properties/props-tyres-services/props-tyre-runFlat.service';
-import { PropsTyreReinforceService } from 'src/properties/props-tyres-services/props-tyre-reinforce.service';
-import { PropsTyreParamsService } from 'src/properties/props-tyres-services/props-tyre-params.service';
-import { PropsModelService } from 'src/properties/props-tyres-services/props-tyre-model.service';
-import { PropsTyreLoadIndexService } from 'src/properties/props-tyres-services/props-tyre-loadIndex.service';
-import { PropsTyreHomologationService } from 'src/properties/props-tyres-services/props-tyre-homologation.service';
-import { PropsTyreHeightService } from 'src/properties/props-tyres-services/props-tyre-height.service';
-import { PropsTyrDiametrService } from 'src/properties/props-tyres-services/props-tyre-diameter.service';
-import { PropsTyreDemoService } from 'src/properties/props-tyres-services/props-tyre-demo.service';
-import { PropsTyreCountryService } from 'src/properties/props-tyres-services/props-tyre-country.service';
-import { ItemPriceTyresConfigAttr } from './interfaces/priceItemTyre.interface';
-import { UploaderPaprserService } from './uploaderParser.service';
+import { PriceWheelsService } from 'src/prices/price-wheels.service';
+import { PropsWheelBoltCountService } from 'src/properties/props-wheel-services/props-wheel-boltCount.service';
+import { PropsWheelBoltCountPcdService } from 'src/properties/props-wheel-services/props-wheel-boltCountPcd.service';
+import { PropsWheelBrandService } from 'src/properties/props-wheel-services/props-wheel-brand.service';
+import { PropsWheelColorService } from 'src/properties/props-wheel-services/props-wheel-color.service';
+import { PropsWheelDiaService } from 'src/properties/props-wheel-services/props-wheel-dia.service';
+import { PropsWheelDiameterService } from 'src/properties/props-wheel-services/props-wheel-diameter.service';
+import { PropsWheelEtService } from 'src/properties/props-wheel-services/props-wheel-et.service';
+import { PropsWheelModelService } from 'src/properties/props-wheel-services/props-wheel-model.service';
+import { PropsWheelPcdService } from 'src/properties/props-wheel-services/props-wheel-pcd.service';
+import { PropsWheelPcd2Service } from 'src/properties/props-wheel-services/props-wheel-pcd2.service';
+import { PropsWheelSizeDigitsService } from 'src/properties/props-wheel-services/props-wheel-sizeDigits.service';
+import { PropsWheelTypeService } from 'src/properties/props-wheel-services/props-wheel-type.service';
+import { PropsWheelWidthService } from 'src/properties/props-wheel-services/props-wheel-width.service';
+import { StockWheelsService } from 'src/stock/stock-wheels.service';
+import { WheelsService } from 'src/wheels/wheels.service';
+import { ItemPriceWheelConfigAttr } from './interfaces/priceItemWheel.interface';
 
 @Injectable()
 export class AddWheelsToDbService {
   constructor( 
     private categoryService: CategorysService,
-    private tyresservice: TyresService,
     private supplierService: SuppliersService,
-    private stockTyresService: StockTyresService,
-    private priceTyreService: PriceTyresService,
-    //protected stockWheelService: StockWheelsService,
-    //protected priceWheelService: PriceWheelsService,
-    private propsBrandService: PropsBrandService,
-    private propsTyreCountry: PropsTyreCountryService,
-    private propsTyreDemo: PropsTyreDemoService,
-    private propsTyreDiameter: PropsTyrDiametrService,
-    private propsTyreHeight: PropsTyreHeightService,
-    private propsTyreHomologation: PropsTyreHomologationService,
-    private propsTyreLoadIndex: PropsTyreLoadIndexService,
-    private propsTyreModel: PropsModelService,
-    private propsTyreParams: PropsTyreParamsService,
-    private propsTyreReinforce: PropsTyreReinforceService,
-    private propsTyreRunFlat: PropsTyreRunFlatService,
-    private propsTyreSeal: PropsTyreSealService,
-    private propsTyreSeason: PropsTyreSeasonService,
-    private propsTyreSilent: PropsTyreSilentService,
-    private propsTyreSizeDigits: PropsTyreSizeDigitsService,
-    private propsTyreSpeedIndex: PropsTyreSpeedIndexService,
-    private propsTyreStudded: PropsTyreStuddedService,
-    private propsTyreVehicleType: PropsTyreVehicleTypeService,
-    private propsTyreWidth: PropsTyreWidthService,
-    private propsTyreYear: PropsTyreYearService,
+    private wheelsService: WheelsService,
+    private stockWheelService: StockWheelsService,
+    private priceWheelService: PriceWheelsService,
+    private propsWheelBrandService: PropsWheelBrandService,
+    private propsWheelBoltCountService: PropsWheelBoltCountService, 
+    private propsWheelBoltCountPcdService: PropsWheelBoltCountPcdService,
+    private propsWheelColorService: PropsWheelColorService,
+    private propsWheelDiaService: PropsWheelDiaService,
+    private propsWheelDiameter: PropsWheelDiameterService,
+    private propsWheelEtService: PropsWheelEtService,
+    private propsWheelModelService: PropsWheelModelService,
+    private propsWheelPcdService: PropsWheelPcdService,
+    private propsWheelPcd2Service: PropsWheelPcd2Service,
+    private propsWheelSizeDigitsService: PropsWheelSizeDigitsService,
+    private propsWheelTypeService: PropsWheelTypeService,
+    private propsWheelWidthService: PropsWheelWidthService
   ) {
 
   }
     
-    async addWheelsToDb(item: ItemPriceTyresConfigAttr) {
+  async addWheelsToDb(item: ItemPriceWheelConfigAttr) {
     
-        try {
+    try {
 
-            // await this.tyresservice.createTyresFromPrice(
-            //     +item.id, 
-            //     String(item.full_name), 
-            //     String(item.photo_url),
-            //     item.update_date,
-            // );
+      await this.wheelsService.createWheelFromPrice(
+        +item.id, 
+        item.full_name ?? '',
+        item.fullname_color_full ?? '',
+        item.fullname_hotline ?? '',
+        item.photo_url ?? '',
+        item.update_date 
+      );
    
-            // await this.categoryService.createCategoryFromPrice(
-            //     +item.id,
-            //     item.price_list_type
-            // );
+      await this.categoryService.createCategoryWheelFromPrice(
+        +item.id,
+        item.price_list_type ?? ''
+      );
     
-            // await this.supplierService.createSupplierFromPrice(
-            //     +item.provider_id, 
-            //     String(item.provider) ?? '',
-            //     String(item.city) ?? '', 
-            //     String(item.city_ua) ?? ''
-            // );
+      await this.supplierService.createSupplierFromPrice(
+        +item.provider_id, 
+        String(item.provider) === 'undefined' ? '' : String(item.provider),
+        item.city ?? '', 
+        item.city_ua ?? ''
+      );
 
-            // await this.propsBrandService.createTyreBrandFromPrice(
-            //     +item.id, 
-            //     +item.brand_id, 
-            //     item.brand ?? ''
-            // );
+      await this.propsWheelBrandService.createWheelBrandFromPrice(
+        +item.id, 
+        item.brand ?? ''
+      );
 
-            // await this.propsTyreModel.createTyreModelFromPrice(
-            //     +item.id,
-            //     +item.model_id,
-            //     String(item.model) ?? ''
-            // );
-            // await this.propsTyreCountry.createTyreCountryFromPrice(
-            //     +item.id,
-            //     String(item.country_manufacturer) ?? '',
-            //     String(item.country_manufacturer_ua) ?? ''
-            // );
-            // await this.propsTyreDemo.createTyreDemoFromPrice(
-            //     +item.id,
-            //     item.demo ?? '',
-            // );
+      await this.propsWheelModelService.createWheelModelFromPrice(
+        +item.id, 
+        item.model_id,
+        String(item.model) === 'undefined' ? '' : String(item.model)
+      );
 
-            // await this.propsTyreDiameter.createTyreDiameterFromPrice(
-            //     +item.id,
-            //     item.diameter ?? null,
-            // );
+      await this.propsWheelWidthService.createWheelWidthFromPrice( 
+        +item.id,
+        String(item.width).replace(/,/g, ".") === 'undefined' ? '' : String(item.width).replace(/,/g, "."),
+      );
 
-            // await this.propsTyreHeight.createTyreHeightFromPrice(
-            //     +item.id,
-            //     item.height ?? null,
-            // );
+      await this.propsWheelPcdService.createWheelPcdFromPrice(
+        item.id,
+        String(item.pcd).replace(/,/g, ".") === 'undefined' ? '' : String(item.pcd).replace(/,/g, "."),
+      );
 
-            // await this.propsTyreHomologation.createTyreHomologationFromPrice(
-            //     +item.id,
-            //     item.homologation ?? ''
-            // );
+      await this.propsWheelPcd2Service.createWheelPcd2FromPrice( 
+        item.id,
+        String(item.pcd2).replace(/,/g, ".") === 'undefined' ? '' : String(item.pcd2).replace(/,/g, "."),
+      );
 
-            // await this.propsTyreLoadIndex.createLoadIndexFromPrice(
-            //     +item.id,
-            //     String(item.load_index) ?? '',
-            //     item.load_index_with_desc ?? ''
-            // );
-   
-            // await this.propsTyreParams.createParamsFromPrice(
-            //     +item.id,
-            //     item.params ?? ''
-            // );
+      await this.propsWheelBoltCountService.createWheelBoltCountFromPrice( 
+        +item.id,
+        String(item.bolt_count).replace(/,/g, ".") === 'undefined' ? '' : String(item.bolt_count).replace(/,/g, "."),
+      );
 
-            // await this.propsTyreReinforce.createTyreReinforceFromPrice(
-            //     +item.id,
-            //     item.reinforce ?? '',
-            // );
+      await this.propsWheelBoltCountPcdService.createWheelBoltCountPcdFromPrice( 
+        +item.id, 
+        String(item.bolt_count_pcd).replace(/,/g, ".") === 'undefined' ? '' : String(item.bolt_count_pcd).replace(/,/g, "."),
+      );
 
-            // await this.propsTyreRunFlat.createTyreRunFlatFromPrice(
-            //     +item.id,
-            //     item.run_flat ?? ''
-            // );
+      await this.propsWheelColorService.createWheelColorFromPrice( 
+        +item.id,
+        item.color_id ?? 999, 
+        item.color ?? '', 
+        item.color_short ?? ''
+      );
 
-            // await this.propsTyreSeal.createTyreSealFromPrice(
-            //     +item.id,
-            //     item.seal ?? ''
-            // );
+      await this.propsWheelDiameter.createWheelDiameterFromPrice( 
+        item.id,
+        String(item.diameter).replace(/,/g, ".") === 'undefined' ? '' : String(item.diameter).replace(/,/g, "."),
+      );
 
-            // await this.propsTyreSeason.createTyreSeasonFromPrice(
-            //     +item.id,
-            //     +item.season_id,
-            //     item.season ?? '',
-            //     item.season_ua ?? ''
-            // );
+      await this.propsWheelDiaService.createWheelDiaFromPrice( 
+        item.id,
+        String(item.dia).replace(/,/g, ".") === 'undefined' ? '' : String(item.dia).replace(/,/g, "."),
+      );
 
-            // await this.propsTyreSilent.createTyreSilentFromPrice(
-            //     +item.id,
-            //     item.silent ?? ''
-            // );
+      await this.propsWheelEtService.createWheelEtFromPrice( 
+        item.id,
+        String(item.et).replace(/,/g, ".") === 'undefined' ? '' : String(item.et).replace(/,/g, "."),
+      );
 
-            // await this.propsTyreSizeDigits.createTyreSizeDigitsFromPrice(
-            //     +item.id,
-            //     +item.size_only_digits ?? null
-            // );
+      await this.propsWheelTypeService.createWheelTypeFromPrice( 
+        +item.id,
+        item.type_id ?? 999,
+        item.type ?? ''
+      );
 
-            // await this.propsTyreSpeedIndex.createTyreSpeedIndexFromPrice(
-            //     +item.id,
-            //     item.speed_index ?? '',
-            //     item.speed_index_with_desc ?? ''
-            // );
+      await this.propsWheelSizeDigitsService.createWheelSizeDigitsFromPrice( 
+        item.id,
+        item.size_only_digits ?? null
+      );
 
-            // await this.propsTyreStudded.createTyreStuddedFromPrice(
-            //     +item.id,
-            //     item.studded ?? ''
-            // );
-
-            // await this.propsTyreVehicleType.createTyreVehicleTypeFromPrice(
-            //     item.id,
-            //     +item.vehicle_type_id,
-            //     item.vehicle_type ?? '',
-            //     item.vehicle_type_ua ?? '',
-            // );
-
-            // await this.propsTyreWidth.createTyreWidthFromPrice(
-            //     +item.id,
-            //     item.width ?? null,
-            // );
-
-            // await this.propsTyreYear.createTyreYearFromPrice(
-            //     +item.id,
-            //     +item.manufacture_year ?? null
-            // );
-
-            // await this.stockTyresService.createStockTyreFromPrice(
-            //     +item.id,
-            //     +item.in_stock,
-            //     +item.provider_id,
-            //     item.update_date,
-            // );
+      await this.stockWheelService.createStockWheelFromPrice(
+        +item.id,
+        +item.in_stock,
+        +item.provider_id,
+        item.update_date,
+      );
         
-            // await this.priceTyreService.createPriceTyresFromPrice(
-            //     +item.id,
-            //     +item.user_price_wholesale,
-            //     +item.user_price,
-            //     +item.user_delivery_price,
-            //     +item.user_price_plus_user_delivery_price,
-            //     +item.provider_id,
-            //     item.update_date,
-            // );
+      await this.priceWheelService.createPriceWheelsFromPrice(
+        +item.id,
+        +item.user_price_wholesale,
+        +item.user_price,
+        +item.user_delivery_price,
+        +item.user_price_plus_user_delivery_price,
+        +item.provider_id,
+        item.update_date,
+      );
 
-            return  'Price added to DATA BASE';
+      return  'Price added to DATA BASE';
 
-        } catch (error) {
+    } catch (error) {
 
-            throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
 
-        }
+    }
 
-    } 
+  } 
 
 }

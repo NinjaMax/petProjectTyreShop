@@ -58,36 +58,15 @@ export class PropsWheelPcd2Service {
 
     try {
 
-        const wheelId = await this.wheelsService.findWheelByIdPrice(id);
-        const wheelPcd2 = await this.wheelPcd2Repository.findOne(
-        { where: { pcd2: pcd2 } })
+      const [wheelPcd2, created] = await this.wheelPcd2Repository.findOrCreate(
+        {where: {pcd2: pcd2}, defaults: {pcd2: pcd2}}
+      );
 
-        if(wheelId && wheelPcd2) {
+      if(created || !created) {
 
-            const updatePcd2 = await this.wheelPcd2Repository.update({
-             pcd2: pcd2}, {where: {id_pcd2: wheelPcd2.id_pcd2}});
-            await wheelId.$set('pcd2', updatePcd2);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
+        await wheelPcd2.$add('wheels', id);
 
-            return updatePcd2;
-
-        } else if(wheelId && !wheelPcd2) {
-
-            const newWheelPcd2 = await this.wheelPcd2Repository.create({pcd2});
-
-            await wheelId.$set('pcd2', newWheelPcd2);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
-
-            return newWheelPcd2;
-
-        } else {
-
-            const wheelPcd2 = await this.wheelPcd2Repository.create({pcd2});
-
-            return wheelPcd2;
-        }
+      }
 
     } catch {
 

@@ -8,7 +8,7 @@ export class WheelModel extends Model<WheelModel, WheelPropsConfigAttr> {
     @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
     id_model: number;
    
-    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    @Column({type: DataType.STRING, unique: false, allowNull: false})
     model: string;
 
     @HasMany(() => Wheel, 'id_model')

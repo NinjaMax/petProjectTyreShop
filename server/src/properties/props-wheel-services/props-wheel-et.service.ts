@@ -58,36 +58,15 @@ export class PropsWheelEtService {
 
     try {
 
-        const wheelId = await this.wheelsService.findWheelByIdPrice(id);
-        const wheelEt = await this.wheelEtRepository.findOne(
-        { where: { et: et } })
+      const [wheelEt, created] = await this.wheelEtRepository.findOrCreate(
+        {where: {et: et}, defaults: {et: et}}
+      );
 
-        if(wheelId && wheelEt) {
+      if(created || !created) {
 
-            const updateEt = await this.wheelEtRepository.update({
-             et: et}, {where: {id_et: wheelEt.id_et}});
-            await wheelId.$set('et', updateEt);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
+        await wheelEt.$add('wheels', id);
 
-            return updateEt;
-
-        } else if(wheelId && !wheelEt) {
-
-            const newWheelEt = await this.wheelEtRepository.create({et});
-
-            await wheelId.$set('et', newWheelEt);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
-
-            return newWheelEt;
-
-        } else {
-
-            const wheelEt = await this.wheelEtRepository.create({et});
-
-            return wheelEt;
-        }
+      }
 
     } catch {
 

@@ -8,7 +8,7 @@ import { Storage } from "src/storage/entities/storage.model";
 export class PriceOil extends Model<PriceOil, PriceOilsConfigAttr>{ 
     
    @ForeignKey(() => Oil)
-   @Column({type: DataType.INTEGER, unique: true, autoIncrement: false, primaryKey: true})
+   @Column({type: DataType.INTEGER, unique: false, autoIncrement: false, primaryKey: true})
    id_oil: number;
 
    @Column({type: DataType.INTEGER, unique: false, allowNull: true})

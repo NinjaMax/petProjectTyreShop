@@ -58,36 +58,15 @@ export class PropsWheelWidthService {
 
     try {
 
-        const wheelId = await this.wheelsService.findWheelByIdPrice(id);
-        const wheelWidth = await this.wheelWidthRepository.findOne(
-        { where: { width: width } })
+      const [wheelWidth, created] = await this.wheelWidthRepository.findOrCreate(
+        {where: {width: width}, defaults: {width: width}}
+      );
 
-        if(wheelId && wheelWidth) {
+      if(created || !created) {
 
-            const updateWidth = await this.wheelWidthRepository.update({
-             width: width}, {where: {id_width: wheelWidth.id_width}});
-            await wheelId.$set('width', updateWidth);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
+        await wheelWidth.$add('wheels', id);
 
-            return updateWidth;
-
-        } else if(wheelId && !wheelWidth) {
-
-            const newWheelWidth = await this.wheelWidthRepository.create({width});
-
-            await wheelId.$set('width', newWheelWidth);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
-
-            return newWheelWidth;
-
-        } else {
-
-            const wheelWidth = await this.wheelWidthRepository.create({width});
-
-            return wheelWidth;
-        }
+      }
 
     } catch {
 

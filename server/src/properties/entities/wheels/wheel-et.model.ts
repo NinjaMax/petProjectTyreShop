@@ -8,7 +8,7 @@ export class WheelEt extends Model<WheelEt, WheelPropsConfigAttr> {
     @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_et: number;
    
-    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    @Column({type: DataType.STRING, unique: true, allowNull: true})
     et: string;
 
     @HasMany(() => Wheel, 'id_et')

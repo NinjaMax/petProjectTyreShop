@@ -9,7 +9,7 @@ export class TyreStudded extends Model<TyreStudded, TyrePropsConfigAttr> {
     @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_studded: number;
    
-    @Column({type: DataType.STRING, unique: true, allowNull: true})
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
     studded: string;
 
     @HasMany(() => Tyres , 'id_studded')

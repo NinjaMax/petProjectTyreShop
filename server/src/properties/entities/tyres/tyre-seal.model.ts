@@ -8,7 +8,7 @@ export class TyreSeal extends Model<TyreSeal, TyrePropsConfigAttr> {
     @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_seal: number;
    
-    @Column({type: DataType.STRING, unique: true, allowNull: true})
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
     seal: string;
 
     @HasMany(() => Tyres , 'id_seal')

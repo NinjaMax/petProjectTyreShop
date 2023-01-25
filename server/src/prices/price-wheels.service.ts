@@ -54,7 +54,7 @@ export class PriceWheelsService {
     
   }
 
-  async createPriceTyresFromPrice(
+  async createPriceWheelsFromPrice(
     id: number,
     price_wholesale: number,
     price: number,
@@ -66,34 +66,31 @@ export class PriceWheelsService {
     
     try {
 
-      const tyresById = await this.wheelsService.findWheelByIdPrice(id);
-      const priceById = await this.priceWheelsRepository.findByPk(id);
+      const [priceByWheelId, created] = await this.priceWheelsRepository.findOrCreate(
+        {where: {id: +id, id_storage: 1}, 
+        defaults:{
+          id: +id,
+          price_wholesale: +price_wholesale,
+          price: +price,
+          delivery_price: +delivery_price,
+          price_plus_delivery: +price_plus_delivery,
+          id_supplier: +id_supplier,
+          update_date: update_date
+        }});
 
-      if(tyresById && priceById) {
-
-        const updatePriceTyre = await this.priceWheelsRepository.update(
-          { id: id,
-            price_wholesale: price_wholesale,
-            price: price,
-            delivery_price: delivery_price,
-            price_plus_delivery: price_plus_delivery,
-            id_supplier: id_supplier,
-            update_date: update_date}, 
-          {where:{id: priceById.id}}
-        );
-
-        return updatePriceTyre;
-
-      } else {
-
-        const createNewPrice = await this.priceWheelsRepository.create(
-          {id, price_wholesale, price, delivery_price, 
-            price_plus_delivery,
-            id_supplier, update_date});
+      if(!created) {
         
-        return createNewPrice;
-        
-      }
+        await priceByWheelId.update({
+          price_wholesale: +price_wholesale,
+          price: +price,
+          delivery_price: +delivery_price,
+          price_plus_delivery: +price_plus_delivery,
+          id_supplier: +id_supplier,
+          update_date: update_date}, 
+        {where:{id: priceByWheelId.id}});
+
+        return priceByWheelId;
+      } 
 
     } catch {
       

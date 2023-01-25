@@ -14,17 +14,18 @@ import { BatteriesModule } from 'src/batteries/batteries.module';
 import { PriceWheels } from './entities/price-wheels.model';
 import { PriceOil } from './entities/price-oils.model';
 import { PriceBatteries } from './entities/price-battery.model';
+import { PriceWheelsService } from './price-wheels.service';
 
 @Module({
-  controllers: [PriceTyresController],
-  providers: [PriceTyresService],
+  controllers: [PriceTyresController, ],
+  providers: [PriceTyresService, PriceWheelsService],
   imports: [ 
     SequelizeModule.forFeature([ PriceTyres, PriceWheels, PriceOil, 
       PriceBatteries]),
     TyresModule, WheelsModule, OilsModule, BatteriesModule, 
     SuppliersModule, StorageModule
   ],
-  exports: [PriceTyresService]
+  exports: [PriceTyresService, PriceWheelsService]
 
 })
 export class PricesModule {}

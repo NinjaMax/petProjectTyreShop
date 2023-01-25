@@ -60,39 +60,21 @@ export class PropsWheelColorService {
 
     try {
 
-        const wheelId = await this.wheelsService.findWheelByIdPrice(id);
-        const wheelColor = await this.wheelColorRepository.findOne(
-        { where: { color: color } })
-
-        if(wheelId && wheelColor) {
-
-            const updateColor = await this.wheelColorRepository.update({
-             color: color, color_short: color_short }, 
-             {where: {id_color: wheelColor.id_color}});
-            await wheelId.$set('color', updateColor);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
-
-            return updateColor;
-
-        } else if(wheelId && !wheelColor) {
-
-            const newWheelColor = await this.wheelColorRepository.create(
-                {id_color, color, color_short});
-
-            await wheelId.$set('color', newWheelColor);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
-
-            return newWheelColor;
-
-        } else {
-
-            const wheelColor = await this.wheelColorRepository.create(
-                {id_color, color, color_short});
-
-            return wheelColor;
+      const [wheelColor, created] = await this.wheelColorRepository.findOrCreate(
+        {where: {id_color: id_color}, 
+          defaults: {id_color: id_color, 
+            color: color, 
+            color_short: color_short
+          }
         }
+      );
+
+      if(created || !created) {
+
+        await wheelColor.$add('wheels', id);
+
+      }
+
 
     } catch {
 

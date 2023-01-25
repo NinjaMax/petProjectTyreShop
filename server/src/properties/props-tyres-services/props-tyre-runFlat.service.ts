@@ -60,7 +60,7 @@ export class PropsTyreRunFlatService {
 
       if(created || !created) {
 
-        await tyreRunFlat.$add('tyres', id);
+        await tyreRunFlat.$set('tyres', id);
           
       }
 
