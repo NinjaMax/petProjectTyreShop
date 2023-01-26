@@ -3,14 +3,13 @@ import '../css/Admin.css';
 
 const Admin = () => {
     return (
-        <div className='adminPage'>
-            Admin Page
-            <div className='adminWindowEnter'>
-                    <span>Вхід до адмін панелі</span>
-                    <input className='inputAdminForm' type="text" name="username" placeholder="email або телефон" required/>
-                    <input className='inputAdminForm' type="password" name="password" placeholder="Пароль" required/>
-                    <input className='inputAdminForm' type="submit" value="Увійти"/>
-            </div>
+        <div className='adminPageMain'>
+            <div className='profileAdmin'></div>
+            <div className='leftColumn'></div>
+            <div className='headerAdmin'></div>
+            <div className='rightColumn'>
+
+            </div>            
         </div>
     );
 };
