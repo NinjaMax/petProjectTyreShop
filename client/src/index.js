@@ -11,7 +11,7 @@ ReactDOM.render(
     user: new UserStore(),
     goods: new GoodsStore(),
   }}>
-    <App />
+    <App/>
   </Context.Provider>,
   document.getElementById("root")
 );

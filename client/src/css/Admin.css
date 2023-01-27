@@ -1,25 +1,39 @@
 .adminPageMain {
     display: grid;
     grid-gap: 5px;
-    grid-template-columns: 10% 90%;
-    grid-area: 
+    grid-template-columns: 10% 45% 45%;
+    grid-template-rows: 30% 70%;
+    grid-template-areas: 
     "profile header header"
+    "leftCol rightCol rightCol"
+    "leftCol rightCol rightCol"
     "leftCol rightCol rightCol";
+    font-family: var(--main-font-family);
+    background-color: #fff;
+    margin: 10px;
 
 }
 
 .leftColumn {
     grid-area: leftCol;
+    border-radius: 8px;
+    box-shadow: 1px 8px 10px 1px rgba(0,0,0,0.2);
 }
 
 .rightColumn {
     grid-area: rightCol;
+    border-radius: 8px;
+    box-shadow: 1px 8px 10px 1px rgba(0,0,0,0.2);
 }
 
 .headerAdmin {
     grid-area: header;
+    border-radius: 8px;
+    box-shadow: 1px 8px 10px 1px rgba(0,0,0,0.2);
 }
 
 .profileAdmin {
     grid-area: profile;
+    border-radius: 8px;
+    box-shadow: 1px 8px 10px 1px rgba(0,0,0,0.2);
 }

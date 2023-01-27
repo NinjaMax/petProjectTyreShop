@@ -4,11 +4,45 @@ import '../css/Admin.css';
 const Admin = () => {
     return (
         <div className='adminPageMain'>
-            <div className='profileAdmin'></div>
-            <div className='leftColumn'></div>
-            <div className='headerAdmin'></div>
-            <div className='rightColumn'>
+            <div className='profileAdmin'>
+                PROFILE
+                PROFILE PHOTO
+                USER NAME
+            </div>
+            <div className='leftColumn'>
+                LEFT MENU LIST
+                LEFT MENU LIST
+                LEFT MENU LIST
 
+                LEFT MENU LIST
+                LEFT MENU LIST
+                LEFT MENU LIST
+
+                LEFT MENU LIST
+                LEFT MENU LIST
+                LEFT MENU LIST
+
+                LEFT MENU LIST
+                LEFT MENU LIST
+            </div>
+            <div className='headerAdmin'>
+                HEADER CHARTS
+            </div>
+            <div className='rightColumn'>
+                RIGHT ITEMS LIST
+                RIGHT ITEMS LIST
+                RIGHT ITEMS LIST
+                RIGHT ITEMS LIST
+                RIGHT ITEMS LIST
+                RIGHT ITEMS LIST
+                RIGHT ITEMS LIST
+                RIGHT ITEMS LIST
+                RIGHT ITEMS LIST
+                RIGHT ITEMS LIST
+                RIGHT ITEMS LIST
+                RIGHT ITEMS LIST
+                RIGHT ITEMS LIST
+                RIGHT ITEMS LIST
             </div>            
         </div>
     );

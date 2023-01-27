@@ -3,9 +3,11 @@
 # dependencies
 /config
 /node_modules
+/assets
+/
 /.pnp
 .pnp.js
-
+/upload_prices
 # testing
 /coverage
 
