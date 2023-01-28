@@ -4,13 +4,13 @@
 }
 
 /* Remove margins and padding from the list */
-ul {
+/*ul {
     margin: 0;
     padding: 0;
 }
 
 /* Style the list items */
-ul li {
+/*ul li {
     cursor: pointer;
     position: relative;
     padding: 12px 8px 12px 40px;
@@ -19,31 +19,32 @@ ul li {
     transition: 0.2s;
 
     /* make the list items unselectable */
+    /*
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}
+}*/
 
 /* Set all odd list items to a different color (zebra-stripes) */
-ul li:nth-child(odd) {
+/*ul li:nth-child(odd) {
     background: #f9f9f9;
-}
+}*/
 
 /* Darker background-color on hover */
-ul li:hover {
+/*ul li:hover {
     background: #ddd;
-}
+}*/
 
 /* When clicked on, add a background color and strike out text */
-ul li.checked {
+/*ul li.checked {
     background: #888;
     color: #fff;
     text-decoration: line-through;
-}
+}*/
 
 /* Add a "checked" mark when clicked on */
-ul li.checked::before {
+/*ul li.checked::before {
     content: '';
     position: absolute;
     border-color: #fff;
@@ -54,6 +55,36 @@ ul li.checked::before {
     transform: rotate(45deg);
     height: 15px;
     width: 7px;
+}
+*/
+.headerGoodsTable {
+
+}
+
+.admListGoodsTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+.admListGoodsTable tr, .admListGoodsTable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.admListGoodsTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: #444;
+}
+
+.admListGoodsTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.admListGoodsTable tr:hover {
+    background-color: #ddd;
+    cursor: pointer;
 }
 
 /* Style the close button */

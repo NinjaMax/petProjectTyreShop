@@ -1,23 +1,93 @@
 import React from 'react';
 import '../../css/AdminComponentCss/AdminSideBar.css';
 
-const AdminSideBar = () => {
+const AdminSideBar = ({changeMenu}) => {
     return (
         <div className='adminSideBar'>
-            <div>Головна</div>
-            <div>Каталог Товарів</div>
-            <div>Замовлення</div>
-            <div>Продажі</div>
-            <div>Замовлення Постачальнику</div>
-            <div>Каси</div>
-            <div>Платежі вхідні</div>
-            <div>Платежі вихідні</div>
-            <div>Постачальники</div>
-            <div>Покупці</div>
-            <div>Користувачі</div>
-            <div>Завантаження</div>
-            <div>Звіти</div>
-            <div>Налаштування</div>
+            <label className='admSideBarItem'>
+                <input className='admSideBarItemMenu' 
+                onClick={changeMenu} 
+                name='sideBar' 
+                value='golovna' 
+                type='radio'/>Головна</label>
+            <label className='admSideBarItem'>
+                <input className='admSideBarItemMenu' 
+                onClick={changeMenu}
+                name='sideBar' 
+                value='catalog' 
+                type='radio'/>Каталог Товарів</label>
+            <label className='admSideBarItem'>
+                <input className='admSideBarItemMenu'
+                onClick={changeMenu}
+                name='sideBar' 
+                value='catalog'
+                type='radio'/>Замовлення</label>
+            <label className='admSideBarItem'>
+                <input className='admSideBarItemMenu' 
+                onClick={changeMenu}
+                name='sideBar' 
+                value='prodagi'
+                type='radio'/>Продажі</label>
+            <label className='admSideBarItem'>
+                <input className='admSideBarItemMenu' 
+                onClick={changeMenu}
+                name='sideBar' 
+                value='zamovleniaPost'
+                type='radio'/>Замовлення Постачальнику</label>
+            <label className='admSideBarItem'>
+                <input className='admSideBarItemMenu' 
+                onClick={changeMenu}
+                name='sideBar'  
+                value='kasi'
+                type='radio'/>Каси</label>
+            <label className='admSideBarItem'>
+                <input className='admSideBarItemMenu' 
+                onClick={changeMenu}
+                name='sideBar' 
+                value='plategiVh'
+                type='radio'/>Платежі вхідні</label>
+            <label className='admSideBarItem'>
+                <input className='admSideBarItemMenu' 
+                onClick={changeMenu}
+                name='sideBar'  
+                value='plategiVih'
+                type='radio'/>Платежі вихідні</label>
+            <label className='admSideBarItem'>
+                <input className='admSideBarItemMenu' 
+                onClick={changeMenu}
+                name='sideBar'  
+                value='postachal'
+                type='radio'/>Постачальники</label>
+            <label className='admSideBarItem'>
+                <input className='admSideBarItemMenu' 
+                onClick={changeMenu}
+                name='sideBar'  
+                value='pokupci'
+                type='radio'/>Покупці</label>
+            <label className='admSideBarItem'>
+                <input className='admSideBarItemMenu' 
+                onClick={changeMenu}
+                name='sideBar'  
+                value='koristuvachi'
+                type='radio'/>Користувачі</label>
+            <label className='admSideBarItem'>
+                <input className='admSideBarItemMenu' 
+                onClick={changeMenu}
+                name='sideBar'  
+                value='zavantag'
+                type='radio'/>Завантаження</label>
+            <label className='admSideBarItem'>
+                <input className='admSideBarItemMenu' 
+                onClick={changeMenu}
+                name='sideBar'  
+                value='zviti'
+                type='radio'/>Звіти</label>
+            <label className='admSideBarItem'>
+                <input className='admSideBarItemMenu' 
+                onClick={changeMenu}
+                name='sideBar'  
+                value='nalashtuvania'
+                type='radio'/>Налаштування</label>
         </div>
     );
 };
