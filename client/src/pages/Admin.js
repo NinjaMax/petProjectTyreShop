@@ -15,6 +15,8 @@ import AdminUsersContent from '../components/AdminComponents/AdminContent/AdminU
 import AdminUploaderContent from '../components/AdminComponents/AdminContent/AdminUploaderContent';
 import AdminReportsContent from '../components/AdminComponents/AdminContent/AdminReportsContent';
 import AdminOptionContent from '../components/AdminComponents/AdminContent/AdminOptionContent';
+import AdminProfile from '../components/AdminComponents/AdminProfile';
+import AdminHeader from '../components/AdminComponents/AdminHeader';
 
 const Admin = () => {
     useState()
@@ -28,15 +30,13 @@ const Admin = () => {
     return (
         <div className='adminPageMain'>
             <div className='profileAdmin'>
-                PROFILE
-                PROFILE PHOTO
-                USER NAME
+                <AdminProfile/>
             </div>
             <div className='leftColumn'>
                 <AdminSideBar changeMenu={sideBarItemChange}/>
             </div>
             <div className='headerAdmin'>
-                HEADER CHARTS
+                <AdminHeader/>
             </div>
             <div className='rightColumn'>
                 {sideBarItem === 'golovna' ?

@@ -8,8 +8,7 @@ const ButtonSearch = ({clickSearchBtn}) => {
             <button className="btnSearch"
             onClick={clickSearchBtn}
             > Пошук <i className='fa fa-search'></i>
-            </button>
-            
+            </button>        
         </div>
     );
 };

@@ -9,85 +9,127 @@ const AdminSideBar = ({changeMenu}) => {
                 onClick={changeMenu} 
                 name='sideBar' 
                 value='golovna' 
-                type='radio'/>Головна</label>
+                type='radio'/>
+                <i className="fas fa-bars"></i>
+                Головна
+            </label>
             <label className='admSideBarItem'>
                 <input className='admSideBarItemMenu' 
                 onClick={changeMenu}
                 name='sideBar' 
                 value='catalog' 
-                type='radio'/>Каталог Товарів</label>
+                type='radio'/>
+                <i className="fas fa-archive"></i>
+                Каталог Товарів
+            </label>
             <label className='admSideBarItem'>
                 <input className='admSideBarItemMenu'
                 onClick={changeMenu}
                 name='sideBar' 
                 value='catalog'
-                type='radio'/>Замовлення</label>
+                type='radio'/>
+                <i className="fas fa-clipboard-list"></i>    
+                Замовлення
+            </label>
             <label className='admSideBarItem'>
                 <input className='admSideBarItemMenu' 
                 onClick={changeMenu}
                 name='sideBar' 
                 value='prodagi'
-                type='radio'/>Продажі</label>
+                type='radio'/>
+                <i className="fas fa-clipboard-check"></i>
+                Продажі
+            </label>
             <label className='admSideBarItem'>
                 <input className='admSideBarItemMenu' 
                 onClick={changeMenu}
                 name='sideBar' 
                 value='zamovleniaPost'
-                type='radio'/>Замовлення Постачальнику</label>
+                type='radio'/>
+                <i className="fas fa-dolly-flatbed"></i>
+                Замовлення Постачальнику
+            </label>
             <label className='admSideBarItem'>
                 <input className='admSideBarItemMenu' 
                 onClick={changeMenu}
                 name='sideBar'  
                 value='kasi'
-                type='radio'/>Каси</label>
+                type='radio'/>
+                <i className="fas fa-cash-register"></i>
+                Каси
+            </label>
             <label className='admSideBarItem'>
                 <input className='admSideBarItemMenu' 
                 onClick={changeMenu}
                 name='sideBar' 
                 value='plategiVh'
-                type='radio'/>Платежі вхідні</label>
+                type='radio'/>
+                <i className="fas fa-file-import"></i>
+                Платежі вхідні
+            </label>
             <label className='admSideBarItem'>
                 <input className='admSideBarItemMenu' 
                 onClick={changeMenu}
                 name='sideBar'  
                 value='plategiVih'
-                type='radio'/>Платежі вихідні</label>
+                type='radio'/>
+                <i className="fas fa-file-export"></i>
+                Платежі вихідні
+            </label>
             <label className='admSideBarItem'>
                 <input className='admSideBarItemMenu' 
                 onClick={changeMenu}
                 name='sideBar'  
                 value='postachal'
-                type='radio'/>Постачальники</label>
+                type='radio'/>
+                <i className="fas fa-user-tie"></i>
+                Постачальники
+            </label>
             <label className='admSideBarItem'>
                 <input className='admSideBarItemMenu' 
                 onClick={changeMenu}
                 name='sideBar'  
                 value='pokupci'
-                type='radio'/>Покупці</label>
+                type='radio'/>
+                <i className="fas fa-address-book"></i>
+                Покупці
+            </label>
             <label className='admSideBarItem'>
                 <input className='admSideBarItemMenu' 
                 onClick={changeMenu}
                 name='sideBar'  
                 value='koristuvachi'
-                type='radio'/>Користувачі</label>
+                type='radio'/>
+                <i className="fas fa-users"></i>
+                Користувачі
+            </label>
             <label className='admSideBarItem'>
                 <input className='admSideBarItemMenu' 
                 onClick={changeMenu}
                 name='sideBar'  
                 value='zavantag'
-                type='radio'/>Завантаження</label>
+                type='radio'/>
+                <i className="fas fa-download"></i>
+                Завантаження
+            </label>
             <label className='admSideBarItem'>
                 <input className='admSideBarItemMenu' 
                 onClick={changeMenu}
                 name='sideBar'  
                 value='zviti'
-                type='radio'/>Звіти</label>
+                type='radio'/>
+                <i className="fas fa-chart-line"></i>   
+                Звіти
+            </label>
             <label className='admSideBarItem'>
                 <input className='admSideBarItemMenu' 
                 onClick={changeMenu}
                 name='sideBar'  
                 value='nalashtuvania'
-                type='radio'/>Налаштування</label>
+                type='radio'/>
+                <i className="fas fa-cogs"></i>
+                Налаштування
+            </label>
         </div>
     );
 };

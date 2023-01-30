@@ -1,47 +1,36 @@
-/* Include the padding and border in an element's total width and height */
-* {
-    box-sizing: border-box;
+
+.admStockGoodsTable {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: auto;
+    font-size: 14px;
+}
+.admStockGoodsTable tr, .admStockGoodsTable th {
+    border: 1px solid #ddd;
+    padding: 8px 5px;
 }
 
-/* Remove margins and padding from the list */
-/*ul {
-    margin: 0;
-    padding: 0;
+.admStockGoodsTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: #444;
 }
 
-/* Style the list items */
-/*ul li {
+.admStockGoodsTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.admStockGoodsTable tr:hover {
+    background-color: #ddd;
     cursor: pointer;
-    position: relative;
-    padding: 12px 8px 12px 40px;
-    background: #eee;
-    font-size: 18px;
-    transition: 0.2s;
+}
 
-    /* make the list items unselectable */
-    /*
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}*/
+.admStockGoodsTable td {
+    padding: 5px; 
+}
 
-/* Set all odd list items to a different color (zebra-stripes) */
-/*ul li:nth-child(odd) {
-    background: #f9f9f9;
-}*/
-
-/* Darker background-color on hover */
-/*ul li:hover {
-    background: #ddd;
-}*/
-
-/* When clicked on, add a background color and strike out text */
-/*ul li.checked {
-    background: #888;
-    color: #fff;
-    text-decoration: line-through;
-}*/
 
 /* Add a "checked" mark when clicked on */
 /*ul li.checked::before {
@@ -58,16 +47,20 @@
 }
 */
 .headerGoodsTable {
-
+    font-size: 14px;
+    font-family: var(--main-font-family);
+    font-weight: bold;
 }
 
 .admListGoodsTable {
     width: 100%;
     border-collapse: collapse;
+    font-size: 14px;
+    
 }
 .admListGoodsTable tr, .admListGoodsTable th {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 8px 5px;
 }
 
 .admListGoodsTable th {
@@ -76,6 +69,10 @@
     text-align: left;
     background-color: #4CAF50;
     color: #444;
+}
+
+.admListGoodsTable i {
+    margin-left: 3px;
 }
 
 .admListGoodsTable tr:nth-child(even) {
@@ -87,47 +84,131 @@
     cursor: pointer;
 }
 
-/* Style the close button */
+.admListGoodsTable td {
+    padding: 5px; 
+}
+
+.admGoodsTable {
+    width: 100%;
+    height: 266px;
+    overflow-y: auto;  
+}
+
+.admGoodsTable thead th {
+    position: sticky; 
+    top: 0px;
+}
+
 .closeAdmGoods {
-    position: absolute;
+    margin: 4px;
+    border: 0px;
+    border-radius: 4px;
     right: 0;
     top: 0;
-    padding: 12px 16px 12px 16px;
+    padding: 5px 12px 5px 12px;
+    background-color:#f2f2f2;
+    color: #f44336;
 }
 
 .closeAdmGoods:hover {
     background-color: #f44336;
     color: white;
+    cursor: pointer;
 }
 
-/* Style the header */
+.basketAdmGoods {
+    margin: 4px;
+    border: 0px;
+    border-radius: 4px;
+    right: 0;
+    top: 0;
+    padding: 5px 12px 5px 12px;
+    background-color: #f2f2f2;
+    color: #4CAF50;
+}
+
+.basketAdmGoods:hover {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+.editAdmGoods {
+    margin: 4px;
+    border: 0px;
+    border-radius: 4px;
+    right: 0;
+    top: 0;
+    padding: 5px 12px 5px 12px;
+    background-color: #f2f2f2;
+    color: #71C2ff;
+}
+
+.editAdmGoods:hover {
+    background-color: #71C2ff;
+    color: white;
+    cursor: pointer;
+}
+
 .headerGoods {
-    background-color: #f44336;
-    padding: 30px 40px;
+    background-color: #f2f2f2;
+    padding: 5px 10px;
     color: white;
     text-align: center;
+    color:#444;
 }
 
-/* Clear floats after the header */
 .headerGoods:after {
     content: "";
     display: table;
     clear: both;
 }
 
-/* Style the input */
+.admHeaderCatalog {
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    gap: 3px;
+    padding: 5px;
+    margin: 3px;
+}
+
+.admChooseCat {
+    appearance: none;
+}
+
+.admChooseLabel {
+    border-radius: 3px;
+    background-color:#f2f2f2;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.admChooseLabel:hover, .admChooseLabel:focus {
+    background-color:#ddd;
+}
+
+.admBtnSearch {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
 .inputAdminGoods {
     margin: 0;
     border: none;
-    border-radius: 0;
+    border-radius: 3px;
     width: 75%;
-    padding: 10px;
+    height: 15px;
+    padding: 3px;
     float: left;
-    font-size: 16px;
+    font-size: 10px;
 }
 
-/* Style the "Add" button */
-.btnSearch {
+/*.btnAdminSearch {
     padding: 10px;
     width: 25%;
     background: #d9d9d9;
@@ -140,6 +221,6 @@
     border-radius: 0;
 }
 
-.btnSearch:hover {
+.btnAdminSearch:hover {
     background-color: #bbb;
-}
+}*/

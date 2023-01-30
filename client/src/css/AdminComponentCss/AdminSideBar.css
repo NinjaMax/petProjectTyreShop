@@ -28,3 +28,7 @@
 .admSideBarItemMenu {
     appearance: none;
 }
+
+.adminSideBar i {
+    margin-right: 10px;
+}

@@ -8,6 +8,7 @@
     font-family: var(--main-font-family);
     cursor: pointer; /* Mouse pointer on hover */
     border-radius: 3px;
+    margin: 0;
     
 }
 
@@ -16,6 +17,6 @@
     background-color:#9EB9D3;
 }
 
-.btnIcon{
+/*.btnIcon{
     background: url('../../assets/search_icon.png');
-}
+}*/
