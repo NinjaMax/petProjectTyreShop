@@ -7,8 +7,7 @@ const AdminGoodsContent = () => {
         <div>
             <div id="myDIV" className="headerGoods">
                 <span>Каталог товарів:</span>
-                <div className='admHeaderCatalog'>
-                  
+                <div className='admHeaderCatalog'>  
                   <label className='admChooseLabel'>
                     <input className='admChooseCat'
                     name='chooseGoodsCat' value='Шини'

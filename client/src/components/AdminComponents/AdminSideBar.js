@@ -26,7 +26,7 @@ const AdminSideBar = ({changeMenu}) => {
                 <input className='admSideBarItemMenu'
                 onClick={changeMenu}
                 name='sideBar' 
-                value='catalog'
+                value='zamovlenia'
                 type='radio'/>
                 <i className="fas fa-clipboard-list"></i>    
                 Замовлення

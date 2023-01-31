@@ -1,21 +1,22 @@
 import React from 'react';
 import ButtonSearch from '../../Buttons/ButtonSearch';
+import '../../../css/AdminComponentCss/AdminContentCss/AdminOrderContent.css';
 
 const AdminOrderContent = () => {
     return (
         <div>
-            <div id="myDIV" className="headerGoods">
-                <span>Замовлення:</span>
-                <div className='admHeaderCatalog'>
+            <div className="admOrderContent">
+                <span>Замовлення Покупців:</span>
+                <div className='admOrderHeader'>
                     <button>Додати замовлення</button>
                 </div>
-                <input className='inputAdminGoods' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
+                <input className='inputAdminOrder' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
                 <ButtonSearch/>
             </div>
-            <div className='admGoodsTable'>
-            <table className='admListGoodsTable'>
+            <div className='admOrdersTable'>
+            <table className='admListOrdersTable'>
                 <thead>
-                    <tr className='headerGoodsTable'>
+                    <tr className='headerOrderTable'>
                         <th>Тип</th>
                         <th>Код</th>
                         <th>Дата</th>
@@ -30,18 +31,27 @@ const AdminOrderContent = () => {
                         <th>Статус Оплати</th>
                         <th>Тип оплати</th>
                         <th>Користувач</th>
-                        <th>Коментар</th> 
+                        <th>Коментар</th>
+                        <th>Опції</th>
                     </tr>
                 </thead>    
-                <tbody >
-                    
-                    <tr >
-                        <td>264302</td>
-                        <td>BFGoodrich Activan 185/75 R16C 104/102R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
+                <tbody>
+                    <tr>
+                        <td>V</td>
+                        <td>2643020000000</td>
+                        <td>02.01.2023</td>
+                        <td>25.01.2023</td>
+                        <td>Тімошенко Н.В.</td>
+                        <td>Склад Поставщик</td>
+                        <td>10200.00</td>
+                        <td>Новий</td>
+                        <td>Сайт</td>
+                        <td>Доставляеться</td>
+                        <td>Нова Пошта</td>
+                        <td>Очікує Оплати</td>
+                        <td>Карта</td>
+                        <td>Михайло</td>
+                        <td>Треба уточнення</td>
                         <td>
                             <button className='basketAdmGoods'>
                                 <i className="fa fa-shopping-cart"></i>
@@ -55,12 +65,21 @@ const AdminOrderContent = () => {
                         </td>
                     </tr>          
                     <tr>
-                        <td>264299</td>
-                        <td>BFGoodrich Activan 195/65 R16C 104/102R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
+                    <td>V</td>
+                        <td>264302</td>
+                        <td>02.01.2023</td>
+                        <td>25.01.2023</td>
+                        <td>Тімошенко Н.В.</td>
+                        <td>Склад Поставщик</td>
+                        <td>10200.00</td>
+                        <td>Новий</td>
+                        <td>Сайт</td>
+                        <td>Доставляеться</td>
+                        <td>Нова Пошта</td>
+                        <td>Очікує Оплати</td>
+                        <td>Карта</td>
+                        <td>Михайло</td>
+                        <td>Треба уточнення</td>
                         <td>
                             <button className='basketAdmGoods'>
                                 <i className="fa fa-shopping-cart"></i>
@@ -70,16 +89,25 @@ const AdminOrderContent = () => {
                             </button>
                             <button className='closeAdmGoods'>
                                 <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>  
+                            </button>                  
+                        </td>
                     </tr>
                     <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
+                    <td>V</td>
+                        <td>264302</td>
+                        <td>02.01.2023</td>
+                        <td>25.01.2023</td>
+                        <td>Тімошенко Н.В.</td>
+                        <td>Склад Поставщик</td>
+                        <td>10200.00</td>
+                        <td>Новий</td>
+                        <td>Сайт</td>
+                        <td>Доставляеться</td>
+                        <td>Нова Пошта</td>
+                        <td>Очікує Оплати</td>
+                        <td>Карта</td>
+                        <td>Михайло</td>
+                        <td>Треба уточнення</td>
                         <td>
                             <button className='basketAdmGoods'>
                                 <i className="fa fa-shopping-cart"></i>
@@ -89,16 +117,25 @@ const AdminOrderContent = () => {
                             </button>
                             <button className='closeAdmGoods'>
                                 <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
+                            </button>                  
+                        </td>
                     </tr>
                     <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
+                    <td>V</td>
+                        <td>264302</td>
+                        <td>02.01.2023</td>
+                        <td>25.01.2023</td>
+                        <td>Тімошенко Н.В.</td>
+                        <td>Склад Поставщик</td>
+                        <td>10200.00</td>
+                        <td>Новий</td>
+                        <td>Сайт</td>
+                        <td>Доставляеться</td>
+                        <td>Нова Пошта</td>
+                        <td>Очікує Оплати</td>
+                        <td>Карта</td>
+                        <td>Михайло</td>
+                        <td>Треба уточнення</td>
                         <td>
                             <button className='basketAdmGoods'>
                                 <i className="fa fa-shopping-cart"></i>
@@ -108,16 +145,25 @@ const AdminOrderContent = () => {
                             </button>
                             <button className='closeAdmGoods'>
                                 <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
+                            </button>                  
+                        </td>
                     </tr> 
                     <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
+                    <td>V</td>
+                        <td>264302</td>
+                        <td>02.01.2023</td>
+                        <td>25.01.2023</td>
+                        <td>Тімошенко Н.В.</td>
+                        <td>Склад Поставщик</td>
+                        <td>10200.00</td>
+                        <td>Новий</td>
+                        <td>Сайт</td>
+                        <td>Доставляеться</td>
+                        <td>Нова Пошта</td>
+                        <td>Очікує Оплати</td>
+                        <td>Карта</td>
+                        <td>Михайло</td>
+                        <td>Треба уточнення</td>
                         <td>
                             <button className='basketAdmGoods'>
                                 <i className="fa fa-shopping-cart"></i>
@@ -127,16 +173,25 @@ const AdminOrderContent = () => {
                             </button>
                             <button className='closeAdmGoods'>
                                 <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
+                            </button>                  
+                        </td>
                     </tr> 
                     <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
+                    <td>V</td>
+                        <td>264302</td>
+                        <td>02.01.2023</td>
+                        <td>25.01.2023</td>
+                        <td>Тімошенко Н.В.</td>
+                        <td>Склад Поставщик</td>
+                        <td>10200.00</td>
+                        <td>Новий</td>
+                        <td>Сайт</td>
+                        <td>Доставляеться</td>
+                        <td>Нова Пошта</td>
+                        <td>Очікує Оплати</td>
+                        <td>Карта</td>
+                        <td>Михайло</td>
+                        <td>Треба уточнення</td>
                         <td>
                             <button className='basketAdmGoods'>
                                 <i className="fa fa-shopping-cart"></i>
@@ -146,16 +201,25 @@ const AdminOrderContent = () => {
                             </button>
                             <button className='closeAdmGoods'>
                                 <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
+                            </button>                  
+                        </td>
                     </tr> 
                     <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
+                    <td>V</td>
+                        <td>264302</td>
+                        <td>02.01.2023</td>
+                        <td>25.01.2023</td>
+                        <td>Тімошенко Н.В.</td>
+                        <td>Склад Поставщик</td>
+                        <td>10200.00</td>
+                        <td>Новий</td>
+                        <td>Сайт</td>
+                        <td>Доставляеться</td>
+                        <td>Нова Пошта</td>
+                        <td>Очікує Оплати</td>
+                        <td>Карта</td>
+                        <td>Михайло</td>
+                        <td>Треба уточнення</td>
                         <td>
                             <button className='basketAdmGoods'>
                                 <i className="fa fa-shopping-cart"></i>
@@ -165,16 +229,25 @@ const AdminOrderContent = () => {
                             </button>
                             <button className='closeAdmGoods'>
                                 <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
+                            </button>                  
+                        </td>
                     </tr> 
                     <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
+                    <td>V</td>
+                        <td>264302</td>
+                        <td>02.01.2023</td>
+                        <td>25.01.2023</td>
+                        <td>Тімошенко Н.В.</td>
+                        <td>Склад Поставщик</td>
+                        <td>10200.00</td>
+                        <td>Новий</td>
+                        <td>Сайт</td>
+                        <td>Доставляеться</td>
+                        <td>Нова Пошта</td>
+                        <td>Очікує Оплати</td>
+                        <td>Карта</td>
+                        <td>Михайло</td>
+                        <td>Треба уточнення</td>
                         <td>
                             <button className='basketAdmGoods'>
                                 <i className="fa fa-shopping-cart"></i>
@@ -184,16 +257,25 @@ const AdminOrderContent = () => {
                             </button>
                             <button className='closeAdmGoods'>
                                 <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
+                            </button>                  
+                        </td>
                     </tr>
                     <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
+                    <td>V</td>
+                        <td>264302</td>
+                        <td>02.01.2023</td>
+                        <td>25.01.2023</td>
+                        <td>Тімошенко Н.В.</td>
+                        <td>Склад Поставщик</td>
+                        <td>10200.00</td>
+                        <td>Новий</td>
+                        <td>Сайт</td>
+                        <td>Доставляеться</td>
+                        <td>Нова Пошта</td>
+                        <td>Очікує Оплати</td>
+                        <td>Карта</td>
+                        <td>Михайло</td>
+                        <td>Треба уточнення</td>
                         <td>
                             <button className='basketAdmGoods'>
                                 <i className="fa fa-shopping-cart"></i>
@@ -203,16 +285,25 @@ const AdminOrderContent = () => {
                             </button>
                             <button className='closeAdmGoods'>
                                 <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
+                            </button>                  
+                        </td>
                     </tr>  
                     <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
+                    <td>V</td>
+                        <td>264302</td>
+                        <td>02.01.2023</td>
+                        <td>25.01.2023</td>
+                        <td>Тімошенко Н.В.</td>
+                        <td>Склад Поставщик</td>
+                        <td>10200.00</td>
+                        <td>Новий</td>
+                        <td>Сайт</td>
+                        <td>Доставляеться</td>
+                        <td>Нова Пошта</td>
+                        <td>Очікує Оплати</td>
+                        <td>Карта</td>
+                        <td>Михайло</td>
+                        <td>Треба уточнення</td>
                         <td>
                             <button className='basketAdmGoods'>
                                 <i className="fa fa-shopping-cart"></i>
@@ -222,16 +313,25 @@ const AdminOrderContent = () => {
                             </button>
                             <button className='closeAdmGoods'>
                                 <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
+                            </button>                  
+                        </td>
                     </tr>  
                     <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
+                    <td>V</td>
+                        <td>264302</td>
+                        <td>02.01.2023</td>
+                        <td>25.01.2023</td>
+                        <td>Тімошенко Н.В.</td>
+                        <td>Склад Поставщик</td>
+                        <td>10200.00</td>
+                        <td>Новий</td>
+                        <td>Сайт</td>
+                        <td>Доставляеться</td>
+                        <td>Нова Пошта</td>
+                        <td>Очікує Оплати</td>
+                        <td>Карта</td>
+                        <td>Михайло</td>
+                        <td>Треба уточнення</td>
                         <td>
                             <button className='basketAdmGoods'>
                                 <i className="fa fa-shopping-cart"></i>
@@ -241,16 +341,25 @@ const AdminOrderContent = () => {
                             </button>
                             <button className='closeAdmGoods'>
                                 <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
+                            </button>                  
+                        </td>
                     </tr>
                     <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
+                    <td>V</td>
+                        <td>264302</td>
+                        <td>02.01.2023</td>
+                        <td>25.01.2023</td>
+                        <td>Тімошенко Н.В.</td>
+                        <td>Склад Поставщик</td>
+                        <td>10200.00</td>
+                        <td>Новий</td>
+                        <td>Сайт</td>
+                        <td>Доставляеться</td>
+                        <td>Нова Пошта</td>
+                        <td>Очікує Оплати</td>
+                        <td>Карта</td>
+                        <td>Михайло</td>
+                        <td>Треба уточнення</td>
                         <td>
                             <button className='basketAdmGoods'>
                                 <i className="fa fa-shopping-cart"></i>
@@ -260,16 +369,25 @@ const AdminOrderContent = () => {
                             </button>
                             <button className='closeAdmGoods'>
                                 <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
+                            </button>                  
+                        </td>
                     </tr>    
                     <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
+                    <td>V</td>
+                        <td>264302</td>
+                        <td>02.01.2023</td>
+                        <td>25.01.2023</td>
+                        <td>Тімошенко Н.В.</td>
+                        <td>Склад Поставщик</td>
+                        <td>10200.00</td>
+                        <td>Новий</td>
+                        <td>Сайт</td>
+                        <td>Доставляеться</td>
+                        <td>Нова Пошта</td>
+                        <td>Очікує Оплати</td>
+                        <td>Карта</td>
+                        <td>Михайло</td>
+                        <td>Треба уточнення</td>
                         <td>
                             <button className='basketAdmGoods'>
                                 <i className="fa fa-shopping-cart"></i>
@@ -279,16 +397,25 @@ const AdminOrderContent = () => {
                             </button>
                             <button className='closeAdmGoods'>
                                 <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
+                            </button>                  
+                        </td>
                     </tr>
                     <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
+                    <td>V</td>
+                        <td>264302</td>
+                        <td>02.01.2023</td>
+                        <td>25.01.2023</td>
+                        <td>Тімошенко Н.В.</td>
+                        <td>Склад Поставщик</td>
+                        <td>10200.00</td>
+                        <td>Новий</td>
+                        <td>Сайт</td>
+                        <td>Доставляеться</td>
+                        <td>Нова Пошта</td>
+                        <td>Очікує Оплати</td>
+                        <td>Карта</td>
+                        <td>Михайло</td>
+                        <td>Треба уточнення</td>
                         <td>
                             <button className='basketAdmGoods'>
                                 <i className="fa fa-shopping-cart"></i>
@@ -298,16 +425,25 @@ const AdminOrderContent = () => {
                             </button>
                             <button className='closeAdmGoods'>
                                 <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
+                            </button>                  
+                        </td>
                     </tr>        
                     <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
+                    <td>V</td>
+                        <td>264302</td>
+                        <td>02.01.2023</td>
+                        <td>25.01.2023</td>
+                        <td>Тімошенко Н.В.</td>
+                        <td>Склад Поставщик</td>
+                        <td>10200.00</td>
+                        <td>Новий</td>
+                        <td>Сайт</td>
+                        <td>Доставляеться</td>
+                        <td>Нова Пошта</td>
+                        <td>Очікує Оплати</td>
+                        <td>Карта</td>
+                        <td>Михайло</td>
+                        <td>Треба уточнення</td>
                         <td>
                             <button className='basketAdmGoods'>
                                 <i className="fa fa-shopping-cart"></i>
@@ -317,8 +453,8 @@ const AdminOrderContent = () => {
                             </button>
                             <button className='closeAdmGoods'>
                                 <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
+                            </button>                  
+                        </td>
                     </tr>                  
                 </tbody>
             </table>

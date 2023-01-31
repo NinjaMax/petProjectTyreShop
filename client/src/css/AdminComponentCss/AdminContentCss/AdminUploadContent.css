@@ -1,0 +1,16 @@
+.uploadContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14px;
+    font-family: var(--main-font-family);
+    font-weight: bold;
+    margin: 20px;
+}
+
+.uploadItem {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 8px;
+    box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.2);
+}

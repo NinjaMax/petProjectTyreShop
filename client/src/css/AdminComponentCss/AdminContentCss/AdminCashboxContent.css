@@ -1,0 +1,208 @@
+.admStockGoodsTable {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: auto;
+    font-size: 12px;
+}
+.admStockGoodsTable tr, .admStockGoodsTable th {
+    border: 1px solid #ddd;
+    padding: 8px 5px;
+}
+
+.admStockGoodsTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: #444;
+}
+
+.admStockGoodsTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.admStockGoodsTable tr:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+.admStockGoodsTable td {
+    padding: 5px; 
+}
+
+
+/* Add a "checked" mark when clicked on */
+/*ul li.checked::before {
+    content: '';
+    position: absolute;
+    border-color: #fff;
+    border-style: solid;
+    border-width: 0 2px 2px 0;
+    top: 10px;
+    left: 16px;
+    transform: rotate(45deg);
+    height: 15px;
+    width: 7px;
+}
+*/
+.headerCashBoxTable {
+    font-size: 12px;
+    font-family: var(--main-font-family);
+    font-weight: bold;
+}
+
+.admListCashBoxTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    
+}
+.admListCashBoxTable tr, .admListCashBoxTable th {
+    border: 1px solid #ddd;
+    padding: 8px 5px;
+}
+
+.admListCashBoxTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: #444;
+}
+
+.admListCashBoxTable i {
+    margin-left: 3px;
+}
+
+.admListCashBoxTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.admListCashBoxTable tr:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+.admListCashBoxTable td {
+    padding: 5px; 
+}
+
+.admCashBoxTable {
+    width: 100%;
+    height: 420px;
+    overflow-y: auto;  
+}
+
+.admCashBoxTable thead th {
+    position: sticky; 
+    top: 0px;
+}
+
+.closeAdmGoods {
+    margin: 4px;
+    border: 0px;
+    border-radius: 4px;
+    right: 0;
+    top: 0;
+    padding: 5px 12px 5px 12px;
+    background-color:#f2f2f2;
+    color: #f44336;
+}
+
+.closeAdmGoods:hover {
+    background-color: #f44336;
+    color: white;
+    cursor: pointer;
+}
+
+.basketAdmGoods {
+    margin: 4px;
+    border: 0px;
+    border-radius: 4px;
+    right: 0;
+    top: 0;
+    padding: 5px 12px 5px 12px;
+    background-color: #f2f2f2;
+    color: #4CAF50;
+}
+
+.basketAdmGoods:hover {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+.editAdmGoods {
+    margin: 4px;
+    border: 0px;
+    border-radius: 4px;
+    right: 0;
+    top: 0;
+    padding: 5px 12px 5px 12px;
+    background-color: #f2f2f2;
+    color: #71C2ff;
+}
+
+.editAdmGoods:hover {
+    background-color: #71C2ff;
+    color: white;
+    cursor: pointer;
+}
+
+.admCashBoxContent {
+    background-color: #f2f2f2;
+    padding: 5px 10px;
+    color: white;
+    text-align: center;
+    color:#444;
+}
+
+.admCashBoxContent:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.admCashBoxHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    gap: 3px;
+    padding: 5px;
+    margin: 3px;
+}
+
+.admChooseCat {
+    appearance: none;
+}
+
+.admChooseLabel {
+    border-radius: 3px;
+    background-color:#f2f2f2;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.admChooseLabel:hover, .admChooseLabel:focus {
+    background-color:#ddd;
+}
+
+.admBtnSearch {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+.inputAdminCashBox {
+    margin: 0;
+    border: none;
+    border-radius: 3px;
+    width: 75%;
+    height: 15px;
+    padding: 3px;
+    float: left;
+    font-size: 10px;
+}

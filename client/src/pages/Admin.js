@@ -40,46 +40,46 @@ const Admin = () => {
             </div>
             <div className='rightColumn'>
                 {sideBarItem === 'golovna' ?
-                    <AdminMainContent/>
+                    <AdminMainContent changeMenu={sideBarItemChange}/>
                 : null}
                 {sideBarItem === 'catalog' ?
-                    <AdminGoodsContent/>
+                    <AdminGoodsContent changeMenu={sideBarItemChange}/>
                 : null}
                 {sideBarItem === 'zamovlenia' ?
-                    <AdminOrderContent/>
+                    <AdminOrderContent changeMenu={sideBarItemChange}/>
                 : null}
                 {sideBarItem === 'prodagi' ?
-                    <AdminSalesContent/>
+                    <AdminSalesContent changeMenu={sideBarItemChange}/>
                 : null}
                 {sideBarItem === 'zamovleniaPost' ?
-                    <AdminOrderSupContent/>
+                    <AdminOrderSupContent changeMenu={sideBarItemChange}/>
                 :null}
                 {sideBarItem === 'kasi' ?
-                    <AdminCashBoxContent/>
+                    <AdminCashBoxContent changeMenu={sideBarItemChange}/>
                 : null}
                 {sideBarItem === 'plategiVh' ?
-                    <AdminPayIncomesContent/>
+                    <AdminPayIncomesContent changeMenu={sideBarItemChange}/>
                 : null}
                 {sideBarItem === 'plategiVih' ?
-                    <AdminPayExpensesContent/>
+                    <AdminPayExpensesContent changeMenu={sideBarItemChange}/>
                 : null}
                 {sideBarItem === 'postachal' ?
-                    <AdminSupplierContent/>
+                    <AdminSupplierContent changeMenu={sideBarItemChange}/>
                 : null}
                 {sideBarItem === 'pokupci' ?
-                    <AdminCustomersContent/>
+                    <AdminCustomersContent changeMenu={sideBarItemChange}/>
                 : null}
                 {sideBarItem === 'koristuvachi' ?
-                    <AdminUsersContent/>
+                    <AdminUsersContent changeMenu={sideBarItemChange}/>
                 : null}
                 {sideBarItem === 'zavantag' ?
-                    <AdminUploaderContent/>
+                    <AdminUploaderContent changeMenu={sideBarItemChange}/>
                 : null}
                 {sideBarItem === 'zviti' ?
-                    <AdminReportsContent/>
+                    <AdminReportsContent changeMenu={sideBarItemChange}/>
                 : null}
                 {sideBarItem === 'nalashtuvania' ?
-                    <AdminOptionContent/>
+                    <AdminOptionContent changeMenu={sideBarItemChange}/>
                 : null} 
             </div>            
         </div>
