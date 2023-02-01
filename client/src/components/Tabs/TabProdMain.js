@@ -1,6 +1,7 @@
 import React from 'react';
-import PromotionBox from '../PromotionBox';
 import '../../css/TabsCss/TabProdMain.css';
+import PromotionBox from '../PromotionBox';
+
 
 
 const TabProdMain = () => {

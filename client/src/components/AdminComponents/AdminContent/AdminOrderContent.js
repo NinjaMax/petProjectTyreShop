@@ -1,8 +1,16 @@
-import React from 'react';
-import ButtonSearch from '../../Buttons/ButtonSearch';
+import {React, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminOrderContent.css';
+import ButtonSearch from '../../Buttons/ButtonSearch';
+import Modal from '../../Modal/Modal';
+import AdminFormOrder from '../AdminMain/AdminFormOrder';
 
 const AdminOrderContent = () => {
+    const [active, setActive] = useState(false);
+
+    const activeForm = () => {
+        setActive(!active);
+    }
+
     return (
         <div>
             <div className="admOrderContent">
@@ -53,7 +61,8 @@ const AdminOrderContent = () => {
                         <td>Михайло</td>
                         <td>Треба уточнення</td>
                         <td>
-                            <button className='basketAdmGoods'>
+                            <button className='basketAdmGoods'
+                                onClick={activeForm}>
                                 <i className="fa fa-shopping-cart"></i>
                             </button>
                             <button className='editAdmGoods'>
@@ -65,7 +74,7 @@ const AdminOrderContent = () => {
                         </td>
                     </tr>          
                     <tr>
-                    <td>V</td>
+                        <td>V</td>
                         <td>264302</td>
                         <td>02.01.2023</td>
                         <td>25.01.2023</td>
@@ -93,7 +102,7 @@ const AdminOrderContent = () => {
                         </td>
                     </tr>
                     <tr>
-                    <td>V</td>
+                        <td>V</td>
                         <td>264302</td>
                         <td>02.01.2023</td>
                         <td>25.01.2023</td>
@@ -459,6 +468,13 @@ const AdminOrderContent = () => {
                 </tbody>
             </table>
             </div> 
+            {active ?
+                <Modal active={active} setActive={activeForm}>
+                    <AdminFormOrder/>
+                </Modal>  
+                : null
+            }
+            
         </div>
     );
 };

@@ -1,0 +1,204 @@
+/* Style inputs with type="text", select elements and textareas */
+/*input[type=text], select, textarea {
+    width: 250px; /* Full width */
+    /*padding: 12px; /* Some padding */ 
+   /* border: 1px solid #ccc; /* Gray border */
+   /* border-radius: 4px; /* Rounded borders */
+   /* box-sizing: border-box; /* Make sure that padding and width stays in place */
+   /* margin-top: 6px; /* Add a top margin */
+   /* margin-bottom: 16px; /* Bottom margin */
+   /* resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+/*}*/
+
+/* Style the submit button with a specific background color etc */
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* When moving the mouse over the submit button, add a darker green color */
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.admFormOrderData {
+    width: 122px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the us*/
+}
+
+.admFormOrderId {
+    width: 100px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the us*/
+}
+
+.admFormOrderCustm {
+    width: 330px;
+    /*display: flex;
+    flex-direction: row;*/
+    /*text-align: center;*/
+    vertical-align:sub;
+    /*justify-content: center;
+    align-content:center;*/
+
+}
+.admFormOrderName {
+    width: 250px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user to vert*/
+}
+
+.admFormOrderNotes {
+    width: 650px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+.admFormOrderDelivery {
+    width: 140px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user*/
+}
+
+.admFormOrderStorage {
+    width: 170px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user*/
+}
+
+.admFormOrderStatus {
+    width: 140px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user to vert*/
+}
+
+.admFormOrderBtn {
+    background-color: #ff003f;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.admOrderFormGrp {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+.admFormDataOrder {
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    gap: 3px;
+}
+.admFormSearchCustm {
+    margin-left: 3px;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.admFormAddCustm {
+    margin-left: 3px;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color:#4CAF58;
+}
+
+.admFormSearchCustm:hover {
+    background-color:#ccc;
+}
+
+.admFormAddCustm:hover {
+    background-color:#4CAF50;
+}
+
+.admFormOrderTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    
+}
+.admFormOrderTable tr, .admFormOrderTable th {
+    border: 1px solid #ddd;
+    padding: 8px 5px;
+}
+
+.admFormOrderTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: #444;
+}
+
+.admFormOrderTable i {
+    margin-left: 3px;
+}
+
+.admFormOrderTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.admFormOrderTable tr:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+.admFormOrderTable td {
+    padding: 5px; 
+}
+
+/* Add a background color and some padding around the form */
+.container {
+    width: 1100px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
