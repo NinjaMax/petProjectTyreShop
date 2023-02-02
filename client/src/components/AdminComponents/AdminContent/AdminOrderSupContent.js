@@ -54,7 +54,7 @@ const AdminOrderSupContent = () => {
                     <td>Треба уточнення</td>
                     <td>
                         <button className='basketAdmGoods'>
-                            <i className="fa fa-shopping-cart"></i>
+                            <i className="fas fa-warehouse"></i>
                         </button>
                         <button className='editAdmGoods'>
                             <i className="fas fa-edit"></i>

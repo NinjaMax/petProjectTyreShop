@@ -3,8 +3,8 @@ import '../../css/Modal/Modal.css';
 
 const Modal = ({active, setActive, children}) => {
     return (
-      
-        <div className={active? 'modalWindowActive': 'modalWindow'}
+    
+            <div className={active? 'modalWindowActive': 'modalWindow'}
             onClick={()=>{setActive(false)}}>
             <div className= {active? 'modalWindowBox active': 'modalWindowBox'} onClick={(e)=>e.stopPropagation()}>
                 <button className='closeModalBtn' 
@@ -13,9 +13,8 @@ const Modal = ({active, setActive, children}) => {
                 </button>
                 {children}   
             </div>       
-        </div>
-      
+        </div> 
     );
-};
 
+}
 export default Modal;

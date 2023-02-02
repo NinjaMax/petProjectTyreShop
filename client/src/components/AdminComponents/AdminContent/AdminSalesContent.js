@@ -53,9 +53,6 @@ const AdminSalesContent = () => {
                     <td>Михайло</td>
                     <td>Треба уточнення</td>
                     <td>
-                        <button className='basketAdmGoods'>
-                            <i className="fa fa-shopping-cart"></i>
-                        </button>
                         <button className='editAdmGoods'>
                             <i className="fas fa-edit"></i>
                         </button>

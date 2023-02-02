@@ -1,6 +1,6 @@
 import {React, useEffect, useState} from 'react';
 import '../../css/AdminComponentCss/AdminHeader.css';
-import Charts from './AdminMain/Chart';
+import Charts from './AdminModalForm/Chart';
 import response from './data.json';
 
 const AdminHeader = () => {

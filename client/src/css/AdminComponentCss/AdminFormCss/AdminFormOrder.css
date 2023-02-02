@@ -11,19 +11,19 @@
 /*}*/
 
 /* Style the submit button with a specific background color etc */
-input[type=submit] {
+/*input[type=submit] {
     background-color: #4CAF50;
     color: white;
     padding: 12px 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-}
+}*/
 
 /* When moving the mouse over the submit button, add a darker green color */
-input[type=submit]:hover {
+/*input[type=submit]:hover {
     background-color: #45a049;
-}
+}*/
 
 .admFormOrderData {
     width: 122px; /* Full width */
@@ -49,12 +49,9 @@ input[type=submit]:hover {
 
 .admFormOrderCustm {
     width: 330px;
-    /*display: flex;
-    flex-direction: row;*/
-    /*text-align: center;*/
-    vertical-align:sub;
-    /*justify-content: center;
-    align-content:center;*/
+    display: flex;
+    flex-direction: row;
+    align-items:baseline;
 
 }
 .admFormOrderName {
@@ -77,6 +74,26 @@ input[type=submit]:hover {
     margin-top: 6px; /* Add a top margin */
     margin-bottom: 16px; /* Bottom margin */
     resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+.admFormOrderCommit {
+    margin: 10px;
+}
+
+.admFormOrderCommitChat {
+    padding-bottom: 5px;
+    padding-top: 8px;
+}
+
+.admFormOrderAddCommit {
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    gap: 8px;
+}
+
+.admOrderCommitText {
+    width: 80%;
 }
 
 .admFormOrderDelivery {
@@ -112,6 +129,27 @@ input[type=submit]:hover {
     resize: vertical /* Allow the user to vert*/
 }
 
+.admOrderFormGrp {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.admFormOrderBtnAdd {
+    height: 40px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    vertical-align:middle;
+}
+
+.admFormOrderBtnAdd:hover {
+    background-color: #2caf30;
+}
+
 .admFormOrderBtn {
     background-color: #ff003f;
     color: white;
@@ -121,14 +159,36 @@ input[type=submit]:hover {
     cursor: pointer;
 }
 
-.admOrderFormGrp {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
+.admFormOrderBtnSave {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
+
+.admFormOrderBtnSave:hover {
+    background-color: #2caf30;
+}
+
+.admFormOrderBtnOk {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.admFormOrderBtnOk:hover {
+    background-color: #2caf30;
+}
+
 .admFormDataOrder {
     display: flex;
     flex-direction: row;
+    align-items:baseline;
     flex-wrap:wrap;
     gap: 3px;
 }
@@ -196,7 +256,7 @@ input[type=submit]:hover {
 }
 
 /* Add a background color and some padding around the form */
-.container {
+.containerAdmOrderForm {
     width: 1100px;
     border-radius: 5px;
     background-color: #f2f2f2;

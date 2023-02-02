@@ -1,12 +1,27 @@
-import React from 'react';
+import {React, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminFormCss/AdminFormOrder.css';
-import Modal from '../../Modal/Modal';
+//import Modal from '../../Modal/Modal';
+import ModalAdmin from '../../Modal/ModalAdmin';
+import AdminComment from './AdminComment';
+import AdminModalCustomers from './AdminModalCustomers';
+import AdminModalGoods from './AdminModalGoods';
 
 const AdminFormOrder = () => {
+    const [active, setActive] = useState(false);
+    const [addGoods, setAddGoods] = useState(false);
+
+    const addGoodsForm = () => {
+        setAddGoods(!addGoods);
+    }
+
+    const activeForm = () => {
+        setActive(!active);
+    }
+
     return (
         <div>
             Замовлення Покупця
-            <div class="container">
+            <div className="containerAdmOrderForm">
             <form action="">
                 <div className='admFormDataOrder'>
                     <div>
@@ -27,22 +42,27 @@ const AdminFormOrder = () => {
                         />  
                     </div>
                     <div >
-                        <label htmlFor="lname">Покупець </label>
                         <div className='admFormOrderCustm'>
-                        
-                        
-                        <input type="text" 
-                            className="admFormOrderName" 
-                            name="lastname" 
-                            maxLength='45'
-                            placeholder="Ім'я або назва.."
-                        />
-                            <button className='admFormSearchCustm'>
+                            <label htmlFor="lname">Покупець </label>
+                            <input type="text" 
+                                className="admFormOrderName" 
+                                name="lastname" 
+                                maxLength='45'
+                                placeholder="Ім'я або назва.."
+                            />
+                            <div onClick={(e)=>e.preventDefault({passive: false})}>
+                                <button onClick={activeForm}
+                                className='admFormSearchCustm'>
                                 <i className="fas fa-search"></i>    
-                            </button>
-                            <button className='admFormAddCustm'>
-                                <i className="fas fa-plus"></i>    
-                            </button>   
+                                </button> 
+                            </div>
+                            <div onClick={(e)=>e.preventDefault({passive: false})}>
+                                <button 
+                                    onClick={() => console.log('Added new Customer')}
+                                    className='admFormAddCustm'>
+                                    <i className="fas fa-plus"></i>    
+                                </button>  
+                            </div>         
                         </div>    
                     </div>
                     <div>
@@ -61,6 +81,9 @@ const AdminFormOrder = () => {
                             <option value="2">Склад Основний</option>
                             <option value="3">Склад Монтаж</option>
                         </select>  
+                    </div>
+                    <div onClick={(e)=>e.preventDefault({passive: false})}>
+                        <button onClick={addGoodsForm} className='admFormOrderBtnAdd'>Додати товар</button>  
                     </div>
                     <div>
                         <label htmlFor="pereviznik">Перевізник </label>
@@ -103,15 +126,39 @@ const AdminFormOrder = () => {
                 <textarea className="admFormOrderNotes" name="subject" 
                     placeholder="Пишить нотатку..">
                 </textarea>
+                <div className='admFormOrderCommit'
+                    onClick={(e)=>e.preventDefault({passive: false})}>
+                    <div className='admFormOrderAddCommit'>
+                    <button onClick={() => console.log('Add Commit')} 
+                        className='admFormOrderBtnAdd'>Додати коментар
+                    </button>
+                        <textarea  name="subject" className='admOrderCommitText'
+                        placeholder="Пишить коментар.."></textarea>
+                    </div>
+                    <div className='admFormOrderCommitChat'>
+                        <AdminComment>
+
+                        </AdminComment>
+                    </div>  
+                </div>
                 <div className='admOrderFormGrp'>
-                    <input type="submit" value="Ok"/>
-                    <input type="submit" className='admSubmitCancel' value="Зберегти"/>
+                    <input type="submit" className='admFormOrderBtnOk' value="Ok"/>
+                    <input type="submit" className='admFormOrderBtnSave' value="Зберегти"/>
                     <button className='admFormOrderBtn'>Відмінити</button> 
                 </div>
-            
             </form>
             </div>
-            <Modal></Modal>
+            {active ?
+                <ModalAdmin active={active} setActive={setActive} >
+                    <AdminModalCustomers/>
+                </ModalAdmin> : null  
+            }
+            {addGoods ? 
+                <ModalAdmin active={addGoods} setActive={setAddGoods}>
+                    <AdminModalGoods/>
+                </ModalAdmin>
+                : null
+            }
         </div>
     );
 };

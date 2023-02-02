@@ -1,0 +1,56 @@
+/* Chat containers */
+.admCommitBox {
+    height: 200px;
+    overflow: scroll;
+    position: relative;
+    overflow-x: auto;
+}
+
+.containerAdmComment {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+/* Darker chat container */
+.darker {
+    border-color: #ccc;
+    background-color: #ddd;
+}
+
+/* Clear floats */
+.containerAdmComment::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* Style images */
+.containerAdmComment img {
+    float: left;
+    max-width: 40px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+/* Style the right image */
+.containerAdmComment img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right:0;
+}
+
+/* Style time text */
+.timeAdmCommitRight {
+    float: right;
+    color: #aaa;
+}
+
+/* Style time text */
+.timeAdmCommitLeft {
+    float: left;
+    color: #999;
+}

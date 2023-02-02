@@ -1,8 +1,9 @@
 import {React, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminOrderContent.css';
 import ButtonSearch from '../../Buttons/ButtonSearch';
-import Modal from '../../Modal/Modal';
-import AdminFormOrder from '../AdminMain/AdminFormOrder';
+//import Modal from '../../Modal/Modal';
+import ModalAdmin from '../../Modal/ModalAdmin';
+import AdminFormOrder from '../AdminModalForm/AdminFormOrder';
 
 const AdminOrderContent = () => {
     const [active, setActive] = useState(false);
@@ -16,7 +17,9 @@ const AdminOrderContent = () => {
             <div className="admOrderContent">
                 <span>Замовлення Покупців:</span>
                 <div className='admOrderHeader'>
-                    <button>Додати замовлення</button>
+                    <button className='admOrderHeaderBtn' onClick={activeForm}>
+                        Додати замовлення
+                    </button>
                 </div>
                 <input className='inputAdminOrder' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
                 <ButtonSearch/>
@@ -63,7 +66,7 @@ const AdminOrderContent = () => {
                         <td>
                             <button className='basketAdmGoods'
                                 onClick={activeForm}>
-                                <i className="fa fa-shopping-cart"></i>
+                                <i className="fas fa-truck-loading"></i>
                             </button>
                             <button className='editAdmGoods'>
                                 <i className="fas fa-edit"></i>
@@ -469,9 +472,9 @@ const AdminOrderContent = () => {
             </table>
             </div> 
             {active ?
-                <Modal active={active} setActive={activeForm}>
+                <ModalAdmin active={active} setActive={activeForm}>
                     <AdminFormOrder/>
-                </Modal>  
+                </ModalAdmin>  
                 : null
             }
             

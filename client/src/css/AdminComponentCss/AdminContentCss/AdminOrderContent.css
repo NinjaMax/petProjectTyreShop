@@ -155,6 +155,9 @@
     color: white;
     text-align: center;
     color:#444;
+    font-size: 14px;
+    font-family: var(--main-font-family);
+    font-weight: bold;
 }
 
 .admOrderContent:after {
@@ -170,7 +173,22 @@
     gap: 3px;
     padding: 5px;
     margin: 3px;
+    font-size: 12px;
+    font-family: var(--main-font-family);
 }
+.admOrderHeaderBtn {
+    margin-left: 3px;
+    width: 150px;
+    height: 30px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color:#4CAF58;
+    font-size: 12px;
+    font-family: var(--main-font-family);
+    font-weight: bold;  
+}
+
 
 .admChooseCat {
     appearance: none;
