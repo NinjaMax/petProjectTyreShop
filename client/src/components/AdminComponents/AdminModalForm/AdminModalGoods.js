@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../css/AdminComponentCss/AdminFormCss/AdminModalGoods.css';
+import '../../../css/AdminComponentCss/AdminModalFormCss/AdminModalGoods.css';
 
 const AdminModalGoods = () => {
     return (

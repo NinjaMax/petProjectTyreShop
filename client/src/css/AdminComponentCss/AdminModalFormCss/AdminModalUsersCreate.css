@@ -1,0 +1,237 @@
+.admFormUsersData {
+    width: 122px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the us*/
+}
+
+.admFormUsersId {
+    width: 100px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the us*/
+}
+
+.admFormUsersCustm {
+    width: 330px;
+    display: flex;
+    flex-direction: row;
+    align-items:baseline;
+
+}
+.admFormUsersName {
+    width: 250px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user to vert*/
+}
+
+.admFormUsersNotes {
+    width: 650px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+.admFormUsersCommit {
+    margin: 10px;
+}
+
+.admFormUsersCommitChat {
+    padding-bottom: 5px;
+    padding-top: 8px;
+}
+
+.admFormUsersAddCommit {
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    gap: 8px;
+}
+
+.admUsersCommitText {
+    width: 80%;
+}
+
+.admFormUsersDelivery {
+    width: 140px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user*/
+}
+
+.admFormUsersStorage {
+    width: 170px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user*/
+}
+
+.admFormUsersStatus {
+    width: 140px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user to vert*/
+}
+
+.admUsersFormGrp {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.admFormUsersBtnAdd {
+    height: 40px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    vertical-align:middle;
+}
+
+.admFormUsersBtnAdd:hover {
+    background-color: #2caf30;
+}
+
+.admFormUsersBtn {
+    background-color: #ff003f;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.admFormUsersBtnSave {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.admFormUsersBtnSave:hover {
+    background-color: #2caf30;
+}
+
+.admFormUsersBtnOk {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.admFormUsersBtnOk:hover {
+    background-color: #2caf30;
+}
+
+.admFormDataUsers {
+    display: flex;
+    flex-direction: row;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap: 8px;
+}
+.admFormSearchCustm {
+    margin-left: 3px;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.admFormAddCustm {
+    margin-left: 3px;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color:#4CAF58;
+}
+
+.admFormSearchCustm:hover {
+    background-color:#ccc;
+}
+
+.admFormAddCustm:hover {
+    background-color:#4CAF50;
+}
+
+.admFormUsersTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    
+}
+.admFormUsersTable tr, .admFormOrderTable th {
+    border: 1px solid #ddd;
+    padding: 8px 5px;
+}
+
+.admFormUsersTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: #444;
+}
+
+.admFormUsersTable i {
+    margin-left: 3px;
+}
+
+.admFormUsersTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.admFormUsersTable tr:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+.admFormUsersTable td {
+    padding: 5px; 
+}
+
+/* Add a background color and some padding around the form */
+.containerAdmUsersForm {
+    width: 1100px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}

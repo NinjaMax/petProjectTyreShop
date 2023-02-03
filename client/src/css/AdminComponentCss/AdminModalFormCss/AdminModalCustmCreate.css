@@ -1,0 +1,237 @@
+.admFormCustmCreateData {
+    width: 122px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the us*/
+}
+
+.admFormCustmCreateId {
+    width: 100px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the us*/
+}
+
+.admFormCustmCreateCustm {
+    width: 330px;
+    display: flex;
+    flex-direction: row;
+    align-items:baseline;
+
+}
+.admFormCustmCreateName {
+    width: 250px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user to vert*/
+}
+
+.admFormCustmCreateNotes {
+    width: 650px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+.admFormCustmCreateCommit {
+    margin: 10px;
+}
+
+.admFormCustmCreateCommitChat {
+    padding-bottom: 5px;
+    padding-top: 8px;
+}
+
+.admFormCustmCreateAddCommit {
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    gap: 8px;
+}
+
+.admCustmCreateCommitText {
+    width: 80%;
+}
+
+.admFormCustmCreateDelivery {
+    width: 140px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user*/
+}
+
+.admFormCustmCreateStorage {
+    width: 170px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user*/
+}
+
+.admFormCustmCreateStatus {
+    width: 140px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user to vert*/
+}
+
+.admCustmCreateFormGrp {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.admFormCustmCreateBtnAdd {
+    height: 40px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    vertical-align:middle;
+}
+
+.admFormCustmCreateBtnAdd:hover {
+    background-color: #2caf30;
+}
+
+.admFormCustmCreateBtn {
+    background-color: #ff003f;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.admFormCustmCreateBtnSave {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.admFormCustmCreateBtnSave:hover {
+    background-color: #2caf30;
+}
+
+.admFormCustmCreateBtnOk {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.admFormCustmCreateBtnOk:hover {
+    background-color: #2caf30;
+}
+
+.admFormDataCustmCreate {
+    display: flex;
+    flex-direction: row;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap: 8px;
+}
+.admFormSearchCustm {
+    margin-left: 3px;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.admFormAddCustm {
+    margin-left: 3px;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color:#4CAF58;
+}
+
+.admFormSearchCustm:hover {
+    background-color:#ccc;
+}
+
+.admFormAddCustm:hover {
+    background-color:#4CAF50;
+}
+
+.admFormCustmCreateTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    
+}
+.admFormCustmCreateTable tr, .admFormOrderTable th {
+    border: 1px solid #ddd;
+    padding: 8px 5px;
+}
+
+.admFormCustmCreateTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: #444;
+}
+
+.admFormCustmCreateTable i {
+    margin-left: 3px;
+}
+
+.admFormCustmCreateTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.admFormCustmCreateTable tr:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+.admFormCustmCreateTable td {
+    padding: 5px; 
+}
+
+/* Add a background color and some padding around the form */
+.containerAdmCustmCreateForm {
+    width: 1100px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}

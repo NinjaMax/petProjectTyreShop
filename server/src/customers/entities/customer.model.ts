@@ -25,6 +25,12 @@ export class Customer extends Model<Customer, CustomerConfigAttr> {
     email: string;
 
     @Column({type: DataType.STRING, unique: false, allowNull: true})
+    adress: string;
+
+    @Column({type: DataType.STRING, unique: false, allowNull: true})
+    delivery: string;
+
+    @Column({type: DataType.STRING, unique: false, allowNull: true})
     token: string;
 
     @Column({type: DataType.STRING, unique: false, allowNull: false, defaultValue: 'customer'})

@@ -1,0 +1,153 @@
+
+.headerBatteryTable {
+    font-size: 14px;
+    font-family: var(--main-font-family);
+    font-weight: bold;
+}
+
+.admListBatteryTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    
+}
+.admListBatteryTable tr, .admListBatteryTable th {
+    border: 1px solid #ddd;
+    padding: 8px 5px;
+}
+
+.admListBatteryTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: #444;
+}
+
+.admListBatteryTable i {
+    margin-left: 3px;
+}
+
+.admListBatteryTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.admListBatteryTable tr:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+.admListBatteryTable td {
+    padding: 5px; 
+}
+
+.admBatteryTable {
+    width: 100%;
+    height: 266px;
+    overflow-y: auto;  
+}
+
+.admBatteryTable thead th {
+    position: sticky; 
+    top: 0px;
+}
+
+.closeAdmBattery {
+    margin: 4px;
+    border: 0px;
+    border-radius: 4px;
+    right: 0;
+    top: 0;
+    padding: 5px 12px 5px 12px;
+    background-color:#f2f2f2;
+    color: #f44336;
+}
+
+.closeAdmBattery:hover {
+    background-color: #f44336;
+    color: white;
+    cursor: pointer;
+}
+
+.basketAdmBattery {
+    margin: 4px;
+    border: 0px;
+    border-radius: 4px;
+    right: 0;
+    top: 0;
+    padding: 5px 12px 5px 12px;
+    background-color: #f2f2f2;
+    color: #4CAF50;
+}
+
+.basketAdmBattery:hover {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+.editAdmBattery {
+    margin: 4px;
+    border: 0px;
+    border-radius: 4px;
+    right: 0;
+    top: 0;
+    padding: 5px 12px 5px 12px;
+    background-color: #f2f2f2;
+    color: #71C2ff;
+}
+
+.editAdmBattery:hover {
+    background-color: #71C2ff;
+    color: white;
+    cursor: pointer;
+}
+
+.headerBattery {
+    background-color: #f2f2f2;
+    padding: 5px 10px;
+    color: white;
+    text-align: center;
+    color:#444;
+}
+
+.headerBattery:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/*.admHeaderCatalog {
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    gap: 3px;
+    padding: 5px;
+    margin: 3px;
+}*/
+
+/*.admChooseCat {
+    appearance: none;
+}*/
+
+/*.admChooseLabel {
+    border-radius: 3px;
+    background-color:#f2f2f2;
+    padding: 10px;
+    cursor: pointer;
+}*/
+
+/*.admChooseLabel:hover, .admChooseLabel:focus {
+    background-color:#ddd;
+}*/
+/*.inputAdminOil {
+    margin: 0;
+    border: none;
+    border-radius: 3px;
+    width: 75%;
+    height: 15px;
+    padding: 3px;
+    float: left;
+    font-size: 10px;
+}
+*/

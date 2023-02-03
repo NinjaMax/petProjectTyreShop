@@ -1,14 +1,22 @@
-import React from 'react';
-import ButtonSearch from '../../Buttons/ButtonSearch';
+import {React, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminOrderSupContent.css';
+import ButtonSearch from '../../Buttons/ButtonSearch';
+import ModalAdmin from '../../Modal/ModalAdmin';
+import AdminModalOrderSup from '../AdminModalForm/AdminModalOrderSup';
 
 const AdminOrderSupContent = () => {
+    const [createOrdSup, setCreateOrdSup] = useState(false);
+
+    const createOrdSupBtn = () => {
+        setCreateOrdSup(!createOrdSup);
+    };
+
     return (
         <div>
         <div className="admOrderSupContent">
             <span>Замовлення Постачальника:</span>
             <div className='admOrderSupHeader'>
-                <button>Додати замовлення</button>
+                <button onClick={createOrdSupBtn}>Додати замовлення</button>
             </div>
             <input className='inputAdminOrderSup' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
             <ButtonSearch/>
@@ -459,6 +467,12 @@ const AdminOrderSupContent = () => {
             </tbody>
         </table>
         </div> 
+        {createOrdSup ? 
+            <ModalAdmin active={createOrdSup} setActive={setCreateOrdSup}>
+                <AdminModalOrderSup/>
+            </ModalAdmin>
+            : null
+        }
     </div>
     );
 };

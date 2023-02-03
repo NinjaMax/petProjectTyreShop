@@ -1,33 +1,45 @@
-import React from 'react';
+import {React, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminGoodsContent.css';
 import ButtonSearch from '../../Buttons/ButtonSearch';
+import AdminBatteryContent from './AdminBatteryContent';
+import AdminOilContent from './AdminOilContent';
+import AdminTyreContent from './AdminTyreContent';
+import AdminWheelContent from './AdminWheelContent';
 
 const AdminGoodsContent = () => {
+    const [chooseCat, setChooseCat] = useState('Шини');
+
     return (
         <div>
             <div id="myDIV" className="headerGoods">
-                <span>Каталог товарів:</span>
+                <span>Каталог товарів: {chooseCat}</span>
                 <div className='admHeaderCatalog'>  
                   <label className='admChooseLabel'>
                     <input className='admChooseCat'
+                    onChange={(e) => setChooseCat(e.currentTarget.value)}
                     name='chooseGoodsCat' value='Шини'
                     type='radio'/>Шини</label>
                   <label className='admChooseLabel'>
                     <input className='admChooseCat'
+                    onChange={(e) => setChooseCat(e.currentTarget.value)}
                     name='chooseGoodsCat' value='Диски'
                     type='radio'/>Диски</label>
                   <label className='admChooseLabel'>
                     <input className='admChooseCat'
+                    onChange={(e) => setChooseCat(e.currentTarget.value)}
                     name='chooseGoodsCat' value='АКБ'
                     type='radio'/>АКБ</label>
                   <label className='admChooseLabel'>
                     <input className='admChooseCat'
+                    onChange={(e) => setChooseCat(e.currentTarget.value)}
                     name='chooseGoodsCat' value='Масла'
                     type='radio'/>Масла</label> 
                   <label className='admChooseLabel'>
                     <input className='admChooseCat'
+                    onChange={(e) => setChooseCat(e.currentTarget.value)}
                     name='chooseGoodsCat'value='Запчастини' 
                     type='radio'/>Запчастини</label>
+                    <button className='admBtnCreate'>Створити товар</button>
                 </div>
                 <div className='admBtnSearch'>
                     <input className='inputAdminGoods' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
@@ -35,318 +47,26 @@ const AdminGoodsContent = () => {
                 </div>
             </div>
             <div className='admGoodsTable'>
-            <table className='admListGoodsTable'>
-                <thead>
-                    <tr className='headerGoodsTable'>
-                        <th>Код 
-                           <i className="fas fa-sort"></i>
-                        </th>
-                        <th>Назва товару
-                            <i className="fas fa-sort"></i>
-                        </th>
-                        <th>Сезон
-                            <i className="fas fa-sort"></i>
-                        </th>
-                        <th>Рік Виробн.
-                            <i className="fas fa-sort"></i>
-                        </th>
-                        <th>Країна поход.
-                            <i className="fas fa-sort"></i>
-                        </th>
-                        <th>Категорія
-                            <i className="fas fa-sort"></i>
-                        </th>
-                        <th>Опції</th> 
-                    </tr>
-                </thead>    
-                <tbody> 
-                    <tr>
-                        <td>264302</td>
-                        <td>BFGoodrich Activan 185/75 R16C 104/102R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>264299</td>
-                        <td>BFGoodrich Activan 195/65 R16C 104/102R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>  
-                    </tr>
-                    <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
-                    </tr>
-                    <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
-                    </tr> 
-                    <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
-                    </tr> 
-                    <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
-                    </tr> 
-                    <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
-                    </tr> 
-                    <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
-                    </tr>
-                    <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
-                    </tr>  
-                    <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
-                    </tr>  
-                    <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
-                    </tr>
-                    <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
-                    </tr>    
-                    <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
-                    </tr>
-                    <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
-                    </tr>        
-                    <tr>
-                        <td>263127</td>
-                        <td>BFGoodrich Activan 205/70 R15C 106/104R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button> 
-                        </td>    
-                    </tr>                  
-                </tbody>
-            </table>
+            { chooseCat === 'Шини'?
+                <AdminTyreContent/>
+                : null
+            }
+            { chooseCat === 'Диски' ?
+                <AdminWheelContent/>
+                : null
+            }
+            { chooseCat === 'АКБ'?
+                <AdminBatteryContent/>
+                : null
+            }
+            { chooseCat === 'Масла' ?
+                <AdminOilContent/>
+                : null
+            }
+            {chooseCat === 'Запчастини' ?
+                'Печалька =( Нажаль немає зараз товарів' : null
+            }
+
             </div>
             <table className='admStockGoodsTable'>
                 <tbody>

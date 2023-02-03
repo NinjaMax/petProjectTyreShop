@@ -1,9 +1,8 @@
 import {React, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminOrderContent.css';
 import ButtonSearch from '../../Buttons/ButtonSearch';
-//import Modal from '../../Modal/Modal';
 import ModalAdmin from '../../Modal/ModalAdmin';
-import AdminFormOrder from '../AdminModalForm/AdminFormOrder';
+import AdminModalFormOrder from '../AdminModalForm/AdminModalFormOrder';
 
 const AdminOrderContent = () => {
     const [active, setActive] = useState(false);
@@ -473,7 +472,7 @@ const AdminOrderContent = () => {
             </div> 
             {active ?
                 <ModalAdmin active={active} setActive={activeForm}>
-                    <AdminFormOrder/>
+                    <AdminModalFormOrder/>
                 </ModalAdmin>  
                 : null
             }

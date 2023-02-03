@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../css/AdminComponentCss/AdminFormCss/AdminModalCustomers.css';
+import '../../../css/AdminComponentCss/AdminModalFormCss/AdminModalCustomers.css';
 
 const AdminModalCustomers = () => {
 

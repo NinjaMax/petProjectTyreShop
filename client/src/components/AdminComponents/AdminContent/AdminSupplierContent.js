@@ -1,14 +1,23 @@
-import React from 'react';
+import {React, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminSuppliersContent.css';
 import ButtonSearch from '../../Buttons/ButtonSearch';
+import ModalAdmin from '../../Modal/ModalAdmin';
+import AdminModalSupplier from '../AdminModalForm/AdminModalSupplier';
 
 const AdminSupplierContent = () => {
+
+    const [createSupplier, setCreateSupplier] = useState(false);
+
+    const createSupplierBtn = () => {
+        setCreateSupplier(!createSupplier);
+    };
+    
     return (
         <div>
         <div className="admSupplierContent">
             <span>Постачальники:</span>
             <div className='admSupplierHeader'>
-                <button>Додати постачальника</button>
+                <button onClick={createSupplierBtn}>Додати постачальника</button>
             </div>
             <input className='inputAdminSupplier' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
             <ButtonSearch/>
@@ -347,6 +356,11 @@ const AdminSupplierContent = () => {
             </tbody>
         </table>
         </div> 
+        {createSupplier?
+            <ModalAdmin active={createSupplier} setActive={setCreateSupplier}>
+                <AdminModalSupplier/>
+            </ModalAdmin> : null
+        }
     </div>
     );
 };

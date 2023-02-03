@@ -1,33 +1,19 @@
-import {React, useState} from 'react';
-import '../../../css/AdminComponentCss/AdminFormCss/AdminFormOrder.css';
-//import Modal from '../../Modal/Modal';
-import ModalAdmin from '../../Modal/ModalAdmin';
-import AdminComment from './AdminComment';
-import AdminModalCustomers from './AdminModalCustomers';
-import AdminModalGoods from './AdminModalGoods';
+import React from 'react';
+import '../../../css/AdminComponentCss/AdminModalFormCss/AdminModalOrderSup.css';
+import AdminComment from '../AdminContent/AdminComment';
 
-const AdminFormOrder = () => {
-    const [active, setActive] = useState(false);
-    const [addGoods, setAddGoods] = useState(false);
-
-    const addGoodsForm = () => {
-        setAddGoods(!addGoods);
-    }
-
-    const activeForm = () => {
-        setActive(!active);
-    }
-
+const AdminModalOrderSup = () => {
     return (
-        <div>
-            Замовлення Покупця
-            <div className="containerAdmOrderForm">
+        
+            <div>
+            Замовлення Постачальника
+            <div className="containerAdmOrderSupForm">
             <form action="">
-                <div className='admFormDataOrder'>
+                <div className='admFormDataOrderSup'>
                     <div>
                         <label htmlFor="fname">Дата</label>
                         <input type="date" 
-                            className="admFormOrderData" 
+                            className="admFormOrderSupData" 
                             name="date" 
                             min="2023-01-01"    
                         />  
@@ -35,30 +21,28 @@ const AdminFormOrder = () => {
                     <div>
                         <label htmlFor="fname">id </label>
                         <input type="text" 
-                            className="admFormOrderId" 
+                            className="admFormOrderSupId" 
                             name="firstname" 
                             maxLength='30'
                             placeholder="Ид.."
                         />  
                     </div>
                     <div >
-                        <div className='admFormOrderCustm'>
-                            <label htmlFor="lname">Покупець </label>
+                        <div className='admFormOrderSupCustm'>
+                            <label htmlFor="lname">Поcтачальник </label>
                             <input type="text" 
-                                className="admFormOrderName" 
+                                className="admFormOrderSupName" 
                                 name="lastname" 
                                 maxLength='45'
                                 placeholder="Ім'я або назва.."
                             />
                             <div onClick={(e)=>e.preventDefault({passive: false})}>
-                                <button onClick={activeForm}
-                                className='admFormSearchCustm'>
-                                <i className="fas fa-search"></i>    
+                                <button onClick={'activeForm'} className='admFormSearchCustm'>
+                                    <i className="fas fa-search"></i>    
                                 </button> 
                             </div>
                             <div onClick={(e)=>e.preventDefault({passive: false})}>
-                                <button 
-                                    onClick={() => console.log('Added new Customer')}
+                                <button onClick={'addCustomerForm'}
                                     className='admFormAddCustm'>
                                     <i className="fas fa-plus"></i>    
                                 </button>  
@@ -68,7 +52,7 @@ const AdminFormOrder = () => {
                     <div>
                         <label htmlFor="fname">Контракт </label>
                         <input type="text" 
-                            className="admFormOrderId" 
+                            className="admFormOrderSupId" 
                             name="firstname" 
                             maxLength='45'
                             placeholder="Контракт покупця.."
@@ -76,18 +60,18 @@ const AdminFormOrder = () => {
                     </div>
                     <div>
                         <label htmlFor="sklad">Склад </label>
-                            <select className="admFormOrderStorage" name="Pereviznik">
+                            <select className="admFormOrderSupStorage" name="Pereviznik">
                             <option value="1">Склад Поставщик</option>
                             <option value="2">Склад Основний</option>
                             <option value="3">Склад Монтаж</option>
                         </select>  
                     </div>
                     <div onClick={(e)=>e.preventDefault({passive: false})}>
-                        <button onClick={addGoodsForm} className='admFormOrderBtnAdd'>Додати товар</button>  
+                        <button onClick={'addGoodsForm'} className='admFormOrderSupBtnAdd'>Додати товар</button>  
                     </div>
                     <div>
                         <label htmlFor="pereviznik">Перевізник </label>
-                            <select className="admFormOrderDelivery" name="Pereviznik">
+                            <select className="admFormOrderSupDelivery" name="Pereviznik">
                             <option value="NovaPoshta">Нова Пошта</option>
                             <option value="UkrPoshta">Укр Пошта</option>
                             <option value="Delivary">Делівері</option>
@@ -95,14 +79,14 @@ const AdminFormOrder = () => {
                     </div>
                     <div>
                         <label htmlFor="status">Статус </label>
-                            <select className="admFormOrderStatus" name="Status">
+                            <select className="admFormOrderSupStatus" name="Status">
                             <option value="Novi">Новий</option>
                             <option value="Prodaga">Продаж</option>
                             <option value="Oplata">Очік Оплати</option>
                         </select>    
                     </div>    
                 </div>
-                <table className='admFormOrderTable'>
+                <table className='admFormOrderSupTable'>
                     <thead>
                         <tr>
                             <th>id</th>
@@ -123,44 +107,34 @@ const AdminFormOrder = () => {
                     </tbody>
                 </table>
                 <label htmlFor="subject">Нотатки</label>
-                <textarea className="admFormOrderNotes" name="subject" 
+                <textarea className="admFormOrderSupNotes" name="subject" 
                     placeholder="Пишить нотатку..">
                 </textarea>
-                <div className='admFormOrderCommit'
+                <div className='admFormOrderSupCommit'
                     onClick={(e)=>e.preventDefault({passive: false})}>
-                    <div className='admFormOrderAddCommit'>
+                    <div className='admFormOrderSupAddCommit'>
                     <button onClick={() => console.log('Add Commit')} 
-                        className='admFormOrderBtnAdd'>Додати коментар
+                        className='admFormOrderSupBtnAdd'>Додати коментар
                     </button>
-                        <textarea  name="subject" className='admOrderCommitText'
+                        <textarea  name="subject" className='admOrderSupCommitText'
                         placeholder="Пишить коментар.."></textarea>
                     </div>
-                    <div className='admFormOrderCommitChat'>
+                    <div className='admFormOrderSupCommitChat'>
                         <AdminComment>
 
                         </AdminComment>
                     </div>  
                 </div>
-                <div className='admOrderFormGrp'>
-                    <input type="submit" className='admFormOrderBtnOk' value="Ok"/>
-                    <input type="submit" className='admFormOrderBtnSave' value="Зберегти"/>
-                    <button className='admFormOrderBtn'>Відмінити</button> 
+                <div className='admOrderSupFormGrp'>
+                    <input type="submit" className='admFormOrderSupBtnOk' value="Ok"/>
+                    <input type="submit" className='admFormOrderSupBtnSave' value="Зберегти"/>
+                    <button className='admFormOrderSupBtn'>Відмінити</button> 
                 </div>
             </form>
             </div>
-            {active ?
-                <ModalAdmin active={active} setActive={setActive} >
-                    <AdminModalCustomers/>
-                </ModalAdmin> : null  
-            }
-            {addGoods ? 
-                <ModalAdmin active={addGoods} setActive={setAddGoods}>
-                    <AdminModalGoods/>
-                </ModalAdmin>
-                : null
-            }
         </div>
+        
     );
 };
 
-export default AdminFormOrder;
+export default AdminModalOrderSup;

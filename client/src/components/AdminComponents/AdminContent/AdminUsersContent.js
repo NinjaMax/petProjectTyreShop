@@ -1,14 +1,22 @@
-import React from 'react';
+import {React, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminUsersContent.css';
 import ButtonSearch from '../../Buttons/ButtonSearch';
+import ModalAdmin from '../../Modal/ModalAdmin';
+import AdminModalUsers from '../AdminModalForm/AdminModalUsers';
 
 const AdminUsersContent = () => {
+    const [createUser, setCreateUser] =useState(false);
+
+    const createUserBtn = () => {
+        setCreateUser(!createUser);
+    };
+
     return (
         <div>
         <div className="admUsersContent">
             <span>Користувачі:</span>
             <div className='admUsersHeader'>
-                <button>Додати покупця</button>
+                <button onClick={createUserBtn}>Додати користувача</button>
             </div>
             <input className='inputAdminUsers' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
             <ButtonSearch/>
@@ -346,7 +354,12 @@ const AdminUsersContent = () => {
                 </tr>          
             </tbody>
         </table>
-        </div> 
+        </div>
+        {createUser?
+            <ModalAdmin active={createUser} setActive={setCreateUser}>
+                <AdminModalUsers/>
+            </ModalAdmin> : null
+        } 
     </div>
     );
 };
