@@ -1,14 +1,22 @@
-import React from 'react';
+import {React, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminPayIncomesContent.css';
 import ButtonSearch from '../../Buttons/ButtonSearch';
+import ModalAdmin from '../../Modal/ModalAdmin';
+import AdminModalPayIncome from '../AdminModalForm/AdminModalPayIncome';
 
 const AdminPayIncomesContent = () => {
+    const [incomePay, setIncomePay] = useState(false);
+
+    const createIncPay = () => {
+        setIncomePay(!incomePay);
+    };
+
     return (
         <div>
         <div className="admIncomesContent">
             <span>Платежі вхідні:</span>
             <div className='admIncomesHeader'>
-                <button>Додати замовлення</button>
+                <button onClick={createIncPay}>Додати платіж</button>
             </div>
             <input className='inputAdminIncomes' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
             <ButtonSearch/>
@@ -391,7 +399,12 @@ const AdminPayIncomesContent = () => {
                 </tr>             
             </tbody>
         </table>
-        </div> 
+        </div>
+        {incomePay ?
+            <ModalAdmin active={incomePay} setActive={setIncomePay}>
+                <AdminModalPayIncome/>
+            </ModalAdmin> : null
+        } 
     </div>
     );
 };

@@ -1,14 +1,22 @@
-import React from 'react';
+import {React, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminPayExpenseContent.css';
 import ButtonSearch from '../../Buttons/ButtonSearch';
+import ModalAdmin from '../../Modal/ModalAdmin';
+import AdminModalPayExpense from '../AdminModalForm/AdminModalPayExpense';
 
 const AdminPayExpensesContent = () => {
+    const [outgoingPay, setOutgoingPay] = useState(false);
+    
+    const outgoingCreate = () => {
+        setOutgoingPay(!outgoingPay);
+    };  
+
     return (
         <div>
         <div className="admExpenseContent">
             <span>Платежі вихідні:</span>
             <div className='admExpenseHeader'>
-                <button>Додати замовлення</button>
+                <button onClick={outgoingCreate}>Додати платіж</button>
             </div>
             <input className='inputAdminExpense' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
             <ButtonSearch/>
@@ -392,6 +400,11 @@ const AdminPayExpensesContent = () => {
             </tbody>
         </table>
         </div> 
+        {outgoingPay ?
+            <ModalAdmin active={outgoingPay} setActive={setOutgoingPay}>
+                <AdminModalPayExpense/>
+            </ModalAdmin> : null
+        }
     </div>
     );
 };

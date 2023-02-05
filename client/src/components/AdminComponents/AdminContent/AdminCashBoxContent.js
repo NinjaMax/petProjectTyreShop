@@ -1,14 +1,22 @@
-import React from 'react';
+import {React, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminCashboxContent.css';
 import ButtonSearch from '../../Buttons/ButtonSearch';
+import ModalAdmin from '../../Modal/ModalAdmin';
+import AdminModalCashbox from '../AdminModalForm/AdminModalCashbox';
 
 const AdminCashBoxContent = () => {
+    const [cashbox, setCashbox] = useState(false);
+    
+    const createCashbox = () => {
+        setCashbox(!cashbox);
+    };
+
     return (
         <div>
         <div className="admUsersContent">
             <span>Каси:</span>
             <div className='admUsersHeader'>
-                <button>Додати касу</button>
+                <button onClick={createCashbox}>Додати касу</button>
             </div>
             <input className='inputAdminUsers' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
             <ButtonSearch/>
@@ -79,6 +87,11 @@ const AdminCashBoxContent = () => {
             </tbody>
         </table>
         </div> 
+        {cashbox ?
+            <ModalAdmin active={cashbox} setActive={setCashbox}>
+                <AdminModalCashbox/>
+            </ModalAdmin> : null
+        }
     </div>
     );
 };

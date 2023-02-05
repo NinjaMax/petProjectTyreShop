@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../css/AdminComponentCss/AdminFormCss/AdminComment.css';
+import '../../../css/AdminComponentCss/AdminModalFormCss/AdminComment.css';
 
 const AdminComment = () => {
     return (

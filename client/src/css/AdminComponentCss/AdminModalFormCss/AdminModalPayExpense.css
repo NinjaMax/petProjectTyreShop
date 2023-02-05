@@ -1,0 +1,237 @@
+.admFormPayExpenseData {
+    width: 122px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the us*/
+}
+
+.admFormPayExpenseId {
+    width: 100px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the us*/
+}
+
+.admFormPayExpenseCustm {
+    width: 330px;
+    display: flex;
+    flex-direction: row;
+    align-items:baseline;
+
+}
+.admFormPayExpenseName {
+    width: 250px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user to vert*/
+}
+
+.admFormPayExpenseNotes {
+    width: 650px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+.admFormPayExpenseCommit {
+    margin: 10px;
+}
+
+.admFormPayExpenseCommitChat {
+    padding-bottom: 5px;
+    padding-top: 8px;
+}
+
+.admFormPayExpenseAddCommit {
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    gap: 8px;
+}
+
+.admPayExpenseCommitText {
+    width: 80%;
+}
+
+.admFormPayExpenseDelivery {
+    width: 140px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user*/
+}
+
+.admFormPayExpenseStorage {
+    width: 170px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user*/
+}
+
+.admFormPayExpenseStatus {
+    width: 140px; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical /* Allow the user to vert*/
+}
+
+.admPayExpenseFormGrp {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.admFormPayExpenseBtnAdd {
+    height: 40px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    vertical-align:middle;
+}
+
+.admFormPayExpenseBtnAdd:hover {
+    background-color: #2caf30;
+}
+
+.admFormPayExpenseBtn {
+    background-color: #ff003f;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.admFormPayExpenseBtnSave {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.admFormPayExpenseBtnSave:hover {
+    background-color: #2caf30;
+}
+
+.admFormPayExpenseBtnOk {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.admFormPayExpenseBtnOk:hover {
+    background-color: #2caf30;
+}
+
+.admFormDataPayExpense {
+    display: flex;
+    flex-direction: row;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap: 8px;
+}
+.admFormSearchCustm {
+    margin-left: 3px;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.admFormAddCustm {
+    margin-left: 3px;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color:#4CAF58;
+}
+
+.admFormSearchCustm:hover {
+    background-color:#ccc;
+}
+
+.admFormAddCustm:hover {
+    background-color:#4CAF50;
+}
+
+.admFormPayExpenseTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    
+}
+.admFormPayExpenseTable tr, .admFormPayExpenseTable th {
+    border: 1px solid #ddd;
+    padding: 8px 5px;
+}
+
+.admFormPayExpenseTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: #444;
+}
+
+.admFormPayExpenseTable i {
+    margin-left: 3px;
+}
+
+.admFormPayExpenseTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.admFormPayExpenseTable tr:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+.admFormPayExpenseTable td {
+    padding: 5px; 
+}
+
+/* Add a background color and some padding around the form */
+.containerAdmPayExpenseForm {
+    width: 1100px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
