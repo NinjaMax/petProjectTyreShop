@@ -16,7 +16,9 @@ const AdminPayIncomesContent = () => {
         <div className="admIncomesContent">
             <span>Платежі вхідні:</span>
             <div className='admIncomesHeader'>
-                <button onClick={createIncPay}>Додати платіж</button>
+                <button className='admIncomesAddBtn'
+                    onClick={createIncPay}>Додати платіж
+                </button>
             </div>
             <input className='inputAdminIncomes' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
             <ButtonSearch/>

@@ -10,7 +10,7 @@ const AdminModalCashbox = () => {
             <div className='admFormDataCashBox'>
                 <div >
                     <div className='admFormCashBoxCustm'>
-                        <label htmlFor="lname">І'мя або Назва </label>
+                        <label htmlFor="lname">Назва каси </label>
                         <input type="text" 
                             className="admFormCashBoxName" 
                             name="lastname" 
@@ -20,50 +20,7 @@ const AdminModalCashbox = () => {
                     </div>    
                 </div>
                 <div>
-                    <label htmlFor="fname">Повне ім'я / назва </label>
-                    <input type="text" 
-                        className="admFormCashBoxId" 
-                        name="firstname" 
-                        maxLength='45'
-                        placeholder="Контракт покупця.."
-                    />  
-                </div>
-                <div>
-                    <label htmlFor="fname">телефон </label>
-                    <input type="text" 
-                        className="admFormCashBoxId" 
-                        name="firstname" 
-                        maxLength='45'
-                        placeholder="Контракт покупця.."
-                    />  
-                </div>
-                <div>
-                    <label htmlFor="fname">email </label>
-                    <input type="text" 
-                        className="admFormCashBoxId" 
-                        name="firstname" 
-                        maxLength='45'
-                        placeholder="Контракт покупця.."
-                    />  
-                </div>
-                <div>
-                    <label htmlFor="fname">Адреса </label>
-                    <input type="text" 
-                        className="admFormCashBoxId" 
-                        name="firstname" 
-                        maxLength='45'
-                        placeholder="Контракт покупця.."
-                    />  
-                </div>
-                <div>
-                    <label htmlFor="sklad">Роль </label>
-                        <select className="admFormCashBoxStorage" name="Pereviznik">
-                        <option value="1">Покупець</option>
-                        <option value="2">Покупець Оптовий</option>
-                    </select>  
-                </div>
-                <div>
-                    <label htmlFor="pereviznik">Перевізник </label>
+                    <label htmlFor="pereviznik">Організація </label>
                         <select className="admFormCashBoxDelivery" name="Pereviznik">
                         <option value="NovaPoshta">Нова Пошта</option>
                         <option value="UkrPoshta">Укр Пошта</option>
@@ -75,23 +32,10 @@ const AdminModalCashbox = () => {
             <textarea className="admFormCashBoxNotes" name="subject" 
                 placeholder="Пишить нотатку..">
             </textarea>
-            <div className='admFormCashBoxCommit'
-                onClick={(e)=>e.preventDefault({passive: false})}>
-                <div className='admFormCashBoxAddCommit'>
-                <button onClick={() => console.log('Add Commit')} 
-                    className='admFormCashBoxBtnAdd'>Додати коментар
-                </button>
-                    <textarea  name="subject" className='admCashBoxCommitText'
-                    placeholder="Пишить коментар.."></textarea>
-                </div>
-                <div className='admFormCashBoxCommitChat'>
-
-                </div>  
-            </div>
             <div className='admCashBoxFormGrp'>
                 <input type="submit" className='admFormCashBoxBtnOk' value="Ok"/>
                 <input type="submit" className='admFormCashBoxBtnSave' value="Зберегти"/>
-                <button className='admCashBoxBtn'>Відмінити</button> 
+                <button className='admFormCashBoxBtnCancel'>Відмінити</button> 
             </div>
         </form>
         </div>

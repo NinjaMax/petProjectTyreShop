@@ -13,18 +13,20 @@ const AdminCashBoxContent = () => {
 
     return (
         <div>
-        <div className="admUsersContent">
+        <div className="admCashBoxContent">
             <span>Каси:</span>
             <div className='admUsersHeader'>
-                <button onClick={createCashbox}>Додати касу</button>
+                <button className='admCashBoxAddBtn'
+                    onClick={createCashbox}>Додати касу
+                </button>
             </div>
-            <input className='inputAdminUsers' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
+            <input className='inputAdminCashBox' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
             <ButtonSearch/>
         </div>
-        <div className='admUsersTable'>
-        <table className='admListUsersTable'>
+        <div className='admCashBoxTable'>
+        <table className='admListCashBoxTable'>
             <thead>
-                <tr className='headerUsersTable'>
+                <tr className='headerCashBoxTable'>
                     <th>Код</th>
                     <th>Каса</th>
                     <th>Організація</th>
@@ -39,9 +41,6 @@ const AdminCashBoxContent = () => {
                     <td>ФОП Гайворонский Н</td>
                     <td>25500</td>
                     <td>
-                        <button className='basketAdmGoods'>
-                            <i className="fa fa-shopping-cart"></i>
-                        </button>
                         <button className='editAdmGoods'>
                             <i className="fas fa-edit"></i>
                         </button>
@@ -56,9 +55,6 @@ const AdminCashBoxContent = () => {
                     <td>ФОП Гайворонский Н</td>
                     <td>20500</td>
                     <td>
-                        <button className='basketAdmGoods'>
-                            <i className="fa fa-shopping-cart"></i>
-                        </button>
                         <button className='editAdmGoods'>
                             <i className="fas fa-edit"></i>
                         </button>
@@ -73,9 +69,6 @@ const AdminCashBoxContent = () => {
                     <td>ТОВ НИКНЕЙМ</td>
                     <td>50500</td>
                     <td>
-                        <button className='basketAdmGoods'>
-                            <i className="fa fa-shopping-cart"></i>
-                        </button>
                         <button className='editAdmGoods'>
                             <i className="fas fa-edit"></i>
                         </button>

@@ -45,6 +45,22 @@
     width: 7px;
 }
 */
+.admExpenseAddBtn{
+    margin: 4px;
+    border: 0px;
+    border-radius: 4px;
+    right: 0;
+    top: 0;
+    padding: 5px 12px 5px 12px;
+    background-color:#4CAF50;
+    color: #f2f2f2;
+}
+
+.admExpenseAddBtn:hover {
+    background-color: #2caf30;
+    color: white;
+    cursor: pointer;
+}
 .headerExpenseTable {
     font-size: 12px;
     font-family: var(--main-font-family);

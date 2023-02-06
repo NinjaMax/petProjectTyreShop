@@ -159,6 +159,10 @@
     cursor: pointer;
 }
 
+.admFormOrderBtn:hover {
+    background-color:#f44336;
+}
+
 .admFormOrderBtnSave {
     background-color: #4CAF50;
     color: white;

@@ -16,7 +16,9 @@ const AdminUsersContent = () => {
         <div className="admUsersContent">
             <span>Користувачі:</span>
             <div className='admUsersHeader'>
-                <button onClick={createUserBtn}>Додати користувача</button>
+                <button className='admUsersAddBtn'
+                    onClick={createUserBtn}>Додати користувача
+                </button>
             </div>
             <input className='inputAdminUsers' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
             <ButtonSearch/>

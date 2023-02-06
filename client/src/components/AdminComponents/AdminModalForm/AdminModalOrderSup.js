@@ -29,7 +29,7 @@ const AdminModalOrderSup = () => {
                     </div>
                     <div >
                         <div className='admFormOrderSupCustm'>
-                            <label htmlFor="lname">Поcтачальник </label>
+                            <label htmlFor="lname">Поcтачальник</label>
                             <input type="text" 
                                 className="admFormOrderSupName" 
                                 name="lastname" 
@@ -128,7 +128,7 @@ const AdminModalOrderSup = () => {
                 <div className='admOrderSupFormGrp'>
                     <input type="submit" className='admFormOrderSupBtnOk' value="Ok"/>
                     <input type="submit" className='admFormOrderSupBtnSave' value="Зберегти"/>
-                    <button className='admFormOrderSupBtn'>Відмінити</button> 
+                    <button className='admFormOrderSupBtnCancel'>Відмінити</button> 
                 </div>
             </form>
             </div>

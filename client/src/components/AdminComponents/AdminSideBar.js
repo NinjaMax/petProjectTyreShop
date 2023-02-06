@@ -9,7 +9,8 @@ const AdminSideBar = ({changeMenu}) => {
                 onClick={changeMenu} 
                 name='sideBar' 
                 value='golovna' 
-                type='radio'/>
+                type="radio"
+                checked/>
                 <i className="fas fa-bars"></i>
                 Головна
             </label>
@@ -18,7 +19,7 @@ const AdminSideBar = ({changeMenu}) => {
                 onClick={changeMenu}
                 name='sideBar' 
                 value='catalog' 
-                type='radio'/>
+                type="radio"/>
                 <i className="fas fa-archive"></i>
                 Каталог Товарів
             </label>
@@ -27,7 +28,7 @@ const AdminSideBar = ({changeMenu}) => {
                 onClick={changeMenu}
                 name='sideBar' 
                 value='zamovlenia'
-                type='radio'/>
+                type="radio"/>
                 <i className="fas fa-clipboard-list"></i>    
                 Замовлення
             </label>
@@ -36,7 +37,7 @@ const AdminSideBar = ({changeMenu}) => {
                 onClick={changeMenu}
                 name='sideBar' 
                 value='prodagi'
-                type='radio'/>
+                type="radio"/>
                 <i className="fas fa-clipboard-check"></i>
                 Продажі
             </label>
@@ -45,7 +46,7 @@ const AdminSideBar = ({changeMenu}) => {
                 onClick={changeMenu}
                 name='sideBar' 
                 value='zamovleniaPost'
-                type='radio'/>
+                type="radio"/>
                 <i className="fas fa-dolly-flatbed"></i>
                 Замовлення Постачальнику
             </label>
@@ -54,7 +55,7 @@ const AdminSideBar = ({changeMenu}) => {
                 onClick={changeMenu}
                 name='sideBar'  
                 value='kasi'
-                type='radio'/>
+                type="radio"/>
                 <i className="fas fa-cash-register"></i>
                 Каси
             </label>
@@ -63,7 +64,7 @@ const AdminSideBar = ({changeMenu}) => {
                 onClick={changeMenu}
                 name='sideBar' 
                 value='plategiVh'
-                type='radio'/>
+                type="radio"/>
                 <i className="fas fa-file-import"></i>
                 Платежі вхідні
             </label>
@@ -72,7 +73,7 @@ const AdminSideBar = ({changeMenu}) => {
                 onClick={changeMenu}
                 name='sideBar'  
                 value='plategiVih'
-                type='radio'/>
+                type="radio"/>
                 <i className="fas fa-file-export"></i>
                 Платежі вихідні
             </label>
@@ -81,7 +82,7 @@ const AdminSideBar = ({changeMenu}) => {
                 onClick={changeMenu}
                 name='sideBar'  
                 value='postachal'
-                type='radio'/>
+                type="radio"/>
                 <i className="fas fa-user-tie"></i>
                 Постачальники
             </label>
@@ -90,7 +91,7 @@ const AdminSideBar = ({changeMenu}) => {
                 onClick={changeMenu}
                 name='sideBar'  
                 value='pokupci'
-                type='radio'/>
+                type="radio"/>
                 <i className="fas fa-address-book"></i>
                 Покупці
             </label>
@@ -99,7 +100,7 @@ const AdminSideBar = ({changeMenu}) => {
                 onClick={changeMenu}
                 name='sideBar'  
                 value='koristuvachi'
-                type='radio'/>
+                type="radio"/>
                 <i className="fas fa-users"></i>
                 Користувачі
             </label>
@@ -108,7 +109,7 @@ const AdminSideBar = ({changeMenu}) => {
                 onClick={changeMenu}
                 name='sideBar'  
                 value='zavantag'
-                type='radio'/>
+                type="radio"/>
                 <i className="fas fa-download"></i>
                 Завантаження
             </label>
@@ -117,7 +118,7 @@ const AdminSideBar = ({changeMenu}) => {
                 onClick={changeMenu}
                 name='sideBar'  
                 value='zviti'
-                type='radio'/>
+                type="radio"/>
                 <i className="fas fa-chart-line"></i>   
                 Звіти
             </label>
@@ -126,7 +127,7 @@ const AdminSideBar = ({changeMenu}) => {
                 onClick={changeMenu}
                 name='sideBar'  
                 value='nalashtuvania'
-                type='radio'/>
+                type="radio"/>
                 <i className="fas fa-cogs"></i>
                 Налаштування
             </label>

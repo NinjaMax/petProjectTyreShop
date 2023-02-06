@@ -16,7 +16,8 @@ const AdminPayExpensesContent = () => {
         <div className="admExpenseContent">
             <span>Платежі вихідні:</span>
             <div className='admExpenseHeader'>
-                <button onClick={outgoingCreate}>Додати платіж</button>
+                <button className='admExpenseAddBtn'
+                    onClick={outgoingCreate}>Додати платіж</button>
             </div>
             <input className='inputAdminExpense' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
             <ButtonSearch/>

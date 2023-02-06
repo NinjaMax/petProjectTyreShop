@@ -17,7 +17,9 @@ const AdminSupplierContent = () => {
         <div className="admSupplierContent">
             <span>Постачальники:</span>
             <div className='admSupplierHeader'>
-                <button onClick={createSupplierBtn}>Додати постачальника</button>
+                <button className='admSupplierAddBtn'
+                    onClick={createSupplierBtn}>Додати постачальника
+                </button>
             </div>
             <input className='inputAdminSupplier' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
             <ButtonSearch/>

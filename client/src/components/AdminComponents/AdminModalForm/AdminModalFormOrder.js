@@ -80,6 +80,15 @@ const AdminFormOrder = () => {
                         />  
                     </div>
                     <div>
+                        <label htmlFor="fname">ТТН </label>
+                        <input type="text" 
+                            className="admFormOrderId" 
+                            name="firstname" 
+                            maxLength='45'
+                            placeholder="Контракт покупця.."
+                        />  
+                    </div>
+                    <div>
                         <label htmlFor="sklad">Склад </label>
                             <select className="admFormOrderStorage" name="Pereviznik">
                             <option value="1">Склад Поставщик</option>

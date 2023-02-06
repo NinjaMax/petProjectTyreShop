@@ -16,7 +16,9 @@ const AdminCustomersContent = () => {
             <div className="admCustomersContent">
                 <span>Покупці:</span>
                 <div className='admCustomersHeader'>
-                    <button onClick={createCustomer}>Додати покупця</button>
+                    <button className='admCustomersAddBtn'
+                        onClick={createCustomer}>Додати покупця
+                    </button>
                 </div>
                 <input className='inputAdminCustomers' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
                     <ButtonSearch/>

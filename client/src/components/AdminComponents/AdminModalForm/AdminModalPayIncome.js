@@ -8,19 +8,8 @@ const AdminModalPayIncome = () => {
             <div className="containerAdmPayIncomeForm">
             <form action="">
                 <div className='admFormDataPayIncome'>
-                    <div >
-                        <div className='admFormPayIncomeCustm'>
-                            <label htmlFor="lname">І'мя або Назва </label>
-                            <input type="text" 
-                                className="admFormPayIncomeName" 
-                                name="lastname" 
-                                maxLength='45'
-                                placeholder="Ім'я або назва.."
-                            />        
-                        </div>    
-                    </div>
                     <div>
-                        <label htmlFor="fname">Повне ім'я / назва </label>
+                        <label htmlFor="fname">id </label>
                         <input type="text" 
                             className="admFormPayIncomeId" 
                             name="firstname" 
@@ -29,47 +18,48 @@ const AdminModalPayIncome = () => {
                         />  
                     </div>
                     <div>
-                        <label htmlFor="fname">телефон </label>
-                        <input type="text" 
-                            className="admFormPayIncomeId" 
-                            name="firstname" 
-                            maxLength='45'
-                            placeholder="Контракт покупця.."
-                        />  
-                    </div>
-                    <div>
-                        <label htmlFor="fname">email </label>
-                        <input type="text" 
-                            className="admFormPayIncomeId" 
-                            name="firstname" 
-                            maxLength='45'
-                            placeholder="Контракт покупця.."
-                        />  
-                    </div>
-                    <div>
-                        <label htmlFor="fname">Адреса </label>
-                        <input type="text" 
-                            className="admFormPayIncomeId" 
-                            name="firstname" 
-                            maxLength='45'
-                            placeholder="Контракт покупця.."
-                        />  
-                    </div>
-                    <div>
-                        <label htmlFor="sklad">Роль </label>
+                        <label htmlFor="sklad">Тип платежу </label>
                             <select className="admFormPayIncomeStorage" name="Pereviznik">
-                            <option value="1">Покупець</option>
-                            <option value="2">Покупець Оптовий</option>
+                            <option value="1">Оплата покупця</option>
+                            <option value="2">Внесення готівки в касу</option>
+                            <option value="2">Внесення безготівки на рахунок</option>
                         </select>  
                     </div>
                     <div>
-                        <label htmlFor="pereviznik">Перевізник </label>
+                        <label htmlFor="pereviznik">Форма платежу </label>
                             <select className="admFormPayIncomeDelivery" name="Pereviznik">
-                            <option value="NovaPoshta">Нова Пошта</option>
-                            <option value="UkrPoshta">Укр Пошта</option>
-                            <option value="Delivary">Делівері</option>
+                            <option value="NovaPoshta">Готівкова</option>
+                            <option value="UkrPoshta">Безготівкова</option>
                         </select>    
-                    </div>   
+                    </div>
+                    <div>
+                        <label htmlFor="pereviznik">Організація </label>
+                            <select className="admFormPayIncomeDelivery" name="Pereviznik">
+                            <option value="NovaPoshta">ЧП Гайворонський Н.Н</option>
+                            <option value="UkrPoshta">ТОВ ЮНІТІГРАНД-СОЛЮШН</option>
+                        </select>    
+                    </div>
+                    <label htmlFor="lname">Заказ покупця </label>
+                            <input type="text" 
+                                className="admPayIncomeName" 
+                                name="lastname" 
+                                maxLength='45'
+                                placeholder="номер заказу покупця"
+                            />
+                            <div onClick={(e)=>e.preventDefault({passive: false})}>
+                                <button  className='admPayIncomeSearchCustm'>
+                                    <i className="fas fa-search"></i>    
+                                </button> 
+                            </div>
+                    <div>
+                        <label htmlFor="fname">Сума </label>
+                        <input type="text" 
+                            className="admFormPayIncomeId" 
+                            name="firstname" 
+                            maxLength='45'
+                            placeholder="введіть сумму.."
+                        />  
+                    </div>
                 </div>
                 <label htmlFor="subject">Нотатки</label>
                 <textarea className="admFormPayIncomeNotes" name="subject" 

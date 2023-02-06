@@ -16,7 +16,9 @@ const AdminOrderSupContent = () => {
         <div className="admOrderSupContent">
             <span>Замовлення Постачальника:</span>
             <div className='admOrderSupHeader'>
-                <button onClick={createOrdSupBtn}>Додати замовлення</button>
+                <button className='admOrderSupAddOrderBtn'
+                    onClick={createOrdSupBtn}>Додати замовлення
+                </button>
             </div>
             <input className='inputAdminOrderSup' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
             <ButtonSearch/>

@@ -91,7 +91,7 @@ const AdminModalCustmCreate = () => {
                 <div className='admCustmCreateFormGrp'>
                     <input type="submit" className='admFormCustmCreateBtnOk' value="Ok"/>
                     <input type="submit" className='admFormCustmCreateBtnSave' value="Зберегти"/>
-                    <button className='admFormOrderBtn'>Відмінити</button> 
+                    <button className='admFormCustmCreateBtnCancel'>Відмінити</button> 
                 </div>
             </form>
             </div>

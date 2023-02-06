@@ -39,7 +39,7 @@ const AdminGoodsContent = () => {
                     onChange={(e) => setChooseCat(e.currentTarget.value)}
                     name='chooseGoodsCat'value='Запчастини' 
                     type='radio'/>Запчастини</label>
-                    <button className='admBtnCreate'>Створити товар</button>
+                    <button className='admGoodsAddBtn'>Створити товар</button>
                 </div>
                 <div className='admBtnSearch'>
                     <input className='inputAdminGoods' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>

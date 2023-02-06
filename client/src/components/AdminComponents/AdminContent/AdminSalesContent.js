@@ -7,9 +7,7 @@ const AdminSalesContent = () => {
         <div>
         <div className="admSalesContent">
             <span>Продажі:</span>
-            <div className='admSalesHeader'>
-                <button>Додати замовлення</button>
-            </div>
+            <div className='admSalesHeader'></div>
             <input className='inputAdminSales' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
             <ButtonSearch/>
         </div>
