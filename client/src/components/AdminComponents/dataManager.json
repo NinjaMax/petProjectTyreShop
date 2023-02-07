@@ -1,0 +1,25 @@
+{
+    "version": 1.0,
+    "totalCharts": 32,
+    "charts": [
+        {
+            "name": "Bar",
+            "chartType": "BarChart",
+            "data": [
+                ["Менеджер", "Продажі"],
+                ["Кирилл", 11],
+                ["Ігор", 2],
+                ["Денис", 2],
+                ["Нікіта", 2],
+                ["Артем", 7]
+            ],
+            "options":{
+                "title": "Продажі Менеджерів",
+                "subtitle": "Sales, Expenses, and Profit: 2014-2017"
+            },
+            "width": "100%",
+            "height": "100%"
+        }
+
+    ]
+}

@@ -8,8 +8,8 @@ const Charts = (prop) => {
             chartType={prop.chart.chartType}
             data={prop.chart.data}
             options={prop.chart.options}
-            width={'300px'}
-            height={'250px'}
+            width={200}
+            height={200}
         />
     );
 };
