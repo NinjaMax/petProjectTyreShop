@@ -2,7 +2,8 @@
 .headerTyreTable {
     font-size: 14px;
     font-family: var(--main-font-family);
-    font-weight: bold;
+    /*font-weight: bold;*/
+    /*height: 200px;*/
 }
 
 .admListTyreTable {
@@ -11,7 +12,7 @@
     font-size: 14px;
     
 }
-.admListTyreTable tr, .admWheelTable th {
+.admListTyreTable tr, .admTyreTable th {
     border: 1px solid #ddd;
     padding: 8px 5px;
 }
@@ -28,7 +29,7 @@
     margin-left: 3px;
 }
 
-.admListWheelTable tr:nth-child(even) {
+.admListTyreTable tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
@@ -43,7 +44,7 @@
 
 .admTyreTable {
     width: 100%;
-    height: 266px;
+    height: 345px;
     overflow-y: auto;  
 }
 

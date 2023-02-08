@@ -12,7 +12,7 @@ const AdminUsersContent = () => {
     };
 
     return (
-        <div>
+        <div className='admUserContentBox'>
         <div className="admUsersContent">
             <span>Користувачі:</span>
             <div className='admUsersHeader'>

@@ -10,7 +10,7 @@ const AdminSideBar = ({changeMenu}) => {
                 name='sideBar' 
                 value='golovna' 
                 type="radio"
-                checked/>
+                defaultChecked/>
                 <i className="fas fa-bars"></i>
                 Головна
             </label>

@@ -1,35 +1,3 @@
-.admStockGoodsTable {
-    width: 100%;
-    border-collapse: collapse;
-    overflow: auto;
-    font-size: 12px;
-}
-.admStockGoodsTable tr, .admStockGoodsTable th {
-    border: 1px solid #ddd;
-    padding: 8px 5px;
-}
-
-.admStockGoodsTable th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #4CAF50;
-    color: #444;
-}
-
-.admStockGoodsTable tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-.admStockGoodsTable tr:hover {
-    background-color: #ddd;
-    cursor: pointer;
-}
-
-.admStockGoodsTable td {
-    padding: 5px; 
-}
-
 
 /* Add a "checked" mark when clicked on */
 /*ul li.checked::before {
@@ -107,7 +75,7 @@
 
 .admCustomersTable {
     width: 100%;
-    height: 420px;
+    height: 500px;
     overflow-y: auto;  
 }
 
@@ -173,6 +141,10 @@
     color: white;
     text-align: center;
     color:#444;
+    font-size: 14px;
+    font-family: var(--main-font-family);
+    /*font-weight: bold;*/
+    border-radius: 8px 8px 0px 0px;
 }
 
 .admCustomersContent:after {

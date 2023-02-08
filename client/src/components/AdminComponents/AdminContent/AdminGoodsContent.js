@@ -66,9 +66,9 @@ const AdminGoodsContent = () => {
             {chooseCat === 'Запчастини' ?
                 'Печалька =( Нажаль немає зараз товарів' : null
             }
-
             </div>
-            <table className='admStockGoodsTable'>
+            <div className='admStockGoodsGroup'>
+               <table className='admStockGoodsTable'>
                 <tbody>
                     <tr>
                         <th>Склад</th>
@@ -97,9 +97,28 @@ const AdminGoodsContent = () => {
                         <td>2150</td>
                         <td>2380</td>
                     </tr>
+                    <tr>
+                        <td>Склад Основний</td>
+                        <td>4</td>
+                        <td>0</td>
+                        <td>4</td>
+                        <td>1950</td>
+                        <td>2150</td>
+                        <td>2380</td>
+                    </tr>
+                    <tr>
+                        <td>Прайс Постачальник</td>
+                        <td>8</td>
+                        <td>2</td>
+                        <td>6</td>
+                        <td>2000</td>
+                        <td>2100</td>
+                        <td>2300</td>
+                    </tr>
                     
                 </tbody>
-            </table>    
+                </table>     
+            </div>    
         </div>
     );
 };

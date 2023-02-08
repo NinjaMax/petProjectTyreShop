@@ -469,7 +469,51 @@ const AdminOrderSupContent = () => {
             </tbody>
         </table>
         </div> 
-        {createOrdSup ? 
+        <div className='admOrderSupCommitGroup'>
+                <table className='admOrderSupCommitTable'>
+                <thead>
+                    <tr>
+                        <th>Замовлення</th>
+                        <th>Користувач</th>
+                        <th>Дата</th>
+                        <th>Коментар</th>
+                    </tr>  
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>100255</td>
+                        <td>Миколай</td>
+                        <td>02.02.2023</td>
+                        <td>Треба передзвоники кліенту та домовитись про адресну доставку</td>
+                    </tr>
+                    <tr>
+                        <td>100255</td>
+                        <td>Кирило</td>
+                        <td>02.02.2023</td>
+                        <td>Кліент буде буде опалчувати по безготівковому розрахунку. Тількт б/г с ПДВ. Важливо.</td>
+                    </tr>
+                    <tr>
+                        <td>100255</td>
+                        <td>Миколай</td>
+                        <td>02.02.2023</td>
+                        <td>Оплата є. ТАкож після приходу хоче ще звробити замовлення. Обовязково передзвонити. Приблизно через неділю.</td>
+                    </tr>
+                    <tr>
+                        <td>100255</td>
+                        <td>Кирило</td>
+                        <td>02.02.2023</td>
+                        <td>Кліент буде буде опалчувати по безготівковому розрахунку. Тількт б/г с ПДВ. Важливо.</td>
+                    </tr>
+                    <tr>
+                        <td>100255</td>
+                        <td>Миколай</td>
+                        <td>02.02.2023</td>
+                        <td>Оплата є. ТАкож після приходу хоче ще звробити замовлення. Обовязково передзвонити. Приблизно через неділю.</td>
+                    </tr>     
+                </tbody>
+                </table>       
+            </div> 
+            {createOrdSup ? 
             <ModalAdmin active={createOrdSup} setActive={setCreateOrdSup}>
                 <AdminModalOrderSup/>
             </ModalAdmin>
