@@ -1,13 +1,28 @@
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminGoodsContent.css';
 import ButtonSearch from '../../Buttons/ButtonSearch';
 import AdminBatteryContent from './AdminBatteryContent';
 import AdminOilContent from './AdminOilContent';
 import AdminTyreContent from './AdminTyreContent';
 import AdminWheelContent from './AdminWheelContent';
+import axios from 'axios';
 
 const AdminGoodsContent = () => {
     const [chooseCat, setChooseCat] = useState('Шини');
+    const [tyreData, setTyreData] = useState(null);
+    
+    useEffect(()=>{
+        axios.get("http://localhost:4000/tyres", {
+            headers: { 'Access-Control-Allow-Origin': '*'},
+            withCredentials: true})
+        .then(response => {
+            setTyreData(response.data);
+            console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    });
 
     return (
         <div>
@@ -48,7 +63,7 @@ const AdminGoodsContent = () => {
             </div>
             <div className='admGoodsTable'>
             { chooseCat === 'Шини'?
-                <AdminTyreContent/>
+                <AdminTyreContent props={tyreData}/>
                 : null
             }
             { chooseCat === 'Диски' ?

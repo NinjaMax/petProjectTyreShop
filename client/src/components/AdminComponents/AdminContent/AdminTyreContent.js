@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminTyreContent.css';
 
-const AdminTyreContent = () => {
+const AdminTyreContent = ({props}) => {
     return (
         <div>
             <div className='admTyreTable'>
@@ -30,7 +30,32 @@ const AdminTyreContent = () => {
                     </tr>
                 </thead>    
                 <tbody> 
-                    <tr>
+                    {props ? props.map((item) => (
+                <>
+                    <tr key={item.id}>
+                        <td>item.id</td>
+                        <td>item.full_name</td>
+                        <td>item.season</td>
+                        <td>item.year</td>
+                        <td>item.country</td>
+                        <td>item.category</td>
+                        <td>
+                            <button className='basketAdmTyre'>
+                                <i className="fa fa-shopping-cart"></i>
+                            </button>
+                            <button className='editAdmTyre'>
+                                <i className="fas fa-edit"></i>
+                            </button>
+                            <button className='closeAdmTyre'>
+                                <i className="fa fa-remove"></i>
+                            </button>                  
+                        </td>
+                    </tr> 
+                    </>
+                    ))
+                    : "Нема товарів"
+                    }         
+                    {/* <tr>
                         <td>264302</td>
                         <td>BFGoodrich Activan 185/75 R16C 104/102R</td>
                         <td>Літо</td>
@@ -295,26 +320,7 @@ const AdminTyreContent = () => {
                                 <i className="fa fa-remove"></i>
                             </button>                  
                         </td>
-                    </tr>          
-                    <tr>
-                        <td>264302</td>
-                        <td>BFGoodrich Activan 185/75 R16C 104/102R</td>
-                        <td>Літо</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Шини</td>
-                        <td>
-                            <button className='basketAdmTyre'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmTyre'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmTyre'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
+                    </tr>           */}
                 </tbody>
             </table>
             </div>

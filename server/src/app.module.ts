@@ -97,7 +97,6 @@ import { WheelPcd } from './properties/entities/wheels/wheel-pcd.model';
 
 @Module({
   imports: [
-    
     SequelizeModule.forRootAsync({
       imports: [ConfigModule.register({ folder: './config' }),],
       useFactory:  (configService: ConfigService) => ({

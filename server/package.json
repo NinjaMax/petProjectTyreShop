@@ -28,6 +28,7 @@
     "@nestjs/mapped-types": "^1.2.0",
     "@nestjs/platform-express": "^9.2.1",
     "@nestjs/sequelize": "^0.1.1",
+    "@types/cors": "^2.8.13",
     "@types/node-expat": "^2.3.2",
     "dotenv": "^16.0.3",
     "fast-xml-parser": "^4.0.13",
