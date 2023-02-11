@@ -143,7 +143,7 @@ export class StockTyresService {
     
   }
 
-  async findStockTyreById(getStockDto : GetStockDto) {
+  async findStockTyreById(getStockDto: GetStockDto) {
 
     try {
 
@@ -159,7 +159,23 @@ export class StockTyresService {
     
   }
 
-  async findStockTyreByIdForSale(id : number) {
+  async findStockTyreParamId(id: GetStockDto) {
+
+    try {
+
+      const stockTyreById = await this.stockTyresRepository.findByPk(id, {include: {all: true}});
+
+      return stockTyreById;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+      
+    }
+    
+  }
+
+  async findStockTyreByIdForSale(id: number) {
 
     try {
 

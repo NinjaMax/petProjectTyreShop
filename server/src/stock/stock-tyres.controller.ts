@@ -14,14 +14,14 @@ export class StockTyresController {
     return this.stockTyresService.createStockTyre(createStockDto);
   }
 
-  @Get('/tyres')
+  @Get('/tyres/all')
   findAllStock() {
     return this.stockTyresService.findAllStock();
   }
 
-  @Get('/id')
-  findStockTyreById( @Body() getStockDto : GetStockDto) {
-    return this.stockTyresService.findStockTyreById(getStockDto);
+  @Get('tyres:id')
+  findStockTyreParamId( @Param('id') id: GetStockDto) {
+    return this.stockTyresService.findStockTyreParamId(id);
   }
 
   @Patch('/update')

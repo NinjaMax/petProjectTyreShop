@@ -5,7 +5,7 @@ module.exports = {
     args: './main.ts',
     //cwd: '/server',
     watch: true,
-    watch: ['./main.ts'],
+    //watch: ['./main.ts'],
     exec_mode: 'fork',
     ignore_watch: ['node_modules', 'client'],
     //watch_delay: 1000,

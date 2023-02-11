@@ -10,10 +10,12 @@ import axios from 'axios';
 const AdminGoodsContent = () => {
     const [chooseCat, setChooseCat] = useState('Шини');
     const [tyreData, setTyreData] = useState(null);
-    
+    const [itemId, setItemId] = useState(null);
+    //const [stockPrice, setStockPrice] =useState(null);
+
     useEffect(()=>{
         axios.get("http://localhost:4000/tyres", {
-            headers: { 'Access-Control-Allow-Origin': '*'},
+            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
             withCredentials: true})
         .then(response => {
             setTyreData(response.data);
@@ -22,7 +24,30 @@ const AdminGoodsContent = () => {
         .catch(error => {
           console.log(error)
         })
-    });
+
+        axios.get("http://localhost:4000/stock/tyres/", {
+            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+            withCredentials: true,
+            params: {id: 308282}
+        })
+        .then(response => {
+            //setItemId(response.data);
+            console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error)
+        })
+
+    },[itemId]);
+
+    const showStockPrice = (e) => {
+        const itemByID = tyreData.find((item)=> item.id === e.currentTarget.getAttribute("value"));
+        setItemId(e.currentTarget.getAttribute("value"));
+        console.log(itemByID);
+        console.log(e.currentTarget.getAttribute("value"));
+    };
+
+    console.log(itemId);
 
     return (
         <div>
@@ -63,7 +88,7 @@ const AdminGoodsContent = () => {
             </div>
             <div className='admGoodsTable'>
             { chooseCat === 'Шини'?
-                <AdminTyreContent props={tyreData}/>
+                <AdminTyreContent props={tyreData} showRowData={showStockPrice}/>
                 : null
             }
             { chooseCat === 'Диски' ?
@@ -94,8 +119,9 @@ const AdminGoodsContent = () => {
                         <th>Ціна Оптова</th>
                         <th>Ціна Роздріб</th>
                     </tr>
+                    
                     <tr>
-                        <td>Прайс Постачальник</td>
+                        <td>CKLAD</td>
                         <td>8</td>
                         <td>2</td>
                         <td>6</td>
@@ -103,6 +129,7 @@ const AdminGoodsContent = () => {
                         <td>2100</td>
                         <td>2300</td>
                     </tr>
+                    
                     <tr>
                         <td>Склад Основний</td>
                         <td>4</td>
