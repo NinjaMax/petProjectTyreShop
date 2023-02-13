@@ -10,8 +10,9 @@ import axios from 'axios';
 const AdminGoodsContent = () => {
     const [chooseCat, setChooseCat] = useState('Шини');
     const [tyreData, setTyreData] = useState(null);
-    const [itemId, setItemId] = useState(null);
-    //const [stockPrice, setStockPrice] =useState(null);
+    const [itemId, setItemId] = useState();
+    const [stockTyre, setStockTyre] =useState([]);
+    const [priceTyre, setPriceTyre] =useState();
 
     useEffect(()=>{
         axios.get("http://localhost:4000/tyres", {
@@ -19,35 +20,45 @@ const AdminGoodsContent = () => {
             withCredentials: true})
         .then(response => {
             setTyreData(response.data);
-            console.log(response.data);
+            //console.log(response.data);
         })
         .catch(error => {
           console.log(error)
         })
+    },[]);
 
+    useEffect(()=>{
         axios.get("http://localhost:4000/stock/tyres/", {
             headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
             withCredentials: true,
-            params: {id: 308282}
+            params: {id: itemId}
         })
         .then(response => {
-            //setItemId(response.data);
-            console.log(response.data);
+            setStockTyre([response.data]);
         })
         .catch(error => {
           console.log(error)
-        })
+        });
 
+        axios.get("http://localhost:4000/price/tyres/", {
+            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+            withCredentials: true,
+            params: {id: itemId}
+        })
+        .then(response => {
+            setPriceTyre([response.data]);
+            //console.log(response.data)
+        })
+        .catch(error => {
+          console.log(error)
+        });
     },[itemId]);
 
     const showStockPrice = (e) => {
-        const itemByID = tyreData.find((item)=> item.id === e.currentTarget.getAttribute("value"));
         setItemId(e.currentTarget.getAttribute("value"));
-        console.log(itemByID);
-        console.log(e.currentTarget.getAttribute("value"));
     };
 
-    console.log(itemId);
+    //console.log(itemId);
 
     return (
         <div>
@@ -112,52 +123,40 @@ const AdminGoodsContent = () => {
                 <tbody>
                     <tr>
                         <th>Склад</th>
+                        <th>Постачальник</th>
+                        <th>Місто</th>
                         <th>Наявність</th>
                         <th>Резерв</th>
                         <th>Залишки</th>
                         <th>Ціна Закупка</th>
-                        <th>Ціна Оптова</th>
                         <th>Ціна Роздріб</th>
+                        <th>Ціна Роздріб+Дост</th>
                     </tr>
                     
-                    <tr>
-                        <td>CKLAD</td>
-                        <td>8</td>
-                        <td>2</td>
-                        <td>6</td>
-                        <td>2000</td>
-                        <td>2100</td>
-                        <td>2300</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>Склад Основний</td>
-                        <td>4</td>
-                        <td>0</td>
-                        <td>4</td>
-                        <td>1950</td>
-                        <td>2150</td>
-                        <td>2380</td>
-                    </tr>
-                    <tr>
-                        <td>Склад Основний</td>
-                        <td>4</td>
-                        <td>0</td>
-                        <td>4</td>
-                        <td>1950</td>
-                        <td>2150</td>
-                        <td>2380</td>
-                    </tr>
-                    <tr>
-                        <td>Прайс Постачальник</td>
-                        <td>8</td>
-                        <td>2</td>
-                        <td>6</td>
-                        <td>2000</td>
-                        <td>2100</td>
-                        <td>2300</td>
-                    </tr>
-                    
+                     <tr>
+                     {stockTyre ? stockTyre.map((item) => (
+                        <>
+                        <td key={'stst' + item.id}>{item.storage?.storage}</td>
+                        <td key={'sts' + item.id}>{item.supplier?.name}</td>
+                        <td key={'stsc' + item.id}>{item.supplier?.city_ua}</td>
+                        <td key={'stsk' + item.id}>{item?.stock}</td>
+                        <td key={'strs' + item.id}>{item?.reserve}</td>
+                        <td key={'strm' + item.id}>{item?.remainder}</td>
+                        </>
+                        ))
+                    : <td>Покищо немає данних. Очікуємо...</td>
+                    }
+                    { priceTyre ? priceTyre.map((item) =>(
+                    <>
+                        <td key={'tpr' + item.id}>{item.price_wholesale}</td>
+                        <td key={'tprr' + item.id}>{item.price}</td>
+                        <td key={'tprd' + item.id}>{item.price_plus_delivery}</td>
+                    </> 
+                    ))
+                   : <td>Покищо немає данних. Очікуємо...</td>
+                    }     
+                 </tr>
+                 
                 </tbody>
                 </table>     
             </div>    

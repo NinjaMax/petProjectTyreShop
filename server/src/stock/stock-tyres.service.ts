@@ -159,13 +159,13 @@ export class StockTyresService {
     
   }
 
-  async findStockTyreParamId(id: GetStockDto) {
+  async findStockTyreParamId(id: number) {
 
     try {
 
-      const stockTyreById = await this.stockTyresRepository.findByPk(id, {include: {all: true}});
+      const stockTyreByParamId = await this.stockTyresRepository.findByPk(id, {include: {all: true}});
 
-      return stockTyreById;
+      return stockTyreByParamId;
 
     } catch {
 
