@@ -16,11 +16,11 @@ export class PriceTyresController {
 
   @Get('/all')
   findAll() {
-    return this.pricesService.findAll();
+    return this.pricesService.findAllTyres();
   }
 
   @Get()
-  findOne(@Query() getPriceDto : GetPriceDto) {
+  findPriceTyresById(@Query() getPriceDto: GetPriceDto) {
     return this.pricesService.findPriceTyresById(getPriceDto);
   }
 

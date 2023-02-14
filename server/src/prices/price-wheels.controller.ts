@@ -1,35 +1,35 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { CreatePriceDto } from './dto/create-price.dto';
 import { UpdatePriceTyresDto } from './dto/update-price_tyres.dto';
 import { GetPriceDto } from './dto/get-price.dto';
 import { PriceWheelsService } from './price-wheels.service';
 
-@Controller('prices')
+@Controller('price/wheels')
 export class PriceWheelsController {
   
   constructor(private readonly priceWheelsService: PriceWheelsService) {}
 
-  @Post('/wheels')
+  @Post('/add')
   create(@Body() createPriceDto: CreatePriceDto) {
     return this.priceWheelsService.createPriceWheels(createPriceDto);
   }
 
-  @Get('/wheels')
-  findAll() {
-    return this.priceWheelsService.findAll();
+  @Get('/all')
+  findAllWheels() {
+    return this.priceWheelsService.findAllWheels();
   }
 
-  @Get('wheels/id')
-  findOne(@Body() getPriceDto : GetPriceDto) {
+  @Get()
+  findPriceWheelsById(@Query() getPriceDto: GetPriceDto) {
     return this.priceWheelsService.findPriceWheelsById(getPriceDto);
   }
 
-  @Patch('wheels/update')
+  @Patch('/update')
   update(@Body() updatePriceDto: UpdatePriceTyresDto) {
     return this.priceWheelsService.updatePriceWheels(updatePriceDto);
   }
 
-  @Delete('wheels/remove')
+  @Delete('/remove')
   remove(@Body() getPriceDto: GetPriceDto) {
     return this.priceWheelsService.removePriceWheels(getPriceDto);
   }

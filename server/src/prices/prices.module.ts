@@ -15,9 +15,10 @@ import { PriceWheels } from './entities/price-wheels.model';
 import { PriceOil } from './entities/price-oils.model';
 import { PriceBatteries } from './entities/price-battery.model';
 import { PriceWheelsService } from './price-wheels.service';
+import { PriceWheelsController } from './price-wheels.controller';
 
 @Module({
-  controllers: [PriceTyresController, ],
+  controllers: [PriceTyresController, PriceWheelsController],
   providers: [PriceTyresService, PriceWheelsService],
   imports: [ 
     SequelizeModule.forFeature([ PriceTyres, PriceWheels, PriceOil, 

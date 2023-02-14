@@ -99,7 +99,7 @@ export class PriceTyresService {
     
   }
 
-  async findAll() {
+  async findAllTyres() {
 
     try {
 
@@ -119,9 +119,9 @@ export class PriceTyresService {
     
     try {
 
-      const tyresId = await this.priceTyresRepository.findByPk(getPriceDto.id, {include: {all: true}});
+      const tyresById = await this.priceTyresRepository.findByPk(getPriceDto.id, {include: {all: true}});
 
-      return tyresId;
+      return tyresById;
 
 
     } catch {

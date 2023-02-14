@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminWheelContent.css';
 
-const AdminWheelContent = () => {
+const AdminWheelContent = ({props, showRowData}) => {
     return (
         <div>
             <div className='admWheelTable'>
@@ -17,10 +17,7 @@ const AdminWheelContent = () => {
                         <th>Тип Диску
                             <i className="fas fa-sort"></i>
                         </th>
-                        <th>Рік Виробн.
-                            <i className="fas fa-sort"></i>
-                        </th>
-                        <th>Країна поход.
+                        <th>Цвіт короткий
                             <i className="fas fa-sort"></i>
                         </th>
                         <th>Категорія
@@ -30,14 +27,15 @@ const AdminWheelContent = () => {
                     </tr>
                 </thead>    
                 <tbody> 
-                    <tr>
-                        <td>264302</td>
-                        <td>Thomason Edition Black W6.5 Et150.2 5x114.3 (Silver)</td>
-                        <td>Титан</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Масла</td>
-                        <td>
+                {props ? props.map((item) => (
+                
+                <tr key={'w' + item.id} onClick={showRowData} value={item.id}>
+                    <td key={'wid' + item.id}>{item.id}</td>
+                    <td key={'tn' + item.id}>{item.full_name_color}</td>
+                    <td key={'ts' + item.id}>{item.type?.type ?? ''}</td>
+                    <td key={'ty' + item.id}>{item.color?.color_short ?? ''}</td>
+                    <td key={'tca' + item.id}>{item.category?.category ?? ''}</td>
+                    <td key={'t' + item.id}>
                             <button className='basketAdmWheel'>
                                 <i className="fa fa-shopping-cart"></i>
                             </button>
@@ -48,292 +46,10 @@ const AdminWheelContent = () => {
                                 <i className="fa fa-remove"></i>
                             </button>                  
                         </td>
-                    </tr>          
-                    <tr>
-                        <td>264302</td>
-                        <td>Thomason Edition Black W6.5 Et150.2 5x114.3 (Silver)</td>
-                        <td>Титан</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Масла</td>
-                        <td>
-                            <button className='basketAdmWheel'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmWheel'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmWheel'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>264302</td>
-                        <td>Thomason Edition Black W6.5 Et150.2 5x114.3 (Silver)</td>
-                        <td>Титан</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Масла</td>
-                        <td>
-                            <button className='basketAdmWheel'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmWheel'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmWheel'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>264302</td>
-                        <td>Thomason Edition Black W6.5 Et150.2 5x114.3 (Silver)</td>
-                        <td>Титан</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Масла</td>
-                        <td>
-                            <button className='basketAdmWheel'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmWheel'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmWheel'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>264302</td>
-                        <td>Thomason Edition Black W6.5 Et150.2 5x114.3 (Silver)</td>
-                        <td>Титан</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Масла</td>
-                        <td>
-                            <button className='basketAdmWheel'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmWheel'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmWheel'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>264302</td>
-                        <td>Thomason Edition Black W6.5 Et150.2 5x114.3 (Silver)</td>
-                        <td>Титан</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Масла</td>
-                        <td>
-                            <button className='basketAdmWheel'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmWheel'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmWheel'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>264302</td>
-                        <td>Thomason Edition Black W6.5 Et150.2 5x114.3 (Silver)</td>
-                        <td>Титан</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Масла</td>
-                        <td>
-                            <button className='basketAdmWheel'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmWheel'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmWheel'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>264302</td>
-                        <td>Thomason Edition Black W6.5 Et150.2 5x114.3 (Silver)</td>
-                        <td>Титан</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Масла</td>
-                        <td>
-                            <button className='basketAdmWheel'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmWheel'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmWheel'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>264302</td>
-                        <td>Thomason Edition Black W6.5 Et150.2 5x114.3 (Silver)</td>
-                        <td>Титан</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Масла</td>
-                        <td>
-                            <button className='basketAdmWheel'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmWheel'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmWheel'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>264302</td>
-                        <td>Thomason Edition Black W6.5 Et150.2 5x114.3 (Silver)</td>
-                        <td>Титан</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Масла</td>
-                        <td>
-                            <button className='basketAdmWheel'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmWheel'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmWheel'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>264302</td>
-                        <td>Thomason Edition Black W6.5 Et150.2 5x114.3 (Silver)</td>
-                        <td>Титан</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Масла</td>
-                        <td>
-                            <button className='basketAdmWheel'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmWheel'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmWheel'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>264302</td>
-                        <td>Thomason Edition Black W6.5 Et150.2 5x114.3 (Silver)</td>
-                        <td>Титан</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Масла</td>
-                        <td>
-                            <button className='basketAdmWheel'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmWheel'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmWheel'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>264302</td>
-                        <td>Thomason Edition Black W6.5 Et150.2 5x114.3 (Silver)</td>
-                        <td>Титан</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Масла</td>
-                        <td>
-                            <button className='basketAdmWheel'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmWheel'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmWheel'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>264302</td>
-                        <td>Thomason Edition Black W6.5 Et150.2 5x114.3 (Silver)</td>
-                        <td>Титан</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Масла</td>
-                        <td>
-                            <button className='basketAdmWheel'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmWheel'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmWheel'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>264302</td>
-                        <td>Thomason Edition Black W6.5 Et150.2 5x114.3 (Silver)</td>
-                        <td>Титан</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Масла</td>
-                        <td>
-                            <button className='basketAdmWheel'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmWheel'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmWheel'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>264302</td>
-                        <td>Thomason Edition Black W6.5 Et150.2 5x114.3 (Silver)</td>
-                        <td>Титан</td>
-                        <td>2022</td>
-                        <td>Румунія</td>
-                        <td>Масла</td>
-                        <td>
-                            <button className='basketAdmWheel'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmWheel'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmWheel'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
+                    </tr>
+                    ))
+                    : <tr><td>"Нема товарів"</td></tr>
+                    }      
                 </tbody>
             </table>
             </div>

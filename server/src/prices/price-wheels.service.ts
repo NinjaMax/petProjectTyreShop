@@ -21,7 +21,6 @@ export class PriceWheelsService {
     
     try {
       
-
       const wheel = await this.wheelsService.findWheelById(createPriceDto);
       const storage = await this.storageService.findStorageById(createPriceDto);
       
@@ -100,7 +99,7 @@ export class PriceWheelsService {
     
   }
 
-  async findAll() {
+  async findAllWheels() {
 
     try {
 
@@ -120,9 +119,9 @@ export class PriceWheelsService {
     
     try {
 
-      const wheelsPriceId = await this.priceWheelsRepository.findByPk(getPriceDto.id_wheel, {include: {all: true}});
+      const wheelsPriceById = await this.priceWheelsRepository.findByPk(getPriceDto.id, {include: {all: true}});
 
-      return wheelsPriceId;
+      return wheelsPriceById;
 
 
     } catch {
@@ -133,11 +132,11 @@ export class PriceWheelsService {
     
   }
 
-  async updatePriceWheels( updatePriceDto: UpdatePriceTyresDto ) {
+  async updatePriceWheels(updatePriceDto: UpdatePriceTyresDto ) {
 
     try {
 
-      const wheelsPriceId = await this.priceWheelsRepository.findByPk(updatePriceDto.id_wheel, {include: {all: true}});
+      const wheelsPriceId = await this.priceWheelsRepository.findByPk(updatePriceDto.id, {include: {all: true}});
       
       if(wheelsPriceId) {
 

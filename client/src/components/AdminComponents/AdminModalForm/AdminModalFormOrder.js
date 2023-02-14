@@ -6,10 +6,11 @@ import AdminModalCustmCreate from './AdminModalCustmCreate';
 import AdminModalCustomers from './AdminModalCustomers';
 import AdminModalGoods from './AdminModalGoods';
 
-const AdminFormOrder = () => {
+const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
     const [active, setActive] = useState(false);
     const [addGoods, setAddGoods] = useState(false);
     const [addCustomer, setAddCustomer] = useState(false);
+    const [goodsList, setGoodsList] = useState([]);
     
     const activeForm = () => {
         setActive(!active);
@@ -23,7 +24,18 @@ const AdminFormOrder = () => {
         setAddCustomer(!addCustomer);
     }
 
+    const addGoodsToList = () => {
+        if(tyreDatas) {
+            const itemTyre = tyreDatas.find((item) => item === goodsId);
+            setGoodsList(goodsList.push(itemTyre));
+        }
 
+        if(wheelDatas) {
+            const itemWheel = wheelDatas.find((item) => item === goodsId);
+            setGoodsList(goodsList.push(itemWheel));
+        }
+
+    };
 
     return (
         <div>
@@ -120,20 +132,28 @@ const AdminFormOrder = () => {
                     <thead>
                         <tr>
                             <th>id</th>
-                            <th>товар</th>
-                            <th>категорія</th>
-                            <th>кількість</th>
+                            <th>Товар</th>
+                            <th>Категорія</th>
+                            <th>Кількість</th>
+                            <th>Резерв</th>
+                            <th>Ціна</th>
                             <th>склад</th>
                         </tr>     
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td> 
+                        {goodsList ? goodsList.map((item) =>(
+                        <tr key={'g'+item.id}>
+                            <td key={'gid'+item.id}></td>
+                            <td key={'gg'+item.id}></td>
+                            <td key={'gcat'+item.id}></td>
+                            <td key={'gc'+item.id}></td>
+                            <td key={'gres'+item.id}></td>
+                            <td key={'gpr'+item.id}></td>
+                            <td key={'gst'+item.id}></td> 
                         </tr>
+                        ))
+                        : <tr></tr>
+                        }
                     </tbody>
                 </table>
                 <label htmlFor="subject">Нотатки</label>

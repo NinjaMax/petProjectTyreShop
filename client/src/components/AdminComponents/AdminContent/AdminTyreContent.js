@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminTyreContent.css';
 
-const AdminTyreContent = ({props, showRowData}) => {
+const AdminTyreContent = ({props, showRowData, addTyreToOrder}) => {
 
     return (
         <div>
@@ -41,7 +41,8 @@ const AdminTyreContent = ({props, showRowData}) => {
                         <td key={'tc' + item.id}>{item.country?.country_manufacturer_ua ?? ''}</td>
                         <td key={'tca' + item.id}>{item.category?.category ?? ''}</td>
                         <td key={'t' + item.id}>
-                            <button className='basketAdmTyre'>
+                            <button className='basketAdmTyre' value={item.id}
+                                onClick={addTyreToOrder}>
                                 <i className="fa fa-shopping-cart"></i>
                             </button>
                             <button className='editAdmTyre'>

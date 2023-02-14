@@ -1,35 +1,35 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { CreateStockDto } from './dto/create-stock.dto';
 import { UpdateStockDto } from './dto/update-stock.dto';
 import { GetStockDto } from './dto/get-stock.dto';
 import { StockOilsService } from './stock-oils.service';
 
-@Controller('stock')
+@Controller('stock/oils')
 export class StockOilsController {
 
   constructor(private readonly stockOilsService: StockOilsService) {}
 
-  @Post('/oils')
+  @Post('/add')
   createStockOils(@Body() createStockDto: CreateStockDto) {
     return this.stockOilsService.createStockOils(createStockDto);
   }
 
-  @Get('/oils')
+  @Get('/all')
   findAllStock() {
     return this.stockOilsService.findAllStock();
   }
 
-  @Get('/oils/id')
-  findStockOilById(@Param() @Body() getStockDto : GetStockDto) {
+  @Get()
+  findStockOilById(@Query() getStockDto : GetStockDto) {
     return this.stockOilsService.findStockOilById(getStockDto);
   }
 
-  @Patch('/oils/update')
+  @Patch('/update')
   updateStockOil(@Body() updateStockDto: UpdateStockDto) {
     return this.stockOilsService.updateStockOil(updateStockDto);
   }
 
-  @Delete('/oils/remove')
+  @Delete('/remove')
   removeStockOil(@Body() getStockDto: GetStockDto) {
     return this.stockOilsService.removeStockOil(getStockDto);
   }

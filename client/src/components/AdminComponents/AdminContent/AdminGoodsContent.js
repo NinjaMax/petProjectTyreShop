@@ -6,13 +6,31 @@ import AdminOilContent from './AdminOilContent';
 import AdminTyreContent from './AdminTyreContent';
 import AdminWheelContent from './AdminWheelContent';
 import axios from 'axios';
+import AdminTyreStockPriceRow from './AdminTyreStockPriceRow';
+import AdminWheelStockPriceRow from './AdminWheelStockPriceRow';
+import ModalAdmin from '../../Modal/ModalAdmin';
+import AdminFormOrder from '../AdminModalForm/AdminModalFormOrder';
 
 const AdminGoodsContent = () => {
     const [chooseCat, setChooseCat] = useState('Шини');
     const [tyreData, setTyreData] = useState(null);
-    const [itemId, setItemId] = useState();
-    const [stockTyre, setStockTyre] =useState([]);
-    const [priceTyre, setPriceTyre] =useState();
+    const [wheelData, setWheelData] = useState(null);
+    // const [oilData, setOildata] = useState(null);
+    // const [batteryData, setBatteryData] = useState(null);
+    const [itemIdTyre, setItemIdTyre] = useState();
+    const [itemIdWheel, setItemIdWheel] = useState();
+    // const [itemIdOil, setItemIdOil] = useState();
+    // const [itemIdBattery, setItemIdBattery] = useState();
+    const [itemId, setItemId] = useState(null);
+    const [addGoods, setAddGoods] = useState(false)
+    const [stockTyre, setStockTyre] = useState([]);
+    const [priceTyre, setPriceTyre] = useState([]);
+    const [stockWheel, setStockWheel] = useState([]);
+    const [priceWheel, setPriceWheel] = useState([]);
+    // const [stockOil, setStockOil] = useState([]);
+    // const [priceOil, setPriceOil] = useState([]);
+    // const [stockBattery, setStockBattery] = useState([]);
+    // const [priceBattery, setPriceBattery] = useState([]);
 
     useEffect(()=>{
         axios.get("http://localhost:4000/tyres", {
@@ -25,13 +43,25 @@ const AdminGoodsContent = () => {
         .catch(error => {
           console.log(error)
         })
+
+        axios.get("http://localhost:4000/wheels", {
+            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+            withCredentials: true})
+        .then(response => {
+            setWheelData(response.data);
+            //console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error)
+        })
+
     },[]);
 
     useEffect(()=>{
         axios.get("http://localhost:4000/stock/tyres/", {
             headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
             withCredentials: true,
-            params: {id: itemId}
+            params: {id: itemIdTyre}
         })
         .then(response => {
             setStockTyre([response.data]);
@@ -43,7 +73,7 @@ const AdminGoodsContent = () => {
         axios.get("http://localhost:4000/price/tyres/", {
             headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
             withCredentials: true,
-            params: {id: itemId}
+            params: {id: itemIdTyre}
         })
         .then(response => {
             setPriceTyre([response.data]);
@@ -52,11 +82,55 @@ const AdminGoodsContent = () => {
         .catch(error => {
           console.log(error)
         });
-    },[itemId]);
+    },[itemIdTyre]);
 
-    const showStockPrice = (e) => {
-        setItemId(e.currentTarget.getAttribute("value"));
+    useEffect(()=>{
+        axios.get("http://localhost:4000/stock/wheels/", {
+            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+            withCredentials: true,
+            params: {id: itemIdWheel}
+        })
+        .then(response => {
+            setStockWheel([response.data]);
+        })
+        .catch(error => {
+          console.log(error)
+        });
+
+        axios.get("http://localhost:4000/price/wheels/", {
+            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+            withCredentials: true,
+            params: {id: itemIdWheel}
+        })
+        .then(response => {
+            setPriceWheel([response.data]);
+            //console.log(response.data)
+        })
+        .catch(error => {
+          console.log(error)
+        });
+    },[itemIdWheel]);
+
+    const showStockPriceTyre = (e) => {
+        setItemIdTyre(e.currentTarget.getAttribute("value"));
     };
+
+    const showStockPriceWheel = (e) => {
+        setItemIdWheel(e.currentTarget.getAttribute("value"));
+    };
+
+    // const showStockPriceOil = (e) => {
+    //     setItemIdO(e.currentTarget.getAttribute("value"));
+    // };
+
+    // const showStockPriceBattery = (e) => {
+    //     setItemIdB(e.currentTarget.getAttribute("value"));
+    // };
+
+    const addToOrder = (e) => {
+        setItemId(e.currentTarget.value);
+        setAddGoods(!addGoods);
+    }
 
     //console.log(itemId);
 
@@ -99,11 +173,12 @@ const AdminGoodsContent = () => {
             </div>
             <div className='admGoodsTable'>
             { chooseCat === 'Шини'?
-                <AdminTyreContent props={tyreData} showRowData={showStockPrice}/>
+                <AdminTyreContent props={tyreData} showRowData={showStockPriceTyre}
+                addTyreToOrder={addToOrder}/>
                 : null
             }
             { chooseCat === 'Диски' ?
-                <AdminWheelContent/>
+                <AdminWheelContent props={wheelData} showRowData={showStockPriceWheel}/>
                 : null
             }
             { chooseCat === 'АКБ'?
@@ -123,6 +198,7 @@ const AdminGoodsContent = () => {
                 <tbody>
                     <tr>
                         <th>Склад</th>
+                        <th>Дата оновлення</th>
                         <th>Постачальник</th>
                         <th>Місто</th>
                         <th>Наявність</th>
@@ -132,34 +208,27 @@ const AdminGoodsContent = () => {
                         <th>Ціна Роздріб</th>
                         <th>Ціна Роздріб+Дост</th>
                     </tr>
-                    
-                     <tr>
-                     {stockTyre ? stockTyre.map((item) => (
-                        <>
-                        <td key={'stst' + item.id}>{item.storage?.storage}</td>
-                        <td key={'sts' + item.id}>{item.supplier?.name}</td>
-                        <td key={'stsc' + item.id}>{item.supplier?.city_ua}</td>
-                        <td key={'stsk' + item.id}>{item?.stock}</td>
-                        <td key={'strs' + item.id}>{item?.reserve}</td>
-                        <td key={'strm' + item.id}>{item?.remainder}</td>
-                        </>
-                        ))
-                    : <td>Покищо немає данних. Очікуємо...</td>
-                    }
-                    { priceTyre ? priceTyre.map((item) =>(
-                    <>
-                        <td key={'tpr' + item.id}>{item.price_wholesale}</td>
-                        <td key={'tprr' + item.id}>{item.price}</td>
-                        <td key={'tprd' + item.id}>{item.price_plus_delivery}</td>
-                    </> 
-                    ))
-                   : <td>Покищо немає данних. Очікуємо...</td>
+                    <tr>
+                    {chooseCat === 'Шини'? 
+                        <AdminTyreStockPriceRow stockTyres={stockTyre} priceTyres={priceTyre}/>
+                    :   null
+                    } 
+                    {chooseCat === 'Диски'?
+                       <AdminWheelStockPriceRow stockWheels={stockWheel} priceWheels={priceWheel}/>
+                    :   null
                     }     
                  </tr>
-                 
                 </tbody>
                 </table>     
-            </div>    
+            </div>
+            {addGoods ?
+                <ModalAdmin>
+                    <AdminFormOrder goodsId={itemId} 
+                        tyreDatas={tyreData} 
+                        wheelDatas={wheelData}/>
+                </ModalAdmin>
+                : null
+            }    
         </div>
     );
 };
