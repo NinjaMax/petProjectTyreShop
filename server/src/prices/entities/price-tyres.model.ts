@@ -7,7 +7,6 @@ import { Storage } from "src/storage/entities/storage.model";
 @Table({tableName: 'price_tyres', createdAt: false, updatedAt: false})
 export class PriceTyres extends Model<PriceTyres, PriceTyresConfigAttr>{ 
     
-   @ForeignKey(() => Tyres)
    @Column({type: DataType.INTEGER, unique: false, autoIncrement: false, primaryKey: true})
    id: number;
 
@@ -16,6 +15,10 @@ export class PriceTyres extends Model<PriceTyres, PriceTyresConfigAttr>{
    
    @Column({type: DataType.FLOAT, unique: false, allowNull: true})
    price: number;
+
+   @ForeignKey(() => Tyres)
+   @Column({type: DataType.INTEGER})
+   id_tyre: number;
 
    @ForeignKey(() => Supplier)
    @Column({type: DataType.INTEGER})

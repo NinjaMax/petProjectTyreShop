@@ -11,6 +11,7 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
     const [addGoods, setAddGoods] = useState(false);
     const [addCustomer, setAddCustomer] = useState(false);
     const [goodsList, setGoodsList] = useState([]);
+    //const [addItems, setAddItems] = useState();
     
     const activeForm = () => {
         setActive(!active);
@@ -24,13 +25,13 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
         setAddCustomer(!addCustomer);
     }
 
-    const addGoodsToList = () => {
-        if(tyreDatas) {
+    const addGoodsToList = (e) => {
+        if(tyreDatas || e.currentTarget.getAttribute("value")) {
             const itemTyre = tyreDatas.find((item) => item === goodsId);
             setGoodsList(goodsList.push(itemTyre));
         }
 
-        if(wheelDatas) {
+        if(wheelDatas || e.currentTarget.getAttribute("value")) {
             const itemWheel = wheelDatas.find((item) => item === goodsId);
             setGoodsList(goodsList.push(itemWheel));
         }
@@ -143,23 +144,25 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
                     <tbody>
                         {goodsList ? goodsList.map((item) =>(
                         <tr key={'g'+item.id}>
-                            <td key={'gid'+item.id}></td>
-                            <td key={'gg'+item.id}></td>
-                            <td key={'gcat'+item.id}></td>
-                            <td key={'gc'+item.id}></td>
-                            <td key={'gres'+item.id}></td>
-                            <td key={'gpr'+item.id}></td>
-                            <td key={'gst'+item.id}></td> 
+                            <td key={'gid'+item.id}>{}</td>
+                            <td key={'gg'+item.id}>{}</td>
+                            <td key={'gcat'+item.id}>{}</td>
+                            <td key={'gc'+item.id}>{}</td>
+                            <td key={'gres'+item.id}>{}</td>
+                            <td key={'gpr'+item.id}>{}</td>
+                            <td key={'gst'+item.id}>{}</td> 
                         </tr>
                         ))
                         : <tr></tr>
                         }
                     </tbody>
                 </table>
-                <label htmlFor="subject">Нотатки</label>
-                <textarea className="admFormOrderNotes" name="subject" 
-                    placeholder="Пишить нотатку..">
-                </textarea>
+                <div className='admFormOrderNotes'>
+                    <label htmlFor="subject">Нотатки</label>
+                    <textarea className="admFormOrderNotesText" name="subject" 
+                        placeholder="Пишить нотатку..">
+                    </textarea>  
+                </div>
                 <div className='admFormOrderCommit'
                     onClick={(e)=>e.preventDefault({passive: false})}>
                     <div className='admFormOrderAddCommit'>
@@ -175,7 +178,7 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
                         </AdminComment>
                     </div>  
                 </div>
-                <div className='admOrderFormGrp'>
+                <div className='admOrderFormGrp' onClick={(e)=>e.preventDefault({passive: false})}>
                     <input type="submit" className='admFormOrderBtnOk' value="Ok"/>
                     <input type="submit" className='admFormOrderBtnSave' value="Зберегти"/>
                     <button className='admFormOrderBtn'>Відмінити</button> 
@@ -189,7 +192,10 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
             }
             {addGoods ? 
                 <ModalAdmin active={addGoods} setActive={setAddGoods}>
-                    <AdminModalGoods/>
+                    <AdminModalGoods 
+                        showRowModData={addGoodsToList}
+                        tyreModData={tyreDatas} 
+                        wheelModData={wheelDatas}/>
                 </ModalAdmin> : null
             }
             {addCustomer ?

@@ -7,15 +7,18 @@ import { PriceBatteryConfigAttr } from "../interfaces/price-battery.interface";
 @Table({tableName: 'price_battery', createdAt: false, updatedAt: false})
 export class PriceBatteries extends Model<PriceBatteries, PriceBatteryConfigAttr>{ 
     
-   @ForeignKey(() => Battery)
    @Column({type: DataType.INTEGER, unique: false, autoIncrement: false, primaryKey: true})
-   id_battery: number;
+   id: number;
 
    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
    price_wholesale: number;
    
    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
    price: number;
+
+   @ForeignKey(() => Battery)
+   @Column({type: DataType.INTEGER})
+   id_battery: number;
 
    @ForeignKey(() => Supplier)
    @Column({type: DataType.INTEGER})

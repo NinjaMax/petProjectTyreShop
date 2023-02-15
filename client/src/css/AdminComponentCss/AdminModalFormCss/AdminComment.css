@@ -1,6 +1,6 @@
 /* Chat containers */
 .admCommitBox {
-    height: 200px;
+    height: 150px;
     overflow: scroll;
     position: relative;
     overflow-x: auto;

@@ -128,7 +128,7 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
     @Column({type: DataType.INTEGER})
     id_silent: number;
 
-    @HasMany(() => StockTyres , 'id')
+    @HasMany(() => StockTyres , 'id_tyre')
     stock: StockTyres[];
 
     @HasMany(() => PriceTyres , 'id')

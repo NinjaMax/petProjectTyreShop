@@ -36,6 +36,7 @@ const AdminSupplierContent = () => {
                     <th>Ід Контракту</th>
                     <th>Контракт</th>
                     <th>Баланс</th>
+                    <th>Перевізники</th>
                     <th>Опції</th>
                 </tr>
             </thead>    
@@ -49,6 +50,7 @@ const AdminSupplierContent = () => {
                     <td>0125</td>
                     <td>ФОП Гайворонский Основний договір</td>
                     <td>10000</td>
+                    <th>Делівері, Нова Пошта, УкрПошта, Глово</th>
                     <td>
                         <button className='basketAdmGoods'>
                             <i className="fa fa-shopping-cart"></i>

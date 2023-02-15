@@ -7,8 +7,7 @@ import { Storage } from "src/storage/entities/storage.model";
 @Table({tableName: 'stock_tyres', createdAt: false, updatedAt: false})
 export class StockTyres extends Model<StockTyres, StockTyresConfigAttr> {
 
-    @ForeignKey(() => Tyres)
-    @Column({type: DataType.INTEGER, unique: true, autoIncrement: false, primaryKey: true})
+    @Column({type: DataType.INTEGER, unique: false, autoIncrement: false, primaryKey: true})
     id: number;
     
     @Column({type: DataType.INTEGER, unique: false, allowNull: true})
@@ -35,7 +34,11 @@ export class StockTyres extends Model<StockTyres, StockTyresConfigAttr> {
                  
         }
     })
-    remainder: number;  
+    remainder: number; 
+    
+    @ForeignKey(() => Tyres)
+    @Column({type: DataType.INTEGER})
+    id_tyre: number;
 
     @ForeignKey(() => Supplier)
     @Column({type: DataType.INTEGER})

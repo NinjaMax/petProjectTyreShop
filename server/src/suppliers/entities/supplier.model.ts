@@ -32,6 +32,9 @@ export class Supplier extends Model<Supplier, SuppliersConfigAttr> {
     @Column({type: DataType.STRING, unique: false, allowNull: true})
     email: string;
 
+    @Column({type: DataType.STRING, unique: false, allowNull: true})
+    delivery: string[];
+
     @HasMany(() => StockTyres, 'id_supplier')
     stock_tyres: StockTyres[];
 

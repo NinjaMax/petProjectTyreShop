@@ -165,10 +165,11 @@ export class SuppliersService {
 
         await this.suppliersRepository.update(
         {  
-          name : updateSupplierDto.name,
-          city : updateSupplierDto.city, 
-          phone : updateSupplierDto.phone,
-          email : updateSupplierDto.email
+          name: updateSupplierDto.name,
+          city: updateSupplierDto.city, 
+          phone: updateSupplierDto.phone,
+          email: updateSupplierDto.email,
+          delivery: updateSupplierDto.delivery
         }, {where: {id_supplier : updateSupplierDto.id_supplier}});
 
         const updateSupplier = await this.suppliersRepository.findByPk(updateSupplierDto.id_supplier, {include: {all: true}});

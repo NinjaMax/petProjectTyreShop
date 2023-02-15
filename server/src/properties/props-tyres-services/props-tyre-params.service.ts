@@ -17,7 +17,7 @@ export class PropsTyreParamsService {
     
         const tyreId = await this.tyresService.findTyresById(createPropertyDto);
         const tyreParams = await this.tyreParamsRepository.findOne(
-        { where: { params: createPropertyDto.params } })
+        {where: {params: createPropertyDto.params} })
 
         if(tyreId && tyreParams) {
 
@@ -55,7 +55,8 @@ export class PropsTyreParamsService {
 
       if(created || !created) {
 
-        await tyreParams.$set('tyres', id);
+        tyreParams.$add('tyres', id);
+        //tyreParams.tyres.push(id);
           
       }
 

@@ -7,15 +7,18 @@ import { Storage } from "src/storage/entities/storage.model";
 @Table({tableName: 'price_oil', createdAt: false, updatedAt: false})
 export class PriceOil extends Model<PriceOil, PriceOilsConfigAttr>{ 
     
-   @ForeignKey(() => Oil)
    @Column({type: DataType.INTEGER, unique: false, autoIncrement: false, primaryKey: true})
-   id_oil: number;
+   id: number;
 
    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
    price_wholesale: number;
    
    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
    price: number;
+
+   @ForeignKey(() => Oil)
+   @Column({type: DataType.INTEGER})
+   id_oil: number;
 
    @ForeignKey(() => Supplier)
    @Column({type: DataType.INTEGER})

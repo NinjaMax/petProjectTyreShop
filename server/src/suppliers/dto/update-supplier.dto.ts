@@ -8,5 +8,6 @@ export class UpdateSupplierDto extends PartialType(CreateSupplierDto) {
     readonly city: string;
     readonly phone: bigint;
     readonly email: string;
+    readonly delivery: string[];
 
 }

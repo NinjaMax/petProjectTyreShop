@@ -64,7 +64,7 @@ export class PropsTyreSealService {
 
       if(created || !created) {
 
-        await tyreSeal.$set('tyres', id);
+        tyreSeal.$add('tyres', id);
           
       }
 

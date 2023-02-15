@@ -21,7 +21,7 @@ const AdminGoodsContent = () => {
     const [itemIdWheel, setItemIdWheel] = useState();
     // const [itemIdOil, setItemIdOil] = useState();
     // const [itemIdBattery, setItemIdBattery] = useState();
-    const [itemId, setItemId] = useState(null);
+    //const [itemId, setItemId] = useState(null);
     const [addGoods, setAddGoods] = useState(false)
     const [stockTyre, setStockTyre] = useState([]);
     const [priceTyre, setPriceTyre] = useState([]);
@@ -128,7 +128,7 @@ const AdminGoodsContent = () => {
     // };
 
     const addToOrder = (e) => {
-        setItemId(e.currentTarget.value);
+        //setItemId(e.currentTarget.value);
         setAddGoods(!addGoods);
     }
 
@@ -172,7 +172,7 @@ const AdminGoodsContent = () => {
                 </div>
             </div>
             <div className='admGoodsTable'>
-            { chooseCat === 'Шини'?
+            { chooseCat === 'Шини' ?
                 <AdminTyreContent props={tyreData} showRowData={showStockPriceTyre}
                 addTyreToOrder={addToOrder}/>
                 : null
@@ -181,7 +181,7 @@ const AdminGoodsContent = () => {
                 <AdminWheelContent props={wheelData} showRowData={showStockPriceWheel}/>
                 : null
             }
-            { chooseCat === 'АКБ'?
+            { chooseCat === 'АКБ' ?
                 <AdminBatteryContent/>
                 : null
             }
@@ -222,8 +222,9 @@ const AdminGoodsContent = () => {
                 </table>     
             </div>
             {addGoods ?
-                <ModalAdmin>
-                    <AdminFormOrder goodsId={itemId} 
+                <ModalAdmin active={addGoods} setActive={addToOrder}>
+                    <AdminFormOrder 
+                        //goodsId={itemId} 
                         tyreDatas={tyreData} 
                         wheelDatas={wheelData}/>
                 </ModalAdmin>

@@ -62,7 +62,7 @@ export class PropsTyreHeightService {
 
       if(created || !created) {
 
-        await tyreHeight.$add('tyres', id);
+        tyreHeight.$add('tyres', id);
 
       }
 
