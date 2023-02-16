@@ -57,7 +57,11 @@ export class UpdatePropertyDto extends PartialType(CreatePropertyDto) {
     readonly pcd: string;
     readonly id_pcd2: number;
     readonly pcd2: string;
-    //readonly id_tyres: number;
+
+    readonly id_tyre: number;
+    readonly id_wheel: number;
+    readonly id_oil: number;
+    readonly id_battery: number;
     readonly id_supplier: number;
     readonly update_date: Date;
     readonly full_name: string;

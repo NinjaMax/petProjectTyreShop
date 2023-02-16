@@ -7,18 +7,18 @@ import { Storage } from "src/storage/entities/storage.model";
 @Table({tableName: 'price_wheel', createdAt: false, updatedAt: false})
 export class PriceWheels extends Model<PriceWheels, PriceWheelsConfigAttr>{ 
     
-   @Column({type: DataType.INTEGER, unique: false, autoIncrement: false, primaryKey: true})
+   @Column({type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true})
    id: number;
+
+   @ForeignKey(() => Wheel)
+   @Column({type: DataType.INTEGER})
+   id_wheel: number;
 
    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
    price_wholesale: number;
    
    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
    price: number;
-
-   @ForeignKey(() => Wheel)
-   @Column({type: DataType.INTEGER})
-   id_wheel: number;
 
    @ForeignKey(() => Supplier)
    @Column({type: DataType.INTEGER})
@@ -37,7 +37,7 @@ export class PriceWheels extends Model<PriceWheels, PriceWheelsConfigAttr>{
    @Column({type: DataType.DATE, unique: false, allowNull: false})
    update_date: Date;
 
-   @BelongsTo( () => Wheel , 'id')
+   @BelongsTo( () => Wheel , 'id_wheel')
    wheel: Wheel;
 
    @BelongsTo( () => Supplier , 'id_supplier')

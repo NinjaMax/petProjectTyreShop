@@ -2,6 +2,10 @@ export class GetOrdersDto {
    
     readonly id_order: number;
     readonly id: number;
+    readonly id_tyre: number;
+    readonly id_wheel: number;
+    readonly id_oil: number;
+    readonly id_battery: number;
     //readonly id_cat: number;
     //readonly goods: string;
     readonly price: number;

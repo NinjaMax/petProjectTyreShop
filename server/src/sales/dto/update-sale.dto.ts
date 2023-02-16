@@ -5,6 +5,10 @@ export class UpdateSaleDto extends PartialType(CreateSaleDto) {
     
     readonly id_sale: number;
     readonly id: number;
+    readonly id_tyre: number;
+    readonly id_wheel: number;
+    readonly id_oil: number;
+    readonly id_battery: number;
     readonly status: string;
     readonly quantity: number;
     readonly price: number;

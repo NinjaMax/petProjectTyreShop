@@ -7,18 +7,18 @@ import { Storage } from "src/storage/entities/storage.model";
 @Table({tableName: 'price_tyres', createdAt: false, updatedAt: false})
 export class PriceTyres extends Model<PriceTyres, PriceTyresConfigAttr>{ 
     
-   @Column({type: DataType.INTEGER, unique: false, autoIncrement: false, primaryKey: true})
+   @Column({type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true})
    id: number;
+
+   @ForeignKey(() => Tyres)
+   @Column({type: DataType.INTEGER})
+   id_tyre: number;
 
    @Column({type: DataType.FLOAT, unique: false, allowNull: true})
    price_wholesale: number;
    
    @Column({type: DataType.FLOAT, unique: false, allowNull: true})
    price: number;
-
-   @ForeignKey(() => Tyres)
-   @Column({type: DataType.INTEGER})
-   id_tyre: number;
 
    @ForeignKey(() => Supplier)
    @Column({type: DataType.INTEGER})
@@ -37,7 +37,7 @@ export class PriceTyres extends Model<PriceTyres, PriceTyresConfigAttr>{
    @Column({type: DataType.DATE, unique: false, allowNull: false})
    update_date: Date;
 
-   @BelongsTo( () => Tyres , 'id')
+   @BelongsTo( () => Tyres , 'id_tyre')
    tyres: Tyres;
 
    @BelongsTo( () => Supplier , 'id_supplier')

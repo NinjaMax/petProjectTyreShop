@@ -4,9 +4,10 @@ import { CreateOrderDto } from './create-order.dto';
 export class UpdateOrderDto extends PartialType(CreateOrderDto) {
 
     
-    //readonly id_goods: number;
-    //readonly id_cat: number;
-    //readonly goods: string;
+    readonly id_tyre: number;
+    readonly id_wheel: number;
+    readonly id_oil: number;
+    readonly id_battery: number;
     readonly price: number;
     readonly quantity: number;
     readonly total: number;

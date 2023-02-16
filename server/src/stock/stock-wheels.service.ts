@@ -63,9 +63,9 @@ export class StockWheelsService {
     try {
       
       const [WheelStock, created] = await this.stockWheelsRepository.findOrCreate(
-        {where:{id: +id, id_storage: 1}, 
+        {where:{id_wheel: +id, id_storage: 1}, 
         defaults:{
-          id: +id,
+          id_wheel: +id,
           stock: +stock,
           id_supplier: +id_supplier,
           update_date: update_date
@@ -77,7 +77,7 @@ export class StockWheelsService {
           {stock: +stock, 
             id_supplier: +id_supplier,
             update_date: update_date}, 
-          {where: {id: +id}}
+          {where: {id_wheel: WheelStock.id_wheel, id_storage: 1}}
         );
 
         return WheelStock;

@@ -1,6 +1,10 @@
 export class CreateSaleDto {
     
     readonly id: number;
+    readonly id_tyre: number;
+    readonly id_wheel: number;
+    readonly id_oil: number;
+    readonly id_battery: number;
     readonly id_sale: number;
     readonly id_order: number;
     readonly status: string;

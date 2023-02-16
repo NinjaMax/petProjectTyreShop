@@ -21,18 +21,35 @@ export class UploaderPaprserService {
   async xmlParserTyres(path: string) {
 
     try {
+      let itemByte = 9000;
       
       const stream = fs.createReadStream(join(process.cwd(), path),
-      {highWaterMark: 9100});
+      {highWaterMark: itemByte}
+      //{start: 0, end: name}
+      );
 
-        const items = [];
-        let item = [[]];
+      const items = [];
+      let item = [[]];
+      let startTag;
+      let endTag;
 
-        const xmlStream = new Parser('UTF-8');
-  
+      const xmlStream = new Parser('UTF-8');
+      stream.read
       stream.pipe(xmlStream);
+
       xmlStream.on('startElement', function (name) {
         item.push([name]);
+
+         if(name.toString() =='item') {
+        //   //items.push(Object.fromEntries(item));
+          startTag = Buffer.byteLength(item.toString());
+        //   console.log(Buffer.byteLength(item.toString()));
+        //   //console.log(Buffer.byteLength(name));
+        //   console.log(name + " Start tag");
+         }
+        //console.log(Buffer.byteLength(item.toString()));
+        //console.log(Buffer.byteLength(name));
+        //console.log(name);
       });
   
       xmlStream.on('text', function (text) {    
@@ -43,13 +60,24 @@ export class UploaderPaprserService {
   
         if(name.toString() =='item') {
           items.push(Object.fromEntries(item));
+          //if( < 1269) {
+            endTag = Buffer.byteLength(item.toString())
+          //} else {
+          //  itemByte = 9000;
+          //}
+          console.log(endTag - startTag);
+          //itemByte = Buffer.byteLength(item.toString()) + 5;
+          //console.log(Buffer.byteLength(item.toString()));
+          //console.log(Buffer.byteLength(name));
+          console.log(name + " END tag");
         }
-         
+        
         if(name.toString() =='xml') {
   
           items.forEach((item: ItemPriceTyresConfigAttr) => {  
-            this.addTyresToDataBase.addTyresToDb(item);
+            //this.addTyresToDataBase.addTyresToDb(item);
               //console.log('ITEM ID', item);
+              //console.log('ITEM ID');
           });
           
         } 
@@ -61,10 +89,10 @@ export class UploaderPaprserService {
       });
 
       xmlStream.on('end', function () {
-        console.log('END XML');
+        console.log('XML END');
       });
         
-      stream.on('end', ()=> console.log('END'));
+      stream.on('end', ()=> console.log('STREAM END'));
         
         //return `Price File ${path} has been succeeded upload, parse and added to Database`
          

@@ -18,6 +18,10 @@ export class CreateCommentDto {
     readonly status: string;
     readonly id_basket: number;
 
+    readonly id_tyre: number;
+    readonly id_wheel: number;
+    readonly id_oil: number;
+    readonly id_battery: number;
     readonly name: string;
     readonly full_name: string;
     readonly phone: bigint;

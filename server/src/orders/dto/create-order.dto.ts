@@ -21,7 +21,7 @@ export class CreateOrderDto {
     readonly update_date: Date;
     readonly full_name: string;
     readonly id_sup: number;
-    readonly id_tyres: number;
+    readonly id_tyre: number;
     readonly id_wheel: number;
     readonly id_oil: number;
     readonly id_battery: number;

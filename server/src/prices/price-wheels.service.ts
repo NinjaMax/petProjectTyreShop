@@ -66,9 +66,9 @@ export class PriceWheelsService {
     try {
 
       const [priceByWheelId, created] = await this.priceWheelsRepository.findOrCreate(
-        {where: {id: +id, id_storage: 1}, 
+        {where: {id_wheel: +id, id_storage: 1}, 
         defaults:{
-          id: +id,
+          id_wheel: +id,
           price_wholesale: +price_wholesale,
           price: +price,
           delivery_price: +delivery_price,
@@ -86,7 +86,7 @@ export class PriceWheelsService {
           price_plus_delivery: +price_plus_delivery,
           id_supplier: +id_supplier,
           update_date: update_date}, 
-        {where:{id: priceByWheelId.id}});
+        {where:{id_wheel: priceByWheelId.id_wheel, id_storage: 1}});
 
         return priceByWheelId;
       } 

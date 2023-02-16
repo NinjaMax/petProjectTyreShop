@@ -97,10 +97,10 @@ export class Wheel extends Model<Wheel, WheelConfigAttr> {
     @BelongsTo(() => Category, 'id_cat')
     category: Category;
 
-    @HasMany(() => StockWheels , 'id')
+    @HasMany(() => StockWheels , 'id_wheel')
     stock: StockWheels[];
 
-    @HasMany(() => PriceWheels , 'id')
+    @HasMany(() => PriceWheels , 'id_wheel')
     price: PriceWheels[];
 
     @BelongsTo(() => WheelBrand, 'id_brand')

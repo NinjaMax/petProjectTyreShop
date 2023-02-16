@@ -50,6 +50,12 @@ export class SuppliersService {
 
       if(!created) {
 
+        await supplierFind.update(
+          {name: name,
+          city: city,
+          city_ua: city_ua}, 
+        {where: {id_supplier: supplierFind.id_supplier}});
+
         return supplierFind;
 
       } else {

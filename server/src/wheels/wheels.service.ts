@@ -101,6 +101,21 @@ export class WheelsService {
     }
   }
 
+  async findWheelOne(getWheelDto: GetWheelDto) {
+
+    try {
+      
+      const wheelById = await this.wheelRepository.findOne({where: {id: getWheelDto.id_wheel}});
+
+      return wheelById;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+  }
+
   async findWheelByIdPrice(id: number) {
 
     try {

@@ -66,9 +66,9 @@ export class PriceTyresService {
     try {
 
       const [priceTyreById, created] = await this.priceTyresRepository.findOrCreate(
-        {where: {id: +id, id_storage: 1}, 
+        {where: {id_tyre: +id, id_storage: 1}, 
         defaults:{
-          id: +id,
+          id_tyre: +id,
           price_wholesale: +price_wholesale,
           price: +price,
           delivery_price: +delivery_price,
@@ -86,7 +86,7 @@ export class PriceTyresService {
           price_plus_delivery: +price_plus_delivery,
           id_supplier: +id_supplier,
           update_date: update_date}, 
-        {where:{id: priceTyreById.id}});
+        {where:{id_tyre: priceTyreById.id_tyre, id_storage: 1}});
 
         return priceTyreById;
       } 
@@ -96,7 +96,7 @@ export class PriceTyresService {
       throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
 
     }
-    
+  
   }
 
   async findAllTyres() {

@@ -1,6 +1,7 @@
 export interface PriceTyresConfigAttr {
     
     id: number;
+    id_tyre: number;
     price_wholesale: number;
     price: number;
     delivery_price: number;

@@ -8,6 +8,10 @@ export class UpdateReviewDto extends PartialType(CreateReviewDto) {
     readonly discription: string;
 
     readonly id: number;
+    readonly id_tyre: number;
+    readonly id_wheel: number;
+    readonly id_oil: number;
+    readonly id_battery: number;
     readonly id_model: number;
     readonly id_brand: number;
     readonly id_width: number;

@@ -20,6 +20,10 @@ export class CreatePaynmentDto {
     readonly reserve: number;
     readonly id_basket: number;
 
+    readonly id_tyre: number;
+    readonly id_wheel: number;
+    readonly id_oil: number;
+    readonly id_battery: number;
     readonly id_cashbox: number;
     readonly cashbox: string;
     readonly funds: number;

@@ -1,6 +1,7 @@
 export interface PriceWheelsConfigAttr {
 
     id: number;
+    id_wheel: number;
     price_wholesale: number;
     price: number;
     delivery_price: number;

@@ -5,8 +5,10 @@ export class UpdateOrdersSupplierDto extends PartialType(CreateOrdersSupplierDto
 
     readonly id_order_sup: number;
     readonly id_storage: number;
-    //readonly id_cat: number;
-    //readonly goods: string;
+    readonly id_tyre: number;
+    readonly id_wheel: number;
+    readonly id_oil: number;
+    readonly id_battery: number;
     readonly price: number;
     readonly notes: string;
     readonly total: number;

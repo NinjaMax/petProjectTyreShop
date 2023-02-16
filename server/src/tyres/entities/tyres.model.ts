@@ -131,7 +131,7 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
     @HasMany(() => StockTyres , 'id_tyre')
     stock: StockTyres[];
 
-    @HasMany(() => PriceTyres , 'id')
+    @HasMany(() => PriceTyres , 'id_tyre')
     price: PriceTyres[];
 
     @HasMany(() => ReviewTyres , 'id')

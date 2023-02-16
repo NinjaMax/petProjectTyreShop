@@ -8,5 +8,9 @@ export class UpdatePaynmentDto extends PartialType(CreatePaynmentDto) {
     readonly price: number;
     readonly notes: string;
     readonly status: string;
+    readonly id_tyre: number;
+    readonly id_wheel: number;
+    readonly id_oil: number;
+    readonly id_battery: number;
     
 }
