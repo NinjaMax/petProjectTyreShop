@@ -135,7 +135,7 @@ export class AddWheelsToDbService {
 
       await this.propsWheelSizeDigitsService.createWheelSizeDigitsFromPrice( 
         item.id,
-        item.size_only_digits ?? null
+        item.size_only_digits ?? ''
       );
 
       await this.stockWheelService.createStockWheelFromPrice(

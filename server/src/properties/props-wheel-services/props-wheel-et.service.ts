@@ -64,7 +64,7 @@ export class PropsWheelEtService {
 
       if(created || !created) {
 
-        await wheelEt.$add('wheels', id);
+        wheelEt.$add('wheels', id);
 
       }
 

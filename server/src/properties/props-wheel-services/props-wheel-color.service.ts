@@ -71,7 +71,7 @@ export class PropsWheelColorService {
 
       if(created || !created) {
 
-        await wheelColor.$add('wheels', id);
+        wheelColor.$add('wheels', id);
 
       }
 

@@ -62,7 +62,7 @@ export class PropsTyreLoadIndexService {
     try {
 
       const [tyreLoadIndex, created] = await this.tyreLoadIndexRepository.findOrCreate(
-        { where: {load_index: load_index}, 
+        {where: {load_index: load_index}, 
           defaults: {load_index: load_index, 
             load_index_with_desc: load_index_with_desc
           }

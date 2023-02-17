@@ -160,7 +160,7 @@ export class AddTyresToDbService {
 
             await this.propsTyreSizeDigits.createTyreSizeDigitsFromPrice(
                 +item.id,
-                item.size_only_digits ?? null
+                item.size_only_digits ?? ''
             );
 
             await this.propsTyreSpeedIndex.createTyreSpeedIndexFromPrice(

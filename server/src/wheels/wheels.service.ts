@@ -55,7 +55,7 @@ export class WheelsService {
           full_name: full_name,
           full_name_color: full_name_color,
           full_name_hotline: full_name_hotline, 
-          photo_url: photo_url,
+          //photo_url: photo_url,
           update_date: update_date},
           {where: {id: wheelsIdFromPrice.id}}
         );

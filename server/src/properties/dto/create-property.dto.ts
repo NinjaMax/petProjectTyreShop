@@ -41,7 +41,7 @@ export class CreatePropertyDto {
     readonly id_silent: number;
     readonly silent: string;
     readonly id_size_digits: number;
-    readonly size_only_digits: number;
+    readonly size_only_digits: string;
     readonly id_vehicle_type: number;
     readonly vehicle_type: string;
     readonly vehicle_type_ua: string;

@@ -35,7 +35,7 @@ export class CategorysService {
       
       if(created || !created) {
 
-        await findCategory.$add('tyres', id);
+        findCategory.$add('tyres', id);
 
       }
       

@@ -53,7 +53,7 @@ export class PropsWheelSizeDigitsService {
 
   }
 
-  async createWheelSizeDigitsFromPrice( id: number, size_only_digits: number) {
+  async createWheelSizeDigitsFromPrice( id: number, size_only_digits: string) {
 
     try {
 
@@ -64,7 +64,7 @@ export class PropsWheelSizeDigitsService {
 
       if(created || !created) {
 
-        await wheelSize_only_digits.$add('wheels', id);
+        wheelSize_only_digits.$add('wheels', id);
 
       }
 

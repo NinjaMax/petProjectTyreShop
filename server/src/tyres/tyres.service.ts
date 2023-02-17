@@ -48,10 +48,10 @@ export class TyresService {
 
         await tyresIdFromPrice.update(
           {
-          full_name: full_name, 
-          photo_url: photo_url,
+          //full_name: full_name, 
+          //photo_url: photo_url,
           update_date: update_date},
-          {where: {id: id}}
+          {where: {id: tyresIdFromPrice.id}}
         );
 
         return tyresIdFromPrice;

@@ -23,7 +23,7 @@ export interface WheelPropsConfigAttr {
     id_pcd2: number;
     pcd2: string;
     id_size_digits: number;
-    size_only_digits: number;
+    size_only_digits: string;
     id_type: number;
     type: string;
     id_width: number;

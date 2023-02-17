@@ -8,8 +8,8 @@ export class TyreSizeDigits extends Model<TyreSizeDigits, TyrePropsConfigAttr> {
     @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_size_digits: number;
    
-    @Column({type: DataType.INTEGER, unique: true, allowNull: true})
-    size_only_digits: number;
+    @Column({type: DataType.STRING, unique: true, allowNull: true})
+    size_only_digits: string;
 
     @HasMany(() => Tyres , 'id_size_digits')
     tyres: Tyres[];

@@ -28,7 +28,7 @@ export interface TyrePropsConfigAttr {
     id_silent: number;
     silent: string;
     id_size_digits: number;
-    size_only_digits: number;
+    size_only_digits: string;
     id_speed_index: number;
     speed_index: string;
     speed_index_with_desc: string;

@@ -64,7 +64,7 @@ export class PropsWheelTypeService {
 
       if(created || !created) {
 
-        await wheelType.$add('wheels', id);
+        wheelType.$add('wheels', id);
 
       }
 

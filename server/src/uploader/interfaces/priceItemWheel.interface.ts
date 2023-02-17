@@ -11,7 +11,7 @@ export interface ItemPriceWheelConfigAttr {
     model_id: number;
     model: string;
     diameter: string;
-    size_only_digits: number;
+    size_only_digits: string;
     type_id: number;
     type: string;
     width: string;

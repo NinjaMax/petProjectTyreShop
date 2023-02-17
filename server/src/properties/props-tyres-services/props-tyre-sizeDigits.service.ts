@@ -54,7 +54,7 @@ export class PropsTyreSizeDigitsService {
 
   }
 
-  async createTyreSizeDigitsFromPrice( id: number, size_only_digits: number) {
+  async createTyreSizeDigitsFromPrice( id: number, size_only_digits: string) {
 
     try {
 

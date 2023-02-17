@@ -26,7 +26,7 @@ export interface ItemPriceTyresConfigAttr {
     season: string;
     season_ua: string;
     silent: string;
-    size_only_digits: number;
+    size_only_digits: string;
     speed_index: string;
     speed_index_with_desc: string;
     studded: string;
