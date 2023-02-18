@@ -64,7 +64,7 @@ export class PropsWheelSizeDigitsService {
 
       if(created || !created) {
 
-        wheelSize_only_digits.$add('wheels', id);
+        await wheelSize_only_digits.$add('wheels', id);
 
       }
 

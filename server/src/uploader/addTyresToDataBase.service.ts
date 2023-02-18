@@ -183,12 +183,12 @@ export class AddTyresToDbService {
 
             await this.propsTyreWidth.createTyreWidthFromPrice(
                 +item.id,
-                String(item.width).replace(/,/g, ".") ? '' : String(item.width).replace(/,/g, "."),
+                String(item.width).replace(/,/g, ".") === 'undefined' ? '' : String(item.width).replace(/,/g, "."),
             );
 
             await this.propsTyreYear.createTyreYearFromPrice(
                 +item.id,
-                item.manufacture_year ?? null
+                item.manufacture_year ?? ''
             );
 
             await this.stockTyresService.createStockTyreFromPrice(
@@ -212,7 +212,7 @@ export class AddTyresToDbService {
 
         } catch (error) {
 
-            throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+           throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
 
         }
 

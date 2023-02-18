@@ -66,7 +66,7 @@ export class PropsTyreVehicleTypeService {
         
       if(created || !created) {
 
-        tyreVehicleType.$add('tyres', id);
+        await tyreVehicleType.$add('tyres', id);
 
       }
 

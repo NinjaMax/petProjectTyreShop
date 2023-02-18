@@ -54,7 +54,7 @@ export class PropsModelService {
       
       if(created || !created) {
 
-        tyreModel.$add('tyres', id);
+        await tyreModel.$add('tyres', id);
 
       }
   

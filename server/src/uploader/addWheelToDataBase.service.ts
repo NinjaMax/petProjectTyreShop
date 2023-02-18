@@ -107,7 +107,7 @@ export class AddWheelsToDbService {
 
       await this.propsWheelColorService.createWheelColorFromPrice( 
         +item.id,
-        item.color_id ?? 999, 
+        item.color_id === '' || item.color_id  === 'undefined' ? '999': item.color_id, 
         item.color ?? '', 
         item.color_short ?? ''
       );
@@ -129,7 +129,7 @@ export class AddWheelsToDbService {
 
       await this.propsWheelTypeService.createWheelTypeFromPrice( 
         +item.id,
-        item.type_id ?? 999,
+        item.type_id  === '' || item.type_id  === 'undefined' ? '999' : item.type_id,
         item.type ?? ''
       );
 

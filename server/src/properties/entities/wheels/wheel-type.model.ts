@@ -5,8 +5,8 @@ import { WheelPropsConfigAttr } from "src/properties/interfaces/wheels/wheel-pro
 @Table({tableName: 'wheel_type' , updatedAt: false, createdAt: false})
 export class WheelType extends Model<WheelType, WheelPropsConfigAttr> {
 
-    @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
-    id_type: number;
+    @Column({type: DataType.STRING, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
+    id_type: string;
    
     @Column({type: DataType.STRING, unique: true, allowNull: true})
     type: string;

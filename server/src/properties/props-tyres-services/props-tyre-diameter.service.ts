@@ -60,7 +60,7 @@ export class PropsTyrDiametrService {
 
       if(created || !created) {
 
-        tyreDiameter.$add('tyres', id);
+        await tyreDiameter.$add('tyres', id);
           
       }
     

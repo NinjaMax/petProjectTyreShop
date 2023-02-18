@@ -5,8 +5,11 @@ import { WheelPropsConfigAttr } from "src/properties/interfaces/wheels/wheel-pro
 @Table({tableName: 'wheel_color' , updatedAt: false, createdAt: false})
 export class WheelColor extends Model<WheelColor, WheelPropsConfigAttr> {
 
-    @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
-    id_color: number;
+    @Column({type: DataType.STRING, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
+    id_color: string;
+
+    //@Column({type: DataType.INTEGER, unique: true, allowNull: true})
+    //color_id: number;
    
     @Column({type: DataType.STRING, unique: true, allowNull: true})
     color: string;

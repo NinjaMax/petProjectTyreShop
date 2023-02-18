@@ -17,13 +17,13 @@ export class UploaderService {
     
     try {
 
-      this.uploaderParser.xmlParserTyres(path);
+      await this.uploaderParser.csvParserTyres(path);
 
-      return `Price File ${path} has been succeeded upload, parse and added to Database`
+      return `Price File ${path} has been succeeded upload`
        
     } catch {
       
-      throw new HttpException('Some Problems with Upload and Parce price', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Some Problems with Upload and Parce price', HttpStatus.SERVICE_UNAVAILABLE);
       
     }
     
@@ -33,13 +33,13 @@ export class UploaderService {
     
     try {
 
-      this.uploaderParser.xmlParserWheels(path);
+      await this.uploaderParser.csvParserWheels(path);
 
-      return `Price File ${path} has been succeeded upload, parse and added to Database`
+      return `Price File ${path} has been succeeded upload`
        
     } catch {
       
-      throw new HttpException('Some Problems with Upload and Parce price', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Some Problems with Upload and Parce price', HttpStatus.SERVICE_UNAVAILABLE);
       
     }
     

@@ -63,7 +63,7 @@ export class PropsWheelDiameterService {
 
       if(created || !created) {
 
-        wheelDiameter.$add('wheels', id);
+        await wheelDiameter.$add('wheels', id);
 
       }
 

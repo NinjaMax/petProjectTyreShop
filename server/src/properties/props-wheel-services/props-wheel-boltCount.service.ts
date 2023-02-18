@@ -66,7 +66,7 @@ export class PropsWheelBoltCountService {
 
       if(created || !created) {
 
-        wheelBoltCount.$add('wheels', id);
+        await wheelBoltCount.$add('wheels', id);
 
       }
 

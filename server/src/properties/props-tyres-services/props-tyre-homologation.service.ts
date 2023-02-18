@@ -65,7 +65,7 @@ export class PropsTyreHomologationService {
 
       if(created || !created) {
 
-        tyreHomologation.$add('tyres', id);
+        await tyreHomologation.$add('tyres', id);
           
       }
 

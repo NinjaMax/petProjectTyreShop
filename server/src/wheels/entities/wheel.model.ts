@@ -59,8 +59,8 @@ export class Wheel extends Model<Wheel, WheelConfigAttr> {
     id_bolt_count_pcd: number;
 
     @ForeignKey(() => WheelColor)
-    @Column({type: DataType.INTEGER})
-    id_color: number;
+    @Column({type: DataType.STRING})
+    id_color: string;
 
     @ForeignKey(() => WheelDia)
     @Column({type: DataType.INTEGER})
@@ -87,8 +87,8 @@ export class Wheel extends Model<Wheel, WheelConfigAttr> {
     id_size_digits: number;
 
     @ForeignKey(() => WheelType)
-    @Column({type: DataType.INTEGER})
-    id_type: number;
+    @Column({type: DataType.STRING})
+    id_type: string;
 
     @ForeignKey(() => WheelWidth)
     @Column({type: DataType.INTEGER})

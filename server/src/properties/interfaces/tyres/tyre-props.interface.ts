@@ -40,6 +40,6 @@ export interface TyrePropsConfigAttr {
     id_width: number;
     width: string;
     id_year: number;
-    manufacture_year: number;
+    manufacture_year: string;
 
 }

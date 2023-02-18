@@ -13,6 +13,7 @@ export class CreatePropertyDto {
     readonly season: string;
     readonly brand: string;
     readonly model: string;
+    readonly id_type: string;
     readonly type: string;
     readonly id_demo: number;
     readonly demo: string;
@@ -24,7 +25,7 @@ export class CreatePropertyDto {
     readonly country_manufacturer: string;
     readonly country_manufacturer_ua: string;
     readonly id_year: number;
-    readonly manufacture_year: number;
+    readonly manufacture_year: string;
     readonly id_speed_index: number;
     readonly speed_index: string;
     readonly speed_index_with_desc: string;
@@ -52,7 +53,7 @@ export class CreatePropertyDto {
     readonly id_bolt_count_pcd: number;
     readonly bolt_count_pcd: string;
     readonly id_wheel_brand: number;
-    readonly id_color: number;
+    readonly id_color: string;
     readonly color: string;
     readonly color_short: string;
     readonly id_dia: number;
@@ -63,7 +64,7 @@ export class CreatePropertyDto {
     readonly pcd: string;
     readonly id_pcd2: number;
     readonly pcd2: string;
-    readonly id_type: number;
+    
     
     readonly id_tyre: number;
     readonly id_wheel: number;

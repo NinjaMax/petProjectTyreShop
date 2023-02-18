@@ -55,7 +55,7 @@ export class PropsWheelColorService {
 
   }
 
-  async createWheelColorFromPrice( id: number, id_color: number, color: string, 
+  async createWheelColorFromPrice( id: number, id_color: string, color: string, 
     color_short: string) {
 
     try {
@@ -71,7 +71,7 @@ export class PropsWheelColorService {
 
       if(created || !created) {
 
-        wheelColor.$add('wheels', id);
+        await wheelColor.$add('wheels', id);
 
       }
 

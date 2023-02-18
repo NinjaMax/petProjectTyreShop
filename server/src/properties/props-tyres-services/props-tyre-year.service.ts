@@ -17,7 +17,7 @@ export class PropsTyreYearService {
     
         const tyreId = await this.tyresService.findTyresById(createPropertyDto);
         const tyreYear = await this.tyreYearRepository.findOne(
-        { where: { manufacture_year: createPropertyDto.manufacture_year } })
+        {where: { manufacture_year: createPropertyDto.manufacture_year } })
 
         if(tyreId && tyreYear) {
 
@@ -54,7 +54,7 @@ export class PropsTyreYearService {
 
   }
 
-  async createTyreYearFromPrice( id: number, manufacture_year: number) {
+  async createTyreYearFromPrice( id: number, manufacture_year: string) {
 
     try {
 
@@ -66,7 +66,7 @@ export class PropsTyreYearService {
         
       if(created || !created) {
 
-        tyreYear.$add('tyres', id);
+      await tyreYear.$add('tyres', id);
 
       }
 

@@ -64,7 +64,7 @@ export class PropsWheelDiaService {
 
       if(created || !created) {
 
-        wheelDia.$add('wheels', id);
+        await wheelDia.$add('wheels', id);
 
       }
 

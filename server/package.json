@@ -29,12 +29,10 @@
     "@nestjs/platform-express": "^9.2.1",
     "@nestjs/sequelize": "^0.1.1",
     "@types/cors": "^2.8.13",
-    "@types/node-expat": "^2.3.2",
     "csv-parser": "^3.0.0",
     "dotenv": "^16.0.3",
     "fast-xml-parser": "^4.0.13",
     "iconv-lite": "^0.6.3",
-    "node-expat": "^2.4.0",
     "node-gyp": "^9.3.1",
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
@@ -43,8 +41,7 @@
     "rxjs": "^7.8.0",
     "sass": "^1.57.1",
     "sequelize": "^6.28.0",
-    "sequelize-typescript": "^2.1.5",
-    "strip-bom-stream": "^5.0.0"
+    "sequelize-typescript": "^2.1.5"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.1.8",

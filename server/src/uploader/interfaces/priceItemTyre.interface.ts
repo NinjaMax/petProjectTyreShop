@@ -34,7 +34,7 @@ export interface ItemPriceTyresConfigAttr {
     vehicle_type: string;
     vehicle_type_ua: string;
     width: string;
-    manufacture_year: number;
+    manufacture_year: string;
     full_name: string;
     photo_url: string;
     update_date: Date;

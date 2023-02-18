@@ -45,7 +45,7 @@ export class PropsTyreParamsService {
 
   }
 
-  async createParamsFromPrice( id: number, params: string) {
+  async createParamsFromPrice(id: number, params: string) {
 
     try {
 
@@ -55,7 +55,7 @@ export class PropsTyreParamsService {
 
       if(created || !created) {
 
-        tyreParams.$add('tyres', id);
+        await tyreParams.$add('tyres', id);
         //tyreParams.tyres.push(id);
           
       }

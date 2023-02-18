@@ -16,7 +16,7 @@ export class UpdatePropertyDto extends PartialType(CreatePropertyDto) {
     readonly season: string;
     readonly brand: string;
     readonly model: string;
-    readonly id_type: number;
+    readonly id_type: string;
     readonly type: string;
     readonly id_demo: number;
     readonly demo: string;
@@ -28,7 +28,7 @@ export class UpdatePropertyDto extends PartialType(CreatePropertyDto) {
     readonly country_manufacturer: string;
     readonly country_manufacturer_ua: string;
     readonly id_year: number;
-    readonly manufacture_year: number;
+    readonly manufacture_year: string;
     readonly id_speed_index: number;
     readonly speed_index: string;
     readonly speed_index_with_desc: string;

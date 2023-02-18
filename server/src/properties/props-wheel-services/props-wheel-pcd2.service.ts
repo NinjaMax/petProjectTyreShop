@@ -64,7 +64,7 @@ export class PropsWheelPcd2Service {
 
       if(created || !created) {
 
-        wheelPcd2.$add('wheels', id);
+        await wheelPcd2.$add('wheels', id);
 
       }
 

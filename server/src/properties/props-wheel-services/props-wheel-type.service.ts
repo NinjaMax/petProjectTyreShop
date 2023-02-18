@@ -54,7 +54,7 @@ export class PropsWheelTypeService {
 
   }
 
-  async createWheelTypeFromPrice( id: number, id_type: number, type: string) {
+  async createWheelTypeFromPrice( id: number, id_type: string, type: string) {
 
     try {
 
@@ -64,7 +64,7 @@ export class PropsWheelTypeService {
 
       if(created || !created) {
 
-        wheelType.$add('wheels', id);
+        await wheelType.$add('wheels', id);
 
       }
 

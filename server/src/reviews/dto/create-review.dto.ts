@@ -22,7 +22,7 @@ export class CreateReviewDto {
     readonly season: string;
     readonly brand: string;
     readonly model: string;
-    readonly id_type: number;
+    readonly id_type: string;
     readonly type: string;
     readonly id_demo: number;
     readonly demo: string;
@@ -34,7 +34,7 @@ export class CreateReviewDto {
     readonly country_manufacturer: string;
     readonly country_manufacturer_ua: string;
     readonly id_year: number;
-    readonly manufacture_year: number;
+    readonly manufacture_year: string;
     readonly id_speed_index: number;
     readonly speed_index: string;
     readonly speed_index_with_desc: string;
@@ -61,7 +61,7 @@ export class CreateReviewDto {
     readonly id_bolt_count_pcd: number;
     readonly bolt_count_pcd: string;
     readonly bolt_count: string;
-    readonly id_color: number;
+    readonly id_color: string;
     readonly color: string;
     readonly id_dia: number;
     readonly dia: string;

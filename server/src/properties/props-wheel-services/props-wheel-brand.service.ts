@@ -66,7 +66,7 @@ export class PropsWheelBrandService {
 
       if(created || !created) {
 
-        wheelBrand.$add('wheels', id);
+        await wheelBrand.$add('wheels', id);
 
       }
 

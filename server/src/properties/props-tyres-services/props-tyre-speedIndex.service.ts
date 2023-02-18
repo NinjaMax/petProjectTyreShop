@@ -70,7 +70,7 @@ export class PropsTyreSpeedIndexService {
 
       if(created || !created) {
 
-        tyreSpeedIndex.$add('tyres', id); 
+        await tyreSpeedIndex.$add('tyres', id); 
 
       }
 

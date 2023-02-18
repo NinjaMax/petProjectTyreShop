@@ -17,10 +17,9 @@ export class UploaderController {
 
   @Post('/tyres')
   @Header('Content-Type', 'multipart/form-data')
-  //@Header('Accept-Charset', '*')
+  @Header('Accept-Charset', 'utf-8')
   @UseInterceptors(FileInterceptor( 'file', 
     {
-      
       storage: diskStorage({
         destination: './upload_prices',
         filename: (req, file, cb) => {
@@ -61,8 +60,8 @@ export class UploaderController {
         destination: './upload_prices',
         filename: (req, file, cb) => {
 
-          if(!file.mimetype.includes('xml')) {
-           throw "not supported format"
+          if(!file.mimetype.includes('csv')) {
+           throw "Not supported format"
           }
 
           const fileName: string = file.originalname;
@@ -79,7 +78,7 @@ export class UploaderController {
       new ParseFilePipe({
         validators: [
           new MaxFileSizeValidator({ maxSize: 15000000 }),
-          new FileTypeValidator({ fileType: 'xml' }),
+          new FileTypeValidator({ fileType: 'csv' }),
         ]
       })
     ) file: Express.Multer.File, 

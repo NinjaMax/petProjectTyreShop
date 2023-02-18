@@ -64,7 +64,7 @@ export class PropsWheelWidthService {
 
       if(created || !created) {
 
-        wheelWidth.$add('wheels', id);
+       await wheelWidth.$add('wheels', id);
 
       }
 

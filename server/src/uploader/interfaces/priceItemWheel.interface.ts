@@ -12,7 +12,7 @@ export interface ItemPriceWheelConfigAttr {
     model: string;
     diameter: string;
     size_only_digits: string;
-    type_id: number;
+    type_id: string;
     type: string;
     width: string;
     pcd: string;
@@ -20,7 +20,7 @@ export interface ItemPriceWheelConfigAttr {
     pcd2: string;
     dia: string;
     color: string;
-    color_id: number;
+    color_id: string;
     color_short: string;
     bolt_count: string;
     bolt_count_pcd: string;

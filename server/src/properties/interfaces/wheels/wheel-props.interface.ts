@@ -7,7 +7,7 @@ export interface WheelPropsConfigAttr {
     id_wheel_brand: number;
     id_brand: number;
     brand: string;
-    id_color: number;
+    id_color: string;
     color: string;
     color_short: string;
     id_dia: number;
@@ -24,7 +24,7 @@ export interface WheelPropsConfigAttr {
     pcd2: string;
     id_size_digits: number;
     size_only_digits: string;
-    id_type: number;
+    id_type: string;
     type: string;
     id_width: number;
     width: string;
