@@ -73,7 +73,10 @@ export class PriceOilsService {
     
     try {
 
-      const oilsPriceId = await this.priceOilsRepository.findByPk(getPriceDto.id_oil, {include: {all: true}});
+      const oilsPriceId = await this.priceOilsRepository.findOne(
+        {where: {id_oil: getPriceDto.id_oil}, 
+        include: {all: true}
+      });
 
       return oilsPriceId;
 
@@ -90,17 +93,17 @@ export class PriceOilsService {
 
     try {
 
-      const oilsPriceId = await this.priceOilsRepository.findByPk(updatePriceDto.id_oil, {include: {all: true}});
+      const oilPriceIdUpdate = await this.priceOilsRepository.findByPk(updatePriceDto.id_oil, {include: {all: true}});
       
-      if(oilsPriceId) {
+      if(oilPriceIdUpdate) {
 
          await this.priceOilsRepository.update(
-        { price_wholesale : updatePriceDto.price_wholesale, 
-          price : updatePriceDto.price, 
-          id_supplier : updatePriceDto.id_supplier,
-          delivery_price : updatePriceDto.delivery_price, 
-          price_plus_delivery : updatePriceDto.price_plus_delivery,
-          update_date : updatePriceDto.update_date
+        { price_wholesale: updatePriceDto.price_wholesale, 
+          price: updatePriceDto.price, 
+          id_supplier: updatePriceDto.id_supplier,
+          delivery_price: updatePriceDto.delivery_price, 
+          price_plus_delivery: updatePriceDto.price_plus_delivery,
+          update_date: updatePriceDto.update_date
         }, {where: {id_oil : updatePriceDto.id_oil}});
 
         const updatePriceOils = await this.priceOilsRepository.findByPk(updatePriceDto.id_oil, {include: {all: true}});
@@ -121,7 +124,7 @@ export class PriceOilsService {
 
     try {
 
-      const removePriceOils = await this.priceOilsRepository.destroy({where: {id_oil : getPriceDto.id_oil}});
+      const removePriceOils = await this.priceOilsRepository.destroy({where: {id_oil: getPriceDto.id_oil}});
 
       return removePriceOils;
 

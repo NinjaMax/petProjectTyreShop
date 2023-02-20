@@ -47,7 +47,7 @@ export class UploaderController {
       })
     ) file: Express.Multer.File, 
   ) {    
-    return await this.uploaderService.parseTyresPrice(file.path);
+    return await this.uploaderService.parseTyresPrice(file.path, file.filename);
   }
 
   @Post('/wheels')
@@ -58,7 +58,7 @@ export class UploaderController {
       
       storage: diskStorage({
         destination: './upload_prices',
-        filename: (req, file, cb) => {
+        filename: (res, file, cb) => {
 
           if(!file.mimetype.includes('csv')) {
            throw "Not supported format"
@@ -83,7 +83,7 @@ export class UploaderController {
       })
     ) file: Express.Multer.File, 
   ) {    
-    return await this.uploaderService.parseWheelsPrice(file.path);
+    return await this.uploaderService.parseWheelsPrice(file.path, file.filename);
   }
 
   @Get()

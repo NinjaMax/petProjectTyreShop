@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import {React, useState, Fragment} from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminModalGoods.css';
 
 const AdminModalGoods = ({tyreModData, wheelModData, showRowModData}) => {
@@ -39,7 +39,7 @@ const AdminModalGoods = ({tyreModData, wheelModData, showRowModData}) => {
                 </div>
             </div>
                 <input type="text" className="admInpModalGoods" 
-                    onKeyUp={() =>console.log('search Goods')} 
+                    //onKeyUp={() =>console.log('search Goods')} 
                     placeholder="Пошук товару..."/>
             <div className='admModalGoodsTableBox'>
             <table className="admModalGoodsTable">
@@ -55,30 +55,34 @@ const AdminModalGoods = ({tyreModData, wheelModData, showRowModData}) => {
                 <tbody>
                     {chooseCatMod === 'Шини' ?
                 
-                    tyreModData.map((item, index) => (
+                        tyreModData.map((item, index) => (
                 
                         <tr key={'tm' + item.id} onDoubleClick={showRowModData} value={item.id}>
-                            <td key={'tmid' + item.id}>{item.id}</td>
-                            <td key={'tmfn' + item.id}>{item.full_name}</td>
-                            <td key={'tmca' + item.id}>{item.category?.category ?? ''}</td>
-                            { item.price.lenght > 0 ?
-                                item.price.map((entity) => (
+                            {item.price.lenght > 0 || item.stock.lenght > 0 ? 
+                            <Fragment key={'tid' + item.id}>
+                                <td key={'tmid' + item.id}>{item.id}</td>
+                                <td key={'tmfn' + item.id}>{item.full_name}</td>
+                                <td key={'tmca' + item.id}>{item.category?.category ?? ''}</td>
+                                {item.price.map((entity) => (
                                     <td key={'tmpr' + entity.id}>{entity.price ?? ''}</td>
-                                ))
-                              : <td key={'tmpr' + item.id}>{item.price.price ?? ''}</td>  
-                            }
-                            { item.stock.lenght > 0 ?
-                                item.stock.map((entity) => (
+                                ))}     
+                                {item.stock.map((entity) => (
                                     <td key={'tmr' + entity.id}>{entity.remainder ?? ''}</td>
-                                ))
-                              : <td key={'tmr' + item.id}>{item.price.remainder ?? ''}</td>  
-                            }
+                                ))}</Fragment> 
+                              : 
+                              <Fragment key={'tid' + item.id}>
+                                <td key={'tmid' + item.id}>{item.id}</td>
+                                <td key={'tmfn' + item.id}>{item.full_name}</td>
+                                <td key={'tmca' + item.id}>{item.category?.category ?? ''}</td>
+                                <td key={'tmpr' + item.id}>{item.price.price ?? ''}</td> 
+                                <td key={'tmr' + item.id}>{item.stock.remainder ?? ''}</td> 
+                              </Fragment>   
+                            }    
                         </tr> ))
-                    : null 
+                        : null 
                     }
                     {chooseCatMod=== 'Диски' ?
                         wheelModData.map((item) => (
-                
                             <tr key={'wm' + item.id} onDoubleClick={showRowModData} value={item.id}>
                                 <td key={'wmid' + item.id}>{item.id}</td>
                                 <td key={'wmfn' + item.id}>{item.full_name_color}</td>

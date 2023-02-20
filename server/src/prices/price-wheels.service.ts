@@ -119,7 +119,10 @@ export class PriceWheelsService {
     
     try {
 
-      const wheelsPriceById = await this.priceWheelsRepository.findByPk(getPriceDto.id, {include: {all: true}});
+      const wheelsPriceById = await this.priceWheelsRepository.findOne(
+        {where: {id_wheel: getPriceDto.id_wheel}, 
+        include: {all: true}
+      });
 
       return wheelsPriceById;
 
@@ -136,18 +139,18 @@ export class PriceWheelsService {
 
     try {
 
-      const wheelsPriceId = await this.priceWheelsRepository.findByPk(updatePriceDto.id, {include: {all: true}});
+      const wheelsPriceId = await this.priceWheelsRepository.findByPk(updatePriceDto.id_wheel, {include: {all: true}});
       
       if(wheelsPriceId) {
 
          await this.priceWheelsRepository.update(
-        { price_wholesale : updatePriceDto.price_wholesale, 
-          price : updatePriceDto.price, 
-          id_supplier : updatePriceDto.id_supplier,
-          delivery_price : updatePriceDto.delivery_price, 
-          price_plus_delivery : updatePriceDto.price_plus_delivery,
-          update_date : updatePriceDto.update_date
-        }, {where: {id: updatePriceDto.id}});
+        { price_wholesale: updatePriceDto.price_wholesale, 
+          price: updatePriceDto.price, 
+          id_supplier: updatePriceDto.id_supplier,
+          delivery_price: updatePriceDto.delivery_price, 
+          price_plus_delivery: updatePriceDto.price_plus_delivery,
+          update_date: updatePriceDto.update_date
+        }, {where: {id_wheel: updatePriceDto.id_wheel}});
 
         const updatePriceWheels = await this.priceWheelsRepository.findByPk(updatePriceDto.id_wheel, {include: {all: true}});
 
@@ -167,7 +170,7 @@ export class PriceWheelsService {
 
     try {
 
-      const removePriceWheels = await this.priceWheelsRepository.destroy({where: {id: getPriceDto.id}});
+      const removePriceWheels = await this.priceWheelsRepository.destroy({where: {id_wheel: getPriceDto.id_wheel}});
 
       return removePriceWheels;
 

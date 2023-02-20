@@ -11,7 +11,7 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
     const [addGoods, setAddGoods] = useState(false);
     const [addCustomer, setAddCustomer] = useState(false);
     const [goodsList, setGoodsList] = useState([]);
-    //const [addItems, setAddItems] = useState();
+    const [addItems, setAddItems] = useState();
     
     const activeForm = () => {
         setActive(!active);
@@ -35,8 +35,14 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
             const itemWheel = wheelDatas.find((item) => item === goodsId);
             setGoodsList(goodsList.push(itemWheel));
         }
-
+        
     };
+
+        if(goodsId) {
+            console.log('FORM: ', goodsId);
+            setAddItems(goodsId);
+        }
+
 
     return (
         <div>
@@ -142,18 +148,29 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
                         </tr>     
                     </thead>
                     <tbody>
-                        {goodsList ? goodsList.map((item) =>(
-                        <tr key={'g'+item.id}>
-                            <td key={'gid'+item.id}>{}</td>
-                            <td key={'gg'+item.id}>{}</td>
-                            <td key={'gcat'+item.id}>{}</td>
-                            <td key={'gc'+item.id}>{}</td>
-                            <td key={'gres'+item.id}>{}</td>
-                            <td key={'gpr'+item.id}>{}</td>
-                            <td key={'gst'+item.id}>{}</td> 
+                        {goodsList ? 
+                            goodsList.map((item) =>(
+                        <tr key={'g'+ item.id}>
+                            <td key={'gid'+ item.id}>{item?.id}</td>
+                            <td key={'gg'+ item.id}>{item?.full_name}</td>
+                            <td key={'gcat'+ item.id}>{item?.cat}</td>
+                            <td key={'gc'+ item.id}>{}</td>
+                            <td key={'gres'+ item.id}>{}</td>
+                            <td key={'gpr'+ item.id}>{item.price?.price}</td>
+                            <td key={'gst'+ item.id}>{item?.storage}</td> 
                         </tr>
                         ))
-                        : <tr></tr>
+                        : addItems.map((item)=> ( 
+                        <tr key={'g'+ item.id}>
+                            <td key={'gid'+ item.id}>{item?.id}</td>
+                            <td key={'gg'+ item.id}>{item?.full_name}</td>
+                            <td key={'gcat'+ item.id}>{item?.cat}</td>
+                            <td key={'gc'+ item.id}>{}</td>
+                            <td key={'gres'+ item.id}>{}</td>
+                            <td key={'gpr'+ item.id}>{item.price?.price}</td>
+                            <td key={'gst'+ item.id}>{item?.storage}</td> 
+                        </tr>
+                        ))
                         }
                     </tbody>
                 </table>

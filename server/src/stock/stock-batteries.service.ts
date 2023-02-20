@@ -107,11 +107,14 @@ export class StockBatteriesService {
     
   }
 
-  async findStockBatteryById(getStockDto : GetStockDto) {
+  async findStockBatteryById(getStockDto: GetStockDto) {
 
     try {
 
-      const stockBatteryById = await this.stockBatteriesRepository.findByPk(getStockDto.id, {include: {all: true}});
+      const stockBatteryById = await this.stockBatteriesRepository.findOne(
+        {where: {id_battery: getStockDto.id_battery}, 
+        include: {all: true}
+      });
 
       return stockBatteryById;
 
@@ -123,13 +126,13 @@ export class StockBatteriesService {
     
   }
 
-  async findStockBatteryByIdForSale(id : number) {
+  async findStockBatteryByIdForSale(id_battery: number) {
 
     try {
 
-      const stockBatteryById = await this.stockBatteriesRepository.findByPk(id, {include: {all: true}});
+      const stockBatteryId = await this.stockBatteriesRepository.findByPk(id_battery, {include: {all: true}});
 
-      return stockBatteryById;
+      return stockBatteryId;
 
     } catch {
 
@@ -143,20 +146,20 @@ export class StockBatteriesService {
     
     try {
 
-      const batteryId = await this.stockBatteriesRepository.findByPk(updateStockDto.id, {include: {all: true}});
+      const batteryIdUpdate = await this.stockBatteriesRepository.findByPk(updateStockDto.id_battery, {include: {all: true}});
       
-      if(batteryId) {
+      if(batteryIdUpdate) {
 
         await this.stockBatteriesRepository.update(
         { 
-            stock : updateStockDto.stock,
-            reserve : updateStockDto.reserve,
-            remainder : updateStockDto.remainder, 
-            id_supplier : updateStockDto.id_supplier,
-            update_date : updateStockDto.update_date
-        }, {where: {id : updateStockDto.id}});
+            stock: updateStockDto.stock,
+            reserve: updateStockDto.reserve,
+            remainder: updateStockDto.remainder, 
+            id_supplier: updateStockDto.id_supplier,
+            update_date: updateStockDto.update_date
+        }, {where: {id_battery: updateStockDto.id_battery}});
 
-        const updateStockBatteries = await this.stockBatteriesRepository.findByPk(updateStockDto.id, {include: {all: true}});
+        const updateStockBatteries = await this.stockBatteriesRepository.findByPk(updateStockDto.id_battery, {include: {all: true}});
 
         return updateStockBatteries; 
       }
@@ -173,7 +176,7 @@ export class StockBatteriesService {
     
     try {
 
-      const removeStockBatteries = await this.stockBatteriesRepository.destroy({where: {id : getStockDto.id}});
+      const removeStockBatteries = await this.stockBatteriesRepository.destroy({where: {id_battery: getStockDto.id_battery}});
 
       return removeStockBatteries;
 

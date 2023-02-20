@@ -119,7 +119,10 @@ export class PriceTyresService {
     
     try {
 
-      const tyresById = await this.priceTyresRepository.findByPk(getPriceDto.id, {include: {all: true}});
+      const tyresById = await this.priceTyresRepository.findOne(
+        {where: {id_tyre: getPriceDto.id_tyre}, 
+        include: {all: true}
+      });
 
       return tyresById;
 
@@ -132,24 +135,24 @@ export class PriceTyresService {
     
   }
 
-  async updatePriceTyres( updatePriceDto: UpdatePriceTyresDto ) {
+  async updatePriceTyres(updatePriceDto: UpdatePriceTyresDto) {
 
     try {
 
-      const tyresId = await this.priceTyresRepository.findByPk(updatePriceDto.id, {include: {all: true}});
+      const tyresId = await this.priceTyresRepository.findByPk(updatePriceDto.id_tyre, {include: {all: true}});
       
       if(tyresId) {
 
          await this.priceTyresRepository.update(
-        { price_wholesale : updatePriceDto.price_wholesale, 
-          price : updatePriceDto.price, 
-          id_supplier : updatePriceDto.id_supplier,
-          delivery_price : updatePriceDto.delivery_price, 
-          price_plus_delivery : updatePriceDto.price_plus_delivery,
-          update_date : updatePriceDto.update_date
-        }, {where: {id : updatePriceDto.id}});
+        { price_wholesale: updatePriceDto.price_wholesale, 
+          price: updatePriceDto.price, 
+          id_supplier: updatePriceDto.id_supplier,
+          delivery_price: updatePriceDto.delivery_price, 
+          price_plus_delivery: updatePriceDto.price_plus_delivery,
+          update_date: updatePriceDto.update_date
+        }, {where: {id_tyre: updatePriceDto.id_tyre}});
 
-        const updatePriceTyres = await this.priceTyresRepository.findByPk(updatePriceDto.id, {include: {all: true}});
+        const updatePriceTyres = await this.priceTyresRepository.findByPk(updatePriceDto.id_tyre, {include: {all: true}});
 
         return updatePriceTyres; 
       }
@@ -167,7 +170,7 @@ export class PriceTyresService {
 
     try {
 
-      const removePrice = await this.priceTyresRepository.destroy({where: {id : getPriceDto.id}});
+      const removePrice = await this.priceTyresRepository.destroy({where: {id_tyre: getPriceDto.id_tyre}});
 
       return removePrice;
 

@@ -139,11 +139,14 @@ export class StockWheelsService {
     
   }
 
-  async findStockWheelById(getStockTyresDto : GetStockDto) {
+  async findStockWheelById(getStockDto: GetStockDto) {
 
     try {
 
-      const stockWheelById = await this.stockWheelsRepository.findByPk(getStockTyresDto.id, {include: {all: true}});
+      const stockWheelById = await this.stockWheelsRepository.findOne(
+        {where: {id_wheel: getStockDto.id_wheel}, 
+        include: {all: true}
+      });
 
       return stockWheelById;
 
@@ -155,13 +158,13 @@ export class StockWheelsService {
     
   }
 
-  async findStockWheelByIdForSale(id : number) {
+  async findStockWheelByIdForSale(id_wheel: number) {
 
     try {
 
-      const stockWheelById = await this.stockWheelsRepository.findByPk(id, {include: {all: true}});
+      const stockWheelId = await this.stockWheelsRepository.findByPk(id_wheel, {include: {all: true}});
 
-      return stockWheelById;
+      return stockWheelId;
 
     } catch {
 
@@ -175,19 +178,19 @@ export class StockWheelsService {
     
     try {
 
-      const wheelId = await this.stockWheelsRepository.findByPk(updateStockDto.id, {include: {all: true}});
+      const wheelIdUpdate = await this.stockWheelsRepository.findByPk(updateStockDto.id_wheel, {include: {all: true}});
       
-      if(wheelId) {
+      if(wheelIdUpdate) {
 
         await this.stockWheelsRepository.update(
-        {   stock : updateStockDto.stock,
-            reserve : updateStockDto.reserve,
-            remainder : updateStockDto.remainder,
-            id_supplier : updateStockDto.id_supplier,
-            update_date : updateStockDto.update_date
-        }, {where: {id : updateStockDto.id}});
+        {   stock: updateStockDto.stock,
+            reserve: updateStockDto.reserve,
+            remainder: updateStockDto.remainder,
+            id_supplier: updateStockDto.id_supplier,
+            update_date: updateStockDto.update_date
+        }, {where: {id_wheel: updateStockDto.id_wheel}});
 
-        const updateStockWheel = await this.stockWheelsRepository.findByPk(updateStockDto.id, {include: {all: true}});
+        const updateStockWheel = await this.stockWheelsRepository.findByPk(updateStockDto.id_wheel, {include: {all: true}});
 
         return updateStockWheel; 
       }
@@ -204,7 +207,7 @@ export class StockWheelsService {
     
     try {
 
-      const removeStockWheel = await this.stockWheelsRepository.destroy({where: {id: getStockDto.id}});
+      const removeStockWheel = await this.stockWheelsRepository.destroy({where: {id_wheel: getStockDto.id_wheel}});
 
       return removeStockWheel;
 

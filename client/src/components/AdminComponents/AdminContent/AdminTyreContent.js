@@ -40,7 +40,7 @@ const AdminTyreContent = ({props, showRowData, addTyreToOrder}) => {
                         <td key={'ty' + item.id}>{item.year?.manufacture_year ?? ''}</td>
                         <td key={'tc' + item.id}>{item.country?.country_manufacturer_ua ?? ''}</td>
                         <td key={'tca' + item.id}>{item.category?.category ?? ''}</td>
-                        <td key={'t' + item.id}>
+                        <td key={'t' + item.id} onClick={(e)=>e.preventDefault({passive: false})}>
                             <button className='basketAdmTyre' value={item.id}
                                 onClick={addTyreToOrder}>
                                 <i className="fa fa-shopping-cart"></i>

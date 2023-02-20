@@ -21,7 +21,7 @@ const AdminGoodsContent = () => {
     const [itemIdWheel, setItemIdWheel] = useState();
     // const [itemIdOil, setItemIdOil] = useState();
     // const [itemIdBattery, setItemIdBattery] = useState();
-    //const [itemId, setItemId] = useState(null);
+    const [itemId, setItemId] = useState([]);
     const [addGoods, setAddGoods] = useState(false)
     const [stockTyre, setStockTyre] = useState([]);
     const [priceTyre, setPriceTyre] = useState([]);
@@ -61,10 +61,11 @@ const AdminGoodsContent = () => {
         axios.get("http://localhost:4000/stock/tyres/", {
             headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
             withCredentials: true,
-            params: {id: itemIdTyre}
+            params: {id_tyre: itemIdTyre}
         })
         .then(response => {
             setStockTyre([response.data]);
+            //console.log(response.data)
         })
         .catch(error => {
           console.log(error)
@@ -73,7 +74,7 @@ const AdminGoodsContent = () => {
         axios.get("http://localhost:4000/price/tyres/", {
             headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
             withCredentials: true,
-            params: {id: itemIdTyre}
+            params: {id_tyre: itemIdTyre}
         })
         .then(response => {
             setPriceTyre([response.data]);
@@ -88,7 +89,7 @@ const AdminGoodsContent = () => {
         axios.get("http://localhost:4000/stock/wheels/", {
             headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
             withCredentials: true,
-            params: {id: itemIdWheel}
+            params: {id_wheel: itemIdWheel}
         })
         .then(response => {
             setStockWheel([response.data]);
@@ -100,7 +101,7 @@ const AdminGoodsContent = () => {
         axios.get("http://localhost:4000/price/wheels/", {
             headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
             withCredentials: true,
-            params: {id: itemIdWheel}
+            params: {id_wheel: itemIdWheel}
         })
         .then(response => {
             setPriceWheel([response.data]);
@@ -128,8 +129,24 @@ const AdminGoodsContent = () => {
     // };
 
     const addToOrder = (e) => {
-        //setItemId(e.currentTarget.value);
         setAddGoods(!addGoods);
+        console.log(e.currentTarget.value)
+        let itemTyre = tyreData?.find(item => item.id === e.currentTarget.value);
+        let itemWheel = tyreData?.find(item => item.id === e.currentTarget.value);
+        //const itemTyre = tyreData.find(item => item ==e.currentTarget.value);
+        //const itemTyre = tyreData.find(item => item ==e.currentTarget.value);
+        
+        console.log('GOODS: ', itemTyre);
+        if(itemTyre) {
+            setItemId(itemId.push(itemTyre));
+            //setAddGoods(!addGoods);
+        }
+            
+        if(itemWheel) {
+             setItemId(itemWheel);
+            
+        }
+       
     }
 
     //console.log(itemId);
@@ -224,7 +241,7 @@ const AdminGoodsContent = () => {
             {addGoods ?
                 <ModalAdmin active={addGoods} setActive={addToOrder}>
                     <AdminFormOrder 
-                        //goodsId={itemId} 
+                        goodsId={itemId} 
                         tyreDatas={tyreData} 
                         wheelDatas={wheelData}/>
                 </ModalAdmin>

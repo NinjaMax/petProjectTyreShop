@@ -105,7 +105,7 @@ export class WheelsService {
 
     try {
       
-      const wheelById = await this.wheelRepository.findOne({where: {id: getWheelDto.id_wheel}});
+      const wheelById = await this.wheelRepository.findOne({where: {id: getWheelDto.id}});
 
       return wheelById;
 

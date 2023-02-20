@@ -106,11 +106,14 @@ export class StockOilsService {
     
   }
 
-  async findStockOilById(getStockTyresDto : GetStockDto) {
+  async findStockOilById(getStockDto: GetStockDto) {
 
     try {
 
-      const stockOilById = await this.stockOilsRepository.findByPk(getStockTyresDto.id, {include: {all: true}});
+      const stockOilById = await this.stockOilsRepository.findOne(
+        {where: {id_oil: getStockDto.id_oil}, 
+        include: {all: true}
+      });
 
       return stockOilById;
 
@@ -122,13 +125,13 @@ export class StockOilsService {
     
   }
 
-  async findStockOilByIdForSale(id : number) {
+  async findStockOilByIdForSale(id_oil : number) {
 
     try {
 
-      const stockOilById = await this.stockOilsRepository.findByPk(id, {include: {all: true}});
+      const stockOilId = await this.stockOilsRepository.findByPk(id_oil, {include: {all: true}});
 
-      return stockOilById;
+      return stockOilId;
 
     } catch {
 
@@ -142,20 +145,20 @@ export class StockOilsService {
     
     try {
 
-      const oilId = await this.stockOilsRepository.findByPk(updateStockDto.id, {include: {all: true}});
+      const oilIdUpdate = await this.stockOilsRepository.findByPk(updateStockDto.id_oil, {include: {all: true}});
       
-      if(oilId) {
+      if(oilIdUpdate) {
 
         await this.stockOilsRepository.update(
         {   
-            stock : updateStockDto.stock, 
-            reserve : updateStockDto.reserve,
-            remainder : updateStockDto.remainder,
-            id_supplier : updateStockDto.id_supplier,
-            update_date : updateStockDto.update_date
-        }, {where: {id : updateStockDto.id}});
+            stock: updateStockDto.stock, 
+            reserve: updateStockDto.reserve,
+            remainder: updateStockDto.remainder,
+            id_supplier: updateStockDto.id_supplier,
+            update_date: updateStockDto.update_date
+        }, {where: {id_oil: updateStockDto.id_oil}});
 
-        const updateStockOils = await this.stockOilsRepository.findByPk(updateStockDto.id, {include: {all: true}});
+        const updateStockOils = await this.stockOilsRepository.findByPk(updateStockDto.id_oil, {include: {all: true}});
 
         return updateStockOils; 
       }
@@ -172,7 +175,7 @@ export class StockOilsService {
     
     try {
 
-      const removeStockOils = await this.stockOilsRepository.destroy({where: {id: getStockDto.id}});
+      const removeStockOils = await this.stockOilsRepository.destroy({where: {id_oil: getStockDto.id_oil}});
 
       return removeStockOils;
 

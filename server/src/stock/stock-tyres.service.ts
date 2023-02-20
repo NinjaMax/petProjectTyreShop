@@ -147,7 +147,10 @@ export class StockTyresService {
 
     try {
 
-      const stockTyreById = await this.stockTyresRepository.findByPk(getStockDto.id, {include: {all: true}});
+      const stockTyreById = await this.stockTyresRepository.findOne(
+        {where: {id_tyre: getStockDto.id_tyre}, 
+        include: {all: true}
+      });
 
       return stockTyreById;
 
@@ -159,11 +162,11 @@ export class StockTyresService {
     
   }
 
-  async findStockTyreParamId(id: number) {
+  async findStockTyreParamId(id_tyre: number) {
 
     try {
 
-      const stockTyreByParamId = await this.stockTyresRepository.findByPk(id, {include: {all: true}});
+      const stockTyreByParamId = await this.stockTyresRepository.findByPk(id_tyre, {include: {all: true}});
 
       return stockTyreByParamId;
 
@@ -175,13 +178,13 @@ export class StockTyresService {
     
   }
 
-  async findStockTyreByIdForSale(id: number) {
+  async findStockTyreByIdForSale(id_tyre: number) {
 
     try {
 
-      const stockTyreById = await this.stockTyresRepository.findByPk(id, {include: {all: true}});
+      const stockTyreId = await this.stockTyresRepository.findByPk(id_tyre, {include: {all: true}});
 
-      return stockTyreById;
+      return stockTyreId;
 
     } catch {
 
@@ -195,19 +198,19 @@ export class StockTyresService {
     
     try {
 
-      const tyresId = await this.stockTyresRepository.findByPk(updateStockDto.id, {include: {all: true}});
+      const tyresIdUpdate = await this.stockTyresRepository.findByPk(updateStockDto.id_tyre, {include: {all: true}});
       
-      if(tyresId) {
+      if(tyresIdUpdate) {
 
         await this.stockTyresRepository.update(
-        { stock : updateStockDto.stock,
-          reserve : updateStockDto.reserve,
-          remainder : updateStockDto.remainder,
-          id_supplier : updateStockDto.id_supplier,
-          update_date : updateStockDto.update_date
-        }, {where: {id : updateStockDto.id}});
+        { stock: updateStockDto.stock,
+          reserve: updateStockDto.reserve,
+          remainder: updateStockDto.remainder,
+          id_supplier: updateStockDto.id_supplier,
+          update_date: updateStockDto.update_date
+        }, {where: {id_tyre: updateStockDto.id_tyre}});
 
-        const updateStockTyres = await this.stockTyresRepository.findByPk(updateStockDto.id, {include: {all: true}});
+        const updateStockTyres = await this.stockTyresRepository.findByPk(updateStockDto.id_tyre, {include: {all: true}});
 
         return updateStockTyres; 
       }
@@ -224,7 +227,7 @@ export class StockTyresService {
     
     try {
 
-      const removeStockTyre = await this.stockTyresRepository.destroy({where: {id : getStockDto.id}});
+      const removeStockTyre = await this.stockTyresRepository.destroy({where: {id_tyre: getStockDto.id_tyre}});
 
       return removeStockTyre;
 

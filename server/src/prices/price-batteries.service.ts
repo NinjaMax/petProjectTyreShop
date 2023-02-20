@@ -73,7 +73,10 @@ export class PriceBatteryService {
     
     try {
 
-      const batteriesPriceId = await this.priceBatteryRepository.findByPk(getPriceDto.id_battery, {include: {all: true}});
+      const batteriesPriceId = await this.priceBatteryRepository.findOne(
+        {where: {id_battery: getPriceDto.id_battery}, 
+        include: {all: true}
+      });
 
       return batteriesPriceId;
 
@@ -90,17 +93,17 @@ export class PriceBatteryService {
 
     try {
 
-      const batteriesPriceId = await this.priceBatteryRepository.findByPk(updatePriceDto.id_battery, {include: {all: true}});
+      const batteryPriceId = await this.priceBatteryRepository.findByPk(updatePriceDto.id_battery, {include: {all: true}});
       
-      if(batteriesPriceId) {
+      if(batteryPriceId) {
 
          await this.priceBatteryRepository.update(
-        { price_wholesale : updatePriceDto.price_wholesale, 
-          price : updatePriceDto.price, 
-          id_supplier : updatePriceDto.id_supplier,
-          delivery_price : updatePriceDto.delivery_price, 
-          price_plus_delivery : updatePriceDto.price_plus_delivery,
-          update_date : updatePriceDto.update_date
+        { price_wholesale: updatePriceDto.price_wholesale, 
+          price: updatePriceDto.price, 
+          id_supplier: updatePriceDto.id_supplier,
+          delivery_price: updatePriceDto.delivery_price, 
+          price_plus_delivery: updatePriceDto.price_plus_delivery,
+          update_date: updatePriceDto.update_date
         }, {where: {id_battery : updatePriceDto.id_battery}});
 
         const updatePriceBatteries = await this.priceBatteryRepository.findByPk(updatePriceDto.id_battery, {include: {all: true}});
@@ -121,7 +124,7 @@ export class PriceBatteryService {
 
     try {
 
-      const removePriceBattery = await this.priceBatteryRepository.destroy({where: {id_battery : getPriceDto.id_battery}});
+      const removePriceBattery = await this.priceBatteryRepository.destroy({where: {id_battery: getPriceDto.id_battery}});
 
       return removePriceBattery;
 

@@ -13,13 +13,13 @@ export class UploaderService {
     return 'This action adds a new uploader';
   }
 
-  async parseTyresPrice(path: string) {
+  async parseTyresPrice(path: string, fileName: string) {
     
     try {
 
       await this.uploaderParser.csvParserTyres(path);
 
-      return `Price File ${path} has been succeeded upload`
+      return `Price File ${fileName} has been succeeded upload`
        
     } catch {
       
@@ -29,13 +29,13 @@ export class UploaderService {
     
   }  
 
-  async parseWheelsPrice(path: string) {
+  async parseWheelsPrice(path: string, fileName: string) {
     
     try {
 
       await this.uploaderParser.csvParserWheels(path);
 
-      return `Price File ${path} has been succeeded upload`
+      return `Price File ${fileName} has been succeeded upload`
        
     } catch {
       
