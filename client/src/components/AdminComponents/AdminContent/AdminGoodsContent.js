@@ -1,4 +1,4 @@
-import {React, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminGoodsContent.css';
 import ButtonSearch from '../../Buttons/ButtonSearch';
 import AdminBatteryContent from './AdminBatteryContent';

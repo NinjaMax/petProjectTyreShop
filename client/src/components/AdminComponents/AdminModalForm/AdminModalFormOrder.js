@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import React, {useMemo, useReducer, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminFormOrder.css';
 import ModalAdmin from '../../Modal/ModalAdmin';
 import AdminComment from '../AdminContent/AdminComment';
@@ -6,12 +6,72 @@ import AdminModalCustmCreate from './AdminModalCustmCreate';
 import AdminModalCustomers from './AdminModalCustomers';
 import AdminModalGoods from './AdminModalGoods';
 
+// function createInitialState(goodsId) {
+//     const initialState = [];
+
+//       initialState.push(goodsId);
+    
+//     return initialState;
+//   }
+
+function reducer(state = [], action, initialState) {
+    switch (action.type) {
+      
+        case 'addTyreToOrder': {
+            if(action.addTyre) {
+              state.push(action.addTyre)  
+            }
+
+            return state;
+            //break;
+        }
+
+        case 'addWheelToOrder': {
+            if(action.addWheel) {
+               state.push(action.addWheel); 
+            }
+            
+            return state;
+            //break;
+        }
+
+        default: {
+            throw Error('Unknown action: ' + action.type);
+        } 
+    }
+    
+}
+
 const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
     const [active, setActive] = useState(false);
     const [addGoods, setAddGoods] = useState(false);
     const [addCustomer, setAddCustomer] = useState(false);
-    const [goodsList, setGoodsList] = useState([]);
-    const [addItems, setAddItems] = useState();
+    //const [goodsList, setGoodsList] = useState([]);
+    //const [addItems, setAddItems] = useState();
+    const [state, dispatch] = useReducer(reducer, createInitialState(goodsId));
+     
+    function createInitialState (goodsId) {
+            
+        let initialState = [];
+
+        if(goodsId) {
+            initialState.push(goodsId);
+        }
+            
+        return initialState;
+            
+    }
+     //useMemo(() =>{ 
+      
+    //   },[goodsId]);
+    //     if(goodsId) {
+    //     console.log('FORM: ', goodsId);
+        
+    //     //setGoodsList([goodsId, ...goodsList]);
+    //     dispatch({type:'addGoodsToOrder', addGoods: goodsId})
+    //     //setAddItems(goodsId);
+    //     }
+     
     
     const activeForm = () => {
         setActive(!active);
@@ -25,24 +85,16 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
         setAddCustomer(!addCustomer);
     }
 
-    const addGoodsToList = (e) => {
-        if(tyreDatas || e.currentTarget.getAttribute("value")) {
-            const itemTyre = tyreDatas.find((item) => item === goodsId);
-            setGoodsList(goodsList.push(itemTyre));
+    const actions = useMemo(() => ({
+
+         addGoodsToList: (value) => {
+
+            dispatch({type: 'addTyreToOrder', addTyre: tyreDatas.find((item) => item?.id === value)});
+            dispatch({type: 'addWheelToOrder', addWheel: wheelDatas.find((item) => item?.id === value)});
         }
 
-        if(wheelDatas || e.currentTarget.getAttribute("value")) {
-            const itemWheel = wheelDatas.find((item) => item === goodsId);
-            setGoodsList(goodsList.push(itemWheel));
-        }
-        
-    };
-
-        if(goodsId) {
-            console.log('FORM: ', goodsId);
-            setAddItems(goodsId);
-        }
-
+    }),[tyreDatas, wheelDatas])
+    console.log('STATE: ', state);
 
     return (
         <div>
@@ -135,8 +187,9 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
                         </select>    
                     </div>    
                 </div>
+                <div className='admFormOrderTableBox'>
                 <table className='admFormOrderTable'>
-                    <thead>
+                    <thead className='admFormOrderTableTh'>
                         <tr>
                             <th>id</th>
                             <th>Товар</th>
@@ -148,32 +201,27 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
                         </tr>     
                     </thead>
                     <tbody>
-                        {goodsList ? 
-                            goodsList.map((item) =>(
+                        {state?.lenght !== 0 ? 
+                            state.map((item) =>(
                         <tr key={'g'+ item.id}>
                             <td key={'gid'+ item.id}>{item?.id}</td>
                             <td key={'gg'+ item.id}>{item?.full_name}</td>
-                            <td key={'gcat'+ item.id}>{item?.cat}</td>
-                            <td key={'gc'+ item.id}>{}</td>
-                            <td key={'gres'+ item.id}>{}</td>
+                            <td key={'gcat'+ item.id}>{item?.category.category}</td>
+                            <td key={'gc'+ item.id}>{0}</td>
+                            <td key={'gres'+ item.id}>{0}</td>
                             <td key={'gpr'+ item.id}>{item.price?.price}</td>
                             <td key={'gst'+ item.id}>{item?.storage}</td> 
                         </tr>
                         ))
-                        : addItems.map((item)=> ( 
-                        <tr key={'g'+ item.id}>
-                            <td key={'gid'+ item.id}>{item?.id}</td>
-                            <td key={'gg'+ item.id}>{item?.full_name}</td>
-                            <td key={'gcat'+ item.id}>{item?.cat}</td>
-                            <td key={'gc'+ item.id}>{}</td>
-                            <td key={'gres'+ item.id}>{}</td>
-                            <td key={'gpr'+ item.id}>{item.price?.price}</td>
-                            <td key={'gst'+ item.id}>{item?.storage}</td> 
+                        : 
+                        <tr>
+                            <td>Очікуємо товари......</td>
                         </tr>
-                        ))
+                      
                         }
                     </tbody>
                 </table>
+                </div>
                 <div className='admFormOrderNotes'>
                     <label htmlFor="subject">Нотатки</label>
                     <textarea className="admFormOrderNotesText" name="subject" 
@@ -210,7 +258,7 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
             {addGoods ? 
                 <ModalAdmin active={addGoods} setActive={setAddGoods}>
                     <AdminModalGoods 
-                        showRowModData={addGoodsToList}
+                        showRowModData={actions.addGoodsToList}
                         tyreModData={tyreDatas} 
                         wheelModData={wheelDatas}/>
                 </ModalAdmin> : null

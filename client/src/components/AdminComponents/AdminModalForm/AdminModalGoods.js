@@ -53,12 +53,14 @@ const AdminModalGoods = ({tyreModData, wheelModData, showRowModData}) => {
                     </tr>   
                 </thead>
                 <tbody>
-                    {chooseCatMod === 'Шини' ?
+                    {chooseCatMod === 'Шини' && tyreModData ?
                 
                         tyreModData.map((item, index) => (
                 
-                        <tr key={'tm' + item.id} onDoubleClick={showRowModData} value={item.id}>
-                            {item.price.lenght > 0 || item.stock.lenght > 0 ? 
+                        <tr key={'tm' + item.id} 
+                            onDoubleClick={e => showRowModData(e.currentTarget.getAttribute("value"))} 
+                            value={item.id}>
+                            {item.price.lenght !== 0 ? 
                             <Fragment key={'tid' + item.id}>
                                 <td key={'tmid' + item.id}>{item.id}</td>
                                 <td key={'tmfn' + item.id}>{item.full_name}</td>
@@ -83,7 +85,9 @@ const AdminModalGoods = ({tyreModData, wheelModData, showRowModData}) => {
                     }
                     {chooseCatMod=== 'Диски' ?
                         wheelModData.map((item) => (
-                            <tr key={'wm' + item.id} onDoubleClick={showRowModData} value={item.id}>
+                            <tr key={'wm' + item.id} 
+                                onDoubleClick={e => showRowModData(e.currentTarget.getAttribute("value"))} 
+                                value={item.id}>
                                 <td key={'wmid' + item.id}>{item.id}</td>
                                 <td key={'wmfn' + item.id}>{item.full_name_color}</td>
                                 <td key={'wmca' + item.id}>{item.category?.category ?? ''}</td>
