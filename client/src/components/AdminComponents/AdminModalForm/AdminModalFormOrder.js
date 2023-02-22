@@ -6,14 +6,6 @@ import AdminModalCustmCreate from './AdminModalCustmCreate';
 import AdminModalCustomers from './AdminModalCustomers';
 import AdminModalGoods from './AdminModalGoods';
 
-// function createInitialState(goodsId) {
-//     const initialState = [];
-
-//       initialState.push(goodsId);
-    
-//     return initialState;
-//   }
-
 function reducer(state = [], action, initialState) {
     switch (action.type) {
       
@@ -23,7 +15,6 @@ function reducer(state = [], action, initialState) {
             }
 
             return state;
-            //break;
         }
 
         case 'addWheelToOrder': {
@@ -32,7 +23,6 @@ function reducer(state = [], action, initialState) {
             }
             
             return state;
-            //break;
         }
 
         default: {
@@ -42,13 +32,16 @@ function reducer(state = [], action, initialState) {
     
 }
 
-const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
-    const [active, setActive] = useState(false);
+const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas, customer}) => {
+    
     const [addGoods, setAddGoods] = useState(false);
-    const [addCustomer, setAddCustomer] = useState(false);
+    const [createCustomer, setCreateCustomer] = useState(false);
+    const [openCustomers, setOpenCustomers] = useState(false);
+    const [addCustomer, setAddCustomer] = useState(null);
     //const [goodsList, setGoodsList] = useState([]);
     //const [addItems, setAddItems] = useState();
-    const [state, dispatch] = useReducer(reducer, createInitialState(goodsId));
+    //const [changeCustomer, setChangeCustomer] = useState();
+    const [state, dispatch] = useReducer(reducer, goodsId, createInitialState);
      
     function createInitialState (goodsId) {
             
@@ -56,45 +49,49 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
 
         if(goodsId) {
             initialState.push(goodsId);
+            //console.log(initialState); 
         }
-            
+           
         return initialState;
             
-    }
-     //useMemo(() =>{ 
-      
-    //   },[goodsId]);
-    //     if(goodsId) {
-    //     console.log('FORM: ', goodsId);
-        
-    //     //setGoodsList([goodsId, ...goodsList]);
-    //     dispatch({type:'addGoodsToOrder', addGoods: goodsId})
-    //     //setAddItems(goodsId);
-    //     }
-     
+    };
     
-    const activeForm = () => {
-        setActive(!active);
-    }
-
     const addGoodsForm = () => {
         setAddGoods(!addGoods);
-    }
+    };
 
-    const addCustomerForm = () => {
-        setAddCustomer(!addCustomer);
-    }
-
+    const activeCustomer = () => {
+        setCreateCustomer(!createCustomer);
+    };
+    const openCustomerForm = () => {
+        setOpenCustomers(!openCustomers);
+    };
+    
+    
     const actions = useMemo(() => ({
+        addCustToOrder: (valueCust) => {
+            //console.log(valueCust);
+            //console.log('CUST TO', customer)
+            const findCustomer = customer.find((items) => items?.id_customer === +valueCust);
+            //const findCustomer = customer[6];
+            //console.log('FIND CUST', findCustomer);
 
-         addGoodsToList: (value) => {
+            if(findCustomer) {
+                setAddCustomer(findCustomer);  
+            }
+
+        },
+
+        addGoodsToList: (value) => {
 
             dispatch({type: 'addTyreToOrder', addTyre: tyreDatas.find((item) => item?.id === value)});
             dispatch({type: 'addWheelToOrder', addWheel: wheelDatas.find((item) => item?.id === value)});
         }
 
-    }),[tyreDatas, wheelDatas])
-    console.log('STATE: ', state);
+    }),[tyreDatas, wheelDatas, customer])
+    //console.log('STATE: ', state);
+    //console.log('GOODSID', goodsId);
+    //console.log('CUSTOMER', customer);
 
     return (
         <div>
@@ -104,10 +101,11 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
                 <div className='admFormDataOrder'>
                     <div>
                         <label htmlFor="fname">Дата</label>
-                        <input type="date" 
+                        <input type="datetime-local" 
                             className="admFormOrderData" 
                             name="date" 
-                            min="2023-01-01"    
+                            min="2023-01-01"
+                            //value="2023-02-22"    
                         />  
                     </div>
                     <div>
@@ -127,14 +125,18 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
                                 name="lastname" 
                                 maxLength='45'
                                 placeholder="Ім'я або назва.."
+                                //defaultValue={addCustomer ?? ''}
+                                value={addCustomer?.full_name ?? ''}
+                                //readOnly={true}
+                                onChange={() => setAddCustomer(addCustomer)}
                             />
                             <div onClick={(e)=>e.preventDefault({passive: false})}>
-                                <button onClick={activeForm} className='admFormSearchCustm'>
+                                <button onClick={openCustomerForm} className='admFormSearchCustm'>
                                     <i className="fas fa-search"></i>    
                                 </button> 
                             </div>
                             <div onClick={(e)=>e.preventDefault({passive: false})}>
-                                <button onClick={addCustomerForm}
+                                <button onClick={activeCustomer}
                                     className='admFormAddCustm'>
                                     <i className="fas fa-plus"></i>    
                                 </button>  
@@ -143,21 +145,15 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
                     </div>
                     <div>
                         <label htmlFor="fname">Контракт </label>
-                        <input type="text" 
-                            className="admFormOrderId" 
-                            name="firstname" 
-                            maxLength='45'
-                            placeholder="Контракт покупця.."
-                        />  
-                    </div>
-                    <div>
-                        <label htmlFor="fname">ТТН </label>
-                        <input type="text" 
-                            className="admFormOrderId" 
-                            name="firstname" 
-                            maxLength='45'
-                            placeholder="Контракт покупця.."
-                        />  
+                        <select className="admFormOrderContract" name="Contract">
+                           {addCustomer ? addCustomer.contract.map((entity, index)=>(
+                                <option key={'contr' + index} value={'id '+ entity.id}>
+                                     {entity.name} {entity.id_contract} 
+                                </option>
+                                
+                                )) : <option></option>
+                            } 
+                        </select>
                     </div>
                     <div>
                         <label htmlFor="sklad">Склад </label>
@@ -185,6 +181,15 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
                             <option value="Prodaga">Продаж</option>
                             <option value="Oplata">Очік Оплати</option>
                         </select>    
+                    </div>
+                    <div>
+                        <label htmlFor="fname">ТТН </label>
+                        <input type="text" 
+                            className="admFormOrderTtn" 
+                            name="firstname" 
+                            maxLength='45'
+                            placeholder="ТТН замовлення.."
+                        />  
                     </div>    
                 </div>
                 <div className='admFormOrderTableBox'>
@@ -206,10 +211,10 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
                         <tr key={'g'+ item.id}>
                             <td key={'gid'+ item.id}>{item?.id}</td>
                             <td key={'gg'+ item.id}>{item?.full_name}</td>
-                            <td key={'gcat'+ item.id}>{item?.category.category}</td>
+                            <td key={'gcat'+ item.id}>{item.category?.category}</td>
                             <td key={'gc'+ item.id}>{0}</td>
                             <td key={'gres'+ item.id}>{0}</td>
-                            <td key={'gpr'+ item.id}>{item.price?.price}</td>
+                            <td key={'gpr'+ item.id}>{item.price[0]?.price}</td>
                             <td key={'gst'+ item.id}>{item?.storage}</td> 
                         </tr>
                         ))
@@ -250,10 +255,16 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
                 </div>
             </form>
             </div>
-            {active ?
-                <ModalAdmin active={active} setActive={setActive} >
-                    <AdminModalCustomers/>
+            {openCustomers ?
+                <ModalAdmin active={openCustomers} setActive={setOpenCustomers} >
+                    <AdminModalCustomers allCustomer={customer}
+                        addCustomer={actions.addCustToOrder}/>
                 </ModalAdmin> : null  
+            }
+            {createCustomer ?
+                <ModalAdmin active={createCustomer} setActive={setCreateCustomer}>
+                    <AdminModalCustmCreate />   
+                </ModalAdmin> : null
             }
             {addGoods ? 
                 <ModalAdmin active={addGoods} setActive={setAddGoods}>
@@ -261,11 +272,6 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas}) => {
                         showRowModData={actions.addGoodsToList}
                         tyreModData={tyreDatas} 
                         wheelModData={wheelDatas}/>
-                </ModalAdmin> : null
-            }
-            {addCustomer ?
-                <ModalAdmin active={addCustomer} setActive={setAddCustomer}>
-                    <AdminModalCustmCreate/>   
                 </ModalAdmin> : null
             }
         </div>

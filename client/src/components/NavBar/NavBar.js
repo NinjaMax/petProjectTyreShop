@@ -1,6 +1,6 @@
 import {React, useState} from 'react';
 import '../../css/NavBarCss/NavBar.css';
-import logoShop from '../../assets/logoShop/sampleQ_4_302_100.png';
+import logoShop from '../../assets/logoShop/logoSample_1_302_100.png';
 //import {Context} from '../index';
 import { observer } from 'mobx-react-lite';
 import ButtonSearch from '../Buttons/ButtonSearch';

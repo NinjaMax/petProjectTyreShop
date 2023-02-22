@@ -11,18 +11,19 @@ import AdminWheelStockPriceRow from './AdminWheelStockPriceRow';
 import ModalAdmin from '../../Modal/ModalAdmin';
 import AdminFormOrder from '../AdminModalForm/AdminModalFormOrder';
 
-const AdminGoodsContent = () => {
+const AdminGoodsContent = ({tyreData, wheelData, customer}) => {
     const [chooseCat, setChooseCat] = useState('Шини');
-    const [tyreData, setTyreData] = useState(null);
-    const [wheelData, setWheelData] = useState(null);
-    // const [oilData, setOildata] = useState(null);
-    // const [batteryData, setBatteryData] = useState(null);
+    // const [tyreData, setTyreData] = useState(null);
+    // const [wheelData, setWheelData] = useState(null);
+    // // const [oilData, setOildata] = useState(null);
+    // // const [batteryData, setBatteryData] = useState(null);
+    //const [customers, setCustomers] = useState(null);
     const [itemIdTyre, setItemIdTyre] = useState();
     const [itemIdWheel, setItemIdWheel] = useState();
     // const [itemIdOil, setItemIdOil] = useState();
     // const [itemIdBattery, setItemIdBattery] = useState();
     const [itemId, setItemId] = useState([]);
-    const [addGoods, setAddGoods] = useState(false)
+    const [addGoods, setAddGoods] = useState(false);
     const [stockTyre, setStockTyre] = useState([]);
     const [priceTyre, setPriceTyre] = useState([]);
     const [stockWheel, setStockWheel] = useState([]);
@@ -32,30 +33,41 @@ const AdminGoodsContent = () => {
     // const [stockBattery, setStockBattery] = useState([]);
     // const [priceBattery, setPriceBattery] = useState([]);
 
-    useEffect(()=>{
-        axios.get("http://localhost:4000/tyres", {
-            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
-            withCredentials: true})
-        .then(response => {
-            setTyreData(response.data);
-            //console.log(response.data);
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    //useEffect(()=>{
+        // axios.get("http://localhost:4000/tyres", {
+        //     headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+        //     withCredentials: true})
+        // .then(response => {
+        //     setTyreData(response.data);
+        //     //console.log(response.data);
+        // })
+        // .catch(error => {
+        //   console.log(error)
+        // })
 
-        axios.get("http://localhost:4000/wheels", {
-            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
-            withCredentials: true})
-        .then(response => {
-            setWheelData(response.data);
-            //console.log(response.data);
-        })
-        .catch(error => {
-          console.log(error)
-        })
+        // axios.get("http://localhost:4000/wheels", {
+        //     headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+        //     withCredentials: true})
+        // .then(response => {
+        //     setWheelData(response.data);
+        //     //console.log(response.data);
+        // })
+        // .catch(error => {
+        //   console.log(error)
+        // })
 
-    },[]);
+        // axios.get("http://localhost:4000/customers/all", {
+        //     headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+        //     withCredentials: true})
+        // .then(response => {
+        //     setCustomers(response.data);
+        //     //console.log(response.data);
+        // })
+        // .catch(error => {
+        //   console.log(error)
+        // })
+
+    //},[]);
 
     useEffect(()=>{
         axios.get("http://localhost:4000/stock/tyres/", {
@@ -132,24 +144,24 @@ const AdminGoodsContent = () => {
         setAddGoods(!addGoods);
         console.log(e.currentTarget.value)
         let itemTyre = tyreData?.find(item => item.id === e.currentTarget.value);
-        let itemWheel = tyreData?.find(item => item.id === e.currentTarget.value);
+        let itemWheel = wheelData?.find(item => item.id === e.currentTarget.value);
         //const itemTyre = tyreData.find(item => item ==e.currentTarget.value);
         //const itemTyre = tyreData.find(item => item ==e.currentTarget.value);
         
-        console.log('GOODS: ', itemTyre);
+        //console.log('GOODS: ', itemTyre);
+
         if(itemTyre) {
-            setItemId(itemId.push(itemTyre));
+            setItemId(itemTyre);
             //setAddGoods(!addGoods);
         }
             
         if(itemWheel) {
              setItemId(itemWheel);
             
-        }
-       
+        }  
     }
 
-    //console.log(itemId);
+    //console.log('ITEMID',itemId);
 
     return (
         <div>
@@ -195,7 +207,8 @@ const AdminGoodsContent = () => {
                 : null
             }
             { chooseCat === 'Диски' ?
-                <AdminWheelContent props={wheelData} showRowData={showStockPriceWheel}/>
+                <AdminWheelContent props={wheelData} showRowData={showStockPriceWheel}
+                addWheelToOrder={addToOrder}/>
                 : null
             }
             { chooseCat === 'АКБ' ?
@@ -243,7 +256,8 @@ const AdminGoodsContent = () => {
                     <AdminFormOrder 
                         goodsId={itemId} 
                         tyreDatas={tyreData} 
-                        wheelDatas={wheelData}/>
+                        wheelDatas={wheelData}
+                        customer={customer}/>
                 </ModalAdmin>
                 : null
             }    

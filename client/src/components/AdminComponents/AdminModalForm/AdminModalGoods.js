@@ -83,7 +83,7 @@ const AdminModalGoods = ({tyreModData, wheelModData, showRowModData}) => {
                         </tr> ))
                         : null 
                     }
-                    {chooseCatMod=== 'Диски' ?
+                    {chooseCatMod=== 'Диски' && wheelModData ?
                         wheelModData.map((item) => (
                             <tr key={'wm' + item.id} 
                                 onDoubleClick={e => showRowModData(e.currentTarget.getAttribute("value"))} 

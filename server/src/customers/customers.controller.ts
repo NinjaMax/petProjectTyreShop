@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { CustomersService } from './customers.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { GetCustomerDto } from './dto/get-customer.dto';
@@ -13,13 +13,13 @@ export class CustomersController {
     return this.customersService.createCustomer(createCustomerDto);
   }
 
-  @Get()
+  @Get('/all')
   findAllCustomer() {
     return this.customersService.findAllCustomer();
   }
 
-  @Get('/id')
-  findCustomerById(@Body() getCustomerDto: GetCustomerDto) {
+  @Get()
+  findCustomerById(@Query() getCustomerDto: GetCustomerDto) {
     return this.customersService.findCustomerById(getCustomerDto);
 
   }

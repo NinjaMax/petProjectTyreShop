@@ -1,5 +1,6 @@
-import {React, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../css/Admin.css';
+import axios from 'axios';
 import AdminSideBar from '../components/AdminComponents/AdminSideBar';
 import AdminMainContent from '../components/AdminComponents/AdminMainContent';
 import AdminGoodsContent from '../components/AdminComponents/AdminContent/AdminGoodsContent';
@@ -19,9 +20,51 @@ import AdminProfile from '../components/AdminComponents/AdminProfile';
 import AdminHeader from '../components/AdminComponents/AdminHeader';
 
 const Admin = () => {
-    useState()
     const [sideBarItem, setSideBarItem] = useState("golovna");
+
+    const [tyreData, setTyreData] = useState(null);
+    const [wheelData, setWheelData] = useState(null);
+    // const [oilData, setOildata] = useState(null);
+    // const [batteryData, setBatteryData] = useState(null);
+    const [customers, setCustomers] = useState(null);
+
   
+    useEffect(() => {
+        axios.get("http://localhost:4000/tyres", {
+            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+            withCredentials: true})
+        .then(response => {
+            setTyreData(response.data);
+            //console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error)
+        })
+
+        axios.get("http://localhost:4000/wheels", {
+            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+            withCredentials: true})
+        .then(response => {
+            setWheelData(response.data);
+            //console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error)
+        })
+
+        axios.get("http://localhost:4000/customers/all", {
+            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+            withCredentials: true})
+        .then(response => {
+            setCustomers(response.data);
+            //console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error)
+        })
+
+    },[])
+
     const sideBarItemChange = (e) => {
         setSideBarItem(e.target.value);
         console.log(e.target.value);
@@ -43,10 +86,13 @@ const Admin = () => {
                     <AdminMainContent changeMenu={sideBarItemChange}/>
                 : null}
                 {sideBarItem === 'catalog' ?
-                    <AdminGoodsContent changeMenu={sideBarItemChange}/>
+                    <AdminGoodsContent changeMenu={sideBarItemChange}
+                        tyreData={tyreData} wheelData={wheelData}
+                        customer={customers}/>
                 : null}
                 {sideBarItem === 'zamovlenia' ?
-                    <AdminOrderContent changeMenu={sideBarItemChange}/>
+                    <AdminOrderContent changeMenu={sideBarItemChange}
+                        customer={customers}/>
                 : null}
                 {sideBarItem === 'prodagi' ?
                     <AdminSalesContent changeMenu={sideBarItemChange}/>
@@ -67,7 +113,8 @@ const Admin = () => {
                     <AdminSupplierContent changeMenu={sideBarItemChange}/>
                 : null}
                 {sideBarItem === 'pokupci' ?
-                    <AdminCustomersContent changeMenu={sideBarItemChange}/>
+                    <AdminCustomersContent changeMenu={sideBarItemChange}
+                    customers={customers}/>
                 : null}
                 {sideBarItem === 'koristuvachi' ?
                     <AdminUsersContent changeMenu={sideBarItemChange}/>

@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminWheelContent.css';
 
-const AdminWheelContent = ({props, showRowData}) => {
+const AdminWheelContent = ({props, showRowData, addWheelToOrder}) => {
     return (
         <div>
             <div className='admWheelTable'>
@@ -35,8 +35,9 @@ const AdminWheelContent = ({props, showRowData}) => {
                     <td key={'ts' + item.id}>{item.type?.type ?? ''}</td>
                     <td key={'ty' + item.id}>{item.color?.color_short ?? ''}</td>
                     <td key={'tca' + item.id}>{item.category?.category ?? ''}</td>
-                    <td key={'t' + item.id}>
-                            <button className='basketAdmWheel'>
+                    <td key={'t' + item.id} onClick={(e)=>e.preventDefault({passive: false})}>
+                            <button className='basketAdmWheel' value={item.id} 
+                                onClick={addWheelToOrder}>
                                 <i className="fa fa-shopping-cart"></i>
                             </button>
                             <button className='editAdmWheel'>
