@@ -32,7 +32,7 @@ function reducer(state = [], action, initialState) {
     
 }
 
-const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas, customer}) => {
+const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas, comments, customer}) => {
     
     const [addGoods, setAddGoods] = useState(false);
     const [createCustomer, setCreateCustomer] = useState(false);
@@ -67,14 +67,10 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas, customer}) => {
         setOpenCustomers(!openCustomers);
     };
     
-    
     const actions = useMemo(() => ({
         addCustToOrder: (valueCust) => {
             //console.log(valueCust);
-            //console.log('CUST TO', customer)
             const findCustomer = customer.find((items) => items?.id_customer === +valueCust);
-            //const findCustomer = customer[6];
-            //console.log('FIND CUST', findCustomer);
 
             if(findCustomer) {
                 setAddCustomer(findCustomer);  
@@ -112,12 +108,50 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas, customer}) => {
                         <label htmlFor="fname">id </label>
                         <input type="text" 
                             className="admFormOrderId" 
-                            name="firstname" 
-                            maxLength='30'
-                            placeholder="Ид.."
+                            name="firstname"
+                            value={'12345678910' ?? ''} 
+                            //maxLength='30'
+                            placeholder="id замовлення"
+                            readOnly={true}
                         />  
                     </div>
-                    <div >
+                    <div>
+                        <label htmlFor="sklad">Організація </label>
+                            <select className="admFormOrderOrganiz" name="Organization">
+                            <option value="1">ФОП Гайворонський</option>
+                            <option value="2">фл Гайворонський Н. М</option>
+                            <option value="3">ТОВ Скай-Партс</option>
+                        </select>  
+                    </div>
+                    <div>
+                        <label htmlFor="sklad">Склад </label>
+                            <select className="admFormOrderStorage" name="Storage">
+                            <option value="1">Склад Поставщик</option>
+                            <option value="2">Склад Основний</option>
+                            <option value="3">Склад Монтаж</option>
+                        </select>  
+                    </div>
+                    <div>
+                        <label htmlFor="OrderView">Вид </label>
+                            <select className="admFormOrderView" name="OrderView">
+                            <option value="1">Сайт</option>
+                            <option value="2">Роздріб</option>
+                            <option value="2">Опт</option>
+                            <option value="3">Інше</option>
+                        </select>  
+                    </div>
+                    <div>
+                        <label htmlFor="status">Статус </label>
+                            <select className="admFormOrderStatus" name="Status Order">
+                            <option value="Novi">Новий</option>
+                            <option value="Prodaga">Продаж</option>
+                            <option value="Oplata">Обробка</option>
+                            <option value="Oplata">Виконання</option>
+                            <option value="Oplata">Відміна</option>
+                            <option value="Oplata">Повернення</option>
+                        </select>    
+                    </div>
+                    <div>
                         <div className='admFormOrderCustm'>
                             <label htmlFor="lname">Покупець </label>
                             <input type="text" 
@@ -144,7 +178,7 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas, customer}) => {
                         </div>    
                     </div>
                     <div>
-                        <label htmlFor="fname">Контракт </label>
+                        <label htmlFor="fname"> Контракт </label>
                         <select className="admFormOrderContract" name="Contract">
                            {addCustomer ? addCustomer.contract.map((entity, index)=>(
                                 <option key={'contr' + index} value={'id '+ entity.id}>
@@ -155,31 +189,15 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas, customer}) => {
                             } 
                         </select>
                     </div>
-                    <div>
-                        <label htmlFor="sklad">Склад </label>
-                            <select className="admFormOrderStorage" name="Pereviznik">
-                            <option value="1">Склад Поставщик</option>
-                            <option value="2">Склад Основний</option>
-                            <option value="3">Склад Монтаж</option>
-                        </select>  
-                    </div>
-                    <div onClick={(e)=>e.preventDefault({passive: false})}>
-                        <button onClick={addGoodsForm} className='admFormOrderBtnAdd'>Додати товар</button>  
-                    </div>
+
                     <div>
                         <label htmlFor="pereviznik">Перевізник </label>
-                            <select className="admFormOrderDelivery" name="Pereviznik">
+                            <select className="admFormOrderDelivery" name="Delivery">
+                            <option value="Samoviviz">Самовивіз</option>
+                            <option value="SvoiDostavka">Своя Доставка</option>
                             <option value="NovaPoshta">Нова Пошта</option>
                             <option value="UkrPoshta">Укр Пошта</option>
                             <option value="Delivary">Делівері</option>
-                        </select>    
-                    </div>
-                    <div>
-                        <label htmlFor="status">Статус </label>
-                            <select className="admFormOrderStatus" name="Status">
-                            <option value="Novi">Новий</option>
-                            <option value="Prodaga">Продаж</option>
-                            <option value="Oplata">Очік Оплати</option>
                         </select>    
                     </div>
                     <div>
@@ -190,7 +208,47 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas, customer}) => {
                             maxLength='45'
                             placeholder="ТТН замовлення.."
                         />  
-                    </div>    
+                    </div>
+                    <div>
+                        <label htmlFor="status">Статус дост </label>
+                        <select className="admFormOrderStatusDel" name="StatusDel">
+                            <option value="Novi">Новий</option>
+                            <option value="Samoviviz">Самовивіз</option>
+                            <option value="Obrobka">Обробляеться</option>
+                            <option value="OchikueTtn">Очікує ТТН</option>
+                            <option value="Dostavka">Доставляеться</option>
+                            <option value="Ttn">Отримано ТТН</option>
+                            <option value="PoverneiaTtn">Повернення ТТН</option>
+                            <option value="CancelDelivery">Відміна</option>
+                        </select>    
+                    </div>
+                    <div onClick={(e)=>e.preventDefault({passive: false})}>
+                        <button onClick={addGoodsForm} className='admFormOrderBtnAdd'>Додати товар</button>  
+                    </div>
+                    <div>
+                        <label htmlFor="viewPay">Вид оплати </label>
+                        <select className="admFormOrderViewPay" name="viewPay">
+                            <option value="Novi">Новий</option>
+                            <option value="cashPay">Готівка</option>
+                            <option value="billPay">Б/г рахунок</option>
+                            <option value="billPayCard">Б/г карта</option>
+                            <option value="nalogka">Наложка</option>
+                            <option value="Oplata">Відміна</option>
+                            <option value="OplataPov">Повернення</option>
+                        </select>    
+                    </div>
+                    <div>
+                    <label htmlFor="statusPay">Статус оплати </label>
+                        <select className="admFormOrderStatusPay" name="statusPay">
+                        <option value="Novi">Новий</option>
+                        <option value="WaitPay">Очікує Оплату</option>
+                        <option value="Oplata">Оплачено</option>
+                        <option value="Oplata">Виконання</option>
+                        <option value="Oplata">Відміна</option>
+                        <option value="OplataPov">Повернення</option>
+                        <option value="NalogPay">Наложка Отримана</option>
+                        </select>    
+                    </div>   
                 </div>
                 <div className='admFormOrderTableBox'>
                 <table className='admFormOrderTable'>
@@ -254,7 +312,7 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas, customer}) => {
                     <button className='admFormOrderBtn'>Відмінити</button> 
                 </div>
             </form>
-            </div>
+        </div>
             {openCustomers ?
                 <ModalAdmin active={openCustomers} setActive={setOpenCustomers} >
                     <AdminModalCustomers allCustomer={customer}

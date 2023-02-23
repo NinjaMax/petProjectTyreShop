@@ -4,68 +4,79 @@
     height: 580px;
     border-radius: 5px;
     background-color: #f2f2f2;
-    padding: 20px;
+    padding: 10px 10px 0px 10px;
+}
+
+.admFormDataOrder {
+    display: flex;
+    flex-direction: row;
+    justify-content:left;
+    align-items:baseline;
+    flex-wrap:wrap;
+    margin: 0px;
+    gap: 3px;
 }
 
 .admFormOrderData {
     width: 122px; /* Full width */
-    padding: 12px; /* Some padding */ 
+    padding: 10px; /* Some padding */ 
     border: 1px solid #ccc; /* Gray border */
     border-radius: 4px; /* Rounded borders */
     box-sizing: border-box; /* Make sure that padding and width stays in place */
-    margin-top: 6px; /* Add a top margin */
-    margin-bottom: 16px; /* Bottom margin */
+    margin-top: 3px; /* Add a top margin */
+    margin-bottom: 3px; /* Bottom margin */
     resize: vertical /* Allow the us*/
 }
 
 .admFormOrderId {
-    width: 100px; /* Full width */
-    padding: 12px; /* Some padding */ 
+    width: 95px; /* Full width */
+    padding: 10px; /* Some padding */ 
     border: 1px solid #ccc; /* Gray border */
     border-radius: 4px; /* Rounded borders */
     box-sizing: border-box; /* Make sure that padding and width stays in place */
-    margin-top: 6px; /* Add a top margin */
-    margin-bottom: 16px; /* Bottom margin */
+    margin-top: 3px; /* Add a top margin */
+    margin-bottom: 3px; /* Bottom margin */
     resize: vertical /* Allow the us*/
 }
 
 .admFormOrderTtn {
     width: 180px; /* Full width */
-    padding: 12px; /* Some padding */ 
+    padding: 10px; /* Some padding */ 
     border: 1px solid #ccc; /* Gray border */
     border-radius: 4px; /* Rounded borders */
     box-sizing: border-box; /* Make sure that padding and width stays in place */
-    margin-top: 6px; /* Add a top margin */
-    margin-bottom: 16px; /* Bottom margin */
+    margin-top: 3px; /* Add a top margin */
+    margin-bottom: 3px; /* Bottom margin */
     resize: vertical /* Allow the us*/
 }
 
 .admFormOrderContract {
     width: 200px; /* Full width */
-    padding: 12px; /* Some padding */ 
+    padding: 10px; /* Some padding */ 
     border: 1px solid #ccc; /* Gray border */
     border-radius: 4px; /* Rounded borders */
     box-sizing: border-box; /* Make sure that padding and width stays in place */
-    margin-top: 6px; /* Add a top margin */
-    margin-bottom: 16px; /* Bottom margin */
+    margin-top: 3px; /* Add a top margin */
+    margin-bottom: 3px; /* Bottom margin */
     resize: vertical /* Allow the us*/
 }
 
 .admFormOrderCustm {
-    width: 330px;
+    width: 320px;
     display: flex;
     flex-direction: row;
     align-items:baseline;
+    margin-right: 5px;
 
 }
 .admFormOrderName {
-    width: 250px; /* Full width */
-    padding: 12px; /* Some padding */ 
+    width: 200px; /* Full width */
+    padding: 10px; /* Some padding */ 
     border: 1px solid #ccc; /* Gray border */
     border-radius: 4px; /* Rounded borders */
     box-sizing: border-box; /* Make sure that padding and width stays in place */
-    margin-top: 6px; /* Add a top margin */
-    margin-bottom: 16px; /* Bottom margin */
+    margin-top: 3px; /* Add a top margin */
+    margin-bottom: 3px; /* Bottom margin */
     resize: vertical /* Allow the user to vert*/
 }
 
@@ -85,18 +96,21 @@
     border: 1px solid #ccc; /* Gray border */
     border-radius: 4px; /* Rounded borders */
     box-sizing: border-box; /* Make sure that padding and width stays in place */
-    margin-top: 5px; /* Add a top margin */
-    margin-bottom: 5px; /* Bottom margin */
+    margin-top: 3px; /* Add a top margin */
+    margin-bottom: 3px; /* Bottom margin */
     resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
 }
 
 .admFormOrderCommit {
-    margin: 10px;
+    margin: 5px;
 }
 
 .admFormOrderCommitChat {
     padding-bottom: 5px;
-    padding-top: 8px;
+    padding-top: 5px;
+    margin-top: 5px;
+    border: solid 1px #ccc;
+    border-radius: 8px;
 }
 
 .admFormOrderAddCommit {
@@ -111,35 +125,90 @@
 }
 
 .admFormOrderDelivery {
-    width: 140px; /* Full width */
-    padding: 12px; /* Some padding */ 
+    width: 135px; /* Full width */
+    padding: 10px; /* Some padding */ 
     border: 1px solid #ccc; /* Gray border */
     border-radius: 4px; /* Rounded borders */
     box-sizing: border-box; /* Make sure that padding and width stays in place */
-    margin-top: 6px; /* Add a top margin */
-    margin-bottom: 16px; /* Bottom margin */
+    margin-top: 3px; /* Add a top margin */
+    margin-bottom: 3px; /* Bottom margin */
     resize: vertical /* Allow the user*/
 }
 
 .admFormOrderStorage {
-    width: 170px; /* Full width */
-    padding: 12px; /* Some padding */ 
+    width: 155px; /* Full width */
+    padding: 10px; /* Some padding */ 
     border: 1px solid #ccc; /* Gray border */
     border-radius: 4px; /* Rounded borders */
     box-sizing: border-box; /* Make sure that padding and width stays in place */
-    margin-top: 6px; /* Add a top margin */
-    margin-bottom: 16px; /* Bottom margin */
+    margin-top: 3px; /* Add a top margin */
+    margin-bottom: 3px; /* Bottom margin */
+    resize: vertical /* Allow the user*/
+}
+
+.admFormOrderOrganiz {
+    width: 165px; /* Full width */
+    padding: 10px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 3px; /* Add a top margin */
+    margin-bottom: 3px; /* Bottom margin */
+    resize: vertical /* Allow the user*/
+}
+
+.admFormOrderView {
+    width: 93px; /* Full width */
+    padding: 10px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 3px; /* Add a top margin */
+    margin-bottom: 3px; /* Bottom margin */
     resize: vertical /* Allow the user*/
 }
 
 .admFormOrderStatus {
-    width: 140px; /* Full width */
-    padding: 12px; /* Some padding */ 
+    width: 120px; /* Full width */
+    padding: 10px; /* Some padding */ 
     border: 1px solid #ccc; /* Gray border */
     border-radius: 4px; /* Rounded borders */
     box-sizing: border-box; /* Make sure that padding and width stays in place */
-    margin-top: 6px; /* Add a top margin */
-    margin-bottom: 16px; /* Bottom margin */
+    margin-top: 3px; /* Add a top margin */
+    margin-bottom: 3px; /* Bottom margin */
+    resize: vertical /* Allow the user to vert*/
+}
+
+.admFormOrderStatusDel {
+    width: 148px; /* Full width */
+    padding: 10px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 3px; /* Add a top margin */
+    margin-bottom: 3px; /* Bottom margin */
+    resize: vertical /* Allow the user to vert*/
+}
+
+.admFormOrderViewPay {
+    width: 120px; /* Full width */
+    padding: 10px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 3px; /* Add a top margin */
+    margin-bottom: 3px; /* Bottom margin */
+    resize: vertical /* Allow the user*/
+}
+
+.admFormOrderStatusPay {
+    width: 140px; /* Full width */
+    padding: 10px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 3px; /* Add a top margin */
+    margin-bottom: 3px; /* Bottom margin */
     resize: vertical /* Allow the user to vert*/
 }
 
@@ -203,13 +272,6 @@
     background-color: #2caf30;
 }
 
-.admFormDataOrder {
-    display: flex;
-    flex-direction: row;
-    align-items:baseline;
-    flex-wrap:wrap;
-    gap: 3px;
-}
 .admFormSearchCustm {
     margin-left: 3px;
     width: 30px;
@@ -243,6 +305,8 @@
     margin-bottom: 5px;
     overflow-y: auto;
     border: 1px solid #ccc;
+    border-radius: 8px 0px 0px 8px;
+    /*: 4px 0px 4px 0px;*/
 }
 
 /*.admFormOrderTableTh th {

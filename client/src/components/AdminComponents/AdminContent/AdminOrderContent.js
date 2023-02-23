@@ -4,7 +4,7 @@ import ButtonSearch from '../../Buttons/ButtonSearch';
 import ModalAdmin from '../../Modal/ModalAdmin';
 import AdminModalFormOrder from '../AdminModalForm/AdminModalFormOrder';
 
-const AdminOrderContent = () => {
+const AdminOrderContent = ({orders, customer, comments, showComment}) => {
     const [active, setActive] = useState(false);
 
     const activeForm = () => {
@@ -27,7 +27,7 @@ const AdminOrderContent = () => {
             <table className='admListOrdersTable'>
                 <thead>
                     <tr className='headerOrderTable'>
-                        <th>Тип</th>
+                      
                         <th>Код</th>
                         <th>Дата</th>
                         <th>Дата оновлення</th>
@@ -36,32 +36,33 @@ const AdminOrderContent = () => {
                         <th>Сума</th>
                         <th>Статус</th>
                         <th>Тип замовлення</th>
-                        <th>Статус Доставки</th>
                         <th>Перевізник</th>
-                        <th>Статус Оплати</th>
+                        <th>Статус Доставки</th>
                         <th>Тип оплати</th>
+                        <th>Статус Оплати</th>
                         <th>Користувач</th>
-                        <th>Коментар</th>
+                        <th>Нотатки</th>
                         <th>Опції</th>
                     </tr>
                 </thead>    
                 <tbody>
+                    {orders ? orders.map((items) => (
                     <tr>
-                        <td>V</td>
-                        <td>2643020000000</td>
+                        <td>{items.id_order}</td>
                         <td>02.01.2023</td>
                         <td>25.01.2023</td>
-                        <td>Тімошенко Н.В.</td>
+                        <td>{items.customer}</td>
                         <td>Склад Поставщик</td>
                         <td>10200.00</td>
-                        <td>Новий</td>
-                        <td>Сайт</td>
-                        <td>Доставляеться</td>
-                        <td>Нова Пошта</td>
-                        <td>Очікує Оплати</td>
-                        <td>Карта</td>
-                        <td>Михайло</td>
-                        <td>Треба уточнення</td>
+                        <td>{items.status}</td>
+                        <td>{items.order_view}</td>
+                        <td>{items.delivery}</td>
+                        <td>{items.status_delivery}</td>
+                        <td>{items.pay_view}</td>
+                        <td>{items.status_pay}</td>
+                        <td>{items.order_view}</td>
+                        <td>{items.user}</td>
+                        <td>{items.notes}</td>
                         <td>
                             <button className='basketAdmGoods'
                                 onClick={activeForm}>
@@ -74,399 +75,10 @@ const AdminOrderContent = () => {
                                 <i className="fa fa-remove"></i>
                             </button>                  
                         </td>
-                    </tr>          
-                    <tr>
-                        <td>V</td>
-                        <td>264302</td>
-                        <td>02.01.2023</td>
-                        <td>25.01.2023</td>
-                        <td>Тімошенко Н.В.</td>
-                        <td>Склад Поставщик</td>
-                        <td>10200.00</td>
-                        <td>Новий</td>
-                        <td>Сайт</td>
-                        <td>Доставляеться</td>
-                        <td>Нова Пошта</td>
-                        <td>Очікує Оплати</td>
-                        <td>Карта</td>
-                        <td>Михайло</td>
-                        <td>Треба уточнення</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
                     </tr>
-                    <tr>
-                        <td>V</td>
-                        <td>264302</td>
-                        <td>02.01.2023</td>
-                        <td>25.01.2023</td>
-                        <td>Тімошенко Н.В.</td>
-                        <td>Склад Поставщик</td>
-                        <td>10200.00</td>
-                        <td>Новий</td>
-                        <td>Сайт</td>
-                        <td>Доставляеться</td>
-                        <td>Нова Пошта</td>
-                        <td>Очікує Оплати</td>
-                        <td>Карта</td>
-                        <td>Михайло</td>
-                        <td>Треба уточнення</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>
-                    <tr>
-                    <td>V</td>
-                        <td>264302</td>
-                        <td>02.01.2023</td>
-                        <td>25.01.2023</td>
-                        <td>Тімошенко Н.В.</td>
-                        <td>Склад Поставщик</td>
-                        <td>10200.00</td>
-                        <td>Новий</td>
-                        <td>Сайт</td>
-                        <td>Доставляеться</td>
-                        <td>Нова Пошта</td>
-                        <td>Очікує Оплати</td>
-                        <td>Карта</td>
-                        <td>Михайло</td>
-                        <td>Треба уточнення</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr> 
-                    <tr>
-                    <td>V</td>
-                        <td>264302</td>
-                        <td>02.01.2023</td>
-                        <td>25.01.2023</td>
-                        <td>Тімошенко Н.В.</td>
-                        <td>Склад Поставщик</td>
-                        <td>10200.00</td>
-                        <td>Новий</td>
-                        <td>Сайт</td>
-                        <td>Доставляеться</td>
-                        <td>Нова Пошта</td>
-                        <td>Очікує Оплати</td>
-                        <td>Карта</td>
-                        <td>Михайло</td>
-                        <td>Треба уточнення</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr> 
-                    <tr>
-                    <td>V</td>
-                        <td>264302</td>
-                        <td>02.01.2023</td>
-                        <td>25.01.2023</td>
-                        <td>Тімошенко Н.В.</td>
-                        <td>Склад Поставщик</td>
-                        <td>10200.00</td>
-                        <td>Новий</td>
-                        <td>Сайт</td>
-                        <td>Доставляеться</td>
-                        <td>Нова Пошта</td>
-                        <td>Очікує Оплати</td>
-                        <td>Карта</td>
-                        <td>Михайло</td>
-                        <td>Треба уточнення</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr> 
-                    <tr>
-                    <td>V</td>
-                        <td>264302</td>
-                        <td>02.01.2023</td>
-                        <td>25.01.2023</td>
-                        <td>Тімошенко Н.В.</td>
-                        <td>Склад Поставщик</td>
-                        <td>10200.00</td>
-                        <td>Новий</td>
-                        <td>Сайт</td>
-                        <td>Доставляеться</td>
-                        <td>Нова Пошта</td>
-                        <td>Очікує Оплати</td>
-                        <td>Карта</td>
-                        <td>Михайло</td>
-                        <td>Треба уточнення</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr> 
-                    <tr>
-                    <td>V</td>
-                        <td>264302</td>
-                        <td>02.01.2023</td>
-                        <td>25.01.2023</td>
-                        <td>Тімошенко Н.В.</td>
-                        <td>Склад Поставщик</td>
-                        <td>10200.00</td>
-                        <td>Новий</td>
-                        <td>Сайт</td>
-                        <td>Доставляеться</td>
-                        <td>Нова Пошта</td>
-                        <td>Очікує Оплати</td>
-                        <td>Карта</td>
-                        <td>Михайло</td>
-                        <td>Треба уточнення</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>
-                    <tr>
-                    <td>V</td>
-                        <td>264302</td>
-                        <td>02.01.2023</td>
-                        <td>25.01.2023</td>
-                        <td>Тімошенко Н.В.</td>
-                        <td>Склад Поставщик</td>
-                        <td>10200.00</td>
-                        <td>Новий</td>
-                        <td>Сайт</td>
-                        <td>Доставляеться</td>
-                        <td>Нова Пошта</td>
-                        <td>Очікує Оплати</td>
-                        <td>Карта</td>
-                        <td>Михайло</td>
-                        <td>Треба уточнення</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>  
-                    <tr>
-                    <td>V</td>
-                        <td>264302</td>
-                        <td>02.01.2023</td>
-                        <td>25.01.2023</td>
-                        <td>Тімошенко Н.В.</td>
-                        <td>Склад Поставщик</td>
-                        <td>10200.00</td>
-                        <td>Новий</td>
-                        <td>Сайт</td>
-                        <td>Доставляеться</td>
-                        <td>Нова Пошта</td>
-                        <td>Очікує Оплати</td>
-                        <td>Карта</td>
-                        <td>Михайло</td>
-                        <td>Треба уточнення</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>  
-                    <tr>
-                    <td>V</td>
-                        <td>264302</td>
-                        <td>02.01.2023</td>
-                        <td>25.01.2023</td>
-                        <td>Тімошенко Н.В.</td>
-                        <td>Склад Поставщик</td>
-                        <td>10200.00</td>
-                        <td>Новий</td>
-                        <td>Сайт</td>
-                        <td>Доставляеться</td>
-                        <td>Нова Пошта</td>
-                        <td>Очікує Оплати</td>
-                        <td>Карта</td>
-                        <td>Михайло</td>
-                        <td>Треба уточнення</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>
-                    <tr>
-                    <td>V</td>
-                        <td>264302</td>
-                        <td>02.01.2023</td>
-                        <td>25.01.2023</td>
-                        <td>Тімошенко Н.В.</td>
-                        <td>Склад Поставщик</td>
-                        <td>10200.00</td>
-                        <td>Новий</td>
-                        <td>Сайт</td>
-                        <td>Доставляеться</td>
-                        <td>Нова Пошта</td>
-                        <td>Очікує Оплати</td>
-                        <td>Карта</td>
-                        <td>Михайло</td>
-                        <td>Треба уточнення</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>    
-                    <tr>
-                    <td>V</td>
-                        <td>264302</td>
-                        <td>02.01.2023</td>
-                        <td>25.01.2023</td>
-                        <td>Тімошенко Н.В.</td>
-                        <td>Склад Поставщик</td>
-                        <td>10200.00</td>
-                        <td>Новий</td>
-                        <td>Сайт</td>
-                        <td>Доставляеться</td>
-                        <td>Нова Пошта</td>
-                        <td>Очікує Оплати</td>
-                        <td>Карта</td>
-                        <td>Михайло</td>
-                        <td>Треба уточнення</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>
-                    <tr>
-                    <td>V</td>
-                        <td>264302</td>
-                        <td>02.01.2023</td>
-                        <td>25.01.2023</td>
-                        <td>Тімошенко Н.В.</td>
-                        <td>Склад Поставщик</td>
-                        <td>10200.00</td>
-                        <td>Новий</td>
-                        <td>Сайт</td>
-                        <td>Доставляеться</td>
-                        <td>Нова Пошта</td>
-                        <td>Очікує Оплати</td>
-                        <td>Карта</td>
-                        <td>Михайло</td>
-                        <td>Треба уточнення</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>        
-                    <tr>
-                    <td>V</td>
-                        <td>264302</td>
-                        <td>02.01.2023</td>
-                        <td>25.01.2023</td>
-                        <td>Тімошенко Н.В.</td>
-                        <td>Склад Поставщик</td>
-                        <td>10200.00</td>
-                        <td>Новий</td>
-                        <td>Сайт</td>
-                        <td>Доставляеться</td>
-                        <td>Нова Пошта</td>
-                        <td>Очікує Оплати</td>
-                        <td>Карта</td>
-                        <td>Михайло</td>
-                        <td>Треба уточнення</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>                  
+                    ))
+                    : <tr><td>Очікуемо замовлення......</td></tr>
+                    }              
                 </tbody>
             </table>
             </div>
@@ -481,36 +93,16 @@ const AdminOrderContent = () => {
                     </tr>  
                 </thead>
                 <tbody>
+                    {comments ? comments.map((value) => (
                     <tr>
-                        <td>100255</td>
-                        <td>Миколай</td>
-                        <td>02.02.2023</td>
-                        <td>Треба передзвоники кліенту та домовитись про адресну доставку</td>
+                        <td>{value.id_order}</td>
+                        <td>{value.user}</td>
+                        <td>{value.createdAt}</td>
+                        <td>{value.comment}</td>
                     </tr>
-                    <tr>
-                        <td>100255</td>
-                        <td>Кирило</td>
-                        <td>02.02.2023</td>
-                        <td>Кліент буде буде опалчувати по безготівковому розрахунку. Тількт б/г с ПДВ. Важливо.</td>
-                    </tr>
-                    <tr>
-                        <td>100255</td>
-                        <td>Миколай</td>
-                        <td>02.02.2023</td>
-                        <td>Оплата є. ТАкож після приходу хоче ще звробити замовлення. Обовязково передзвонити. Приблизно через неділю.</td>
-                    </tr>
-                    <tr>
-                        <td>100255</td>
-                        <td>Кирило</td>
-                        <td>02.02.2023</td>
-                        <td>Кліент буде буде опалчувати по безготівковому розрахунку. Тількт б/г с ПДВ. Важливо.</td>
-                    </tr>
-                    <tr>
-                        <td>100255</td>
-                        <td>Миколай</td>
-                        <td>02.02.2023</td>
-                        <td>Оплата є. ТАкож після приходу хоче ще звробити замовлення. Обовязково передзвонити. Приблизно через неділю.</td>
-                    </tr>     
+                    ))
+                    : <tr><td></td></tr>
+                    }
                 </tbody>
                 </table>       
             </div> 

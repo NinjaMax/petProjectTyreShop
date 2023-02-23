@@ -12,5 +12,10 @@ export interface OrdersConfigAttr
     total: number;
     notes: string;
     status: string; 
+    delivery: string;
+    status_delivery: string;
+    delivery_ttn: string;
+    pay_view: string;
+    status_pay: string;
  
 }

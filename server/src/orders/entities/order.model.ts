@@ -22,14 +22,29 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
     @Column({type: DataType.BIGINT, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_order: number;
 
-    @Column({type: DataType.STRING, unique: false, allowNull: false})
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    order_view: string;
+
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
     delivery: string;
+
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    status_delivery: string;
+
+    @Column({type: DataType.STRING, unique: false, allowNull: true})
+    delivery_ttn: string;
+
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    status: string;
+
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    pay_view: string;
+
+    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    status_pay: string;
 
     @Column({type: DataType.STRING, unique: false, allowNull: true})
     notes: string;
-
-    @Column({type: DataType.STRING, unique: false, allowNull: false})
-    status: string;
 
     @ForeignKey(() => Customer)
     @Column({type: DataType.INTEGER, allowNull: true})

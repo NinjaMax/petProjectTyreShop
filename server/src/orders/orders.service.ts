@@ -142,9 +142,9 @@ export class OrdersService {
       const storageStorage  = await this.storageService.findStorageById(createOrderDto);
       const orderStorageId = await this.ordersStorageService.findOrderStorageById(createOrderDto);
       
-      if( tyreStock ) {
+      if(tyreStock) {
         
-        if(tyreStock.remainder < createOrderDto.quantity && tyreStock.stock !==0 ) {
+        if(tyreStock.remainder < createOrderDto.quantity && tyreStock.stock !==0) {
 
           const newReserve = createOrderDto.quantity - (createOrderDto.quantity - tyreStock.remainder);
           await tyreStock.increment('reserve', {by: newReserve});
@@ -160,7 +160,7 @@ export class OrdersService {
           return orderId;
         }
 
-        if( tyreStock.remainder > createOrderDto.quantity && tyreStock.stock !==0 ) {
+        if(tyreStock.remainder > createOrderDto.quantity && tyreStock.stock !==0) {
           
           await tyreStock.increment('reserve', {by: createOrderDto.quantity});
           await tyreStock.reload();
@@ -175,7 +175,7 @@ export class OrdersService {
           return orderId;
         }
 
-        if(tyreStock.remainder == 0 || tyreStock.stock == 0 || tyreStock.id_storage !== createOrderDto.id_storage ) {
+        if(tyreStock.remainder == 0 || tyreStock.stock == 0 || tyreStock.id_storage !== createOrderDto.id_storage) {
           
           return `You can not set more "reserve" 
             because does not have remainder. "Remainder 0".
@@ -202,7 +202,7 @@ export class OrdersService {
           return orderId;
         }
 
-        if( wheelStock.remainder > createOrderDto.quantity && wheelStock.stock !==0 ) {
+        if(wheelStock.remainder > createOrderDto.quantity && wheelStock.stock !==0) {
           
           await wheelStock.increment('reserve', {by: createOrderDto.quantity});
           await wheelStock.reload();
@@ -217,7 +217,7 @@ export class OrdersService {
           return orderId;
         }
 
-        if(wheelStock.remainder == 0 || wheelStock.stock == 0 || wheelStock.id_storage !== createOrderDto.id_storage ) {
+        if(wheelStock.remainder == 0 || wheelStock.stock == 0 || wheelStock.id_storage !== createOrderDto.id_storage) {
           
           return `You can not set more "reserve" 
             because does not have remainder. "Remainder 0".
@@ -228,7 +228,7 @@ export class OrdersService {
 
       if(batteryStock) {
 
-        if(batteryStock.remainder < createOrderDto.quantity && batteryStock.stock !==0 ) {
+        if(batteryStock.remainder < createOrderDto.quantity && batteryStock.stock !==0) {
 
           const newReserve = createOrderDto.quantity - (createOrderDto.quantity - batteryStock.remainder);
           await batteryStock.increment('reserve', {by: newReserve});
@@ -244,7 +244,7 @@ export class OrdersService {
           return orderId;
         }
 
-        if( batteryStock.remainder > createOrderDto.quantity && batteryStock.stock !==0 ) {
+        if(batteryStock.remainder > createOrderDto.quantity && batteryStock.stock !==0) {
           
           await batteryStock.increment('reserve', {by: createOrderDto.quantity});
           await batteryStock.reload();
@@ -259,7 +259,7 @@ export class OrdersService {
           return orderId;
         }
 
-        if(batteryStock.remainder == 0 || batteryStock.stock == 0 || batteryStock.id_storage !== createOrderDto.id_storage ) {
+        if(batteryStock.remainder == 0 || batteryStock.stock == 0 || batteryStock.id_storage !== createOrderDto.id_storage) {
           
           return `You can not set more "reserve" 
             because does not have remainder. "Remainder 0".
@@ -270,7 +270,7 @@ export class OrdersService {
 
       if(oilStock) {
 
-        if(oilStock.remainder < createOrderDto.quantity && oilStock.stock !==0 ) {
+        if(oilStock.remainder < createOrderDto.quantity && oilStock.stock !==0) {
 
           const newReserve = createOrderDto.quantity - (createOrderDto.quantity - oilStock.remainder);
           await oilStock.increment('reserve', {by: newReserve});
@@ -286,7 +286,7 @@ export class OrdersService {
           return orderId;
         }
 
-        if( oilStock.remainder > createOrderDto.quantity && oilStock.stock !==0 ) {
+        if(oilStock.remainder > createOrderDto.quantity && oilStock.stock !==0) {
           
           await oilStock.increment('reserve', {by: createOrderDto.quantity});
           await oilStock.reload();
@@ -301,7 +301,7 @@ export class OrdersService {
           return orderId;
         }
 
-        if(oilStock.remainder == 0 || oilStock.stock == 0 || oilStock.id_storage !== createOrderDto.id_storage ) {
+        if(oilStock.remainder == 0 || oilStock.stock == 0 || oilStock.id_storage !== createOrderDto.id_storage) {
           
           return `You can not set more "reserve" 
             because does not have remainder. "Remainder 0".
@@ -329,10 +329,10 @@ export class OrdersService {
       if(ordersId) {
 
         await this.ordersRepository.update(
-        { id : updateOrderDto.id,
+        {id: updateOrderDto.id,
           id_user: updateOrderDto.id_user, 
           notes: updateOrderDto.notes,
-        }, {where: {id_order : updateOrderDto.id_order}});
+        }, {where: {id_order: updateOrderDto.id_order}});
         
         const orderAfterUpdate = await this.ordersRepository.findByPk(updateOrderDto.id_order, {include: {all: true}});
 

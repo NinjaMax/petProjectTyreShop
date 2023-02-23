@@ -27,6 +27,9 @@ const Admin = () => {
     // const [oilData, setOildata] = useState(null);
     // const [batteryData, setBatteryData] = useState(null);
     const [customers, setCustomers] = useState(null);
+    const [commentData, setCommentData] = useState(null);
+    const [commentId, setCommentId] = useState(null);
+    const [orderAllData, setOrderAllData] = useState(null);
 
   
     useEffect(() => {
@@ -52,6 +55,32 @@ const Admin = () => {
           console.log(error)
         })
 
+        axios.get("http://localhost:4000/comments", {
+            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+            withCredentials: true,
+            params: {id_comment: commentId}
+        })
+        .then(response => {
+            setCommentData(response.data);
+            console.log('COMMENTS',response.data);
+        })
+        .catch(error => {
+          console.log(error)
+        })
+
+        axios.get("http://localhost:4000/orders/all", {
+            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+            withCredentials: true,
+            //params: {id_comment: commentId}
+        })
+        .then(response => {
+            setOrderAllData(response.data);
+            //console.log('COMMENTS',response.data);
+        })
+        .catch(error => {
+          console.log(error)
+        })
+
         axios.get("http://localhost:4000/customers/all", {
             headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
             withCredentials: true})
@@ -63,11 +92,15 @@ const Admin = () => {
           console.log(error)
         })
 
-    },[])
+    },[commentId])
 
     const sideBarItemChange = (e) => {
         setSideBarItem(e.target.value);
         console.log(e.target.value);
+    }
+
+    const showCommentData = (e) => {
+        setCommentId(e.target.value);
     }
 
     return (
@@ -83,50 +116,54 @@ const Admin = () => {
             </div>
             <div className='rightColumn'>
                 {sideBarItem === 'golovna' ?
-                    <AdminMainContent changeMenu={sideBarItemChange}/>
+                    <AdminMainContent />
                 : null}
                 {sideBarItem === 'catalog' ?
-                    <AdminGoodsContent changeMenu={sideBarItemChange}
+                    <AdminGoodsContent 
                         tyreData={tyreData} wheelData={wheelData}
-                        customer={customers}/>
+                        customer={customers}
+                        comments={commentData}/>
                 : null}
                 {sideBarItem === 'zamovlenia' ?
-                    <AdminOrderContent changeMenu={sideBarItemChange}
-                        customer={customers}/>
+                    <AdminOrderContent 
+                        showComment={showCommentData}
+                        orders={orderAllData}
+                        customer={customers} 
+                        comments={commentData}/>
                 : null}
                 {sideBarItem === 'prodagi' ?
-                    <AdminSalesContent changeMenu={sideBarItemChange}/>
+                    <AdminSalesContent />
                 : null}
                 {sideBarItem === 'zamovleniaPost' ?
-                    <AdminOrderSupContent changeMenu={sideBarItemChange}/>
+                    <AdminOrderSupContent />
                 :null}
                 {sideBarItem === 'kasi' ?
-                    <AdminCashBoxContent changeMenu={sideBarItemChange}/>
+                    <AdminCashBoxContent />
                 : null}
                 {sideBarItem === 'plategiVh' ?
-                    <AdminPayIncomesContent changeMenu={sideBarItemChange}/>
+                    <AdminPayIncomesContent />
                 : null}
                 {sideBarItem === 'plategiVih' ?
-                    <AdminPayExpensesContent changeMenu={sideBarItemChange}/>
+                    <AdminPayExpensesContent />
                 : null}
                 {sideBarItem === 'postachal' ?
-                    <AdminSupplierContent changeMenu={sideBarItemChange}/>
+                    <AdminSupplierContent />
                 : null}
                 {sideBarItem === 'pokupci' ?
-                    <AdminCustomersContent changeMenu={sideBarItemChange}
+                    <AdminCustomersContent 
                     customers={customers}/>
                 : null}
                 {sideBarItem === 'koristuvachi' ?
-                    <AdminUsersContent changeMenu={sideBarItemChange}/>
+                    <AdminUsersContent />
                 : null}
                 {sideBarItem === 'zavantag' ?
-                    <AdminUploaderContent changeMenu={sideBarItemChange}/>
+                    <AdminUploaderContent />
                 : null}
                 {sideBarItem === 'zviti' ?
-                    <AdminReportsContent changeMenu={sideBarItemChange}/>
+                    <AdminReportsContent />
                 : null}
                 {sideBarItem === 'nalashtuvania' ?
-                    <AdminOptionContent changeMenu={sideBarItemChange}/>
+                    <AdminOptionContent />
                 : null} 
             </div>            
         </div>
