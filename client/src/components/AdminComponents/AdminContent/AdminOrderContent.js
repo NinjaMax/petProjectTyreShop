@@ -2,13 +2,19 @@ import {React, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminOrderContent.css';
 import ButtonSearch from '../../Buttons/ButtonSearch';
 import ModalAdmin from '../../Modal/ModalAdmin';
-import AdminModalFormOrder from '../AdminModalForm/AdminModalFormOrder';
+import AdminFormOrder from '../AdminModalForm/AdminModalFormOrder';
+import AdminModalOrderSup from '../AdminModalForm/AdminModalOrderSup';
 
-const AdminOrderContent = ({orders, customer, comments, showComment}) => {
-    const [active, setActive] = useState(false);
+const AdminOrderContent = ({props, orders, customer, comments, showComment}) => {
+    const [activeOrder, setActiveOrder] = useState(false);
+    const [activeOrderSup, setActiveOrderSup] = useState(false);
 
-    const activeForm = () => {
-        setActive(!active);
+    const activeFormOrder = () => {
+        setActiveOrder(!activeOrder);
+    }
+
+    const activeFormOrderSup = () => {
+        setActiveOrderSup(!activeOrderSup);
     }
 
     return (
@@ -16,7 +22,7 @@ const AdminOrderContent = ({orders, customer, comments, showComment}) => {
             <div className="admOrderContent">
                 <span>Замовлення Покупців:</span>
                 <div className='admOrderHeader'>
-                    <button className='admOrderHeaderBtn' onClick={activeForm}>
+                    <button className='admOrderHeaderBtn' onClick={activeFormOrder}>
                         Додати замовлення
                     </button>
                 </div>
@@ -65,7 +71,7 @@ const AdminOrderContent = ({orders, customer, comments, showComment}) => {
                         <td>{items.notes}</td>
                         <td>
                             <button className='basketAdmGoods'
-                                onClick={activeForm}>
+                                onClick={activeFormOrderSup}>
                                 <i className="fas fa-truck-loading"></i>
                             </button>
                             <button className='editAdmGoods'>
@@ -106,10 +112,22 @@ const AdminOrderContent = ({orders, customer, comments, showComment}) => {
                 </tbody>
                 </table>       
             </div> 
-            {active ?
-                <ModalAdmin active={active} setActive={activeForm}>
-                    <AdminModalFormOrder/>
+            {activeOrder ?
+                <ModalAdmin active={activeOrder} setActive={activeFormOrder}>
+                    <AdminFormOrder 
+                        // tyreDatas={tyreData} 
+                        // wheelDatas={wheelData}
+                        setActive={activeFormOrder}
+                        customer={customer} 
+                        props={props}
+                    />
                 </ModalAdmin>  
+                : null
+            }
+            {activeOrderSup ? 
+                <ModalAdmin active={activeOrderSup} setActive={activeFormOrderSup}>
+                    <AdminModalOrderSup/>
+                </ModalAdmin>
                 : null
             }
             

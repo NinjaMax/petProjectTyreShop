@@ -11,7 +11,8 @@ import AdminWheelStockPriceRow from './AdminWheelStockPriceRow';
 import ModalAdmin from '../../Modal/ModalAdmin';
 import AdminFormOrder from '../AdminModalForm/AdminModalFormOrder';
 
-const AdminGoodsContent = ({tyreData, wheelData, customer}) => {
+const AdminGoodsContent = ({comments, props, customer}) => {
+    const [tyreData, wheelData] = props;
     const [chooseCat, setChooseCat] = useState('Шини');
     // const [tyreData, setTyreData] = useState(null);
     // const [wheelData, setWheelData] = useState(null);
@@ -32,42 +33,6 @@ const AdminGoodsContent = ({tyreData, wheelData, customer}) => {
     // const [priceOil, setPriceOil] = useState([]);
     // const [stockBattery, setStockBattery] = useState([]);
     // const [priceBattery, setPriceBattery] = useState([]);
-
-    //useEffect(()=>{
-        // axios.get("http://localhost:4000/tyres", {
-        //     headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
-        //     withCredentials: true})
-        // .then(response => {
-        //     setTyreData(response.data);
-        //     //console.log(response.data);
-        // })
-        // .catch(error => {
-        //   console.log(error)
-        // })
-
-        // axios.get("http://localhost:4000/wheels", {
-        //     headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
-        //     withCredentials: true})
-        // .then(response => {
-        //     setWheelData(response.data);
-        //     //console.log(response.data);
-        // })
-        // .catch(error => {
-        //   console.log(error)
-        // })
-
-        // axios.get("http://localhost:4000/customers/all", {
-        //     headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
-        //     withCredentials: true})
-        // .then(response => {
-        //     setCustomers(response.data);
-        //     //console.log(response.data);
-        // })
-        // .catch(error => {
-        //   console.log(error)
-        // })
-
-    //},[]);
 
     useEffect(()=>{
         axios.get("http://localhost:4000/stock/tyres/", {
@@ -254,9 +219,8 @@ const AdminGoodsContent = ({tyreData, wheelData, customer}) => {
             {addGoods ?
                 <ModalAdmin active={addGoods} setActive={addToOrder}>
                     <AdminFormOrder 
-                        goodsId={itemId} 
-                        tyreDatas={tyreData} 
-                        wheelDatas={wheelData}
+                        goodsId={itemId}
+                        props={props} 
                         customer={customer}/>
                 </ModalAdmin>
                 : null

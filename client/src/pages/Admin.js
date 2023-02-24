@@ -20,8 +20,8 @@ import AdminProfile from '../components/AdminComponents/AdminProfile';
 import AdminHeader from '../components/AdminComponents/AdminHeader';
 
 const Admin = () => {
-    const [sideBarItem, setSideBarItem] = useState("golovna");
 
+    const [sideBarItem, setSideBarItem] = useState("golovna");
     const [tyreData, setTyreData] = useState(null);
     const [wheelData, setWheelData] = useState(null);
     // const [oilData, setOildata] = useState(null);
@@ -62,7 +62,7 @@ const Admin = () => {
         })
         .then(response => {
             setCommentData(response.data);
-            console.log('COMMENTS',response.data);
+            //console.log('COMMENTS',response.data);
         })
         .catch(error => {
           console.log(error)
@@ -75,6 +75,19 @@ const Admin = () => {
         })
         .then(response => {
             setOrderAllData(response.data);
+            //console.log('COMMENTS',response.data);
+        })
+        .catch(error => {
+          console.log(error)
+        })
+
+        axios.post("http://localhost:4000/orders/", {
+            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+            withCredentials: true,
+            body: {id_comment: commentId,}
+        })
+        .then(response => {
+            //setOrderAllData(response.data);
             //console.log('COMMENTS',response.data);
         })
         .catch(error => {
@@ -119,23 +132,28 @@ const Admin = () => {
                     <AdminMainContent />
                 : null}
                 {sideBarItem === 'catalog' ?
-                    <AdminGoodsContent 
-                        tyreData={tyreData} wheelData={wheelData}
+                    <AdminGoodsContent
+                        props={[tyreData, wheelData]}
                         customer={customers}
-                        comments={commentData}/>
+                        comments={commentData}
+                    />
                 : null}
                 {sideBarItem === 'zamovlenia' ?
                     <AdminOrderContent 
+                        props={[tyreData, wheelData]}
                         showComment={showCommentData}
                         orders={orderAllData}
                         customer={customers} 
-                        comments={commentData}/>
+                        comments={commentData}
+                    />
                 : null}
                 {sideBarItem === 'prodagi' ?
                     <AdminSalesContent />
                 : null}
                 {sideBarItem === 'zamovleniaPost' ?
-                    <AdminOrderSupContent />
+                    <AdminOrderSupContent 
+                        props={[tyreData, wheelData]}
+                    />
                 :null}
                 {sideBarItem === 'kasi' ?
                     <AdminCashBoxContent />

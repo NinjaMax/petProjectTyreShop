@@ -1,8 +1,8 @@
 import {React, useState, Fragment} from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminModalGoods.css';
 
-const AdminModalGoods = ({tyreModData, wheelModData, showRowModData}) => {
-
+const AdminModalGoods = ({props, showRowModData}) => {
+    const [tyreModData, wheelModData] = props;
     const [chooseCatMod, setChooseCatMod] = useState('Шини');
 
     return (

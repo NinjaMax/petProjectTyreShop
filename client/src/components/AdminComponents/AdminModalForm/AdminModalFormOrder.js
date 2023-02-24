@@ -1,5 +1,7 @@
 import React, {useMemo, useReducer, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminFormOrder.css';
+//import axios from 'axios';
+import { useForm } from 'react-hook-form';
 import ModalAdmin from '../../Modal/ModalAdmin';
 import AdminComment from '../AdminContent/AdminComment';
 import AdminModalCustmCreate from './AdminModalCustmCreate';
@@ -32,12 +34,16 @@ function reducer(state = [], action, initialState) {
     
 }
 
-const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas, comments, customer}) => {
-    
+const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
+    const [tyreDatas, wheelDatas] =props;
+    const {register, handleSubmit, formState: {errors}} = useForm();
     const [addGoods, setAddGoods] = useState(false);
     const [createCustomer, setCreateCustomer] = useState(false);
     const [openCustomers, setOpenCustomers] = useState(false);
     const [addCustomer, setAddCustomer] = useState(null);
+    // const [answer, setAnswer] = useState('');
+    // const [error, setError] = useState(null);
+    // const [status, setStatus] = useState('typing');
     //const [goodsList, setGoodsList] = useState([]);
     //const [addItems, setAddItems] = useState();
     //const [changeCustomer, setChangeCustomer] = useState();
@@ -85,15 +91,68 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas, comments, customer}) =>
         }
 
     }),[tyreDatas, wheelDatas, customer])
+
+    // async function handleSubmit(e) {
+    //     e.preventDefault();
+    //     setStatus('submitting');
+    //     try {
+    //       await submitForm(answer);
+    //       setStatus('success');
+    //     } catch (err) {
+    //       setStatus('typing');
+    //       setError(err);
+    //     }
+    // }
+        const onSubmit = (data) => {
+            //await responseForm(data);
+            console.log('SEND DATA', data);
+        };
+        
+    // useEffect(() => {
+        
+    //     const responseForm = async (data) => { await axios.post('http://localhost:4000/orders', data, {
+    //         headers: {
+    //             'Content-Type': 'application/json; charset=utf-8',
+    //             'Access-Control-Allow-Origin': 'http://localhost:3000'
+    //         },
+    //         withCredentials: true,
+    //         // data: {
+    //         //     order_view: {},
+    //         //     status: 'Новий',
+    //         //     delivery: 'Flintstone',
+    //         //     status_delivery: 'Novij',
+    //         //     delivery_ttn:'',
+    //         //     pay_view: '',
+    //         //     status_pay: '',
+    //         //     notes: '',
+    //         //     id_user:'',
+    //         //     id_customer:'',
+    //         //     id_contract:'',
+    //         //     id_basket:'',
+    //         //     order_storage: state,
+    //         // }
+    //         //photo: document.querySelector('#fileInput').files
+    //         })
+    //         .then(response => {
+    //         //setOrderAllData(response.data);
+    //         console.log('Order',response.data);
+    //         })
+    //         .catch(error => {
+    //             console.log(error)
+    //         }
+    //     )}
+        
+    //})
     //console.log('STATE: ', state);
     //console.log('GOODSID', goodsId);
     //console.log('CUSTOMER', customer);
+    console.log(errors);
 
     return (
         <div>
             Замовлення Покупця
             <div className="containerAdmOrderForm">
-            <form action="">
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='admFormDataOrder'>
                     <div>
                         <label htmlFor="fname">Дата</label>
@@ -116,39 +175,42 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas, comments, customer}) =>
                         />  
                     </div>
                     <div>
-                        <label htmlFor="sklad">Організація </label>
-                            <select className="admFormOrderOrganiz" name="Organization">
+                        <label htmlFor="organization">Організація </label>
+                        <select className="admFormOrderOrganiz" name="Organization">
                             <option value="1">ФОП Гайворонський</option>
                             <option value="2">фл Гайворонський Н. М</option>
                             <option value="3">ТОВ Скай-Партс</option>
                         </select>  
                     </div>
                     <div>
-                        <label htmlFor="sklad">Склад </label>
-                            <select className="admFormOrderStorage" name="Storage">
+                        <label htmlFor="storage">Склад </label>
+                        <select className="admFormOrderStorage" name="storage"
+                            {...register('id_storage', {required: 'Це необхідні дані'})}>
                             <option value="1">Склад Поставщик</option>
                             <option value="2">Склад Основний</option>
                             <option value="3">Склад Монтаж</option>
                         </select>  
                     </div>
                     <div>
-                        <label htmlFor="OrderView">Вид </label>
-                            <select className="admFormOrderView" name="OrderView">
-                            <option value="1">Сайт</option>
-                            <option value="2">Роздріб</option>
-                            <option value="2">Опт</option>
-                            <option value="3">Інше</option>
+                        <label htmlFor="orderView">Вид </label>
+                        <select className="admFormOrderView" name="order_view"
+                            {...register('order_view', {required: 'Це необхідні дані'})}>
+                            <option value="Сайт">Сайт</option>
+                            <option value="Роздріб">Роздріб</option>
+                            <option value="Опт">Опт</option>
+                            <option value="Інше">Інше</option>
                         </select>  
                     </div>
                     <div>
-                        <label htmlFor="status">Статус </label>
-                            <select className="admFormOrderStatus" name="Status Order">
-                            <option value="Novi">Новий</option>
-                            <option value="Prodaga">Продаж</option>
-                            <option value="Oplata">Обробка</option>
-                            <option value="Oplata">Виконання</option>
-                            <option value="Oplata">Відміна</option>
-                            <option value="Oplata">Повернення</option>
+                        <label htmlFor="statusOrder">Статус </label>
+                        <select className="admFormOrderStatus" name="status_order"
+                            {...register('status', {required: 'Це необхідні дані'})}>
+                            <option value="Новий">Новий</option>
+                            <option value="Продаж">Продаж</option>
+                            <option value="Обробка">Обробка</option>
+                            <option value="Виконання">Виконання</option>
+                            <option value="Відміна">Відміна</option>
+                            <option value="Повернення">Повернення</option>
                         </select>    
                     </div>
                     <div>
@@ -162,6 +224,7 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas, comments, customer}) =>
                                 //defaultValue={addCustomer ?? ''}
                                 value={addCustomer?.full_name ?? ''}
                                 //readOnly={true}
+                                {...register('customer', {required: 'Це необхідні дані'})}
                                 onChange={() => setAddCustomer(addCustomer)}
                             />
                             <div onClick={(e)=>e.preventDefault({passive: false})}>
@@ -179,9 +242,10 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas, comments, customer}) =>
                     </div>
                     <div>
                         <label htmlFor="fname"> Контракт </label>
-                        <select className="admFormOrderContract" name="Contract">
+                        <select className="admFormOrderContract" name="contract"
+                            {...register('id_contract', {required: 'Це необхідні дані'})}>
                            {addCustomer ? addCustomer.contract.map((entity, index)=>(
-                                <option key={'contr' + index} value={'id '+ entity.id}>
+                                <option key={'contract' + index} value={entity.id_contract}>
                                      {entity.name} {entity.id_contract} 
                                 </option>
                                 
@@ -192,61 +256,66 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas, comments, customer}) =>
 
                     <div>
                         <label htmlFor="pereviznik">Перевізник </label>
-                            <select className="admFormOrderDelivery" name="Delivery">
-                            <option value="Samoviviz">Самовивіз</option>
-                            <option value="SvoiDostavka">Своя Доставка</option>
-                            <option value="NovaPoshta">Нова Пошта</option>
-                            <option value="UkrPoshta">Укр Пошта</option>
-                            <option value="Delivary">Делівері</option>
+                        <select className="admFormOrderDelivery" name="delivery"
+                            {...register('delivery', {required: 'Це необхідні дані'})}>
+                            <option value="Самовивіз">Самовивіз</option>
+                            <option value="Своя Доставка">Своя Доставка</option>
+                            <option value="Нова Пошта">Нова Пошта</option>
+                            <option value="Укр Пошта">Укр Пошта</option>
+                            <option value="Делівері">Делівері</option>
                         </select>    
                     </div>
                     <div>
                         <label htmlFor="fname">ТТН </label>
                         <input type="text" 
                             className="admFormOrderTtn" 
-                            name="firstname" 
+                            name="delivery_ttn" 
                             maxLength='45'
                             placeholder="ТТН замовлення.."
+                            {...register('delivery_ttn')}
                         />  
                     </div>
                     <div>
                         <label htmlFor="status">Статус дост </label>
-                        <select className="admFormOrderStatusDel" name="StatusDel">
-                            <option value="Novi">Новий</option>
-                            <option value="Samoviviz">Самовивіз</option>
-                            <option value="Obrobka">Обробляеться</option>
-                            <option value="OchikueTtn">Очікує ТТН</option>
-                            <option value="Dostavka">Доставляеться</option>
-                            <option value="Ttn">Отримано ТТН</option>
-                            <option value="PoverneiaTtn">Повернення ТТН</option>
-                            <option value="CancelDelivery">Відміна</option>
+                        <select className="admFormOrderStatusDel" name="status_delivery"
+                            {...register('status_delivery', {required: 'Це необхідні дані'})}>
+                            <option value="Новий">Новий</option>
+                            <option value="Самовивіз">Самовивіз</option>
+                            <option value="Обробляеться">Обробляеться</option>
+                            <option value="Очікує ТТН">Очікує ТТН</option>
+                            <option value="Доставляеться">Доставляеться</option>
+                            <option value="Отримано ТТН">Отримано ТТН</option>
+                            <option value="Повернення ТТН">Повернення ТТН</option>
+                            <option value="Відміна">Відміна</option>
                         </select>    
                     </div>
                     <div onClick={(e)=>e.preventDefault({passive: false})}>
                         <button onClick={addGoodsForm} className='admFormOrderBtnAdd'>Додати товар</button>  
                     </div>
                     <div>
-                        <label htmlFor="viewPay">Вид оплати </label>
-                        <select className="admFormOrderViewPay" name="viewPay">
-                            <option value="Novi">Новий</option>
-                            <option value="cashPay">Готівка</option>
-                            <option value="billPay">Б/г рахунок</option>
-                            <option value="billPayCard">Б/г карта</option>
-                            <option value="nalogka">Наложка</option>
-                            <option value="Oplata">Відміна</option>
-                            <option value="OplataPov">Повернення</option>
+                        <label htmlFor="pay_view">Вид оплати </label>
+                        <select className="admFormOrderViewPay" name="pay_view"
+                            {...register('pay_view', {required: 'Це необхідні дані'})}>
+                            <option value="Новий">Новий</option>
+                            <option value="Готівка">Готівка</option>
+                            <option value="Б/г рахунок">Б/г рахунок</option>
+                            <option value="Б/г карта">Б/г карта</option>
+                            <option value="Наложка">Наложка</option>
+                            <option value="Відміна">Відміна</option>
+                            <option value="Повернення">Повернення</option>
                         </select>    
                     </div>
                     <div>
-                    <label htmlFor="statusPay">Статус оплати </label>
-                        <select className="admFormOrderStatusPay" name="statusPay">
-                        <option value="Novi">Новий</option>
-                        <option value="WaitPay">Очікує Оплату</option>
-                        <option value="Oplata">Оплачено</option>
-                        <option value="Oplata">Виконання</option>
-                        <option value="Oplata">Відміна</option>
-                        <option value="OplataPov">Повернення</option>
-                        <option value="NalogPay">Наложка Отримана</option>
+                    <label htmlFor="status_pay">Статус оплати </label>
+                        <select className="admFormOrderStatusPay" name="status_pay"
+                        {...register('status_pay', {required: 'Це необхідні дані'})}>
+                        <option value="Новий">Новий</option>
+                        <option value="Очікує Оплату">Очікує Оплату</option>
+                        <option value="Оплачено">Оплачено</option>
+                        <option value="Виконання">Виконання</option>
+                        <option value="Відміна">Відміна</option>
+                        <option value="Повернення">Повернення</option>
+                        <option value="Наложка Отримана">Наложка Отримана</option>
                         </select>    
                     </div>   
                 </div>
@@ -286,8 +355,9 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas, comments, customer}) =>
                 </table>
                 </div>
                 <div className='admFormOrderNotes'>
-                    <label htmlFor="subject">Нотатки</label>
-                    <textarea className="admFormOrderNotesText" name="subject" 
+                    <label htmlFor="notes">Нотатки</label>
+                    <textarea className="admFormOrderNotesText" name="notes" 
+                        {...register('notes')}
                         placeholder="Пишить нотатку..">
                     </textarea>  
                 </div>
@@ -307,9 +377,9 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas, comments, customer}) =>
                     </div>  
                 </div>
                 <div className='admOrderFormGrp' onClick={(e)=>e.preventDefault({passive: false})}>
-                    <input type="submit" className='admFormOrderBtnOk' value="Ok"/>
-                    <input type="submit" className='admFormOrderBtnSave' value="Зберегти"/>
-                    <button className='admFormOrderBtn'>Відмінити</button> 
+                    <button className='admFormOrderBtnOk' onClick={handleSubmit(onSubmit)}>Ok</button>
+                    <button className='admFormOrderBtnSave'>Зберегти</button>
+                    <button className='admFormOrderBtn' onClick={setActive}>Відмінити</button> 
                 </div>
             </form>
         </div>
@@ -328,8 +398,8 @@ const AdminFormOrder = ({goodsId, tyreDatas, wheelDatas, comments, customer}) =>
                 <ModalAdmin active={addGoods} setActive={setAddGoods}>
                     <AdminModalGoods 
                         showRowModData={actions.addGoodsToList}
-                        tyreModData={tyreDatas} 
-                        wheelModData={wheelDatas}/>
+                        props={props}
+                    />
                 </ModalAdmin> : null
             }
         </div>

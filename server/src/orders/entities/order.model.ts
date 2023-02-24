@@ -16,7 +16,7 @@ import { OrdersConfigAttr } from '../interfaces/orders.interface';
 //import { Orders_Goods } from "./order-goods.model";
 import { Order_Storage } from "./order-storage.model";
 
-@Table({ tableName: 'order'})
+@Table({tableName: 'order'})
 export class Orders extends Model<Orders, OrdersConfigAttr> {
     
     @Column({type: DataType.BIGINT, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})

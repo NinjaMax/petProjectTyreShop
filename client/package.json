@@ -26,6 +26,7 @@
     "react-bootstrap": "^2.0.0",
     "react-dom": "^18.2.0",
     "react-google-charts": "^4.0.0",
+    "react-hook-form": "^7.43.2",
     "react-imask": "^6.4.3-alpha.1",
     "react-router-dom": "^5.3.0",
     "react-scripts": "^5.0.1",
