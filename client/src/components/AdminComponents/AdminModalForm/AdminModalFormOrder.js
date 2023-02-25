@@ -1,6 +1,6 @@
 import React, {useMemo, useReducer, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminFormOrder.css';
-//import axios from 'axios';
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import ModalAdmin from '../../Modal/ModalAdmin';
 import AdminComment from '../AdminContent/AdminComment';
@@ -37,6 +37,7 @@ function reducer(state = [], action, initialState) {
 const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
     const [tyreDatas, wheelDatas] =props;
     const {register, handleSubmit, formState: {errors}} = useForm();
+    //const {registerOs, handleSubmitOr, formState: {errors}} = useForm();
     const [addGoods, setAddGoods] = useState(false);
     const [createCustomer, setCreateCustomer] = useState(false);
     const [openCustomers, setOpenCustomers] = useState(false);
@@ -103,47 +104,97 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
     //       setError(err);
     //     }
     // }
-        const onSubmit = (data) => {
-            //await responseForm(data);
-            console.log('SEND DATA', data);
+        const onSubmit = async (data) => {
+            await responseForm(data);
+
+            if (state.length !== 0) {
+                state.map((item) => (
+                    createGoodsToOrder(item, data.id_order)
+                ));
+            }
+           // console.log('SEND DATA', data);
         };
         
     // useEffect(() => {
         
-    //     const responseForm = async (data) => { await axios.post('http://localhost:4000/orders', data, {
-    //         headers: {
-    //             'Content-Type': 'application/json; charset=utf-8',
-    //             'Access-Control-Allow-Origin': 'http://localhost:3000'
-    //         },
-    //         withCredentials: true,
-    //         // data: {
-    //         //     order_view: {},
-    //         //     status: 'Новий',
-    //         //     delivery: 'Flintstone',
-    //         //     status_delivery: 'Novij',
-    //         //     delivery_ttn:'',
-    //         //     pay_view: '',
-    //         //     status_pay: '',
-    //         //     notes: '',
-    //         //     id_user:'',
-    //         //     id_customer:'',
-    //         //     id_contract:'',
-    //         //     id_basket:'',
-    //         //     order_storage: state,
-    //         // }
-    //         //photo: document.querySelector('#fileInput').files
-    //         })
-    //         .then(response => {
-    //         //setOrderAllData(response.data);
-    //         console.log('Order',response.data);
-    //         })
-    //         .catch(error => {
-    //             console.log(error)
-    //         }
-    //     )}
+     const responseForm = async (data) => { 
+        await axios.post('http://localhost:4000/orders', data, {
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'Access-Control-Allow-Origin': 'http://localhost:3000'
+            },
+            withCredentials: true,
+            // data: {
+            //     order_view: {},
+            //     status: 'Новий',
+            //     delivery: 'Flintstone',
+            //     status_delivery: 'Novij',
+            //     delivery_ttn:'',
+            //     pay_view: '',
+            //     status_pay: '',
+            //     notes: '',
+            //     id_user:'',
+            //     id_customer:'',
+            //     id_contract:'',
+            //     id_basket:'',
+            //     order_storage: state,
+            // }
+            //photo: document.querySelector('#fileInput').files
+            })
+            .then(response => {
+            //setOrderAllData(response.data);
+            console.log('Order',response.data);
+            })
+            .catch(error => {
+                console.log(error)
+            }
+        )
+    }
+
+    const createGoodsToOrder = async (data, order_id) => { 
+        await axios.post('http://localhost:4000/orders/creategoods', data, {
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'Access-Control-Allow-Origin': 'http://localhost:3000'
+            },
+            withCredentials: true,
+            data: {
+                id: data.id,
+                //id_supplier: ,
+                order_index: order_id,
+                //storage_index: ,
+                quantity: 4,
+                price: data.price,
+                // delivery: 'Flintstone',
+                // status_delivery: 'Novij',
+                // delivery_ttn:'',
+                // pay_view: '',
+                // status_pay: '',
+                // notes: '',
+                //id_user:'',
+                //id_customer:'',
+                //id_contract:'',
+                //id_basket:'',
+                //order_storage: state,
+            }
+            //photo: document.querySelector('#fileInput').files
+            })
+            .then(response => {
+            //setOrderAllData(response.data);
+            console.log('Order_storage',response.data);
+            })
+            .catch(error => {
+                console.log(error)
+            }
+        )
+    }
         
-    //})
-    //console.log('STATE: ', state);
+    
+    
+    
+    //)
+
+    console.log('STATE: ', state);
     //console.log('GOODSID', goodsId);
     //console.log('CUSTOMER', customer);
     console.log(errors);
@@ -319,7 +370,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                         </select>    
                     </div>   
                 </div>
-                <div className='admFormOrderTableBox'>
+                <div className='admFormOrderTableBox'>   
                 <table className='admFormOrderTable'>
                     <thead className='admFormOrderTableTh'>
                         <tr>
@@ -333,6 +384,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                         </tr>     
                     </thead>
                     <tbody>
+                        
                         {state?.lenght !== 0 ? 
                             state.map((item) =>(
                         <tr key={'g'+ item.id}>
@@ -341,8 +393,17 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                             <td key={'gcat'+ item.id}>{item.category?.category}</td>
                             <td key={'gc'+ item.id}>{0}</td>
                             <td key={'gres'+ item.id}>{0}</td>
-                            <td key={'gpr'+ item.id}>{item.price[0]?.price}</td>
-                            <td key={'gst'+ item.id}>{item?.storage}</td> 
+                            <td key={'gpr'+ item.id}>
+                                <input type='number'
+                                name='price'
+                                //value={}
+                                {...register('price')}
+                                />{item.price[0]?.price}
+                            </td>
+                            <td key={'gst'+ item.id}>
+                                <input 
+                                />{item?.storage}
+                            </td> 
                         </tr>
                         ))
                         : 
@@ -350,7 +411,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                             <td>Очікуємо товари......</td>
                         </tr>
                       
-                        }
+                        }   
                     </tbody>
                 </table>
                 </div>
@@ -377,8 +438,8 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                     </div>  
                 </div>
                 <div className='admOrderFormGrp' onClick={(e)=>e.preventDefault({passive: false})}>
-                    <button className='admFormOrderBtnOk' onClick={handleSubmit(onSubmit)}>Ok</button>
-                    <button className='admFormOrderBtnSave'>Зберегти</button>
+                    <button className='admFormOrderBtnOk'>Ok</button>
+                    <button className='admFormOrderBtnSave' onClick={handleSubmit(onSubmit)}>Зберегти</button>
                     <button className='admFormOrderBtn' onClick={setActive}>Відмінити</button> 
                 </div>
             </form>
