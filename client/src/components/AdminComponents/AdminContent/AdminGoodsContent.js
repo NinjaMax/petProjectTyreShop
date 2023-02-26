@@ -42,7 +42,7 @@ const AdminGoodsContent = ({comments, props, customer}) => {
         })
         .then(response => {
             setStockTyre([response.data]);
-            //console.log(response.data)
+            console.log('STOCK TYRE: ',response.data)
         })
         .catch(error => {
           console.log(error)
@@ -55,7 +55,7 @@ const AdminGoodsContent = ({comments, props, customer}) => {
         })
         .then(response => {
             setPriceTyre([response.data]);
-            //console.log(response.data)
+            console.log('PRICE TYRE: ',response.data)
         })
         .catch(error => {
           console.log(error)

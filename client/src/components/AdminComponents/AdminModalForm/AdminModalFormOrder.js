@@ -27,6 +27,14 @@ function reducer(state = [], action, initialState) {
             return state;
         }
 
+        case 'deleteItemFromOrder': {
+
+            state.splice(action.deleteItem, 1)
+            
+            return state;
+        }
+
+
         default: {
             throw Error('Unknown action: ' + action.type);
         } 
@@ -87,11 +95,23 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
 
         addGoodsToList: (value) => {
 
-            dispatch({type: 'addTyreToOrder', addTyre: tyreDatas.find((item) => item?.id === value)});
-            dispatch({type: 'addWheelToOrder', addWheel: wheelDatas.find((item) => item?.id === value)});
+            dispatch({type: 'addTyreToOrder', 
+                addTyre: tyreDatas.find((item) => item?.id === value)
+            });
+            dispatch({type: 'addWheelToOrder', 
+                addWheel: wheelDatas.find((item) => item?.id === value)
+            });
         }
 
     }),[tyreDatas, wheelDatas, customer])
+
+        const deleteItem =(itemIndex) => {
+    
+        dispatch({type: 'deleteItemFromOrder', 
+        //deleteItem: state.splice(itemIndex, 1)});
+        deleteItem: itemIndex});
+
+    }
 
     // async function handleSubmit(e) {
     //     e.preventDefault();
@@ -189,7 +209,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
         )
     }
         
-    
+
     
     
     //)
@@ -381,12 +401,13 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                             <th>Резерв</th>
                             <th>Ціна</th>
                             <th>склад</th>
+                            <th>Опціі</th>
                         </tr>     
                     </thead>
                     <tbody>
                         
                         {state?.lenght !== 0 ? 
-                            state.map((item) =>(
+                            state.map((item, index) =>(
                         <tr key={'g'+ item.id}>
                             <td key={'gid'+ item.id}>{item?.id}</td>
                             <td key={'gg'+ item.id}>{item?.full_name}</td>
@@ -404,6 +425,12 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                                 <input 
                                 />{item?.storage}
                             </td> 
+                            <td>
+                                <button className='closeAdmGoods' value={index}
+                                    onClick={e => deleteItem(e.currentTarget.value)}>
+                                    <i className="fa fa-remove"></i>
+                                </button>
+                            </td>
                         </tr>
                         ))
                         : 
