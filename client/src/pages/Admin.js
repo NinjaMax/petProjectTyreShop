@@ -23,9 +23,23 @@ const Admin = () => {
 
     const [sideBarItem, setSideBarItem] = useState("golovna");
     const [tyreData, setTyreData] = useState(null);
+    const [tyreStockData, setTyreStockData] = useState(null);
+    const [tyrePriceData, setTyrePriceData] = useState(null);
     const [wheelData, setWheelData] = useState(null);
+    const [wheelStockData, setWheelStockData] = useState(null);
+    const [wheelPriceData, setWheelPriceData] = useState(null);
     // const [oilData, setOildata] = useState(null);
+    // const [oilStockData, setOilStockData] = useState(null);
+    // const [oilPriceData, setOilPriceData] = useState(null);
     // const [batteryData, setBatteryData] = useState(null);
+    // const [batteryStockData, setBatteryStockData] = useState(null);
+    // const [batteryPriceData, setBatteryPriceData] = useState(null);
+    // const [ordeSupAllData, setOrderSupAlldata] = useState(null);
+    // const [usersAllData, setUsersAllData] = useState(null);
+    // const [supplierAll, setSupplierAll] = useState(null);
+    // const [cashBoxAll, setCashBoxAll] = useState(null);
+    // const [payIncomesAll, setPayIncomeAll] = useState(null);
+    // const [payExpenseAll, setPayExpenseAll] = useState(null);
     const [customers, setCustomers] = useState(null);
     const [commentData, setCommentData] = useState(null);
     const [commentId, setCommentId] = useState(null);
@@ -44,6 +58,32 @@ const Admin = () => {
           console.log(error)
         })
 
+        axios.get("http://localhost:4000/stock/tyres/all", {
+            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+            withCredentials: true,
+            //params: {id_tyre: itemIdTyre}
+        })
+        .then(response => {
+            setTyreStockData(response.data);
+            //console.log('STOCK TYRE: ',response.data)
+        })
+        .catch(error => {
+          console.log(error)
+        });
+
+        axios.get("http://localhost:4000/price/tyres/all", {
+            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+            withCredentials: true,
+            //params: {id_tyre: itemIdTyre}
+        })
+        .then(response => {
+            setTyrePriceData(response.data);
+            //console.log('PRICE TYRE: ',response.data)
+        })
+        .catch(error => {
+          console.log(error)
+        });
+
         axios.get("http://localhost:4000/wheels", {
             headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
             withCredentials: true})
@@ -54,6 +94,32 @@ const Admin = () => {
         .catch(error => {
           console.log(error)
         })
+
+        axios.get("http://localhost:4000/stock/wheels/all", {
+            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+            withCredentials: true,
+            //params: {id_tyre: itemIdTyre}
+        })
+        .then(response => {
+            setWheelStockData(response.data);
+            //console.log('STOCK TYRE: ',response.data)
+        })
+        .catch(error => {
+          console.log(error)
+        });
+
+        axios.get("http://localhost:4000/price/wheels/all", {
+            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+            withCredentials: true,
+            //params: {id_tyre: itemIdTyre}
+        })
+        .then(response => {
+            setWheelPriceData(response.data);
+            //console.log('PRICE TYRE: ',response.data)
+        })
+        .catch(error => {
+          console.log(error)
+        });
 
         axios.get("http://localhost:4000/comments", {
             headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
@@ -133,14 +199,16 @@ const Admin = () => {
                 : null}
                 {sideBarItem === 'catalog' ?
                     <AdminGoodsContent
-                        props={[tyreData, wheelData]}
+                        props={[tyreData, tyreStockData, tyrePriceData,
+                             wheelData, wheelPriceData, wheelStockData]}
                         customer={customers}
                         comments={commentData}
                     />
                 : null}
                 {sideBarItem === 'zamovlenia' ?
                     <AdminOrderContent 
-                        props={[tyreData, wheelData]}
+                        props={[tyreData, tyreStockData, tyrePriceData,
+                            wheelData, wheelPriceData, wheelStockData]}
                         showComment={showCommentData}
                         orders={orderAllData}
                         customer={customers} 
@@ -152,7 +220,8 @@ const Admin = () => {
                 : null}
                 {sideBarItem === 'zamovleniaPost' ?
                     <AdminOrderSupContent 
-                        props={[tyreData, wheelData]}
+                        props={[tyreData, tyreStockData, tyrePriceData,
+                            wheelData, wheelPriceData, wheelStockData]}
                     />
                 :null}
                 {sideBarItem === 'kasi' ?

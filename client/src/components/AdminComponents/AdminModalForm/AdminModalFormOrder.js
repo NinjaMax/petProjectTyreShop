@@ -12,15 +12,14 @@ function reducer(state = [], action, initialState) {
     switch (action.type) {
       
         case 'addTyreToOrder': {
-            if(action.addTyre) {
-              state.push(action.addTyre)  
+            if (action.addTyre) {
+              state.push(action.addTyre)    
             }
-
             return state;
         }
 
         case 'addWheelToOrder': {
-            if(action.addWheel) {
+            if (action.addWheel) {
                state.push(action.addWheel); 
             }
             
@@ -43,13 +42,16 @@ function reducer(state = [], action, initialState) {
 }
 
 const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
-    const [tyreDatas, wheelDatas] =props;
+    const [tyreDatas, wheelDatas] = props;
     const {register, handleSubmit, formState: {errors}} = useForm();
     //const {registerOs, handleSubmitOr, formState: {errors}} = useForm();
     const [addGoods, setAddGoods] = useState(false);
     const [createCustomer, setCreateCustomer] = useState(false);
     const [openCustomers, setOpenCustomers] = useState(false);
     const [addCustomer, setAddCustomer] = useState(null);
+    const [priceIndex, setPriceIndex] = useState(null);
+    // const [priceItem, setPriceItem] = useState('0');
+    // const [quantityItem, setQuantytiItem] = useState('4');
     // const [answer, setAnswer] = useState('');
     // const [error, setError] = useState(null);
     // const [status, setStatus] = useState('typing');
@@ -64,6 +66,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
 
         if(goodsId) {
             initialState.push(goodsId);
+            //setPriceItem(goodsId.price[0].price);
             //console.log(initialState); 
         }
            
@@ -94,13 +97,23 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
         },
 
         addGoodsToList: (value) => {
-
+            //let [idValue, indexValue] = value;
+            const newArr = value.split(',');
+            //console.log('VALUE: ', newArr);
+            // console.log('ID', newArr[0]);
+            // console.log('INDEX', newArr[1]);
+            let [idValue, indexValue] = newArr;
+            // console.log('ARR ID', +idValue);
+            // console.log('ARR INDX', +indexValue);
+             
             dispatch({type: 'addTyreToOrder', 
-                addTyre: tyreDatas.find((item) => item?.id === value)
+                addTyre: tyreDatas.find((item) => item?.id === idValue)
             });
             dispatch({type: 'addWheelToOrder', 
-                addWheel: wheelDatas.find((item) => item?.id === value)
+                addWheel: wheelDatas.find((item) => item?.id === idValue)
             });
+
+            setPriceIndex(+indexValue);
         }
 
     }),[tyreDatas, wheelDatas, customer])
@@ -163,7 +176,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
             })
             .then(response => {
             //setOrderAllData(response.data);
-            console.log('Order',response.data);
+            console.log('Order', response.data);
             })
             .catch(error => {
                 console.log(error)
@@ -217,8 +230,9 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
     console.log('STATE: ', state);
     //console.log('GOODSID', goodsId);
     //console.log('CUSTOMER', customer);
+    //console.log('TYRE DATAS: ', tyreDatas);
     console.log(errors);
-
+    console.log(priceIndex);
     return (
         <div>
             Замовлення Покупця
@@ -408,18 +422,31 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                         
                         {state?.lenght !== 0 ? 
                             state.map((item, index) =>(
-                        <tr key={'g'+ item.id}>
+                        <tr key={'g'+ item.id + priceIndex === null ? 1 : index}>
                             <td key={'gid'+ item.id}>{item?.id}</td>
                             <td key={'gg'+ item.id}>{item?.full_name}</td>
                             <td key={'gcat'+ item.id}>{item.category?.category}</td>
-                            <td key={'gc'+ item.id}>{0}</td>
+                            <td key={'gc'+ item.id}>
+                                <input 
+                                //type='number'
+                                name='quantity'
+                                defaultValue="4"
+                                //value={quantityItem}
+                                {...register('quantity')}
+                                //onChange={e => setQuantytiItem(e.target.value)}
+
+                                /></td>
                             <td key={'gres'+ item.id}>{0}</td>
                             <td key={'gpr'+ item.id}>
-                                <input type='number'
+                                <input 
+                                //type='number'
                                 name='price'
-                                //value={}
+                                defaultValue={String(item.price[priceIndex ?? 0]?.price)}
+                                //value={String(item.price[priceIndex ?? 0]?.price) ?? ''}
                                 {...register('price')}
-                                />{item.price[0]?.price}
+                                onChange={e => e.target.value}
+                                //onChange={e => setPriceItem(e.target.value)}   
+                                />
                             </td>
                             <td key={'gst'+ item.id}>
                                 <input 

@@ -183,7 +183,7 @@ export class StockWheelsService {
       if(wheelIdUpdate) {
 
         await this.stockWheelsRepository.update(
-        {   stock: updateStockDto.stock,
+        { stock: updateStockDto.stock,
             reserve: updateStockDto.reserve,
             remainder: updateStockDto.remainder,
             id_supplier: updateStockDto.id_supplier,

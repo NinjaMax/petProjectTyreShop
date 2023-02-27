@@ -50,37 +50,40 @@ const AdminModalGoods = ({props, showRowModData}) => {
                         <th>Категорія</th>
                         <th>Ціна</th>
                         <th>Залишки</th>
+                        <th>Склад</th>
                     </tr>   
                 </thead>
                 <tbody>
                     {chooseCatMod === 'Шини' && tyreModData ?
-                
                         tyreModData.map((item, index) => (
-                
-                        <tr key={'tm' + item.id} 
+                        item.price.lenght !== 0 ?    
+                            item.price.map((entity, indexEntity) =>(
+                        <tr key={'tm' + entity.id} 
                             onDoubleClick={e => showRowModData(e.currentTarget.getAttribute("value"))} 
-                            value={item.id}>
-                            {item.price.lenght !== 0 ? 
-                            <Fragment key={'tid' + item.id}>
+                            value={[item.id, indexEntity]}>
+                              <Fragment key={'tid' + item.id}>
                                 <td key={'tmid' + item.id}>{item.id}</td>
                                 <td key={'tmfn' + item.id}>{item.full_name}</td>
                                 <td key={'tmca' + item.id}>{item.category?.category ?? ''}</td>
-                                {item.price.map((entity) => (
-                                    <td key={'tmpr' + entity.id}>{entity.price ?? ''}</td>
-                                ))}     
-                                {item.stock.map((entity) => (
-                                    <td key={'tmr' + entity.id}>{entity.remainder ?? ''}</td>
-                                ))}</Fragment> 
-                              : 
-                              <Fragment key={'tid' + item.id}>
+                                <td key={'tmpr' + item.id}>{item.price[indexEntity]?.price ?? ''}</td> 
+                                <td key={'tmr' + item.id}>{item.stock[indexEntity]?.remainder ?? ''}</td> 
+                              </Fragment>   
+                               
+                        </tr> ))
+                        :
+                        <tr key={'tm' + item.id} 
+                            onDoubleClick={e => showRowModData(e.currentTarget.getAttribute("value"))} 
+                            value={[item.id, 0]}>
+                            <Fragment key={'tid' + item.id}>
                                 <td key={'tmid' + item.id}>{item.id}</td>
                                 <td key={'tmfn' + item.id}>{item.full_name}</td>
                                 <td key={'tmca' + item.id}>{item.category?.category ?? ''}</td>
                                 <td key={'tmpr' + item.id}>{item.price.price ?? ''}</td> 
                                 <td key={'tmr' + item.id}>{item.stock.remainder ?? ''}</td> 
-                              </Fragment>   
-                            }    
-                        </tr> ))
+                            </Fragment> 
+                        </tr>  
+                        
+                        ))
                         : null 
                     }
                     {chooseCatMod=== 'Диски' && wheelModData ?

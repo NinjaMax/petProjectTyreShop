@@ -48,20 +48,10 @@ export class Order_Storage extends Model<
   @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
   quantity: number;
 
-  @Column({
-    type: DataType.INTEGER,
-    unique: false,
-    allowNull: true,
-    defaultValue: 0,
-  })
+  @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0,})
   reserve: number;
 
-  @Column({
-    type: DataType.INTEGER,
-    unique: false,
-    allowNull: true,
-    defaultValue: 0,
-  })
+  @Column({type: DataType.INTEGER, unique: false, allowNull: true, defaultValue: 0,})
   price: number;
 
   @Column({
