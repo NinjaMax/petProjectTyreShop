@@ -49,8 +49,8 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
     const [createCustomer, setCreateCustomer] = useState(false);
     const [openCustomers, setOpenCustomers] = useState(false);
     const [addCustomer, setAddCustomer] = useState(null);
-    const [priceIndex, setPriceIndex] = useState(null);
-    // const [priceItem, setPriceItem] = useState('0');
+    const [priceIndex, setPriceIndex] = useState(0);
+    //const [priceItem, setPriceItem] = useState(null);
     // const [quantityItem, setQuantytiItem] = useState('4');
     // const [answer, setAnswer] = useState('');
     // const [error, setError] = useState(null);
@@ -59,12 +59,13 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
     //const [addItems, setAddItems] = useState();
     //const [changeCustomer, setChangeCustomer] = useState();
     const [state, dispatch] = useReducer(reducer, goodsId, createInitialState);
+    const [stateData, setStateData] = useState(state);
      
     function createInitialState (goodsId) {
             
         let initialState = [];
 
-        if(goodsId) {
+        if (goodsId) {
             initialState.push(goodsId);
             //setPriceItem(goodsId.price[0].price);
             //console.log(initialState); 
@@ -90,7 +91,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
             //console.log(valueCust);
             const findCustomer = customer.find((items) => items?.id_customer === +valueCust);
 
-            if(findCustomer) {
+            if (findCustomer) {
                 setAddCustomer(findCustomer);  
             }
 
@@ -114,9 +115,36 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
             });
 
             setPriceIndex(+indexValue);
-        }
+        }, 
+        //     onChangeInput: (e, id) => {
+        //     const {name, value} = e.target
+
+        //     console.log('name', name)
+        //     console.log('value', value)
+        //     console.log('ITEM Id', id)
+        
+        //     const editStateData = stateData.map((item) =>
+        //       item.id === id && name ? { ...item, price: value } : item
+        //     )
+        //         console.log('editData', editStateData)
+        //     setStateData(editStateData);
+        //   }
 
     }),[tyreDatas, wheelDatas, customer])
+
+    const onChangeInput = (e, id) => {
+            const {name, value} = e.target
+
+            console.log('name', name);
+            console.log('value', value);
+            console.log('ITEM Id', id);
+        
+            const editStateData = stateData.map((item) =>
+              item.id === id && name ? { ...item, price: [{ price: value,  }] } : item
+            )
+            console.log('editData', editStateData)
+            setStateData(editStateData);
+        }
 
         const deleteItem =(itemIndex) => {
     
@@ -420,37 +448,54 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                     </thead>
                     <tbody>
                         
-                        {state?.lenght !== 0 ? 
-                            state.map((item, index) =>(
-                        <tr key={'g'+ item.id + priceIndex === null ? 1 : index}>
-                            <td key={'gid'+ item.id}>{item?.id}</td>
-                            <td key={'gg'+ item.id}>{item?.full_name}</td>
-                            <td key={'gcat'+ item.id}>{item.category?.category}</td>
-                            <td key={'gc'+ item.id}>
+                        {stateData?.lenght !== 0 ? 
+                            stateData.map(({id, full_name, category, price}, index) =>(
+                        <tr key={ id + index}>
+                            <td >{id}</td>
+                            <td >{full_name}</td>
+                            <td >{category?.category}</td>
+                            <td key={ id + index}>
                                 <input 
-                                //type='number'
-                                name='quantity'
-                                defaultValue="4"
-                                //value={quantityItem}
+                                //id="quantiti"
                                 {...register('quantity')}
+                                type="text"
+                                name="quantity"
+                                //defaultValue="4"
+                                value={"4"}
+                                //key={'g'+ id + priceIndex === null ? 1 : index}
+                                onChange={e => e.target.value}
+                                
                                 //onChange={e => setQuantytiItem(e.target.value)}
 
-                                /></td>
-                            <td key={'gres'+ item.id}>{0}</td>
-                            <td key={'gpr'+ item.id}>
-                                <input 
-                                //type='number'
-                                name='price'
-                                defaultValue={String(item.price[priceIndex ?? 0]?.price)}
-                                //value={String(item.price[priceIndex ?? 0]?.price) ?? ''}
-                                {...register('price')}
-                                onChange={e => e.target.value}
-                                //onChange={e => setPriceItem(e.target.value)}   
                                 />
                             </td>
-                            <td key={'gst'+ item.id}>
+                            <td >{index}</td>
+                            <td >
                                 <input 
-                                />{item?.storage}
+                                id={'gprice'+ id}
+                                //onChangeInput
+                                //disabled={!price ? true : false }
+                                type="text"
+                                name="price"
+                                value={String(price[priceIndex ?? 0]?.price)}
+                                //key={ 'price' + id + price}
+                                autoFocus={true}
+                                //key={item.price[priceIndex ?? 0]?.price}
+                                //defaultValue={index === 0 && priceItem ? priceItem :
+                                //    String(item.price[priceIndex ?? 0]?.price)}
+                                //defaultValue={String(item.price[priceIndex ?? 0]?.price)}
+                                //value={String(item.price[priceIndex ?? 0]?.price) ?? ''}
+                                onInput={e => onChangeInput(e, id)}
+                                placeholder="Введіть цифри"
+                                {...register('price')}
+                                //onChange={e => e.target.value}
+                                //onChange={() => setPriceItem(String(item.price[priceIndex ?? 0]?.price))}   
+                                />
+                               
+                            </td>
+                            <td >
+                                <input 
+                                />
                             </td> 
                             <td>
                                 <button className='closeAdmGoods' value={index}

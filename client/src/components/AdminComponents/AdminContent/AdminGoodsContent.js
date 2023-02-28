@@ -128,7 +128,7 @@ const AdminGoodsContent = ({comments, props, customer}) => {
 
     const addToOrder = (e) => {
         setAddGoods(!addGoods);
-        console.log(e.currentTarget.value)
+        //console.log(e.currentTarget.value)
         let itemTyre = tyreData?.find(item => item.id === e.currentTarget.value);
         let itemWheel = wheelData?.find(item => item.id === e.currentTarget.value);
         //const itemTyre = tyreData.find(item => item ==e.currentTarget.value);
