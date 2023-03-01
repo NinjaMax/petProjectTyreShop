@@ -1,4 +1,4 @@
-import React, {useMemo, useReducer, useState} from 'react';
+import React, {useMemo, useReducer, useState, useCallback} from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminFormOrder.css';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
@@ -8,7 +8,7 @@ import AdminModalCustmCreate from './AdminModalCustmCreate';
 import AdminModalCustomers from './AdminModalCustomers';
 import AdminModalGoods from './AdminModalGoods';
 
-function reducer(state = [], action, initialState) {
+function reducer (state = [], action, initialState) {
     switch (action.type) {
       
         case 'addTyreToOrder': {
@@ -40,6 +40,7 @@ function reducer(state = [], action, initialState) {
     }
     
 }
+
 
 const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
     const [tyreDatas, wheelDatas] = props;
@@ -74,6 +75,48 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
         return initialState;
             
     };
+
+    // useMemo(() => {
+    //     //state
+    //     setStateData(state);
+    // },[state])
+
+    const onChangeInput = useCallback((e, id) => {
+
+        const {name, value} = e.target;
+        //e.preventDefault();
+        // console.log('name', name);
+        // console.log('value', value);
+        // console.log('ITEM Id', id);
+    setStateData(editStateData => 
+        editStateData.map((item) =>  {
+          return (
+         item.id === id && name ? { ...item, 
+            price: [{price: value,
+            id: item.price[0].id,
+            id_storage: item.price[0].id_storage, 
+            id_tyre: item.price[0].id_tyre,
+            price_plus_delivery: item.price[0].price_plus_delivery, 
+            price_wholesale: item.price[0].price_wholesale,
+            id_supplier: item.price[0].id_supplier,
+            update_date: item.price[0].update_date,
+            delivery_price: item.price[0].delivery_price,
+            }]
+        } 
+           : item 
+        )}
+        )
+        //return  ;
+    
+
+        //);
+    )
+    },[])
+
+     console.log('editData', stateData)
+
+
+
     
     const addGoodsForm = () => {
         setAddGoods(!addGoods);
@@ -87,6 +130,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
     };
     
     const actions = useMemo(() => ({
+
         addCustToOrder: (valueCust) => {
             //console.log(valueCust);
             const findCustomer = customer.find((items) => items?.id_customer === +valueCust);
@@ -106,7 +150,8 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
             let [idValue, indexValue] = newArr;
             // console.log('ARR ID', +idValue);
             // console.log('ARR INDX', +indexValue);
-             
+            setPriceIndex(+indexValue); 
+
             dispatch({type: 'addTyreToOrder', 
                 addTyre: tyreDatas.find((item) => item?.id === idValue)
             });
@@ -114,37 +159,36 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                 addWheel: wheelDatas.find((item) => item?.id === idValue)
             });
 
-            setPriceIndex(+indexValue);
+            
         }, 
-        //     onChangeInput: (e, id) => {
+        // onChangeInput: (e, id) => {
         //     const {name, value} = e.target
 
-        //     console.log('name', name)
-        //     console.log('value', value)
-        //     console.log('ITEM Id', id)
+        //     console.log('name', name);
+        //     console.log('value', value);
+        //     console.log('ITEM Id', id);
         
         //     const editStateData = stateData.map((item) =>
-        //       item.id === id && name ? { ...item, price: value } : item
+        //     item.id === id && name ? { ...item, 
+        //         price: [{price: value,
+        //         id: item.price[0].id,
+        //         id_storage: item.price[0].id_storage, 
+        //         id_tyre: item.price[0].id_tyre,
+        //         price_plus_delivery: item.price[0].price_plus_delivery, 
+        //         price_wholesale: item.price[0].price_wholesale,
+        //         id_supplier: item.price[0].id_supplier,
+        //         update_date: item.price[0].update_date,
+        //         delivery_price: item.price[0].delivery_price,
+        //         }]} 
+        //        : item
         //     )
-        //         console.log('editData', editStateData)
+        //     console.log('editData', editStateData)
         //     setStateData(editStateData);
-        //   }
+        // }
 
     }),[tyreDatas, wheelDatas, customer])
 
-    const onChangeInput = (e, id) => {
-            const {name, value} = e.target
-
-            console.log('name', name);
-            console.log('value', value);
-            console.log('ITEM Id', id);
-        
-            const editStateData = stateData.map((item) =>
-              item.id === id && name ? { ...item, price: [{ price: value,  }] } : item
-            )
-            console.log('editData', editStateData)
-            setStateData(editStateData);
-        }
+    
 
         const deleteItem =(itemIndex) => {
     
@@ -153,6 +197,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
         deleteItem: itemIndex});
 
     }
+    
 
     // async function handleSubmit(e) {
     //     e.preventDefault();
@@ -449,37 +494,50 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                     <tbody>
                         
                         {stateData?.lenght !== 0 ? 
-                            stateData.map(({id, full_name, category, price}, index) =>(
-                        <tr key={ id + index}>
+                            stateData?.map(({id, full_name, category, price}, index) =>(
+                        //<Fragment key={'fg' + id + index}>
+                        <tr key={id + index} 
+                        //onChange={(e)=>e.preventDefault({passive: false})}
+                            >
+                            
                             <td >{id}</td>
                             <td >{full_name}</td>
                             <td >{category?.category}</td>
-                            <td key={ id + index}>
+                            <td key={'quantiti' + id + index} 
+                                onChange={(e)=>e.preventDefault({passive: false})}
+                                >
                                 <input 
                                 //id="quantiti"
-                                {...register('quantity')}
+                                id={'quantiti'+ id}
+                                key={'quantiti'+ id}
+                                
                                 type="text"
                                 name="quantity"
-                                //defaultValue="4"
-                                value={"4"}
+                                defaultValue="4"
+                                //autoFocus={true}
+                                //value={"4"}
                                 //key={'g'+ id + priceIndex === null ? 1 : index}
-                                onChange={e => e.target.value}
+                                //onInput={e => e.target.value}
                                 
                                 //onChange={e => setQuantytiItem(e.target.value)}
-
+                                {...register('quantity')}
                                 />
                             </td>
                             <td >{index}</td>
-                            <td >
+                            <td 
+                                //key={ 'price' + id + price} 
+                                //onChange={(e)=>e.preventDefault({passive: false})}
+                                >
                                 <input 
-                                id={'gprice'+ id}
+                                // id={id}
+                                //key={'price' + id}
                                 //onChangeInput
                                 //disabled={!price ? true : false }
                                 type="text"
                                 name="price"
-                                value={String(price[priceIndex ?? 0]?.price)}
-                                //key={ 'price' + id + price}
-                                autoFocus={true}
+                                //value={String(price[priceIndex ?? 0]?.price)}
+                                value={String(price[priceIndex ? priceIndex : 0]?.price)}
+                                //autoFocus={true}
                                 //key={item.price[priceIndex ?? 0]?.price}
                                 //defaultValue={index === 0 && priceItem ? priceItem :
                                 //    String(item.price[priceIndex ?? 0]?.price)}
@@ -497,13 +555,17 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                                 <input 
                                 />
                             </td> 
-                            <td>
-                                <button className='closeAdmGoods' value={index}
+                            <td onInput={(e)=>e.stopPropagation()}>
+                                <button className='closeAdmGoods' 
+                                    key={'deleteBtn' + id}
+                                    value={index}
                                     onClick={e => deleteItem(e.currentTarget.value)}>
                                     <i className="fa fa-remove"></i>
                                 </button>
                             </td>
+                            
                         </tr>
+                        //</Fragment>
                         ))
                         : 
                         <tr>
