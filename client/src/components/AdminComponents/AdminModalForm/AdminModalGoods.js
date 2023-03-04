@@ -61,13 +61,14 @@ const AdminModalGoods = ({props, showRowModData}) => {
                         <tr key={'tm' + entity.id} 
                             onDoubleClick={e => showRowModData(e.currentTarget.getAttribute("value"))} 
                             value={[item.id, indexEntity]}>
-                              <Fragment key={'tid' + item.id}>
+                            <Fragment key={'tid' + item.id}>
                                 <td key={'tmid' + item.id}>{item.id}</td>
                                 <td key={'tmfn' + item.id}>{item.full_name}</td>
                                 <td key={'tmca' + item.id}>{item.category?.category ?? ''}</td>
                                 <td key={'tmpr' + item.id}>{item.price[indexEntity]?.price ?? ''}</td> 
                                 <td key={'tmr' + item.id}>{item.stock[indexEntity]?.remainder ?? ''}</td> 
-                              </Fragment>   
+                                <td key={'tmrs' + item.id}>{item.stock[indexEntity]?.id_storage ?? ''}</td> 
+                            </Fragment>   
                                
                         </tr> ))
                         :
@@ -79,7 +80,8 @@ const AdminModalGoods = ({props, showRowModData}) => {
                                 <td key={'tmfn' + item.id}>{item.full_name}</td>
                                 <td key={'tmca' + item.id}>{item.category?.category ?? ''}</td>
                                 <td key={'tmpr' + item.id}>{item.price.price ?? ''}</td> 
-                                <td key={'tmr' + item.id}>{item.stock.remainder ?? ''}</td> 
+                                <td key={'tmr' + item.id}>{item.stock.remainder ?? ''}</td>
+                                <td key={'tmrs' + item.id}>{item.stock.id_storage ?? ''}</td> 
                             </Fragment> 
                         </tr>  
                         

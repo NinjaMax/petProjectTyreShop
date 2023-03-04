@@ -1,4 +1,4 @@
-import React, {useMemo, useReducer, useState, useCallback, useRef} from 'react';
+import React, {useMemo, useReducer, useState, useCallback} from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminFormOrder.css';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
@@ -13,29 +13,22 @@ function reducer (state = [], action, initialState) {
       
         case 'addTyreToOrder': {
             if (action.addTyre) {
-                state.push(action.addTyre);
+                state.push({...action.addTyre, 
+                    "price":{...action.addTyre.price[action.indexPrice],
+                       "quantity": "4"},  
+                });
             }
             return state;
         }
 
         case 'addWheelToOrder': {
             if (action.addWheel) {
-               state.push(action.addWheel); 
+                state.push({...action.addWheel, 
+                    "price":{...action.addTyre.price[action.indexPrice],
+                        "quantity": "4"}, 
+                }); 
             }
             
-            return state;
-        }
-
-        case 'indexPrice': {
-             
-            if (action.indexPrice) {
-                //let [indexPrice, idValue] = action.indexPrice;
-
-                state.map(item => 
-                    item.id === action.id ? {...item, "price_index": action.indexPrice} : item
-                )
-            }
-
             return state;
         }
 
@@ -56,7 +49,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
     const [openCustomers, setOpenCustomers] = useState(false);
     const [addCustomer, setAddCustomer] = useState(null);
     //const [priceIndex, setPriceIndex] = useState(0);
-    let defaultQuantity = useRef(null);
+    //let defaultQuantity = useRef(null);
     //const [quantity, setQuantity] = useState('4');
     //const [priceItem, setPriceItem] = useState(null);
     // const [quantityItem, setQuantytiItem] = useState('4');
@@ -91,58 +84,22 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
         
     // }
 
-    const onChangeInput = useCallback((e, id) => {
+    const onChangeInput = useCallback((e, id, indexItem) => {
 
         let {name, value} = e.target;
         //console.log('INPUT', ref.current)
         // console.log('name', name);
          console.log('valueINPUT', value);
         // console.log('ITEM Id', id);
-        if (name === "quantity") {
             setStateData(editStateData => 
-                editStateData.map((item) =>  {
-                  return (
-                 item.id === id && name ? { ...item, 
-                    price: [{price: item.price[0].price,
-                    quantity: value ?? '',
-                    id: item.price[0].id,
-                    id_storage: item.price[0].id_storage, 
-                    id_tyre: item.price[0].id_tyre,
-                    price_plus_delivery: item.price[0].price_plus_delivery, 
-                    price_wholesale: item.price[0].price_wholesale,
-                    id_supplier: item.price[0].id_supplier,
-                    update_date: item.price[0].update_date,
-                    delivery_price: item.price[0].delivery_price,
-                    }]
-                } 
-                : item 
+                editStateData.map((item, index) => {
+                return (
+                    item.id === id && index === indexItem ?
+                    {...item, price: {...item.price, [name]: value ?? '0'}}
+                    : item
                 )}
                 )
             )
-        }
-        if (name === "price") {
-            setStateData(editStateData => 
-            editStateData.map((item) =>  {
-            return (
-            item.id === id && name ? { ...item, 
-            price: [{price: value,
-            quantity: item.price[0].quantity ?? '',
-            id: item.price[0].id,
-            id_storage: item.price[0].id_storage, 
-            id_tyre: item.price[0].id_tyre,
-            price_plus_delivery: item.price[0].price_plus_delivery, 
-            price_wholesale: item.price[0].price_wholesale,
-            id_supplier: item.price[0].id_supplier,
-            update_date: item.price[0].update_date,
-            delivery_price: item.price[0].delivery_price,
-            }]
-        } 
-        : item 
-        )}
-        )
-    )
-        }
-    
     },[])
 
      console.log('editData', stateData)
@@ -182,16 +139,13 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
             //setPriceIndex(+indexValue); 
             
             dispatch({type: 'addTyreToOrder', 
-                addTyre: tyreDatas.find((item) => item?.id === idValue)
+                addTyre: tyreDatas.find((item) => item?.id === idValue),
+                indexPrice: indexValue,
+                
             });
             dispatch({type: 'addWheelToOrder', 
-                addWheel: wheelDatas.find((item) => item?.id === idValue)
-            });
-
-            dispatch({
-                type: 'indexPrice', 
+                addWheel: wheelDatas.find((item) => item?.id === idValue),
                 indexPrice: indexValue,
-                id: idValue
             });
             
         }
@@ -500,72 +454,62 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                             <th>Опціі</th>
                         </tr>     
                     </thead>
-                    <tbody onClick={(e)=>e.preventDefault({passive: false})}>
-                        
+                    <tbody>
                         {stateData?.lenght !== 0 ? 
-                            stateData?.map(({id, full_name, category, price, price_index}, index) =>(
-                        //<Fragment key={'fg' + id + index}>
+                            stateData?.map((
+                                {id, full_name, category, price}, index) =>(
                         <tr key={id + index} 
                         //onChange={(e)=>e.preventDefault({passive: false})}
                             >
                             <td >{id}</td>
                             <td >{full_name}</td>
                             <td >{category?.category}</td>
-                            <td key={'quantiti' + id + index} 
+                            <td key={'quantity' + id + index} 
                                 //onInput={(e)=>e.preventDefault({passive: false})}
+                                onInput={(e) => e.stopPropagation()}
                                 >
                                 <input 
                                 //id="quantiti"
-                                id={'quantiti'+ id}
-                                key={'quantiti'+ id}
-                                ref={defaultQuantity}
+                                id={'quantity'+ id}
+                                key={'quantity'+ id + index}
+                                //ref={defaultQuantity}
                                 type="text"
                                 name="quantity"
-                                value={price[price_index ?? 0]?.quantity ?? '4'}
-                                //autoFocus={true}
-                                //defaultValue={'4'}
-                                //key={'g'+ id + priceIndex === null ? 1 : index}
-                                onInput={e => onChangeInput(e, id)}
-                                
+                                value={price?.quantity}
+                                onInput={(e) => onChangeInput(e, id, index)}
+                                placeholder="Введіть цифри"
                                 //onChange={e => setQuantytiItem(e.target.value)}
-                                {...register('quantity')}
+                                //{...register('quantity')}
                                 />
                             </td>
                             <td >{index}</td>
                             <td 
-                                //key={ 'price' + id + price} 
-                                //onInput={(e)=>e.preventDefault({passive: false})}
+                                key={'price' + id + index} 
+                                onInput={(e) => e.stopPropagation()}
                                 >
                                 <input 
-                                 id={id}
-                                //key={'price' + id}
-                                //onChangeInput
-                                //disabled={!price ? true : false }
-                                // ref={initialPrice}
-                                 type="text"
-                                 name="price"
-                                // value={String(price[priceIndex ?? 0]?.price)}
-                                value={String(price[price_index ?? 0]?.price)}
-                                //autoFocus={true}
-                                //key={item.price[priceIndex ?? 0]?.price}
-                                //defaultValue={index === 0 && priceItem ? priceItem :
-                                //    String(item.price[priceIndex ?? 0]?.price)}
-                                //defaultValue={String(item.price[priceIndex ?? 0]?.price)}
-                                //value={String(item.price[priceIndex ?? 0]?.price) ?? ''}
-                                 onInput={e => onChangeInput(e, id)}
-                                // placeholder="Введіть цифри"
-                                
-                                //onChange={e => e.target.value}
-                                //onChange={() => setPriceItem(String(item.price[priceIndex ?? 0]?.price))}   
+                                id={id}
+                                key={'price' + id + index}
+                                type="text"
+                                name="price"
+                                value={price?.price}
+                                onInput={(e) => onChangeInput(e, id, index)}
+                                placeholder="Введіть цифри" 
+                                //{...register('price')}
                                 />
                            
                             </td>
                             <td >
-                                <input 
-                                />
+                                <select className="admFormOrderStorage" name="storage_index"
+                                    {...register('storage_index', {required: 'Це необхідні дані'})}>
+                                    <option value="1">Склад Поставщик</option>
+                                    <option value="2">Склад Основний</option>
+                                    <option value="3">Склад Монтаж</option>
+                                </select>  
                             </td> 
                             <td 
                             //onClick={(e)=>e.preventDefault({passive: false})}
+                            onClick={(e) => e.stopPropagation()}
                             >
                                 <button className='closeAdmGoods' 
                                     key={'deleteBtn' + id}
