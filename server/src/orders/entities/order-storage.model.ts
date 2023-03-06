@@ -28,6 +28,12 @@ export class Order_Storage extends Model<
   @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
   id: number;
 
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  full_name: string;
+
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  category: string;
+
   @ForeignKey(() => Orders)
   @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
   id_order: number;

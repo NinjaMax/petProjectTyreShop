@@ -1,6 +1,5 @@
 //import sequelize from "sequelize";
-//import { BelongsToManyAddAssociationsMixin } from "sequelize";
-import { Column, DataType, Model, Table, BelongsTo, HasMany, ForeignKey, BelongsToMany, BelongsToAssociation, Sequelize } from "sequelize-typescript";
+import { Column, DataType, Model, Table, BelongsTo, HasMany, ForeignKey, Sequelize } from "sequelize-typescript";
 //import sequelize from "sequelize/types/sequelize";
 import { Basket } from "src/basket/entities/basket.model";
 import { Comments } from "src/comments/entities/comment.model";
@@ -22,29 +21,38 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
     @Column({type: DataType.BIGINT, unique: true, allowNull: false, primaryKey: true, autoIncrement:true})
     id_order: number;
 
-    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    @Column({type: DataType.STRING, unique: false, allowNull: false})
+    organisation: string;
+
+    @Column({type: DataType.STRING, unique: false, allowNull: true})
+    storage: string;
+
+    @Column({type: DataType.STRING, unique: false, allowNull: false})
     order_view: string;
 
-    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    @Column({type: DataType.STRING, unique: false, allowNull: false})
     delivery: string;
 
-    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    @Column({type: DataType.STRING, unique: false, allowNull: false})
     status_delivery: string;
 
     @Column({type: DataType.STRING, unique: false, allowNull: true})
     delivery_ttn: string;
 
-    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    @Column({type: DataType.STRING, unique: false, allowNull: false})
     status: string;
 
-    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    @Column({type: DataType.STRING, unique: false, allowNull: false})
     pay_view: string;
 
-    @Column({type: DataType.STRING, unique: true, allowNull: false})
+    @Column({type: DataType.STRING, unique: false, allowNull: false})
     status_pay: string;
 
     @Column({type: DataType.STRING, unique: false, allowNull: true})
     notes: string;
+
+    @Column({type: DataType.STRING, unique: false, allowNull: true})
+    dop_garanty: string;
 
     @ForeignKey(() => Customer)
     @Column({type: DataType.INTEGER, allowNull: true})

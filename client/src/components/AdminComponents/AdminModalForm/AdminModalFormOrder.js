@@ -43,7 +43,7 @@ function reducer (state = [], action, initialState) {
 const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
     const [tyreDatas, wheelDatas] = props;
     const {register, handleSubmit, formState: {errors}} = useForm();
-    //const {registerOs, handleSubmitOr, formState: {errors}} = useForm();
+    const [orderId, setOrderId] = useState(null);
     const [addGoods, setAddGoods] = useState(false);
     const [createCustomer, setCreateCustomer] = useState(false);
     const [openCustomers, setOpenCustomers] = useState(false);
@@ -102,7 +102,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
             )
     },[])
 
-     console.log('editData', stateData)
+    console.log('editData', stateData)
     
     const addGoodsForm = () => {
         setAddGoods(!addGoods);
@@ -119,7 +119,9 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
 
         addCustToOrder: (valueCust) => {
             //console.log(valueCust);
-            const findCustomer = customer.find((items) => items?.id_customer === +valueCust);
+            const findCustomer = customer.find(
+                (items) => items?.id_customer === +valueCust
+            );
 
             if (findCustomer) {
                 setAddCustomer(findCustomer);  
@@ -153,13 +155,18 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
     }),[tyreDatas, wheelDatas, customer])
 
     
-
-    const deleteItem =(itemIndex) => {
+    //useEffect(() => {
+        const deleteItem = (itemIndex) => {
+        
+           //dispatch({type: 'deleteItemFromOrder', 
+           
+            stateData.splice(itemIndex, 1);
+           
+           state.splice(itemIndex, 1);
+            //deleteItem: itemIndex});
+        } 
+//},[state, stateData])
     
-       //dispatch({type: 'deleteItemFromOrder', 
-       stateData.splice(itemIndex, 1);
-        //deleteItem: itemIndex});
-    }
     
 
     // async function handleSubmit(e) {
@@ -174,11 +181,12 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
     //     }
     // }
         const onSubmit = async (data) => {
+            //e.preventDefault();
             await responseForm(data);
 
-            if (state.length !== 0) {
-                state.map((item) => (
-                    createGoodsToOrder(item, data.id_order)
+            if (stateData.length !== 0) {
+                stateData.map((item) => (
+                createGoodsToOrder(item)
                 ));
             }
            // console.log('SEND DATA', data);
@@ -212,28 +220,27 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
             })
             .then(response => {
             //setOrderAllData(response.data);
-            console.log('Order', response.data);
+            setOrderId(+response.data.id_order);
+            alert(`Заказ створено, id ${response.data.id_order}`);
+            console.log('Order id: ', response.data);
             })
             .catch(error => {
-                console.log(error)
+                console.log(error);
             }
         )
     }
 
-    const createGoodsToOrder = async (data, order_id) => { 
-        await axios.post('http://localhost:4000/orders/creategoods', data, {
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-                'Access-Control-Allow-Origin': 'http://localhost:3000'
-            },
-            withCredentials: true,
-            data: {
-                id: data.id,
-                //id_supplier: ,
-                order_index: order_id,
-                //storage_index: ,
-                quantity: 4,
-                price: data.price,
+    const createGoodsToOrder = async (item) => { 
+        await axios.post('http://localhost:4000/orders/creategoods',
+            {
+                id: +item.id,
+                full_name: item.full_name,
+                category: item.category.category,
+                order_index: +orderId,
+                id_supplier: +item.stock[0].id_supplier,
+                storage_index: +item.stock[0].id_storage,
+                quantity: +item.price.quantity,
+                price: +item.price.price,
                 // delivery: 'Flintstone',
                 // status_delivery: 'Novij',
                 // delivery_ttn:'',
@@ -245,9 +252,14 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                 //id_contract:'',
                 //id_basket:'',
                 //order_storage: state,
+            },{headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'Access-Control-Allow-Origin': 'http://localhost:3000'
             }
-            //photo: document.querySelector('#fileInput').files
-            })
+            }, {
+                withCredentials: true,  
+            },
+            )
             .then(response => {
             //setOrderAllData(response.data);
             console.log('Order_storage',response.data);
@@ -286,10 +298,10 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                     </div>
                     <div>
                         <label htmlFor="fname">id </label>
-                        <input type="text" 
-                            className="admFormOrderId" 
+                        <input className="admFormOrderId"
+                            type="text"
                             name="firstname"
-                            value={'12345678910' ?? ''} 
+                            value={orderId ?? ''} 
                             //maxLength='30'
                             placeholder="id замовлення"
                             readOnly={true}
@@ -297,7 +309,8 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                     </div>
                     <div>
                         <label htmlFor="organization">Організація </label>
-                        <select className="admFormOrderOrganiz" name="Organization">
+                        <select className="admFormOrderOrganiz" name="organisation"
+                            {...register('organisation',)}>
                             <option value="1">ФОП Гайворонський</option>
                             <option value="2">фл Гайворонський Н. М</option>
                             <option value="3">ТОВ Скай-Партс</option>
@@ -306,7 +319,8 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                     <div>
                         <label htmlFor="storage">Склад </label>
                         <select className="admFormOrderStorage" name="storage"
-                            {...register('id_storage', {required: 'Це необхідні дані'})}>
+                            {...register('storage', {required: 'Це необхідні дані'})}
+                            >
                             <option value="1">Склад Поставщик</option>
                             <option value="2">Склад Основний</option>
                             <option value="3">Склад Монтаж</option>
@@ -315,7 +329,8 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                     <div>
                         <label htmlFor="orderView">Вид </label>
                         <select className="admFormOrderView" name="order_view"
-                            {...register('order_view', {required: 'Це необхідні дані'})}>
+                            {...register('order_view', {required: 'Це необхідні дані'})}
+                            >
                             <option value="Сайт">Сайт</option>
                             <option value="Роздріб">Роздріб</option>
                             <option value="Опт">Опт</option>
@@ -325,7 +340,8 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                     <div>
                         <label htmlFor="statusOrder">Статус </label>
                         <select className="admFormOrderStatus" name="status_order"
-                            {...register('status', {required: 'Це необхідні дані'})}>
+                            {...register('status', {required: 'Це необхідні дані'})}
+                            >
                             <option value="Новий">Новий</option>
                             <option value="Продаж">Продаж</option>
                             <option value="Обробка">Обробка</option>
@@ -337,15 +353,17 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                     <div>
                         <div className='admFormOrderCustm'>
                             <label htmlFor="lname">Покупець </label>
-                            <input type="text" 
-                                className="admFormOrderName" 
-                                name="lastname" 
+                            <input  className="admFormOrderName"
+                                type="text"
+                                name="customer" 
                                 maxLength='45'
                                 placeholder="Ім'я або назва.."
                                 //defaultValue={addCustomer ?? ''}
                                 value={addCustomer?.full_name ?? ''}
+                                autoFocus={true}
+                                //onFocus={e=>e.target.value}
                                 //readOnly={true}
-                                {...register('customer', {required: 'Це необхідні дані'})}
+                                {...register('customer',)}
                                 onChange={() => setAddCustomer(addCustomer)}
                             />
                             <div onClick={(e)=>e.preventDefault({passive: false})}>
@@ -364,10 +382,10 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                     <div>
                         <label htmlFor="fname"> Контракт </label>
                         <select className="admFormOrderContract" name="contract"
-                            {...register('id_contract', {required: 'Це необхідні дані'})}>
+                            {...register('id_contract', )}>
                            {addCustomer ? addCustomer.contract.map((entity, index)=>(
-                                <option key={'contract' + index} value={entity.id_contract}>
-                                     {entity.name} {entity.id_contract} 
+                                <option key={'contract' + index} value={+entity.id_contract}>
+                                    {entity.name} {entity.id_contract} 
                                 </option>
                                 
                                 )) : <option></option>
