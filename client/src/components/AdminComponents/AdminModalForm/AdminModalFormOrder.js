@@ -1,4 +1,4 @@
-import React, {useMemo, useReducer, useState, useCallback} from 'react';
+import React, {useMemo, useReducer, useState, useCallback, useEffect} from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminFormOrder.css';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
@@ -40,7 +40,7 @@ function reducer (state = [], action, initialState) {
 }
 
 
-const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
+const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}) => {
     const [tyreDatas, wheelDatas] = props;
     const {register, handleSubmit, formState: {errors}} = useForm();
     const [orderId, setOrderId] = useState(null);
@@ -192,7 +192,6 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
            // console.log('SEND DATA', data);
         };
         
-    // useEffect(() => {
         
      const responseForm = async (data) => { 
         await axios.post('http://localhost:4000/orders', data, {
@@ -593,6 +592,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive}) => {
                     <AdminModalGoods 
                         showRowModData={actions.addGoodsToList}
                         props={props}
+                        storage={storage}
                     />
                 </ModalAdmin> : null
             }

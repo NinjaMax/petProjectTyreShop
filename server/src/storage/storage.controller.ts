@@ -13,7 +13,7 @@ export class StorageController {
     return this.storageService.createStorage(createStorageDto);
   }
 
-  @Get()
+  @Get('/all')
   findAllStorage() {
     return this.storageService.findAllStorage();
   }

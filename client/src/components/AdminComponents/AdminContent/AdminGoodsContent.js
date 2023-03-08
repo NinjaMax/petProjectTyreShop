@@ -11,7 +11,7 @@ import AdminWheelStockPriceRow from './AdminWheelStockPriceRow';
 import ModalAdmin from '../../Modal/ModalAdmin';
 import AdminFormOrder from '../AdminModalForm/AdminModalFormOrder';
 
-const AdminGoodsContent = ({comments, props, customer}) => {
+const AdminGoodsContent = ({comments, props, customer, storage}) => {
     const [tyreData, tyreStockData, tyrePriceData,
         wheelData, wheelPriceData, wheelStockData] = props;
     const [chooseCat, setChooseCat] = useState('Шини');
@@ -246,6 +246,7 @@ const AdminGoodsContent = ({comments, props, customer}) => {
                     <AdminFormOrder 
                         goodsId={itemId}
                         props={props} 
+                        storage={storage}
                         customer={customer}/>
                 </ModalAdmin>
                 : null

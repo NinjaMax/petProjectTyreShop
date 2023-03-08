@@ -1,7 +1,7 @@
 import {React, useState, Fragment} from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminModalGoods.css';
 
-const AdminModalGoods = ({props, showRowModData}) => {
+const AdminModalGoods = ({props, showRowModData, storage}) => {
     const [tyreModData, wheelModData] = props;
     const [chooseCatMod, setChooseCatMod] = useState('Шини');
 
@@ -51,26 +51,32 @@ const AdminModalGoods = ({props, showRowModData}) => {
                         <th>Ціна</th>
                         <th>Залишки</th>
                         <th>Склад</th>
+                        <th>Склад ID</th>
                     </tr>   
                 </thead>
                 <tbody>
                     {chooseCatMod === 'Шини' && tyreModData ?
-                        tyreModData.map((item, index) => (
-                        item.price.lenght !== 0 ?    
-                            item.price.map((entity, indexEntity) =>(
+                        tyreModData.map((item) => (
+                        item.price.length !== 1 ?   
+
+                        item.price.map((entity, indexEntity) => (
+
                         <tr key={'tm' + entity.id} 
                             onDoubleClick={e => showRowModData(e.currentTarget.getAttribute("value"))} 
                             value={[item.id, indexEntity]}>
                             <Fragment key={'tid' + item.id}>
-                                <td key={'tmid' + item.id}>{item.id}</td>
-                                <td key={'tmfn' + item.id}>{item.full_name}</td>
-                                <td key={'tmca' + item.id}>{item.category?.category ?? ''}</td>
-                                <td key={'tmpr' + item.id}>{item.price[indexEntity]?.price ?? ''}</td> 
-                                <td key={'tmr' + item.id}>{item.stock[indexEntity]?.remainder ?? ''}</td> 
-                                <td key={'tmrs' + item.id}>{item.stock[indexEntity]?.id_storage ?? ''}</td> 
-                            </Fragment>   
-                               
-                        </tr> ))
+                                <td>{item.id}</td>
+                                <td>{item.full_name}</td>
+                                <td>{item.category?.category ?? ''}</td>
+                                <td>{item.price[indexEntity]?.price ?? ''}</td>                             
+                                <td>{item.stock[item.stock.findIndex(
+                                    itemI => itemI.id_storage === entity.id_storage)]?.remainder ?? ''}</td>
+                                <td>{storage.find(item => item.id === entity.id_storage).storage}</td>     
+                                <td>{item.stock[item.stock.findIndex(
+                                    itemI => itemI.id_storage === entity.id_storage)]?.id_storage ?? ''}</td>     
+                            </Fragment>       
+                        </tr> 
+                       ))
                         :
                         <tr key={'tm' + item.id} 
                             onDoubleClick={e => showRowModData(e.currentTarget.getAttribute("value"))} 
@@ -79,13 +85,14 @@ const AdminModalGoods = ({props, showRowModData}) => {
                                 <td key={'tmid' + item.id}>{item.id}</td>
                                 <td key={'tmfn' + item.id}>{item.full_name}</td>
                                 <td key={'tmca' + item.id}>{item.category?.category ?? ''}</td>
-                                <td key={'tmpr' + item.id}>{item.price.price ?? ''}</td> 
-                                <td key={'tmr' + item.id}>{item.stock.remainder ?? ''}</td>
-                                <td key={'tmrs' + item.id}>{item.stock.id_storage ?? ''}</td> 
+                                <td key={'tmpr' + item.id}>{item.price[0].price ?? ''}</td> 
+                                <td key={'tmr' + item.id}>{item.stock[0].remainder ?? ''}</td>
+                                <td>{storage.find(item => item.id === item.stock[0].id_storage).storage}</td>     
+                                <td key={'tmrs' + item.id}>{item.stock[0].id_storage ?? ''}</td> 
                             </Fragment> 
                         </tr>  
-                        
-                        ))
+                          
+                         ))
                         : null 
                     }
                     {chooseCatMod=== 'Диски' && wheelModData ?

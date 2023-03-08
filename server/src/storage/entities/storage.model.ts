@@ -1,7 +1,5 @@
 import { Column, DataType, Model, Table, BelongsTo, ForeignKey, BelongsToMany, HasMany} from "sequelize-typescript";
 import { StorageConfigAttr } from '../interfaces/storage.interface';
-//import { OrdersSupplier } from "src/orders-suppliers/entities/orders-supplier.model";
-//import { Orders } from "src/orders/entities/order.model";
 import { Order_Storage } from "src/orders/entities/order-storage.model";
 import { Sales } from "src/sales/entities/sale.model";
 import { StockTyres } from "src/stock/entities/stock-tyres.model";
@@ -57,6 +55,4 @@ export class Storage extends Model<Storage, StorageConfigAttr> {
     @BelongsToMany(() => Sales, () => SaleStorage)
     sales: Sales[];
 
-    //@BelongsToMany(() => Orders, { through: { model: () => Order_Storage, unique: false}})
-    //orders: Orders[];
 }

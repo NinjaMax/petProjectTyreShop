@@ -4,7 +4,7 @@ import ButtonSearch from '../../Buttons/ButtonSearch';
 import ModalAdmin from '../../Modal/ModalAdmin';
 import AdminModalOrderSup from '../AdminModalForm/AdminModalOrderSup';
 
-const AdminOrderSupContent = () => {
+const AdminOrderSupContent = ({storage}) => {
     const [createOrdSup, setCreateOrdSup] = useState(false);
 
     const createOrdSupBtn = () => {
@@ -515,7 +515,8 @@ const AdminOrderSupContent = () => {
             </div> 
             {createOrdSup ? 
             <ModalAdmin active={createOrdSup} setActive={setCreateOrdSup}>
-                <AdminModalOrderSup/>
+                <AdminModalOrderSup 
+                    storage={storage}/>
             </ModalAdmin>
             : null
         }

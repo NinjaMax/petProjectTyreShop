@@ -5,7 +5,7 @@ import ModalAdmin from '../../Modal/ModalAdmin';
 import AdminFormOrder from '../AdminModalForm/AdminModalFormOrder';
 import AdminModalOrderSup from '../AdminModalForm/AdminModalOrderSup';
 
-const AdminOrderContent = ({props, orders, customer, comments, showComment}) => {
+const AdminOrderContent = ({props, orders, customer, comments, showComment, storage}) => {
     const [activeOrder, setActiveOrder] = useState(false);
     const [activeOrderSup, setActiveOrderSup] = useState(false);
 
@@ -114,11 +114,10 @@ const AdminOrderContent = ({props, orders, customer, comments, showComment}) => 
             {activeOrder ?
                 <ModalAdmin active={activeOrder} setActive={activeFormOrder}>
                     <AdminFormOrder 
-                        // tyreDatas={tyreData} 
-                        // wheelDatas={wheelData}
                         setActive={activeFormOrder}
                         customer={customer} 
                         props={props}
+                        storage={storage}
                     />
                 </ModalAdmin>  
                 : null

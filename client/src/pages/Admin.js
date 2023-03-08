@@ -44,6 +44,7 @@ const Admin = () => {
     const [commentData, setCommentData] = useState(null);
     const [commentId, setCommentId] = useState(null);
     const [orderAllData, setOrderAllData] = useState(null);
+    const [storageAll, setStorageAll] = useState(null);
 
   
     useEffect(() => {
@@ -102,6 +103,19 @@ const Admin = () => {
         })
         .then(response => {
             setWheelStockData(response.data);
+            //console.log('STOCK TYRE: ',response.data)
+        })
+        .catch(error => {
+          console.log(error)
+        });
+
+        axios.get("http://localhost:4000/storage/all", {
+            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+            withCredentials: true,
+            //params: {id_tyre: itemIdTyre}
+        })
+        .then(response => {
+            setStorageAll(response.data);
             //console.log('STOCK TYRE: ',response.data)
         })
         .catch(error => {
@@ -203,6 +217,7 @@ const Admin = () => {
                              wheelData, wheelPriceData, wheelStockData]}
                         customer={customers}
                         comments={commentData}
+                        storage={storageAll}
                     />
                 : null}
                 {sideBarItem === 'zamovlenia' ?
@@ -213,6 +228,7 @@ const Admin = () => {
                         orders={orderAllData}
                         customer={customers} 
                         comments={commentData}
+                        storage={storageAll}
                     />
                 : null}
                 {sideBarItem === 'prodagi' ?
@@ -222,6 +238,7 @@ const Admin = () => {
                     <AdminOrderSupContent 
                         props={[tyreData, tyreStockData, tyrePriceData,
                             wheelData, wheelPriceData, wheelStockData]}
+                        storage={storageAll}
                     />
                 :null}
                 {sideBarItem === 'kasi' ?
