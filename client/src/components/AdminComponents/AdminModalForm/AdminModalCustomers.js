@@ -21,10 +21,10 @@ const AdminModalCustomers = ({allCustomer, addCustomer}) => {
                         <tr key={'cus' + entity.id_customer} 
                             onDoubleClick={e => addCustomer(e.currentTarget.getAttribute("value"))} 
                             value={entity.id_customer}>
-                            <td key={'cusid' + entity.id_customer}>{entity.id_customer}</td>
-                            <td key={'cusn' + entity.id_customer}>{entity.full_name}</td>
-                            <td key={'cusc' + entity.id_customer}>{entity.contract[0].name}</td>
-                            <td key={'cuscid' + entity.id_customer}>{entity.contract[0].id_contract}</td>
+                            <td >{entity.id_customer}</td>
+                            <td >{entity.full_name}</td>
+                            <td >{entity.contract[0].name}</td>
+                            <td >{entity.contract[0].id_contract}</td>
                         </tr>
                         )) 
                         : <tr><td>Очікуемо покупців....</td></tr> 

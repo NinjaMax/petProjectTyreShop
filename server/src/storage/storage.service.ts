@@ -30,7 +30,7 @@ export class StorageService {
 
     try {
       
-      const storageAll = await this.storageRepository.findAll({include: {all: true}});
+      const storageAll = await this.storageRepository.findAll();
 
       return storageAll;
 

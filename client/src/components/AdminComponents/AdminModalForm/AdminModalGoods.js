@@ -60,7 +60,7 @@ const AdminModalGoods = ({props, showRowModData, storage}) => {
                         item.price.length !== 1 ?   
 
                         item.price.map((entity, indexEntity) => (
-
+                            
                         <tr key={'tm' + entity.id} 
                             onDoubleClick={e => showRowModData(e.currentTarget.getAttribute("value"))} 
                             value={[item.id, indexEntity]}>
@@ -71,27 +71,28 @@ const AdminModalGoods = ({props, showRowModData, storage}) => {
                                 <td>{item.price[indexEntity]?.price ?? ''}</td>                             
                                 <td>{item.stock[item.stock.findIndex(
                                     itemI => itemI.id_storage === entity.id_storage)]?.remainder ?? ''}</td>
-                                <td>{storage.find(item => item.id === entity.id_storage).storage}</td>     
+                                <td>{storage[storage.findIndex(itemS => itemS.id_storage === entity.id_storage)]?.storage}</td>     
                                 <td>{item.stock[item.stock.findIndex(
                                     itemI => itemI.id_storage === entity.id_storage)]?.id_storage ?? ''}</td>     
                             </Fragment>       
-                        </tr> 
+                        </tr>
+                        
                        ))
                         :
                         <tr key={'tm' + item.id} 
                             onDoubleClick={e => showRowModData(e.currentTarget.getAttribute("value"))} 
                             value={[item.id, 0]}>
                             <Fragment key={'tid' + item.id}>
-                                <td key={'tmid' + item.id}>{item.id}</td>
-                                <td key={'tmfn' + item.id}>{item.full_name}</td>
-                                <td key={'tmca' + item.id}>{item.category?.category ?? ''}</td>
-                                <td key={'tmpr' + item.id}>{item.price[0].price ?? ''}</td> 
-                                <td key={'tmr' + item.id}>{item.stock[0].remainder ?? ''}</td>
-                                <td>{storage.find(item => item.id === item.stock[0].id_storage).storage}</td>     
-                                <td key={'tmrs' + item.id}>{item.stock[0].id_storage ?? ''}</td> 
+                                <td>{item.id}</td>
+                                <td>{item.full_name}</td>
+                                <td>{item.category?.category ?? ''}</td>
+                                <td>{item.price[0].price ?? ''}</td> 
+                                <td>{item.stock[0].remainder ?? ''}</td>
+                                <td>{storage[storage.findIndex(itemS => itemS.id_storage === item.stock[0].id_storage)]?.storage}</td>     
+                                <td>{item.stock[0].id_storage ?? ''}</td> 
                             </Fragment> 
                         </tr>  
-                          
+                       
                          ))
                         : null 
                     }

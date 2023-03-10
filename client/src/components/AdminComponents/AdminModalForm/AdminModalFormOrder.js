@@ -42,12 +42,15 @@ function reducer (state = [], action, initialState) {
 
 const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}) => {
     const [tyreDatas, wheelDatas] = props;
-    const {register, handleSubmit, formState: {errors}} = useForm();
     const [orderId, setOrderId] = useState(null);
     const [addGoods, setAddGoods] = useState(false);
     const [createCustomer, setCreateCustomer] = useState(false);
     const [openCustomers, setOpenCustomers] = useState(false);
     const [addCustomer, setAddCustomer] = useState(null);
+    const {register, handleSubmit, setValue, formState: {errors}} = useForm(
+        {defaultValues:{id_customer: addCustomer?.id_customer}}
+        );
+    //const [contractId, setContractId] = useState(null);
     //const [priceIndex, setPriceIndex] = useState(0);
     //let defaultQuantity = useRef(null);
     //const [quantity, setQuantity] = useState('4');
@@ -75,7 +78,15 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
         return initialState;
             
     };
-
+    useEffect(() => {
+        register("id_customer");
+        setValue("id_customer", addCustomer?.id_customer)
+      }, [addCustomer?.id_customer, register, setValue])
+    
+    // useEffect(() => {
+    //     setFocus("id_contract", {shouldSelect: true})
+    //   }, [setFocus])
+  
     // const onChangeQuantity = () => {
 
     //     console.log('quantity', defaultQuantity.current);
@@ -182,8 +193,11 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
     // }
         const onSubmit = async (data) => {
             //e.preventDefault();
-            await responseForm(data);
-
+            console.log('CREATE OREDER: ', data)
+            //if(data) {
+              await responseForm(data);  
+           // }
+            
             if (stateData.length !== 0) {
                 stateData.map((item) => (
                 createGoodsToOrder(item)
@@ -200,22 +214,6 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                 'Access-Control-Allow-Origin': 'http://localhost:3000'
             },
             withCredentials: true,
-            // data: {
-            //     order_view: {},
-            //     status: 'Новий',
-            //     delivery: 'Flintstone',
-            //     status_delivery: 'Novij',
-            //     delivery_ttn:'',
-            //     pay_view: '',
-            //     status_pay: '',
-            //     notes: '',
-            //     id_user:'',
-            //     id_customer:'',
-            //     id_contract:'',
-            //     id_basket:'',
-            //     order_storage: state,
-            // }
-            //photo: document.querySelector('#fileInput').files
             })
             .then(response => {
             //setOrderAllData(response.data);
@@ -241,16 +239,6 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                 quantity: +item.price.quantity,
                 price: +item.price.price,
                 // delivery: 'Flintstone',
-                // status_delivery: 'Novij',
-                // delivery_ttn:'',
-                // pay_view: '',
-                // status_pay: '',
-                // notes: '',
-                //id_user:'',
-                //id_customer:'',
-                //id_contract:'',
-                //id_basket:'',
-                //order_storage: state,
             },{headers: {
                 'Content-Type': 'application/json; charset=utf-8',
                 'Access-Control-Allow-Origin': 'http://localhost:3000'
@@ -261,7 +249,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
             )
             .then(response => {
             //setOrderAllData(response.data);
-            console.log('Order_storage',response.data);
+            console.log('Order_storage', response.data);
             })
             .catch(error => {
                 console.log(error)
@@ -310,9 +298,9 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                         <label htmlFor="organization">Організація </label>
                         <select className="admFormOrderOrganiz" name="organisation"
                             {...register('organisation',)}>
-                            <option value="1">ФОП Гайворонський</option>
-                            <option value="2">фл Гайворонський Н. М</option>
-                            <option value="3">ТОВ Скай-Партс</option>
+                            <option value={"ФОП Гайворонський"}>ФОП Гайворонський</option>
+                            <option value={"фл Гайворонський Н. М"}>фл Гайворонський Н. М</option>
+                            <option value={"ТОВ Скай-Партс"}>ТОВ Скай-Партс</option>
                         </select>  
                     </div>
                     <div>
@@ -320,9 +308,9 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                         <select className="admFormOrderStorage" name="storage"
                             {...register('storage', {required: 'Це необхідні дані'})}
                             >
-                            <option value="1">Склад Поставщик</option>
-                            <option value="2">Склад Основний</option>
-                            <option value="3">Склад Монтаж</option>
+                            <option value={'Склад Поставщик'}>Склад Поставщик</option>
+                            <option value={'Склад Основний'}>Склад Основний</option>
+                            <option value={'Склад Монтаж'}>Склад Монтаж</option>
                         </select>  
                     </div>
                     <div>
@@ -357,13 +345,8 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                                 name="customer" 
                                 maxLength='45'
                                 placeholder="Ім'я або назва.."
-                                //defaultValue={addCustomer ?? ''}
                                 value={addCustomer?.full_name ?? ''}
-                                autoFocus={true}
-                                //onFocus={e=>e.target.value}
-                                //readOnly={true}
-                                {...register('customer',)}
-                                onChange={() => setAddCustomer(addCustomer)}
+                                //onChange={() => setAddCustomer(addCustomer)}
                             />
                             <div onClick={(e)=>e.preventDefault({passive: false})}>
                                 <button onClick={openCustomerForm} className='admFormSearchCustm'>
@@ -380,13 +363,19 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                     </div>
                     <div>
                         <label htmlFor="fname"> Контракт </label>
-                        <select className="admFormOrderContract" name="contract"
-                            {...register('id_contract', )}>
-                           {addCustomer ? addCustomer.contract.map((entity, index)=>(
-                                <option key={'contract' + index} value={+entity.id_contract}>
+                        <select className="admFormOrderContract" name="id_contract"
+                            {...register('id_contract')}
+                            //defaultValue={addCustomer?.contract[0]?.id_contract ?? ''}
+                            //value={contractId ?? ''}
+                            //onChange={e => setContractId(e.target.value)}
+                            
+                            
+                            >
+                           {addCustomer ? addCustomer?.contract.map((entity, index)=> (  
+                                <option key={'contract' + index} 
+                                value={entity.id_contract}>
                                     {entity.name} {entity.id_contract} 
                                 </option>
-                                
                                 )) : <option></option>
                             } 
                         </select>
@@ -482,24 +471,19 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                             <td >{full_name}</td>
                             <td >{category?.category}</td>
                             <td key={'quantity' + id + index} 
-                                //onInput={(e)=>e.preventDefault({passive: false})}
                                 onInput={(e) => e.stopPropagation()}
                                 >
                                 <input 
-                                //id="quantiti"
                                 id={'quantity'+ id}
                                 key={'quantity'+ id + index}
-                                //ref={defaultQuantity}
                                 type="text"
                                 name="quantity"
                                 value={price?.quantity}
                                 onInput={(e) => onChangeInput(e, id, index)}
                                 placeholder="Введіть цифри"
-                                //onChange={e => setQuantytiItem(e.target.value)}
-                                //{...register('quantity')}
                                 />
                             </td>
-                            <td >{index}</td>
+                            <td >{0}</td>
                             <td 
                                 key={'price' + id + index} 
                                 onInput={(e) => e.stopPropagation()}
@@ -512,16 +496,16 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                                 value={price?.price}
                                 onInput={(e) => onChangeInput(e, id, index)}
                                 placeholder="Введіть цифри" 
-                                //{...register('price')}
                                 />
                            
                             </td>
                             <td >
                                 <select className="admFormOrderStorage" name="storage_index"
-                                    {...register('storage_index', {required: 'Це необхідні дані'})}>
-                                    <option value="1">Склад Поставщик</option>
-                                    <option value="2">Склад Основний</option>
-                                    <option value="3">Склад Монтаж</option>
+                                    //{...register('storage_index', {required: 'Це необхідні дані'})}
+                                    >
+                                    <option value={1}>Склад Поставщик</option>
+                                    <option value={2}>Склад Основний</option>
+                                    <option value={3}>Склад Монтаж</option>
                                 </select>  
                             </td> 
                             <td 
