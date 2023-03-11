@@ -54,21 +54,21 @@ const AdminOrderContent = ({props, orders, customer, comments, showComment, stor
                 <tbody>
                     {orders ? orders.map((items) => (
                     <tr key={'or' + items.id_order}>
-                        <td key={'orid' + items.id_order}>{items.id_order}</td>
-                        <td key={'orcr' + items.id_order}>{items.createdAt}</td>
-                        <td key={'orup' + items.id_order}>{items.updatedAt}</td>
-                        <td key={'orcus' + items.id_order}>{items.customer}</td>
-                        <td key={'orst' + items.id_order}>{items?.storage}</td>
-                        <td key={'ortot' + items.id_order}>10200.00</td>
-                        <td key={'orsta' + items.id_order}>{items.status}</td>
-                        <td key={'orview' + items.id_order}>{items.order_view}</td>
-                        <td key={'ordel' + items.id_order}>{items.delivery}</td>
-                        <td key={'orstdel' + items.id_order}>{items.status_delivery}</td>
-                        <td key={'orpayv' + items.id_order}>{items.pay_view}</td>
-                        <td key={'orpayst' + items.id_order}>{items.status_pay}</td>
-                        <td key={'oruser' + items.id_order}>{items.user}</td>
-                        <td key={'ornote' + items.id_order}>{items.notes}</td>
-                        <td key={'orbtn' + items.id_order}>
+                        <td>{items.id_order}</td>
+                        <td>{items.createdAt}</td>
+                        <td>{items.updatedAt}</td>
+                        <td>{items.customer.full_name}</td>
+                        <td>{items?.storage}</td>
+                        <td>{10200.00}</td>
+                        <td>{items.status}</td>
+                        <td>{items.order_view}</td>
+                        <td>{items.delivery}</td>
+                        <td>{items.status_delivery}</td>
+                        <td>{items.pay_view}</td>
+                        <td>{items.status_pay}</td>
+                        <td>{items.id_user}</td>
+                        <td>{items.notes}</td>
+                        <td>
                             <button className='basketAdmGoods'
                                 onClick={activeFormOrderSup}>
                                 <i className="fas fa-truck-loading"></i>

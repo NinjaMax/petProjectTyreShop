@@ -47,21 +47,9 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
     const [createCustomer, setCreateCustomer] = useState(false);
     const [openCustomers, setOpenCustomers] = useState(false);
     const [addCustomer, setAddCustomer] = useState(null);
-    const {register, handleSubmit, setValue, formState: {errors}} = useForm(
-        {defaultValues:{id_customer: addCustomer?.id_customer}}
-        );
-    //const [contractId, setContractId] = useState(null);
-    //const [priceIndex, setPriceIndex] = useState(0);
-    //let defaultQuantity = useRef(null);
-    //const [quantity, setQuantity] = useState('4');
-    //const [priceItem, setPriceItem] = useState(null);
-    // const [quantityItem, setQuantytiItem] = useState('4');
-    // const [answer, setAnswer] = useState('');
-    // const [error, setError] = useState(null);
-    // const [status, setStatus] = useState('typing');
-    //const [goodsList, setGoodsList] = useState([]);
-    //const [addItems, setAddItems] = useState();
-    //const [changeCustomer, setChangeCustomer] = useState();
+    const [disableBtn, setDisableBtn] = useState(false);
+    const [orderStorage, setOrderStorage] = useState([]);
+    const {register, handleSubmit, setValue, formState: {errors}} = useForm();    
     const [state, dispatch] = useReducer(reducer, goodsId, createInitialState);
     const [stateData, setStateData] = useState(state);
      
@@ -83,9 +71,10 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
         setValue("id_customer", addCustomer?.id_customer)
       }, [addCustomer?.id_customer, register, setValue])
     
-    // useEffect(() => {
-    //     setFocus("id_contract", {shouldSelect: true})
-    //   }, [setFocus])
+    useEffect(() => {
+        register('id_contract')
+        setValue("id_contract", addCustomer?.contract[0]?.id_contract)
+      }, [register, setValue, addCustomer?.contract])
   
     // const onChangeQuantity = () => {
 
@@ -193,17 +182,28 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
     // }
         const onSubmit = async (data) => {
             //e.preventDefault();
-            console.log('CREATE OREDER: ', data)
+            console.log('CREATE ORDER: ', data)
             //if(data) {
               await responseForm(data);  
            // }
             
             if (stateData.length !== 0) {
                 stateData.map((item) => (
-                createGoodsToOrder(item)
+                    createGoodsToOrder(item)
                 ));
             }
-           // console.log('SEND DATA', data);
+
+            setDisableBtn(!disableBtn);
+        };
+
+        const onSubmitOrder = async () => {
+
+            if(orderStorage.length !== 0) {
+                orderStorage.map(items => (
+                    addGoodsToOrder(items) 
+                ));
+            }
+            
         };
         
         
@@ -248,8 +248,46 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
             },
             )
             .then(response => {
+            setOrderStorage(orderStorage.push(response.data));
+            //console.log('Order_storage', response.data);
+            })
+            .catch(error => {
+                console.log(error)
+            }
+        )
+    }
+
+    const addGoodsToOrder = async (value) => {
+        await axios.post('http://localhost:4000/orders/add',
+            {
+                // id: +item.id,
+                // full_name: item.full_name,
+                // category: item.category.category,
+                // order_index: +orderId,
+                // id_supplier: +item.stock[0].id_supplier,
+                // storage_index: +item.stock[0].id_storage,
+                // quantity: +item.price.quantity,
+                // price: +item.price.price,
+                id_order_storage: value.id_order_storage,
+                id: value.id,
+                id_supplier: value.id_supplier,
+                id_order: value.order_index,
+                id_storage: value.storage_index,
+                quantity: value.quantity,
+                price: value.price
+                // delivery: 'Flintstone',
+            },{headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'Access-Control-Allow-Origin': 'http://localhost:3000'
+            }
+            }, {
+                withCredentials: true,  
+            },
+            )
+            .then(response => {
             //setOrderAllData(response.data);
-            console.log('Order_storage', response.data);
+            alert(`Заказ ${response.data.id_order} проведено`)
+            //onsole.log('Order_storage', response.data);
             })
             .catch(error => {
                 console.log(error)
@@ -267,7 +305,8 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
     //console.log('CUSTOMER', customer);
     //console.log('TYRE DATAS: ', tyreDatas);
     console.log(errors);
-    //console.log(priceIndex);
+    console.log('ORDER STOR ARRAY: ', orderStorage);
+
     return (
         <div>
             Замовлення Покупця
@@ -346,7 +385,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                                 maxLength='45'
                                 placeholder="Ім'я або назва.."
                                 value={addCustomer?.full_name ?? ''}
-                                //onChange={() => setAddCustomer(addCustomer)}
+                                onChange={() => setAddCustomer(addCustomer)}
                             />
                             <div onClick={(e)=>e.preventDefault({passive: false})}>
                                 <button onClick={openCustomerForm} className='admFormSearchCustm'>
@@ -364,16 +403,21 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                     <div>
                         <label htmlFor="fname"> Контракт </label>
                         <select className="admFormOrderContract" name="id_contract"
-                            {...register('id_contract')}
+                            //autoFocus={true}
+                            defaultValue={addCustomer?.contract[0]?.id_contract}
                             //defaultValue={addCustomer?.contract[0]?.id_contract ?? ''}
-                            //value={contractId ?? ''}
-                            //onChange={e => setContractId(e.target.value)}
-                            
-                            
+                            //value={contractId}
+                            //onChange={e => 
+                            //    setContractId(e.target.value)
+                                // setValue('id_contract',
+                                // e.target.value, {shouldDirty: true})
+                            //}
+                            //{...register('id_contract')}
                             >
                            {addCustomer ? addCustomer?.contract.map((entity, index)=> (  
                                 <option key={'contract' + index} 
-                                value={entity.id_contract}>
+                                value={entity.id_contract}
+                                >
                                     {entity.name} {entity.id_contract} 
                                 </option>
                                 )) : <option></option>
@@ -554,8 +598,15 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                     </div>  
                 </div>
                 <div className='admOrderFormGrp' onClick={(e)=>e.preventDefault({passive: false})}>
-                    <button className='admFormOrderBtnOk'>Ok</button>
-                    <button className='admFormOrderBtnSave' onClick={handleSubmit(onSubmit)}>Зберегти</button>
+                    <button className='admFormOrderBtnOk'
+                        onClick={onSubmitOrder}>
+                        Ok
+                    </button>
+                    <button className='admFormOrderBtnSave'
+                        disabled={disableBtn} 
+                        onClick={handleSubmit(onSubmit)}>
+                        Зберегти
+                    </button>
                     <button className='admFormOrderBtn' onClick={setActive}>Відмінити</button> 
                 </div>
             </form>
