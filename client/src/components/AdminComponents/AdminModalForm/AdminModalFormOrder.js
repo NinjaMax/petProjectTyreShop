@@ -137,7 +137,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
             // console.log('INDEX', newArr[1]);
             let [idValue, indexValue] = newArr;
             // console.log('ARR ID', +idValue);
-             console.log('ARR INDX', +indexValue);
+            //console.log('ARR INDX', +indexValue);
             //setPriceIndex(+indexValue); 
             
             dispatch({type: 'addTyreToOrder', 
@@ -159,10 +159,9 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
         const deleteItem = (itemIndex) => {
         
            //dispatch({type: 'deleteItemFromOrder', 
-           
+            state.splice(itemIndex, 1);
             stateData.splice(itemIndex, 1);
            
-           state.splice(itemIndex, 1);
             //deleteItem: itemIndex});
         } 
 //},[state, stateData])
@@ -184,26 +183,29 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
             //e.preventDefault();
             console.log('CREATE ORDER: ', data)
             //if(data) {
-              await responseForm(data);  
-           // }
-            
-            if (stateData.length !== 0) {
-                stateData.map((item) => (
-                    createGoodsToOrder(item)
-                ));
-            }
 
+            await responseForm(data);  
+           // }
+        //    console.log('RES', responseForm.response)
+           
+        //     if (stateData.length !== 0) {
+        //         stateData.map((itemGoods) => (
+        //             createGoodsToOrder(itemGoods, responseForm.id_order)
+        //         ));
+        //     }
+            
             setDisableBtn(!disableBtn);
         };
 
         const onSubmitOrder = async () => {
 
-            if(orderStorage.length !== 0) {
-                orderStorage.map(items => (
-                    addGoodsToOrder(items) 
-                ));
-            }
+            //if(orderStorage.length !== 0) {
             
+                orderStorage?.map((itemsOrd) => (
+                    addGoodsToOrder(itemsOrd) 
+                ));
+            //}
+                
         };
         
         
@@ -217,9 +219,19 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
             })
             .then(response => {
             //setOrderAllData(response.data);
-            setOrderId(+response.data.id_order);
+            
             alert(`Заказ створено, id ${response.data.id_order}`);
             console.log('Order id: ', response.data);
+            setOrderId(+response.data.id_order);
+
+            if (stateData.length !== 0) {
+                stateData.map((itemGoods) => (
+                    createGoodsToOrder(itemGoods, response.data.id_order)
+                ));
+            }
+
+            //console.log('ORDER ID', response.data.id_order);
+                //return response.data;
             })
             .catch(error => {
                 console.log(error);
@@ -227,15 +239,15 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
         )
     }
 
-    const createGoodsToOrder = async (item) => { 
+    const createGoodsToOrder = async (item, id_order) => { 
         await axios.post('http://localhost:4000/orders/creategoods',
             {
                 id: +item.id,
                 full_name: item.full_name,
                 category: item.category.category,
-                order_index: +orderId,
-                id_supplier: +item.stock[0].id_supplier,
-                storage_index: +item.stock[0].id_storage,
+                order_index: id_order,
+                id_supplier: +item.price.id_supplier,
+                storage_index: +item.price.id_storage,
                 quantity: +item.price.quantity,
                 price: +item.price.price,
                 // delivery: 'Flintstone',
@@ -248,8 +260,9 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
             },
             )
             .then(response => {
-            setOrderStorage(orderStorage.push(response.data));
-            //console.log('Order_storage', response.data);
+                
+            setOrderStorage([].push(response.data));
+            console.log('Order_storage', response.data);
             })
             .catch(error => {
                 console.log(error)
@@ -598,16 +611,22 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                     </div>  
                 </div>
                 <div className='admOrderFormGrp' onClick={(e)=>e.preventDefault({passive: false})}>
-                    <button className='admFormOrderBtnOk'
-                        onClick={onSubmitOrder}>
-                        Ok
-                    </button>
-                    <button className='admFormOrderBtnSave'
-                        disabled={disableBtn} 
-                        onClick={handleSubmit(onSubmit)}>
-                        Зберегти
-                    </button>
-                    <button className='admFormOrderBtn' onClick={setActive}>Відмінити</button> 
+                    <div onClick={(e)=>e.preventDefault({passive: false})}>
+                        <button className='admFormOrderBtnOk'
+                            onClick={onSubmitOrder}>
+                            Ok
+                        </button>
+                    </div>
+                    <div onClick={(e)=>e.preventDefault({passive: false})}>
+                        <button className='admFormOrderBtnSave'
+                            disabled={disableBtn} 
+                            onClick={handleSubmit(onSubmit)}>
+                            Зберегти
+                        </button>
+                    </div>
+                    <div onClick={(e) => e.stopPropagation()}>
+                        <button className='admFormOrderBtn' onClick={setActive}>Відмінити</button>
+                    </div>
                 </div>
             </form>
         </div>
