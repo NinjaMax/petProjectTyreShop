@@ -139,12 +139,31 @@ export class StockWheelsService {
     
   }
 
-  async findStockWheelById(getStockDto: GetStockDto) {
+  async findStockWheelByIdWheel(getStockDto: GetStockDto) {
 
     try {
 
       const stockWheelById = await this.stockWheelsRepository.findOne(
         {where: {id_wheel: getStockDto.id_wheel}, 
+        include: {all: true}
+      });
+
+      return stockWheelById;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+      
+    }
+    
+  }
+
+  async findStockWheelById(getStockDto: GetStockDto) {
+
+    try {
+
+      const stockWheelById = await this.stockWheelsRepository.findOne(
+        {where: {id_wheel: getStockDto.id}, 
         include: {all: true}
       });
 

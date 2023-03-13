@@ -7,7 +7,7 @@ import { SuppliersService } from '../suppliers/suppliers.service';
 import { StockBatteries } from './entities/stock-batteries.model';
 import { BatteriesService } from 'src/batteries/batteries.service';
 import { StorageService } from 'src/storage/storage.service';
-import { StockOilsService } from './stock-oils.service';
+//import { StockOilsService } from './stock-oils.service';
 //import { ContractService } from 'src/contract/contract.service';
 //import { OrdersSupStorageService } from 'src/orders-suppliers/orders-sup-storage.service';
 
@@ -107,12 +107,31 @@ export class StockBatteriesService {
     
   }
 
-  async findStockBatteryById(getStockDto: GetStockDto) {
+  async findStockBatteryByIdBattery(getStockDto: GetStockDto) {
 
     try {
 
       const stockBatteryById = await this.stockBatteriesRepository.findOne(
         {where: {id_battery: getStockDto.id_battery}, 
+        include: {all: true}
+      });
+
+      return stockBatteryById;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+      
+    }
+    
+  }
+
+  async findStockBatteryById(getStockDto: GetStockDto) {
+
+    try {
+
+      const stockBatteryById = await this.stockBatteriesRepository.findOne(
+        {where: {id_battery: getStockDto.id}, 
         include: {all: true}
       });
 

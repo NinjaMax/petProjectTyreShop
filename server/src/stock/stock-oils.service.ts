@@ -106,12 +106,31 @@ export class StockOilsService {
     
   }
 
-  async findStockOilById(getStockDto: GetStockDto) {
+  async findStockOilByIdOil(getStockDto: GetStockDto) {
 
     try {
 
       const stockOilById = await this.stockOilsRepository.findOne(
         {where: {id_oil: getStockDto.id_oil}, 
+        include: {all: true}
+      });
+
+      return stockOilById;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+      
+    }
+    
+  }
+
+  async findStockOilById(getStockDto: GetStockDto) {
+
+    try {
+
+      const stockOilById = await this.stockOilsRepository.findOne(
+        {where: {id_oil: getStockDto.id}, 
         include: {all: true}
       });
 

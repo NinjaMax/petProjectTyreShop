@@ -1,4 +1,117 @@
 // //React Ax ios Post Request: 
+import axios from "axios";
+
+    const createGoodsToOrder = async (item, id_order) => { 
+        const createGoods = await axios.post('http://localhost:4000/orders/creategoods',
+            {
+                id: +item.id,
+                full_name: item.full_name,
+                category: item.category.category,
+                order_index: id_order,
+                id_supplier: +item.price.id_supplier,
+                storage_index: +item.price.id_storage,
+                quantity: +item.price.quantity,
+                price: +item.price.price,
+                // delivery: 'Flintstone',
+            },{headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'Access-Control-Allow-Origin': 'http://localhost:3000'
+            }
+            }, {
+                withCredentials: true,  
+            },
+            )
+            .then(response => {
+                
+            // setOrderStorage([...orderStorage, response.data, ...orderStorage]);
+            // console.log('Order_storage', response.data);
+                return response.data;
+            })
+            .catch(error => {
+                console.log(error)
+            }
+        )
+
+        return createGoods;
+    }
+
+    const responseForm = async (data) => { 
+       const newData = await axios.post('http://localhost:4000/orders', data, {
+           headers: {
+               'Content-Type': 'application/json; charset=utf-8',
+               'Access-Control-Allow-Origin': 'http://localhost:3000'
+           },
+           withCredentials: true,
+           })
+           .then(response => 
+            {
+           //setOrderAllData(response.data);
+           
+        //    alert(`Заказ створено, id ${response.data.id_order}`);
+        //    console.log('Order id: ', response.data);
+        //    setOrderId(+response.data.id_order);
+
+        //    if (stateData.length !== 0) {
+        //        stateData.map((itemGoods) => (
+        //            createGoodsToOrder(itemGoods, response.data.id_order)
+        //        ));
+        //   }
+
+           //console.log('ORDER ID', response.data.id_order);
+               return response.data;
+           }
+           )
+           .catch(error => {
+               console.log(error);
+           }
+       )
+
+       return newData;
+
+   };
+
+const addGoodsToOrder = async (value) => {
+    const addGoods = await axios.post('http://localhost:4000/orders/add',
+        {
+            // id: +item.id,
+            // full_name: item.full_name,
+            // category: item.category.category,
+            // order_index: +orderId,
+            // id_supplier: +item.stock[0].id_supplier,
+            // storage_index: +item.stock[0].id_storage,
+            // quantity: +item.price.quantity,
+            // price: +item.price.price,
+            id_order_storage: value.id_order_storage,
+            id: value.id,
+            id_supplier: value.id_supplier,
+            id_order: value.order_index,
+            id_storage: value.storage_index,
+            quantity: value.quantity,
+            price: value.price
+            // delivery: 'Flintstone',
+        },{headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Access-Control-Allow-Origin': 'http://localhost:3000'
+        }
+        }, {
+            withCredentials: true,  
+        },
+        )
+        .then(response => {
+        //setOrderAllData(response.data);
+        //alert(`Заказ ${response.data.id_order} проведено`)
+        //onsole.log('Order_storage', response.data);
+        return response.data;
+        })
+        .catch(error => {
+            console.log(error)
+        }
+    )
+
+    return addGoods;
+}
+
+export {addGoodsToOrder, createGoodsToOrder, responseForm};
 // import React, { useEffect, useState } from 'react'; import axios from 'axios';
 
 // const MyComponent = () => { const [data, setData] = useState(null);

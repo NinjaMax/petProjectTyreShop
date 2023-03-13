@@ -124,10 +124,10 @@ export class OrdersService {
   }
 
   async addGoodsToOrder(createOrderDto: CreateOrderDto) {
-    try {
+    //try {
       const orderId = await this.ordersRepository.findByPk(
         createOrderDto.id_order,
-        { include: { all: true } },
+        {include: {all: true}},
       );
       const tyreStock = await this.stockTyresService.findStockTyreById(
         createOrderDto,
@@ -355,12 +355,12 @@ export class OrdersService {
       }
 
       return orderId;
-    } catch {
-      throw new HttpException(
-        'Data is incorrect and must be uniq',
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    // } catch {
+    //   throw new HttpException(
+    //     'Data is incorrect and must be uniq',
+    //     HttpStatus.NOT_FOUND,
+    //   );
+    // }
   }
 
   async updateOrder(updateOrderDto: UpdateOrderDto) {

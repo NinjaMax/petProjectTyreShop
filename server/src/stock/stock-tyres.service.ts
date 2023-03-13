@@ -143,12 +143,31 @@ export class StockTyresService {
     
   }
 
-  async findStockTyreById(getStockDto: GetStockDto) {
+  async findStockTyreByIdtyre(getStockDto: GetStockDto) {
 
     try {
 
       const stockTyreById = await this.stockTyresRepository.findOne(
         {where: {id_tyre: getStockDto.id_tyre}, 
+        include: {all: true}
+      });
+
+      return stockTyreById;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+      
+    }
+    
+  }
+
+  async findStockTyreById(getStockDto: GetStockDto) {
+
+    try {
+
+      const stockTyreById = await this.stockTyresRepository.findOne(
+        {where: {id_tyre: getStockDto.id}, 
         include: {all: true}
       });
 

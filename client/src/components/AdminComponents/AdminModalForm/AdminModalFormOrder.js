@@ -7,6 +7,7 @@ import AdminComment from '../AdminContent/AdminComment';
 import AdminModalCustmCreate from './AdminModalCustmCreate';
 import AdminModalCustomers from './AdminModalCustomers';
 import AdminModalGoods from './AdminModalGoods';
+//import {addGoodsToOrder, createGoodsToOrder, responseForm} from '../../../RestAPI/restAdminAPI';
 
 function reducer (state = [], action, initialState) {
     switch (action.type) {
@@ -179,97 +180,83 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
     //       setError(err);
     //     }
     // }
-        const onSubmit = async (data) => {
-            //e.preventDefault();
-            console.log('CREATE ORDER: ', data)
-            //if(data) {
+    //useEffect(() => {  
+  
+        const responseForm = async (data) => { 
+           await axios.post('http://localhost:4000/orders', data, {
+               headers: {
+                   'Content-Type': 'application/json; charset=utf-8',
+                   'Access-Control-Allow-Origin': 'http://localhost:3000'
+               },
+               withCredentials: true,
+               })
+               .then(response => {
+               //setOrderAllData(response.data);
+               
+               alert(`Заказ створено, id ${response.data.id_order}`);
+               console.log('Order id: ', response.data.id_order);
+               setOrderId(+response.data.id_order);
+   
+               //if (stateData.length !== 0) {
+                // for (let i =0; i < stateData.length; i++) {
+                //     createGoodsToOrder(stateData[i], response.data.id_order)
+                    
+                // }
+                   stateData.forEach((itemGoods) => (
+                     createGoodsToOrder(itemGoods, response.data.id_order)
+                   ));
+               //}
+   
+               console.log('ORDER ID', response.data.id_order);
+                //   return response.data;
+               })
+               .catch(error => {
+                   console.log(error);
+               }
+          )
+   
+       }
+     //   return () => responseForm();      
+    // },[]) 
 
-            await responseForm(data);  
-           // }
-        //    console.log('RES', responseForm.response)
-           
-        //     if (stateData.length !== 0) {
-        //         stateData.map((itemGoods) => (
-        //             createGoodsToOrder(itemGoods, responseForm.id_order)
-        //         ));
-        //     }
-            
-            setDisableBtn(!disableBtn);
-        };
-
-        const onSubmitOrder = async () => {
-
-            //if(orderStorage.length !== 0) {
-            
-                orderStorage?.map((itemsOrd) => (
-                    addGoodsToOrder(itemsOrd) 
-                ));
-            //}
-                
-        };
-        
-        
-     const responseForm = async (data) => { 
-        await axios.post('http://localhost:4000/orders', data, {
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-                'Access-Control-Allow-Origin': 'http://localhost:3000'
-            },
-            withCredentials: true,
-            })
-            .then(response => {
-            //setOrderAllData(response.data);
-            
-            alert(`Заказ створено, id ${response.data.id_order}`);
-            console.log('Order id: ', response.data);
-            setOrderId(+response.data.id_order);
-
-            if (stateData.length !== 0) {
-                stateData.map((itemGoods) => (
-                    createGoodsToOrder(itemGoods, response.data.id_order)
-                ));
-            }
-
-            //console.log('ORDER ID', response.data.id_order);
-                //return response.data;
-            })
-            .catch(error => {
-                console.log(error);
-            }
-        )
-    }
-
-    const createGoodsToOrder = async (item, id_order) => { 
-        await axios.post('http://localhost:4000/orders/creategoods',
-            {
-                id: +item.id,
-                full_name: item.full_name,
-                category: item.category.category,
-                order_index: id_order,
-                id_supplier: +item.price.id_supplier,
-                storage_index: +item.price.id_storage,
-                quantity: +item.price.quantity,
-                price: +item.price.price,
-                // delivery: 'Flintstone',
-            },{headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-                'Access-Control-Allow-Origin': 'http://localhost:3000'
-            }
-            }, {
-                withCredentials: true,  
-            },
+    // useEffect(() =>{
+    //     createGoodsToOrder();
+        const createGoodsToOrder = async (item, id_order) => { 
+        const resPost =   await axios.post('http://localhost:4000/orders/creategoods',
+                {
+                    id: +item.id,
+                    full_name: item.full_name,
+                    category: item.category.category,
+                    order_index: id_order,
+                    id_supplier: +item.price.id_supplier,
+                    storage_index: +item.price.id_storage,
+                    quantity: +item.price.quantity,
+                    price: +item.price.price,
+                    // delivery: 'Flintstone',
+                },{headers: {
+                    'Content-Type': 'application/json; charset=utf-8',
+                    'Access-Control-Allow-Origin': 'http://localhost:3000'
+                }
+                }, {
+                    withCredentials: true,  
+                },
+                )
+                .then(response => {
+                    
+                    setOrderStorage(oldOrdStor => [...oldOrdStor, response.data]);
+                    console.log('Order_storage', response.data);
+                //return response
+                })
+                .catch(error => {
+                    console.log(error)
+                }
             )
-            .then(response => {
-                
-            setOrderStorage([].push(response.data));
-            console.log('Order_storage', response.data);
-            })
-            .catch(error => {
-                console.log(error)
-            }
-        )
-    }
 
+            return resPost;
+        }
+    //     return () => createGoodsToOrder();
+    // },[])
+    
     const addGoodsToOrder = async (value) => {
         await axios.post('http://localhost:4000/orders/add',
             {
@@ -300,15 +287,39 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
             .then(response => {
             //setOrderAllData(response.data);
             alert(`Заказ ${response.data.id_order} проведено`)
-            //onsole.log('Order_storage', response.data);
+            console.log('Order Done', response.data);
             })
             .catch(error => {
                 console.log(error)
             }
         )
     }
-        
 
+        
+    const onSubmit = async (data) => {
+                //e.preventDefault();
+                console.log('CREATE ORDER: ', data)
+                //if(data) {
+    
+                await responseForm(data); 
+
+                setDisableBtn(!disableBtn);
+            //};
+    
+            // return () => onSubmit();
+    }    
+    
+        
+    const onSubmitOrder = async () => {
+
+        //if(orderStorage.length !== 0) {
+        
+            orderStorage?.map((itemsOrd) => (
+                addGoodsToOrder(itemsOrd) 
+            ));
+        //}
+            
+    };
     
     
     //)
@@ -418,14 +429,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                         <select className="admFormOrderContract" name="id_contract"
                             //autoFocus={true}
                             defaultValue={addCustomer?.contract[0]?.id_contract}
-                            //defaultValue={addCustomer?.contract[0]?.id_contract ?? ''}
-                            //value={contractId}
-                            //onChange={e => 
-                            //    setContractId(e.target.value)
-                                // setValue('id_contract',
-                                // e.target.value, {shouldDirty: true})
-                            //}
-                            //{...register('id_contract')}
+
                             >
                            {addCustomer ? addCustomer?.contract.map((entity, index)=> (  
                                 <option key={'contract' + index} 
@@ -618,7 +622,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                         </button>
                     </div>
                     <div onClick={(e)=>e.preventDefault({passive: false})}>
-                        <button className='admFormOrderBtnSave'
+                        <button className={!disableBtn ? 'admFormOrderBtnSave' : 'admFormOrderBtnSaveDsb'}
                             disabled={disableBtn} 
                             onClick={handleSubmit(onSubmit)}>
                             Зберегти
