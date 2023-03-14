@@ -8,7 +8,9 @@ const AdminUploaderContent = () => {
         const formData = new FormData();
         formData.append("file", data.file[0]);
 
-        const res = await fetch("http://localhost:4000/uploader/tyres", {
+        const res = await fetch(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/uploader/tyres`, {
+            headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
+            withCredentials: true,
             method: "POST",
             body: formData,
         }).then((res) => res.json());

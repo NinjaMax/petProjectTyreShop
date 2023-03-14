@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import '../css/Admin.css';
+//import env from "react-dotenv";
 import axios from 'axios';
 import AdminSideBar from '../components/AdminComponents/AdminSideBar';
 import AdminMainContent from '../components/AdminComponents/AdminMainContent';
@@ -48,19 +49,20 @@ const Admin = () => {
 
   
     useEffect(() => {
-        axios.get("http://localhost:4000/tyres", {
-            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+        axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/tyres`, {
+            headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
             withCredentials: true})
         .then(response => {
             setTyreData(response.data);
             //console.log(response.data);
+            
         })
         .catch(error => {
           console.log(error)
         })
 
-        axios.get("http://localhost:4000/stock/tyres/all", {
-            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+        axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/stock/tyres/all`, {
+            headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
             withCredentials: true,
             //params: {id_tyre: itemIdTyre}
         })
@@ -72,8 +74,8 @@ const Admin = () => {
           console.log(error)
         });
 
-        axios.get("http://localhost:4000/price/tyres/all", {
-            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+        axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/price/tyres/all`, {
+            headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
             withCredentials: true,
             //params: {id_tyre: itemIdTyre}
         })
@@ -85,8 +87,8 @@ const Admin = () => {
           console.log(error)
         });
 
-        axios.get("http://localhost:4000/wheels", {
-            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+        axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/wheels`, {
+            headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
             withCredentials: true})
         .then(response => {
             setWheelData(response.data);
@@ -96,8 +98,8 @@ const Admin = () => {
           console.log(error)
         })
 
-        axios.get("http://localhost:4000/stock/wheels/all", {
-            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+        axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/stock/wheels/all`, {
+            headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
             withCredentials: true,
             //params: {id_tyre: itemIdTyre}
         })
@@ -109,8 +111,8 @@ const Admin = () => {
           console.log(error)
         });
 
-        axios.get("http://localhost:4000/storage/all", {
-            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+        axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/storage/all`, {
+            headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
             withCredentials: true,
             //params: {id_tyre: itemIdTyre}
         })
@@ -122,8 +124,8 @@ const Admin = () => {
           console.log(error)
         });
 
-        axios.get("http://localhost:4000/price/wheels/all", {
-            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+        axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/price/wheels/all`, {
+            headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
             withCredentials: true,
             //params: {id_tyre: itemIdTyre}
         })
@@ -135,8 +137,8 @@ const Admin = () => {
           console.log(error)
         });
 
-        axios.get("http://localhost:4000/comments", {
-            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+        axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/comments`, {
+            headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
             withCredentials: true,
             params: {id_comment: commentId}
         })
@@ -148,8 +150,8 @@ const Admin = () => {
           console.log(error)
         })
 
-        axios.get("http://localhost:4000/orders/all", {
-            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+        axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders/all`, {
+            headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
             withCredentials: true,
             //params: {id_comment: commentId}
         })
@@ -174,8 +176,8 @@ const Admin = () => {
         //   console.log(error)
         // })
 
-        axios.get("http://localhost:4000/customers/all", {
-            headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
+        axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/customers/all`, {
+            headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
             withCredentials: true})
         .then(response => {
             setCustomers(response.data);
@@ -195,6 +197,9 @@ const Admin = () => {
     const showCommentData = (e) => {
         setCommentId(e.target.value);
     }
+
+    // console.log(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/tyres`);
+    // console.log('PORT: ',  process.env.REACT_APP_PORT)
 
     return (
         <div className='adminPageMain'>

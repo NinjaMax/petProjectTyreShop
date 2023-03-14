@@ -183,10 +183,10 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
     //useEffect(() => {  
   
         const responseForm = async (data) => { 
-           await axios.post('http://localhost:4000/orders', data, {
+           await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders`, data, {
                headers: {
                    'Content-Type': 'application/json; charset=utf-8',
-                   'Access-Control-Allow-Origin': 'http://localhost:3000'
+                   'Access-Control-Allow-Origin': `${process.env.CORS}`
                },
                withCredentials: true,
                })
@@ -222,7 +222,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
     // useEffect(() =>{
     //     createGoodsToOrder();
         const createGoodsToOrder = async (item, id_order) => { 
-        const resPost =   await axios.post('http://localhost:4000/orders/creategoods',
+        const resPost =   await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders/creategoods`,
                 {
                     id: +item.id,
                     full_name: item.full_name,
@@ -235,7 +235,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                     // delivery: 'Flintstone',
                 },{headers: {
                     'Content-Type': 'application/json; charset=utf-8',
-                    'Access-Control-Allow-Origin': 'http://localhost:3000'
+                    'Access-Control-Allow-Origin': `${process.env.CORS}`
                 }
                 }, {
                     withCredentials: true,  
@@ -258,7 +258,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
     // },[])
     
     const addGoodsToOrder = async (value) => {
-        await axios.post('http://localhost:4000/orders/add',
+        await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders/add`,
             {
                 // id: +item.id,
                 // full_name: item.full_name,
@@ -278,7 +278,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                 // delivery: 'Flintstone',
             },{headers: {
                 'Content-Type': 'application/json; charset=utf-8',
-                'Access-Control-Allow-Origin': 'http://localhost:3000'
+                'Access-Control-Allow-Origin': `${process.env.CORS}`
             }
             }, {
                 withCredentials: true,  
