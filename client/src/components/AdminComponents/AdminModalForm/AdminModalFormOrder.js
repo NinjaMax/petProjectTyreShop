@@ -324,7 +324,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
            
             })
             //}
-        alert(`Заказ ${1} проведено`)
+        //alert(`Заказ ${1} проведено`)
         //console.log('Order Done', resp.data)
 
         } catch (error) {
