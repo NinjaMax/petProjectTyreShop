@@ -287,10 +287,13 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
             .then(response => {
             //setOrderAllData(response.data);
             alert(`Заказ ${response.data.id_order} проведено`)
+
             console.log('Order Done', response.data);
             })
             .catch(error => {
-                console.log(error)
+                console.log(
+                    'Не вистачає залишків, або не вірно вказані дані',
+                     error)
             }
         )
     }
@@ -313,11 +316,24 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
     const onSubmitOrder = async () => {
 
         //if(orderStorage.length !== 0) {
-        
-            orderStorage?.map((itemsOrd) => (
-                addGoodsToOrder(itemsOrd) 
-            ));
-        //}
+         
+        try {
+            //let respDone = async () => {
+            orderStorage?.forEach((itemsOrd) => {
+             addGoodsToOrder(itemsOrd)
+           
+            })
+            //}
+        alert(`Заказ ${1} проведено`)
+        //console.log('Order Done', resp.data)
+
+        } catch (error) {
+            alert (
+                `Помилка. Не вірні данні, не вистачае залишків,
+                або системна помилка`, 
+                error)
+        }
+ 
             
     };
     

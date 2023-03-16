@@ -10,7 +10,7 @@ module.exports = {
     ignore_watch: ['node_modules', 'client'],
     //watch_delay: 1000,
     //node_args: ["port=4000", "version=0.0.1"],
-    //node_args: [ "version=0.0.1"],
+    node_args:  "--max_old_space_size=3072",
     interpreter: 'node',
     interpreter_args: '--require ts-node/register --require tsconfig-paths/register',
     //interpreter_args: "--harmony", 
