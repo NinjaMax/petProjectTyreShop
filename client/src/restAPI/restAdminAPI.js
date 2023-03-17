@@ -110,8 +110,27 @@ const addGoodsToOrder = async (value) => {
 
     return addGoods;
 }
+const getTyres = async () => {
+//const allTyres = 
+await axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/tyres`, {
+    headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
+    withCredentials: true})
+//.then(response => { 
+    //Object.assign()
+    //setTyreData(response.data);
+    //console.log(response.data);
+    
+//})
+.catch(error => {
+  console.log(error)
+})
 
-export {addGoodsToOrder, createGoodsToOrder, responseForm};
+//return allTyres;
+
+}
+
+
+export {addGoodsToOrder, createGoodsToOrder, responseForm, getTyres};
 // import React, { useEffect, useState } from 'react'; import axios from 'axios';
 
 // const MyComponent = () => { const [data, setData] = useState(null);

@@ -586,15 +586,20 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                                 </select>  
                             </td> 
                             <td 
-                            //onClick={(e)=>e.preventDefault({passive: false})}
-                            onClick={(e) => e.stopPropagation()}
+                                //onClick={(e)=>e.preventDefault({passive: false})}
+                                onClick={(e) => e.stopPropagation()}
                             >
+                                <div 
+                                    onClick={(e) => e.stopPropagation()}
+                                //onClick={(e)=>e.preventDefault({passive: false})}
+                                >
                                 <button className='closeAdmGoods' 
                                     key={'deleteBtn' + id}
                                     value={index}
                                     onClick={e => deleteItem(e.currentTarget.value)}>
                                     <i className="fa fa-remove"></i>
                                 </button>
+                                </div>
                             </td>
                             
                         </tr>
@@ -630,14 +635,20 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                         </AdminComment>
                     </div>  
                 </div>
-                <div className='admOrderFormGrp' onClick={(e)=>e.preventDefault({passive: false})}>
+                <div className='admOrderFormGrp'
+                    onClick={(e) => e.stopPropagation()}
+                     //onClick={(e)=>e.preventDefault({passive: false})}
+                     >
                     <div onClick={(e)=>e.preventDefault({passive: false})}>
                         <button className='admFormOrderBtnOk'
                             onClick={onSubmitOrder}>
                             Ok
                         </button>
                     </div>
-                    <div onClick={(e)=>e.preventDefault({passive: false})}>
+                    <div 
+                        onClick={(e) => e.stopPropagation()}
+                        //onClick={(e)=>e.preventDefault({passive: false})}
+                        >
                         <button className={!disableBtn ? 'admFormOrderBtnSave' : 'admFormOrderBtnSaveDsb'}
                             disabled={disableBtn} 
                             onClick={handleSubmit(onSubmit)}>

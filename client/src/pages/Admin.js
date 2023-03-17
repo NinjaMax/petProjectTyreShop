@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import '../css/Admin.css';
-//import env from "react-dotenv";
 import axios from 'axios';
+import { getTyres } from '../RestAPI/restAdminAPI';
 import AdminSideBar from '../components/AdminComponents/AdminSideBar';
 import AdminMainContent from '../components/AdminComponents/AdminMainContent';
 import AdminGoodsContent from '../components/AdminComponents/AdminContent/AdminGoodsContent';
@@ -48,18 +48,33 @@ const Admin = () => {
     const [storageAll, setStorageAll] = useState(null);
 
   
+    useEffect(()=> {
+        //const getAllTyre = getTyres();
+        getTyres().then(data => console.log(data));
+        //getAllTyre.then(data => setTyreData(data.data));
+            //);
+        console.log(getTyres().data);
+        setTyreData(['gdfgdfg']);
+
+        //return () => getTyres();
+
+    },[])
+    
+    
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/tyres`, {
-            headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-            withCredentials: true})
-        .then(response => {
-            setTyreData(response.data);
-            //console.log(response.data);
+        // axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/tyres`, {
+        //     headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
+        //     withCredentials: true})
+        // .then(response => {
+        //     setTyreData(response.data);
+        //     //console.log(response.data);
             
-        })
-        .catch(error => {
-          console.log(error)
-        })
+        // })
+        // .catch(error => {
+        //   console.log(error)
+        // })
+
+        
 
         axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/stock/tyres/all`, {
             headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
@@ -189,12 +204,12 @@ const Admin = () => {
 
     },[commentId])
 
-    const sideBarItemChange = (e) => {
+    const sideBarItemChange = async (e) => {
         setSideBarItem(e.target.value);
         console.log(e.target.value);
     }
 
-    const showCommentData = (e) => {
+    const showCommentData = async (e) => {
         setCommentId(e.target.value);
     }
 
