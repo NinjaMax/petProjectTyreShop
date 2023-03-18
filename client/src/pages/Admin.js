@@ -50,32 +50,65 @@ const Admin = () => {
   
     useEffect(()=> {
         //const getAllTyre = getTyres();
-        getTyres().then(data => console.log(data));
+        let isMounted = false;
+         const fetchData = async () => {
+        //    await getTyres();
+
+            //if (isMounted) {
+                //setTyreData(['sdfsdfsdf']); 
+                //console.log(
+                    //const getTyres = async () => 
+                    //{
+                    ///const allTyres = async () =>
+                    //try {
+                    // await axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/tyres`, {
+                    //     headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
+                    //     withCredentials: true})
+                    // .then(response => { 
+                    //     //Object.assign()
+                    //     //setTyreData(response.data);
+                    //     //console.log(response.data);
+                    //     if (!isMounted) {
+                    //         setTyreData(response.data) 
+                    //     }
+                        
+                    // })
+                    // .catch(error => {
+                    //  console.log(error)
+                    // })
+                const result = await getTyres();
+                //await getTyres().then(data => {
+                    if (!isMounted) {
+                       //setTyreData(data.data) 
+                       setTyreData(result.data);
+                       //console.log(result.data);
+                    }
+                //});
+            }
+                //getTyres().then(data => console.log(data.data))
+                //console.log(getTyres())
+                //   );
+            //}
+        //}
+
+        fetchData();
         //getAllTyre.then(data => setTyreData(data.data));
             //);
-        console.log(getTyres().data);
-        setTyreData(['gdfgdfg']);
-
-        //return () => getTyres();
+        return () => {
+            isMounted = true;
+        };
 
     },[])
-    
-    
-    useEffect(() => {
-        // axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/tyres`, {
-        //     headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-        //     withCredentials: true})
-        // .then(response => {
-        //     setTyreData(response.data);
-        //     //console.log(response.data);
-            
-        // })
-        // .catch(error => {
-        //   console.log(error)
-        // })
 
+    // useEffect(() =>{
+
+    // },[])
+    
+    // useEffect(() =>{
         
+    // },[])
 
+    useEffect(() =>{
         axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/stock/tyres/all`, {
             headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
             withCredentials: true,
@@ -88,7 +121,9 @@ const Admin = () => {
         .catch(error => {
           console.log(error)
         });
+    },[])
 
+    useEffect(() =>{
         axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/price/tyres/all`, {
             headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
             withCredentials: true,
@@ -101,7 +136,9 @@ const Admin = () => {
         .catch(error => {
           console.log(error)
         });
+    },[])
 
+    useEffect(() => {
         axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/wheels`, {
             headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
             withCredentials: true})
@@ -112,7 +149,9 @@ const Admin = () => {
         .catch(error => {
           console.log(error)
         })
+    },[])
 
+    useEffect(() => {
         axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/stock/wheels/all`, {
             headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
             withCredentials: true,
@@ -125,7 +164,9 @@ const Admin = () => {
         .catch(error => {
           console.log(error)
         });
+    },[])
 
+    useEffect(() => {
         axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/storage/all`, {
             headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
             withCredentials: true,
@@ -138,7 +179,9 @@ const Admin = () => {
         .catch(error => {
           console.log(error)
         });
+    },[])
 
+    useEffect(() => {
         axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/price/wheels/all`, {
             headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
             withCredentials: true,
@@ -151,7 +194,9 @@ const Admin = () => {
         .catch(error => {
           console.log(error)
         });
+    },[])
 
+    useEffect(() => {
         axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/comments`, {
             headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
             withCredentials: true,
@@ -164,7 +209,9 @@ const Admin = () => {
         .catch(error => {
           console.log(error)
         })
+    },[commentId])
 
+    useEffect(() => {
         axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders/all`, {
             headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
             withCredentials: true,
@@ -177,19 +224,9 @@ const Admin = () => {
         .catch(error => {
           console.log(error)
         })
-
-        // axios.post("http://localhost:4000/orders/", {
-        //     headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
-        //     withCredentials: true,
-        //     body: {id_comment: commentId,}
-        // })
-        // .then(response => {
-        //     //setOrderAllData(response.data);
-        //     //console.log('COMMENTS',response.data);
-        // })
-        // .catch(error => {
-        //   console.log(error)
-        // })
+    },[])
+    
+    useEffect(() => {
 
         axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/customers/all`, {
             headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},

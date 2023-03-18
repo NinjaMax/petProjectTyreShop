@@ -110,9 +110,11 @@ const addGoodsToOrder = async (value) => {
 
     return addGoods;
 }
-const getTyres = async () => {
-//const allTyres = 
-await axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/tyres`, {
+const getTyres = async () => 
+//{
+///const allTyres = async () =>
+//try {
+    await axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/tyres`, {
     headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
     withCredentials: true})
 //.then(response => { 
@@ -122,12 +124,16 @@ await axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PO
     
 //})
 .catch(error => {
-  console.log(error)
+ console.log(error)
 })
+// } catch (error) {
+//     console.log(error)
+// }
+
 
 //return allTyres;
 
-}
+//}
 
 
 export {addGoodsToOrder, createGoodsToOrder, responseForm, getTyres};
