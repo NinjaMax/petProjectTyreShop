@@ -11,10 +11,10 @@ import imageSpectehnika from '../../assets/icons/iconsTypeCar/bulldozer.png';
 import imageWinter from '../../assets/icons/iconsSeasons/seasonWinter.png';
 import imageSummer from '../../assets/icons/iconsSeasons/seasonSummer.png';
 import imageAllSeason from '../../assets/icons/iconsSeasons/seasonAll.png';
-import FilterMainBtn from '../MainFilterButton/FilterMainBtn';
-import CheckboxBtn from '../Select/CheckboxBtn';
+import FilterMainBtn from '../mainFilterButton/FilterMainBtn';
+import CheckboxBtn from '../select/CheckboxBtn';
 import Accordion from './Accordion';
-import SelectFilterList from '../Select/SelectFilterList';
+import SelectFilterList from '../select/SelectFilterList';
 import PriceRange from './PriceRange';
 
 const FilterCatalogTyres = () => {

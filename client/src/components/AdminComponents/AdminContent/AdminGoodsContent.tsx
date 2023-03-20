@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, SyntheticEvent, MouseEvent} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminGoodsContent.css';
-import ButtonSearch from '../../Buttons/ButtonSearch';
+import ButtonSearch from '../../buttons/ButtonSearch';
 import AdminBatteryContent from './AdminBatteryContent';
 import AdminOilContent from './AdminOilContent';
 import AdminTyreContent from './AdminTyreContent';
@@ -8,13 +8,27 @@ import AdminWheelContent from './AdminWheelContent';
 //import axios from 'axios';
 import AdminTyreStockPriceRow from './AdminTyreStockPriceRow';
 import AdminWheelStockPriceRow from './AdminWheelStockPriceRow';
-import ModalAdmin from '../../Modal/ModalAdmin';
-import AdminFormOrder from '../AdminModalForm/AdminModalFormOrder';
+import ModalAdmin from '../../modal/ModalAdmin';
+import AdminFormOrder from '../adminModalForm/AdminModalFormOrder';
 
-const AdminGoodsContent = ({comments, props, customer, storage}) => {
+interface IGoodsContent {
+    comments?:[] | null;
+    props:[[] | null, ...[][] | null[]];
+    customer?:{} | null;
+    storage?:[] | null;
+    stockByIdTyre?: []; 
+    tyreStockData:[];
+    tyrePriceData:[];
+    wheelData:[]; 
+    wheelPriceData:[];
+    wheelStockData:[]; 
+    //stockByIdTyre: [];
+}
+
+const AdminGoodsContent = ({comments, props, customer, storage}:IGoodsContent) => {
     const [tyreData, tyreStockData, tyrePriceData,
         wheelData, wheelPriceData, wheelStockData] = props;
-    const [chooseCat, setChooseCat] = useState('Шини');
+    const [chooseCat, setChooseCat] = useState<string>('Шини');
     // const [tyreData, setTyreData] = useState(null);
     // const [wheelData, setWheelData] = useState(null);
     // // const [oilData, setOildata] = useState(null);
@@ -24,12 +38,12 @@ const AdminGoodsContent = ({comments, props, customer, storage}) => {
     // const [itemIdWheel, setItemIdWheel] = useState();
     // const [itemIdOil, setItemIdOil] = useState();
     // const [itemIdBattery, setItemIdBattery] = useState();
-    const [itemId, setItemId] = useState([]);
-    const [addGoods, setAddGoods] = useState(false);
-    const [stockTyre, setStockTyre] = useState();
-    const [priceTyre, setPriceTyre] = useState();
-    const [stockWheel, setStockWheel] = useState();
-    const [priceWheel, setPriceWheel] = useState();
+    const [itemId, setItemId] = useState<[]>([]);
+    const [addGoods, setAddGoods] = useState<boolean>(false);
+    const [stockTyre, setStockTyre] = useState<{}[]>();
+    const [priceTyre, setPriceTyre] = useState<{}[]>();
+    const [stockWheel, setStockWheel] = useState<{}[]>();
+    const [priceWheel, setPriceWheel] = useState<{}[]>();
     // const [stockOil, setStockOil] = useState([]);
     // const [priceOil, setPriceOil] = useState([]);
     // const [stockBattery, setStockBattery] = useState([]);
@@ -90,32 +104,32 @@ const AdminGoodsContent = ({comments, props, customer, storage}) => {
     //     });
     // },[itemIdWheel]);
 
-    const showStockPriceTyre = (e) => {
+    const showStockPriceTyre = (e: { currentTarget: { getAttribute: (arg0: string) => any; }; }) => {
         //console.log(typeof(e.currentTarget.getAttribute("value")));
         
-        let stockByIdTyre = tyreStockData.filter(
+        let stockByIdTyre: {}[] | undefined = tyreStockData?.filter(
             //item => item.id_tyre === Number(308282)
-            item => item.id_tyre === Number(e.currentTarget.getAttribute("value"))
+            (item:{id_tyre:number}) => item.id_tyre === Number(e.currentTarget.getAttribute("value"))
         );
         setStockTyre(stockByIdTyre);
         //console.log('STOCK TYRE: ',stockByIdTyre);
-        let priceByIdTyre = tyrePriceData.filter(
-            item => item.id_tyre === Number(e.currentTarget.getAttribute("value"))
+        let priceByIdTyre: {}[] | undefined = tyrePriceData?.filter(
+            (item:{id_tyre:number}) => item.id_tyre === Number(e.currentTarget.getAttribute("value"))
         );
         setPriceTyre(priceByIdTyre);
         //console.log('PRICE TYRE: ',priceByIdTyre);
     };
 
-    const showStockPriceWheel = (e) => {
-        const stockByIdWheel = wheelStockData.filter(
-            item => item.id_wheel === Number(e.currentTarget.getAttribute("value"))
+    const showStockPriceWheel = (e: { currentTarget: { getAttribute: (arg0: string) => any; }; }) => {
+        const stockByIdWheel: {}[] | undefined = wheelStockData?.filter(
+            (item:{id_wheel:number}) => item.id_wheel === Number(e.currentTarget.getAttribute("value"))
         );
         setStockWheel(stockByIdWheel);
 
-        const pricekByIdWheel = wheelPriceData.filter(
-            item => item.id_wheel === Number(e.currentTarget.getAttribute("value"))
+        const priceByIdWheel: {}[] | undefined = wheelPriceData?.filter(
+            (item:{id_wheel:number}) => item.id_wheel === Number(e.currentTarget.getAttribute("value"))
         );
-        setPriceWheel(pricekByIdWheel);
+        setPriceWheel(priceByIdWheel);
     };
 
     // const showStockPriceOil = (e) => {
@@ -126,11 +140,11 @@ const AdminGoodsContent = ({comments, props, customer, storage}) => {
     //     setItemIdB(e.currentTarget.getAttribute("value"));
     // };
 
-    const addToOrder = (e) => {
+    const addToOrder = (e: { currentTarget: { value: number; }; }) => {
         setAddGoods(!addGoods);
         //console.log(e.currentTarget.value)
-        let itemTyre = tyreData?.find(item => item.id === e.currentTarget.value);
-        let itemWheel = wheelData?.find(item => item.id === e.currentTarget.value);
+        let itemTyre = tyreData?.find((item:{id:number}) => item.id === e.currentTarget.value);
+        let itemWheel = wheelData?.find((item:{id:number}) => item.id === e.currentTarget.value);
         //const itemTyre = tyreData.find(item => item ==e.currentTarget.value);
         //const itemTyre = tyreData.find(item => item ==e.currentTarget.value);
         
@@ -245,9 +259,11 @@ const AdminGoodsContent = ({comments, props, customer, storage}) => {
                 <ModalAdmin active={addGoods} setActive={addToOrder}>
                     <AdminFormOrder 
                         goodsId={itemId}
-                        props={props} 
+                        props={props}
                         storage={storage}
-                        customer={customer}/>
+                        customer={customer} 
+                        comments={undefined} 
+                        setActive={undefined}/>
                 </ModalAdmin>
                 : null
             }    

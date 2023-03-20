@@ -1,8 +1,12 @@
 import React from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminModalOrderSup.css';
-import AdminComment from '../AdminContent/AdminComment';
+import AdminComment from '../adminContent/AdminComment';
 
-const AdminModalOrderSup = () => {
+interface IModalOrderSup {
+    storage: [] | null;
+}
+
+const AdminModalOrderSup = ({storage}: IModalOrderSup) => {
     return (
         
             <div>
@@ -36,13 +40,13 @@ const AdminModalOrderSup = () => {
                                 maxLength='45'
                                 placeholder="Ім'я або назва.."
                             />
-                            <div onClick={(e)=>e.preventDefault({passive: false})}>
-                                <button onClick={'activeForm'} className='admFormSearchCustm'>
+                            <div onClick={(e)=>e.preventDefault()}>
+                                <button  className='admFormSearchCustm'>
                                     <i className="fas fa-search"></i>    
                                 </button> 
                             </div>
-                            <div onClick={(e)=>e.preventDefault({passive: false})}>
-                                <button onClick={'addCustomerForm'}
+                            <div onClick={(e)=>e.preventDefault()}>
+                                <button 
                                     className='admFormAddCustm'>
                                     <i className="fas fa-plus"></i>    
                                 </button>  
@@ -66,8 +70,8 @@ const AdminModalOrderSup = () => {
                             <option value="3">Склад Монтаж</option>
                         </select>  
                     </div>
-                    <div onClick={(e)=>e.preventDefault({passive: false})}>
-                        <button onClick={'addGoodsForm'} className='admFormOrderSupBtnAdd'>Додати товар</button>  
+                    <div onClick={(e)=>e.preventDefault()}>
+                        <button  className='admFormOrderSupBtnAdd'>Додати товар</button>  
                     </div>
                     <div>
                         <label htmlFor="pereviznik">Перевізник </label>
@@ -111,7 +115,7 @@ const AdminModalOrderSup = () => {
                     placeholder="Пишить нотатку..">
                 </textarea>
                 <div className='admFormOrderSupCommit'
-                    onClick={(e)=>e.preventDefault({passive: false})}>
+                    onClick={(e)=>e.preventDefault()}>
                     <div className='admFormOrderSupAddCommit'>
                     <button onClick={() => console.log('Add Commit')} 
                         className='admFormOrderSupBtnAdd'>Додати коментар
@@ -120,9 +124,7 @@ const AdminModalOrderSup = () => {
                         placeholder="Пишить коментар.."></textarea>
                     </div>
                     <div className='admFormOrderSupCommitChat'>
-                        <AdminComment>
-
-                        </AdminComment>
+                        <AdminComment/>
                     </div>  
                 </div>
                 <div className='admOrderSupFormGrp'>

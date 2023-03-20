@@ -2,8 +2,8 @@ import React, {useMemo, useReducer, useState, useCallback, useEffect} from 'reac
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminFormOrder.css';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
-import ModalAdmin from '../../Modal/ModalAdmin';
-import AdminComment from '../AdminContent/AdminComment';
+import ModalAdmin from '../../modal/ModalAdmin';
+import AdminComment from '../adminContent/AdminComment';
 import AdminModalCustmCreate from './AdminModalCustmCreate';
 import AdminModalCustomers from './AdminModalCustomers';
 import AdminModalGoods from './AdminModalGoods';

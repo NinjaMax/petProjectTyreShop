@@ -1,7 +1,25 @@
-import React from 'react';
+import React, {MouseEvent} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminTyreContent.css';
 
-const AdminTyreContent = ({props, showRowData, addTyreToOrder}) => {
+interface ITyreContent {
+    props:[] | null;
+    showRowData(e: any):void;
+    addTyreToOrder(e: any): void;
+    //stockByIdTyre: [];
+}
+
+type TyreContent = {
+    country: any;
+    year: any;
+    season: any;
+    id: number; 
+    full_name: string;
+    season_ua: string; 
+    manufacture_year: string;
+    category: {category: string};
+}
+
+const AdminTyreContent = ({props, showRowData, addTyreToOrder}: ITyreContent) => {
 
     return (
         <div>
@@ -31,7 +49,7 @@ const AdminTyreContent = ({props, showRowData, addTyreToOrder}) => {
                     </tr>
                 </thead>    
                 <tbody> 
-                    {props ? props.map((item) => (
+                    {props ? props.map((item: TyreContent) => (
                 
                     <tr key={'t' + item.id} onClick={showRowData} value={item.id}>
                         <td key={'tid' + item.id}>{item.id}</td>
@@ -40,7 +58,7 @@ const AdminTyreContent = ({props, showRowData, addTyreToOrder}) => {
                         <td key={'ty' + item.id}>{item.year?.manufacture_year ?? ''}</td>
                         <td key={'tc' + item.id}>{item.country?.country_manufacturer_ua ?? ''}</td>
                         <td key={'tca' + item.id}>{item.category?.category ?? ''}</td>
-                        <td key={'t' + item.id} onClick={(e)=>e.preventDefault({passive: false})}>
+                        <td key={'t' + item.id} onClick={(e: MouseEvent)=>e.preventDefault()}>
                             <button className='basketAdmTyre' value={item.id}
                                 onClick={addTyreToOrder}>
                                 <i className="fa fa-shopping-cart"></i>

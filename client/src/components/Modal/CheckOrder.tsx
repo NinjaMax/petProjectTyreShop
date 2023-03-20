@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../css/Modal/CheckOrder.css';
-import ButtonAction from '../Buttons/ButtonAction';
-import TyresCardList from '../Cards/TyresCardList';
+import ButtonAction from '../buttons/ButtonAction';
+import TyresCardList from '../cards/TyresCardList';
 
 const CheckOrder = () => {
 

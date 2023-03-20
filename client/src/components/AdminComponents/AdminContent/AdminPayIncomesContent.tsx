@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminPayIncomesContent.css';
-import ButtonSearch from '../../Buttons/ButtonSearch';
-import ModalAdmin from '../../Modal/ModalAdmin';
-import AdminModalPayIncome from '../AdminModalForm/AdminModalPayIncome';
+import ButtonSearch from '../../buttons/ButtonSearch';
+import ModalAdmin from '../../modal/ModalAdmin';
+import AdminModalPayIncome from '../adminModalForm/AdminModalPayIncome';
 
 const AdminPayIncomesContent = () => {
     const [incomePay, setIncomePay] = useState(false);

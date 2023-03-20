@@ -1,5 +1,5 @@
 import React from 'react';
-import TyresCard from './Cards/TyresCard';
+import TyresCard from './cards/TyresCard';
 import '../css/PromotionBox.css';
 
 const PromotionBox = () => {

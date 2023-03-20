@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminOrderContent.css';
-import ButtonSearch from '../../Buttons/ButtonSearch';
-import ModalAdmin from '../../Modal/ModalAdmin';
-import AdminFormOrder from '../AdminModalForm/AdminModalFormOrder';
-import AdminModalOrderSup from '../AdminModalForm/AdminModalOrderSup';
+import ButtonSearch from '../../buttons/ButtonSearch';
+import ModalAdmin from '../../modal/ModalAdmin';
+import AdminFormOrder from '../adminModalForm/AdminModalFormOrder';
+import AdminModalOrderSup from '../adminModalForm/AdminModalOrderSup';
 
 const AdminOrderContent = ({props, orders, customer, comments, showComment, storage}) => {
     const [activeOrder, setActiveOrder] = useState(false);

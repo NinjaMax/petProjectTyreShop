@@ -1,10 +1,14 @@
 import React, {useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminCustomersContent.css';
-import ButtonSearch from '../../Buttons/ButtonSearch';
-import ModalAdmin from '../../Modal/ModalAdmin';
-import AdminModalCustmCreate from '../AdminModalForm/AdminModalCustmCreate';
+import ButtonSearch from '../../buttons/ButtonSearch';
+import ModalAdmin from '../../modal/ModalAdmin';
+import AdminModalCustmCreate from '../adminModalForm/AdminModalCustmCreate';
 
-const AdminCustomersContent = () => {
+interface ICustomer {
+    customer: [] | null;
+}
+
+const AdminCustomersContent = ({customer}: ICustomer) => {
     const [createCustm, setCreateCustm] = useState(false);
 
     const createCustomer = () => {

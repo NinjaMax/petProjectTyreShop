@@ -46,7 +46,7 @@ const AdminModalPayIncome = () => {
                                 maxLength='45'
                                 placeholder="номер заказу покупця"
                             />
-                            <div onClick={(e)=>e.preventDefault({passive: false})}>
+                            <div onClick={(e)=>e.preventDefault()}>
                                 <button  className='admPayIncomeSearchCustm'>
                                     <i className="fas fa-search"></i>    
                                 </button> 
@@ -66,7 +66,7 @@ const AdminModalPayIncome = () => {
                     placeholder="Пишить нотатку..">
                 </textarea>
                 <div className='admFormPayIncomeCommit'
-                    onClick={(e)=>e.preventDefault({passive: false})}>
+                    onClick={(e)=>e.preventDefault()}>
                     <div className='admFormPayIncomeAddCommit'>
                     <button onClick={() => console.log('Add Commit')} 
                         className='admFormPayIncomeBtnAdd'>Додати коментар

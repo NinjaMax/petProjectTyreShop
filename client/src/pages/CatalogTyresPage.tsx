@@ -1,9 +1,9 @@
 import React from 'react';
 import '../css/CatalogTyresPage.css';
-import CatalogTyres from '../components/Catalogs/CatalogTyres';
-import FilterCatalogTyres from '../components/FilterCatalog/FilterCatalogTyres';
-import ReviewsMain from '../components/Reviews/ReviewsMain';
-import ReviewsGoods from '../components/Reviews/ReviewsGoods';
+import CatalogTyres from '../components/catalogs/CatalogTyres';
+import FilterCatalogTyres from '../components/filterCatalog/FilterCatalogTyres';
+import ReviewsMain from '../components/reviews/ReviewsMain';
+import ReviewsGoods from '../components/reviews/ReviewsGoods';
 import BreadCrumbs from '../components/BreadCrumbs';
 
 const CatalogTyresPage = () => {

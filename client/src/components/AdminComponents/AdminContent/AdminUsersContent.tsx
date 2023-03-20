@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminUsersContent.css';
-import ButtonSearch from '../../Buttons/ButtonSearch';
-import ModalAdmin from '../../Modal/ModalAdmin';
-import AdminModalUsers from '../AdminModalForm/AdminModalUsers';
+import ButtonSearch from '../../buttons/ButtonSearch';
+import ModalAdmin from '../../modal/ModalAdmin';
+import AdminModalUsers from '../adminModalForm/AdminModalUsers';
 
 const AdminUsersContent = () => {
     const [createUser, setCreateUser] =useState(false);

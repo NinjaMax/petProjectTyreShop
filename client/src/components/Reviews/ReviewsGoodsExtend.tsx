@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../css/Reviews/ReviewGoodsExtend.css';
-import Rating from '../UX/Rating';
-import RatingOptions from '../UX/RatingOptions';
+import Rating from '../ux/Rating';
+import RatingOptions from '../ux/RatingOptions';
 
 const ReviewsGoodsExtend = () => {
     

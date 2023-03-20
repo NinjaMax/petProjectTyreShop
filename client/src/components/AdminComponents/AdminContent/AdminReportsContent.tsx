@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import Charts from '../AdminModalForm/Chart';
+import Charts from '../adminModalForm/Chart';
 import response from '../data.json';
 
 const AdminReportsContent = () => {

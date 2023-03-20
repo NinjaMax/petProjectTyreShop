@@ -1,10 +1,25 @@
 import React, {useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminOrderSupContent.css';
-import ButtonSearch from '../../Buttons/ButtonSearch';
-import ModalAdmin from '../../Modal/ModalAdmin';
-import AdminModalOrderSup from '../AdminModalForm/AdminModalOrderSup';
+import ButtonSearch from '../../buttons/ButtonSearch';
+import ModalAdmin from '../../modal/ModalAdmin';
+import AdminModalOrderSup from '../adminModalForm/AdminModalOrderSup';
 
-const AdminOrderSupContent = ({storage}) => {
+interface IOrderSupContent {
+    
+    props:[[] | null, ...[][] | null[]];
+    customer?:{} | null;
+    storage?:[] | null;
+    comments?:[] | null;
+    //stockByIdTyre?:[]; 
+    // tyreStockData:[];
+    // tyrePriceData:[];
+    // wheelData:[]; 
+    // wheelPriceData:[];
+    // wheelStockData:[]; 
+}
+
+const AdminOrderSupContent = (
+    {props, storage, customer, comments}: IOrderSupContent) => {
     const [createOrdSup, setCreateOrdSup] = useState(false);
 
     const createOrdSupBtn = () => {
@@ -21,7 +36,7 @@ const AdminOrderSupContent = ({storage}) => {
                 </button>
             </div>
             <input className='inputAdminOrderSup' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
-            <ButtonSearch/>
+            <ButtonSearch clickSearchBtn={undefined}/>
         </div>
         <div className='admOrdersSupTable'>
         <table className='admListOrdersSupTable'>

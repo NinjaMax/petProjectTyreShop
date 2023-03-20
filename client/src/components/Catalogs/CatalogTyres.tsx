@@ -1,13 +1,12 @@
-import {React, useState} from 'react';
+import React, {useState} from 'react';
 import '../../css/Catalogs/CatalogTyres.css';
-import TyresCard from '../Cards/TyresCard';
-import PopularSizeTyre from '../PopularGoods/PopularSizeTyre';
-import PopularDiametrTyre from '../PopularGoods/PopularDiametrTyre';
-import SelectRadio from '../Select/SelectRadio';
+import TyresCard from '../cards/TyresCard';
+import PopularSizeTyre from '../popularGoods/PopularSizeTyre';
+import PopularDiametrTyre from '../popularGoods/PopularDiametrTyre';
+import SelectRadio from '../select/SelectRadio';
 import Pagination from '../Pagination';
-import CheckOrder from '../Modal/CheckOrder';
-import Modal from '../Modal/Modal';
-
+import CheckOrder from '../modal/CheckOrder';
+import Modal from '../modal/Modal';
 
 const CatalogTyres = () => {
     const [active, setActive] = useState(false);
@@ -20,12 +19,12 @@ const CatalogTyres = () => {
         <div>
             <h2>Шини</h2>
             <div className="btnContainerCatalogTyres">
-                <button className="btnCatalor active" onClick={"1"}> Show all</button>
-                <button className="btnCatalor" onClick={"2"}> Nature</button>
-                <button className="btnCatalor" onClick={"3"}> Cars</button>
-                <button className="btnCatalor" onClick={"4"}> People</button>
-                <button className="btnCatalor" onClick={"3"}> Cars</button>
-                <button className="btnCatalor" onClick={"4"}> People</button>
+                <button className="btnCatalog active" > Show all</button>
+                <button className="btnCatalog" > Nature</button>
+                <button className="btnCatalog" > Cars</button>
+                <button className="btnCatalog" > People</button>
+                <button className="btnCatalog" > Cars</button>
+                <button className="btnCatalog" > People</button>
                 <span>Допомогти у підборі? </span>
                 <span>Як підібрати?</span>
             </div>
@@ -35,15 +34,15 @@ const CatalogTyres = () => {
             </div> 
             <div className='sortBtnCatalog'>
                 <span>Сортування:</span>
-                <SelectRadio radioData={{value: "deshevihDodorogih", radioName: "Від дешевих до дорогих"}}
-                    direction={"row"}/>
-                <SelectRadio radioData={{value: "dorogihDeshevih", radioName: "Від дорогих до дешевих"}}
-                    direction={"row"}/>
-                <SelectRadio radioData={{value: "poRatingu", radioName: "По рейтингу"}}
-                    direction={"row"}/>               
+                <SelectRadio radioData={{ value: "deshevihDodorogih", radioName: "Від дешевих до дорогих" }}
+                direction={"row"} addOptions={undefined} checked={undefined} children={undefined}/>
+                <SelectRadio radioData={{ value: "dorogihDeshevih", radioName: "Від дорогих до дешевих" }}
+                direction={"row"} addOptions={undefined} checked={undefined} children={undefined}/>
+                <SelectRadio radioData={{ value: "poRatingu", radioName: "По рейтингу" }}
+                direction={"row"} addOptions={undefined} checked={undefined} children={undefined}/>               
             </div>
             <div className="rowCatalogTyres">
-                <TyresCard optionsBox={true} checkOrders={checkOrders}/>
+                <TyresCard optionsBox={true} checkOrders={checkOrders} forOrder={false}/>
                 <TyresCard optionsBox={true} checkOrders={checkOrders}/>
                 <TyresCard optionsBox={true} checkOrders={checkOrders}/>
                 <TyresCard optionsBox={true} checkOrders={checkOrders}/>

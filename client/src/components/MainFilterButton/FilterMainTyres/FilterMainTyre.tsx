@@ -2,10 +2,10 @@ import {React, useState} from 'react';
 import '../../../css/FilterMain/FilterMainTyres/FilterMainTyre.css';
 import imageThorn from '../../../assets/icons/imagesThorn_1.png';
 import FilterMainBtn from '../FilterMainBtn';
-import ButtonAction from '../../Buttons/ButtonAction';
-import CheckboxBtn from '../../Select/CheckboxBtn';
-import SelectFilterList from '../../Select/SelectFilterList';
-import SelectFilter from '../../Select/SelectFilter';
+import ButtonAction from '../../buttons/ButtonAction';
+import CheckboxBtn from '../../select/CheckboxBtn';
+import SelectFilterList from '../../select/SelectFilterList';
+import SelectFilter from '../../select/SelectFilter';
 
 const FilterMainTyre = () => {
     const [handleItem, setHandleItem] = useState();

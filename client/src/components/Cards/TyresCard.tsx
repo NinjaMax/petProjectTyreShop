@@ -2,13 +2,13 @@ import React from 'react';
 import '../../css/CardsCss/TyresCard.css';
 import FlagsIcon from './FlagsIcon';
 import PropsCardIcons from './PropsCardIcons';
-import Rating from '../UX/Rating';
+import Rating from '../ux/Rating';
 import OptionsTyreBox from './OptionsTyreBox';
 import tyres from '../../assets/autotyrespilotspotps2.png';
-import ButtonAction from '../Buttons/ButtonAction';
+import ButtonAction from '../buttons/ButtonAction';
+import { ITyreCard } from './interfaces/tyreCard.interface';
 
-
-const TyresCard = ({optionsBox, checkOrders}) => {
+const TyresCard = ({optionsBox, checkOrders}:ITyreCard) => {
 
     return (
         <div className="tyresCard">

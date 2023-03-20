@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../css/FilterCatatogCss/PriceRange.css';
-import ButtonAction from '../Buttons/ButtonAction';
+import ButtonAction from '../buttons/ButtonAction';
 
 const PriceRange = () => {
     return (

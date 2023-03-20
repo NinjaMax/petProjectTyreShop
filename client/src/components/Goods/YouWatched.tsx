@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../css/Goods/YouWatched.css';
-import TyresCard from '../Cards/TyresCard';
+import TyresCard from '../cards/TyresCard';
 
 const YouWatched = () => {
     return (

@@ -1,8 +1,8 @@
 import React from 'react';
 import '../../css/Reviews/ReviewsBrandOverall.css';
-import Rating from '../UX/Rating';
+import Rating from '../ux/Rating';
 import brandImg from '../../assets/img/continental_logo.png';
-import RatingOptions from '../UX/RatingOptions';
+import RatingOptions from '../ux/RatingOptions';
 
 
 const ReviewsBrandOverall = () => {

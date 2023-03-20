@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminCashboxContent.css';
-import ButtonSearch from '../../Buttons/ButtonSearch';
-import ModalAdmin from '../../Modal/ModalAdmin';
-import AdminModalCashbox from '../AdminModalForm/AdminModalCashbox';
+import ButtonSearch from '../../buttons/ButtonSearch';
+import ModalAdmin from '../../modal/ModalAdmin';
+import AdminModalCashbox from '../adminModalForm/AdminModalCashbox';
 
 const AdminCashBoxContent = () => {
     const [cashbox, setCashbox] = useState(false);

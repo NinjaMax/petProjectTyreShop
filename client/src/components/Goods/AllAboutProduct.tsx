@@ -4,13 +4,13 @@ import productImage from '../../assets/autotyrespilotspotps2.png';
 import heartImg from '../../assets/icons/heart_64BlueClear.png';
 import scaleImg from '../../assets/icons/scales50.png';
 import shieldImg from '../../assets/icons/shield64.png';
-import ButtonAction from '../Buttons/ButtonAction';
-import Rating from '../UX/Rating';
-import PropsCardIcons from '../Cards/PropsCardIcons';
-import FlagsIcon from '../Cards/FlagsIcon';
-import CheckboxBtn from '../Select/CheckboxBtn';
+import ButtonAction from '../buttons/ButtonAction';
+import Rating from '../ux/Rating';
+import PropsCardIcons from '../cards/PropsCardIcons';
+import FlagsIcon from '../cards/FlagsIcon';
+import CheckboxBtn from '../select/CheckboxBtn';
 import TyreMarking from './TyreMarking';
-import SocialMediaLinks from '../SocialMedia/SocialMediaLinks';
+import SocialMediaLinks from '../socialMedia/SocialMediaLinks';
 
 
 const AllAboutProduct = () => {

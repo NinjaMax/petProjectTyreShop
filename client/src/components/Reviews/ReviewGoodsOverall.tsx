@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../css/Reviews/ReviewGoodsOverall.css';
-import Rating from '../UX/Rating';
-import RatingOptions from '../UX/RatingOptions';
+import Rating from '../ux/Rating';
+import RatingOptions from '../ux/RatingOptions';
 
 const ReviewGoodsOverall = () => {
     const overAllRating = 4.7;

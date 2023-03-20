@@ -1,5 +1,4 @@
 
-
 h1 {
     font-size: 50px;
     font-family: var(--main-font-family);
@@ -15,7 +14,7 @@ h1 {
 
 
 /* Style the buttons */
-.btnCatalor {
+.btnCatalog {
   border: none;
   outline: none;
   padding: 12px 16px;
@@ -24,12 +23,12 @@ h1 {
 }
 
 /* Add a grey background color on mouse-over */
-.btnCatalor:hover {
+.btnCatalog:hover {
   background-color: #ddd;
 }
 
 /* Add a dark background color to the active button */
-.btnCatalor.active {
+.btnCatalog.active {
   background-color: #666;
    color: white;
 }

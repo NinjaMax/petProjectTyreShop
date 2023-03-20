@@ -1,7 +1,13 @@
 import React, {useState, Fragment} from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminModalGoods.css';
 
-const AdminModalGoods = ({props, showRowModData, storage}) => {
+interface IModalGoods {
+    props: [[] | null, ...[][] | null[]];
+    storage: [{ storage: number}] | null;
+    showRowModData(e: any): void;
+}
+
+const AdminModalGoods = ({props, showRowModData, storage}: IModalGoods) => {
     const [tyreModData, wheelModData] = props;
     const [chooseCatMod, setChooseCatMod] = useState('Шини');
 
@@ -56,7 +62,7 @@ const AdminModalGoods = ({props, showRowModData, storage}) => {
                 </thead>
                 <tbody>
                     {chooseCatMod === 'Шини' && tyreModData ?
-                        tyreModData.map((item) => (
+                        tyreModData.map((item: { price: any[]; id: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | null | undefined; full_name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | null | undefined; category: { category: any; }; stock: any[]; }) => (
                         item.price.length !== 1 ?   
 
                         item.price.map((entity, indexEntity) => (
@@ -71,7 +77,7 @@ const AdminModalGoods = ({props, showRowModData, storage}) => {
                                 <td>{item.price[indexEntity]?.price ?? ''}</td>                             
                                 <td>{item.stock[item.stock.findIndex(
                                     itemI => itemI.id_storage === entity.id_storage)]?.remainder ?? ''}</td>
-                                <td>{storage[storage.findIndex(itemS => itemS.id_storage === entity.id_storage)]?.storage}</td>     
+                                <td>{storage[storage.findIndex((itemS: { id_storage: number; }) => itemS.id_storage === entity.id_storage)]?.storage}</td>     
                                 <td>{item.stock[item.stock.findIndex(
                                     itemI => itemI.id_storage === entity.id_storage)]?.id_storage ?? ''}</td>     
                             </Fragment>       
@@ -88,7 +94,7 @@ const AdminModalGoods = ({props, showRowModData, storage}) => {
                                 <td>{item.category?.category ?? ''}</td>
                                 <td>{item.price[0].price ?? ''}</td> 
                                 <td>{item.stock[0].remainder ?? ''}</td>
-                                <td>{storage[storage.findIndex(itemS => itemS.id_storage === item.stock[0].id_storage)]?.storage}</td>     
+                                <td>{storage[storage.findIndex((itemS) => itemS.id_storage === item.stock[0].id_storage)]?.storage}</td>     
                                 <td>{item.stock[0].id_storage ?? ''}</td> 
                             </Fragment> 
                         </tr>  
@@ -97,7 +103,7 @@ const AdminModalGoods = ({props, showRowModData, storage}) => {
                         : null 
                     }
                     {chooseCatMod=== 'Диски' && wheelModData ?
-                        wheelModData.map((item) => (
+                        wheelModData.map((item: { id: string | number | boolean | React.ReactFragment | React.ReactElement<any, string | React.JSXElementConstructor<any>> | null | undefined; full_name_color: string | number | boolean | React.ReactFragment | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactPortal | null | undefined; category: { category: any; }; price: { price: any; }; stock: { remainder: any; }; }) => (
                             <tr key={'wm' + item.id} 
                                 onDoubleClick={e => showRowModData(e.currentTarget.getAttribute("value"))} 
                                 value={item.id}>

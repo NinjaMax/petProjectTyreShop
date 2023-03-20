@@ -1,6 +1,6 @@
 import {React, useState, useEffect} from 'react';
 import '../../css/AdminComponentCss/AdminMainContent.css';
-import Charts from './AdminModalForm/Chart';
+import Charts from './adminModalForm/Chart';
 import responseCat from './dataCat.json';
 import responseManger from './dataManager.json';
 import responseSales from './dataSales.json';

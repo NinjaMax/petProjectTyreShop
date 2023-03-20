@@ -2,7 +2,7 @@ import { ADMIN_ROUTE, ADMIN_AUTH_ROUTE, BASKET_ROUTE, CATALOG_TYRES_ROUTE,
   LOGIN_ROUTE, REGISTRATION_ROUTE, GOODS_ROUTE, 
   MAIN_ROUTE, CONTACT_ROUTE} from './utils/consts';
 import Admin from './pages/Admin';
-import AdminAuth from './components/Auth/AdminAuth';
+import AdminAuth from './components/auth/AdminAuth';
 import Auth from './pages/Auth';
 import Basket from './pages/Basket';
 import CatalogTyresPage from './pages/CatalogTyresPage';

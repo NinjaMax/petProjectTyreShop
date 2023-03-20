@@ -76,7 +76,7 @@ const AdminModalSupplier = () => {
                     placeholder="Пишить нотатку..">
                 </textarea>
                 <div className='admFormSupplierCommit'
-                    onClick={(e)=>e.preventDefault({passive: false})}>
+                    onClick={(e)=>e.preventDefault()}>
                     <div className='admFormSupplierAddCommit'>
                     <button onClick={() => console.log('Add Commit')} 
                         className='admFormSupplierBtnAdd'>Додати коментар

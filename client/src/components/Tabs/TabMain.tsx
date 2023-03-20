@@ -1,8 +1,8 @@
 import React from 'react';
 import '../../css/TabsCss/TabMain.css';
-import FilterMainTyre from '../MainFilterButton/FilterMainTyres/FilterMainTyre';
-import PopularSizeTyre from '../PopularGoods/PopularSizeTyre';
-import PopularDiametrTyre from '../PopularGoods/PopularDiametrTyre';
+import FilterMainTyre from '../mainFilterButton/filterMainTyres/FilterMainTyre';
+import PopularSizeTyre from '../popularGoods/PopularSizeTyre';
+import PopularDiametrTyre from '../popularGoods/PopularDiametrTyre';
 
 
 const TabMain = () => {

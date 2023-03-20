@@ -1,24 +1,48 @@
 import React, {useEffect, useState} from 'react';
 import '../css/Admin.css';
 import axios from 'axios';
-import { getTyres } from '../RestAPI/restAdminAPI';
+import { getTyres } from '../restAPI/restAdminAPI';
 import AdminSideBar from '../components/AdminComponents/AdminSideBar';
 import AdminMainContent from '../components/AdminComponents/AdminMainContent';
-import AdminGoodsContent from '../components/AdminComponents/AdminContent/AdminGoodsContent';
-import AdminOrderContent from '../components/AdminComponents/AdminContent/AdminOrderContent';
-import AdminSalesContent from '../components/AdminComponents/AdminContent/AdminSalesContent';
-import AdminOrderSupContent from '../components/AdminComponents/AdminContent/AdminOrderSupContent';
-import AdminCashBoxContent from '../components/AdminComponents/AdminContent/AdminCashBoxContent';
-import AdminPayIncomesContent from '../components/AdminComponents/AdminContent/AdminPayIncomesContent';
-import AdminPayExpensesContent from '../components/AdminComponents/AdminContent/AdminPayExpensesContent';
-import AdminSupplierContent from '../components/AdminComponents/AdminContent/AdminSupplierContent';
-import AdminCustomersContent from '../components/AdminComponents/AdminContent/AdminCustomersContent';
-import AdminUsersContent from '../components/AdminComponents/AdminContent/AdminUsersContent';
-import AdminUploaderContent from '../components/AdminComponents/AdminContent/AdminUploaderContent';
-import AdminReportsContent from '../components/AdminComponents/AdminContent/AdminReportsContent';
-import AdminOptionContent from '../components/AdminComponents/AdminContent/AdminOptionContent';
+import AdminGoodsContent from '../components/AdminComponents/adminContent/AdminGoodsContent';
+import AdminOrderContent from '../components/AdminComponents/adminContent/AdminOrderContent';
+import AdminSalesContent from '../components/AdminComponents/adminContent/AdminSalesContent';
+import AdminOrderSupContent from '../components/AdminComponents/adminContent/AdminOrderSupContent';
+import AdminCashBoxContent from '../components/AdminComponents/adminContent/AdminCashBoxContent';
+import AdminPayIncomesContent from '../components/AdminComponents/adminContent/AdminPayIncomesContent';
+import AdminPayExpensesContent from '../components/AdminComponents/adminContent/AdminPayExpensesContent';
+import AdminSupplierContent from '../components/AdminComponents/adminContent/AdminSupplierContent';
+import AdminCustomersContent from '../components/AdminComponents/adminContent/AdminCustomersContent';
+import AdminUsersContent from '../components/AdminComponents/adminContent/AdminUsersContent';
+import AdminUploaderContent from '../components/AdminComponents/adminContent/AdminUploaderContent';
+import AdminReportsContent from '../components/AdminComponents/adminContent/AdminReportsContent';
+import AdminOptionContent from '../components/AdminComponents/adminContent/AdminOptionContent';
 import AdminProfile from '../components/AdminComponents/AdminProfile';
 import AdminHeader from '../components/AdminComponents/AdminHeader';
+//import { StockTyre } from './interfaces/stockTyre.interface';
+
+interface IAdmin {
+    // data?: [];
+    // result?: void | any;
+    //props:[[], ...[][]];
+    // customer?:[] | null;
+    // comments?:[] | null;
+    // storage?:[] | null;
+    // sideBarItem?: string;
+    // tyreData?:[] | null;
+    // tyreStockData?:[] | null;
+    // tyrePriceData?:[] | null;
+    // wheelData?:[] | null;
+    // wheelStockData?:[] | null;
+    // wheelPriceData?:[] | null;
+    // customers?:[] | null;
+    // commentData?:[] | null;
+    // commentId?:[] | null;
+    // orderAllData?:[] | null;
+    // storageAll?:[] | null;
+    //result.data: [];
+}
+
 
 const Admin = () => {
 
@@ -76,7 +100,7 @@ const Admin = () => {
                     // .catch(error => {
                     //  console.log(error)
                     // })
-                const result = await getTyres();
+                const result: any = await getTyres();
                 //await getTyres().then(data => {
                     if (!isMounted) {
                        //setTyreData(data.data) 
@@ -246,7 +270,7 @@ const Admin = () => {
         console.log(e.target.value);
     }
 
-    const showCommentData = async (e: { target: { value: React.SetStateAction<null>; }; }) => {
+    const showCommentData = async (e: {target: {value: React.SetStateAction<null>;};}) => {
         setCommentId(e.target.value);
     }
 
@@ -270,7 +294,7 @@ const Admin = () => {
                 : null}
                 {sideBarItem === 'catalog' ?
                     <AdminGoodsContent
-                        props={[tyreData, tyreStockData, tyrePriceData,
+                        props ={[tyreData, tyreStockData, tyrePriceData,
                              wheelData, wheelPriceData, wheelStockData]}
                         customer={customers}
                         comments={commentData}
@@ -295,6 +319,8 @@ const Admin = () => {
                     <AdminOrderSupContent 
                         props={[tyreData, tyreStockData, tyrePriceData,
                             wheelData, wheelPriceData, wheelStockData]}
+                        customer={customers} 
+                        comments={commentData}
                         storage={storageAll}
                     />
                 :null}
@@ -312,7 +338,7 @@ const Admin = () => {
                 : null}
                 {sideBarItem === 'pokupci' ?
                     <AdminCustomersContent 
-                    customers={customers}/>
+                    customer={customers}/>
                 : null}
                 {sideBarItem === 'koristuvachi' ?
                     <AdminUsersContent />

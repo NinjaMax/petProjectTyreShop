@@ -70,7 +70,7 @@ const AdminModalUsers = () => {
                 placeholder="Пишить нотатку..">
             </textarea>
             <div className='admFormUsersCommit'
-                onClick={(e)=>e.preventDefault({passive: false})}>
+                onClick={(e)=>e.preventDefault()}>
                 <div className='admFormUsersAddCommit'>
                 <button onClick={() => console.log('Add Commit')} 
                     className='admFormUsersBtnAdd'>Додати коментар

@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../css/CardsCss/TyreCardSmall.css';
-import ButtonAction from '../Buttons/ButtonAction';
+import ButtonAction from '../buttons/ButtonAction';
 import tyres from '../../assets/autotyrespilotspotps2.png';
 
 const TyreCardSmall = () => {

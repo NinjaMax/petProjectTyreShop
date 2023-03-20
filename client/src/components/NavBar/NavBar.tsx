@@ -3,14 +3,14 @@ import '../../css/NavBarCss/NavBar.css';
 import logoShop from '../../assets/logoShop/logoSample_1_302_100.png';
 //import {Context} from '../index';
 import { observer } from 'mobx-react-lite';
-import ButtonSearch from '../Buttons/ButtonSearch';
-import BasketNavBar from '../Basket/BasketNavBar';
-import AuthView from '../Auth/AuthView';
+import ButtonSearch from '../buttons/ButtonSearch';
+import BasketNavBar from '../basket/BasketNavBar';
+import AuthView from '../auth/AuthView';
 import NavBarDropTyres from './NavBarDropTyres';
-import AuthForm from '../Auth/AuthForm';
-import FavoriteGoods from '../UX/FavoriteGoods';
-import Modal from '../Modal/Modal';
-import NavBarSearch from '../SearchForm/NavBarSearch';
+import AuthForm from '../auth/AuthForm';
+import FavoriteGoods from '../ux/FavoriteGoods';
+import Modal from '../modal/Modal';
+import NavBarSearch from '../searchForm/NavBarSearch';
 
 
 const NavBar = observer(() => {

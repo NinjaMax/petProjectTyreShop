@@ -2,12 +2,17 @@ import React from 'react';
 import '../../css/CardsCss/TyresCardList.css';
 import FlagsIcon from './FlagsIcon';
 import PropsCardIcons from './PropsCardIcons';
-import Rating from '../UX/Rating';
+import Rating from '../ux/Rating';
 import tyres from '../../assets/autotyrespilotspotps2.png';
-import ButtonAction from '../Buttons/ButtonAction';
-import CountBtnOrder from '../UX/CountBtnOrder';
+import ButtonAction from '../buttons/ButtonAction';
+import CountBtnOrder from '../ux/CountBtnOrder';
+//import { ITyreCard } from './interfaces/tyreCard.interface';
 
-const TyresCardList = ({forOrder}) => {
+interface ITyreCardList {
+    forOrder?: boolean;
+}
+
+const TyresCardList = ({forOrder}: ITyreCardList) => {
     return (
     
         <div className="tyresCardList">
@@ -25,7 +30,7 @@ const TyresCardList = ({forOrder}) => {
                 <div className='priceAndBtnCard'>
                     <div className="tyresCardPriceList">2005 UAH</div>
                     {!forOrder?
-                     <ButtonAction props={"КУПИТИ"} widthBtn={160}/>   
+                     <ButtonAction props={"КУПИТИ"} widthBtn={160} eventItem={undefined}/>   
                     : <CountBtnOrder countGoods={4}/>}         
                 </div>      
             </div>

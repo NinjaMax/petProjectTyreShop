@@ -1,9 +1,9 @@
 import React from 'react';
 import '../../css/Reviews/ReviewsGoods.css';
 import customerReview from '../../assets/icons/customer64.png';
-import ButtonPrevNext from '../Buttons/ButtonPrevNext';
-import Rating from '../UX/Rating';
-import Thumbs from '../UX/Thumbs';
+import ButtonPrevNext from '../buttons/ButtonPrevNext';
+import Rating from '../ux/Rating';
+import Thumbs from '../ux/Thumbs';
 import ReviewsGoodsExtend from './ReviewsGoodsExtend';
 
 const ReviewsGoods = ({reviewExtend, btnLeft, btnRight}) => {

@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminSuppliersContent.css';
-import ButtonSearch from '../../Buttons/ButtonSearch';
-import ModalAdmin from '../../Modal/ModalAdmin';
-import AdminModalSupplier from '../AdminModalForm/AdminModalSupplier';
+import ButtonSearch from '../../buttons/ButtonSearch';
+import ModalAdmin from '../../modal/ModalAdmin';
+import AdminModalSupplier from '../adminModalForm/AdminModalSupplier';
 
 const AdminSupplierContent = () => {
 

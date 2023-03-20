@@ -2,13 +2,13 @@ import React from 'react';
 import '../css/Main.css';
 import Slider from '../components/Slider';
 import CategorySlide from '../components/CategorySlide';
-import TabProdMain from '../components/Tabs/TabProdMain';
+import TabProdMain from '../components/tabs/TabProdMain';
 import Benefits from '../components/Benefits';
-import ReviewsMain from '../components/Reviews/ReviewsMain';
-import TabMain from '../components/Tabs/TabMain';
-import NewsMainBox from '../components/News/NewsMainBox';
-import ReviewStore from '../components/Reviews/ReviewStore';
-import ReviewsGoods from '../components/Reviews/ReviewsGoods';
+import ReviewsMain from '../components/reviews/ReviewsMain';
+import TabMain from '../components/tabs/TabMain';
+import NewsMainBox from '../components/news/NewsMainBox';
+import ReviewStore from '../components/reviews/ReviewStore';
+import ReviewsGoods from '../components/reviews/ReviewsGoods';
 
 const Main = () => {
     return (

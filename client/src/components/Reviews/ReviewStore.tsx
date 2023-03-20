@@ -1,10 +1,10 @@
 import React from 'react';
-import Rating from '../UX/Rating';
+import Rating from '../ux/Rating';
 import customerReview from '../../assets/icons/customer64.png';
 import ReviewAnswer from './ReviewAnswer';
-import DotSite from '../UX/DotSite';
+import DotSite from '../ux/DotSite';
 import '../../css/Reviews/ReviewStore.css';
-import ButtonPrevNext from '../Buttons/ButtonPrevNext';
+import ButtonPrevNext from '../buttons/ButtonPrevNext';
 
 
 const ReviewStore = () => {

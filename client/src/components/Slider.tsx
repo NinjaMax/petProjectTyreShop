@@ -3,8 +3,8 @@ import '../css/Slider.css';
 import sliderOne from '../assets/michelintyres.jpg';
 import sliderBoxTopImg from '../assets/pexelsJaePark.jpg';
 import sliderBoxBottomImg from '../assets/pexelsVincenzoMalagoli.jpg';
-import DotSite from './UX/DotSite';
-import ButtonPrevNext from './Buttons/ButtonPrevNext';
+import DotSite from './ux/DotSite';
+import ButtonPrevNext from './buttons/ButtonPrevNext';
 
 const Slider = () => {
     return (

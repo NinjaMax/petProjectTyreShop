@@ -1,19 +1,19 @@
 import React, { SetStateAction, useState} from 'react';
 import '../css/Goods.css';
 import BreadCrumbs from '../components/BreadCrumbs';
-import TabsGoodsCard from '../components/Tabs/TabsGoodsCard';
+import TabsGoodsCard from '../components/tabs/TabsGoodsCard';
 import Benefits from '../components/Benefits';
-import AllAboutProduct from '../components/Goods/AllAboutProduct';
-import PropertiesGoods from '../components/Goods/PropertiesGoods';
-import ReviewBrandOverall from '../components/Reviews/ReviewsBrandOverall';
-import ReviewGoodsOverall from '../components/Reviews/ReviewGoodsOverall';
-import ReviewsGoods from '../components/Reviews/ReviewsGoods';
-import SimilarGoods from '../components/Goods/SimilarGoods';
-import TyreCardSmall from '../components/Cards/TyreCardSmall';
-import AllTyreModelSize from '../components/Goods/AllTyreModelSize';
-import AllModelBrand from '../components/Goods/AllModelBrand';
-import ProductPayDel from '../components/Goods/ProductPayDel';
-import YouWatched from '../components/Goods/YouWatched';
+import AllAboutProduct from '../components/goods/AllAboutProduct';
+import PropertiesGoods from '../components/goods/PropertiesGoods';
+import ReviewBrandOverall from '../components/reviews/ReviewsBrandOverall';
+import ReviewGoodsOverall from '../components/reviews/ReviewGoodsOverall';
+import ReviewsGoods from '../components/reviews/ReviewsGoods';
+import SimilarGoods from '../components/goods/SimilarGoods';
+import TyreCardSmall from '../components/cards/TyreCardSmall';
+import AllTyreModelSize from '../components/goods/AllTyreModelSize';
+import AllModelBrand from '../components/goods/AllModelBrand';
+import ProductPayDel from '../components/goods/ProductPayDel';
+import YouWatched from '../components/goods/YouWatched';
 
 const GoodsPage = () => {
   const modelBrand = "CONTICROSSPREMIUMCONTACT";

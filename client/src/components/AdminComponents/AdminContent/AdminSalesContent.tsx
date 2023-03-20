@@ -1,5 +1,5 @@
 import React from 'react';
-import ButtonSearch from '../../Buttons/ButtonSearch';
+import ButtonSearch from '../../buttons/ButtonSearch';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminSalesContent.css';
 
 const AdminSalesContent = () => {

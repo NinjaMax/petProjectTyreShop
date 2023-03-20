@@ -1,16 +1,16 @@
-import {React, useState} from 'react';
+import React, {useState} from 'react';
 import '../../css/BasketCss/BasketOrder.css';
-import ButtonAction from '../Buttons/ButtonAction';
-import TyresCardList from '../Cards/TyresCardList';
-import SelectRadio from '../Select/SelectRadio';
-import InputDataText from '../UX/InputDataText';
-import InputDataTel from '../UX/InputDataTel';
+import ButtonAction from '../buttons/ButtonAction';
+import TyresCardList from '../cards/TyresCardList';
+import SelectRadio from '../select/SelectRadio';
+import InputDataText from '../ux/InputDataText';
+import InputDataTel from '../ux/InputDataTel';
 
 const BasketOrder = () => {
     const [delivery, setDelivery] = useState("");
 
    
-    const acceptInput = (value) => {
+    const acceptInput = (value: string) => {
   
        
    
@@ -21,7 +21,7 @@ const BasketOrder = () => {
     };
        
 
-    const checkedRadio = (e) => {
+    const checkedRadio = (e: { currentTarget: { value: React.SetStateAction<string>; }; }) => {
         setDelivery(e.currentTarget.value);
     }
 
@@ -115,13 +115,13 @@ const BasketOrder = () => {
                     <span>Всього: 8185грн</span>   
                 </div>
                 <div className='basketColmItemRight'>
-                    <label htmfor="commentsOrder">Додати коментар до замовлення:</label>
+                    <label htmlFor="commentsOrder">Додати коментар до замовлення:</label>
                     <textarea id="commentsOrder" name="commentsOrder"
                         placeholder='Залишити коментар для замовлення'
                         rows="5" cols="80">
                     </textarea>
                 </div>
-                <ButtonAction props={"Оформити замовлення"} widthBtn={250}/>
+                <ButtonAction props={"Оформити замовлення"} widthBtn={250} eventItem={undefined}/>
             </div>
         </div>
     );
