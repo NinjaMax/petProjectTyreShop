@@ -76,7 +76,7 @@ const AdminModalCustmCreate = () => {
                     placeholder="Пишить нотатку..">
                 </textarea>
                 <div className='admFormCustmCreateCommit'
-                    onClick={(e)=>e.preventDefault({passive: false})}>
+                    onClick={(e)=>e.preventDefault()}>
                     <div className='admFormCustmCreateAddCommit'>
                     <button onClick={() => console.log('Add Commit')} 
                         className='admFormCustmCreateBtnAdd'>Додати коментар

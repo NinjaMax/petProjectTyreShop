@@ -294,12 +294,11 @@ const Admin = () => {
                 : null}
                 {sideBarItem === 'catalog' ?
                     <AdminGoodsContent
-                        props ={[tyreData, tyreStockData, tyrePriceData,
-                             wheelData, wheelPriceData, wheelStockData]}
+                        props={[tyreData, tyreStockData, tyrePriceData,
+                            wheelData, wheelPriceData, wheelStockData]}
                         customer={customers}
                         comments={commentData}
-                        storage={storageAll}
-                    />
+                        storage={storageAll} />
                 : null}
                 {sideBarItem === 'zamovlenia' ?
                     <AdminOrderContent 

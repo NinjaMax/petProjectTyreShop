@@ -260,10 +260,10 @@ const AdminGoodsContent = ({comments, props, customer, storage}:IGoodsContent) =
                     <AdminFormOrder 
                         goodsId={itemId}
                         props={props}
-                        storage={storage}
+                        storages={storage}
                         customer={customer} 
-                        comments={undefined} 
-                        setActive={undefined}/>
+                        comments={null} 
+                        setActive={null}/>
                 </ModalAdmin>
                 : null
             }    

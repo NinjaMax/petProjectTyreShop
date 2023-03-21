@@ -1,4 +1,4 @@
-import React, {useForm} from 'react';
+import React from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminUploadContent.css'
 
 const AdminUploaderContent = () => {

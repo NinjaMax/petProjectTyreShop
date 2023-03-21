@@ -3,7 +3,7 @@ import '../../../css/AdminComponentCss/AdminModalFormCss/AdminModalGoods.css';
 
 interface IModalGoods {
     props: [[] | null, ...[][] | null[]];
-    storage: [{ storage: number}] | null;
+    storage: [{storage: string; id_storage: number;}];
     showRowModData(e: any): void;
 }
 
@@ -77,7 +77,7 @@ const AdminModalGoods = ({props, showRowModData, storage}: IModalGoods) => {
                                 <td>{item.price[indexEntity]?.price ?? ''}</td>                             
                                 <td>{item.stock[item.stock.findIndex(
                                     itemI => itemI.id_storage === entity.id_storage)]?.remainder ?? ''}</td>
-                                <td>{storage[storage.findIndex((itemS: { id_storage: number; }) => itemS.id_storage === entity.id_storage)]?.storage}</td>     
+                                <td>{storage[storage.findIndex((itemS) => itemS.id_storage === entity.id_storage)]?.storage}</td>     
                                 <td>{item.stock[item.stock.findIndex(
                                     itemI => itemI.id_storage === entity.id_storage)]?.id_storage ?? ''}</td>     
                             </Fragment>       

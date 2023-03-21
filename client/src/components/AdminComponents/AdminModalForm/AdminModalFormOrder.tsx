@@ -1,4 +1,4 @@
-import React, {useMemo, useReducer, useState, useCallback, useEffect} from 'react';
+import React, {useMemo, useReducer, useState, useCallback, useEffect, Dispatch, DispatchWithoutAction} from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminFormOrder.css';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
@@ -9,13 +9,78 @@ import AdminModalCustomers from './AdminModalCustomers';
 import AdminModalGoods from './AdminModalGoods';
 //import {addGoodsToOrder, createGoodsToOrder, responseForm} from '../../../RestAPI/restAdminAPI';
 
-function reducer (state = [], action, initialState) {
+interface IFormOrder {
+    props: [[] | null, ...[][]] | [[] | null, ...null[]];
+    goodsId: {};
+    comments: [] | null;
+    customer: [];
+    setActive():void | null;
+    storages: [] | null;
+}
+
+type IModalFormOrder = {
+    createInitialState():void;
+    reducer():void;
+    addCustomer?: {full_name: string; contract: []; id_customer: number;} | null;
+}
+
+type CreateGoods = {
+    id: number;
+    full_name: string;
+    category: {category: {category:string}};
+    order_index: number;
+    price: {
+        quantity: number;
+        id_storage: number;
+        id_supplier: number; 
+        price: {price: number}
+};
+}
+
+type AddGoods = {
+    id_order_storage: number;
+    id: number;
+    id_supplier: number;
+    order_index: number;
+    storage_index: number;
+    quantity: number;
+    price: number;
+}
+
+interface IReduser {
+    type?: string,
+    addWheel?:{ price:[]}
+    addTyre?:{ price:[]};
+    indexPrice?: number;
+}  
+
+type ActionReducer = 
+    | { type: 'addTyreToOrder', addTyre:{ price:[]}, indexPrice: number,}
+    | { type: 'addWheelToOrder', addWheel:{ price:[]}, indexPrice: number,};
+   
+interface DispatchType {
+    dispatch( {}: any ) :void; 
+        // {type, addWheel, indexPrice}: 
+        // {type:string; addWheel: any; indexPrice: number;}
+    //state:[];
+    // type?: string,
+    // addWheel?:{ price:[]}
+    // addTyre?:{ price:[]};
+    // indexPrice?: number;
+}
+
+interface StateReducer {
+    push(arg0: { price: any; }): unknown;
+    state: [];
+}
+
+function reducer (state: StateReducer, action: ActionReducer,) {
     switch (action.type) {
       
         case 'addTyreToOrder': {
             if (action.addTyre) {
                 state.push({...action.addTyre, 
-                    "price":{...action.addTyre.price[action.indexPrice],
+                    "price":{...(action.addTyre.price[action.indexPrice] as object),
                        "quantity": "4"},  
                 });
             }
@@ -25,7 +90,7 @@ function reducer (state = [], action, initialState) {
         case 'addWheelToOrder': {
             if (action.addWheel) {
                 state.push({...action.addWheel, 
-                    "price":{...action.addTyre.price[action.indexPrice],
+                    "price":{...(action.addWheel.price[action.indexPrice] as object),
                         "quantity": "4"}, 
                 }); 
             }
@@ -40,21 +105,22 @@ function reducer (state = [], action, initialState) {
     
 }
 
-
-const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}) => {
+const AdminFormOrder = (
+    {props, goodsId, comments, customer, setActive, storages}:IFormOrder
+    ) => {
     const [tyreDatas, wheelDatas] = props;
-    const [orderId, setOrderId] = useState(null);
-    const [addGoods, setAddGoods] = useState(false);
-    const [createCustomer, setCreateCustomer] = useState(false);
-    const [openCustomers, setOpenCustomers] = useState(false);
-    const [addCustomer, setAddCustomer] = useState(null);
-    const [disableBtn, setDisableBtn] = useState(false);
-    const [orderStorage, setOrderStorage] = useState([]);
+    const [orderId, setOrderId] = useState<number | null>(null);
+    const [addGoods, setAddGoods] = useState<boolean>(false);
+    const [createCustomer, setCreateCustomer] = useState<boolean>(false);
+    const [openCustomers, setOpenCustomers] = useState<boolean>(false);
+    const [addCustomer, setAddCustomer] = useState<IModalFormOrder | null>(null);
+    const [disableBtn, setDisableBtn] = useState<boolean>(false);
+    const [orderStorage, setOrderStorage] = useState<[]>([]);
     const {register, handleSubmit, setValue, formState: {errors}} = useForm();    
     const [state, dispatch] = useReducer(reducer, goodsId, createInitialState);
     const [stateData, setStateData] = useState(state);
      
-    function createInitialState (goodsId) {
+    function createInitialState (goodsId:{}) {
             
         let initialState = [];
 
@@ -67,6 +133,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
         return initialState;
             
     };
+
     useEffect(() => {
         register("id_customer");
         setValue("id_customer", addCustomer?.id_customer)
@@ -118,10 +185,10 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
     
     const actions = useMemo(() => ({
 
-        addCustToOrder: (valueCust) => {
+        addCustToOrder: (valueCust: number) => {
             //console.log(valueCust);
             const findCustomer = customer.find(
-                (items) => items?.id_customer === +valueCust
+                (items:{id_customer:number}) => items?.id_customer === +valueCust
             );
 
             if (findCustomer) {
@@ -130,7 +197,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
 
         },
 
-        addGoodsToList: (value) => {
+        addGoodsToList: (value:string) => {
             //let [idValue, indexValue] = value;
             const newArr = value.split(',');
             //console.log('VALUE: ', newArr);
@@ -140,16 +207,16 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
             // console.log('ARR ID', +idValue);
             //console.log('ARR INDX', +indexValue);
             //setPriceIndex(+indexValue); 
-            
-            dispatch({type: 'addTyreToOrder', 
-                addTyre: tyreDatas.find((item) => item?.id === idValue),
+            dispatch(({type: "addtyre"}) as value);
+            // dispatch({type: 'addTyreToOrder', 
+            //     addTyre: tyreDatas?.find((item:{id:string}) => item?.id === idValue),
+            //     indexPrice: indexValue,
+            // }: {} typeof value);
+
+            dispatch<Dispatch>(({type: 'addWheelToOrder', 
+                addWheel: wheelDatas?.find((item:{id:string}) => item?.id === idValue),
                 indexPrice: indexValue,
-                
-            });
-            dispatch({type: 'addWheelToOrder', 
-                addWheel: wheelDatas.find((item) => item?.id === idValue),
-                indexPrice: indexValue,
-            });
+            }) typeof value);
             
         }
 
@@ -157,7 +224,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
 
     
     //useEffect(() => {
-        const deleteItem = (itemIndex) => {
+        const deleteItem = (itemIndex: number) => {
         
            //dispatch({type: 'deleteItemFromOrder', 
             state.splice(itemIndex, 1);
@@ -182,13 +249,12 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
     // }
     //useEffect(() => {  
   
-        const responseForm = async (data) => { 
+        const responseForm = async (data:{}) => { 
            await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders`, data, {
                headers: {
                    'Content-Type': 'application/json; charset=utf-8',
                    'Access-Control-Allow-Origin': `${process.env.CORS}`
-               },
-               withCredentials: true,
+               }, withCredentials: true,
                })
                .then(response => {
                //setOrderAllData(response.data);
@@ -202,7 +268,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                 //     createGoodsToOrder(stateData[i], response.data.id_order)
                     
                 // }
-                   stateData.forEach((itemGoods) => (
+                   stateData.forEach((itemGoods:{}) => (
                      createGoodsToOrder(itemGoods, response.data.id_order)
                    ));
                //}
@@ -221,7 +287,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
 
     // useEffect(() =>{
     //     createGoodsToOrder();
-        const createGoodsToOrder = async (item, id_order) => { 
+        const createGoodsToOrder = async (item:CreateGoods, id_order:number) => { 
         const resPost =   await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders/creategoods`,
                 {
                     id: +item.id,
@@ -236,11 +302,8 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                 },{headers: {
                     'Content-Type': 'application/json; charset=utf-8',
                     'Access-Control-Allow-Origin': `${process.env.CORS}`
-                }
-                }, {
-                    withCredentials: true,  
-                },
-                )
+                }, withCredentials: true,
+                })
                 .then(response => {
                     
                     setOrderStorage(oldOrdStor => [...oldOrdStor, response.data]);
@@ -257,7 +320,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
     //     return () => createGoodsToOrder();
     // },[])
     
-    const addGoodsToOrder = async (value) => {
+    const addGoodsToOrder = async (value: AddGoods) => {
         await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders/add`,
             {
                 // id: +item.id,
@@ -279,11 +342,8 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
             },{headers: {
                 'Content-Type': 'application/json; charset=utf-8',
                 'Access-Control-Allow-Origin': `${process.env.CORS}`
-            }
-            }, {
-                withCredentials: true,  
-            },
-            )
+            },withCredentials: true,
+            })
             .then(response => {
             //setOrderAllData(response.data);
             alert(`Заказ ${response.data.id_order} проведено`)
@@ -299,7 +359,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
     }
 
         
-    const onSubmit = async (data) => {
+    const onSubmit = async (data:{}) => {
                 //e.preventDefault();
                 console.log('CREATE ORDER: ', data)
                 //if(data) {
@@ -427,12 +487,12 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                                 value={addCustomer?.full_name ?? ''}
                                 onChange={() => setAddCustomer(addCustomer)}
                             />
-                            <div onClick={(e)=>e.preventDefault({passive: false})}>
+                            <div onClick={(e)=>e.preventDefault()}>
                                 <button onClick={openCustomerForm} className='admFormSearchCustm'>
                                     <i className="fas fa-search"></i>    
                                 </button> 
                             </div>
-                            <div onClick={(e)=>e.preventDefault({passive: false})}>
+                            <div onClick={(e)=>e.preventDefault()}>
                                 <button onClick={activeCustomer}
                                     className='admFormAddCustm'>
                                     <i className="fas fa-plus"></i>    
@@ -447,7 +507,8 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                             defaultValue={addCustomer?.contract[0]?.id_contract}
 
                             >
-                           {addCustomer ? addCustomer?.contract.map((entity, index)=> (  
+                           {addCustomer ? addCustomer?.contract.map(
+                            (entity:{name: string; id_contract:number;}, index:number)=> (  
                                 <option key={'contract' + index} 
                                 value={entity.id_contract}
                                 >
@@ -493,7 +554,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                             <option value="Відміна">Відміна</option>
                         </select>    
                     </div>
-                    <div onClick={(e)=>e.preventDefault({passive: false})}>
+                    <div onClick={(e)=>e.preventDefault()}>
                         <button onClick={addGoodsForm} className='admFormOrderBtnAdd'>Додати товар</button>  
                     </div>
                     <div>
@@ -540,38 +601,38 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                     <tbody>
                         {stateData?.lenght !== 0 ? 
                             stateData?.map((
-                                {id, full_name, category, price}, index) =>(
-                        <tr key={id + index} 
+                                item:{id:number, full_name:string, category:{category:string}, price:{price:number; quantity: number}}, index:number) =>(
+                        <tr key={item.id + index} 
                         //onChange={(e)=>e.preventDefault({passive: false})}
                             >
-                            <td >{id}</td>
-                            <td >{full_name}</td>
-                            <td >{category?.category}</td>
-                            <td key={'quantity' + id + index} 
+                            <td >{item.id}</td>
+                            <td >{item.full_name}</td>
+                            <td >{item.category?.category}</td>
+                            <td key={'quantity' + item.id + index} 
                                 onInput={(e) => e.stopPropagation()}
                                 >
                                 <input 
-                                id={'quantity'+ id}
-                                key={'quantity'+ id + index}
+                                id={'quantity'+ item.id}
+                                key={'quantity'+ item.id + index}
                                 type="text"
                                 name="quantity"
-                                value={price?.quantity}
-                                onInput={(e) => onChangeInput(e, id, index)}
+                                value={item.price?.quantity}
+                                onInput={(e) => onChangeInput(e, item.id, index)}
                                 placeholder="Введіть цифри"
                                 />
                             </td>
                             <td >{0}</td>
                             <td 
-                                key={'price' + id + index} 
+                                key={'price' + item.id + index} 
                                 onInput={(e) => e.stopPropagation()}
                                 >
                                 <input 
                                 id={id}
-                                key={'price' + id + index}
+                                key={'price' + item.id + index}
                                 type="text"
                                 name="price"
-                                value={price?.price}
-                                onInput={(e) => onChangeInput(e, id, index)}
+                                value={item.price?.price}
+                                onInput={(e) => onChangeInput(e, item.id, index)}
                                 placeholder="Введіть цифри" 
                                 />
                            
@@ -621,7 +682,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                     </textarea>  
                 </div>
                 <div className='admFormOrderCommit'
-                    onClick={(e)=>e.preventDefault({passive: false})}>
+                    onClick={(e)=>e.preventDefault()}>
                     <div className='admFormOrderAddCommit'>
                     <button onClick={() => console.log('Add Commit')} 
                         className='admFormOrderBtnAdd'>Додати коментар
@@ -630,16 +691,14 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                         placeholder="Пишить коментар.."></textarea>
                     </div>
                     <div className='admFormOrderCommitChat'>
-                        <AdminComment>
-
-                        </AdminComment>
+                        <AdminComment/>
                     </div>  
                 </div>
                 <div className='admOrderFormGrp'
                     onClick={(e) => e.stopPropagation()}
                      //onClick={(e)=>e.preventDefault({passive: false})}
                      >
-                    <div onClick={(e)=>e.preventDefault({passive: false})}>
+                    <div onClick={(e)=>e.preventDefault()}>
                         <button className='admFormOrderBtnOk'
                             onClick={onSubmitOrder}>
                             Ok
@@ -677,7 +736,7 @@ const AdminFormOrder = ({props, goodsId, comments, customer, setActive, storage}
                     <AdminModalGoods 
                         showRowModData={actions.addGoodsToList}
                         props={props}
-                        storage={storage}
+                        storage={storages}
                     />
                 </ModalAdmin> : null
             }

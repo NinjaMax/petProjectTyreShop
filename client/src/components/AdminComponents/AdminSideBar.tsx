@@ -1,7 +1,11 @@
 import React from 'react';
 import '../../css/AdminComponentCss/AdminSideBar.css';
 
-const AdminSideBar = ({changeMenu}) => {
+interface ISideBar {
+    changeMenu(e:any): void;
+}
+
+const AdminSideBar = ({changeMenu}:ISideBar) => {
     return (
         <div className='adminSideBar'>
             <label className='admSideBarItem'>

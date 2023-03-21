@@ -1,15 +1,24 @@
-import {React, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import '../../css/AdminComponentCss/AdminMainContent.css';
 import Charts from './adminModalForm/Chart';
 import responseCat from './dataCat.json';
 import responseManger from './dataManager.json';
 import responseSales from './dataSales.json';
 
+interface IMainContent {
+    version: number; 
+    totalCharts: number; 
+    charts: { name: string; chartType: string; data: (string | number)[][];
+    options: { title: string; subtitle?: string;};
+    width: string;
+    height: string; }[]; 
+}
+
 const AdminMainContent = () => {
 
-    const [dataCat, setDataCat] = useState(false);
-    const [dataManager, setDataManager] =useState(false);
-    const [dataSales, setDataSales] =useState(false);
+    const [dataCat, setDataCat] = useState<IMainContent>();
+    const [dataManager, setDataManager] =useState<IMainContent>();
+    const [dataSales, setDataSales] =useState<IMainContent>();
     useEffect(() => {
       //if(data){
         setDataCat(responseCat);
