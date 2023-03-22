@@ -3,13 +3,30 @@ import '../../../css/AdminComponentCss/AdminModalFormCss/AdminModalGoods.css';
 
 interface IModalGoods {
     props: [[] | null, ...[][] | null[]];
-    storage: [{storage: string; id_storage: number;}];
+    storageGoods: [ 
+        {id_storage: number;
+        storage: string} 
+    ] | null;
+    
     showRowModData(e: any): void;
 }
 
-const AdminModalGoods = ({props, showRowModData, storage}: IModalGoods) => {
+// type IModalGoodsStorage = IModalGoods & {
+//     storage: string;
+// }
+
+type ItyreModData ={
+    price: [{id: number; price: number; id_storage: number; storage: string}];
+    id: number; 
+    full_name: string;
+    full_name_color?: string;  
+    category: { category: string;}; 
+    stock: [{remainder: number; id_storage: number}]; 
+}
+
+const AdminModalGoods = ({props, showRowModData, storageGoods}: IModalGoods) => {
     const [tyreModData, wheelModData] = props;
-    const [chooseCatMod, setChooseCatMod] = useState('Шини');
+    const [chooseCatMod, setChooseCatMod] = useState<string>('Шини');
 
     return (
         <div className='admModalGoodsBox'>
@@ -62,14 +79,14 @@ const AdminModalGoods = ({props, showRowModData, storage}: IModalGoods) => {
                 </thead>
                 <tbody>
                     {chooseCatMod === 'Шини' && tyreModData ?
-                        tyreModData.map((item: { price: any[]; id: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | null | undefined; full_name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | null | undefined; category: { category: any; }; stock: any[]; }) => (
+                        tyreModData.map((item: ItyreModData) => (
                         item.price.length !== 1 ?   
 
                         item.price.map((entity, indexEntity) => (
                             
                         <tr key={'tm' + entity.id} 
                             onDoubleClick={e => showRowModData(e.currentTarget.getAttribute("value"))} 
-                            value={[item.id, indexEntity]}>
+                            data-value={[item.id, indexEntity]}>
                             <Fragment key={'tid' + item.id}>
                                 <td>{item.id}</td>
                                 <td>{item.full_name}</td>
@@ -77,7 +94,7 @@ const AdminModalGoods = ({props, showRowModData, storage}: IModalGoods) => {
                                 <td>{item.price[indexEntity]?.price ?? ''}</td>                             
                                 <td>{item.stock[item.stock.findIndex(
                                     itemI => itemI.id_storage === entity.id_storage)]?.remainder ?? ''}</td>
-                                <td>{storage[storage.findIndex((itemS) => itemS.id_storage === entity.id_storage)]?.storage}</td>     
+                                <td>{storageGoods![storageGoods!.findIndex((itemS) => itemS.id_storage === entity.id_storage)]?.storage}</td>     
                                 <td>{item.stock[item.stock.findIndex(
                                     itemI => itemI.id_storage === entity.id_storage)]?.id_storage ?? ''}</td>     
                             </Fragment>       
@@ -87,14 +104,14 @@ const AdminModalGoods = ({props, showRowModData, storage}: IModalGoods) => {
                         :
                         <tr key={'tm' + item.id} 
                             onDoubleClick={e => showRowModData(e.currentTarget.getAttribute("value"))} 
-                            value={[item.id, 0]}>
+                            data-value={[item.id, 0]}>
                             <Fragment key={'tid' + item.id}>
                                 <td>{item.id}</td>
                                 <td>{item.full_name}</td>
                                 <td>{item.category?.category ?? ''}</td>
                                 <td>{item.price[0].price ?? ''}</td> 
                                 <td>{item.stock[0].remainder ?? ''}</td>
-                                <td>{storage[storage.findIndex((itemS) => itemS.id_storage === item.stock[0].id_storage)]?.storage}</td>     
+                                <td>{storageGoods![storageGoods!.findIndex((itemS) => itemS.id_storage === item.stock[0].id_storage)]?.storage}</td>     
                                 <td>{item.stock[0].id_storage ?? ''}</td> 
                             </Fragment> 
                         </tr>  
@@ -103,15 +120,16 @@ const AdminModalGoods = ({props, showRowModData, storage}: IModalGoods) => {
                         : null 
                     }
                     {chooseCatMod=== 'Диски' && wheelModData ?
-                        wheelModData.map((item: { id: string | number | boolean | React.ReactFragment | React.ReactElement<any, string | React.JSXElementConstructor<any>> | null | undefined; full_name_color: string | number | boolean | React.ReactFragment | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactPortal | null | undefined; category: { category: any; }; price: { price: any; }; stock: { remainder: any; }; }) => (
+                        wheelModData.map((item: ItyreModData) => (
                             <tr key={'wm' + item.id} 
+                                data-value={item.id}
                                 onDoubleClick={e => showRowModData(e.currentTarget.getAttribute("value"))} 
-                                value={item.id}>
-                                <td key={'wmid' + item.id}>{item.id}</td>
-                                <td key={'wmfn' + item.id}>{item.full_name_color}</td>
-                                <td key={'wmca' + item.id}>{item.category?.category ?? ''}</td>
-                                <td key={'wmpr' + item.id}>{item.price?.price ?? ''}</td>
-                                <td key={'wmsr' + item.id}>{item.stock?.remainder ?? ''}</td>
+                                >
+                                <td >{item.id}</td>
+                                <td >{item.full_name_color}</td>
+                                <td >{item.category?.category ?? ''}</td>
+                                <td >{item.price[0]?.price ?? ''}</td>
+                                <td >{item.stock[0]?.remainder ?? ''}</td>
                             </tr> ))
                     : null
                     }

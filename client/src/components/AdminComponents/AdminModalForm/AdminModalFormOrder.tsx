@@ -1,4 +1,4 @@
-import React, {useMemo, useReducer, useState, useCallback, useEffect, Dispatch, DispatchWithoutAction} from 'react';
+import React, {useMemo, useReducer, Reducer, useState, useCallback, useEffect} from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminFormOrder.css';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
@@ -13,28 +13,43 @@ interface IFormOrder {
     props: [[] | null, ...[][]] | [[] | null, ...null[]];
     goodsId: {};
     comments: [] | null;
-    customer: [];
-    setActive():void | null;
+    customer: [] | null;
+    //setActive():void | undefined;
     storages: [] | null;
 }
 
 type IModalFormOrder = {
-    createInitialState():void;
-    reducer():void;
-    addCustomer?: {full_name: string; contract: []; id_customer: number;} | null;
+    full_name?: string;
+    name?: string;
+    contract: [{id_contract: number, name: string}];
+    id_contract?: number,
+    id_customer?: number;
+    addCustomer?: {
+        full_name: string,
+        contract: [],
+        id_customer: number
+    };
+    map(arg0: any, ...arg: any[]): any;
 }
 
+// type ICreateInitial ={
+//     createInitialState():void;
+// }
+
 type CreateGoods = {
-    id: number;
-    full_name: string;
-    category: {category: {category:string}};
-    order_index: number;
-    price: {
+    id?: number;
+    full_name?: string;
+    category?: {category: {category:string}};
+    order_index?: number;
+    // id_supplier?: {price: {id_supplier?: number}};
+    // storage_index?: {price: {id_storage?: number}};
+    // quantity?: {price?: {quantity?: number}};
+    price?: {
         quantity: number;
         id_storage: number;
         id_supplier: number; 
-        price: {price: number}
-};
+        price: {price: number};
+    };
 }
 
 type AddGoods = {
@@ -47,39 +62,40 @@ type AddGoods = {
     price: number;
 }
 
-interface IReduser {
-    type?: string,
-    addWheel?:{ price:[]}
-    addTyre?:{ price:[]};
-    indexPrice?: number;
-}  
+enum ActionType {
+    ADDTYRE = 'addTyreToOrder',
+    ADDWHEEL = 'addWheelToOrder'
+}
+
+// interface IReduser {
+//     type?: string;
+//     addWheel?:{ price:[]};
+//     addTyre?:{ price:[]};
+//     indexPrice?: number;
+// }  
 
 type ActionReducer = 
-    | { type: 'addTyreToOrder', addTyre:{ price:[]}, indexPrice: number,}
-    | { type: 'addWheelToOrder', addWheel:{ price:[]}, indexPrice: number,};
-   
-interface DispatchType {
-    dispatch( {}: any ) :void; 
-        // {type, addWheel, indexPrice}: 
-        // {type:string; addWheel: any; indexPrice: number;}
-    //state:[];
-    // type?: string,
-    // addWheel?:{ price:[]}
-    // addTyre?:{ price:[]};
-    // indexPrice?: number;
-}
+    | { type: ActionType.ADDTYRE, addTyre:any, indexPrice: string}
+    | { type: ActionType.ADDWHEEL, addWheel:any, indexPrice: string};
+   //{ type: ActionType.ADDWHEEL, addWheel:{ price:[]}, indexPrice: string, payload?: number};
+// interface DispatchType {
+//     dispatch(  {arg0}: any) :void; 
+// }
 
-interface StateReducer {
+type StateReducer = {
+    lenght: number;
+    state?: [];
+    forEach(arg0: (itemGoods: {}) => Promise<void>): unknown;
     push(arg0: { price: any; }): unknown;
-    state: [];
+    splice(itemIndex: number, arg1: number): unknown;
+    map(arg0: any, ...arg: any[]): any;
 }
 
-function reducer (state: StateReducer, action: ActionReducer,) {
+function reducer (state: StateReducer, action: ActionReducer) {
     switch (action.type) {
-      
         case 'addTyreToOrder': {
             if (action.addTyre) {
-                state.push({...action.addTyre, 
+                state?.push({...action.addTyre, 
                     "price":{...(action.addTyre.price[action.indexPrice] as object),
                        "quantity": "4"},  
                 });
@@ -105,8 +121,22 @@ function reducer (state: StateReducer, action: ActionReducer,) {
     
 }
 
+function createInitialState (goodsId: any | undefined): any {
+            
+    let initialState = [];
+
+    if (goodsId) {
+        initialState.push(goodsId);
+        //setPriceItem(goodsId.price[0].price);
+        //console.log(initialState); 
+    }
+       
+    return initialState;
+        
+};
+
 const AdminFormOrder = (
-    {props, goodsId, comments, customer, setActive, storages}:IFormOrder
+    {props, goodsId, comments, customer, storages}:IFormOrder
     ) => {
     const [tyreDatas, wheelDatas] = props;
     const [orderId, setOrderId] = useState<number | null>(null);
@@ -115,25 +145,11 @@ const AdminFormOrder = (
     const [openCustomers, setOpenCustomers] = useState<boolean>(false);
     const [addCustomer, setAddCustomer] = useState<IModalFormOrder | null>(null);
     const [disableBtn, setDisableBtn] = useState<boolean>(false);
-    const [orderStorage, setOrderStorage] = useState<[]>([]);
+    const [orderStorage, setOrderStorage] = useState<any[]>([]);
     const {register, handleSubmit, setValue, formState: {errors}} = useForm();    
-    const [state, dispatch] = useReducer(reducer, goodsId, createInitialState);
+    const [state, dispatch] = useReducer<Reducer<StateReducer, ActionReducer>>(reducer, createInitialState(goodsId));
     const [stateData, setStateData] = useState(state);
      
-    function createInitialState (goodsId:{}) {
-            
-        let initialState = [];
-
-        if (goodsId) {
-            initialState.push(goodsId);
-            //setPriceItem(goodsId.price[0].price);
-            //console.log(initialState); 
-        }
-           
-        return initialState;
-            
-    };
-
     useEffect(() => {
         register("id_customer");
         setValue("id_customer", addCustomer?.id_customer)
@@ -152,7 +168,8 @@ const AdminFormOrder = (
         
     // }
 
-    const onChangeInput = useCallback((e, id, indexItem) => {
+    const onChangeInput = useCallback(
+        (e: any, id: number, indexItem: number) => {
 
         let {name, value} = e.target;
         //console.log('INPUT', ref.current)
@@ -160,7 +177,8 @@ const AdminFormOrder = (
          console.log('valueINPUT', value);
         // console.log('ITEM Id', id);
             setStateData(editStateData => 
-                editStateData.map((item, index) => {
+                editStateData.map(
+                    (item: {id: number; price:{price: number}}, index: number) => {
                 return (
                     item.id === id && index === indexItem ?
                     {...item, price: {...item.price, [name]: value ?? '0'}}
@@ -187,7 +205,7 @@ const AdminFormOrder = (
 
         addCustToOrder: (valueCust: number) => {
             //console.log(valueCust);
-            const findCustomer = customer.find(
+            const findCustomer = customer!.find(
                 (items:{id_customer:number}) => items?.id_customer === +valueCust
             );
 
@@ -207,16 +225,17 @@ const AdminFormOrder = (
             // console.log('ARR ID', +idValue);
             //console.log('ARR INDX', +indexValue);
             //setPriceIndex(+indexValue); 
-            dispatch(({type: "addtyre"}) as value);
-            // dispatch({type: 'addTyreToOrder', 
-            //     addTyre: tyreDatas?.find((item:{id:string}) => item?.id === idValue),
-            //     indexPrice: indexValue,
-            // }: {} typeof value);
 
-            dispatch<Dispatch>(({type: 'addWheelToOrder', 
+
+            dispatch({type: ActionType.ADDTYRE, 
+                addTyre: tyreDatas?.find((item:{id:string}) => item?.id === idValue),
+                indexPrice: indexValue,
+            });
+
+            dispatch({type: ActionType.ADDWHEEL, 
                 addWheel: wheelDatas?.find((item:{id:string}) => item?.id === idValue),
                 indexPrice: indexValue,
-            }) typeof value);
+            });
             
         }
 
@@ -268,7 +287,7 @@ const AdminFormOrder = (
                 //     createGoodsToOrder(stateData[i], response.data.id_order)
                     
                 // }
-                   stateData.forEach((itemGoods:{}) => (
+                   stateData.forEach((itemGoods) => (
                      createGoodsToOrder(itemGoods, response.data.id_order)
                    ));
                //}
@@ -287,17 +306,17 @@ const AdminFormOrder = (
 
     // useEffect(() =>{
     //     createGoodsToOrder();
-        const createGoodsToOrder = async (item:CreateGoods, id_order:number) => { 
-        const resPost =   await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders/creategoods`,
+        const createGoodsToOrder = async (item: CreateGoods, id_order:number) => { 
+        const resPost =  await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders/creategoods`,
                 {
-                    id: +item.id,
+                    id: +item?.id!,
                     full_name: item.full_name,
-                    category: item.category.category,
+                    category: item.category?.category,
                     order_index: id_order,
-                    id_supplier: +item.price.id_supplier,
-                    storage_index: +item.price.id_storage,
-                    quantity: +item.price.quantity,
-                    price: +item.price.price,
+                    id_supplier: +item.price?.id_supplier!,
+                    storage_index: +item.price?.id_storage!,
+                    quantity: +item.price?.quantity!,
+                    price: +item.price?.price!,
                     // delivery: 'Flintstone',
                 },{headers: {
                     'Content-Type': 'application/json; charset=utf-8',
@@ -331,7 +350,7 @@ const AdminFormOrder = (
                 // storage_index: +item.stock[0].id_storage,
                 // quantity: +item.price.quantity,
                 // price: +item.price.price,
-                id_order_storage: value.id_order_storage,
+                id_order_storage: value?.id_order_storage,
                 id: value.id,
                 id_supplier: value.id_supplier,
                 id_order: value.order_index,
@@ -390,8 +409,8 @@ const AdminFormOrder = (
         } catch (error) {
             alert (
                 `Помилка. Не вірні данні, не вистачае залишків,
-                або системна помилка`, 
-                error)
+                або системна помилка: ` + error
+            )
         }
  
             
@@ -435,8 +454,10 @@ const AdminFormOrder = (
                     </div>
                     <div>
                         <label htmlFor="organization">Організація </label>
-                        <select className="admFormOrderOrganiz" name="organisation"
-                            {...register('organisation',)}>
+                        <select className="admFormOrderOrganiz" 
+                            {...register('organisation',)}
+                            name="organisation"
+                            >
                             <option value={"ФОП Гайворонський"}>ФОП Гайворонський</option>
                             <option value={"фл Гайворонський Н. М"}>фл Гайворонський Н. М</option>
                             <option value={"ТОВ Скай-Партс"}>ТОВ Скай-Партс</option>
@@ -444,8 +465,9 @@ const AdminFormOrder = (
                     </div>
                     <div>
                         <label htmlFor="storage">Склад </label>
-                        <select className="admFormOrderStorage" name="storage"
+                        <select className="admFormOrderStorage" 
                             {...register('storage', {required: 'Це необхідні дані'})}
+                            name="storage"
                             >
                             <option value={'Склад Поставщик'}>Склад Поставщик</option>
                             <option value={'Склад Основний'}>Склад Основний</option>
@@ -454,8 +476,9 @@ const AdminFormOrder = (
                     </div>
                     <div>
                         <label htmlFor="orderView">Вид </label>
-                        <select className="admFormOrderView" name="order_view"
+                        <select className="admFormOrderView" 
                             {...register('order_view', {required: 'Це необхідні дані'})}
+                            name="order_view"
                             >
                             <option value="Сайт">Сайт</option>
                             <option value="Роздріб">Роздріб</option>
@@ -465,8 +488,9 @@ const AdminFormOrder = (
                     </div>
                     <div>
                         <label htmlFor="statusOrder">Статус </label>
-                        <select className="admFormOrderStatus" name="status_order"
+                        <select className="admFormOrderStatus" 
                             {...register('status', {required: 'Це необхідні дані'})}
+                            name="status_order"
                             >
                             <option value="Новий">Новий</option>
                             <option value="Продаж">Продаж</option>
@@ -507,7 +531,7 @@ const AdminFormOrder = (
                             defaultValue={addCustomer?.contract[0]?.id_contract}
 
                             >
-                           {addCustomer ? addCustomer?.contract.map(
+                           {addCustomer ? addCustomer?.contract?.map(
                             (entity:{name: string; id_contract:number;}, index:number)=> (  
                                 <option key={'contract' + index} 
                                 value={entity.id_contract}
@@ -521,8 +545,10 @@ const AdminFormOrder = (
 
                     <div>
                         <label htmlFor="pereviznik">Перевізник </label>
-                        <select className="admFormOrderDelivery" name="delivery"
-                            {...register('delivery', {required: 'Це необхідні дані'})}>
+                        <select className="admFormOrderDelivery" 
+                            {...register('delivery', {required: 'Це необхідні дані'})}
+                            name="delivery"
+                            >
                             <option value="Самовивіз">Самовивіз</option>
                             <option value="Своя Доставка">Своя Доставка</option>
                             <option value="Нова Пошта">Нова Пошта</option>
@@ -534,16 +560,18 @@ const AdminFormOrder = (
                         <label htmlFor="fname">ТТН </label>
                         <input type="text" 
                             className="admFormOrderTtn" 
-                            name="delivery_ttn" 
                             maxLength='45'
                             placeholder="ТТН замовлення.."
                             {...register('delivery_ttn')}
+                            name="delivery_ttn"
                         />  
                     </div>
                     <div>
                         <label htmlFor="status">Статус дост </label>
-                        <select className="admFormOrderStatusDel" name="status_delivery"
-                            {...register('status_delivery', {required: 'Це необхідні дані'})}>
+                        <select className="admFormOrderStatusDel" 
+                            {...register('status_delivery', {required: 'Це необхідні дані'})}
+                            name="status_delivery"
+                            >
                             <option value="Новий">Новий</option>
                             <option value="Самовивіз">Самовивіз</option>
                             <option value="Обробляеться">Обробляеться</option>
@@ -559,8 +587,10 @@ const AdminFormOrder = (
                     </div>
                     <div>
                         <label htmlFor="pay_view">Вид оплати </label>
-                        <select className="admFormOrderViewPay" name="pay_view"
-                            {...register('pay_view', {required: 'Це необхідні дані'})}>
+                        <select className="admFormOrderViewPay" 
+                            {...register('pay_view', {required: 'Це необхідні дані'})}
+                            name="pay_view"
+                            >
                             <option value="Новий">Новий</option>
                             <option value="Готівка">Готівка</option>
                             <option value="Б/г рахунок">Б/г рахунок</option>
@@ -572,8 +602,10 @@ const AdminFormOrder = (
                     </div>
                     <div>
                     <label htmlFor="status_pay">Статус оплати </label>
-                        <select className="admFormOrderStatusPay" name="status_pay"
-                        {...register('status_pay', {required: 'Це необхідні дані'})}>
+                        <select className="admFormOrderStatusPay" 
+                            {...register('status_pay', {required: 'Це необхідні дані'})}
+                            name="status_pay"
+                        >
                         <option value="Новий">Новий</option>
                         <option value="Очікує Оплату">Очікує Оплату</option>
                         <option value="Оплачено">Оплачено</option>
@@ -601,7 +633,12 @@ const AdminFormOrder = (
                     <tbody>
                         {stateData?.lenght !== 0 ? 
                             stateData?.map((
-                                item:{id:number, full_name:string, category:{category:string}, price:{price:number; quantity: number}}, index:number) =>(
+                                item:{id:number, 
+                                full_name:string, 
+                                category:{category:string}, 
+                                price:{price:number; quantity: number}}, 
+                                index:number
+                            ) =>(
                         <tr key={item.id + index} 
                         //onChange={(e)=>e.preventDefault({passive: false})}
                             >
@@ -627,7 +664,7 @@ const AdminFormOrder = (
                                 onInput={(e) => e.stopPropagation()}
                                 >
                                 <input 
-                                id={id}
+                                id={'price' + item.id}
                                 key={'price' + item.id + index}
                                 type="text"
                                 name="price"
@@ -655,9 +692,9 @@ const AdminFormOrder = (
                                 //onClick={(e)=>e.preventDefault({passive: false})}
                                 >
                                 <button className='closeAdmGoods' 
-                                    key={'deleteBtn' + id}
+                                    key={'deleteBtn' + item.id}
                                     value={index}
-                                    onClick={e => deleteItem(e.currentTarget.value)}>
+                                    onClick={e => deleteItem(+e.currentTarget.value)}>
                                     <i className="fa fa-remove"></i>
                                 </button>
                                 </div>
@@ -676,8 +713,9 @@ const AdminFormOrder = (
                 </div>
                 <div className='admFormOrderNotes'>
                     <label htmlFor="notes">Нотатки</label>
-                    <textarea className="admFormOrderNotesText" name="notes" 
+                    <textarea className="admFormOrderNotesText"  
                         {...register('notes')}
+                        name="notes"
                         placeholder="Пишить нотатку..">
                     </textarea>  
                 </div>
@@ -715,7 +753,7 @@ const AdminFormOrder = (
                         </button>
                     </div>
                     <div onClick={(e) => e.stopPropagation()}>
-                        <button className='admFormOrderBtn' onClick={setActive}>Відмінити</button>
+                        <button className='admFormOrderBtn' onClick={setActive(false)}>Відмінити</button>
                     </div>
                 </div>
             </form>
@@ -736,7 +774,7 @@ const AdminFormOrder = (
                     <AdminModalGoods 
                         showRowModData={actions.addGoodsToList}
                         props={props}
-                        storage={storages}
+                        storageGoods={storages}
                     />
                 </ModalAdmin> : null
             }

@@ -1,4 +1,4 @@
-import React, {useState, SyntheticEvent, MouseEvent} from 'react';
+import React, {useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminGoodsContent.css';
 import ButtonSearch from '../../buttons/ButtonSearch';
 import AdminBatteryContent from './AdminBatteryContent';
@@ -14,8 +14,8 @@ import AdminFormOrder from '../adminModalForm/AdminModalFormOrder';
 interface IGoodsContent {
     comments?:[] | null;
     props:[[] | null, ...[][] | null[]];
-    customer?:{} | null;
-    storage?:[] | null;
+    customer: [] | null;
+    storage:[] | null;
     stockByIdTyre?: []; 
     tyreStockData:[];
     tyrePriceData:[];
@@ -263,7 +263,8 @@ const AdminGoodsContent = ({comments, props, customer, storage}:IGoodsContent) =
                         storages={storage}
                         customer={customer} 
                         comments={null} 
-                        setActive={null}/>
+                        setActive={undefined}
+                        />
                 </ModalAdmin>
                 : null
             }    
