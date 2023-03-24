@@ -6,10 +6,15 @@ import imgMarkerC from '../../assets/icons/infoTyreMarking/tyreMarkerC.png';
 import imgMarketD from '../../assets/icons/infoTyreMarking/tyreMarkerD.png';
 import imgMarketE from '../../assets/icons/infoTyreMarking/tyreMarkerE.png';
 
-const ContentFilterInfo = ({infoMarking, width}) => {
+interface IContentInfo {
+    infoMarking: string | boolean;
+    width: number;
+}
+
+const ContentFilterInfo = ({infoMarking, width}: IContentInfo) => {
     return (
         
-        <div className='dropdownContentInfo' style={{"--widthBtn":width}}>
+        <div className='dropdownContentInfo' data-style={{"--widthBtn":width}}>
             <h6>Як дізнатися розмір шини?</h6>
             <h6>Маркування на боковині.</h6>
             {infoMarking==='A' ?

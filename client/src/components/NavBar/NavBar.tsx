@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import React, {useState} from 'react';
 import '../../css/NavBarCss/NavBar.css';
 import logoShop from '../../assets/logoShop/logoSample_1_302_100.png';
 //import {Context} from '../index';
@@ -36,15 +36,15 @@ const NavBar = observer(() => {
 
   <div className="navbar">
     <a href='/'>
-      <img href='/' src={logoShop} alt='logoShop'/>
+      <img data-href='/' src={logoShop} alt='logoShop'/>
     </a>
     <NavBarDropTyres/>
     <NavBarDropTyres/>
     <NavBarDropTyres/>
     <a href="/#home" className='anchorBtn'>Доставка і оплата</a>
     <a href='/contact' className='anchorBtn'>Контакти</a>
-    <span href="/#home">067 777 77 77</span>
-    <span href="/#">Більше</span>
+    <span data-href="/#home">067 777 77 77</span>
+    <span data-href="/#">Більше</span>
     <ButtonSearch clickSearchBtn={clickSearchBtn}/>
     {searchBtn? 
       <NavBarSearch searchBtn={searchBtn} clickSearchBtn={clickSearchBtn}/>

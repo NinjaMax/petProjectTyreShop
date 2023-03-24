@@ -5,7 +5,49 @@ import ModalAdmin from '../../modal/ModalAdmin';
 import AdminFormOrder from '../adminModalForm/AdminModalFormOrder';
 import AdminModalOrderSup from '../adminModalForm/AdminModalOrderSup';
 
-const AdminOrderContent = ({props, orders, customer, comments, showComment, storage}) => {
+interface IAdminOrder {
+    comments?:[] | null;
+    props:[[] | null, ...any[][] | null[]];
+    showComment(arg0: any):void;
+    orders: [] | null;
+    customer: [] | null;
+    storage:[any] | null;
+    stockByIdTyre?: []; 
+    tyreStockData?:[];
+    tyrePriceData?:[];
+    wheelData?:[]; 
+    wheelPriceData?:[];
+    wheelStockData?:[]; 
+}
+
+type IOrderComments ={
+        id_order: number;
+        user: string;
+        createdAt: Date;
+        comment: string;
+}      
+
+type IOrdersItem = {
+    id_order: number;
+    createdAt: Date;
+    updatedAt: Date;
+    customer:{full_name: string;}
+    storage: string;
+    status: string;
+    order_view: string;
+    delivery: string;
+    status_delivery: string;
+    pay_view: string;
+    status_pay: string;
+    id_user: number;
+    notes: string;
+    total: number;
+}
+
+
+const AdminOrderContent = (
+    {props, orders, customer, comments, showComment, storage}:IAdminOrder
+    ) => {
     const [activeOrder, setActiveOrder] = useState(false);
     const [activeOrderSup, setActiveOrderSup] = useState(false);
 
@@ -27,13 +69,12 @@ const AdminOrderContent = ({props, orders, customer, comments, showComment, stor
                     </button>
                 </div>
                 <input className='inputAdminOrder' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
-                <ButtonSearch clickSearchBtn={undefined}/>
+                <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
             </div>
             <div className='admOrdersTable'>
             <table className='admListOrdersTable'>
                 <thead>
                     <tr className='headerOrderTable'>
-                      
                         <th>Код</th>
                         <th>Дата</th>
                         <th>Дата оновлення</th>
@@ -52,14 +93,16 @@ const AdminOrderContent = ({props, orders, customer, comments, showComment, stor
                     </tr>
                 </thead>    
                 <tbody>
-                    {orders ? orders.map((items) => (
-                    <tr key={'or' + items.id_order}>
+                    {orders ? orders.map((items: IOrdersItem) => (
+                    <tr key={'or' + items.id_order} 
+                        onClick={showComment}
+                        data-value={items.id_order}>
                         <td>{items.id_order}</td>
-                        <td>{items.createdAt}</td>
-                        <td>{items.updatedAt}</td>
+                        <td>{items.createdAt.toString()}</td>
+                        <td>{items.updatedAt.toString()}</td>
                         <td>{items.customer.full_name}</td>
                         <td>{items?.storage}</td>
-                        <td>{10200.00}</td>
+                        <td>{items?.total}</td>
                         <td>{items.status}</td>
                         <td>{items.order_view}</td>
                         <td>{items.delivery}</td>
@@ -98,11 +141,11 @@ const AdminOrderContent = ({props, orders, customer, comments, showComment, stor
                     </tr>  
                 </thead>
                 <tbody>
-                    {comments ? comments.map((value) => (
+                    {comments ? comments.map((value: IOrderComments) => (
                     <tr>
                         <td>{value.id_order}</td>
                         <td>{value.user}</td>
-                        <td>{value.createdAt}</td>
+                        <td>{value.createdAt.toString()}</td>
                         <td>{value.comment}</td>
                     </tr>
                     ))
@@ -117,14 +160,14 @@ const AdminOrderContent = ({props, orders, customer, comments, showComment, stor
                         setActive={activeFormOrder}
                         customer={customer} 
                         props={props}
-                        storage={storage}
+                        storages={storage}
                     />
                 </ModalAdmin>  
                 : null
             }
             {activeOrderSup ? 
                 <ModalAdmin active={activeOrderSup} setActive={activeFormOrderSup}>
-                    <AdminModalOrderSup/>
+                    <AdminModalOrderSup storages={storage}/>
                 </ModalAdmin>
                 : null
             }

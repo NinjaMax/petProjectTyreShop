@@ -1,8 +1,13 @@
 import React from 'react';
-import Rating from './Rating';
 import '../../css/UXcss/RatingOptions.css';
+import Rating from './Rating';
 
-const RatingOptions = ({nameRating, numScore}) => {
+interface IRatingOptions {
+    nameRating: string; 
+    numScore: number;
+}
+
+const RatingOptions = ({nameRating, numScore}: IRatingOptions) => {
     
     return (
         <div className='ratingOptions'>

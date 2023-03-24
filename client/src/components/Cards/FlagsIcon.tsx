@@ -1,6 +1,7 @@
 import React from 'react';
-import iconFlag from '../../assets/iconFlags/icons8-ukraine-48.png';
 import '../../css/CardsCss/FlagIcon.css';
+import iconFlag from '../../assets/iconFlags/icons8-ukraine-48.png';
+
 
 const FlagsIcon = () => {
     return (

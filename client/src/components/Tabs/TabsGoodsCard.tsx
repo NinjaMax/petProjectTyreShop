@@ -1,18 +1,42 @@
 import React from 'react';
 import '../../css/TabsCss/TabsGoodsCard.css';
 
-const TabsGoodsCard = ({children, itemTab}) => {
+interface ITabGoodsCard {
+    children: React.ReactNode;
+    itemTab: [
+        ITabGoodsItem,
+        ITabGoodsItem, 
+        ITabGoodsItem, 
+        ITabGoodsItem 
+        // {
+        // id:number; 
+        // titleGoodsTab?: string; 
+        // value?: string;
+        // onChangeTab?: (arg: any) => void; 
+        // checked?: string;},
+    ] 
+}
+
+type ITabGoodsItem = {
+    id:number,
+    titleGoodsTab?: string, 
+    value?: string,
+    onChangeTab?: (arg: any) => void,
+    checked?: string,
+}
+
+const TabsGoodsCard = ({children, itemTab}: ITabGoodsCard) => {
    
     return (
 
         <div>
             <div className="tabsGoodsCard">
-                {  itemTab.map((item)=>  
-                <label key={item.value} forhtml={item.value}>
+                {  itemTab.map((item: ITabGoodsItem)=>  
+                <label key={item.value} htmlFor={item.value}>
                     <input className="tabsGoodsCardLinks"
                     value={item.value} 
                     onChange={item.onChangeTab} 
-                    id={item.id}
+                    id={item?.id.toString()}
                     type="radio"
                     name="radioTab"
                     />{item.titleGoodsTab}

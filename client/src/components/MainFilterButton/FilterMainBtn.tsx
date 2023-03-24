@@ -1,9 +1,18 @@
-import {React, useState} from 'react';
+import React, {useState} from 'react';
 import '../../css/FilterMain/FilterMainBtn.css';
 import ContentFilterInfo from './ContentFilterInfo';
 //import ChipOptions from '../ChipOptions';
 
-const FilterMainBtn = ({children, titleFilter, width, contentInfo}) => {
+interface IFilterMainBtn {
+  children: JSX.Element | JSX.Element[] | any;
+  titleFilter: string; 
+  width: number; 
+  contentInfo?: string | boolean; 
+}
+
+const FilterMainBtn = (
+    {children, titleFilter, width, contentInfo}: IFilterMainBtn
+  ) => {
   const [stateClick, setStateClick]=useState(false);
 
   const filterClick = () => {
@@ -17,7 +26,7 @@ const FilterMainBtn = ({children, titleFilter, width, contentInfo}) => {
         <div>
             <div className="dropdownFilterMainBtn">
                 <button onClick={filterClick} 
-                  className="dropBtnFilterMainBtn" style={{"--widthBtn":width}}> 
+                  className="dropBtnFilterMainBtn" data-style={{"--widthBtn":width}}> 
                   {titleFilter} <i className='fa fa-caret-down'/>
                 </button>
                 {stateClick?  

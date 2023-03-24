@@ -1,8 +1,8 @@
 import React from 'react';
+import '../../css/CardsCss/PropsCardIcon.css';
 import seasonSummer from '../../assets/icons/iconsSeasons/seasonSummer.png';
 import passCar from '../../assets/icons/iconsTypeCar/londonCabClear64.png';
 import pickup from '../../assets/icons/iconsTypeCar/pickup.png';
-import '../../css/CardsCss/PropsCardIcon.css';
 
 const PropsCardIcons = () => {
     return (

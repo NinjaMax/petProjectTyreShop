@@ -1,7 +1,15 @@
 import React from 'react';
 import '../../css/SelectCss/CheckboxBtn.css';
 
-const CheckboxBtn = ({value, titleCheckbox, imageSrc}) => {
+interface ICheckBoxBtn {
+    value: string;
+    titleCheckbox: string;
+    imageSrc?: string;
+}
+
+const CheckboxBtn = (
+    {value, titleCheckbox, imageSrc}: ICheckBoxBtn
+    ) => {
     return (
         <div>
             <label className="containerCheckbox">

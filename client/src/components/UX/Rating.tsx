@@ -1,7 +1,11 @@
 import React from 'react';
 import '../../css/UXcss/Rating.css';
 
-const Rating = ({numScore}) => {
+interface  IRating {
+    numScore: number;
+}
+
+const Rating = ({numScore}: IRating) => {
     return (
         <div className='ratingStar'>
             <span className="fa fa-star checked"></span>

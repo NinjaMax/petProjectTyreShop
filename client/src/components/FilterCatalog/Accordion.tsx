@@ -2,8 +2,13 @@ import React, {useState} from 'react';
 import '../../css/FilterCatatogCss/Accordion.css';
 //import ChipOptions from '../MainFilterButton/ChipOptions';
 
+interface IAccordion {
+    titleName: string;
+    children: JSX.Element | JSX.Element [];
+}
 
-const Accordion = ({children, titleName}) => {
+
+const Accordion = ({children, titleName}: IAccordion) => {
     const [activeBtn, setActiveBtn] = useState(false);
 //<ChipOptions props={'Легкові'}/> 
 

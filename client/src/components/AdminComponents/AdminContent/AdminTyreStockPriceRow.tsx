@@ -1,10 +1,37 @@
 import React, {Fragment} from 'react';
 
-const AdminTyreStockPriceRow = ({stockTyres, priceTyres}) => {
+interface IAdmTyreStockPriceRow {
+    stockTyres: any[] | undefined; 
+    priceTyres: any[] | undefined;
+   
+}
+
+type IStockTyrelRow = {
+    id: number;
+    storage: {storage: string};
+    update_date: Date;
+    supplier: {name: string; city_ua: string;};
+    stock: number;
+    reserve: number;
+    remainder: number;
+}
+
+// type IPriceTyreRow = {
+//     id: number;
+//     price_wholesale: number; 
+//     price: number;
+//     price_plus_delivery: number;
+// }
+
+const AdminTyreStockPriceRow = (
+    {stockTyres, priceTyres}: IAdmTyreStockPriceRow
+    ) => {
     return (
         <>
-        {stockTyres?.lenght !==0 || priceTyres?.lenght !==0 ? 
-            priceTyres?.map((item, index) => (
+        {stockTyres?.length !==0 || priceTyres?.length !==0 ? 
+            priceTyres?.map((
+                item: IStockTyrelRow,
+                index: number) => (
         <tr key={'tyrerow ' + item?.id}>
             {stockTyres ?
                 <Fragment key={'stt' + stockTyres[index]?.id}>

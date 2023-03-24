@@ -1,7 +1,14 @@
 import React from 'react';
 import '../../css/SelectCss/SelectFilter.css';
 
-const SelectFilter = ({children, value}) => {
+interface ISelectFilter {
+    children:any; 
+    value: any;
+}
+
+const SelectFilter = (
+        {children, value}: ISelectFilter
+    ) => {
     return (
 
         <div className='selectFilter'>

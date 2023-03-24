@@ -5,7 +5,7 @@ import {MAIN_ROUTE} from '../utils/consts';
 import { Context } from '../index';
 
 const AppRouter = () => {
-    const {user} = useContext(Context);
+    const {user} = useContext<any | null>(Context);
     console.log(user);
     return (
         <Switch>

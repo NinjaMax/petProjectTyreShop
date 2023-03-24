@@ -1,12 +1,37 @@
 import React, {Fragment} from 'react';
 
-const AdminWheelStockPriceRow = ({stockWheels, priceWheels}) => {
+interface IAdmWheelStockPriceRow {
+    stockWheels: any[] | undefined; 
+    priceWheels: any[] | undefined;
+}
+
+type IStockWheelRow = {
+    id: number;
+    storage: {storage: string};
+    update_date: Date;
+    supplier: {name: string; city_ua: string;};
+    stock: number;
+    reserve: number;
+    remainder: number;
+}
+
+type IPriceWheelRow = {
+    id: number;
+    price_wholesale: number; 
+    price: number;
+    price_plus_delivery: number;
+}
+
+
+const AdminWheelStockPriceRow = (
+        {stockWheels, priceWheels}: IAdmWheelStockPriceRow
+    ) => {
     return (
         <>
-            {stockWheels ? stockWheels.map((item) => (
+            {stockWheels ? stockWheels?.map((item: IStockWheelRow) => (
                 <Fragment key={'stw' + item.id}>
                     <td >{item.storage?.storage ?? ''}</td>
-                    <td >{item?.update_date ?? ''}</td>
+                    <td >{item?.update_date.toString() ?? ''}</td>
                     <td >{item.supplier?.name ?? ''}</td>
                     <td >{item.supplier?.city_ua ?? ''}</td>
                     <td >{item?.stock ?? ''}</td>
@@ -16,7 +41,7 @@ const AdminWheelStockPriceRow = ({stockWheels, priceWheels}) => {
                     ))
                     : <td>Покищо немає данних. Очікуємо...</td>
             } 
-            {priceWheels ? priceWheels.map((item) =>(
+            {priceWheels ? priceWheels?.map((item: IPriceWheelRow) =>(
                 <Fragment key={'wp' + item.id}>
                     <td >{item?.price_wholesale ?? ''}</td>
                     <td >{item?.price ?? ''}</td>

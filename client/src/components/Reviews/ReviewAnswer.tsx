@@ -1,6 +1,7 @@
 import React from 'react';
-import storeLogo from '../../assets/logoShop/logoSkyshina151_50clear.png';
 import '../../css/Reviews/ReviewAnswer.css';
+import storeLogo from '../../assets/logoShop/logoSkyshina151_50clear.png';
+
 
 const ReviewAnswer = () => {
     return (

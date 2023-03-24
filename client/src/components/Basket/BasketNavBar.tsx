@@ -1,8 +1,13 @@
 import React from 'react';
-import shoppingCart from '../../assets/icons/shopping_cart64Clear.png';
 import '../../css/BasketCss/BasketNavBar.css';
+import shoppingCart from '../../assets/icons/shopping_cart64Clear.png';
 
-const BasketNavBar = ({setActive}) => {
+
+interface IBasketNav {
+    setActive():void;
+}
+
+const BasketNavBar = ({setActive}: IBasketNav) => {
     return (
         <div className='basketNav' onClick={setActive}>
             <a href='/basket'>

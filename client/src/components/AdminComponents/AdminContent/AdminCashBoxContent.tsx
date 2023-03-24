@@ -21,7 +21,7 @@ const AdminCashBoxContent = () => {
                 </button>
             </div>
             <input className='inputAdminCashBox' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
-            <ButtonSearch clickSearchBtn={undefined}/>
+            <ButtonSearch clickSearchBtn={() => console.log('seaachBTN')}/>
         </div>
         <div className='admCashBoxTable'>
         <table className='admListCashBoxTable'>

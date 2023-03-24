@@ -8,10 +8,18 @@ const TabProdMain = () => {
     return (
         <div>
             <div className="tabProdMain">
-                <button className="tabProdlinks" onClick={'tab'}>АКЦИЯ</button>
-                <button className="tabProdlinks" onClick={'tab'}>ЛИДЕР ПРОДАЖ</button>
-                <button className="tabProdlinks" onClick={'tab'}>РЕКОМЕНДУЕМ</button>
-                <button className="tabProdlinks" onClick={'tab'}>НОВИНКА</button>
+                <button className="tabProdlinks" 
+                    value={'АКЦІЯ'} 
+                    onClick={(e) => e.currentTarget.value}>АКЦІЯ</button>
+                <button className="tabProdlinks" 
+                    value={'ЛІДЕРИ ПРОДАЖУ'} 
+                    onClick={(e) => e.currentTarget.value}>ЛІДЕРИ ПРОДАЖУ</button>
+                <button className="tabProdlinks" 
+                    value={'РЕКОМЕНДУЄМО'} 
+                    onClick={(e) => e.currentTarget.value}>РЕКОМЕНДУЄМО</button>
+                <button className="tabProdlinks" 
+                    value={'НОВИНКА'} 
+                    onClick={(e) => e.currentTarget.value}>НОВИНКА</button>
             </div>
             <div id="London" className="tabContentProdMain">
                 <PromotionBox/>

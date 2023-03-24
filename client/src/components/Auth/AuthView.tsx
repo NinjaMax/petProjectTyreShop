@@ -1,11 +1,16 @@
 import React from 'react';
-import userImg from '../../assets/icons/customer64.png';
 import '../../css/AuthCss/AuthView.css';
+import userImg from '../../assets/icons/customer64.png';
 
-const AuthView = ({setActive}) => {
+
+interface IAuthView {
+    setActive(): void;
+}
+
+const AuthView = ({setActive}:IAuthView) => {
     return (
         <div className='authView'>
-            <label htmfor='btnAuth'onClick={setActive}>
+            <label htmlFor='btnAuth'onClick={setActive}>
                 <img id='imgCustomerAuth' src={userImg} alt='imgUser'/>
             
                 <button className='btnAuthView' name='btnAuth' >

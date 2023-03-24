@@ -11,7 +11,7 @@ const CatalogTyresPage = () => {
     return (
       <div className='catalogTyres'>
         <div className='a'>
-          <BreadCrumbs ref={undefined} hrefTitle={undefined}/>
+          <BreadCrumbs route={['/','/tyres']} hrefTitle={['Home','Tyres']}/>
         </div>
         <div className='b'>
           <FilterCatalogTyres/>

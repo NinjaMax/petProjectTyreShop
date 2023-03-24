@@ -1,7 +1,20 @@
 import React from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminModalCustomers.css';
 
-const AdminModalCustomers = ({allCustomer, addCustomer}) => {
+interface IModalCustomers {
+    allCustomer: [] | null;
+    addCustomer(arg0: any): void;
+}
+
+type IAllCustomer = {
+    id_customer: number;
+    full_name: string;
+    contract: [
+        {name: string; id_contract: number;}
+    ];
+}
+
+const AdminModalCustomers = ({allCustomer, addCustomer}: IModalCustomers) => {
 
     return (
         <div>
@@ -17,10 +30,10 @@ const AdminModalCustomers = ({allCustomer, addCustomer}) => {
                 </thead>
                 <tbody>
                     {allCustomer ? 
-                        allCustomer.map((entity) => (
+                        allCustomer.map((entity:IAllCustomer) => (
                         <tr key={'cus' + entity.id_customer} 
                             onDoubleClick={e => addCustomer(e.currentTarget.getAttribute("value"))} 
-                            value={entity.id_customer}>
+                            data-value={entity.id_customer}>
                             <td >{entity.id_customer}</td>
                             <td >{entity.full_name}</td>
                             <td >{entity.contract[0].name}</td>

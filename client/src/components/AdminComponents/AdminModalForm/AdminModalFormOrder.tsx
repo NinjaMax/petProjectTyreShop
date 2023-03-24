@@ -10,12 +10,12 @@ import AdminModalGoods from './AdminModalGoods';
 //import {addGoodsToOrder, createGoodsToOrder, responseForm} from '../../../RestAPI/restAdminAPI';
 
 interface IFormOrder {
-    props: [[] | null, ...[][]] | [[] | null, ...null[]];
-    goodsId: {};
-    comments: [] | null;
+    props: [[] | null, ...any[][]] | [[] | null, ...null[]];
+    goodsId?: {};
+    comments?: [] | null;
     customer: [] | null;
-    //setActive():void | undefined;
-    storages: [] | null;
+    setActive(arg0: any):void;
+    storages: [any] | null;
 }
 
 type IModalFormOrder = {
@@ -136,7 +136,7 @@ function createInitialState (goodsId: any | undefined): any {
 };
 
 const AdminFormOrder = (
-    {props, goodsId, comments, customer, storages}:IFormOrder
+    {props, goodsId, comments, setActive, customer, storages}:IFormOrder
     ) => {
     const [tyreDatas, wheelDatas] = props;
     const [orderId, setOrderId] = useState<number | null>(null);
@@ -753,14 +753,15 @@ const AdminFormOrder = (
                         </button>
                     </div>
                     <div onClick={(e) => e.stopPropagation()}>
-                        <button className='admFormOrderBtn' onClick={setActive(false)}>Відмінити</button>
+                        <button className='admFormOrderBtn' onClick={() =>setActive(false)}>Відмінити</button>
                     </div>
                 </div>
             </form>
         </div>
             {openCustomers ?
                 <ModalAdmin active={openCustomers} setActive={setOpenCustomers} >
-                    <AdminModalCustomers allCustomer={customer}
+                    <AdminModalCustomers 
+                        allCustomer={customer}
                         addCustomer={actions.addCustToOrder}/>
                 </ModalAdmin> : null  
             }

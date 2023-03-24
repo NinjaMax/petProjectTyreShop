@@ -6,7 +6,15 @@ import Rating from '../ux/Rating';
 import Thumbs from '../ux/Thumbs';
 import ReviewsGoodsExtend from './ReviewsGoodsExtend';
 
-const ReviewsGoods = ({reviewExtend, btnLeft, btnRight}) => {
+interface IReviewsGoods {
+    reviewExtend: boolean; 
+    btnLeft: any; 
+    btnRight: any;
+}
+
+const ReviewsGoods = (
+        {reviewExtend, btnLeft, btnRight}: IReviewsGoods
+    ) => {
     return (
        
             <div className='reviewGoods'>   

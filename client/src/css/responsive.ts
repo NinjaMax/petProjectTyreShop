@@ -1,9 +1,17 @@
-import { css } from "styled-components";
+/* eslint-disable no-sequences */
+//import styled from "styled-components";
 
-export const mobile = (props) => {
-  return css`
-    @media only screen and (max-width: 380px) {
-      ${props}
-    }
-  `;
+interface IMobile {
+  props: {arg0: any, arg1: any};
+  item: any;
+}
+
+export const mobile = ({props}: IMobile) => {
+  // return styled`
+  //   @media only screen and (max-width: 380px) {
+      
+  //     ${props, item}
+
+  //   }
+  // `;
 };

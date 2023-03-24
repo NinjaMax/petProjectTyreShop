@@ -2,7 +2,7 @@ import React, {MouseEvent} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminTyreContent.css';
 
 interface ITyreContent {
-    props:[] | null;
+    props: any[] | null;
     showRowData(e: any):void;
     addTyreToOrder(e: any): void;
     //stockByIdTyre: [];
@@ -51,7 +51,7 @@ const AdminTyreContent = ({props, showRowData, addTyreToOrder}: ITyreContent) =>
                 <tbody> 
                     {props ? props.map((item: TyreContent) => (
                 
-                    <tr key={'t' + item.id} onClick={showRowData} value={item.id}>
+                    <tr key={'t' + item.id} onClick={showRowData} data-value={item.id}>
                         <td key={'tid' + item.id}>{item.id}</td>
                         <td key={'tn' + item.id}>{item.full_name}</td>
                         <td key={'ts' + item.id}>{item.season?.season_ua ?? ''}</td>

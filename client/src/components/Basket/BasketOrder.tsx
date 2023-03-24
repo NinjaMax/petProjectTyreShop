@@ -39,8 +39,8 @@ const BasketOrder = () => {
                 <div className='basketColmItemLeft'>
                     <span>Номер телефону *</span>
                     <InputDataTel 
-                    onAccept={acceptInput} 
-                    //ref={refComp}
+                        onAccept={acceptInput} 
+                        //ref={refComp}
                     />  
                 </div>
                 <div className='basketColmItemLeft'>

@@ -1,7 +1,14 @@
 import React from 'react';
 import '../../css/NavBarSearch.css';
 
-const NavBarSearch = ({searchBtn, clickSearchBtn}) => {
+interface INavBarSearch {
+    searchBtn: boolean; 
+    clickSearchBtn(): void;
+}
+
+const NavBarSearch = (
+        {searchBtn, clickSearchBtn}: INavBarSearch
+    ) => {
     return (
         <div id="myOverlay" className={searchBtn? "overlayActive" : "overlay"}>
             <span className="closebtn" onClick={clickSearchBtn} title="Close Overlay">&#10006;</span>

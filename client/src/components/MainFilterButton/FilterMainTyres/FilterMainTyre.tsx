@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import React, {useState} from 'react';
 import '../../../css/FilterMain/FilterMainTyres/FilterMainTyre.css';
 import imageThorn from '../../../assets/icons/imagesThorn_1.png';
 import FilterMainBtn from '../FilterMainBtn';
@@ -10,7 +10,7 @@ import SelectFilter from '../../select/SelectFilter';
 const FilterMainTyre = () => {
     const [handleItem, setHandleItem] = useState();
 
-    const handleChange = (e) => {
+    const handleChange = (e: any) => {
         
         setHandleItem(e.currentTarget.value);
     } 
@@ -67,7 +67,7 @@ const FilterMainTyre = () => {
                 <CheckboxBtn value={"Dunlop"} titleCheckbox={"Dunlop"}/>
             </FilterMainBtn>
             <div className='btnSelect'>
-                <ButtonAction props={'ПІДІБРАТИ'}/>
+                <ButtonAction props={'ПІДІБРАТИ'} />
             </div>
             <CheckboxBtn value={"ship"} titleCheckbox={"Шип"} imageSrc={imageThorn}/>
         </div>

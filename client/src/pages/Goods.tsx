@@ -18,7 +18,7 @@ import YouWatched from '../components/goods/YouWatched';
 const GoodsPage = () => {
   const modelBrand = "CONTICROSSPREMIUMCONTACT";
   const brandName = "Continental";
-  const [changeTabGoods, setChangeTabGoods] = useState("vseProTovar");
+  const [changeTabGoods, setChangeTabGoods] = useState<string>("vseProTovar");
   
   const handleChangeTab = (e: { currentTarget: { value: SetStateAction<string>; }; }) => {
     setChangeTabGoods(e.currentTarget.value);
@@ -28,7 +28,7 @@ const GoodsPage = () => {
     
     <div className='goodsCard'>
       <div className='goodsBreadCrumbs'>
-        <BreadCrumbs ref={undefined} hrefTitle={undefined}/>
+        <BreadCrumbs route={['/','/tyres']} hrefTitle={['Home','Tyres']}/>
       </div>
       <div className={changeTabGoods==="vseProTovar" ? 'tabGoods':'tabGoodsActive'}>
         <TabsGoodsCard
@@ -50,11 +50,11 @@ const GoodsPage = () => {
                 <div className='tabReviewsActive'>
                   <ReviewGoodsOverall/> 
                   <ReviewBrandOverall/>
-                  <ReviewsGoods reviewExtend={undefined} btnLeft={undefined} btnRight={undefined}/>
-                  <ReviewsGoods reviewExtend={undefined} btnLeft={undefined} btnRight={undefined}/>
-                  <ReviewsGoods reviewExtend={undefined} btnLeft={undefined} btnRight={undefined}/>
-                  <ReviewsGoods reviewExtend={undefined} btnLeft={undefined} btnRight={undefined}/>
-                  <ReviewsGoods reviewExtend={undefined} btnLeft={undefined} btnRight={undefined}/>
+                  <ReviewsGoods reviewExtend={false} btnLeft={undefined} btnRight={undefined}/>
+                  <ReviewsGoods reviewExtend={false} btnLeft={undefined} btnRight={undefined}/>
+                  <ReviewsGoods reviewExtend={false} btnLeft={undefined} btnRight={undefined}/>
+                  <ReviewsGoods reviewExtend={false} btnLeft={undefined} btnRight={undefined}/>
+                  <ReviewsGoods reviewExtend={false} btnLeft={undefined} btnRight={undefined}/>
                 </div>  
             :null}
             {changeTabGoods==="pitannja"?

@@ -8,7 +8,7 @@ interface IOrderSupContent {
     
     props:[[] | null, ...[][] | null[]];
     customer?:{} | null;
-    storage?:[] | null;
+    storage:[any] | null;
     comments?:[] | null;
     //stockByIdTyre?:[]; 
     // tyreStockData:[];
@@ -36,7 +36,7 @@ const AdminOrderSupContent = (
                 </button>
             </div>
             <input className='inputAdminOrderSup' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
-            <ButtonSearch clickSearchBtn={undefined}/>
+            <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
         </div>
         <div className='admOrdersSupTable'>
         <table className='admListOrdersSupTable'>
@@ -531,7 +531,7 @@ const AdminOrderSupContent = (
             {createOrdSup ? 
             <ModalAdmin active={createOrdSup} setActive={setCreateOrdSup}>
                 <AdminModalOrderSup 
-                    storage={storage}/>
+                    storages={storage}/>
             </ModalAdmin>
             : null
         }

@@ -1,11 +1,19 @@
 import React from 'react';
 import '../../css/ButtonsCss/ButtonAction.css';
 
-const ButtonAction = ({props, widthBtn, eventItem}) => {
+interface IButtonAction {
+    props: string;
+    widthBtn?: number;
+    eventItem?:() => void | undefined;
+}
+
+const ButtonAction = (
+    {props, widthBtn, eventItem}: IButtonAction
+    ) => {
     return (
         <div >
             <button id='buttonAction' 
-            style={{"--widthBtn":widthBtn}}
+            data-style={{"--widthBtn":widthBtn}}
             onClick={eventItem}>{props}</button>
         </div>
     );

@@ -1,10 +1,14 @@
 import React from 'react';
 import '../../css/FilterMain/ChipOptions.css';
 
-const ChipOptions = ({props}) => {
+interface IChipOptions {
+    props: any;
+}
+
+const ChipOptions = ({props}: IChipOptions) => {
     return (
         <div className='chipOptions'>
-            {props} <span className="closeChipBtn" onClick={""}>&times;</span>
+            {props} <span className="closeChipBtn" onClick={(e) => console.log(e.currentTarget)}>&times;</span>
         </div>
     );
 };

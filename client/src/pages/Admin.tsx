@@ -1,7 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import '../css/Admin.css';
-import axios from 'axios';
-import { getTyres } from '../restAPI/restAdminAPI';
+//import axios from 'axios';
+import { getTyres, 
+        getStockTyres, 
+        getPriceTyres, 
+        getWheels, 
+        getStockWheel,
+        getStorageAll,
+        getPriceWheels,
+        getCommentData,
+        getOrderData,
+        getCustomers } from '../restAPI/restAdminAPI';
 import AdminSideBar from '../components/AdminComponents/AdminSideBar';
 import AdminMainContent from '../components/AdminComponents/AdminMainContent';
 import AdminGoodsContent from '../components/AdminComponents/adminContent/AdminGoodsContent';
@@ -21,7 +30,7 @@ import AdminProfile from '../components/AdminComponents/AdminProfile';
 import AdminHeader from '../components/AdminComponents/AdminHeader';
 //import { StockTyre } from './interfaces/stockTyre.interface';
 
-interface IAdmin {
+//interface IAdmin {
     // data?: [];
     // result?: void | any;
     //props:[[], ...[][]];
@@ -41,13 +50,13 @@ interface IAdmin {
     // orderAllData?:[] | null;
     // storageAll?:[] | null;
     //result.data: [];
-}
+//}
 
 
 const Admin = () => {
 
     const [sideBarItem, setSideBarItem] = useState("golovna");
-    const [tyreData, setTyreData] = useState(null);
+    const [tyreData, setTyreData] = useState<[] | null>(null);
     const [tyreStockData, setTyreStockData] = useState(null);
     const [tyrePriceData, setTyrePriceData] = useState(null);
     const [wheelData, setWheelData] = useState(null);
@@ -75,195 +84,225 @@ const Admin = () => {
     useEffect(()=> {
         //const getAllTyre = getTyres();
         let isMounted = false;
-         const fetchData = async () => {
-        //    await getTyres();
-
-            //if (isMounted) {
-                //setTyreData(['sdfsdfsdf']); 
-                //console.log(
-                    //const getTyres = async () => 
-                    //{
-                    ///const allTyres = async () =>
-                    //try {
-                    // await axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/tyres`, {
-                    //     headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-                    //     withCredentials: true})
-                    // .then(response => { 
-                    //     //Object.assign()
-                    //     //setTyreData(response.data);
-                    //     //console.log(response.data);
-                    //     if (!isMounted) {
-                    //         setTyreData(response.data) 
-                    //     }
-                        
-                    // })
-                    // .catch(error => {
-                    //  console.log(error)
-                    // })
-                const result: any = await getTyres();
-                //await getTyres().then(data => {
-                    if (!isMounted) {
-                       //setTyreData(data.data) 
-                       setTyreData(result.data);
+         const fetchDataTyre = async () => {
+            const result: any = await getTyres();
+            //await getTyres().then(data => {
+            if (!isMounted) {
+                   //setTyreData(data.data) 
+                setTyreData(result.data);
                        //console.log(result.data);
-                    }
-                //});
             }
-                //getTyres().then(data => console.log(data.data))
-                //console.log(getTyres())
-                //   );
-            //}
-        //}
+        }
 
-        fetchData();
-        //getAllTyre.then(data => setTyreData(data.data));
-            //);
+        fetchDataTyre();
+
         return () => {
             isMounted = true;
         };
 
     },[])
 
-    // useEffect(() =>{
-
-    // },[])
-    
-    // useEffect(() =>{
-        
-    // },[])
-
     useEffect(() =>{
-        axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/stock/tyres/all`, {
-            headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-            withCredentials: true,
-            //params: {id_tyre: itemIdTyre}
-        })
-        .then(response => {
-            setTyreStockData(response.data);
-            //console.log('STOCK TYRE: ',response.data)
-        })
-        .catch(error => {
-          console.log(error)
-        });
+        let isMounted = false;
+
+        const fetchDataStockTyre = async () => {
+
+            const result: any = await getStockTyres();
+                    //await getTyres().then(data => {
+                if (!isMounted) {
+                        //setTyreData(data.data) 
+                    setTyreStockData(result.data);
+                        //console.log(result.data);
+                }
+            }
+
+            fetchDataStockTyre();
+
+            return () => {
+                isMounted = true;
+            };
     },[])
 
     useEffect(() =>{
-        axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/price/tyres/all`, {
-            headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-            withCredentials: true,
-            //params: {id_tyre: itemIdTyre}
-        })
-        .then(response => {
-            setTyrePriceData(response.data);
-            //console.log('PRICE TYRE: ',response.data)
-        })
-        .catch(error => {
-          console.log(error)
-        });
+
+        let isMounted = false;
+
+        const fetchDataPriceTyre = async () => {
+
+            const result: any = await getPriceTyres();
+                    //await getTyres().then(data => {
+                if (!isMounted) {
+                        //setTyreData(data.data) 
+                    setTyrePriceData(result.data);
+                        //console.log(result.data);
+                }
+            }
+    
+            fetchDataPriceTyre();
+
+            return () => {
+                isMounted = true;
+            };
     },[])
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/wheels`, {
-            headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-            withCredentials: true})
-        .then(response => {
-            setWheelData(response.data);
-            //console.log(response.data);
-        })
-        .catch(error => {
-          console.log(error)
-        })
+
+        let isMounted = false;
+
+        const fetchDataWheel = async () => {
+
+            const result: any = await getWheels();
+                    //await getTyres().then(data => {
+                if (!isMounted) {
+                        //setTyreData(data.data) 
+                    setWheelData(result.data);
+                        //console.log(result.data);
+                }
+            }
+    
+            fetchDataWheel();
+
+            return () => {
+                isMounted = true;
+            };
     },[])
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/stock/wheels/all`, {
-            headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-            withCredentials: true,
-            //params: {id_tyre: itemIdTyre}
-        })
-        .then(response => {
-            setWheelStockData(response.data);
-            //console.log('STOCK TYRE: ',response.data)
-        })
-        .catch(error => {
-          console.log(error)
-        });
+
+        let isMounted = false;
+
+        const fetchDataStockWheel = async () => {
+
+            const result: any = await getStockWheel();
+                    //await getTyres().then(data => {
+                if (!isMounted) {
+                        //setTyreData(data.data) 
+                    setWheelStockData(result.data);
+                        //console.log(result.data);
+                }
+            }
+    
+            fetchDataStockWheel();
+
+            return () => {
+                isMounted = true;
+            };
     },[])
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/storage/all`, {
-            headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-            withCredentials: true,
-            //params: {id_tyre: itemIdTyre}
-        })
-        .then(response => {
-            setStorageAll(response.data);
-            //console.log('STOCK TYRE: ',response.data)
-        })
-        .catch(error => {
-          console.log(error)
-        });
+
+        let isMounted = false;
+
+        const fetchDataPriceWheel = async () => {
+
+            const result: any = await getPriceWheels();
+                    //await getTyres().then(data => {
+                if (!isMounted) {
+                        //setTyreData(data.data) 
+                    setWheelPriceData(result.data);
+                        //console.log(result.data);
+                }
+            }
+    
+            fetchDataPriceWheel();
+
+            return () => {
+                isMounted = true;
+            };
+
     },[])
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/price/wheels/all`, {
-            headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-            withCredentials: true,
-            //params: {id_tyre: itemIdTyre}
-        })
-        .then(response => {
-            setWheelPriceData(response.data);
-            //console.log('PRICE TYRE: ',response.data)
-        })
-        .catch(error => {
-          console.log(error)
-        });
+
+        let isMounted = false;
+
+        const fetchDataStorage = async () => {
+
+            const result: any = await getStorageAll();
+                    //await getTyres().then(data => {
+                if (!isMounted) {
+                    //setTyreData(data.data) 
+                    setStorageAll(result.data);
+                    //console.log(result.data);
+                }
+            }
+    
+            fetchDataStorage();
+
+        return () => {
+            isMounted = true;
+        };
+
     },[])
 
+
+
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/comments`, {
-            headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-            withCredentials: true,
-            params: {id_comment: commentId}
-        })
-        .then(response => {
-            setCommentData(response.data);
-            //console.log('COMMENTS',response.data);
-        })
-        .catch(error => {
-          console.log(error)
-        })
+
+        let isMounted = false;
+
+        const fetchDataComment = async () => {
+
+            const result: any = await getCommentData(commentId);
+                    //await getTyres().then(data => {
+                if (!isMounted) {
+                    //setTyreData(data.data) 
+                    setCommentData(result.data);
+                    //console.log(result.data);
+                }
+            }
+    
+            fetchDataComment();
+
+        return () => {
+            isMounted = true;
+        };
     },[commentId])
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders/all`, {
-            headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-            withCredentials: true,
-            //params: {id_comment: commentId}
-        })
-        .then(response => {
-            setOrderAllData(response.data);
-            //console.log('COMMENTS',response.data);
-        })
-        .catch(error => {
-          console.log(error)
-        })
+
+        let isMounted = false;
+
+        const fetchDataOrder = async () => {
+
+            const result: any = await getOrderData();
+                    //await getTyres().then(data => {
+                if (!isMounted) {
+                    //setTyreData(data.data) 
+                    setOrderAllData(result.data);
+                    //console.log(result.data);
+                }
+            }
+    
+            fetchDataOrder();
+
+        return () => {
+            isMounted = true;
+        };
+
     },[])
     
     useEffect(() => {
 
-        axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/customers/all`, {
-            headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-            withCredentials: true})
-        .then(response => {
-            setCustomers(response.data);
-            //console.log(response.data);
-        })
-        .catch(error => {
-          console.log(error)
-        })
+        let isMounted = false;
 
-    },[commentId])
+        const fetchDataCustomers = async () => {
+
+            const result: any = await getCustomers();
+                    //await getTyres().then(data => {
+                if (!isMounted) {
+                    //setTyreData(data.data) 
+                    setCustomers(result.data);
+                    //console.log(result.data);
+                }
+            }
+    
+            fetchDataCustomers();
+
+        return () => {
+            isMounted = true;
+        };
+    },[])
 
     const sideBarItemChange = async (e: any) => {
         setSideBarItem(e.target.value);
@@ -298,7 +337,8 @@ const Admin = () => {
                             wheelData, wheelPriceData, wheelStockData]}
                         customer={customers}
                         comments={commentData}
-                        storage={storageAll} />
+                        storage={storageAll}  
+                        />
                 : null}
                 {sideBarItem === 'zamovlenia' ?
                     <AdminOrderContent 

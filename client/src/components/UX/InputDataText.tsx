@@ -1,6 +1,15 @@
 import React from 'react';
 
-const InputDataText = ({inputItem}) => {
+interface IinputDataTex {
+    inputItem: {
+        name:string,
+        discr:string,
+        max:string,
+        size: string  
+    }
+}
+
+const InputDataText = ({inputItem}: IinputDataTex) => {
     return (
         <div>
             <input className='inputDataText' 
@@ -8,9 +17,9 @@ const InputDataText = ({inputItem}) => {
                 name={inputItem.name} 
                 id={inputItem.name}  
                 placeholder={inputItem.discr} 
-                minLength="4" 
+                minLength={4} 
                 maxLength={inputItem.max} 
-                size={inputItem.size} 
+                data-size={inputItem.size} 
                 required
                 autoComplete='true'/> 
         </div>

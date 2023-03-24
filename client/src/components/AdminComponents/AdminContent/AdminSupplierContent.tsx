@@ -22,7 +22,7 @@ const AdminSupplierContent = () => {
                 </button>
             </div>
             <input className='inputAdminSupplier' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
-            <ButtonSearch clickSearchBtn={undefined}/>
+            <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
         </div>
         <div className='admSupplierTable'>
         <table className='admListSupplierTable'>

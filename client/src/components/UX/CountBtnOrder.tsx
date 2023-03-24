@@ -1,7 +1,11 @@
 import React from 'react';
 import '../../css/UXcss/CountBtnOrder.css';
 
-const CountBtnOrder = ({countGoods}) => {
+interface ICountBtnOrder {
+    countGoods: number;
+}
+
+const CountBtnOrder = ({countGoods}: ICountBtnOrder) => {
     return (
         <div className='countBtnOrder'>
             <button className='countBtnOrderLeft'>&#x2B;</button>

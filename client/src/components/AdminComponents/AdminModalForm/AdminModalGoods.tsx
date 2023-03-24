@@ -2,7 +2,7 @@ import React, {useState, Fragment} from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminModalGoods.css';
 
 interface IModalGoods {
-    props: [[] | null, ...[][] | null[]];
+    props: [[] | null, ...any[][] | null[]];
     storageGoods: [ 
         {id_storage: number;
         storage: string} 

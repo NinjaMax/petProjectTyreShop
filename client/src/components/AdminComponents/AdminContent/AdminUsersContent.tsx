@@ -21,7 +21,7 @@ const AdminUsersContent = () => {
                 </button>
             </div>
             <input className='inputAdminUsers' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
-            <ButtonSearch clickSearchBtn={undefined}/>
+            <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
         </div>
         <div className='admUsersTable'>
         <table className='admListUsersTable'>

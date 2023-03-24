@@ -1,14 +1,15 @@
 import React from 'react';
+import '../../css/News/NewsMainBox.css';
 import newsImage from '../../assets/img/all_season_tyres_road_kwik_fit_header.jpg';
 import newsImage2 from '../../assets/michelintyres.jpg';
-import '../../css/News/NewsMainBox.css';
+
 
 const NewsMainBox = () => {
     return (
         <div className='newsMainBox'>
             <div className='newsTitle'>Новини статті огляди</div>
             <div className="newsMainBoxList">
-                <div className="columnNewsBox" onClick={"openTab('b1');"}>
+                <div className="columnNewsBox" onClick={() => console.log('Стаття 1')}>
                     <img src={newsImage} alt='imageNews'/>
                     <div className='columnNewsBoxContent'>
                         <h4>Чи потрібні всесезонні шини?</h4>
@@ -16,7 +17,7 @@ const NewsMainBox = () => {
                         <div>18.08.2022</div>
                     </div>    
                 </div>
-                <div className="columnNewsBox" onClick={"openTab('b2');"}>
+                <div className="columnNewsBox" onClick={() => console.log('Стаття 2')}>
                     <img src={newsImage2} alt='imageNews'/>
                     <div className='columnNewsBoxContent'>
                         <h4>Як тестують та розвробляють шини для автоспорту</h4>
@@ -24,27 +25,27 @@ const NewsMainBox = () => {
                         <div>18.08.2022</div>
                     </div>    
                 </div>
-                <div className="columnNewsBox" onClick={"openTab('b3');"}>Box 3</div>
+                <div className="columnNewsBox" onClick={() => console.log('Стаття 3')}>Box 3</div>
             </div>
             <div className='btnNewsMainBox'>
                 <button className='btmNewsMainBox'>Дивитися всі новини</button>
             </div>
                 
             <div id="b1" className="containerTabNewsBox">
-                <span onClick={"this.parentElem"} className="closebtnNewsBox">x</span>
+                <span onClick={() => console.log('Стаття 4')} className="closebtnNewsBox">x</span>
                 <img src={newsImage} alt='imageNews'/>
                 <h2>Box 1</h2>
                 <p>Lorem ipsum..</p>
             </div>
 
             <div id="b2" className="containerTabNewsBox">
-                <span onClick={"this.parentElem"} className="closebtnNewsBox">x</span>
+                <span onClick={() => console.log('Стаття 1')} className="closebtnNewsBox">x</span>
                 <h2>Box 2</h2>
                 <p>Lorem ipsum..</p>
             </div>
 
             <div id="b3" className="containerTabNewsBox">
-                <span onClick={"this.parentElem"} className="closebtnNewsBox">x</span>
+                <span onClick={() => console.log('Стаття 1')} className="closebtnNewsBox">x</span>
                 <h2>Box 3</h2>
                 <p>Lorem ipsum..</p>
             </div>

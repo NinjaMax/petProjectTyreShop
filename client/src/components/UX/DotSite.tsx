@@ -4,9 +4,15 @@ import '../../css/UXcss/DotSite.css';
 const DotSite = () => {
     return (
         <div>
-            <span className="dotSite" onClick="currentSlide(1)"></span>
-            <span className="dotSite" onClick="currentSlide(2)"></span>
-            <span className="dotSite" onClick="currentSlide(3)"></span>
+            <span className="dotSite" 
+                onClick={(e) => console.log(e.currentTarget)}>
+            </span>
+            <span className="dotSite" 
+                onClick={(e) => console.log(e.currentTarget)}>
+            </span>
+            <span className="dotSite" 
+                onClick={(e) => console.log(e.currentTarget)}>
+            </span>
         </div>
     );
 };

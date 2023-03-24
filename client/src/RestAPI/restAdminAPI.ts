@@ -1,4 +1,4 @@
-// //React Ax ios Post Request:
+// //React Axios Post Request:
 import axios from "axios";
 
     const createGoodsToOrder = async (item: 
@@ -18,7 +18,6 @@ import axios from "axios";
                 'Content-Type': 'application/json; charset=utf-8',
                 'Access-Control-Allow-Origin': 'http://localhost:3000'
             },
-            
                 withCredentials: true,  
             }
             )
@@ -129,14 +128,147 @@ const getTyres = async () =>
 // } catch (error) {
 //     console.log(error)
 // }
-
-
 //return allTyres;
-
 //}
+const getStockTyres = async () => 
+axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/stock/tyres/all`, {
+    headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
+    withCredentials: true,
+    //params: {id_tyre: itemIdTyre}
+})
+// .then(response => {
+//     //setTyreStockData(response.data);
+//     //console.log('STOCK TYRE: ',response.data)
+// })
+.catch(error => {
+  console.log(error)
+});
+
+const getPriceTyres = async () => 
+    axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/price/tyres/all`, {
+        headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
+        withCredentials: true,
+        //params: {id_tyre: itemIdTyre}
+    })
+    // .then(response => {
+    //     setTyrePriceData(response.data);
+    //     //console.log('PRICE TYRE: ',response.data)
+    // })
+    .catch(error => {
+      console.log(error)
+    });
+
+const getWheels = async () => 
+    axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/wheels`, {
+        headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
+        withCredentials: true
+    })
+    // .then(response => {
+    //     setWheelData(response.data);
+    //     //console.log(response.data);
+    // })
+    .catch(error => {
+      console.log(error)
+    })
+
+const getStockWheel =async () =>
+    axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/stock/wheels/all`, {
+        headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
+        withCredentials: true,
+        //params: {id_tyre: itemIdTyre}
+    })
+    // .then(response => {
+    //     setWheelStockData(response.data);
+        //console.log('STOCK TYRE: ',response.data)
+    //})
+    .catch(error => {
+      console.log(error)
+    });
+
+const getPriceWheels = async () => 
+    axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/price/wheels/all`, {
+        headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
+        withCredentials: true,
+        //params: {id_tyre: itemIdTyre}
+    })
+    // .then(response => {
+    //     setWheelPriceData(response.data);
+    //     //console.log('PRICE TYRE: ',response.data)
+    // })
+    .catch(error => {
+      console.log(error)
+    });
+
+const getStorageAll = async () => 
+    axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/storage/all`, {
+        headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
+        withCredentials: true,
+        //params: {id_tyre: itemIdTyre}
+    })
+    //.then(response => {
+        //setStorageAll(response.data);
+        //console.log('STOCK TYRE: ',response.data)
+    //})
+    .catch(error => {
+      console.log(error)
+    });
+
+const getCommentData = async (commentId: number | null) =>
+    axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/comments`, {
+        headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
+        withCredentials: true,
+        params: {id_comment: commentId}
+    })
+    // .then(response => {
+    //     setCommentData(response.data);
+    //     //console.log('COMMENTS',response.data);
+    // })
+    .catch(error => {
+      console.log(error)
+    })
+
+const getOrderData = async () => 
+    axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders/all`, {
+        headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
+        withCredentials: true,
+        //params: {id_comment: commentId}
+    })
+    // .then(response => {
+    //     setOrderAllData(response.data);
+    //     //console.log('COMMENTS',response.data);
+    // })
+    .catch(error => {
+      console.log(error)
+    })
+
+const getCustomers = async () => 
+    axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/customers/all`, {
+        headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
+        withCredentials: true
+    })
+    // .then(response => {
+    //     setCustomers(response.data);
+    //     //console.log(response.data);
+    // })
+    .catch(error => {
+      console.log(error)
+    })
 
 
-export {addGoodsToOrder, createGoodsToOrder, responseForm, getTyres};
+
+export {addGoodsToOrder,
+        createGoodsToOrder,
+        responseForm,
+        getTyres, 
+        getStockTyres, 
+        getPriceTyres,
+        getWheels,
+        getStockWheel,
+        getStorageAll,
+        getPriceWheels,
+        getCommentData,
+        getOrderData,
+        getCustomers};
 // import React, { useEffect, useState } from 'react'; import axios from 'axios';
 
 // const MyComponent = () => { const [data, setData] = useState(null);

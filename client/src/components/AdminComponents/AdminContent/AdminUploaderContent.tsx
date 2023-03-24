@@ -1,16 +1,24 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminUploadContent.css'
 
-const AdminUploaderContent = () => {
-    const {register, handleSubmit} = useForm();
+interface IUploader {
+    register(arg:string): void;
+    handleSubmit(arg0: any):void;
+    onSubmit(arg0: {arg1: any}):void;
+    file: (string | Blob)[];
+}
 
-    const onSubmit = async (data) => {
+const AdminUploaderContent = () => {
+    const {register, handleSubmit} = useForm<IUploader>();
+
+    const onSubmit = async (data: { file: (string | Blob)[]; }) => {
         const formData = new FormData();
         formData.append("file", data.file[0]);
 
         const res = await fetch(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/uploader/tyres`, {
             headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-            withCredentials: true,
+            //withCredentials: true,
             method: "POST",
             body: formData,
         }).then((res) => res.json());
@@ -24,8 +32,11 @@ const AdminUploaderContent = () => {
                 <form method="post" encType="multipart/form-data">
                     <div>
                         <label htmlFor="file">Виберіть Прайс в форматі CSV для завантаження </label>
-                        <input type="file" id="file" name="file" multiple {...register("file")}
-                            accept=".csv"/>
+                        <input type="file" id="file"  
+                        multiple 
+                        {...register("file")}
+                        name="file"
+                        accept=".csv"/>
                     </div>
                 <div>
                     <button onSubmit={handleSubmit(onSubmit)}>Завантажити</button>

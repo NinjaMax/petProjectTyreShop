@@ -11,25 +11,25 @@ const CategorySlide = () => {
         <div>
             <div className="rowCategoreSlider">
                 <div className="columnCategorySlider">
-                  <img src={summerCat} href="/goods" className="hover-shadow" alt='categorySlider'/>
+                  <img src={summerCat} className="hover-shadow" alt='categorySlider'/>
                   <div className='contentCategorySlider'>
                     <h2>Літні шини</h2>
                   </div>
                 </div>
                 <div className="columnCategorySlider">
-                  <img src={winterCat} onClick={"openModal();currentSlide(2)"} className="hover-shadow" alt='categorySlider'/>
+                  <img src={winterCat} onClick={(e) => console.log(e.currentTarget)} className="hover-shadow" alt='categorySlider'/>
                   <div className='contentCategorySlider'>
                     <h2>Зимові шини</h2>
                   </div>
                 </div>
                 <div className="columnCategorySlider">
-                  <img src={allseasonCat} onClick={"openModal();currentSlide(3)"} className="hover-shadow" alt='categorySlider'/>
+                  <img src={allseasonCat} onClick={(e) => console.log(e.currentTarget)} className="hover-shadow" alt='categorySlider'/>
                   <div className='contentCategorySlider'>
                     <h2>Всесезонні шини</h2>
                   </div>
                 </div>
                 <div className="columnCategorySlider">
-                  <img src={wheelsCat} onClick={"openModal();currentSlide(3)"} className="hover-shadow" alt='categorySlider'/>
+                  <img src={wheelsCat} onClick={(e) => console.log(e.currentTarget)} className="hover-shadow" alt='categorySlider'/>
                   <div className='contentCategorySlider'>
                     <h2>Диски</h2>
                   </div>

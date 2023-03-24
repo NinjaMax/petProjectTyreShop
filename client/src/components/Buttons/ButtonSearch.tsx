@@ -1,7 +1,11 @@
 import React from 'react';
 import '../../css/ButtonsCss/ButtonSearch.css';
 
-const ButtonSearch = ({clickSearchBtn}) => {
+interface IButtonSearch {
+    clickSearchBtn(arg: any): void;
+}
+
+const ButtonSearch = ({clickSearchBtn}: IButtonSearch) => {
     
     return (
         <div>

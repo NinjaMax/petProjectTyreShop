@@ -35,11 +35,11 @@ const CatalogTyres = () => {
             <div className='sortBtnCatalog'>
                 <span>Сортування:</span>
                 <SelectRadio radioData={{ value: "deshevihDodorogih", radioName: "Від дешевих до дорогих" }}
-                direction={"row"} addOptions={undefined} checked={undefined} children={undefined}/>
+                direction={"row"} />
                 <SelectRadio radioData={{ value: "dorogihDeshevih", radioName: "Від дорогих до дешевих" }}
-                direction={"row"} addOptions={undefined} checked={undefined} children={undefined}/>
+                direction={"row"} />
                 <SelectRadio radioData={{ value: "poRatingu", radioName: "По рейтингу" }}
-                direction={"row"} addOptions={undefined} checked={undefined} children={undefined}/>               
+                direction={"row"} />               
             </div>
             <div className="rowCatalogTyres">
                 <TyresCard optionsBox={true} checkOrders={checkOrders} forOrder={false}/>

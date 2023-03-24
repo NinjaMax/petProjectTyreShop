@@ -11,17 +11,25 @@ const TabMain = () => {
 
     <div className='tabMainFilter wheelsTab tyresTab'>
         <div className="tabMain">
-            <button className="tablinksTyres" onClick={'tab'}>
-                ШИНЫ<span className='arrowTabTyres'></span>
+            <button className="tablinksTyres" 
+                value={'ШИНИ'}       
+                onClick={(e) => e.currentTarget.value}>
+                ШИНB<span className='arrowTabTyres'></span>
             </button>
-            <button className="tablinksWheel" onClick={'tab'}>
+            <button className="tablinksWheel" 
+                value={'ДИСКИ'} 
+                onClick={(e) => e.currentTarget.value}>
                 ДИСКИ<span className='arrowTabWheels'></span>   
             </button>
-            <button className="tablinksAkb" onClick={'tab'}>
+            <button className="tablinksAkb" 
+                value={'АКБ'} 
+                onClick={(e) => e.currentTarget.value}>
                 АКБ<span className='arrowTabAkb'></span>
             </button>
-            <button className="tablinksSelect" onClick={'tab'}>
-                ПІДБІР ПО АВТО<span className='arrowTabSelect'></span>
+            <button className="tablinksSelect" 
+                value={'МАСТИЛА/РІДИНИ'} 
+                onClick={(e) => e.currentTarget.value}>
+                МАСЛА ТА РІДИНИ<span className='arrowTabSelect'></span>
             </button>
             
         </div>

@@ -20,7 +20,7 @@ const AdminPayExpensesContent = () => {
                     onClick={outgoingCreate}>Додати платіж</button>
             </div>
             <input className='inputAdminExpense' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
-            <ButtonSearch clickSearchBtn={undefined}/>
+            <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
         </div>
         <div className='admExpenseTable'>
         <table className='admListExpenseTable'>

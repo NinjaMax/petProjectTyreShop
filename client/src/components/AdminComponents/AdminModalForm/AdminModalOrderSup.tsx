@@ -3,10 +3,10 @@ import '../../../css/AdminComponentCss/AdminModalFormCss/AdminModalOrderSup.css'
 import AdminComment from '../adminContent/AdminComment';
 
 interface IModalOrderSup {
-    storage: [] | null;
+    storages: [any] | null;
 }
 
-const AdminModalOrderSup = ({storage}: IModalOrderSup) => {
+const AdminModalOrderSup = ({storages}: IModalOrderSup) => {
     return (
         
             <div>

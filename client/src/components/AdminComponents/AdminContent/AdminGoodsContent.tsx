@@ -13,15 +13,16 @@ import AdminFormOrder from '../adminModalForm/AdminModalFormOrder';
 
 interface IGoodsContent {
     comments?:[] | null;
-    props:[[] | null, ...[][] | null[]];
+    props:[[] | null, ...any[][] | null[]];
+
     customer: [] | null;
-    storage:[] | null;
+    storage:[any] | null;
     stockByIdTyre?: []; 
-    tyreStockData:[];
-    tyrePriceData:[];
-    wheelData:[]; 
-    wheelPriceData:[];
-    wheelStockData:[]; 
+    tyreStockData?:[];
+    tyrePriceData?:[];
+    wheelData?:[]; 
+    wheelPriceData?:[];
+    wheelStockData?:[]; 
     //stockByIdTyre: [];
 }
 
@@ -201,18 +202,18 @@ const AdminGoodsContent = ({comments, props, customer, storage}:IGoodsContent) =
                 </div>
                 <div className='admBtnSearch'>
                     <input className='inputAdminGoods' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
-                    <ButtonSearch clickSearchBtn={undefined}/>  
+                    <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>  
                 </div>
             </div>
             <div className='admGoodsTable'>
             { chooseCat === 'Шини' ?
                 <AdminTyreContent props={tyreData} showRowData={showStockPriceTyre}
-                addTyreToOrder={addToOrder}/>
+                    addTyreToOrder={addToOrder}/>
                 : null
             }
             { chooseCat === 'Диски' ?
                 <AdminWheelContent props={wheelData} showRowData={showStockPriceWheel}
-                addWheelToOrder={addToOrder}/>
+                    addWheelToOrder={addToOrder}/>
                 : null
             }
             { chooseCat === 'АКБ' ?
@@ -263,7 +264,7 @@ const AdminGoodsContent = ({comments, props, customer, storage}:IGoodsContent) =
                         storages={storage}
                         customer={customer} 
                         comments={null} 
-                        setActive={undefined}
+                        setActive={addToOrder}
                         />
                 </ModalAdmin>
                 : null

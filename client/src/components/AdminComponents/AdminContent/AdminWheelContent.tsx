@@ -1,7 +1,24 @@
 import React from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminWheelContent.css';
 
-const AdminWheelContent = ({props, showRowData, addWheelToOrder}) => {
+interface IAdminWheelContent {
+    props: any[] | null;
+    showRowData(arg0: any):void;
+    addWheelToOrder(arg0: any): void;
+}
+
+type IWheelContentItem = {
+    id: number;
+    full_name_color: string;
+    type: {type: string;};
+    color: {color_short: string}
+    category:{category: string}
+}
+
+
+const AdminWheelContent = (
+    {props, showRowData, addWheelToOrder}: IAdminWheelContent
+    ) => {
     return (
         <div>
             <div className='admWheelTable'>
@@ -27,15 +44,16 @@ const AdminWheelContent = ({props, showRowData, addWheelToOrder}) => {
                     </tr>
                 </thead>    
                 <tbody> 
-                {props ? props.map((item) => (
+                {props ? props.map((item: IWheelContentItem) => (
                 
-                <tr key={'w' + item.id} onClick={showRowData} value={item.id}>
-                    <td key={'wid' + item.id}>{item.id}</td>
-                    <td key={'tn' + item.id}>{item.full_name_color}</td>
-                    <td key={'ts' + item.id}>{item.type?.type ?? ''}</td>
-                    <td key={'ty' + item.id}>{item.color?.color_short ?? ''}</td>
-                    <td key={'tca' + item.id}>{item.category?.category ?? ''}</td>
-                    <td key={'t' + item.id} onClick={(e)=>e.preventDefault({passive: false})}>
+                <tr key={'w' + item.id} onClick={showRowData} 
+                    data-value={item.id}>
+                    <td >{item.id}</td>
+                    <td >{item.full_name_color}</td>
+                    <td >{item.type?.type ?? ''}</td>
+                    <td >{item.color?.color_short ?? ''}</td>
+                    <td >{item.category?.category ?? ''}</td>
+                    <td  onClick={(e)=>e.preventDefault()}>
                             <button className='basketAdmWheel' value={item.id} 
                                 onClick={addWheelToOrder}>
                                 <i className="fa fa-shopping-cart"></i>

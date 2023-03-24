@@ -2,11 +2,19 @@ import React, {useRef} from 'react';
 import '../../css/UXcss/InputDataTel.css';
 import { IMaskInput } from 'react-imask';
 
- const InputDataTel = ({onAccept}) => {
+interface IinputDataTel {
+    current?: any;
+    onAccept?: (arg: any) => void;
+    refLabel?: {current:{className: string;}};
+}
 
-    const refLabel = useRef();
+//type IOnAccept =  {refLabel?: {current:{className: string;}};}
 
-    const inputEvent = (e) => {
+const InputDataTel = ({onAccept}: IinputDataTel) => {
+
+    const refLabel: IinputDataTel = useRef();
+
+    const inputEvent = (e: any) => {
         if(e.currentTarget.value.length > 4 && e.currentTarget.value.length <= 10 ) {
             refLabel.current.className = 'inputDataTelLabelActive';
         } else {
@@ -21,23 +29,23 @@ import { IMaskInput } from 'react-imask';
     return (
 
         <div>
-            <IMaskInput className='inputDataTel'
+            <IMaskInput data-className='inputDataTel'
                 mask='+{38}(000)000-00-00'
                 radix="."
                 value="_"
                 unmask={false}
                 lazy={false} 
                 onAccept={onAccept}
-                onInput={inputEvent}
-                placeholder='0'
-                autoComplete="tel"
-                type="text"
+                data-onInput={inputEvent}
+                data-placeholder='0'
+                data-autoComplete="tel"
+                data-type="text"
                 definitions={{'_': /[1-10]/}}
-                guide="true"
+                data-guide="true"
                 overwrite={true} 
-                required
+                data-required
             />
-            <label ref={refLabel} className='inputDataTelLabel'>
+            <label data-ref={refLabel} className='inputDataTelLabel'>
                     введіть номер телефону 
                     <span className='inputDataTelSpan'> *</span>
             </label>   

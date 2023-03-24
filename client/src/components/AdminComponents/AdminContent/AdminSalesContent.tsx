@@ -1,6 +1,7 @@
 import React from 'react';
-import ButtonSearch from '../../buttons/ButtonSearch';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminSalesContent.css';
+import ButtonSearch from '../../buttons/ButtonSearch';
+
 
 const AdminSalesContent = () => {
     return (
@@ -9,7 +10,7 @@ const AdminSalesContent = () => {
             <span>Продажі:</span>
             <div className='admSalesHeader'></div>
             <input className='inputAdminSales' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
-            <ButtonSearch clickSearchBtn={undefined}/>
+            <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
         </div>
         <div className='admSalesTable'>
         <table className='admListSalesTable'>

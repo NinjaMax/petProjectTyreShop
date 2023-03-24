@@ -1,7 +1,13 @@
 import React from 'react';
 import '../../css/Modal/ModalAdmin.css';
 
-const ModalAdmin = ({active, setActive, children}) => {
+interface IModalAmin {
+    active: boolean;
+    setActive(arg0: any): void;
+    children?: JSX.Element | JSX.Element[];
+}
+
+const ModalAdmin = ({active, setActive, children}: IModalAmin) => {
     return (
         <div className={active? 'modalAdmWindowActive': 'modalAdmWindow'}
             >
