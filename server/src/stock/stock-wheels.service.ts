@@ -164,7 +164,7 @@ export class StockWheelsService {
 
       const stockWheelById = await this.stockWheelsRepository.findOne(
         {where: {id_wheel: getStockDto.id}, 
-        include: {all: true}
+        //include: {all: true}
       });
 
       return stockWheelById;

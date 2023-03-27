@@ -132,7 +132,7 @@ export class StockBatteriesService {
 
       const stockBatteryById = await this.stockBatteriesRepository.findOne(
         {where: {id_battery: getStockDto.id}, 
-        include: {all: true}
+        //include: {all: true}
       });
 
       return stockBatteryById;

@@ -168,7 +168,7 @@ export class StockTyresService {
 
       const stockTyreById = await this.stockTyresRepository.findOne(
         {where: {id_tyre: getStockDto.id}, 
-        include: {all: true}
+        //include: {all: true}
       });
 
       return stockTyreById;

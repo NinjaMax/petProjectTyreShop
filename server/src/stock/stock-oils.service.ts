@@ -131,7 +131,7 @@ export class StockOilsService {
 
       const stockOilById = await this.stockOilsRepository.findOne(
         {where: {id_oil: getStockDto.id}, 
-        include: {all: true}
+        //include: {all: true}
       });
 
       return stockOilById;

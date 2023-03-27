@@ -72,7 +72,9 @@ export class OrdersService {
     try {
       const orderId = await this.ordersRepository.findByPk(
         getOrdersDto.id_order,
-        {include: { all: true }},
+        {
+          include: { all: true },
+        },
       );
 
       return orderId;
@@ -127,17 +129,19 @@ export class OrdersService {
     //try {
       const orderId = await this.ordersRepository.findByPk(
         createOrderDto.id_order,
-        {include: {all: true}},
+        {include: ['order_storage']}
+        //{include: {all: true}},
       );
-      const tyreStock = await this.stockTyresService.findStockTyreById(
+      let tyreStock = await this.stockTyresService.findStockTyreById(
         createOrderDto,
       );
-      const wheelStock = await this.stockWheelsService.findStockWheelById(
+      let wheelStock = await this.stockWheelsService.findStockWheelById(
         createOrderDto,
       );
-      const batteryStock =
+      let batteryStock =
         await this.stockBatteriesService.findStockBatteryById(createOrderDto);
-      const oilStock = await this.stockOilsService.findStockOilById(
+
+      let oilStock = await this.stockOilsService.findStockOilById(
         createOrderDto,
       );
       const storageStorage = await this.storageService.findStorageById(
@@ -195,6 +199,10 @@ export class OrdersService {
             because does not have remainder. "Remainder 0".
             Or Storage specified incorrectly`;
         }
+
+        return () => {
+        tyreStock = null;
+        };
       }
 
       if (wheelStock) {
@@ -247,6 +255,10 @@ export class OrdersService {
           return `You can not set more "reserve" 
             because does not have remainder. "Remainder 0".
             Or Storage specified incorrectly`;
+        }
+
+        return () => {
+          wheelStock = null;
         }
       }
 
@@ -301,6 +313,10 @@ export class OrdersService {
             because does not have remainder. "Remainder 0".
             Or Storage specified incorrectly`;
         }
+
+        return () => {
+          batteryStock = null;
+        }
       }
 
       if (oilStock) {
@@ -351,6 +367,10 @@ export class OrdersService {
           return `You can not set more "reserve" 
             because does not have remainder. "Remainder 0".
             Or Storage specified incorrectly`;
+        }
+
+        return () => {
+          oilStock = null;
         }
       }
 

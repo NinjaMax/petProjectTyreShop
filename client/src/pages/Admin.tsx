@@ -28,6 +28,10 @@ import AdminReportsContent from '../components/AdminComponents/adminContent/Admi
 import AdminOptionContent from '../components/AdminComponents/adminContent/AdminOptionContent';
 import AdminProfile from '../components/AdminComponents/AdminProfile';
 import AdminHeader from '../components/AdminComponents/AdminHeader';
+import { yieldToMain } from '../restAPI/postTaskAdmin';
+//import { postTask } from '../restAPI/postTaskAdmin';
+//import { scheduler } from 'timers/promises';
+
 //import { StockTyre } from './interfaces/stockTyre.interface';
 
 //interface IAdmin {
@@ -83,226 +87,120 @@ const Admin = () => {
   
     useEffect(()=> {
         //const getAllTyre = getTyres();
-        let isMounted = false;
-         const fetchDataTyre = async () => {
-            const result: any = await getTyres();
-            //await getTyres().then(data => {
-            if (!isMounted) {
-                   //setTyreData(data.data) 
-                setTyreData(result.data);
-                       //console.log(result.data);
-            }
-        }
+        // let isMounted = false;
+        //  const fetchDataTyre = async () => {
+        //     const result: any = await getTyres();
+        //     //await getTyres().then(data => {
+        //     if (!isMounted) {
+        //            //setTyreData(data.data) 
+        //         setTyreData(result.data);
+        //                //console.log(result.data);
+        //     }
+        // }
+    
+        // fetchDataTyre();
 
-        fetchDataTyre();
+
+        let isMounted = false;
+            const postTask = async() => {
+            
+                const tasks:any[] = [
+                    //addGoodsToOrder,
+                    //createGoodsToOrder,
+                    //responseForm,
+                    getTyres,
+                    getStockTyres,
+                    getPriceTyres,
+                    getWheels,
+                    getStockWheel,
+                    getStorageAll,
+                    getPriceWheels,
+                    getCommentData,
+                    getOrderData,
+                    getCustomers
+                ]
+                
+
+                for (let i = 0; tasks.length > i; i++) {
+                    if(!isMounted && tasks[i] === getTyres) {
+                        
+                        let result: any = await tasks[i]();
+                        setTyreData(result.data);
+                    }
+
+                    if(!isMounted && tasks[i] === getStockTyres) {
+                        
+                        let result: any = await tasks[i]();
+                        setTyreStockData(result.data);
+                    } 
+                    
+                    if(!isMounted && tasks[i] === getPriceTyres) {
+                       
+                        let result: any = await tasks[i]();
+                        setTyrePriceData(result.data);
+                    } 
+                    
+                    if(!isMounted && tasks[i] === getWheels) {
+                       
+                        let result: any = await tasks[i]();
+                        setWheelData(result.data);
+                    } 
+                    
+                    if(!isMounted && tasks[i] === getStockWheel) {
+                       
+                        let result: any = await tasks[i]();
+                        setWheelStockData(result.data);
+                    } 
+                    
+                    if(!isMounted && tasks[i] === getStorageAll) {
+                       
+                        let result: any = await tasks[i]();
+                        setStorageAll(result.data);
+                    } 
+                    
+                    if(!isMounted && tasks[i] === getPriceWheels) {
+                       
+                        let result: any = await tasks[i]();
+                        setWheelPriceData(result.data);
+                    } 
+                    
+                    if(!isMounted && tasks[i] === getOrderData) {
+                        
+                        let result: any = await tasks[i]();
+                        setOrderAllData(result.data);
+                    } 
+                    
+                    if(!isMounted && tasks[i] === getCustomers) {
+                       
+                        let result: any = await tasks[i]();
+                        setCustomers(result.data);
+                    } 
+
+                    if(!isMounted && tasks[i] === getCommentData) {
+                       
+                        let result: any = await tasks[i](commentId);
+                        setCommentData(result.data);
+                    } 
+
+                    const task = tasks.shift();
+  
+                    // Run the task:
+                    task();
+
+                    await yieldToMain()   
+                }
+  
+            }
+
+            postTask();
 
         return () => {
             isMounted = true;
         };
 
-    },[])
-
-    useEffect(() =>{
-        let isMounted = false;
-
-        const fetchDataStockTyre = async () => {
-
-            const result: any = await getStockTyres();
-                    //await getTyres().then(data => {
-                if (!isMounted) {
-                        //setTyreData(data.data) 
-                    setTyreStockData(result.data);
-                        //console.log(result.data);
-                }
-            }
-
-            fetchDataStockTyre();
-
-            return () => {
-                isMounted = true;
-            };
-    },[])
-
-    useEffect(() =>{
-
-        let isMounted = false;
-
-        const fetchDataPriceTyre = async () => {
-
-            const result: any = await getPriceTyres();
-                    //await getTyres().then(data => {
-                if (!isMounted) {
-                        //setTyreData(data.data) 
-                    setTyrePriceData(result.data);
-                        //console.log(result.data);
-                }
-            }
-    
-            fetchDataPriceTyre();
-
-            return () => {
-                isMounted = true;
-            };
-    },[])
-
-    useEffect(() => {
-
-        let isMounted = false;
-
-        const fetchDataWheel = async () => {
-
-            const result: any = await getWheels();
-                    //await getTyres().then(data => {
-                if (!isMounted) {
-                        //setTyreData(data.data) 
-                    setWheelData(result.data);
-                        //console.log(result.data);
-                }
-            }
-    
-            fetchDataWheel();
-
-            return () => {
-                isMounted = true;
-            };
-    },[])
-
-    useEffect(() => {
-
-        let isMounted = false;
-
-        const fetchDataStockWheel = async () => {
-
-            const result: any = await getStockWheel();
-                    //await getTyres().then(data => {
-                if (!isMounted) {
-                        //setTyreData(data.data) 
-                    setWheelStockData(result.data);
-                        //console.log(result.data);
-                }
-            }
-    
-            fetchDataStockWheel();
-
-            return () => {
-                isMounted = true;
-            };
-    },[])
-
-    useEffect(() => {
-
-        let isMounted = false;
-
-        const fetchDataPriceWheel = async () => {
-
-            const result: any = await getPriceWheels();
-                    //await getTyres().then(data => {
-                if (!isMounted) {
-                        //setTyreData(data.data) 
-                    setWheelPriceData(result.data);
-                        //console.log(result.data);
-                }
-            }
-    
-            fetchDataPriceWheel();
-
-            return () => {
-                isMounted = true;
-            };
-
-    },[])
-
-    useEffect(() => {
-
-        let isMounted = false;
-
-        const fetchDataStorage = async () => {
-
-            const result: any = await getStorageAll();
-                    //await getTyres().then(data => {
-                if (!isMounted) {
-                    //setTyreData(data.data) 
-                    setStorageAll(result.data);
-                    //console.log(result.data);
-                }
-            }
-    
-            fetchDataStorage();
-
-        return () => {
-            isMounted = true;
-        };
-
-    },[])
-
-
-
-    useEffect(() => {
-
-        let isMounted = false;
-
-        const fetchDataComment = async () => {
-
-            const result: any = await getCommentData(commentId);
-                    //await getTyres().then(data => {
-                if (!isMounted) {
-                    //setTyreData(data.data) 
-                    setCommentData(result.data);
-                    //console.log(result.data);
-                }
-            }
-    
-            fetchDataComment();
-
-        return () => {
-            isMounted = true;
-        };
     },[commentId])
 
-    useEffect(() => {
-
-        let isMounted = false;
-
-        const fetchDataOrder = async () => {
-
-            const result: any = await getOrderData();
-                    //await getTyres().then(data => {
-                if (!isMounted) {
-                    //setTyreData(data.data) 
-                    setOrderAllData(result.data);
-                    //console.log(result.data);
-                }
-            }
     
-            fetchDataOrder();
-
-        return () => {
-            isMounted = true;
-        };
-
-    },[])
-    
-    useEffect(() => {
-
-        let isMounted = false;
-
-        const fetchDataCustomers = async () => {
-
-            const result: any = await getCustomers();
-                    //await getTyres().then(data => {
-                if (!isMounted) {
-                    //setTyreData(data.data) 
-                    setCustomers(result.data);
-                    //console.log(result.data);
-                }
-            }
-    
-            fetchDataCustomers();
-
-        return () => {
-            isMounted = true;
-        };
-    },[])
 
     const sideBarItemChange = async (e: any) => {
         setSideBarItem(e.target.value);
@@ -312,9 +210,7 @@ const Admin = () => {
     const showCommentData = async (e: {target: {value: React.SetStateAction<null>;};}) => {
         setCommentId(e.target.value);
     }
-
-    // console.log(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/tyres`);
-    // console.log('PORT: ',  process.env.REACT_APP_PORT)
+    
 
     return (
         <div className='adminPageMain'>

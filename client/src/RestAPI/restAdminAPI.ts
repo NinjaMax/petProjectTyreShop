@@ -1,8 +1,10 @@
 // //React Axios Post Request:
 import axios from "axios";
+import { IRestAdminApi } from "./interfaces/restAdmin.interface";
 
-    const createGoodsToOrder = async (item: 
-        { id: string | number; full_name: any; category: { category: any; }; price: { id_supplier: string | number; id_storage: string | number; quantity: string | number; price: string | number; }; }, id_order: any) => { 
+    const createGoodsToOrder = async (item:IRestAdminApi, id_order: number
+        //{ id: string | number; full_name: any; category: { category: any; }; price: { id_supplier: string | number; id_storage: string | number; quantity: string | number; price: string | number; }; }, id_order: number
+        ) => { 
         const createGoods = await axios.post('http://localhost:4000/orders/creategoods',
             {
                 id: +item.id,
@@ -70,7 +72,9 @@ import axios from "axios";
 
    };
 
-const addGoodsToOrder = async (value: { id_order_storage: any; id: any; id_supplier: any; order_index: any; storage_index: any; quantity: any; price: any; }) => {
+const addGoodsToOrder = async (value: IRestAdminApi
+    //{ id_order_storage: any; id: any; id_supplier: any; order_index: any; storage_index: any; quantity: any; price: any; }
+    ) => {
     const addGoods = await axios.post('http://localhost:4000/orders/add',
         {
             // id: +item.id,
@@ -118,7 +122,7 @@ const getTyres = async () =>
     withCredentials: true})
 //.then(response => { 
     //Object.assign()
-    //setTyreData(response.data);
+//    setTyreData(response.data);
     //console.log(response.data);
     
 //})
