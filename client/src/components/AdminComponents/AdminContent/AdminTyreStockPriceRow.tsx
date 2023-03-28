@@ -34,7 +34,7 @@ const AdminTyreStockPriceRow = (
                 index: number) => (
         <tr key={'tyrerow ' + item?.id}>
             {stockTyres ?
-                <Fragment key={'stt' + stockTyres[index]?.id}>
+                <Fragment key={'stt' + stockTyres[index]?.id} >
                     <td >{stockTyres[index]?.storage.storage ?? ''}</td>
                     <td >{stockTyres[index]?.update_date ?? ''}</td>
                     <td >{stockTyres[index]?.supplier.name ?? ''}</td>
@@ -48,9 +48,15 @@ const AdminTyreStockPriceRow = (
             } 
             {priceTyres ? 
                 <Fragment key={'tp' + priceTyres[index]?.id}>
-                    <td >{priceTyres[index]?.price_wholesale ?? ''}</td>
-                    <td >{priceTyres[index]?.price ?? ''}</td>
-                    <td >{priceTyres[index]?.price_plus_delivery ?? ''}</td>
+                    <td >{priceTyres[
+                        priceTyres.findIndex((entity:{id_storage: number}) => entity.id_storage === stockTyres![index]?.id_storage)
+                        ]?.price_wholesale ?? ''}</td>
+                    <td >{priceTyres[
+                        priceTyres.findIndex((entity:{id_storage: number}) => entity.id_storage === stockTyres![index]?.id_storage)
+                        ]?.price ?? ''}</td>
+                    <td >{priceTyres[
+                        priceTyres.findIndex((entity:{id_storage: number}) => entity.id_storage === stockTyres![index]?.id_storage)
+                        ]?.price_plus_delivery ?? ''}</td>
                 </Fragment> 
                : <td>Покищо немає данних. Очікуємо...</td>
             }  

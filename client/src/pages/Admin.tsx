@@ -60,7 +60,7 @@ import { yieldToMain } from '../restAPI/postTaskAdmin';
 const Admin = () => {
 
     const [sideBarItem, setSideBarItem] = useState("golovna");
-    const [tyreData, setTyreData] = useState<[] | null>(null);
+    const [tyreData, setTyreData] = useState(null);
     const [tyreStockData, setTyreStockData] = useState(null);
     const [tyrePriceData, setTyrePriceData] = useState(null);
     const [wheelData, setWheelData] = useState(null);
@@ -113,83 +113,85 @@ const Admin = () => {
                     getPriceTyres,
                     getWheels,
                     getStockWheel,
-                    getStorageAll,
                     getPriceWheels,
+                    getStorageAll,
                     getCommentData,
                     getOrderData,
                     getCustomers
                 ]
                 
+                let i: number = 0;
+                while(tasks.length > i) {
+                //for (let i = 0; tasks.length > i; i++) {
 
-                for (let i = 0; tasks.length > i; i++) {
-                    if(!isMounted && tasks[i] === getTyres) {
-                        
+                    if(!isMounted && tasks[i] === getTyres) {    
                         let result: any = await tasks[i]();
                         setTyreData(result.data);
+                       // console.log('TYRE DATA', result.data )
                     }
 
                     if(!isMounted && tasks[i] === getStockTyres) {
-                        
                         let result: any = await tasks[i]();
                         setTyreStockData(result.data);
+                        //console.log('TYRE STOCK DATA', result.data )
                     } 
                     
-                    if(!isMounted && tasks[i] === getPriceTyres) {
-                       
+                    if(!isMounted && tasks[i] === getPriceTyres) {   
                         let result: any = await tasks[i]();
                         setTyrePriceData(result.data);
+                        //console.log('TYRE PRICE DATA', result.data )
                     } 
                     
-                    if(!isMounted && tasks[i] === getWheels) {
-                       
+                    if(!isMounted && tasks[i] === getWheels) {   
                         let result: any = await tasks[i]();
                         setWheelData(result.data);
+                        //console.log('WHEELS DATA', result.data )
                     } 
                     
                     if(!isMounted && tasks[i] === getStockWheel) {
-                       
                         let result: any = await tasks[i]();
                         setWheelStockData(result.data);
+                        //console.log('WHEELS STOCK DATA', result.data )
                     } 
                     
                     if(!isMounted && tasks[i] === getStorageAll) {
-                       
                         let result: any = await tasks[i]();
                         setStorageAll(result.data);
+                        //console.log('STORAGE DATA', result.data )
                     } 
                     
                     if(!isMounted && tasks[i] === getPriceWheels) {
-                       
                         let result: any = await tasks[i]();
                         setWheelPriceData(result.data);
+                        //console.log('WHEELS PRICE DATA', result.data )
                     } 
                     
                     if(!isMounted && tasks[i] === getOrderData) {
-                        
                         let result: any = await tasks[i]();
                         setOrderAllData(result.data);
+                        //console.log('ORDERS DATA', result.data )
                     } 
                     
                     if(!isMounted && tasks[i] === getCustomers) {
-                       
                         let result: any = await tasks[i]();
                         setCustomers(result.data);
+                        //console.log('CUSTOMERS DATA', result.data )
                     } 
 
                     if(!isMounted && tasks[i] === getCommentData) {
-                       
                         let result: any = await tasks[i](commentId);
                         setCommentData(result.data);
+                        //console.log('COMMENTS DATA', result.data )
                     } 
 
                     const task = tasks.shift();
   
                     // Run the task:
                     task();
-
+                    //i++;
                     await yieldToMain()   
                 }
-  
+                
             }
 
             postTask();

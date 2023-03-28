@@ -9,12 +9,12 @@ interface ITyreContent {
 }
 
 type TyreContent = {
-    country: any;
-    year: any;
-    season: any;
-    id: number; 
+    tyre_brand: {brand: string;};
+    country: {country_manufacturer_ua :string};
+    year: {manufacture_year: number};
+    id: string; 
     full_name: string;
-    season_ua: string; 
+    season: {season_ua: string}; 
     manufacture_year: string;
     category: {category: string};
 }
@@ -31,6 +31,9 @@ const AdminTyreContent = ({props, showRowData, addTyreToOrder}: ITyreContent) =>
                            <i className="fas fa-sort"></i>
                         </th>
                         <th>Назва товару
+                            <i className="fas fa-sort"></i>
+                        </th>
+                        <th>Бренд
                             <i className="fas fa-sort"></i>
                         </th>
                         <th>Сезон
@@ -52,13 +55,14 @@ const AdminTyreContent = ({props, showRowData, addTyreToOrder}: ITyreContent) =>
                     {props ? props.map((item: TyreContent) => (
                 
                     <tr key={'t' + item.id} onClick={showRowData} data-value={item.id}>
-                        <td key={'tid' + item.id}>{item.id}</td>
-                        <td key={'tn' + item.id}>{item.full_name}</td>
-                        <td key={'ts' + item.id}>{item.season?.season_ua ?? ''}</td>
-                        <td key={'ty' + item.id}>{item.year?.manufacture_year ?? ''}</td>
-                        <td key={'tc' + item.id}>{item.country?.country_manufacturer_ua ?? ''}</td>
-                        <td key={'tca' + item.id}>{item.category?.category ?? ''}</td>
-                        <td key={'t' + item.id} onClick={(e: MouseEvent)=>e.preventDefault()}>
+                        <td >{item.id}</td>
+                        <td >{item.full_name}</td>
+                        <td >{item.tyre_brand?.brand ?? ''}</td>
+                        <td >{item.season?.season_ua ?? ''}</td>
+                        <td >{item.year?.manufacture_year ?? ''}</td>
+                        <td >{item.country?.country_manufacturer_ua ?? ''}</td>
+                        <td >{item.category?.category ?? ''}</td>
+                        <td  onClick={(e: MouseEvent)=>e.preventDefault()}>
                             <button className='basketAdmTyre' value={item.id}
                                 onClick={addTyreToOrder}>
                                 <i className="fa fa-shopping-cart"></i>

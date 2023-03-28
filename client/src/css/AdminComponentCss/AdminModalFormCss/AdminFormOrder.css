@@ -279,6 +279,14 @@
 .admFormOrderBtnOk:hover {
     background-color: #2caf30;
 }
+.admFormOrderBtnOkDsb {
+    background-color: #ddd;
+    color: #444B54;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
 .admFormSearchCustm {
     margin-left: 3px;

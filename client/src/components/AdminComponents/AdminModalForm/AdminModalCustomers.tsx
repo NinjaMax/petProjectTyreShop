@@ -30,9 +30,9 @@ const AdminModalCustomers = ({allCustomer, addCustomer}: IModalCustomers) => {
                 </thead>
                 <tbody>
                     {allCustomer ? 
-                        allCustomer.map((entity:IAllCustomer) => (
+                        allCustomer?.map((entity:IAllCustomer) => (
                         <tr key={'cus' + entity.id_customer} 
-                            onDoubleClick={e => addCustomer(e.currentTarget.getAttribute("value"))} 
+                            onDoubleClick={e => addCustomer(e.currentTarget.getAttribute("data-value"))} 
                             data-value={entity.id_customer}>
                             <td >{entity.id_customer}</td>
                             <td >{entity.full_name}</td>

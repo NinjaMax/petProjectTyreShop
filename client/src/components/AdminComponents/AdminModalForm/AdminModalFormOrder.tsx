@@ -1,13 +1,13 @@
-import React, {useMemo, useReducer, Reducer, useState, useCallback, useEffect} from 'react';
+import React, { useReducer, Reducer, useState, useCallback, useEffect} from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminFormOrder.css';
-import axios from 'axios';
+//import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import ModalAdmin from '../../modal/ModalAdmin';
 import AdminComment from '../adminContent/AdminComment';
 import AdminModalCustmCreate from './AdminModalCustmCreate';
 import AdminModalCustomers from './AdminModalCustomers';
 import AdminModalGoods from './AdminModalGoods';
-//import {addGoodsToOrder, createGoodsToOrder, responseForm} from '../../../RestAPI/restAdminAPI';
+import {addGoodsToOrder, createGoodsToOrder, responseForm} from '../../../restAPI/restAdminAPI';
 
 interface IFormOrder {
     props: [[] | null, ...any[][]] | [[] | null, ...null[]];
@@ -37,18 +37,27 @@ type IModalFormOrder = {
 // }
 
 type CreateGoods = {
-    id?: number;
+    id?: number | string;
     full_name?: string;
-    category?: {category: {category:string}};
+    //category?: {category: {category:string}};
+    category?: { category: string; };
     order_index?: number;
-    // id_supplier?: {price: {id_supplier?: number}};
+    //createGoodsToOrder(arg0: {}, id_order: number): void;
+    id_supplier?: number;
     // storage_index?: {price: {id_storage?: number}};
-    // quantity?: {price?: {quantity?: number}};
+    id_order_storage?: number;
+    storage_index?: number;
+    //id_supplier: number;
+    quantity?: number;
+    //quantity: number;
+    //id: any;
+    //id_order: number;
+
     price?: {
         quantity: number;
-        id_storage: number;
-        id_supplier: number; 
-        price: {price: number};
+        id_storage: number | string;
+        id_supplier: number | string; 
+        price: number;
     };
 }
 
@@ -83,9 +92,11 @@ type ActionReducer =
 // }
 
 type StateReducer = {
+    i:number;
+    stateData?: [];
     lenght: number;
     state?: [];
-    forEach(arg0: (itemGoods: {}) => Promise<void>): unknown;
+    forEach(arg0: (itemGoods: {}) => Promise<void | any>): unknown;
     push(arg0: { price: any; }): unknown;
     splice(itemIndex: number, arg1: number): unknown;
     map(arg0: any, ...arg: any[]): any;
@@ -145,6 +156,7 @@ const AdminFormOrder = (
     const [openCustomers, setOpenCustomers] = useState<boolean>(false);
     const [addCustomer, setAddCustomer] = useState<IModalFormOrder | null>(null);
     const [disableBtn, setDisableBtn] = useState<boolean>(false);
+    const [disableBtnOk, setDisableBtnOk] = useState<boolean>(false);
     const [orderStorage, setOrderStorage] = useState<any[]>([]);
     const {register, handleSubmit, setValue, formState: {errors}} = useForm();    
     const [state, dispatch] = useReducer<Reducer<StateReducer, ActionReducer>>(reducer, createInitialState(goodsId));
@@ -201,9 +213,9 @@ const AdminFormOrder = (
         setOpenCustomers(!openCustomers);
     };
     
-    const actions = useMemo(() => ({
+    //const actions = useMemo(() => ({
 
-        addCustToOrder: (valueCust: number) => {
+        const addCustToOrder = async (valueCust: number) => {
             //console.log(valueCust);
             const findCustomer = customer!.find(
                 (items:{id_customer:number}) => items?.id_customer === +valueCust
@@ -213,9 +225,9 @@ const AdminFormOrder = (
                 setAddCustomer(findCustomer);  
             }
 
-        },
+        }
 
-        addGoodsToList: (value:string) => {
+        const addGoodsToList = async (value:string) => {
             //let [idValue, indexValue] = value;
             const newArr = value.split(',');
             //console.log('VALUE: ', newArr);
@@ -239,11 +251,11 @@ const AdminFormOrder = (
             
         }
 
-    }),[tyreDatas, wheelDatas, customer])
+    //}),[tyreDatas, wheelDatas, customer])
 
     
     //useEffect(() => {
-        const deleteItem = (itemIndex: number) => {
+        const deleteItem = async (itemIndex: number) => {
         
            //dispatch({type: 'deleteItemFromOrder', 
             state.splice(itemIndex, 1);
@@ -268,122 +280,136 @@ const AdminFormOrder = (
     // }
     //useEffect(() => {  
   
-        const responseForm = async (data:{}) => { 
-           await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders`, data, {
-               headers: {
-                   'Content-Type': 'application/json; charset=utf-8',
-                   'Access-Control-Allow-Origin': `${process.env.CORS}`
-               }, withCredentials: true,
-               })
-               .then(response => {
-               //setOrderAllData(response.data);
+        // const responseForm = async (data:{}) => { 
+        //    await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders`, data, {
+        //        headers: {
+        //            'Content-Type': 'application/json; charset=utf-8',
+        //            'Access-Control-Allow-Origin': `${process.env.CORS}`
+        //        }, withCredentials: true,
+        //        })
+        //        .then(response => {
+        //        //setOrderAllData(response.data);
                
-               alert(`Заказ створено, id ${response.data.id_order}`);
-               console.log('Order id: ', response.data.id_order);
-               setOrderId(+response.data.id_order);
+        //        alert(`Заказ створено, id ${response.data.id_order}`);
+        //        console.log('Order id: ', response.data.id_order);
+        //        setOrderId(+response.data.id_order);
    
-               //if (stateData.length !== 0) {
-                // for (let i =0; i < stateData.length; i++) {
-                //     createGoodsToOrder(stateData[i], response.data.id_order)
+        //        //if (stateData.length !== 0) {
+        //         // for (let i =0; i < stateData.length; i++) {
+        //         //     createGoodsToOrder(stateData[i], response.data.id_order)
                     
-                // }
-                   stateData.forEach((itemGoods) => (
-                     createGoodsToOrder(itemGoods, response.data.id_order)
-                   ));
-               //}
+        //         // }
+        //            stateData.forEach((itemGoods) => (
+        //              createGoodsToOrder(itemGoods, response.data.id_order)
+        //            ));
+        //        //}
    
-               console.log('ORDER ID', response.data.id_order);
-                //   return response.data;
-               })
-               .catch(error => {
-                   console.log(error);
-               }
-          )
-   
-       }
+        //        console.log('ORDER ID', response.data.id_order);
+        //         //   return response.data;
+        //        })
+        //        .catch(error => {
+        //            console.log(error);
+        //        }
+        //     )
+        // }
      //   return () => responseForm();      
     // },[]) 
 
     // useEffect(() =>{
     //     createGoodsToOrder();
-        const createGoodsToOrder = async (item: CreateGoods, id_order:number) => { 
-        const resPost =  await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders/creategoods`,
-                {
-                    id: +item?.id!,
-                    full_name: item.full_name,
-                    category: item.category?.category,
-                    order_index: id_order,
-                    id_supplier: +item.price?.id_supplier!,
-                    storage_index: +item.price?.id_storage!,
-                    quantity: +item.price?.quantity!,
-                    price: +item.price?.price!,
-                    // delivery: 'Flintstone',
-                },{headers: {
-                    'Content-Type': 'application/json; charset=utf-8',
-                    'Access-Control-Allow-Origin': `${process.env.CORS}`
-                }, withCredentials: true,
-                })
-                .then(response => {
+        // const createGoodsToOrder = async (item: CreateGoods, id_order:number) => { 
+        //     await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders/creategoods`,
+        //         {
+        //             id: +item?.id!,
+        //             full_name: item.full_name,
+        //             category: item.category?.category,
+        //             order_index: id_order,
+        //             id_supplier: +item.price?.id_supplier!,
+        //             storage_index: +item.price?.id_storage!,
+        //             quantity: +item.price?.quantity!,
+        //             price: +item.price?.price!,
+        //             // delivery: 'Flintstone',
+        //         },{headers: {
+        //             'Content-Type': 'application/json; charset=utf-8',
+        //             'Access-Control-Allow-Origin': `${process.env.CORS}`
+        //         }, withCredentials: true,
+        //         })
+        //         .then(response => {
                     
-                    setOrderStorage(oldOrdStor => [...oldOrdStor, response.data]);
-                    console.log('Order_storage', response.data);
-                //return response
-                })
-                .catch(error => {
-                    console.log(error)
-                }
-            )
-
-            return resPost;
-        }
+        //             setOrderStorage(oldOrdStor => [...oldOrdStor, response.data]);
+        //             console.log('Order_storage', response.data);
+        //         //return response
+        //         })
+        //         .catch(error => {
+        //             console.log(error)
+        //         }
+        //     ) 
+        // }
     //     return () => createGoodsToOrder();
     // },[])
     
-    const addGoodsToOrder = async (value: AddGoods) => {
-        await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders/add`,
-            {
-                // id: +item.id,
-                // full_name: item.full_name,
-                // category: item.category.category,
-                // order_index: +orderId,
-                // id_supplier: +item.stock[0].id_supplier,
-                // storage_index: +item.stock[0].id_storage,
-                // quantity: +item.price.quantity,
-                // price: +item.price.price,
-                id_order_storage: value?.id_order_storage,
-                id: value.id,
-                id_supplier: value.id_supplier,
-                id_order: value.order_index,
-                id_storage: value.storage_index,
-                quantity: value.quantity,
-                price: value.price
-                // delivery: 'Flintstone',
-            },{headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-                'Access-Control-Allow-Origin': `${process.env.CORS}`
-            },withCredentials: true,
-            })
-            .then(response => {
-            //setOrderAllData(response.data);
-            alert(`Заказ ${response.data.id_order} проведено`)
+    // const addGoodsToOrder = async (value: AddGoods) => {
+    //     await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders/add`,
+    //         {
+    //             // id: +item.id,
+    //             // full_name: item.full_name,
+    //             // category: item.category.category,
+    //             // order_index: +orderId,
+    //             // id_supplier: +item.stock[0].id_supplier,
+    //             // storage_index: +item.stock[0].id_storage,
+    //             // quantity: +item.price.quantity,
+    //             // price: +item.price.price,
+    //             id_order_storage: value?.id_order_storage,
+    //             id: value.id,
+    //             id_supplier: value.id_supplier,
+    //             id_order: value.order_index,
+    //             id_storage: value.storage_index,
+    //             quantity: value.quantity,
+    //             price: value.price
+    //             // delivery: 'Flintstone',
+    //         },{headers: {
+    //             'Content-Type': 'application/json; charset=utf-8',
+    //             'Access-Control-Allow-Origin': `${process.env.CORS}`
+    //         },withCredentials: true,
+    //         })
+    //         .then(response => {
+    //         //setOrderAllData(response.data);
+    //         alert(`Заказ ${response.data.id_order} проведено`)
 
-            console.log('Order Done', response.data);
-            })
-            .catch(error => {
-                console.log(
-                    'Не вистачає залишків, або не вірно вказані дані',
-                     error)
-            }
-        )
-    }
+    //         console.log('Order Done', response.data);
+    //         })
+    //         .catch(error => {
+    //             console.log(
+    //                 'Не вистачає залишків, або не вірно вказані дані',
+    //                  error)
+    //         }
+    //     )
+    // }
 
-        
+        //GOOD PERFORM
     const onSubmit = async (data:{}) => {
                 //e.preventDefault();
                 console.log('CREATE ORDER: ', data)
                 //if(data) {
     
-                await responseForm(data); 
+                let resultForm: any = await responseForm(data);
+
+                alert(`Заказ створено, id ${resultForm.data.id_order}`);
+        //        console.log('Order id: ', response.data.id_order);
+                setOrderId(+resultForm.data.id_order);
+                let resa = stateData[0 as unknown as keyof StateReducer]
+                //stateData.map((itemGoods: CreateGoods) =>
+                for (let i = 0; stateData.lenght > i; i++) {
+                  //  {
+                let resultOrder: any = await createGoodsToOrder(stateData[i as unknown as keyof StateReducer], resultForm.data.id_order)
+                //}
+                    setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder.data]);
+                    console.log('Order_storage', resultOrder);
+                        
+                    }
+                //);
+                //setOrderStorage(oldOrdStor => [...oldOrdStor, response.data]);
+                //console.log('Order_storage', response.data);
 
                 setDisableBtn(!disableBtn);
             //};
@@ -391,7 +417,7 @@ const AdminFormOrder = (
             // return () => onSubmit();
     }    
     
-        
+        //GOOD PERFORM
     const onSubmitOrder = async () => {
 
         //if(orderStorage.length !== 0) {
@@ -405,7 +431,7 @@ const AdminFormOrder = (
             //}
         //alert(`Заказ ${1} проведено`)
         //console.log('Order Done', resp.data)
-
+            setDisableBtnOk(!disableBtnOk);
         } catch (error) {
             alert (
                 `Помилка. Не вірні данні, не вистачае залишків,
@@ -737,7 +763,8 @@ const AdminFormOrder = (
                      //onClick={(e)=>e.preventDefault({passive: false})}
                      >
                     <div onClick={(e)=>e.preventDefault()}>
-                        <button className='admFormOrderBtnOk'
+                        <button className={!disableBtnOk ? 'admFormOrderBtnOk' : 'admFormOrderBtnOkDsb'}
+                            disabled={disableBtnOk}
                             onClick={onSubmitOrder}>
                             Ok
                         </button>
@@ -762,7 +789,7 @@ const AdminFormOrder = (
                 <ModalAdmin active={openCustomers} setActive={setOpenCustomers} >
                     <AdminModalCustomers 
                         allCustomer={customer}
-                        addCustomer={actions.addCustToOrder}/>
+                        addCustomer={addCustToOrder}/>
                 </ModalAdmin> : null  
             }
             {createCustomer ?
@@ -773,7 +800,7 @@ const AdminFormOrder = (
             {addGoods ? 
                 <ModalAdmin active={addGoods} setActive={setAddGoods}>
                     <AdminModalGoods 
-                        showRowModData={actions.addGoodsToList}
+                        showRowModData={addGoodsToList}
                         props={props}
                         storageGoods={storages}
                     />

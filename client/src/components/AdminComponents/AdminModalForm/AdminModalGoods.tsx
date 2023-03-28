@@ -85,7 +85,7 @@ const AdminModalGoods = ({props, showRowModData, storageGoods}: IModalGoods) => 
                         item.price.map((entity, indexEntity) => (
                             
                         <tr key={'tm' + entity.id} 
-                            onDoubleClick={e => showRowModData(e.currentTarget.getAttribute("value"))} 
+                            onDoubleClick={e => showRowModData(e.currentTarget.getAttribute("data-value"))} 
                             data-value={[item.id, indexEntity]}>
                             <Fragment key={'tid' + item.id}>
                                 <td>{item.id}</td>
@@ -103,7 +103,7 @@ const AdminModalGoods = ({props, showRowModData, storageGoods}: IModalGoods) => 
                        ))
                         :
                         <tr key={'tm' + item.id} 
-                            onDoubleClick={e => showRowModData(e.currentTarget.getAttribute("value"))} 
+                            onDoubleClick={e => showRowModData(e.currentTarget.getAttribute("data-value"))} 
                             data-value={[item.id, 0]}>
                             <Fragment key={'tid' + item.id}>
                                 <td>{item.id}</td>
@@ -123,7 +123,7 @@ const AdminModalGoods = ({props, showRowModData, storageGoods}: IModalGoods) => 
                         wheelModData.map((item: ItyreModData) => (
                             <tr key={'wm' + item.id} 
                                 data-value={item.id}
-                                onDoubleClick={e => showRowModData(e.currentTarget.getAttribute("value"))} 
+                                onDoubleClick={e => showRowModData(e.currentTarget.getAttribute("data-value"))} 
                                 >
                                 <td >{item.id}</td>
                                 <td >{item.full_name_color}</td>

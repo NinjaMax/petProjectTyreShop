@@ -12,9 +12,9 @@ import ModalAdmin from '../../modal/ModalAdmin';
 import AdminFormOrder from '../adminModalForm/AdminModalFormOrder';
 
 interface IGoodsContent {
+    
+    props:[[] | null, ...[][] | null[]];
     comments?:[] | null;
-    props:[[] | null, ...any[][] | null[]];
-
     customer: [] | null;
     storage:[any] | null;
     stockByIdTyre?: []; 
@@ -41,8 +41,8 @@ const AdminGoodsContent = ({comments, props, customer, storage}:IGoodsContent) =
     // const [itemIdBattery, setItemIdBattery] = useState();
     const [itemId, setItemId] = useState<[]>([]);
     const [addGoods, setAddGoods] = useState<boolean>(false);
-    const [stockTyre, setStockTyre] = useState<{}[]>();
-    const [priceTyre, setPriceTyre] = useState<{}[]>();
+    const [stockTyre, setStockTyre] = useState<any[]>();
+    const [priceTyre, setPriceTyre] = useState<any[]>();
     const [stockWheel, setStockWheel] = useState<{}[]>();
     const [priceWheel, setPriceWheel] = useState<{}[]>();
     // const [stockOil, setStockOil] = useState([]);
@@ -106,29 +106,29 @@ const AdminGoodsContent = ({comments, props, customer, storage}:IGoodsContent) =
     // },[itemIdWheel]);
 
     const showStockPriceTyre = (e: { currentTarget: { getAttribute: (arg0: string) => any; }; }) => {
-        //console.log(typeof(e.currentTarget.getAttribute("value")));
-        
-        let stockByIdTyre: {}[] | undefined = tyreStockData?.filter(
+        //console.log(typeof(e.currentTarget.getAttribute("data-value")));
+        //console.log(e.currentTarget.getAttribute("data-value"));
+        let stockByIdTyre: any[] | undefined = tyreStockData?.filter(
             //item => item.id_tyre === Number(308282)
-            (item:{id_tyre:number}) => item.id_tyre === Number(e.currentTarget.getAttribute("value"))
+            (item:{id_tyre:number}) => item.id_tyre === Number(e.currentTarget.getAttribute("data-value"))
         );
         setStockTyre(stockByIdTyre);
-        //console.log('STOCK TYRE: ',stockByIdTyre);
-        let priceByIdTyre: {}[] | undefined = tyrePriceData?.filter(
-            (item:{id_tyre:number}) => item.id_tyre === Number(e.currentTarget.getAttribute("value"))
+        console.log('STOCK TYRE: ',stockByIdTyre);
+        let priceByIdTyre: any[] | undefined = tyrePriceData?.filter(
+            (item:{id_tyre:number}) => item.id_tyre === Number(e.currentTarget.getAttribute("data-value"))
         );
         setPriceTyre(priceByIdTyre);
-        //console.log('PRICE TYRE: ',priceByIdTyre);
+        console.log('PRICE TYRE: ',priceByIdTyre);
     };
 
     const showStockPriceWheel = (e: { currentTarget: { getAttribute: (arg0: string) => any; }; }) => {
         const stockByIdWheel: {}[] | undefined = wheelStockData?.filter(
-            (item:{id_wheel:number}) => item.id_wheel === Number(e.currentTarget.getAttribute("value"))
+            (item:{id_wheel:number}) => item.id_wheel === Number(e.currentTarget.getAttribute("data-value"))
         );
         setStockWheel(stockByIdWheel);
 
         const priceByIdWheel: {}[] | undefined = wheelPriceData?.filter(
-            (item:{id_wheel:number}) => item.id_wheel === Number(e.currentTarget.getAttribute("value"))
+            (item:{id_wheel:number}) => item.id_wheel === Number(e.currentTarget.getAttribute("data-value"))
         );
         setPriceWheel(priceByIdWheel);
     };
@@ -141,11 +141,11 @@ const AdminGoodsContent = ({comments, props, customer, storage}:IGoodsContent) =
     //     setItemIdB(e.currentTarget.getAttribute("value"));
     // };
 
-    const addToOrder = (e: { currentTarget: { value: number; }; }) => {
+    const addToOrder = (e: { currentTarget: { value: string; }; }) => {
         setAddGoods(!addGoods);
         //console.log(e.currentTarget.value)
-        let itemTyre = tyreData?.find((item:{id:number}) => item.id === e.currentTarget.value);
-        let itemWheel = wheelData?.find((item:{id:number}) => item.id === e.currentTarget.value);
+        let itemTyre = tyreData?.find((item:{id:string}) => item.id === e.currentTarget.value);
+        let itemWheel = wheelData?.find((item:{id:string}) => item.id === e.currentTarget.value);
         //const itemTyre = tyreData.find(item => item ==e.currentTarget.value);
         //const itemTyre = tyreData.find(item => item ==e.currentTarget.value);
         
