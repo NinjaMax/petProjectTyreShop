@@ -8,7 +8,8 @@ import AdminModalCustmCreate from './AdminModalCustmCreate';
 import AdminModalCustomers from './AdminModalCustomers';
 import AdminModalGoods from './AdminModalGoods';
 import {addGoodsToOrder, createGoodsToOrder, responseForm} from '../../../restAPI/restAdminAPI';
-import { yieldToMain } from '../../../restAPI/yieldMain';
+//import { yieldToMain } from '../../../restAPI/yieldMain';
+import { scheduler } from 'timers/promises';
  
 
 interface IFormOrder {
@@ -432,7 +433,8 @@ const AdminFormOrder = (
                     
             const taskOnSubmitDel: any = taskOnSubmit.shift();
             taskOnSubmitDel();
-            await yieldToMain();                    
+            await scheduler.yield();
+            //await yieldToMain();                    
         }
 
         setDisableBtn(!disableBtn);

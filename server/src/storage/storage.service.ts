@@ -76,6 +76,21 @@ export class StorageService {
     }
   }
 
+  async findStorageByIdOrder(getStorageDto: GetStorageDto) {
+
+    try {
+      
+      const storageByIdOrder = await this.storageRepository.findByPk(getStorageDto.id_storage );
+
+      return storageByIdOrder;
+
+    } catch {
+
+      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+
+    }
+  }
+
   update(id: number, updateStorageDto: UpdateStorageDto) {
     return `This action updates a #${id} storage`;
   }

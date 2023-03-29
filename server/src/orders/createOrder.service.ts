@@ -315,3 +315,64 @@ export function yieldToMain () {
       setTimeout(resolve, 0);
     });
   }
+
+
+  async addGoodsToOrder(createOrderDto: CreateOrderDto) {
+    const orderId = await this.ordersRepository.findByPk(createOrderDto.id_order, { include: ['order_storage'] });
+    const orderStorageId = await this.ordersStorageService.findOrderStorageById(createOrderDto);
+    const storageStorage = await this.storageService.findStorageById(createOrderDto);
+  
+    const [tyreStock, wheelStock, batteryStock, oilStock] = await Promise.all([
+      this.stockTyresService.findStockTyreById(createOrderDto),
+      this.stockWheelsService.findStockWheelById(createOrderDto),
+      this.stockBatteriesService.findStockBatteryById(createOrderDto),
+      this.stockOilsService.findStockOilById(createOrderDto)
+    ]);
+  
+    let stock = null;
+    let newReserve = 0;
+  
+    if (tyreStock) {
+      if (tyreStock.remainder < createOrderDto.quantity && tyreStock.stock !== 0) {
+        newReserve = createOrderDto.quantity - (createOrderDto.quantity - tyreStock.remainder);
+        stock = tyreStock;
+      } else if (tyreStock.remainder > createOrderDto.quantity && tyreStock.stock !== 0) {
+        stock = tyreStock;
+      } else {
+        return `You cannot set more "reserve" because there is no remainder ("Remainder 0") or the specified storage is incorrect.`;
+      }
+    } else if (wheelStock) {
+      if (wheelStock.remainder < createOrderDto.quantity && wheelStock.stock !== 0) {
+        newReserve = createOrderDto.quantity - (createOrderDto.quantity - wheelStock.remainder);
+        stock = wheelStock;
+      } else if (wheelStock.remainder > createOrderDto.quantity && wheelStock.stock !== 0) {
+        stock = wheelStock;
+      } else {
+        return `You cannot set more "reserve" because there is no remainder ("Remainder 0") or the specified storage is incorrect.`;
+      }
+    } else if (batteryStock) {
+      if (batteryStock.remainder < createOrderDto.quantity && batteryStock.stock !== 0) {
+        newReserve = createOrderDto.quantity - (createOrderDto.quantity - batteryStock.remainder);
+        stock = batteryStock;
+      } else if (batteryStock.remainder > createOrderDto.quantity && batteryStock.stock !== 0) {
+        stock = batteryStock;
+      } else {
+        return `You cannot set more "reserve" because there is no remainder ("Remainder 0") or the specified storage is incorrect.`;
+      }
+    } else if (oilStock) {
+      // handle oil stock
+    }
+  
+    if (stock) {
+      await stock.increment('reserve', { by: newReserve || createOrderDto.quantity });
+      await stock.reload();
+      await orderStorageId.increment('reserve', { by: newReserve || createOrderDto.quantity });
+      await orderStorageId.reload();
+      await orderId.$add('order_storage', orderStorageId);
+      await storageStorage.$add('order_storage', orderStorageId);
+      await orderId.reload();
+    }
+  
+    return orderId;
+  }
+  

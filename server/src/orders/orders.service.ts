@@ -129,7 +129,7 @@ export class OrdersService {
 
   async tyreStockOrder (createOrderDto: CreateOrderDto) {
 
-    const orderId = await this.ordersRepository.findByPk(
+    const orderIdTyre = await this.ordersRepository.findByPk(
         createOrderDto.id_order,
         {include: ['order_storage']}
         //{include: {all: true}},
@@ -137,10 +137,10 @@ export class OrdersService {
       let tyreStock = await this.stockTyresService.findStockTyreById(
         createOrderDto,
       );
-      const storageStorage = await this.storageService.findStorageById(
+      const storageTyreStorage = await this.storageService.findStorageByIdOrder(
         createOrderDto,
       );
-      const orderStorageId =
+      const orderStorageIdTyre =
         await this.ordersStorageService.findOrderStorageById(createOrderDto);
     
       if (tyreStock) {
@@ -153,15 +153,15 @@ export class OrdersService {
             (createOrderDto.quantity - tyreStock.remainder);
           await tyreStock.increment('reserve', { by: newReserve });
           //await tyreStock.reload();
-          await orderStorageId.increment('reserve', { by: newReserve });
+          await orderStorageIdTyre.increment('reserve', { by: newReserve });
           //await orderStorageId.reload();
     
-          await orderId.$add('order_storage', orderStorageId);
-          await storageStorage.$add('order_storage', orderStorageId);
+          await orderIdTyre.$add('order_storage', orderStorageIdTyre);
+          await storageTyreStorage.$add('order_storage', orderStorageIdTyre);
     
-          await orderId.reload();
+          await orderIdTyre.reload();
     
-          return orderId;
+          return orderIdTyre;
         }
     
         if (
@@ -170,17 +170,17 @@ export class OrdersService {
         ) {
           await tyreStock.increment('reserve', { by: createOrderDto.quantity });
           //await tyreStock.reload();
-          await orderStorageId.increment('reserve', {
+          await orderStorageIdTyre.increment('reserve', {
             by: createOrderDto.quantity,
           });
           //await orderStorageId.reload();
     
-          await orderId.$add('order_storage', orderStorageId);
-          await storageStorage.$add('order_storage', orderStorageId);
+          await orderIdTyre.$add('order_storage', orderStorageIdTyre);
+          await storageTyreStorage.$add('order_storage', orderStorageIdTyre);
     
-          await orderId.reload();
+          await orderIdTyre.reload();
     
-          return orderId;
+          return orderIdTyre;
         }
     
         if (
@@ -198,12 +198,12 @@ export class OrdersService {
         
       }
     
-      return orderId;
+      return orderIdTyre;
     }
     
     async wheelStockOrder (createOrderDto: CreateOrderDto) {
     
-        const orderId = await this.ordersRepository.findByPk(
+        const orderIdWheel = await this.ordersRepository.findByPk(
             createOrderDto.id_order,
             {include: ['order_storage']}
             //{include: {all: true}},
@@ -211,10 +211,10 @@ export class OrdersService {
           let wheelStock = await this.stockWheelsService.findStockWheelById(
             createOrderDto,
           );
-          const storageStorage = await this.storageService.findStorageById(
+          const storageStorageWheel = await this.storageService.findStorageById(
             createOrderDto,
           );
-          const orderStorageId =
+          const orderStorageIdWheel =
             await this.ordersStorageService.findOrderStorageById(createOrderDto);
     
         if (wheelStock) {
@@ -227,15 +227,15 @@ export class OrdersService {
                 (createOrderDto.quantity - wheelStock.remainder);
               await wheelStock.increment('reserve', { by: newReserve });
               //await wheelStock.reload();
-              await orderStorageId.increment('reserve', { by: newReserve });
+              await orderStorageIdWheel.increment('reserve', { by: newReserve });
               //await orderStorageId.reload();
     
-              await orderId.$add('order_storage', orderStorageId);
-              await storageStorage.$add('order_storage', orderStorageId);
+              await orderIdWheel.$add('order_storage', orderStorageIdWheel);
+              await storageStorageWheel.$add('order_storage', orderStorageIdWheel);
     
-              await orderId.reload();
+              await orderIdWheel.reload();
     
-              return orderId;
+              return orderIdWheel;
             }
     
             if (
@@ -246,17 +246,17 @@ export class OrdersService {
                 by: createOrderDto.quantity,
               });
               //await wheelStock.reload();
-              await orderStorageId.increment('reserve', {
+              await orderStorageIdWheel.increment('reserve', {
                 by: createOrderDto.quantity,
               });
               //await orderStorageId.reload();
     
-              await orderId.$add('order_storage', orderStorageId);
-              await storageStorage.$add('order_storage', orderStorageId);
+              await orderIdWheel.$add('order_storage', orderStorageIdWheel);
+              await storageStorageWheel.$add('order_storage', orderStorageIdWheel);
     
-              await orderId.reload();
+              await orderIdWheel.reload();
     
-              return orderId;
+              return orderIdWheel;
             }
     
             if (
@@ -274,11 +274,11 @@ export class OrdersService {
     
         }
     
-        return orderId;
+        return orderIdWheel;
     }
     
     async batteryStockOrder (createOrderDto: CreateOrderDto) {
-        const orderId = await this.ordersRepository.findByPk(
+        const orderIdBattery = await this.ordersRepository.findByPk(
             createOrderDto.id_order,
             {include: ['order_storage']}
             //{include: {all: true}},
@@ -287,10 +287,10 @@ export class OrdersService {
           let batteryStock =
             await this.stockBatteriesService.findStockBatteryById(createOrderDto);
     
-          const storageStorage = await this.storageService.findStorageById(
+          const storageStorageBattery = await this.storageService.findStorageById(
             createOrderDto,
           );
-          const orderStorageId =
+          const orderStorageIdBattery =
             await this.ordersStorageService.findOrderStorageById(createOrderDto);
     
         if (batteryStock) {
@@ -303,15 +303,15 @@ export class OrdersService {
                 (createOrderDto.quantity - batteryStock.remainder);
               await batteryStock.increment('reserve', { by: newReserve });
               //await batteryStock.reload();
-              await orderStorageId.increment('reserve', { by: newReserve });
+              await orderStorageIdBattery.increment('reserve', { by: newReserve });
               //await orderStorageId.reload();
     
-              await orderId.$add('order_storage', orderStorageId);
-              await storageStorage.$add('order_storage', orderStorageId);
+              await orderIdBattery.$add('order_storage', orderStorageIdBattery);
+              await storageStorageBattery.$add('order_storage', orderStorageIdBattery);
     
-              await orderId.reload();
+              await orderIdBattery.reload();
     
-              return orderId;
+              return orderIdBattery;
             }
     
             if (
@@ -322,17 +322,17 @@ export class OrdersService {
                 by: createOrderDto.quantity,
               });
               //await batteryStock.reload();
-              await orderStorageId.increment('reserve', {
+              await orderStorageIdBattery.increment('reserve', {
                 by: createOrderDto.quantity,
               });
               //await orderStorageId.reload();
     
-              await orderId.$add('order_storage', orderStorageId);
-              await storageStorage.$add('order_storage', orderStorageId);
+              await orderIdBattery.$add('order_storage', orderStorageIdBattery);
+              await storageStorageBattery.$add('order_storage', orderStorageIdBattery);
     
-              await orderId.reload();
+              await orderIdBattery.reload();
     
-              return orderId;
+              return orderIdBattery;
             }
     
             if (
@@ -352,7 +352,7 @@ export class OrdersService {
             
         }
     
-          return orderId;
+          return orderIdBattery;
         // } catch {
         //   throw new HttpException(
         //     'Data is incorrect and must be uniq',
@@ -362,7 +362,7 @@ export class OrdersService {
     }
     
     async oilStockOrder (createOrderDto: CreateOrderDto) {
-        const orderId = await this.ordersRepository.findByPk(
+        const orderIdOil = await this.ordersRepository.findByPk(
             createOrderDto.id_order,
             {include: ['order_storage']}
             //{include: {all: true}},
@@ -371,10 +371,10 @@ export class OrdersService {
           let oilStock = await this.stockOilsService.findStockOilById(
             createOrderDto,
           );
-          const storageStorage = await this.storageService.findStorageById(
+          const storageStorageOil = await this.storageService.findStorageById(
             createOrderDto,
           );
-          const orderStorageId =
+          const orderStorageIdOil =
             await this.ordersStorageService.findOrderStorageById(createOrderDto);
     
           if (oilStock) {
@@ -387,15 +387,15 @@ export class OrdersService {
                 (createOrderDto.quantity - oilStock.remainder);
               await oilStock.increment('reserve', { by: newReserve });
               //await oilStock.reload();
-              await orderStorageId.increment('reserve', { by: newReserve });
+              await orderStorageIdOil.increment('reserve', { by: newReserve });
               //await orderStorageId.reload();
     
-              await orderId.$add('order_storage', orderStorageId);
-              await storageStorage.$add('order_storage', orderStorageId);
+              await orderIdOil.$add('order_storage', orderStorageIdOil);
+              await storageStorageOil.$add('order_storage', orderStorageIdOil);
     
-              await orderId.reload();
+              await orderIdOil.reload();
     
-              return orderId;
+              return orderIdOil;
             }
     
             if (
@@ -404,17 +404,17 @@ export class OrdersService {
             ) {
               await oilStock.increment('reserve', { by: createOrderDto.quantity });
               //await oilStock.reload();
-              await orderStorageId.increment('reserve', {
+              await orderStorageIdOil.increment('reserve', {
                 by: createOrderDto.quantity,
               });
               //await orderStorageId.reload();
     
-              await orderId.$add('order_storage', orderStorageId);
-              await storageStorage.$add('order_storage', orderStorageId);
+              await orderIdOil.$add('order_storage', orderStorageIdOil);
+              await storageStorageOil.$add('order_storage', orderStorageIdOil);
     
-              await orderId.reload();
+              await orderIdOil.reload();
     
-              return orderId;
+              return orderIdOil;
             }
     
             if (
@@ -429,7 +429,7 @@ export class OrdersService {
     
               oilStock = null;
     
-          return orderId;
+          return orderIdOil;
         // } catch {
         //   throw new HttpException(
         //     'Data is incorrect and must be uniq',
