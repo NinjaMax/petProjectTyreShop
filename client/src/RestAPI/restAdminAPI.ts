@@ -95,12 +95,12 @@ const addGoodsToOrder = async (value: IRestAdminApi
         'Access-Control-Allow-Origin': `${process.env.CORS}`
     },withCredentials: true,
     })
-    .then(response => {
-    //setOrderAllData(response.data);
-    alert(`Заказ ${response.data.id_order} проведено`)
+    // .then(response => {
+    // //setOrderAllData(response.data);
+    // alert(`Заказ ${response.data.id_order} проведено`)
 
-    console.log('Order Done', response.data);
-    })
+    // console.log('Order Done', response.data);
+    // })
     .catch(error => {
         console.log(
             'Не вистачає залишків, або не вірно вказані дані',

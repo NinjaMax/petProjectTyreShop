@@ -64,7 +64,7 @@ type CreateGoods = {
     ////////
     //itemGoods:[];
     // i:number;
-    // stateData?: [];
+    stateData?: [];
     // length: number;
     // state?: [];
     // forEach(arg0: (itemGoods?: {}) => Promise<void | any>): unknown;
@@ -400,45 +400,45 @@ const AdminFormOrder = (
     //     )
     // }
 
-        //GOOD PERFORM
+    //GOOD PERFORM
     const onSubmit = async (data:{}) => {
-                //e.preventDefault();
-                console.log('CREATE ORDER: ', data)
-                //if(data) {
+        //e.preventDefault();
+        console.log('CREATE ORDER: ', data)
+
+        const taskOnSubmit: any[] = [
+            responseForm,
+            createGoodsToOrder
+        ];
+
+        let i: number = 0;
+        while(taskOnSubmit.length > i) {
+
+            if(taskOnSubmit[i] === responseForm) {
     
                 let resultForm: any = await responseForm(data);
-
-                alert(`Заказ створено, id ${resultForm.data.id_order}`);
-        //        console.log('Order id: ', response.data.id_order);
                 setOrderId(+resultForm.data.id_order);
+                alert(`Заказ створено, id ${resultForm.data.id_order}`);
+                //console.log('Order id: ', response.data.id_order);
+            }
 
-                const arrayData: CreateGoods[] = stateData.slice();
-                //stateData.forEach((itemGoods: CreateGoods): any =>
-                let i: number = 0;
-                while(arrayData.length > i) {
-
-                    let resultOrder: any = await createGoodsToOrder(arrayData[i], resultForm.data.id_order);
-                //}
+            if(taskOnSubmit[i] === responseForm) {
+                //const arrayData: CreateGoods[] = stateData.slice();
+                stateData.forEach(async (itemGoods: CreateGoods): Promise<any> => {
+                    let resultOrder: any = await createGoodsToOrder(itemGoods, orderId!);
                     setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder.data]);
-                    const arrayDataDel: any = arrayData.shift();
-
-                    arrayDataDel();
-
-                    await yieldToMain();
                     console.log('Order_storage', resultOrder);
-                        
-                }
-                //);
-                //setOrderStorage(oldOrdStor => [...oldOrdStor, response.data]);
-                //console.log('Order_storage', response.data);
+                })   
+            }    
+                    
+            const taskOnSubmitDel: any = taskOnSubmit.shift();
+            taskOnSubmitDel();
+            await yieldToMain();                    
+        }
 
-                setDisableBtn(!disableBtn);
-            //};
-    
-            // return () => onSubmit();
+        setDisableBtn(!disableBtn);
     }    
     
-        //GOOD PERFORM
+    //GOOD PERFORM
     const onSubmitOrder = async () => {
 
         //if(orderStorage.length !== 0) {
@@ -451,6 +451,7 @@ const AdminFormOrder = (
             //}
         //alert(`Заказ ${1} проведено`)
         //console.log('Order Done', resp.data)
+            alert(`Заказ ${orderId} проведено`)
             setDisableBtnOk(!disableBtnOk);
         } catch (error) {
             alert (

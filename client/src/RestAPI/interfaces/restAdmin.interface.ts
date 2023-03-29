@@ -11,7 +11,7 @@ export interface IRestAdminApi {
     }; 
     order_index?: number;
     //id_order: number;
-    //createGoodsToOrder(arg0: {}, id_order: number): void;
+    //createGoodsToOrder(arg0: any, id_order: number): void;
     id_order_storage?: number;
     //id: any;
     id_supplier?:number;
@@ -19,7 +19,14 @@ export interface IRestAdminApi {
     storage_index?: number;
     quantity?: number;
     //price: any;
-    stateData: [];
-    i?: number;
+    
+    stateData?: [];
+    // i: number;
+    // length: number;
     //};
+
+    // forEach(arg0: (itemGoods: {}) => Promise<void | any>): unknown;
+    // push(arg0: { price: any; }): unknown;
+    // splice(itemIndex: number, arg1: number): unknown;
+    // map(arg0: any, ...arg: any[]): any;
 }
