@@ -8,6 +8,8 @@ import AdminModalCustmCreate from './AdminModalCustmCreate';
 import AdminModalCustomers from './AdminModalCustomers';
 import AdminModalGoods from './AdminModalGoods';
 import {addGoodsToOrder, createGoodsToOrder, responseForm} from '../../../restAPI/restAdminAPI';
+import { yieldToMain } from '../../../restAPI/yieldMain';
+ 
 
 interface IFormOrder {
     props: [[] | null, ...any[][]] | [[] | null, ...null[]];
@@ -59,6 +61,17 @@ type CreateGoods = {
         id_supplier: number | string; 
         price: number;
     };
+    ////////
+    //itemGoods:[];
+    // i:number;
+    // stateData?: [];
+    // length: number;
+    // state?: [];
+    // forEach(arg0: (itemGoods?: {}) => Promise<void | any>): unknown;
+    // push(arg0: { price: any; }): unknown;
+    // splice(itemIndex: number, arg1: number): unknown;
+    // map(arg0: any, ...arg: any[]): any;
+    ////////
 }
 
 type AddGoods = {
@@ -92,14 +105,15 @@ type ActionReducer =
 // }
 
 type StateReducer = {
-    i:number;
-    stateData?: [];
-    lenght: number;
+    i?:number;
+    stateData: [];
+    length: number;
     state?: [];
-    forEach(arg0: (itemGoods: {}) => Promise<void | any>): unknown;
+    forEach(arg0: (itemGoods: {}) => Promise<void |any>): unknown;
     push(arg0: { price: any; }): unknown;
     splice(itemIndex: number, arg1: number): unknown;
     map(arg0: any, ...arg: any[]): any;
+    slice(arg0?: number, arg1?: number): any;
 }
 
 function reducer (state: StateReducer, action: ActionReducer) {
@@ -397,16 +411,23 @@ const AdminFormOrder = (
                 alert(`Заказ створено, id ${resultForm.data.id_order}`);
         //        console.log('Order id: ', response.data.id_order);
                 setOrderId(+resultForm.data.id_order);
-                let resa = stateData[0 as unknown as keyof StateReducer]
-                //stateData.map((itemGoods: CreateGoods) =>
-                for (let i = 0; stateData.lenght > i; i++) {
-                  //  {
-                let resultOrder: any = await createGoodsToOrder(stateData[i as unknown as keyof StateReducer], resultForm.data.id_order)
+
+                const arrayData: CreateGoods[] = stateData.slice();
+                //stateData.forEach((itemGoods: CreateGoods): any =>
+                let i: number = 0;
+                while(arrayData.length > i) {
+
+                    let resultOrder: any = await createGoodsToOrder(arrayData[i], resultForm.data.id_order);
                 //}
                     setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder.data]);
+                    const arrayDataDel: any = arrayData.shift();
+
+                    arrayDataDel();
+
+                    await yieldToMain();
                     console.log('Order_storage', resultOrder);
                         
-                    }
+                }
                 //);
                 //setOrderStorage(oldOrdStor => [...oldOrdStor, response.data]);
                 //console.log('Order_storage', response.data);
@@ -425,8 +446,7 @@ const AdminFormOrder = (
         try {
             //let respDone = async () => {
             orderStorage?.forEach((itemsOrd) => {
-             addGoodsToOrder(itemsOrd)
-           
+                addGoodsToOrder(itemsOrd)
             })
             //}
         //alert(`Заказ ${1} проведено`)
@@ -657,7 +677,7 @@ const AdminFormOrder = (
                         </tr>     
                     </thead>
                     <tbody>
-                        {stateData?.lenght !== 0 ? 
+                        {stateData?.length !== 0 ? 
                             stateData?.map((
                                 item:{id:number, 
                                 full_name:string, 

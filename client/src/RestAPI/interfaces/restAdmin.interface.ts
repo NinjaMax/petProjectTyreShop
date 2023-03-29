@@ -19,7 +19,7 @@ export interface IRestAdminApi {
     storage_index?: number;
     quantity?: number;
     //price: any;
-    stateData?: [];
-    i: number
+    stateData: [];
+    i?: number;
     //};
 }

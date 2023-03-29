@@ -159,9 +159,9 @@ export class OrdersService {
             createOrderDto.quantity -
             (createOrderDto.quantity - tyreStock.remainder);
           await tyreStock.increment('reserve', { by: newReserve });
-          await tyreStock.reload();
+          //await tyreStock.reload();
           await orderStorageId.increment('reserve', { by: newReserve });
-          await orderStorageId.reload();
+          //await orderStorageId.reload();
 
           await orderId.$add('order_storage', orderStorageId);
           await storageStorage.$add('order_storage', orderStorageId);
@@ -176,11 +176,11 @@ export class OrdersService {
           tyreStock.stock !== 0
         ) {
           await tyreStock.increment('reserve', { by: createOrderDto.quantity });
-          await tyreStock.reload();
+          //await tyreStock.reload();
           await orderStorageId.increment('reserve', {
             by: createOrderDto.quantity,
           });
-          await orderStorageId.reload();
+          //await orderStorageId.reload();
 
           await orderId.$add('order_storage', orderStorageId);
           await storageStorage.$add('order_storage', orderStorageId);
@@ -200,9 +200,9 @@ export class OrdersService {
             Or Storage specified incorrectly`;
         }
 
-        return () => {
+        
         tyreStock = null;
-        };
+        
       }
 
       if (wheelStock) {
@@ -214,9 +214,9 @@ export class OrdersService {
             createOrderDto.quantity -
             (createOrderDto.quantity - wheelStock.remainder);
           await wheelStock.increment('reserve', { by: newReserve });
-          await wheelStock.reload();
+          //await wheelStock.reload();
           await orderStorageId.increment('reserve', { by: newReserve });
-          await orderStorageId.reload();
+          //await orderStorageId.reload();
 
           await orderId.$add('order_storage', orderStorageId);
           await storageStorage.$add('order_storage', orderStorageId);
@@ -233,11 +233,11 @@ export class OrdersService {
           await wheelStock.increment('reserve', {
             by: createOrderDto.quantity,
           });
-          await wheelStock.reload();
+          //await wheelStock.reload();
           await orderStorageId.increment('reserve', {
             by: createOrderDto.quantity,
           });
-          await orderStorageId.reload();
+          //await orderStorageId.reload();
 
           await orderId.$add('order_storage', orderStorageId);
           await storageStorage.$add('order_storage', orderStorageId);
@@ -257,9 +257,9 @@ export class OrdersService {
             Or Storage specified incorrectly`;
         }
 
-        return () => {
+        
           wheelStock = null;
-        }
+
       }
 
       if (batteryStock) {
@@ -271,9 +271,9 @@ export class OrdersService {
             createOrderDto.quantity -
             (createOrderDto.quantity - batteryStock.remainder);
           await batteryStock.increment('reserve', { by: newReserve });
-          await batteryStock.reload();
+          //await batteryStock.reload();
           await orderStorageId.increment('reserve', { by: newReserve });
-          await orderStorageId.reload();
+          //await orderStorageId.reload();
 
           await orderId.$add('order_storage', orderStorageId);
           await storageStorage.$add('order_storage', orderStorageId);
@@ -290,11 +290,11 @@ export class OrdersService {
           await batteryStock.increment('reserve', {
             by: createOrderDto.quantity,
           });
-          await batteryStock.reload();
+          //await batteryStock.reload();
           await orderStorageId.increment('reserve', {
             by: createOrderDto.quantity,
           });
-          await orderStorageId.reload();
+          //await orderStorageId.reload();
 
           await orderId.$add('order_storage', orderStorageId);
           await storageStorage.$add('order_storage', orderStorageId);
@@ -314,9 +314,8 @@ export class OrdersService {
             Or Storage specified incorrectly`;
         }
 
-        return () => {
+        
           batteryStock = null;
-        }
       }
 
       if (oilStock) {
@@ -328,9 +327,9 @@ export class OrdersService {
             createOrderDto.quantity -
             (createOrderDto.quantity - oilStock.remainder);
           await oilStock.increment('reserve', { by: newReserve });
-          await oilStock.reload();
+          //await oilStock.reload();
           await orderStorageId.increment('reserve', { by: newReserve });
-          await orderStorageId.reload();
+          //await orderStorageId.reload();
 
           await orderId.$add('order_storage', orderStorageId);
           await storageStorage.$add('order_storage', orderStorageId);
@@ -345,11 +344,11 @@ export class OrdersService {
           oilStock.stock !== 0
         ) {
           await oilStock.increment('reserve', { by: createOrderDto.quantity });
-          await oilStock.reload();
+          //await oilStock.reload();
           await orderStorageId.increment('reserve', {
             by: createOrderDto.quantity,
           });
-          await orderStorageId.reload();
+          //await orderStorageId.reload();
 
           await orderId.$add('order_storage', orderStorageId);
           await storageStorage.$add('order_storage', orderStorageId);
@@ -369,9 +368,8 @@ export class OrdersService {
             Or Storage specified incorrectly`;
         }
 
-        return () => {
           oilStock = null;
-        }
+        
       }
 
       return orderId;
