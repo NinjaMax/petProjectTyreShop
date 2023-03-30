@@ -356,7 +356,7 @@ export class OrdersService {
       // taskAddOrderRemove();
       //await scheduler.yield();
       //await yieldToMain();
-    }
+    //}
 
     // const orderId = await this.ordersRepository.findByPk(createOrderDto.id_order, { include: ['order_storage'] });
     // const orderStorageId = await this.ordersStorageService.findOrderStorageById(createOrderDto);
