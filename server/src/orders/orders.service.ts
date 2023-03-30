@@ -311,6 +311,7 @@ export class OrdersService {
         
       }
       //oilStock = null;
+      
       await orderIdOil.reload();
       return orderIdOil;
       // } catch {
@@ -324,15 +325,31 @@ export class OrdersService {
 
   async addGoodsToOrder(createOrderDto: CreateOrderDto) {
 
+    const i:number = 0;
+
     const taskAddOrder: any[] = [
-      this.tyreStockOrder(createOrderDto),
-      this.wheelStockOrder(createOrderDto),
-      this.batteryStockOrder(createOrderDto),
-      this.oilStockOrder(createOrderDto),
+      this.tyreStockOrder,
+      this.wheelStockOrder,
+      this.batteryStockOrder,
+      this.oilStockOrder,
     ];
 
-    while (taskAddOrder.length > 0) {
+    while (taskAddOrder.length > i) {
+      if (taskAddOrder[i] === this.tyreStockOrder) {
+        await this.tyreStockOrder(createOrderDto);
+      }
 
+      if (taskAddOrder[i] === this.wheelStockOrder) {
+        await this.wheelStockOrder(createOrderDto);
+      }
+
+      if (taskAddOrder[i] === this.batteryStockOrder) {
+        await this.batteryStockOrder(createOrderDto);
+      }
+
+      if (taskAddOrder[i] === this.oilStockOrder) {
+        await this.oilStockOrder(createOrderDto);
+      }
 
       const taskAddOrderRemove = taskAddOrder.shift();
       taskAddOrderRemove();
