@@ -127,7 +127,7 @@ export class OrdersService {
     }
   }
 
-  async tyreStockOrder (createOrderDto: CreateOrderDto) {
+  async tyreStockOrder(createOrderDto: CreateOrderDto) {
 
     const orderIdTyre = await this.ordersRepository.findByPk(
         createOrderDto.id_order,
@@ -160,18 +160,20 @@ export class OrdersService {
     
       if (stockTyreExists) {
         await stockTyreExists.increment('reserve', { by: newReserveTyre || createOrderDto.quantity });
-        await stockTyreExists.reload();
+        //await stockTyreExists.reload();
         await orderStorageIdTyre.increment('reserve', { by: newReserveTyre || createOrderDto.quantity });
-        await orderStorageIdTyre.reload();
+        //await orderStorageIdTyre.reload();
         await orderIdTyre.$add('order_storage', orderStorageIdTyre);
         await storageTyreStorage.$add('order_storage', orderStorageIdTyre);
-        await orderIdTyre.reload();
+        
       }
       //oilStock = null;
+      await orderIdTyre.reload();
+
       return orderIdTyre;
     }
     
-    async wheelStockOrder (createOrderDto: CreateOrderDto) {
+    async wheelStockOrder(createOrderDto: CreateOrderDto) {
     
         const orderIdWheel = await this.ordersRepository.findByPk(
             createOrderDto.id_order,
@@ -204,18 +206,19 @@ export class OrdersService {
         
           if (stockWheelExists) {
             await stockWheelExists.increment('reserve', { by: newReserveWheel || createOrderDto.quantity });
-            await stockWheelExists.reload();
+            //await stockWheelExists.reload();
             await orderStorageIdWheel.increment('reserve', { by: newReserveWheel || createOrderDto.quantity });
-            await orderStorageIdWheel.reload();
+            //await orderStorageIdWheel.reload();
             await orderIdWheel.$add('order_storage', orderStorageIdWheel);
             await storageStorageWheel.$add('order_storage', orderStorageIdWheel);
-            await orderIdWheel.reload();
+            
           }
           //oilStock = null;
+          await orderIdWheel.reload();
           return orderIdWheel;
     }
 
-    async batteryStockOrder (createOrderDto: CreateOrderDto) {
+    async batteryStockOrder(createOrderDto: CreateOrderDto) {
         const orderIdBattery = await this.ordersRepository.findByPk(
             createOrderDto.id_order,
             {include: ['order_storage']}
@@ -248,14 +251,15 @@ export class OrdersService {
         
           if (stockBatteryExists) {
             await stockBatteryExists.increment('reserve', { by: newReserveBattery || createOrderDto.quantity });
-            await stockBatteryExists.reload();
+            //await stockBatteryExists.reload();
             await orderStorageIdBattery.increment('reserve', { by: newReserveBattery || createOrderDto.quantity });
-            await orderStorageIdBattery.reload();
+            //await orderStorageIdBattery.reload();
             await orderIdBattery.$add('order_storage', orderStorageIdBattery);
             await storageStorageBattery.$add('order_storage', orderStorageIdBattery);
-            await orderIdBattery.reload();
+            
           }
           //oilStock = null;
+          await orderIdBattery.reload();
           return orderIdBattery;
         // } catch {
         //   throw new HttpException(
@@ -265,7 +269,7 @@ export class OrdersService {
         // }
     }
     
-    async oilStockOrder (createOrderDto: CreateOrderDto) {
+    async oilStockOrder(createOrderDto: CreateOrderDto) {
         const orderIdOil = await this.ordersRepository.findByPk(
             createOrderDto.id_order,
             {include: ['order_storage']}
@@ -299,14 +303,15 @@ export class OrdersService {
     
       if (stockOilExists) {
         await stockOilExists.increment('reserve', { by: newReserveOil || createOrderDto.quantity });
-        await stockOilExists.reload();
+        //await stockOilExists.reload();
         await orderStorageIdOil.increment('reserve', { by: newReserveOil || createOrderDto.quantity });
-        await orderStorageIdOil.reload();
+        //await orderStorageIdOil.reload();
         await orderIdOil.$add('order_storage', orderStorageIdOil);
         await storageStorageOil.$add('order_storage', orderStorageIdOil);
-        await orderIdOil.reload();
+        
       }
       //oilStock = null;
+      await orderIdOil.reload();
       return orderIdOil;
       // } catch {
       //   throw new HttpException(
@@ -318,6 +323,7 @@ export class OrdersService {
   }
 
   async addGoodsToOrder(createOrderDto: CreateOrderDto) {
+
     const taskAddOrder: any[] = [
       this.tyreStockOrder(createOrderDto),
       this.wheelStockOrder(createOrderDto),
