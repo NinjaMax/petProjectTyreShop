@@ -325,6 +325,11 @@ export class OrdersService {
 
   async addGoodsToOrder(createOrderDto: CreateOrderDto) {
 
+    const tyreStock = await this.stockTyresService.findStockTyreById(createOrderDto);
+    const wheelStock = await this.stockWheelsService.findStockWheelById(createOrderDto);
+    const batteryStock = await this.stockBatteriesService.findStockBatteryById(createOrderDto);
+    const oilStock = await this.stockOilsService.findStockOilById(createOrderDto);
+   
     const i:number = 0;
 
     const taskAddOrder: any[] = [
@@ -335,19 +340,19 @@ export class OrdersService {
     ];
 
     while (taskAddOrder.length > i) {
-      if (taskAddOrder[i] === this.tyreStockOrder) {
+      if (tyreStock && taskAddOrder[i] === this.tyreStockOrder) {
         await this.tyreStockOrder(createOrderDto);
       }
 
-      if (taskAddOrder[i] === this.wheelStockOrder) {
+      if (wheelStock && taskAddOrder[i] === this.wheelStockOrder) {
         await this.wheelStockOrder(createOrderDto);
       }
 
-      if (taskAddOrder[i] === this.batteryStockOrder) {
+      if (batteryStock && taskAddOrder[i] === this.batteryStockOrder) {
         await this.batteryStockOrder(createOrderDto);
       }
 
-      if (taskAddOrder[i] === this.oilStockOrder) {
+      if (oilStock && taskAddOrder[i] === this.oilStockOrder) {
         await this.oilStockOrder(createOrderDto);
       }
 
