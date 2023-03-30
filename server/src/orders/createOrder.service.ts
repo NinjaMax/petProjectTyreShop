@@ -360,7 +360,14 @@ export function yieldToMain () {
         return `You cannot set more "reserve" because there is no remainder ("Remainder 0") or the specified storage is incorrect.`;
       }
     } else if (oilStock) {
-      // handle oil stock
+      if (oilStock.remainder < createOrderDto.quantity && oilStock.stock !== 0) {
+        newReserve = createOrderDto.quantity - (createOrderDto.quantity - oilStock.remainder);
+        stock = oilStock;
+      } else if (oilStock.remainder > createOrderDto.quantity && oilStock.stock !== 0) {
+        stock = oilStock;
+      } else {
+        return `You cannot set more "reserve" because there is no remainder ("Remainder 0") or the specified storage is incorrect.`;
+      }
     }
   
     if (stock) {
