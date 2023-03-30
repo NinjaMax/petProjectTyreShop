@@ -143,25 +143,25 @@ export class OrdersService {
       const orderStorageIdTyre =
         await this.ordersStorageService.findOrderStorageById(createOrderDto);
     
-        let stock = null;
-        let newReserve = 0;
+        let stockTyreExists = null;
+        let newReserveTyre = 0;
             
 
       if (tyreStock) {
         if (tyreStock.remainder < createOrderDto.quantity && tyreStock.stock !== 0) {
-          newReserve = createOrderDto.quantity - (createOrderDto.quantity - tyreStock.remainder);
-          stock = tyreStock;
+          newReserveTyre = createOrderDto.quantity - (createOrderDto.quantity - tyreStock.remainder);
+          stockTyreExists = tyreStock;
         } else if (tyreStock.remainder > createOrderDto.quantity && tyreStock.stock !== 0) {
-          stock = tyreStock;
+          stockTyreExists = tyreStock;
         } else {
           return `You cannot set more "reserve" because there is no remainder ("Remainder 0") or the specified storage is incorrect.`;
         }
       }
     
-      if (stock) {
-        await stock.increment('reserve', { by: newReserve || createOrderDto.quantity });
-        await stock.reload();
-        await orderStorageIdTyre.increment('reserve', { by: newReserve || createOrderDto.quantity });
+      if (stockTyreExists) {
+        await stockTyreExists.increment('reserve', { by: newReserveTyre || createOrderDto.quantity });
+        await stockTyreExists.reload();
+        await orderStorageIdTyre.increment('reserve', { by: newReserveTyre || createOrderDto.quantity });
         await orderStorageIdTyre.reload();
         await orderIdTyre.$add('order_storage', orderStorageIdTyre);
         await storageTyreStorage.$add('order_storage', orderStorageIdTyre);
@@ -187,25 +187,25 @@ export class OrdersService {
           const orderStorageIdWheel =
             await this.ordersStorageService.findOrderStorageById(createOrderDto);
     
-            let stock = null;
-            let newReserve = 0;
+            let stockWheelExists = null;
+            let newReserveWheel = 0;
                 
     
           if (wheelStock) {
             if (wheelStock.remainder < createOrderDto.quantity && wheelStock.stock !== 0) {
-              newReserve = createOrderDto.quantity - (createOrderDto.quantity - wheelStock.remainder);
-              stock = wheelStock;
+              newReserveWheel = createOrderDto.quantity - (createOrderDto.quantity - wheelStock.remainder);
+              stockWheelExists = wheelStock;
             } else if (wheelStock.remainder > createOrderDto.quantity && wheelStock.stock !== 0) {
-              stock = wheelStock;
+              stockWheelExists = wheelStock;
             } else {
               return `You cannot set more "reserve" because there is no remainder ("Remainder 0") or the specified storage is incorrect.`;
             }
           }
         
-          if (stock) {
-            await stock.increment('reserve', { by: newReserve || createOrderDto.quantity });
-            await stock.reload();
-            await orderStorageIdWheel.increment('reserve', { by: newReserve || createOrderDto.quantity });
+          if (stockWheelExists) {
+            await stockWheelExists.increment('reserve', { by: newReserveWheel || createOrderDto.quantity });
+            await stockWheelExists.reload();
+            await orderStorageIdWheel.increment('reserve', { by: newReserveWheel || createOrderDto.quantity });
             await orderStorageIdWheel.reload();
             await orderIdWheel.$add('order_storage', orderStorageIdWheel);
             await storageStorageWheel.$add('order_storage', orderStorageIdWheel);
@@ -231,25 +231,25 @@ export class OrdersService {
           const orderStorageIdBattery =
             await this.ordersStorageService.findOrderStorageById(createOrderDto);
     
-            let stock = null;
-            let newReserve = 0;
+            let stockBatteryExists = null;
+            let newReserveBattery = 0;
                 
     
           if (batteryStock) {
             if (batteryStock.remainder < createOrderDto.quantity && batteryStock.stock !== 0) {
-              newReserve = createOrderDto.quantity - (createOrderDto.quantity - batteryStock.remainder);
-              stock = batteryStock;
+              newReserveBattery = createOrderDto.quantity - (createOrderDto.quantity - batteryStock.remainder);
+              stockBatteryExists = batteryStock;
             } else if (batteryStock.remainder > createOrderDto.quantity && batteryStock.stock !== 0) {
-              stock = batteryStock;
+              stockBatteryExists = batteryStock;
             } else {
               return `You cannot set more "reserve" because there is no remainder ("Remainder 0") or the specified storage is incorrect.`;
             }
           }
         
-          if (stock) {
-            await stock.increment('reserve', { by: newReserve || createOrderDto.quantity });
-            await stock.reload();
-            await orderStorageIdBattery.increment('reserve', { by: newReserve || createOrderDto.quantity });
+          if (stockBatteryExists) {
+            await stockBatteryExists.increment('reserve', { by: newReserveBattery || createOrderDto.quantity });
+            await stockBatteryExists.reload();
+            await orderStorageIdBattery.increment('reserve', { by: newReserveBattery || createOrderDto.quantity });
             await orderStorageIdBattery.reload();
             await orderIdBattery.$add('order_storage', orderStorageIdBattery);
             await storageStorageBattery.$add('order_storage', orderStorageIdBattery);
@@ -282,25 +282,25 @@ export class OrdersService {
             await this.ordersStorageService.findOrderStorageById(createOrderDto);
           
       
-        let stock = null;
-        let newReserve = 0;
+        let stockOilExists = null;
+        let newReserveOil = 0;
             
 
       if (oilStock) {
         if (oilStock.remainder < createOrderDto.quantity && oilStock.stock !== 0) {
-          newReserve = createOrderDto.quantity - (createOrderDto.quantity - oilStock.remainder);
-          stock = oilStock;
+          newReserveOil = createOrderDto.quantity - (createOrderDto.quantity - oilStock.remainder);
+          stockOilExists = oilStock;
         } else if (oilStock.remainder > createOrderDto.quantity && oilStock.stock !== 0) {
-          stock = oilStock;
+          stockOilExists = oilStock;
         } else {
           return `You cannot set more "reserve" because there is no remainder ("Remainder 0") or the specified storage is incorrect.`;
         }
       }
     
-      if (stock) {
-        await stock.increment('reserve', { by: newReserve || createOrderDto.quantity });
-        await stock.reload();
-        await orderStorageIdOil.increment('reserve', { by: newReserve || createOrderDto.quantity });
+      if (stockOilExists) {
+        await stockOilExists.increment('reserve', { by: newReserveOil || createOrderDto.quantity });
+        await stockOilExists.reload();
+        await orderStorageIdOil.increment('reserve', { by: newReserveOil || createOrderDto.quantity });
         await orderStorageIdOil.reload();
         await orderIdOil.$add('order_storage', orderStorageIdOil);
         await storageStorageOil.$add('order_storage', orderStorageIdOil);
