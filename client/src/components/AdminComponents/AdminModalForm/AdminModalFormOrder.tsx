@@ -451,6 +451,7 @@ const AdminFormOrder = (
             orderStorage?.forEach(async(itemsOrd): Promise<any> => {
                 await addGoodsToOrder(itemsOrd);
                 await yieldToMain();
+                console.log('onSubmOrder', itemsOrd);
             })
             //}
         //alert(`Заказ ${1} проведено`)
