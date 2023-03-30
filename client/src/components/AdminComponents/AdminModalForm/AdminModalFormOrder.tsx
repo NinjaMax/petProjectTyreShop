@@ -406,36 +406,37 @@ const AdminFormOrder = (
         //e.preventDefault();
         console.log('CREATE ORDER: ', data)
 
-        const taskOnSubmit: any[] = [
-            responseForm,
-            createGoodsToOrder
-        ];
+        // const taskOnSubmit: any[] = [
+        //     responseForm,
+        //     createGoodsToOrder
+        // ];
 
-        let i: number = 0;
-        while(taskOnSubmit.length > i) {
+        // let i: number = 0;
+        // while(taskOnSubmit.length > i) {
 
-            if(taskOnSubmit[i] === responseForm) {
+            //if(taskOnSubmit[i] === responseForm) {
     
                 let resultForm: any = await responseForm(data);
                 setOrderId(+resultForm.data.id_order);
                 alert(`Заказ створено, id ${resultForm.data.id_order}`);
                 //console.log('Order id: ', response.data.id_order);
-            }
+            //}
 
-            if(taskOnSubmit[i] === responseForm) {
+            //if(taskOnSubmit[i] === responseForm) {
                 //const arrayData: CreateGoods[] = stateData.slice();
                 stateData.forEach(async (itemGoods: CreateGoods): Promise<any> => {
-                    let resultOrder: any = await createGoodsToOrder(itemGoods, orderId!);
+                    let resultOrder: any = await createGoodsToOrder(itemGoods, resultForm.data.id_order!);
                     setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder.data]);
-                    console.log('Order_storage', resultOrder);
+                    await yieldToMain(); 
+                    console.log('Order_storage', resultOrder.data.data);
                 })   
-            }    
+            //}    
                     
-            const taskOnSubmitDel: any = taskOnSubmit.shift();
-            taskOnSubmitDel();
+            //const taskOnSubmitDel: any = taskOnSubmit.shift();
+            //taskOnSubmitDel();
             //await scheduler.yield();
-            await yieldToMain();                    
-        }
+            //await yieldToMain();                    
+        //}
 
         setDisableBtn(!disableBtn);
     }    
@@ -447,8 +448,9 @@ const AdminFormOrder = (
          
         try {
             //let respDone = async () => {
-            orderStorage?.forEach((itemsOrd) => {
-                addGoodsToOrder(itemsOrd)
+            orderStorage?.forEach(async(itemsOrd): Promise<any> => {
+                await addGoodsToOrder(itemsOrd);
+                await yieldToMain();
             })
             //}
         //alert(`Заказ ${1} проведено`)
@@ -473,7 +475,7 @@ const AdminFormOrder = (
     //console.log('CUSTOMER', customer);
     //console.log('TYRE DATAS: ', tyreDatas);
     console.log(errors);
-    console.log('ORDER STOR ARRAY: ', orderStorage);
+    console.log('ORDER STORG ARRAY: ', orderStorage);
 
     return (
         <div>

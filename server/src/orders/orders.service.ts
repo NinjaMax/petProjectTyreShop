@@ -131,7 +131,7 @@ export class OrdersService {
 
     const orderIdTyre = await this.ordersRepository.findByPk(
         createOrderDto.id_order,
-        {include: ['order_storage']}
+        //{include: ['order_storage']}
         //{include: {all: true}},
       );
       const tyreStock = await this.stockTyresService.findStockTyreById(
@@ -177,7 +177,7 @@ export class OrdersService {
     
         const orderIdWheel = await this.ordersRepository.findByPk(
             createOrderDto.id_order,
-            {include: ['order_storage']}
+            //{include: ['order_storage']}
             //{include: {all: true}},
           );
           const wheelStock = await this.stockWheelsService.findStockWheelById(
@@ -221,7 +221,7 @@ export class OrdersService {
     async batteryStockOrder(createOrderDto: CreateOrderDto) {
         const orderIdBattery = await this.ordersRepository.findByPk(
             createOrderDto.id_order,
-            {include: ['order_storage']}
+            //{include: ['order_storage']}
             //{include: {all: true}},
           );
     
@@ -272,7 +272,7 @@ export class OrdersService {
     async oilStockOrder(createOrderDto: CreateOrderDto) {
         const orderIdOil = await this.ordersRepository.findByPk(
             createOrderDto.id_order,
-            {include: ['order_storage']}
+            //{include: ['order_storage']}
             //{include: {all: true}},
           );
         
