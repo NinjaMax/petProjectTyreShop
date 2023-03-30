@@ -327,33 +327,34 @@ export class OrdersService {
    
     //const i:number = 0;
 
-    const taskAddOrder: any[] = [
-      tyreStock,
-      wheelStock,
-      batteryStock,
-      oilStock,
-    ];
+    // const taskAddOrder: any[] = [
+    //   tyreStock,
+    //   wheelStock,
+    //   batteryStock,
+    //   oilStock,
+    // ];
 
-    for (let i = 0; taskAddOrder.length > i;) {
-      if (tyreStock && taskAddOrder[i]) {
+    // for (let i = 0; taskAddOrder.length > i;) {
+      if (tyreStock) {
         await this.tyreStockOrder(createOrderDto);
+
       }
 
-      if (wheelStock && taskAddOrder[i]) {
+      if (wheelStock) {
         await this.wheelStockOrder(createOrderDto);
       }
 
-      if (batteryStock && taskAddOrder[i] ) {
+      if (batteryStock) {
         await this.batteryStockOrder(createOrderDto);
       }
 
-      if (oilStock && taskAddOrder[i]) {
+      if (oilStock) {
         await this.oilStockOrder(createOrderDto);
       }
 
-      const taskAddOrderRemove = taskAddOrder.shift();
-      taskAddOrderRemove();
-      await scheduler.yield();
+      // const taskAddOrderRemove = taskAddOrder.shift();
+      // taskAddOrderRemove();
+      //await scheduler.yield();
       //await yieldToMain();
     }
 
