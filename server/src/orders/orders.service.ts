@@ -132,6 +132,7 @@ export class OrdersService {
     const orderIdTyre = await this.ordersRepository.findByPk(
         createOrderDto.id_order, {include: { all: true }},
       );
+
       const tyreStock = await this.stockTyresService.findStockTyreById(
         createOrderDto,
       );
@@ -317,34 +318,36 @@ export class OrdersService {
 
   async addGoodsToOrder(createOrderDto: CreateOrderDto) {
 
-    const tyreStock = await this.stockTyresService.findStockTyreById(createOrderDto);
+    const tyreStock = await this.stockTyresService.findStockTyreById(
+      createOrderDto
+    );
     const wheelStock = await this.stockWheelsService.findStockWheelById(createOrderDto);
     const batteryStock = await this.stockBatteriesService.findStockBatteryById(createOrderDto);
     const oilStock = await this.stockOilsService.findStockOilById(createOrderDto);
    
-    const i:number = 0;
+    //const i:number = 0;
 
     const taskAddOrder: any[] = [
-      this.tyreStockOrder,
-      this.wheelStockOrder,
-      this.batteryStockOrder,
-      this.oilStockOrder,
+      tyreStock,
+      wheelStock,
+      batteryStock,
+      oilStock,
     ];
 
-    while (taskAddOrder.length > i) {
-      if (tyreStock && taskAddOrder[i] === this.tyreStockOrder) {
+    for (let i = 0; taskAddOrder.length > i;) {
+      if (tyreStock && taskAddOrder[i]) {
         await this.tyreStockOrder(createOrderDto);
       }
 
-      if (wheelStock && taskAddOrder[i] === this.wheelStockOrder) {
+      if (wheelStock && taskAddOrder[i]) {
         await this.wheelStockOrder(createOrderDto);
       }
 
-      if (batteryStock && taskAddOrder[i] === this.batteryStockOrder) {
+      if (batteryStock && taskAddOrder[i] ) {
         await this.batteryStockOrder(createOrderDto);
       }
 
-      if (oilStock && taskAddOrder[i] === this.oilStockOrder) {
+      if (oilStock && taskAddOrder[i]) {
         await this.oilStockOrder(createOrderDto);
       }
 
