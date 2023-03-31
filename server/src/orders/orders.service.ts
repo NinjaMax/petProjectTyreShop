@@ -267,7 +267,7 @@ export class OrdersService {
     async oilStockOrder(createOrderDto: CreateOrderDto) {
         const orderIdOil = await this.ordersRepository.findByPk(
             createOrderDto.id_order, {include: { all: true }},
-            );
+          );
         
         const oilStock = await this.stockOilsService.findStockOilById(
             createOrderDto,
@@ -319,11 +319,17 @@ export class OrdersService {
   async addGoodsToOrder(createOrderDto: CreateOrderDto) {
 
     const tyreStock = await this.stockTyresService.findStockTyreById(
-      createOrderDto
+      createOrderDto,
     );
-    const wheelStock = await this.stockWheelsService.findStockWheelById(createOrderDto);
-    const batteryStock = await this.stockBatteriesService.findStockBatteryById(createOrderDto);
-    const oilStock = await this.stockOilsService.findStockOilById(createOrderDto);
+    const wheelStock = await this.stockWheelsService.findStockWheelById(
+      createOrderDto,
+    );
+    const batteryStock = await this.stockBatteriesService.findStockBatteryById(
+      createOrderDto,
+    );
+    const oilStock = await this.stockOilsService.findStockOilById(
+      createOrderDto,
+    );
    
     //const i:number = 0;
 
@@ -336,20 +342,23 @@ export class OrdersService {
 
     // for (let i = 0; taskAddOrder.length > i;) {
       if (tyreStock) {
-        await this.tyreStockOrder(createOrderDto);
-
+        const orderAddTyre = await this.tyreStockOrder(createOrderDto);
+        return orderAddTyre;
       }
 
       if (wheelStock) {
-        await this.wheelStockOrder(createOrderDto);
+        const orderAddWheel = await this.wheelStockOrder(createOrderDto);
+        return orderAddWheel;
       }
 
       if (batteryStock) {
-        await this.batteryStockOrder(createOrderDto);
+        const orderAddBattery = await this.batteryStockOrder(createOrderDto);
+        return orderAddBattery;
       }
 
       if (oilStock) {
-        await this.oilStockOrder(createOrderDto);
+        const orderAddOil = await this.oilStockOrder(createOrderDto);
+        return orderAddOil;
       }
 
       // const taskAddOrderRemove = taskAddOrder.shift();
