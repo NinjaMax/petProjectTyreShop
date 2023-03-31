@@ -406,39 +406,42 @@ const AdminFormOrder = (
         //e.preventDefault();
         console.log('CREATE ORDER: ', data)
 
-        // const taskOnSubmit: any[] = [
-        //     responseForm,
-        //     createGoodsToOrder
-        // ];
+        if (!orderId && stateData.length === 0) {
+           let resultForm: any = await responseForm(data);
+            setOrderId(+resultForm.data.id_order);
+            alert(`Заказ створено, id ${resultForm.data.id_order},
+                але товари не додані.
+            `); 
+        }
 
-        // let i: number = 0;
-        // while(taskOnSubmit.length > i) {
+        if(!orderId && stateData.length > 0) {
 
-            //if(taskOnSubmit[i] === responseForm) {
-    
-                let resultForm: any = await responseForm(data);
-                setOrderId(+resultForm.data.id_order);
-                alert(`Заказ створено, id ${resultForm.data.id_order}`);
-                //console.log('Order id: ', response.data.id_order);
-            //}
+            let resultForm: any = await responseForm(data);
+            setOrderId(+resultForm.data.id_order);
+             
+            stateData.forEach(async (itemGoods: CreateGoods): Promise<any> => {
+                let resultOrder: any = await createGoodsToOrder(itemGoods, resultForm.data.id_order!);
+                setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder.data]);
+                await yieldToMain(); 
+            console.log('Order_storage', resultOrder.data);
+            }) 
+            alert(`Заказ створено, id ${resultForm.data.id_order}`);
+            setDisableBtn(!disableBtn);
+        }
 
-            //if(taskOnSubmit[i] === responseForm) {
-                //const arrayData: CreateGoods[] = stateData.slice();
-                stateData.forEach(async (itemGoods: CreateGoods): Promise<any> => {
-                    let resultOrder: any = await createGoodsToOrder(itemGoods, resultForm.data.id_order!);
-                    setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder.data]);
-                    await yieldToMain(); 
-                    console.log('Order_storage', resultOrder.data.data);
-                })   
-            //}    
-                    
-            //const taskOnSubmitDel: any = taskOnSubmit.shift();
-            //taskOnSubmitDel();
-            //await scheduler.yield();
-            //await yieldToMain();                    
-        //}
-
-        setDisableBtn(!disableBtn);
+        if(orderId && stateData.length > 0) {
+        
+            stateData.forEach(async (itemGoods: CreateGoods): Promise<any> => {
+                let resultOrder: any = await createGoodsToOrder(itemGoods, orderId);
+                setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder.data]);
+                await yieldToMain(); 
+                console.log('Order_storage', resultOrder.data);
+            }) 
+            alert(`Заказ створено, id ${orderId}`);
+            setDisableBtn(!disableBtn);
+        } else if(orderId && stateData.length === 0){
+            alert("Треба добавити товари.");
+        }    
     }    
     
     //GOOD PERFORM
@@ -449,9 +452,9 @@ const AdminFormOrder = (
         try {
             //let respDone = async () => {
             orderStorage?.forEach(async(itemsOrd): Promise<any> => {
-                await addGoodsToOrder(itemsOrd);
+                let resOrd: any = await addGoodsToOrder(itemsOrd);
                 await yieldToMain();
-                console.log('onSubmOrder', itemsOrd);
+                console.log('onSubmOrder', resOrd.data);
             })
             //}
         //alert(`Заказ ${1} проведено`)

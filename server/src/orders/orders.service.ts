@@ -1,4 +1,5 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { MESSAGES } from '@nestjs/core/constants';
 import { InjectModel } from '@nestjs/sequelize';
 import { BasketService } from 'src/basket/basket.service';
 //import { PriceTyresService } from 'src/prices/price-tyres.service';
@@ -150,10 +151,12 @@ export class OrdersService {
         if (tyreStock.remainder < createOrderDto.quantity && tyreStock.stock !== 0) {
           newReserveTyre = createOrderDto.quantity - (createOrderDto.quantity - tyreStock.remainder);
           stockTyreExists = tyreStock;
-        } else if (tyreStock.remainder > createOrderDto.quantity && tyreStock.stock !== 0) {
+        } else if (tyreStock.remainder >= createOrderDto.quantity && tyreStock.stock !== 0) {
           stockTyreExists = tyreStock;
         } else {
-          return `You cannot set more "reserve" because there is no remainder ("Remainder 0") or the specified storage is incorrect.`;
+          throw new HttpException (
+            `Ви не можете поставити резерв, томущо немає залишків ("Залишки 0"), або не вірно вказаний склад чи інша помилка.`,
+          HttpStatus.BAD_REQUEST);
         }
       }
     
@@ -194,10 +197,12 @@ export class OrdersService {
             if (wheelStock.remainder < createOrderDto.quantity && wheelStock.stock !== 0) {
               newReserveWheel = createOrderDto.quantity - (createOrderDto.quantity - wheelStock.remainder);
               stockWheelExists = wheelStock;
-            } else if (wheelStock.remainder > createOrderDto.quantity && wheelStock.stock !== 0) {
+            } else if (wheelStock.remainder >= createOrderDto.quantity && wheelStock.stock !== 0) {
               stockWheelExists = wheelStock;
             } else {
-              return `You cannot set more "reserve" because there is no remainder ("Remainder 0") or the specified storage is incorrect.`;
+              throw new HttpException (
+                `Ви не можете поставити резерв, томущо немає залишків ("Залишки 0"), або не вірно вказаний склад чи інша помилка.`,
+                HttpStatus.BAD_REQUEST);
             }
           }
         
@@ -237,10 +242,12 @@ export class OrdersService {
             if (batteryStock.remainder < createOrderDto.quantity && batteryStock.stock !== 0) {
               newReserveBattery = createOrderDto.quantity - (createOrderDto.quantity - batteryStock.remainder);
               stockBatteryExists = batteryStock;
-            } else if (batteryStock.remainder > createOrderDto.quantity && batteryStock.stock !== 0) {
+            } else if (batteryStock.remainder >= createOrderDto.quantity && batteryStock.stock !== 0) {
               stockBatteryExists = batteryStock;
             } else {
-              return `You cannot set more "reserve" because there is no remainder ("Remainder 0") or the specified storage is incorrect.`;
+              throw new HttpException (
+                `Ви не можете поставити резерв, томущо немає залишків ("Залишки 0"), або не вірно вказаний склад чи інша помилка.`,
+              HttpStatus.BAD_REQUEST);
             }
           }
         
@@ -287,10 +294,12 @@ export class OrdersService {
         if (oilStock.remainder < createOrderDto.quantity && oilStock.stock !== 0) {
           newReserveOil = createOrderDto.quantity - (createOrderDto.quantity - oilStock.remainder);
           stockOilExists = oilStock;
-        } else if (oilStock.remainder > createOrderDto.quantity && oilStock.stock !== 0) {
+        } else if (oilStock.remainder >= createOrderDto.quantity && oilStock.stock !== 0) {
           stockOilExists = oilStock;
         } else {
-          return `You cannot set more "reserve" because there is no remainder ("Remainder 0") or the specified storage is incorrect.`;
+          throw new HttpException (
+            `Ви не можете поставити резерв, томущо немає залишків ("Залишки 0"), або не вірно вказаний склад чи інша помилка.`,
+            HttpStatus.BAD_REQUEST);
         }
       }
     

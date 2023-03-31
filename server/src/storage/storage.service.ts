@@ -65,7 +65,7 @@ export class StorageService {
 
     try {
       
-      const storageById = await this.storageRepository.findByPk(getStorageDto.id_storage, {include: {all: true}} );
+      const storageById = await this.storageRepository.findByPk(getStorageDto.id_storage, {include: {all: true}});
 
       return storageById;
 
@@ -80,7 +80,7 @@ export class StorageService {
 
     try {
       
-      const storageByIdOrder = await this.storageRepository.findByPk(getStorageDto.id_storage );
+      const storageByIdOrder = await this.storageRepository.findByPk(getStorageDto.id_storage);
 
       return storageByIdOrder;
 
