@@ -75,14 +75,26 @@ type CreateGoods = {
     ////////
 }
 
-type AddGoods = {
-    id_order_storage: number;
-    id: number;
-    id_supplier: number;
-    order_index: number;
-    storage_index: number;
-    quantity: number;
-    price: number;
+type DataGoods = {
+    delivery: string;
+    delivery_ttn: string;
+    id_contract: number | string;
+    id_customer: number;
+    notes: string;
+    order_view: string;
+    organisation: string;
+    pay_view: string;
+    status: string;
+    status_delivery: string;
+    status_pay: string;
+    storage: string;
+    // id_order_storage: number;
+    // id: number;
+    // id_supplier: number;
+    // order_index: number;
+    // storage_index: number;
+    // quantity: number;
+    // price: number;
 }
 
 enum ActionType {
@@ -152,13 +164,14 @@ function createInitialState (goodsId: any | undefined): any {
     let initialState = [];
 
     if (goodsId) {
-        initialState.push(goodsId);
+        initialState.push({...goodsId, 
+            "price":{...goodsId.price[0],
+               "quantity": "4"},  
+        });
         //setPriceItem(goodsId.price[0].price);
         //console.log(initialState); 
-    }
-       
-    return initialState;
-        
+    }  
+    return initialState;    
 };
 
 const AdminFormOrder = (
@@ -186,6 +199,32 @@ const AdminFormOrder = (
         register('id_contract')
         setValue("id_contract", addCustomer?.contract[0]?.id_contract)
       }, [register, setValue, addCustomer?.contract])
+
+  
+
+    //   useEffect(() => {
+        
+    // const handleDocumentOnsubmit = (event: any) => {
+    //     alert(`
+    //       document clicked - \n
+    //       run analytics for clicked element: ${event.target}
+    //     `);
+    //   };
+    
+    //     document.addEventListener(
+    //       'onsubmit',
+    //       handleDocumentOnsubmit,
+    //       true
+    //     );
+    
+    //     //return () => {
+    //       document.removeEventListener(
+    //         'onsubmit',
+    //         handleDocumentOnsubmit,
+    //         true
+    //       );
+    //     //};
+    //   }, []);
   
     // const onChangeQuantity = () => {
 
@@ -270,166 +309,51 @@ const AdminFormOrder = (
 
     
     //useEffect(() => {
-        const deleteItem = async (itemIndex: number) => {
-        
+        const deleteItem = async (e: any) => {
+            //e.preventDefault();
+            //e.stopPropagation();
            //dispatch({type: 'deleteItemFromOrder', 
-            state.splice(itemIndex, 1);
-            stateData.splice(itemIndex, 1);
+            // state.splice(itemIndex, 1);
+            // stateData.splice(itemIndex, 1);
            
+            state.splice(+e.currentTarget.value, 1);
+            stateData.splice(+e.currentTarget.value, 1);
             //deleteItem: itemIndex});
+            //e.stopPropagation();
+            //e.preventDefault();
         } 
 //},[state, stateData])
     
-    
-
-    // async function handleSubmit(e) {
-    //     e.preventDefault();
-    //     setStatus('submitting');
-    //     try {
-    //       await submitForm(answer);
-    //       setStatus('success');
-    //     } catch (err) {
-    //       setStatus('typing');
-    //       setError(err);
-    //     }
-    // }
-    //useEffect(() => {  
-  
-        // const responseForm = async (data:{}) => { 
-        //    await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders`, data, {
-        //        headers: {
-        //            'Content-Type': 'application/json; charset=utf-8',
-        //            'Access-Control-Allow-Origin': `${process.env.CORS}`
-        //        }, withCredentials: true,
-        //        })
-        //        .then(response => {
-        //        //setOrderAllData(response.data);
-               
-        //        alert(`Заказ створено, id ${response.data.id_order}`);
-        //        console.log('Order id: ', response.data.id_order);
-        //        setOrderId(+response.data.id_order);
-   
-        //        //if (stateData.length !== 0) {
-        //         // for (let i =0; i < stateData.length; i++) {
-        //         //     createGoodsToOrder(stateData[i], response.data.id_order)
-                    
-        //         // }
-        //            stateData.forEach((itemGoods) => (
-        //              createGoodsToOrder(itemGoods, response.data.id_order)
-        //            ));
-        //        //}
-   
-        //        console.log('ORDER ID', response.data.id_order);
-        //         //   return response.data;
-        //        })
-        //        .catch(error => {
-        //            console.log(error);
-        //        }
-        //     )
-        // }
-     //   return () => responseForm();      
-    // },[]) 
-
-    // useEffect(() =>{
-    //     createGoodsToOrder();
-        // const createGoodsToOrder = async (item: CreateGoods, id_order:number) => { 
-        //     await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders/creategoods`,
-        //         {
-        //             id: +item?.id!,
-        //             full_name: item.full_name,
-        //             category: item.category?.category,
-        //             order_index: id_order,
-        //             id_supplier: +item.price?.id_supplier!,
-        //             storage_index: +item.price?.id_storage!,
-        //             quantity: +item.price?.quantity!,
-        //             price: +item.price?.price!,
-        //             // delivery: 'Flintstone',
-        //         },{headers: {
-        //             'Content-Type': 'application/json; charset=utf-8',
-        //             'Access-Control-Allow-Origin': `${process.env.CORS}`
-        //         }, withCredentials: true,
-        //         })
-        //         .then(response => {
-                    
-        //             setOrderStorage(oldOrdStor => [...oldOrdStor, response.data]);
-        //             console.log('Order_storage', response.data);
-        //         //return response
-        //         })
-        //         .catch(error => {
-        //             console.log(error)
-        //         }
-        //     ) 
-        // }
-    //     return () => createGoodsToOrder();
-    // },[])
-    
-    // const addGoodsToOrder = async (value: AddGoods) => {
-    //     await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders/add`,
-    //         {
-    //             // id: +item.id,
-    //             // full_name: item.full_name,
-    //             // category: item.category.category,
-    //             // order_index: +orderId,
-    //             // id_supplier: +item.stock[0].id_supplier,
-    //             // storage_index: +item.stock[0].id_storage,
-    //             // quantity: +item.price.quantity,
-    //             // price: +item.price.price,
-    //             id_order_storage: value?.id_order_storage,
-    //             id: value.id,
-    //             id_supplier: value.id_supplier,
-    //             id_order: value.order_index,
-    //             id_storage: value.storage_index,
-    //             quantity: value.quantity,
-    //             price: value.price
-    //             // delivery: 'Flintstone',
-    //         },{headers: {
-    //             'Content-Type': 'application/json; charset=utf-8',
-    //             'Access-Control-Allow-Origin': `${process.env.CORS}`
-    //         },withCredentials: true,
-    //         })
-    //         .then(response => {
-    //         //setOrderAllData(response.data);
-    //         alert(`Заказ ${response.data.id_order} проведено`)
-
-    //         console.log('Order Done', response.data);
-    //         })
-    //         .catch(error => {
-    //             console.log(
-    //                 'Не вистачає залишків, або не вірно вказані дані',
-    //                  error)
-    //         }
-    //     )
-    // }
-
     //GOOD PERFORM
-    const onSubmit = async (data:{}) => {
-        //e.preventDefault();
-        console.log('CREATE ORDER: ', data)
+    const onSubmit = async (data: DataGoods, e: any) => {
+            e.preventDefault();
+            //e.stopPropagation();
+            console.log('CREATE ORDER: ', data)
+        //try {
+            if (!orderId && data.id_customer && stateData.length === 0) {
+               let resultForm: any = await responseForm(data);
+                setOrderId(+resultForm.data.id_order);
+                alert(`Заказ створено, id ${resultForm.data.id_order},
+                    але товари не додані.
+                `); 
+            }
 
-        if (!orderId && stateData.length === 0) {
-           let resultForm: any = await responseForm(data);
-            setOrderId(+resultForm.data.id_order);
-            alert(`Заказ створено, id ${resultForm.data.id_order},
-                але товари не додані.
-            `); 
-        }
+            if(!orderId && stateData.length > 0) {
 
-        if(!orderId && stateData.length > 0) {
+                let resultForm: any = await responseForm(data);
+                setOrderId(+resultForm.data.id_order);
 
-            let resultForm: any = await responseForm(data);
-            setOrderId(+resultForm.data.id_order);
-             
-            stateData.forEach(async (itemGoods: CreateGoods): Promise<any> => {
-                let resultOrder: any = await createGoodsToOrder(itemGoods, resultForm.data.id_order!);
-                setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder.data]);
-                await yieldToMain(); 
-            console.log('Order_storage', resultOrder.data);
-            }) 
-            alert(`Заказ створено, id ${resultForm.data.id_order}`);
-            setDisableBtn(!disableBtn);
-        }
+                stateData.forEach(async (itemGoods: CreateGoods): Promise<any> => {
+                    let resultOrder: any = await createGoodsToOrder(itemGoods, resultForm.data.id_order!);
+                    setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder.data]);
+                    await yieldToMain(); 
+                console.log('Order_storage', resultOrder.data);
+                }) 
+                alert(`Заказ створено, id ${resultForm.data.id_order}`);
+                setDisableBtn(!disableBtn);
+            }
 
-        if(orderId && stateData.length > 0) {
+            if(orderId && stateData.length > 0) {
         
             stateData.forEach(async (itemGoods: CreateGoods): Promise<any> => {
                 let resultOrder: any = await createGoodsToOrder(itemGoods, orderId);
@@ -437,13 +361,20 @@ const AdminFormOrder = (
                 await yieldToMain(); 
                 console.log('Order_storage', resultOrder.data);
             }) 
-            alert(`Заказ створено, id ${orderId}`);
-            setDisableBtn(!disableBtn);
-        } else if(orderId && stateData.length === 0){
-            alert("Треба добавити товари.");
-        }    
+                alert(`Заказ створено, id ${orderId}`);
+                setDisableBtn(!disableBtn);
+            } else if(orderId && stateData.length === 0){
+                alert("Треба добавити товари.");
+            }
+            e.stopPropagation();
+        // } catch {
+        //     reset();
+        // }
+        
+        
     }    
     
+    //const onError = (errors:any, e:any) => console.log(errors, e);
     //GOOD PERFORM
     const onSubmitOrder = async () => {
 
@@ -482,10 +413,15 @@ const AdminFormOrder = (
     console.log('ORDER STORG ARRAY: ', orderStorage);
 
     return (
-        <div>
+        <div >
             Замовлення Покупця
-            <div className="containerAdmOrderForm">
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="containerAdmOrderForm"
+                //onSubmit={e => e.stopPropagation()}
+                //onSubmit={e => e.preventDefault()}
+                >
+            <form 
+                onSubmit={handleSubmit(onSubmit)}
+            >
                 <div className='admFormDataOrder'>
                     <div>
                         <label htmlFor="fname">Дата</label>
@@ -671,7 +607,10 @@ const AdminFormOrder = (
                         </select>    
                     </div>   
                 </div>
-                <div className='admFormOrderTableBox'>   
+                <div className='admFormOrderTableBox'
+                    //onInput={(e) => e.stopPropagation()}
+                    //onClick={(e)=>e.preventDefault()}
+                    >   
                 <table className='admFormOrderTable'>
                     <thead className='admFormOrderTableTh'>
                         <tr>
@@ -695,7 +634,8 @@ const AdminFormOrder = (
                                 index:number
                             ) =>(
                         <tr key={item.id + index} 
-                        //onChange={(e)=>e.preventDefault({passive: false})}
+                            onInput={(e) => e.stopPropagation()}
+                            //onClick={(e)=>e.preventDefault()}
                             >
                             <td >{item.id}</td>
                             <td >{item.full_name}</td>
@@ -739,17 +679,23 @@ const AdminFormOrder = (
                                 </select>  
                             </td> 
                             <td 
-                                //onClick={(e)=>e.preventDefault({passive: false})}
-                                onClick={(e) => e.stopPropagation()}
+                                //onClick={e =>e.stopPropagation()}
+                                //onClick={(e)=>e.preventDefault()}
+                                //onClickCapture={e => e.preventDefault()}
                             >
                                 <div 
-                                    onClick={(e) => e.stopPropagation()}
-                                //onClick={(e)=>e.preventDefault({passive: false})}
+                                    //onClick={(e) => e.target.addEventListener("click", deleteItem, false)}
+                                    //onClickCapture={e=>e.stopPropagation()}
+                                    onClick={e=>e.stopPropagation()}
+                                    //onClick={(e)=>e.preventDefault()}
                                 >
                                 <button className='closeAdmGoods' 
                                     key={'deleteBtn' + item.id}
                                     value={index}
-                                    onClick={e => deleteItem(+e.currentTarget.value)}>
+                                    //type="button"
+                                    onClick={e => deleteItem(e)}
+                                    //onClickCapture={e=>e.stopPropagation()}
+                                    >
                                     <i className="fa fa-remove"></i>
                                 </button>
                                 </div>
@@ -788,10 +734,10 @@ const AdminFormOrder = (
                     </div>  
                 </div>
                 <div className='admOrderFormGrp'
-                    onClick={(e) => e.stopPropagation()}
-                     //onClick={(e)=>e.preventDefault({passive: false})}
+                        //onClick={(e) => e.stopPropagation()}
+                        //onClickCapture={e=>e.stopPropagation()}
                      >
-                    <div onClick={(e)=>e.preventDefault()}>
+                    <div onClick={(e) => e.stopPropagation()}>
                         <button className={!disableBtnOk ? 'admFormOrderBtnOk' : 'admFormOrderBtnOkDsb'}
                             disabled={disableBtnOk}
                             onClick={onSubmitOrder}>
@@ -799,12 +745,16 @@ const AdminFormOrder = (
                         </button>
                     </div>
                     <div 
-                        onClick={(e) => e.stopPropagation()}
-                        //onClick={(e)=>e.preventDefault({passive: false})}
+                        //onClick={(e) => e.stopPropagation()}
+                        onClick={(e)=>e.preventDefault()}
                         >
                         <button className={!disableBtn ? 'admFormOrderBtnSave' : 'admFormOrderBtnSaveDsb'}
                             disabled={disableBtn} 
-                            onClick={handleSubmit(onSubmit)}>
+                            //type="button"
+                            type="submit"
+                            //onClick={() => handleSubmit(onSubmit)()}
+                            //onClickCapture={e=>e.stopPropagation()}
+                            >
                             Зберегти
                         </button>
                     </div>

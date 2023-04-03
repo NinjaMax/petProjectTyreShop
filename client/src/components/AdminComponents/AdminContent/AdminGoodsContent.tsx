@@ -144,8 +144,8 @@ const AdminGoodsContent = ({comments, props, customer, storage}:IGoodsContent) =
     const addToOrder = (e: { currentTarget: { value: string; }; }) => {
         setAddGoods(!addGoods);
         //console.log(e.currentTarget.value)
-        let itemTyre = tyreData?.find((item:{id:string}) => item.id === e.currentTarget.value);
-        let itemWheel = wheelData?.find((item:{id:string}) => item.id === e.currentTarget.value);
+        let itemTyre = tyreData?.find((item:{id:string}) => item.id === e.currentTarget?.value);
+        let itemWheel = wheelData?.find((item:{id:string}) => item.id === e.currentTarget?.value);
         //const itemTyre = tyreData.find(item => item ==e.currentTarget.value);
         //const itemTyre = tyreData.find(item => item ==e.currentTarget.value);
         
