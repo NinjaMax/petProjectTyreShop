@@ -9,7 +9,7 @@ import AdminModalCustomers from './AdminModalCustomers';
 import AdminModalGoods from './AdminModalGoods';
 import {addGoodsToOrder, createGoodsToOrder, responseForm} from '../../../restAPI/restAdminAPI';
 import { yieldToMain } from '../../../restAPI/yieldMain';
-//import { scheduler } from 'timers/promises';
+
  
 
 interface IFormOrder {
@@ -19,6 +19,7 @@ interface IFormOrder {
     customer: [] | null;
     setActive(arg0: any):void;
     storages: [any] | null;
+    ordersData?: DataGoods;
 }
 
 type IModalFormOrder = {
@@ -65,7 +66,7 @@ type CreateGoods = {
     ////////
     //itemGoods:[];
     // i:number;
-    stateData?: [];
+    //stateData?: [];
     // length: number;
     // state?: [];
     // forEach(arg0: (itemGoods?: {}) => Promise<void | any>): unknown;
@@ -76,6 +77,7 @@ type CreateGoods = {
 }
 
 type DataGoods = {
+    id_order: number;
     delivery: string;
     delivery_ttn: string;
     id_contract: number | string;
@@ -88,6 +90,10 @@ type DataGoods = {
     status_delivery: string;
     status_pay: string;
     storage: string;
+    createdAt: Date;
+    updatedAt: Date;
+    id_user: number;
+    total: number;
     // id_order_storage: number;
     // id: number;
     // id_supplier: number;
@@ -99,7 +105,9 @@ type DataGoods = {
 
 enum ActionType {
     ADDTYRE = 'addTyreToOrder',
-    ADDWHEEL = 'addWheelToOrder'
+    ADDWHEEL = 'addWheelToOrder',
+    DELETEITEM = 'deleteItemFromOrder',
+    EDITITEM = 'editItemFromOrder',
 }
 
 // interface IReduser {
@@ -111,22 +119,22 @@ enum ActionType {
 
 type ActionReducer = 
     | { type: ActionType.ADDTYRE, addTyre:any, indexPrice: string}
-    | { type: ActionType.ADDWHEEL, addWheel:any, indexPrice: string};
-   //{ type: ActionType.ADDWHEEL, addWheel:{ price:[]}, indexPrice: string, payload?: number};
-// interface DispatchType {
-//     dispatch(  {arg0}: any) :void; 
-// }
+    | { type: ActionType.ADDWHEEL, addWheel:any, indexPrice: string}
+    | { type: ActionType.DELETEITEM, deleteItem: any}
+    | { type: ActionType.EDITITEM, editItem: any};
 
 type StateReducer = {
     i?:number;
-    stateData: [];
+    //stateData?: any[];
     length: number;
-    state?: [];
+    state?: any[];
+    //newStateData?:[];
     forEach(arg0: (itemGoods: {}) => Promise<void |any>): unknown;
     push(arg0: { price: any; }): unknown;
-    splice(itemIndex: number, arg1: number): unknown;
+    splice(itemIndex: number, arg1: number): any;
     map(arg0: any, ...arg: any[]): any;
     slice(arg0?: number, arg1?: number): any;
+    [Symbol.iterator](): any;
 }
 
 function reducer (state: StateReducer, action: ActionReducer) {
@@ -148,8 +156,18 @@ function reducer (state: StateReducer, action: ActionReducer) {
                         "quantity": "4"}, 
                 }); 
             }
-            
             return state;
+        }
+
+        case 'deleteItemFromOrder': {
+            if (state.length > 0) {
+                state.splice(action.deleteItem, 1); 
+            }
+            return state;
+        }
+
+        case 'editItemFromOrder': { 
+            return [...action.editItem];
         }
 
         default: {
@@ -168,14 +186,12 @@ function createInitialState (goodsId: any | undefined): any {
             "price":{...goodsId.price[0],
                "quantity": "4"},  
         });
-        //setPriceItem(goodsId.price[0].price);
-        //console.log(initialState); 
     }  
     return initialState;    
 };
 
 const AdminFormOrder = (
-    {props, goodsId, comments, setActive, customer, storages}:IFormOrder
+    {props, goodsId, comments, setActive, customer, storages, ordersData}:IFormOrder
     ) => {
     const [tyreDatas, wheelDatas] = props;
     const [orderId, setOrderId] = useState<number | null>(null);
@@ -188,52 +204,20 @@ const AdminFormOrder = (
     const [orderStorage, setOrderStorage] = useState<any[]>([]);
     const {register, handleSubmit, setValue, formState: {errors}} = useForm();    
     const [state, dispatch] = useReducer<Reducer<StateReducer, ActionReducer>>(reducer, createInitialState(goodsId));
-    const [stateData, setStateData] = useState(state);
+    //const [orderData, setOrderData] = useState<{}>();
      
     useEffect(() => {
-        register("id_customer");
-        setValue("id_customer", addCustomer?.id_customer)
-      }, [addCustomer?.id_customer, register, setValue])
+        register("id_customer", {required: 'Це необхідні дані'});
+        setValue("id_customer", addCustomer?.id_customer,
+        { shouldValidate: true })
+      }, [register, setValue, addCustomer?.id_customer])
     
     useEffect(() => {
-        register('id_contract')
-        setValue("id_contract", addCustomer?.contract[0]?.id_contract)
+        register('id_contract', {required: 'Це необхідні дані'})
+        setValue("id_contract", addCustomer?.contract[0]?.id_contract,
+        { shouldValidate: true })
       }, [register, setValue, addCustomer?.contract])
-
-  
-
-    //   useEffect(() => {
-        
-    // const handleDocumentOnsubmit = (event: any) => {
-    //     alert(`
-    //       document clicked - \n
-    //       run analytics for clicked element: ${event.target}
-    //     `);
-    //   };
-    
-    //     document.addEventListener(
-    //       'onsubmit',
-    //       handleDocumentOnsubmit,
-    //       true
-    //     );
-    
-    //     //return () => {
-    //       document.removeEventListener(
-    //         'onsubmit',
-    //         handleDocumentOnsubmit,
-    //         true
-    //       );
-    //     //};
-    //   }, []);
-  
-    // const onChangeQuantity = () => {
-
-    //     console.log('quantity', defaultQuantity.current);
-
-    //     defaultQuantity = defaultQuantity.current;
-        
-    // }
-
+//
     const onChangeInput = useCallback(
         (e: any, id: number, indexItem: number) => {
 
@@ -242,19 +226,20 @@ const AdminFormOrder = (
         // console.log('name', name);
          console.log('valueINPUT', value);
         // console.log('ITEM Id', id);
-            setStateData(editStateData => 
-                editStateData.map(
-                    (item: {id: number; price:{price: number}}, index: number) => {
-                return (
-                    item.id === id && index === indexItem ?
-                    {...item, price: {...item.price, [name]: value ?? '0'}}
-                    : item
-                )}
-                )
-            )
-    },[])
 
-    console.log('editData', stateData)
+            dispatch({type: ActionType.EDITITEM, 
+                editItem: state.map(
+                            (item: {id: number; price:{price: number}}, index: number) => {
+                        return (
+                            item.id === id && index === indexItem ?
+                            {...item, price: {...item.price, [name]: value ?? '0'}}
+                            : item
+                        )}
+                        )
+                //indexPrice: indexValue,
+            });
+
+    },[state])
     
     const addGoodsForm = () => {
         setAddGoods(!addGoods);
@@ -278,7 +263,6 @@ const AdminFormOrder = (
             if (findCustomer) {
                 setAddCustomer(findCustomer);  
             }
-
         }
 
         const addGoodsToList = async (value:string) => {
@@ -292,7 +276,6 @@ const AdminFormOrder = (
             //console.log('ARR INDX', +indexValue);
             //setPriceIndex(+indexValue); 
 
-
             dispatch({type: ActionType.ADDTYRE, 
                 addTyre: tyreDatas?.find((item:{id:string}) => item?.id === idValue),
                 indexPrice: indexValue,
@@ -301,36 +284,25 @@ const AdminFormOrder = (
             dispatch({type: ActionType.ADDWHEEL, 
                 addWheel: wheelDatas?.find((item:{id:string}) => item?.id === idValue),
                 indexPrice: indexValue,
-            });
-            
+            });            
         }
-
     //}),[tyreDatas, wheelDatas, customer])
 
-    
-    //useEffect(() => {
-        const deleteItem = async (e: any) => {
+        const deleteItem = async (itemIndex: number) => {
             //e.preventDefault();
             //e.stopPropagation();
-           //dispatch({type: 'deleteItemFromOrder', 
-            // state.splice(itemIndex, 1);
-            // stateData.splice(itemIndex, 1);
-           
-            state.splice(+e.currentTarget.value, 1);
-            stateData.splice(+e.currentTarget.value, 1);
-            //deleteItem: itemIndex});
-            //e.stopPropagation();
-            //e.preventDefault();
+            dispatch({type: ActionType.DELETEITEM, 
+                deleteItem: itemIndex,
+            });
         } 
-//},[state, stateData])
     
     //GOOD PERFORM
-    const onSubmit = async (data: DataGoods, e: any) => {
+    const onSubmit = async (data:{}, e: any) => {
             e.preventDefault();
             //e.stopPropagation();
             console.log('CREATE ORDER: ', data)
         //try {
-            if (!orderId && data.id_customer && stateData.length === 0) {
+            if (!orderId && state.length === 0) {
                let resultForm: any = await responseForm(data);
                 setOrderId(+resultForm.data.id_order);
                 alert(`Заказ створено, id ${resultForm.data.id_order},
@@ -338,12 +310,12 @@ const AdminFormOrder = (
                 `); 
             }
 
-            if(!orderId && stateData.length > 0) {
+            if(!orderId && state.length > 0) {
 
                 let resultForm: any = await responseForm(data);
                 setOrderId(+resultForm.data.id_order);
 
-                stateData.forEach(async (itemGoods: CreateGoods): Promise<any> => {
+                state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
                     let resultOrder: any = await createGoodsToOrder(itemGoods, resultForm.data.id_order!);
                     setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder.data]);
                     await yieldToMain(); 
@@ -353,9 +325,9 @@ const AdminFormOrder = (
                 setDisableBtn(!disableBtn);
             }
 
-            if(orderId && stateData.length > 0) {
+            if(orderId && state.length > 0) {
         
-            stateData.forEach(async (itemGoods: CreateGoods): Promise<any> => {
+            state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
                 let resultOrder: any = await createGoodsToOrder(itemGoods, orderId);
                 setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder.data]);
                 await yieldToMain(); 
@@ -363,17 +335,14 @@ const AdminFormOrder = (
             }) 
                 alert(`Заказ створено, id ${orderId}`);
                 setDisableBtn(!disableBtn);
-            } else if(orderId && stateData.length === 0){
+            } else if(orderId && state.length === 0){
                 alert("Треба добавити товари.");
             }
             e.stopPropagation();
         // } catch {
         //     reset();
-        // }
-        
-        
+        // }    
     }    
-    
     //const onError = (errors:any, e:any) => console.log(errors, e);
     //GOOD PERFORM
     const onSubmitOrder = async () => {
@@ -397,14 +366,9 @@ const AdminFormOrder = (
                 `Помилка. Не вірні данні, не вистачае залишків,
                 або системна помилка: ` + error
             )
-        }
- 
-            
+        }      
     };
-    
-    
     //)
-
     console.log('STATE: ', state);
     //console.log('GOODSID', goodsId);
     //console.log('CUSTOMER', customer);
@@ -429,8 +393,10 @@ const AdminFormOrder = (
                             className="admFormOrderData" 
                             name="date" 
                             min="2023-01-01"
-                            //value="2023-02-22"    
+                            data-value={ordersData?.createdAt ?? ''}    
                         />  
+                            
+                      
                     </div>
                     <div>
                         <label htmlFor="fname">id </label>
@@ -449,9 +415,17 @@ const AdminFormOrder = (
                             {...register('organisation',)}
                             name="organisation"
                             >
-                            <option value={"ФОП Гайворонський"}>ФОП Гайворонський</option>
-                            <option value={"фл Гайворонський Н. М"}>фл Гайворонський Н. М</option>
-                            <option value={"ТОВ Скай-Партс"}>ТОВ Скай-Партс</option>
+                            {ordersData ?
+                                <option data-value={ordersData.organisation}>
+                                    {ordersData?.organisation}
+                                </option>
+                                :
+                                <>
+                                <option value={"ФОП Гайворонський"}>ФОП Гайворонський</option>
+                                <option value={"фл Гайворонський Н. М"}>фл Гайворонський Н. М</option>
+                                <option value={"ТОВ Скай-Партс"}>ТОВ Скай-Партс</option>
+                                </>
+                            }
                         </select>  
                     </div>
                     <div>
@@ -460,9 +434,17 @@ const AdminFormOrder = (
                             {...register('storage', {required: 'Це необхідні дані'})}
                             name="storage"
                             >
-                            <option value={'Склад Поставщик'}>Склад Поставщик</option>
-                            <option value={'Склад Основний'}>Склад Основний</option>
-                            <option value={'Склад Монтаж'}>Склад Монтаж</option>
+                            {ordersData ?
+                                <option data-value={ordersData.storage}>
+                                    {ordersData?.storage}
+                                </option>
+                                :
+                                <>
+                                <option value={'Склад Поставщик'}>Склад Поставщик</option>
+                                <option value={'Склад Основний'}>Склад Основний</option>
+                                <option value={'Склад Монтаж'}>Склад Монтаж</option>
+                                </>
+                            }
                         </select>  
                     </div>
                     <div>
@@ -471,10 +453,18 @@ const AdminFormOrder = (
                             {...register('order_view', {required: 'Це необхідні дані'})}
                             name="order_view"
                             >
-                            <option value="Сайт">Сайт</option>
-                            <option value="Роздріб">Роздріб</option>
-                            <option value="Опт">Опт</option>
-                            <option value="Інше">Інше</option>
+                            {ordersData ?
+                                <option data-value={ordersData.order_view}>
+                                    {ordersData?.order_view}
+                                </option>
+                                :
+                                <>
+                                <option value="Сайт">Сайт</option>
+                                <option value="Роздріб">Роздріб</option>
+                                <option value="Опт">Опт</option>
+                                <option value="Інше">Інше</option>
+                                </>
+                            }
                         </select>  
                     </div>
                     <div>
@@ -483,12 +473,20 @@ const AdminFormOrder = (
                             {...register('status', {required: 'Це необхідні дані'})}
                             name="status_order"
                             >
-                            <option value="Новий">Новий</option>
-                            <option value="Продаж">Продаж</option>
-                            <option value="Обробка">Обробка</option>
-                            <option value="Виконання">Виконання</option>
-                            <option value="Відміна">Відміна</option>
-                            <option value="Повернення">Повернення</option>
+                            {ordersData ?
+                                <option data-value={ordersData.status}>
+                                    {ordersData?.status}
+                                </option>
+                                :
+                                <>
+                                <option value="Новий">Новий</option>
+                                <option value="Продаж">Продаж</option>
+                                <option value="Обробка">Обробка</option>
+                                <option value="Виконання">Виконання</option>
+                                <option value="Відміна">Відміна</option>
+                                <option value="Повернення">Повернення</option>
+                                </>
+                            }    
                         </select>    
                     </div>
                     <div>
@@ -520,7 +518,6 @@ const AdminFormOrder = (
                         <select className="admFormOrderContract" name="id_contract"
                             //autoFocus={true}
                             defaultValue={addCustomer?.contract[0]?.id_contract}
-
                             >
                            {addCustomer ? addCustomer?.contract?.map(
                             (entity:{name: string; id_contract:number;}, index:number)=> (  
@@ -540,11 +537,20 @@ const AdminFormOrder = (
                             {...register('delivery', {required: 'Це необхідні дані'})}
                             name="delivery"
                             >
-                            <option value="Самовивіз">Самовивіз</option>
-                            <option value="Своя Доставка">Своя Доставка</option>
-                            <option value="Нова Пошта">Нова Пошта</option>
-                            <option value="Укр Пошта">Укр Пошта</option>
-                            <option value="Делівері">Делівері</option>
+                            { ordersData ?
+                                <option data-value={ordersData.delivery}>
+                                    {ordersData?.delivery}
+                                </option>
+                                :
+                                <>
+                                    <option value="Самовивіз">Самовивіз</option>
+                                    <option value="Своя Доставка">Своя Доставка</option>
+                                    <option value="Нова Пошта">Нова Пошта</option>
+                                    <option value="Укр Пошта">Укр Пошта</option>
+                                    <option value="Делівері">Делівері</option>
+                                </>
+                            }
+                            
                         </select>    
                     </div>
                     <div>
@@ -563,14 +569,23 @@ const AdminFormOrder = (
                             {...register('status_delivery', {required: 'Це необхідні дані'})}
                             name="status_delivery"
                             >
-                            <option value="Новий">Новий</option>
-                            <option value="Самовивіз">Самовивіз</option>
-                            <option value="Обробляеться">Обробляеться</option>
-                            <option value="Очікує ТТН">Очікує ТТН</option>
-                            <option value="Доставляеться">Доставляеться</option>
-                            <option value="Отримано ТТН">Отримано ТТН</option>
-                            <option value="Повернення ТТН">Повернення ТТН</option>
-                            <option value="Відміна">Відміна</option>
+                                {ordersData ?
+                                <option data-value={ordersData.status_delivery}>
+                                    {ordersData?.status_delivery}
+                                </option>
+                                :
+                                <>
+                                <option value="Новий">Новий</option>
+                                <option value="Самовивіз">Самовивіз</option>
+                                <option value="Обробляеться">Обробляеться</option>
+                                <option value="Очікує ТТН">Очікує ТТН</option>
+                                <option value="Доставляеться">Доставляеться</option>
+                                <option value="Отримано ТТН">Отримано ТТН</option>
+                                <option value="Повернення ТТН">Повернення ТТН</option>
+                                <option value="Відміна">Відміна</option>
+                                </>
+                                }
+                            
                         </select>    
                     </div>
                     <div onClick={(e)=>e.preventDefault()}>
@@ -582,13 +597,21 @@ const AdminFormOrder = (
                             {...register('pay_view', {required: 'Це необхідні дані'})}
                             name="pay_view"
                             >
-                            <option value="Новий">Новий</option>
-                            <option value="Готівка">Готівка</option>
-                            <option value="Б/г рахунок">Б/г рахунок</option>
-                            <option value="Б/г карта">Б/г карта</option>
-                            <option value="Наложка">Наложка</option>
-                            <option value="Відміна">Відміна</option>
-                            <option value="Повернення">Повернення</option>
+                            {ordersData ?
+                                <option data-value={ordersData.pay_view}>
+                                    {ordersData?.pay_view}
+                                </option>
+                                :
+                                <>
+                                <option value="Новий">Новий</option>
+                                <option value="Готівка">Готівка</option>
+                                <option value="Б/г рахунок">Б/г рахунок</option>
+                                <option value="Б/г карта">Б/г карта</option>
+                                <option value="Наложка">Наложка</option>
+                                <option value="Відміна">Відміна</option>
+                                <option value="Повернення">Повернення</option>
+                                </>
+                            }
                         </select>    
                     </div>
                     <div>
@@ -597,13 +620,21 @@ const AdminFormOrder = (
                             {...register('status_pay', {required: 'Це необхідні дані'})}
                             name="status_pay"
                         >
-                        <option value="Новий">Новий</option>
-                        <option value="Очікує Оплату">Очікує Оплату</option>
-                        <option value="Оплачено">Оплачено</option>
-                        <option value="Виконання">Виконання</option>
-                        <option value="Відміна">Відміна</option>
-                        <option value="Повернення">Повернення</option>
-                        <option value="Наложка Отримана">Наложка Отримана</option>
+                        {ordersData ?
+                            <option data-value={ordersData.status_pay}>
+                                {ordersData?.status_pay}
+                            </option>
+                            :
+                            <>
+                            <option value="Новий">Новий</option>
+                            <option value="Очікує Оплату">Очікує Оплату</option>
+                            <option value="Оплачено">Оплачено</option>
+                            <option value="Виконання">Виконання</option>
+                            <option value="Відміна">Відміна</option>
+                            <option value="Повернення">Повернення</option>
+                            <option value="Наложка Отримана">Наложка Отримана</option>
+                            </>
+                        }
                         </select>    
                     </div>   
                 </div>
@@ -625,8 +656,8 @@ const AdminFormOrder = (
                         </tr>     
                     </thead>
                     <tbody>
-                        {stateData?.length !== 0 ? 
-                            stateData?.map((
+                        {state?.length !== 0 ? 
+                            state?.map((
                                 item:{id:number, 
                                 full_name:string, 
                                 category:{category:string}, 
@@ -693,7 +724,7 @@ const AdminFormOrder = (
                                     key={'deleteBtn' + item.id}
                                     value={index}
                                     //type="button"
-                                    onClick={e => deleteItem(e)}
+                                    onClick={e => deleteItem(+e.currentTarget.value)}
                                     //onClickCapture={e=>e.stopPropagation()}
                                     >
                                     <i className="fa fa-remove"></i>
@@ -752,7 +783,7 @@ const AdminFormOrder = (
                             disabled={disableBtn} 
                             //type="button"
                             type="submit"
-                            //onClick={() => handleSubmit(onSubmit)()}
+                            //onClick={handleSubmit(onSubmit)}
                             //onClickCapture={e=>e.stopPropagation()}
                             >
                             Зберегти

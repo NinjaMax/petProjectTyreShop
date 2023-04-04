@@ -17,7 +17,8 @@ interface IAdminOrder {
     tyrePriceData?:[];
     wheelData?:[]; 
     wheelPriceData?:[];
-    wheelStockData?:[]; 
+    wheelStockData?:[];
+
 }
 
 type IOrderComments ={
@@ -42,6 +43,10 @@ type IOrdersItem = {
     id_user: number;
     notes: string;
     total: number;
+    delivery_ttn: string;
+    id_contract: number | string;
+    id_customer: number;
+    organisation: string;
 }
 
 
@@ -50,6 +55,7 @@ const AdminOrderContent = (
     ) => {
     const [activeOrder, setActiveOrder] = useState(false);
     const [activeOrderSup, setActiveOrderSup] = useState(false);
+    const [orderData, setOrderData] = useState<IOrdersItem>();
 
     const activeFormOrder = () => {
         setActiveOrder(!activeOrder);
@@ -57,6 +63,15 @@ const AdminOrderContent = (
 
     const activeFormOrderSup = () => {
         setActiveOrderSup(!activeOrderSup);
+    }
+
+    const showOrderData = async (e: any) => {
+        const orderInfo = orders?.find(
+            (item:{id_order: number}) => 
+                item.id_order === e.currentTarget.getAttribute("data-value"));
+        if(orderInfo) {
+            setOrderData(orderInfo);
+        }
     }
 
     return (
@@ -94,7 +109,8 @@ const AdminOrderContent = (
                 </thead>    
                 <tbody>
                     {orders ? orders.map((items: IOrdersItem) => (
-                    <tr key={'or' + items.id_order} 
+                    <tr key={'or' + items.id_order}
+                        onDoubleClick={e =>showOrderData(e)}
                         onClick={showComment}
                         data-value={items.id_order}>
                         <td>{items.id_order}</td>
@@ -161,6 +177,7 @@ const AdminOrderContent = (
                         customer={customer} 
                         props={props}
                         storages={storage}
+                        ordersData={orderData}
                     />
                 </ModalAdmin>  
                 : null
