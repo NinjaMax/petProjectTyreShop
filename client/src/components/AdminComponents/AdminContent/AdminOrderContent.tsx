@@ -43,21 +43,26 @@ type IOrdersItem = {
     id_user: number;
     notes: string;
     total: number;
+    quantity?: number;
     delivery_ttn: string;
     id_contract: number | string;
     id_customer: number;
     organisation: string;
+    order_storage: any [];
+    [Symbol.iterator](): any;
 }
-
 
 const AdminOrderContent = (
     {props, orders, customer, comments, showComment, storage}:IAdminOrder
     ) => {
     const [activeOrder, setActiveOrder] = useState(false);
     const [activeOrderSup, setActiveOrderSup] = useState(false);
-    const [orderData, setOrderData] = useState<IOrdersItem>();
+    const [orderData, setOrderData] = useState<IOrdersItem | null>(null);
 
     const activeFormOrder = () => {
+        if (orderData) {
+            setOrderData(null);
+        }
         setActiveOrder(!activeOrder);
     }
 
@@ -71,6 +76,7 @@ const AdminOrderContent = (
                 item.id_order === e.currentTarget.getAttribute("data-value"));
         if(orderInfo) {
             setOrderData(orderInfo);
+            setActiveOrder(!activeOrder);
         }
     }
 

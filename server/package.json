@@ -25,10 +25,12 @@
   "dependencies": {
     "@nestjs/common": "^9.2.1",
     "@nestjs/core": "^7.6.18",
+    "@nestjs/jwt": "^10.0.3",
     "@nestjs/mapped-types": "^1.2.0",
     "@nestjs/platform-express": "^9.2.1",
     "@nestjs/sequelize": "^0.1.1",
     "@types/cors": "^2.8.13",
+    "argon2": "^0.30.3",
     "csv-parser": "^3.0.0",
     "dotenv": "^16.0.3",
     "fast-xml-parser": "^4.0.13",

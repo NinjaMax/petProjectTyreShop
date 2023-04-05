@@ -10,7 +10,7 @@ import Contact from './pages/Contact';
 import GoodsPage from './pages/Goods';
 import Main from './pages/Main';
 
-export const authRoutes = [
+export const adminRoutes = [
   {
     path: ADMIN_ROUTE,
     Component: Admin

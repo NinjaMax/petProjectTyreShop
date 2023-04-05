@@ -94,6 +94,7 @@ import { WheelPcd2 } from './properties/entities/wheels/wheel-pcd2.model';
 import { WheelBoltCountPcd } from './properties/entities/wheels/wheel-boltCountPcd.model';
 import { WheelBoltCount } from './properties/entities/wheels/wheel-boltCount.model';
 import { WheelPcd } from './properties/entities/wheels/wheel-pcd.model';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -136,7 +137,7 @@ import { WheelPcd } from './properties/entities/wheels/wheel-pcd.model';
     SalesModule, CashboxModule, PaynmentModule, 
     ExpensesModule, ServicesModule, IncomesModule, 
     OrdersModule, OrdersSuppliersModule, BasketModule, 
-    ContractModule, CustomersModule, UploaderModule,
+    ContractModule, CustomersModule, UploaderModule, AuthModule,
   ],
   controllers: [],
   providers: [],

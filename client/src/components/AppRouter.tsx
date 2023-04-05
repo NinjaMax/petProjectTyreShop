@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
-import { authRoutes, publicRoutes } from '../routes';
+import { adminRoutes, publicRoutes } from '../routes';
 import {MAIN_ROUTE} from '../utils/consts';
-import { Context } from '../index';
+import { Context } from '../context/Context';
 
 const AppRouter = () => {
     const {user} = useContext<any | null>(Context);
@@ -10,7 +10,7 @@ const AppRouter = () => {
     return (
         <Switch>
             {
-            authRoutes.map(({path, Component}) => 
+            adminRoutes.map(({path, Component}) => 
             <Route key={path} path={path} component={Component} exact/>)}
             
             {publicRoutes.map(({path, Component}) => 

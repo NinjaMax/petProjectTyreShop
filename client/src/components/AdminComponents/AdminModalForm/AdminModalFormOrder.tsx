@@ -10,8 +10,6 @@ import AdminModalGoods from './AdminModalGoods';
 import {addGoodsToOrder, createGoodsToOrder, responseForm} from '../../../restAPI/restAdminAPI';
 import { yieldToMain } from '../../../restAPI/yieldMain';
 
- 
-
 interface IFormOrder {
     props: [[] | null, ...any[][]] | [[] | null, ...null[]];
     goodsId?: {};
@@ -19,7 +17,7 @@ interface IFormOrder {
     customer: [] | null;
     setActive(arg0: any):void;
     storages: [any] | null;
-    ordersData?: DataGoods;
+    ordersData?: DataGoods | null;
 }
 
 type IModalFormOrder = {
@@ -94,6 +92,9 @@ type DataGoods = {
     updatedAt: Date;
     id_user: number;
     total: number;
+    customer:{full_name: string;}
+    [Symbol.iterator](): any;
+    order_storage: any[];
     // id_order_storage: number;
     // id: number;
     // id_supplier: number;
@@ -110,12 +111,11 @@ enum ActionType {
     EDITITEM = 'editItemFromOrder',
 }
 
-// interface IReduser {
-//     type?: string;
-//     addWheel?:{ price:[]};
-//     addTyre?:{ price:[]};
-//     indexPrice?: number;
-// }  
+interface ICreateInitial {   
+    ordersData: DataGoods | undefined;
+    goodsId:  {} | undefined | any; 
+    //[Symbol.iterator](): any;
+}  
 
 type ActionReducer = 
     | { type: ActionType.ADDTYRE, addTyre:any, indexPrice: string}
@@ -177,7 +177,7 @@ function reducer (state: StateReducer, action: ActionReducer) {
     
 }
 
-function createInitialState (goodsId: any | undefined): any {
+function createInitialState (goodsId: any | undefined, ordersData?: DataGoods | null) {
             
     let initialState = [];
 
@@ -186,7 +186,12 @@ function createInitialState (goodsId: any | undefined): any {
             "price":{...goodsId.price[0],
                "quantity": "4"},  
         });
-    }  
+    } 
+    
+    if (ordersData) {
+        initialState.push(...ordersData.order_storage);
+    }
+
     return initialState;    
 };
 
@@ -203,7 +208,9 @@ const AdminFormOrder = (
     const [disableBtnOk, setDisableBtnOk] = useState<boolean>(false);
     const [orderStorage, setOrderStorage] = useState<any[]>([]);
     const {register, handleSubmit, setValue, formState: {errors}} = useForm();    
-    const [state, dispatch] = useReducer<Reducer<StateReducer, ActionReducer>>(reducer, createInitialState(goodsId));
+    const [state, dispatch] = useReducer<Reducer<StateReducer, ActionReducer>>(
+        reducer, createInitialState(goodsId, ordersData)
+        );
     //const [orderData, setOrderData] = useState<{}>();
      
     useEffect(() => {
@@ -217,6 +224,13 @@ const AdminFormOrder = (
         setValue("id_contract", addCustomer?.contract[0]?.id_contract,
         { shouldValidate: true })
       }, [register, setValue, addCustomer?.contract])
+
+      useEffect(() => {
+        if (ordersData) {
+            setDisableBtn(true);
+            setDisableBtnOk(true);
+        }
+      },[ordersData])
 //
     const onChangeInput = useCallback(
         (e: any, id: number, indexItem: number) => {
@@ -388,23 +402,25 @@ const AdminFormOrder = (
             >
                 <div className='admFormDataOrder'>
                     <div>
-                        <label htmlFor="fname">Дата</label>
-                        <input type="datetime-local" 
-                            className="admFormOrderData" 
-                            name="date" 
-                            min="2023-01-01"
-                            data-value={ordersData?.createdAt ?? ''}    
+                        <label htmlFor="date">Дата</label>
+                        <input className="admFormOrderData" 
+                            type="text"
+                            //type="datetime-local"
+                            name="order_date" 
+                            data-value={ordersData ? ordersData?.createdAt : ''}
+                            defaultValue=''
+                            placeholder="Дата"
+                            readOnly={true}
+                            //min="2023-01-01" 
                         />  
-                            
-                      
                     </div>
                     <div>
                         <label htmlFor="fname">id </label>
                         <input className="admFormOrderId"
                             type="text"
                             name="firstname"
-                            value={orderId ?? ''} 
-                            //maxLength='30'
+                            value={orderId ? orderId : ordersData?.id_order} 
+                            defaultValue=''
                             placeholder="id замовлення"
                             readOnly={true}
                         />  
@@ -497,7 +513,9 @@ const AdminFormOrder = (
                                 name="customer" 
                                 maxLength='45'
                                 placeholder="Ім'я або назва.."
-                                value={addCustomer?.full_name ?? ''}
+                                value={addCustomer ? 
+                                    addCustomer?.full_name : 
+                                    ordersData?.customer.full_name}
                                 onChange={() => setAddCustomer(addCustomer)}
                             />
                             <div onClick={(e)=>e.preventDefault()}>
@@ -526,7 +544,9 @@ const AdminFormOrder = (
                                 >
                                     {entity.name} {entity.id_contract} 
                                 </option>
-                                )) : <option></option>
+                                )) : <option data-value={ordersData?.id_contract}>
+                                        {ordersData?.id_contract}
+                                    </option>
                             } 
                         </select>
                     </div>
@@ -537,7 +557,7 @@ const AdminFormOrder = (
                             {...register('delivery', {required: 'Це необхідні дані'})}
                             name="delivery"
                             >
-                            { ordersData ?
+                            {ordersData ?
                                 <option data-value={ordersData.delivery}>
                                     {ordersData?.delivery}
                                 </option>
@@ -549,18 +569,18 @@ const AdminFormOrder = (
                                     <option value="Укр Пошта">Укр Пошта</option>
                                     <option value="Делівері">Делівері</option>
                                 </>
-                            }
-                            
+                            }    
                         </select>    
                     </div>
                     <div>
-                        <label htmlFor="fname">ТТН </label>
-                        <input type="text" 
-                            className="admFormOrderTtn" 
+                        <label htmlFor="order_ttn">ТТН </label>
+                        <input className="admFormOrderTtn"
+                            type="text"  
                             maxLength='45'
                             placeholder="ТТН замовлення.."
                             {...register('delivery_ttn')}
                             name="delivery_ttn"
+                            defaultValue={ordersData?.delivery_ttn ?? ''}
                         />  
                     </div>
                     <div>
@@ -651,6 +671,7 @@ const AdminFormOrder = (
                             <th>Кількість</th>
                             <th>Резерв</th>
                             <th>Ціна</th>
+                            <th>Сума</th>
                             <th>склад</th>
                             <th>Опціі</th>
                         </tr>     
@@ -658,7 +679,11 @@ const AdminFormOrder = (
                     <tbody>
                         {state?.length !== 0 ? 
                             state?.map((
-                                item:{id:number, 
+                                item:{
+                                id:number,    
+                                quantity: number;
+                                total: number; 
+                                reserve: number;
                                 full_name:string, 
                                 category:{category:string}, 
                                 price:{price:number; quantity: number}}, 
@@ -670,36 +695,34 @@ const AdminFormOrder = (
                             >
                             <td >{item.id}</td>
                             <td >{item.full_name}</td>
-                            <td >{item.category?.category}</td>
-                            <td key={'quantity' + item.id + index} 
+                            <td >{item.category?.category ?? item?.category}</td>
+                            <td 
                                 onInput={(e) => e.stopPropagation()}
-                                >
+                            >
                                 <input 
                                 id={'quantity'+ item.id}
-                                key={'quantity'+ item.id + index}
                                 type="text"
                                 name="quantity"
-                                value={item.price?.quantity}
+                                value={item.price?.quantity ?? item?.quantity}
                                 onInput={(e) => onChangeInput(e, item.id, index)}
                                 placeholder="Введіть цифри"
                                 />
                             </td>
-                            <td >{0}</td>
-                            <td 
-                                key={'price' + item.id + index} 
+                            <td >{item?.reserve ?? 0}</td>
+                            <td  
                                 onInput={(e) => e.stopPropagation()}
                                 >
                                 <input 
                                 id={'price' + item.id}
-                                key={'price' + item.id + index}
                                 type="text"
                                 name="price"
-                                value={item.price?.price}
+                                value={item.price?.price ?? item?.price}
                                 onInput={(e) => onChangeInput(e, item.id, index)}
                                 placeholder="Введіть цифри" 
                                 />
                            
                             </td>
+                            <td >{item?.total ?? item.price.price * item.price.quantity}</td>
                             <td >
                                 <select className="admFormOrderStorage" name="storage_index"
                                     //{...register('storage_index', {required: 'Це необхідні дані'})}
@@ -723,7 +746,7 @@ const AdminFormOrder = (
                                 <button className='closeAdmGoods' 
                                     key={'deleteBtn' + item.id}
                                     value={index}
-                                    //type="button"
+                                    disabled={disableBtn}
                                     onClick={e => deleteItem(+e.currentTarget.value)}
                                     //onClickCapture={e=>e.stopPropagation()}
                                     >
