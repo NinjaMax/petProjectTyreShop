@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import '../../css/NavBarCss/NavBar.css';
 import logoShop from '../../assets/logoShop/logoSample_1_302_100.png';
-//import {Context} from '../index';
 import { observer } from 'mobx-react-lite';
 import ButtonSearch from '../buttons/ButtonSearch';
 import BasketNavBar from '../basket/BasketNavBar';
@@ -11,10 +10,11 @@ import AuthForm from '../auth/AuthForm';
 import FavoriteGoods from '../ux/FavoriteGoods';
 import Modal from '../modal/Modal';
 import NavBarSearch from '../searchForm/NavBarSearch';
+import { Context } from '../../context/Context';
 
 
 const NavBar = observer(() => {
-    //const {user} = useContext(Context);
+  const {user} = useContext<any | null>(Context);
   
   const [activeAuth, setActiveAuth] = useState(false);
   const [searchBtn, setSearchBtn] = useState(false);

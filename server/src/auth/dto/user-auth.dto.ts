@@ -1,4 +1,4 @@
-export class SignupDto {
+export class UserAuthDto {
   name?: string;
   id_user: number;
   email: string;

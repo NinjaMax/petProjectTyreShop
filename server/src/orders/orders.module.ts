@@ -11,6 +11,7 @@ import { TyresModule } from 'src/tyres/tyres.module';
 import { PricesModule } from 'src/prices/prices.module';
 import { StorageModule } from 'src/storage/storage.module';
 import { OrdersStorageService } from './orders-storage.service';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   controllers: [OrdersController],
@@ -18,7 +19,7 @@ import { OrdersStorageService } from './orders-storage.service';
   imports: [
     SequelizeModule.forFeature([Orders, Order_Storage]),
     BasketModule, StockModule, UsersModule, TyresModule,
-    PricesModule, StorageModule
+    PricesModule, StorageModule, AuthModule
   ],
   exports:[OrdersService, OrdersStorageService],
 })

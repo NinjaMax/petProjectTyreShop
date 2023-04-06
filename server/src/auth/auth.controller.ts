@@ -8,10 +8,10 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
-  Request
+  Request,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
+import { CreateAuthDto } from './dto/user-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { Public } from './decorators/public.decorator';
 
@@ -32,7 +32,7 @@ export class AuthController {
   }
 
   @Post('login')
-  async login(@Body() user: LoginDto) {
+  login(@Body() user: LoginDto) {
     return this.authService.login(user);
   }
 

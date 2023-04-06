@@ -6,6 +6,7 @@ import { Comments } from './entities/comment.model';
 import { OrdersModule } from 'src/orders/orders.module';
 import { OrdersSuppliersModule } from 'src/orders-suppliers/orders-suppliers.module';
 import { UsersModule } from 'src/users/users.module';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   controllers: [CommentsController],
@@ -13,7 +14,7 @@ import { UsersModule } from 'src/users/users.module';
   imports: [ 
     SequelizeModule.forFeature([Comments]),
     forwardRef(()=> OrdersModule),
-    OrdersSuppliersModule, UsersModule
+    OrdersSuppliersModule, UsersModule, AuthModule
   ],
   exports: [CommentsService]
 })

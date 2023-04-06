@@ -16,6 +16,7 @@ import { PriceOil } from './entities/price-oils.model';
 import { PriceBatteries } from './entities/price-battery.model';
 import { PriceWheelsService } from './price-wheels.service';
 import { PriceWheelsController } from './price-wheels.controller';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   controllers: [PriceTyresController, PriceWheelsController],
@@ -24,7 +25,7 @@ import { PriceWheelsController } from './price-wheels.controller';
     SequelizeModule.forFeature([ PriceTyres, PriceWheels, PriceOil, 
       PriceBatteries]),
     TyresModule, WheelsModule, OilsModule, BatteriesModule, 
-    SuppliersModule, StorageModule
+    SuppliersModule, StorageModule, AuthModule
   ],
   exports: [PriceTyresService, PriceWheelsService]
 

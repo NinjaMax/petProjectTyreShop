@@ -1,40 +1,47 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
+import { UserAuthDto } from './dto/user-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import { LoginDto } from './dto/logIn-dto';
+import { SignupDto } from './dto/signUp-dto';
 
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
-    private jwtService: JwtService
-    ){}
+    private jwtService: JwtService,
+  ){}
 
-  findUser(username: string): User | undefined {
-    return this.users.find(u => u.username === username);
+  async findUser(userAuthDto: UserAuthDto) {
+    const userIsExist = await this.usersService.findUserByName(
+      userAuthDto
+    )
+    return userIsExist;
   }
   
-  createAccessToken(username: string): { accessToken: string } {
-    return { accessToken: this.jwtService.sign({ sub: username }) };
+  async createAccessToken(userAuthDto: UserAuthDto): Promise<{ accessToken: string }> {
+    return { accessToken: this.jwtService.sign({ sub: userAuthDto.name }) };
   }
 
-  async signIn(username: string, pass: string): Promise<any> {
-    const user = await this.usersService.findOne(username);
-    if (user?.password !== pass) {
-      throw new UnauthorizedException();
+  async signup(signupDto: SignupDto): Promise<{ accessToken: string }> {
+    if (this.findUser(signupDto.name)) {
+      throw new ConflictException(`User with username ${newUser.username} already exists`);
     }
-    const { password, ...result } = user;
-    // TODO: Generate a JWT and return it here
-    // instead of the user object
-    const payload = { username: user.username, sub: user.userId };
-    return result;
+    // const user = {
+    //   username: newUser.username,
+    //   password: await argon2.hash(newUser.password),
+    //   firstName: newUser.firstName,
+    //   lastName: newUser.lastName,
+    // };
+    // this.users.push(user);
+    return this.createAccessToken(signupDto.name);
   }
 
   async login(user: LoginDto): Promise<{ accessToken: string }> {
     try {
-      const existingUser = this.findUser(user.username);
+      const existingUser = this.findUser(user.name);
       if (!user) {
         throw new Error();
       }
@@ -42,7 +49,7 @@ export class AuthService {
       if (!passwordMatch) {
         throw new Error();
       }
-      return this.createAccessToken(user.username);
+      return this.createAccessToken(user.name);
     } catch (e) {
       throw new UnauthorizedException('Username or password may be incorrect. Please try again');
     }

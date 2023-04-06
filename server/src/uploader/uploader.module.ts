@@ -19,7 +19,8 @@ import { WheelsModule } from 'src/wheels/wheels.module';
      UploaderPaprserService], 
   imports: [MulterModule.register({
     dest: './upload_prices',
-  }), TyresModule, PricesModule, StockModule, WheelsModule,
+  }), AuthModule,
+    TyresModule, PricesModule, StockModule, WheelsModule,
      SuppliersModule, PropertiesModule, CategorysModule],
   exports: [UploaderService]
 })

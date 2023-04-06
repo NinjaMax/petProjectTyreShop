@@ -12,6 +12,7 @@ async function bootstrap() {
         origin: [
           'http://localhost:3000',
           'http://localhost:4000'
+          //configService.get('CORS');
         ],
         methods: ["GET", "POST", "PUT", "PATCH","DELETE"],
         credentials: true, // need to change false
@@ -21,7 +22,7 @@ async function bootstrap() {
         //   'Authorization',
         // ]
       });
-      const PORT: number = +configService.get('PORT' || '5000') ;
+      const PORT: number = +configService.get('PORT' || '5000');
       await app.listen(PORT, () => console.log(`Server Start on ${PORT}`));
 
   } catch (error) {

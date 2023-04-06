@@ -7,13 +7,14 @@ import { ReviewsModule } from 'src/reviews/reviews.module';
 import { Users } from './entities/users.model';
 import { ContractModule } from 'src/contract/contract.module';
 import { Contract } from 'src/contract/entities/contract.model';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   controllers: [UsersController],
   providers: [UsersService], 
   imports: [ 
     SequelizeModule.forFeature([Users, ReviewTyres, Contract]),
-    ReviewsModule, ContractModule
+    ReviewsModule, ContractModule, AuthModule
   ],
   exports: [UsersService],
 })

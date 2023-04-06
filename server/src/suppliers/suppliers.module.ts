@@ -6,13 +6,14 @@ import { Supplier } from './entities/supplier.model';
 import { Tyres } from '../tyres/entities/tyres.model';
 import { StockTyres } from '../stock/entities/stock-tyres.model';
 import { ContractModule } from 'src/contract/contract.module';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   controllers: [SuppliersController],
   providers: [SuppliersService],
   imports: [ 
     SequelizeModule.forFeature([Supplier, StockTyres, Tyres ]),
-    ContractModule
+    ContractModule, AuthModule
   ],
   exports:[SuppliersService],
 })

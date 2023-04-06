@@ -67,6 +67,22 @@ export class UsersService {
 
   }
 
+  async findUserByName(getUserDto: GetUserDto) {
+
+    try {
+
+      const userByName = await this.usersRepository.findOne({where: {name: getUserDto.name}});
+
+      return userByName;
+
+    } catch {
+
+      throw new HttpException('Data ID is incorrect or Not Found', HttpStatus.NOT_FOUND);
+
+    }
+
+  }
+
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }

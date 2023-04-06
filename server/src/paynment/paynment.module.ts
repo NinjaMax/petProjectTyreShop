@@ -14,6 +14,7 @@ import { CashboxModule } from 'src/cashbox/cashbox.module';
 import { ExpensesModule } from 'src/expenses/expenses.module';
 import { IncomesModule } from 'src/incomes/incomes.module';
 import { ContractModule } from 'src/contract/contract.module';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   controllers: [PaynmentController],
@@ -22,7 +23,7 @@ import { ContractModule } from 'src/contract/contract.module';
     SequelizeModule.forFeature([Paynment, Orders, OrdersSupplier,
     Cashbox, Expense, Incomes]),
     OrdersModule, OrdersSuppliersModule, CashboxModule, ExpensesModule,
-    IncomesModule, ContractModule
+    IncomesModule, ContractModule, AuthModule
   ],
   exports: [PaynmentService]
 })

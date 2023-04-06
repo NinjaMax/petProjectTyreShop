@@ -12,6 +12,7 @@ import { TyreModel } from 'src/properties/entities/tyres/tyre-model.model';
 import { TyreBrand } from 'src/properties/entities/tyres/tyre-brand.model';
 import { PropertiesModule } from 'src/properties/properties.module';
 import { CustomersModule } from 'src/customers/customers.module';
+import { AuthModule } from 'src/auth/auth.module';
 //import { UsersModule } from 'src/users/users.module';
 
 
@@ -22,7 +23,7 @@ import { CustomersModule } from 'src/customers/customers.module';
     SequelizeModule.forFeature([ReviewTyres, Tyres, RatingTyres, 
     TyreModel, TyreBrand]),
     TyresModule, RatingsModule, PropertiesModule, CustomersModule,
-    
+    AuthModule
   ],
   exports: [ReviewsService]
 })
