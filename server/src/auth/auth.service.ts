@@ -1,11 +1,19 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  ConflictException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UserAuthDto } from './dto/user-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/logIn-dto';
 import { SignupDto } from './dto/signUp-dto';
-
+import argon2 from 'argon2';
+import { randomInt } from 'crypto';
+import { sendSmsPass } from './gatewayApi/smsGateway';
 
 @Injectable()
 export class AuthService {
@@ -15,41 +23,106 @@ export class AuthService {
   ){}
 
   async findUser(userAuthDto: UserAuthDto) {
-    const userIsExist = await this.usersService.findUserByName(
-      userAuthDto
-    )
+    const userIsExist = await this.usersService.findUserByPhone(userAuthDto);
     return userIsExist;
   }
   
-  async createAccessToken(userAuthDto: UserAuthDto): Promise<{ accessToken: string }> {
-    return { accessToken: this.jwtService.sign({ sub: userAuthDto.name }) };
+  async createAccessToken(
+    userAuthDto: UserAuthDto,
+  ): Promise<{ accessToken: string }> {
+    return { accessToken: this.jwtService.sign({ sub: userAuthDto.phone }) };
   }
 
   async signup(signupDto: SignupDto): Promise<{ accessToken: string }> {
-    if (this.findUser(signupDto.name)) {
-      throw new ConflictException(`User with username ${newUser.username} already exists`);
+    if (this.findUser(signupDto)) {
+      throw new ConflictException(
+        `User with username or phone ${signupDto.phone} already exists`,
+      );
     }
-    // const user = {
-    //   username: newUser.username,
-    //   password: await argon2.hash(newUser.password),
-    //   firstName: newUser.firstName,
-    //   lastName: newUser.lastName,
-    // };
+    const createPass = {
+      // id_user: signupDto.id_user,
+      // email: signupDto.email,
+      // id_contract: signupDto.id_contract,
+      // balance: signupDto.balance,
+      // name: signupDto.name,
+      password: await argon2.hash(signupDto.password),
+      // phone: signupDto.phone,
+      // full_name: signupDto.full_name,
+    };
     // this.users.push(user);
-    return this.createAccessToken(signupDto.name);
+    const newUser = await this.usersService.createUser(
+      signupDto,
+      createPass.password,
+    );
+
+    return this.createAccessToken(newUser);
   }
 
-  async login(user: LoginDto): Promise<{ accessToken: string }> {
+  async preSignUp(signupDto: SignupDto): Promise<number> {
+    if (this.findUser(signupDto)) {
+      throw new ConflictException(
+        `Користувач з ім'ям або номером ${signupDto.phone} вже існує.`,
+      );
+    }
+    let randomPass: number = await randomInt(1000, 9000);
+    const sendSms = await sendSmsPass(randomPass, signupDto.phone);
+
+    if (!sendSms) {
+      throw new HttpException (
+        `Помилка, або не вірно вказаний номер телефону`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+      let pass = this.matchPass;
+    if (randomPass == pass) {
+
+    }
+
+
+    setTimeout(() => {
+      randomPass = null;
+    }, 30000); 
+
+    return randomPass;
+  }
+
+  const matchPass = async (matchPass: number) => {
+
+    //const pass = (this.preSignUp)
+    if (!matchPass) {
+      return false;
+    } 
+    return true;
+    //else {
+    //  throw new UnauthorizedException('Пароль не вірний або вже недійсний');
+    //}
+  }
+
+  async comparePass() {
+    let pass = 
+    if(pass == this.matchPass) {
+
+    }
+
+  }
+
+
+  async login(loginDto: LoginDto): Promise<{ accessToken: string }> {
     try {
-      const existingUser = this.findUser(user.name);
-      if (!user) {
+      const existingUser = this.findUser(loginDto);
+      if (!loginDto.phone) {
         throw new Error();
       }
-      const passwordMatch = await argon2.verify(existingUser.password, user.password);
+      const passwordMatch = await argon2.verify(
+        (
+          await existingUser
+        ).password,
+        loginDto.password,
+      );
       if (!passwordMatch) {
         throw new Error();
       }
-      return this.createAccessToken(user.name);
+      return this.createAccessToken(loginDto);
     } catch (e) {
       throw new UnauthorizedException('Username or password may be incorrect. Please try again');
     }

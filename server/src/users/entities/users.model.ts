@@ -13,7 +13,7 @@ export class Users extends Model<Users, UsersConfigAttr> {
     @Column({type: DataType.INTEGER, unique: true, allowNull: false, autoIncrement: true, primaryKey: true})
     id_user: number;
     
-    @Column({type: DataType.STRING, unique: false, allowNull: false})
+    @Column({type: DataType.STRING, unique: false, allowNull: true})
     name: string;
 
     @Column({type: DataType.STRING, unique: false, allowNull: true})
@@ -22,8 +22,8 @@ export class Users extends Model<Users, UsersConfigAttr> {
     @Column({type: DataType.STRING, unique: false, allowNull: false})
     password: string;
 
-    @Column({type: DataType.STRING, unique: false, allowNull: false})
-    confirm_password: string;
+    // @Column({type: DataType.STRING, unique: false, allowNull: false})
+    // confirm_password: string;
 
     @Column({type: DataType.BIGINT, unique: true, allowNull: false})
     phone: bigint;

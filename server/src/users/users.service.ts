@@ -13,19 +13,29 @@ export class UsersService {
     private contractService: ContractService
     ) {}
 
-  async createUser(createUserDto: CreateUserDto) {
+  async createUser(createUserDto: CreateUserDto, pass: string) {
 
     try {
-      
-      const user = await this.usersRepository.create(createUserDto);
+      const newUser = await this.usersRepository.create({
+        password: pass,
+        id_user: createUserDto.id_user,
+        email: createUserDto.email,
+        id_contract: createUserDto.id_contract,
+        balance: createUserDto.balance,
+        name: createUserDto.name,
+        phone: createUserDto.phone,
+        full_name: createUserDto.full_name,
+      });
 
-      const contractUser = await this.contractService.createContract(createUserDto);
+      const contractUser = await this.contractService.createContract(
+        createUserDto,
+      );
 
-      await user.$add('contract', contractUser);
+      await newUser.$add('contract', contractUser);
 
       //user.reload();
 
-      return user;
+      return newUser;
 
     } catch {
 
@@ -83,8 +93,52 @@ export class UsersService {
 
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async findUserByPhone(getUserDto: GetUserDto) {
+
+    try {
+
+      const userByPhone = await this.usersRepository.findOne({
+        where: { phone: getUserDto.phone }
+      });
+
+      return userByPhone;
+
+    } catch {
+
+      throw new HttpException('Data PHONE is incorrect or Not Found', HttpStatus.NOT_FOUND);
+
+    }
+
+  }
+
+  async updateUserByUser (id: number, updateUserDto: UpdateUserDto) {
+    try {
+      const userId = await this.usersRepository.findByPk(
+        updateUserDto.id_user,
+        { include: { all: true } },
+      );
+      
+    if (userId) {
+      await this.usersRepository.update(
+      {  
+        name: updateUserDto.name,
+        full_name: updateUserDto.full_name,
+        email: updateUserDto.email,
+        //update_date : updateTyreDto.update_date
+          },
+          { where: { id_user: userId.id_user } },
+        );
+
+        userId.save();
+      //const updateTyres = await this.tyresRepository.findByPk(updateTyreDto.id, {include: {all: true}});
+
+      return userId; 
+    }
+
+    } catch {
+      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+    }
+    
   }
 
   async removeUser(getUserDto: GetUserDto) {
