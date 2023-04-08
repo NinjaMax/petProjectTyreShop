@@ -10,13 +10,13 @@ const BasketOrder = () => {
     const [delivery, setDelivery] = useState("");
 
    
-    const acceptInput = (value: string) => {
-  
-       
-   
-        //console.log(mask.masked.rawInputValue + ":rawInput");
-        //console.log(mask.masked.rawInputValue.length + ":rawInputLength");
-        //console.log(mask.masked.unmaskedValue + ":unmaskValue");
+    const acceptInput = (value: string, mask: {
+        masked: any; arg: any
+        }) => {
+
+        console.log(mask.masked.rawInputValue + ":rawInput");
+        console.log(mask.masked.rawInputValue.length + ":rawInputLength");
+        console.log(mask.masked.unmaskedValue + ":unmaskValue"); // Need it
         console.log(value + " :VALUE")
     };
        

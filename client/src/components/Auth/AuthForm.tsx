@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../css/AuthCss/AuthForm.css';
 
-const AuthForm = () => {
+const AuthForm = ({confirmActive}: any) => {
 
     return (
           <div className='authFormMain'>
@@ -28,18 +28,16 @@ const AuthForm = () => {
                     <div className="hide-md-lg">
                       <p>Or sign in manually:</p>
                     </div>
-
-                    <input className='inputAuthForm' type="text" name="username" placeholder="email або телефон" required/>
+                    <input className='inputAuthForm' type="text" name="username" placeholder="номер телефона" required/>
                     <input className='inputAuthForm' type="password" name="password" placeholder="Пароль" required/>
                     <input className='inputAuthForm' type="submit" value="Увійти"/>
                   </div>
-
                 </div>
               </form>
             </div>
             <div className="bottomContainer">
               <div className="rowAuthForm">
-                  <a href="/#" className="btnAuthForm">Зареєструватися</a>
+                  <a href="/#" className="btnAuthForm" onClick={confirmActive}>Зареєструватися</a>
                   <a href="/#" className="btnAuthForm">Забули пароль?</a>
               </div>
             </div>

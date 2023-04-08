@@ -11,12 +11,14 @@ import FavoriteGoods from '../ux/FavoriteGoods';
 import Modal from '../modal/Modal';
 import NavBarSearch from '../searchForm/NavBarSearch';
 import { Context } from '../../context/Context';
+import AuthConfirmTel from '../auth/AuthConfirmTel';
 
 
 const NavBar = observer(() => {
   const {user} = useContext<any | null>(Context);
   
   const [activeAuth, setActiveAuth] = useState(false);
+  const [activeAuthConfirm, setAuthConfirm] = useState(false);
   const [searchBtn, setSearchBtn] = useState(false);
   const [activeBasket, setActiveBasket] = useState(false);
 
@@ -26,6 +28,10 @@ const NavBar = observer(() => {
 
   const authActive = () => {
     setActiveAuth(!activeAuth)
+  }
+
+  const authActiveConfirm = () => {
+    setAuthConfirm(!activeAuthConfirm)
   }
 
   const clickSearchBtn = () => {
@@ -53,9 +59,16 @@ const NavBar = observer(() => {
     <AuthView setActive={authActive}/>
     {activeAuth ?
       <Modal active={activeAuth} setActive={authActive}>
-        <AuthForm />
+        <AuthForm confirmActive={authActiveConfirm}/>
       </Modal>
     :null}
+    {activeAuthConfirm ?
+      <Modal active={activeAuthConfirm} 
+        setActive={authActiveConfirm}>
+        <AuthConfirmTel/>
+      </Modal>
+      : null
+    }
     <BasketNavBar setActive={openBasket}/>
   </div>
 

@@ -4,8 +4,12 @@ import { IMaskInput } from 'react-imask';
 
 interface IinputDataTel {
     current?: any;
-    onAccept?: (arg: any) => void;
+    onAccept?: (arg: any, arg1: any) => void;
     refLabel?: {current:{className: string;}};
+    
+    // mask: {
+    //     masked: any; arg: any
+    //     };
 }
 
 //type IOnAccept =  {refLabel?: {current:{className: string;}};}
@@ -14,7 +18,7 @@ const InputDataTel = ({onAccept}: IinputDataTel) => {
 
     const refLabel: IinputDataTel = useRef();
 
-    const inputEvent = (e: any) => {
+    const inputEvent: any = (e: any) => {
         if(e.currentTarget.value.length > 4 && e.currentTarget.value.length <= 10 ) {
             refLabel.current.className = 'inputDataTelLabelActive';
         } else {
@@ -29,16 +33,16 @@ const InputDataTel = ({onAccept}: IinputDataTel) => {
     return (
 
         <div>
-            <IMaskInput data-className='inputDataTel'
+            <IMaskInput data-classname='inputDataTel'
                 mask='+{38}(000)000-00-00'
                 radix="."
                 value="_"
                 unmask={false}
                 lazy={false} 
                 onAccept={onAccept}
-                data-onInput={inputEvent}
+                data-oninput={inputEvent.toString()}
                 data-placeholder='0'
-                data-autoComplete="tel"
+                data-autocomplete="tel"
                 data-type="text"
                 definitions={{'_': /[1-10]/}}
                 data-guide="true"

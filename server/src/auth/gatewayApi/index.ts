@@ -4,7 +4,7 @@ import axios from 'axios';
 //type conf = ConfigService;
 
 const $hostPost = axios.create({
-  baseURL: 'https://sms-fly.ua/',
+  baseURL: '',
   headers: {
     'Content-Type': 'application/json; charset=utf-8',
     //'Access-Control-Allow-Origin': `${process.env.CORS}`,

@@ -58,7 +58,7 @@ export class AuthService {
     return this.createAccessToken(newUser);
   }
 
-  async preSignUp(signupDto: SignupDto): Promise<number> {
+  async preSignUp(signupDto: SignupDto, matchPass: (arg0: number) => any) {
     if (this.findUser(signupDto)) {
       throw new ConflictException(
         `Користувач з ім'ям або номером ${signupDto.phone} вже існує.`,
@@ -73,29 +73,21 @@ export class AuthService {
         HttpStatus.BAD_REQUEST,
       );
     }
-      let pass = this.matchPass;
-    if (randomPass == pass) {
-
-    }
-
-
+    const match = await matchPass(randomPass);
     setTimeout(() => {
       randomPass = null;
     }, 30000); 
 
-    return randomPass;
+    return match;
   }
 
-  const matchPass = async (matchPass: number) => {
-
-    //const pass = (this.preSignUp)
-    if (!matchPass) {
+  async matchPass (matchPass: number, rndmPass: number) {
+    if (matchPass === rndmPass) {
       return false;
-    } 
-    return true;
-    //else {
+    } else {
+      return true;
     //  throw new UnauthorizedException('Пароль не вірний або вже недійсний');
-    //}
+    }
   }
 
   async comparePass() {
