@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const AuthConfirmTel = ({
-    sendSms, 
-    signUp,
-    inputTelAuth, 
-    sendSmsPass, 
-    //authNewCustomer
+    preSignUp, 
+    isSendSms,
+    matchUserPass
   }: any) => {
 
+    const [writeTel, setWriteTel] = useState<number | null>(null);
+    const [passTel, setPassTel] = useState< number| null>(null);
 
     return (
         <div className='authFormMain'>
@@ -18,34 +18,47 @@ const AuthConfirmTel = ({
                 <div className="hide-md-lg">
                   <p>Or sign in manually:</p>
                 </div>
-                <input className='inputAuthForm' 
-                  type="text" 
-                  name="username" 
-                  placeholder="номер телефона"
-                  onChange={inputTelAuth} 
-                  required/>
-                {signUp ?
+                {!isSendSms ? 
                   <input className='inputAuthForm' 
-                    type="password" name="password" 
-                    placeholder="Пароль із SMS" 
+                    type="tel" 
+                    name="username" 
+                    placeholder="номер телефона"
+                    onChange={(e: any) => setWriteTel(e.currentTarget.value)} 
+                    required/>
+                  :null
+                }
+                {isSendSms ?
+                  <input className='inputAuthForm' 
+                    type="password" 
+                    name="passwordSms" 
+                    placeholder="Пароль із SMS"
+                    onChange={(e: any) => setPassTel(e.currentTarget.value)} 
                     required/>
                   : null
                 }
-                {sendSms && !signUp ?
+                {!isSendSms ?
                   <input className='inputAuthForm' 
-                    //type="submit" 
+                    type="button" 
                     value="Відправити SMS"
-                    onClick={sendSmsPass}/>
+                    onClick={() => preSignUp(writeTel)}/>
                   : null
                 }
-                {signUp ?
+                {isSendSms ?
+                  <input className='inputAuthForm' 
+                    type="button" 
+                    value="Підтвердження"
+                    onClick={() => matchUserPass(passTel)}
+                    />
+                  : null
+                }
+                {/* {signUp ?
                   <input className='inputAuthForm' 
                     type="submit" 
                     value="Зареєструватися"
                     onClick={authNewCustomer}
                     />
                   : null
-                }
+                } */}
               </div>
           </form>
         </div>

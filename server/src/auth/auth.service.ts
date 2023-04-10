@@ -33,7 +33,7 @@ export class AuthService {
     return { accessToken: this.jwtService.sign({ sub: userAuthDto.phone }) };
   }
 
-  async signup(signupDto: SignupDto): Promise<{ accessToken: string }> {
+  async signUp(signupDto: SignupDto): Promise<{ accessToken: string }> {
     if (this.findUser(signupDto)) {
       throw new ConflictException(
         `User with username or phone ${signupDto.phone} already exists`,
@@ -58,7 +58,7 @@ export class AuthService {
     return this.createAccessToken(newUser);
   }
 
-  async preSignUp(signupDto: SignupDto, matchPass: (arg0: number) => any) {
+  async preSignUp(signupDto: SignupDto) {
     if (this.findUser(signupDto)) {
       throw new ConflictException(
         `Користувач з ім'ям або номером ${signupDto.phone} вже існує.`,
@@ -73,16 +73,14 @@ export class AuthService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    const match = await matchPass(randomPass);
-    setTimeout(() => {
-      randomPass = null;
-    }, 30000); 
+    //const match = await this.matchPass.bind(null, randomPass);
+    setTimeout(() => (randomPass = null), 60000);
 
-    return match;
+    return sendSms;
   }
 
-  async matchPass (matchPass: number, rndmPass: number) {
-    if (matchPass === rndmPass) {
+  async matchPass (rndmPass: number, pass: number) {
+    if (pass === rndmPass) {
       return false;
     } else {
       return true;
@@ -90,14 +88,9 @@ export class AuthService {
     }
   }
 
-  async comparePass() {
-    let pass = 
-    if(pass == this.matchPass) {
-
-    }
-
+  async comparePass(pass: number) {
+    return pass ? pass : null;
   }
-
 
   async login(loginDto: LoginDto): Promise<{ accessToken: string }> {
     try {
@@ -116,7 +109,9 @@ export class AuthService {
       }
       return this.createAccessToken(loginDto);
     } catch (e) {
-      throw new UnauthorizedException('Username or password may be incorrect. Please try again');
+      throw new UnauthorizedException(
+        'Username or password may be incorrect. Please try again',
+      );
     }
   }
 

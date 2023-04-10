@@ -1,13 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from './config/config.service';
+import * as cookieParser from 'cookie-parser';
 //import cors from 'cors';
 
 async function bootstrap() {
   try {
       const app = await NestFactory.create(AppModule);
-      
       const configService = app.get(ConfigService);
+      app.use(cookieParser());
       app.enableCors({
         origin: [
           'http://localhost:3000',

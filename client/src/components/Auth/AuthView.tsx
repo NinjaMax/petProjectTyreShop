@@ -7,10 +7,10 @@ interface IAuthView {
     setActive(): void;
 }
 
-const AuthView = ({setActive}:IAuthView) => {
+const AuthView = () => {
     return (
         <div className='authView'>
-            <label htmlFor='btnAuth'onClick={setActive}>
+            <label htmlFor='btnAuth'>
                 <img id='imgCustomerAuth' src={userImg} alt='imgUser'/>
             
                 <button className='btnAuthView' name='btnAuth' >

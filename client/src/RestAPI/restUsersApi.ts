@@ -18,3 +18,25 @@ export const check = async () => {
     localStorage.setItem('token', data.token)
     return jwt_decode(data.token)
 }
+
+export const preSignUpUser = async (phoneNum: number) => {
+    const {data} = await $authHostPost.post('/auth/presignup', {phoneNum})
+    //localStorage.setItem('token', data.token)
+    console.log(data);
+    return data;
+}
+
+export const matchPassSms = async (randomPass: number, passMatch: number) => {
+    const {data} = await $authHostPost.post('/auth/matchpass', {randomPass, passMatch})
+    //localStorage.setItem('token', data.token)
+    console.log(data);
+    return data;
+}
+
+export const signUpUser = async (phoneNum: number, password: number) => {
+    const {data} = await $authHostPost.post('/auth/presignup', 
+    {phoneNum, password})
+    //cookie.setItem('token', data.token)
+    console.log(data);
+    return data;
+}

@@ -12,6 +12,8 @@ import Modal from '../modal/Modal';
 import NavBarSearch from '../searchForm/NavBarSearch';
 import { Context } from '../../context/Context';
 import AuthConfirmTel from '../auth/AuthConfirmTel';
+import { preSignUpUser, matchPassSms } from '../../restAPI/restUsersApi';
+import AuthSignUp from '../auth/AuthSignUp';
 
 
 const NavBar = observer(() => {
@@ -21,21 +23,42 @@ const NavBar = observer(() => {
   const [activeAuthConfirm, setAuthConfirm] = useState(false);
   const [searchBtn, setSearchBtn] = useState(false);
   const [activeBasket, setActiveBasket] = useState(false);
+  const [isPassSend, setPassSend] = useState(false);
+  const [isMatchPass, setIsMatchPass] = useState(false);
+  const [smsPass, setSmsPass] = useState<number | null>(null);
 
   const openBasket = () => {
-    setActiveBasket(!activeBasket)
+    setActiveBasket(!activeBasket);
   }
 
   const authActive = () => {
-    setActiveAuth(!activeAuth)
+    setActiveAuth(!activeAuth);
   }
 
   const authActiveConfirm = () => {
-    setAuthConfirm(!activeAuthConfirm)
+    setAuthConfirm(!activeAuthConfirm);
   }
 
   const clickSearchBtn = () => {
-    setSearchBtn(!searchBtn)
+    setSearchBtn(!searchBtn);
+  }
+
+  const preSignUpAuth = async (telnumber: number) => {
+    console.log(telnumber);
+    const sendPass = await preSignUpUser(telnumber);
+    if (sendPass) {
+      setPassSend(!isPassSend);
+      setSmsPass(sendPass);
+    } 
+  }
+
+  const matchGetPass = async (passFromTel: number) => {
+    const matchPass = await matchPassSms(smsPass!, passFromTel);
+    console.log(matchPass);
+    if (matchPass) {
+      setIsMatchPass(!isMatchPass);
+      setAuthConfirm(!activeAuthConfirm);  
+    }  
   }
 
   return (
@@ -56,22 +79,33 @@ const NavBar = observer(() => {
       <NavBarSearch searchBtn={searchBtn} clickSearchBtn={clickSearchBtn}/>
     :null}
     <FavoriteGoods/>
-    <AuthView setActive={authActive}/>
+    {user._isAuth ?
+      <AuthView/>
+      : <span onClick={authActive}>Вхід / Реєстрація</span>
+    }
     {activeAuth ?
       <Modal active={activeAuth} setActive={authActive}>
         <AuthForm confirmActive={authActiveConfirm}/>
       </Modal>
-    :null}
+    : null
+    }
     {activeAuthConfirm ?
       <Modal active={activeAuthConfirm} 
         setActive={authActiveConfirm}>
-        <AuthConfirmTel/>
+        <AuthConfirmTel 
+          preSignUp ={preSignUpAuth}
+          isSendSms={isPassSend}
+          matchUserPass={matchGetPass}
+        />
       </Modal>
       : null
     }
+    {isMatchPass ?
+      <AuthSignUp/>
+      :null
+    }
     <BasketNavBar setActive={openBasket}/>
   </div>
-
-    );
+  );
 });
 export default NavBar;

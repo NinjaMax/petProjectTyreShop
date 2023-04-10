@@ -9,21 +9,31 @@ import {
   HttpCode,
   HttpStatus,
   Request,
+  Res,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/user-auth.dto';
+import { UserAuthDto } from './dto/user-auth.dto';
+import { SignupDto } from './dto/signUp-dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { Public } from './decorators/public.decorator';
+import { LoginDto } from './dto/logIn-dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Public()
-  @HttpCode(HttpStatus.OK)
-  @Post('login')
-  signIn(@Body() signInDto: Record<string, any>) {
-    return this.authService.signIn(signInDto.username, signInDto.password);
+  //@Public()
+  //@HttpCode(HttpStatus.OK)
+  @Post('signup')
+  signUp(@Res() res: Response, @Body() signupDto: SignupDto) {
+    const tokenAccess = this.authService.signUp(signupDto);
+    res.cookie('cookie_Name', tokenAccess, {
+      maxAge: 900000,
+      httpOnly: true,
+      secure: false,
+    });
+    return 'Cookie set successfully';
   }
 
   @Get('profile')
@@ -32,9 +42,23 @@ export class AuthController {
   }
 
   @Post('login')
-  login(@Body() user: LoginDto) {
-    return this.authService.login(user);
+  login(@Body() loginDto: LoginDto) {
+    return this.authService.login(loginDto);
   }
+
+  //@Public()
+  //@HttpCode(HttpStatus.OK)
+  @Post('presignup')
+  preSignUp(@Body() signupDto: SignupDto) {
+    return this.authService.preSignUp(signupDto);
+  }
+
+  @Post('matchpass')
+  matchPass(@Body() rndmPass: number, pass: number) {
+    return this.authService.matchPass(rndmPass, pass);
+  }
+
+
 
   @Post()
   create(@Body() createAuthDto: CreateAuthDto) {

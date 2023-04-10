@@ -2,9 +2,9 @@ import { $hostPost } from './index';
 
 const sendSmsPass = async (valuePass: number, phoneNumber: bigint) =>
   await $hostPost
-    .post('', {
+    .post('/api/v2/api.php', {
       auth: {
-        key: 'specialsecretapikey',
+        key: 'n7GyAj36j6uZyBA5y1AUwVxNZrml9R2r',
       },
       action: 'SENDMESSAGE',
       data: {
