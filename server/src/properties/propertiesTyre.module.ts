@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { PropsBrandService } from './props-tyres-services/props-tyre-brand.service';
 import { PropertiesBrandController } from './props-tyres-controllers/props-tyre-brand.controller';
@@ -63,7 +63,7 @@ import { TyreCountry } from './entities/tyres/tyre-country.model';
     TyreLoadIndex, TyreParams, TyreReinforce, TyreRunFlat, TyreSeal, TyreSeason,
     TyreSilent, TyreSizeDigits, TyreSpeedIndex, TyreStudded, TyreVehicleType, 
     TyreWidth, TyreYear]),
-    TyresModule, RatingsModule
+    forwardRef(() => TyresModule), RatingsModule
   ],
   exports: [PropsBrandService, PropsModelService, PropsTyreCountryService,
     PropsTyreDemoService, PropsTyrDiametrService, PropsTyreHeightService,

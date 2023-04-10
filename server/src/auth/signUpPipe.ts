@@ -1,5 +1,10 @@
-import { BadRequestException, Injectable, PipeTransform } from "@nestjs/common";
-import { SignupDto } from "./dto/signUp-dto";
+import {
+  ArgumentMetadata,
+  BadRequestException,
+  Injectable,
+  PipeTransform,
+} from '@nestjs/common';
+import { SignupDto } from './dto/signUp-dto';
 
 
 @Injectable()
@@ -13,7 +18,7 @@ export class SignupPipe implements PipeTransform {
     if (value.password.length < 12) {
       errors.push('password should be at least 12 characters long');
     }
-    if (value.password !== value.confirm_password) {
+    if (value.password !== value.password) {
       errors.push('password and confirmationPassword do not match');
     }
     if (errors.length) {

@@ -12,6 +12,7 @@ import { AddTyresToDbService } from './addTyresToDataBase.service';
 import { UploaderPaprserService } from './uploaderParser.service';
 import { AddWheelsToDbService } from './addWheelToDataBase.service';
 import { WheelsModule } from 'src/wheels/wheels.module';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   controllers: [UploaderController],

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ReviewsService } from './reviews.service';
 import { ReviewsController } from './reviews.controller';
@@ -13,17 +13,27 @@ import { TyreBrand } from 'src/properties/entities/tyres/tyre-brand.model';
 import { PropertiesModule } from 'src/properties/properties.module';
 import { CustomersModule } from 'src/customers/customers.module';
 import { AuthModule } from 'src/auth/auth.module';
-//import { UsersModule } from 'src/users/users.module';
+import { UsersModule } from 'src/users/users.module';
 
 
 @Module({
   controllers: [ReviewsController],
   providers: [ReviewsService],
   imports: [ 
-    SequelizeModule.forFeature([ReviewTyres, Tyres, RatingTyres, 
-    TyreModel, TyreBrand]),
-    TyresModule, RatingsModule, PropertiesModule, CustomersModule,
-    AuthModule
+    SequelizeModule.forFeature([
+      ReviewTyres,
+      Tyres,
+      RatingTyres,
+      TyreModel,
+      TyreBrand,
+      Users,
+    ]),
+    forwardRef(() => TyresModule),
+    forwardRef(() => UsersModule),
+    RatingsModule,
+    PropertiesModule,
+    CustomersModule,
+    forwardRef(() => AuthModule)
   ],
   exports: [ReviewsService]
 })

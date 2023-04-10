@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { PropertiesTyreModule } from './propertiesTyre.module';
 import { PropertiesWheelModule } from './propertiesWheel.module';
@@ -9,7 +9,9 @@ import { AuthModule } from 'src/auth/auth.module';
   providers: [],
   imports: [ 
     SequelizeModule.forFeature([]),
-    PropertiesTyreModule, PropertiesWheelModule, AuthModule
+    PropertiesTyreModule,
+    PropertiesWheelModule,
+    forwardRef(() => AuthModule),
   ],
   exports: [PropertiesTyreModule, PropertiesWheelModule]
 })

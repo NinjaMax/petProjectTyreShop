@@ -13,11 +13,11 @@ export class UsersService {
     private contractService: ContractService
     ) {}
 
-  async createUser(createUserDto: CreateUserDto, pass: string) {
+  async createUser(createUserDto: CreateUserDto, password: string) {
 
     try {
       const newUser = await this.usersRepository.create({
-        password: pass,
+        password: password,
         id_user: createUserDto.id_user,
         email: createUserDto.email,
         id_contract: createUserDto.id_contract,
@@ -111,7 +111,7 @@ export class UsersService {
 
   }
 
-  async updateUserByUser (id: number, updateUserDto: UpdateUserDto) {
+  async updateUserByUser (id_user: number, updateUserDto: UpdateUserDto) {
     try {
       const userId = await this.usersRepository.findByPk(
         updateUserDto.id_user,

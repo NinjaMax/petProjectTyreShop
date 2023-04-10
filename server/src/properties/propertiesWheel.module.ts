@@ -44,7 +44,7 @@ import { WheelsModule } from 'src/wheels/wheels.module';
         WheelBrand, WheelColor, WheelDia, WheelDiameter, WheelEt, 
         WheelModel, WheelPcd, WheelPcd2, WheelSizeDigits, WheelType,
         WheelWidth]),
-    TyresModule, RatingsModule, WheelsModule
+    RatingsModule, WheelsModule
   ],
   exports: [PropsWheelBoltCountService, PropsWheelBoltCountPcdService,
     PropsWheelBrandService, PropsWheelColorService, PropsWheelDiaService,

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { CustomersService } from './customers.service';
 import { CustomersController } from './customers.controller';
@@ -9,9 +9,10 @@ import { AuthModule } from 'src/auth/auth.module';
 @Module({
   controllers: [CustomersController],
   providers: [CustomersService],
-  imports: [ 
+  imports: [
     SequelizeModule.forFeature([Customer]),
-    ContractModule, AuthModule
+    forwardRef(() => ContractModule),
+    forwardRef(() => AuthModule),
   ],
   exports: [CustomersService],
 })

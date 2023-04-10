@@ -58,12 +58,10 @@ export class AuthController {
     return this.authService.matchPass(rndmPass, pass);
   }
 
-
-
-  @Post()
-  create(@Body() createAuthDto: CreateAuthDto) {
-    return this.authService.create(createAuthDto);
-  }
+  // @Post()
+  // create(@Body(userauth: UserAuthDto)) {
+  //   return this.authService.create(userauth);
+  // }
 
   @Get()
   findAll() {
@@ -75,10 +73,10 @@ export class AuthController {
     return this.authService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authService.update(+id, updateAuthDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
+  //   return this.authService.update(+id, updateAuthDto);
+  // }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

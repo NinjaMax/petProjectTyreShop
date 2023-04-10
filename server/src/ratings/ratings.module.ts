@@ -18,7 +18,9 @@ import { AuthModule } from 'src/auth/auth.module';
   imports: [ 
     SequelizeModule.forFeature([RatingTyres, Tyres, ReviewTyres, TyreBrand,
     TyreModel]), 
-    AuthModule, TyresModule, forwardRef(() => ReviewsModule)
+    forwardRef(() => AuthModule), 
+    forwardRef(() => TyresModule), 
+    forwardRef(() => ReviewsModule)
   ],
   exports: [RatingsService]
 })
