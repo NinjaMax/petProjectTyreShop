@@ -39,64 +39,62 @@ export class UsersService {
 
     } catch {
 
-      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
     }
     
   }
 
   async findAlluser() {
-
     try {
-
-      const usersAll = await this.usersRepository.findAll({include: {all: true}});
+      const usersAll = await this.usersRepository.findAll({
+        include: { all: true },
+      });
 
       return usersAll;
 
     } catch {
-
-      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
     }
 
   }
 
   async findUserById(getUserDto: GetUserDto) {
-
     try {
-
       const userId = await this.usersRepository.findByPk(getUserDto.id_user, {include: {all: true}});
 
       return userId;
 
     } catch {
-
-      throw new HttpException('Data ID is incorrect or Not Found', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data ID is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
     }
 
   }
 
   async findUserByName(getUserDto: GetUserDto) {
-
     try {
-
       const userByName = await this.usersRepository.findOne({where: {name: getUserDto.name}});
 
       return userByName;
 
     } catch {
-
-      throw new HttpException('Data ID is incorrect or Not Found', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data ID is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
     }
 
   }
 
   async findUserByPhone(getUserDto: GetUserDto) {
-
     try {
-
       const userByPhone = await this.usersRepository.findOne({
         where: { phone: getUserDto.phone }
       });
@@ -105,8 +103,10 @@ export class UsersService {
 
     } catch {
 
-      throw new HttpException('Data PHONE is incorrect or Not Found', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data PHONE is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
     }
 
   }

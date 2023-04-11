@@ -43,7 +43,7 @@ const NavBar = observer(() => {
     setSearchBtn(!searchBtn);
   }
 
-  const preSignUpAuth = async (telnumber: number) => {
+  const preSignUpAuth = async (telnumber: bigint) => {
     console.log(telnumber);
     const sendPass = await preSignUpUser(telnumber);
     if (sendPass) {

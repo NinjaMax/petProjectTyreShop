@@ -19,8 +19,8 @@ export const check = async () => {
     return jwt_decode(data.token)
 }
 
-export const preSignUpUser = async (phoneNum: number) => {
-    const {data} = await $authHostPost.post('/auth/presignup', {phoneNum})
+export const preSignUpUser = async (phoneNum: bigint) => {
+    const {data} = await $authHostPost.post('/auth/presignup', {phone: phoneNum})
     //localStorage.setItem('token', data.token)
     console.log(data);
     return data;

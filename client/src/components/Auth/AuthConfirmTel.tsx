@@ -9,6 +9,8 @@ const AuthConfirmTel = ({
     const [writeTel, setWriteTel] = useState<number | null>(null);
     const [passTel, setPassTel] = useState< number| null>(null);
 
+    console.log(typeof(writeTel));
+
     return (
         <div className='authFormMain'>
         <div className="containerAuthForm">
@@ -23,7 +25,7 @@ const AuthConfirmTel = ({
                     type="tel" 
                     name="username" 
                     placeholder="номер телефона"
-                    onChange={(e: any) => setWriteTel(e.currentTarget.value)} 
+                    onChange={(e: any) => setWriteTel(+e.currentTarget.value)} 
                     required/>
                   :null
                 }
@@ -32,7 +34,7 @@ const AuthConfirmTel = ({
                     type="password" 
                     name="passwordSms" 
                     placeholder="Пароль із SMS"
-                    onChange={(e: any) => setPassTel(e.currentTarget.value)} 
+                    onChange={(e: any) => setPassTel(+e.currentTarget.value)} 
                     required/>
                   : null
                 }
