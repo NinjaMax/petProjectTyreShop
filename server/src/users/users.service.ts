@@ -36,14 +36,12 @@ export class UsersService {
       //user.reload();
 
       return newUser;
-
     } catch {
-
       throw new HttpException(
         'Data is incorrect and must be uniq',
         HttpStatus.NOT_FOUND,
+      );
     }
-    
   }
 
   async findAlluser() {
@@ -60,7 +58,6 @@ export class UsersService {
         HttpStatus.NOT_FOUND,
       );
     }
-
   }
 
   async findUserById(getUserDto: GetUserDto) {
