@@ -79,11 +79,11 @@ export class AuthService {
     return sendSms;
   }
 
-  async matchPass (rndmPass: number, pass: number) {
+  async matchPass(rndmPass: number, pass: number) {
     if (pass === rndmPass) {
-      return false;
-    } else {
       return true;
+    } else {
+      return false;
     //  throw new UnauthorizedException('Пароль не вірний або вже недійсний');
     }
   }

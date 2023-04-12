@@ -1,0 +1,148 @@
+/*@import "compass/css3/animation";*/
+
+/* vars */
+/* $main: #e0c764;
+$secondary: darken($main, 20);
+$r: 15;
+$d: $r * 2;
+$t: 2000; */
+
+/* html {
+  height: 100%;
+  background-color: #71C2FF;
+  @include background-image(radial-gradient(center, ellipse cover, lighten(#71C2FF, 5) 0%, darken(#71C2FF, 5) 100%));
+} */
+
+/* .spinnerWait {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -15px;
+  margin-left: -15px;
+  border: 15/10px solid darken(#71C2FF, 20);
+  border-radius: 50%;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 15/10px;
+    background-color: darken(#71C2FF, 20);
+    border-radius: 15/10px;
+    transform-origin: 50% 0%;
+  }
+
+  &:before {
+    height: 30 - (15/10)-((15/10))px;
+    left: 30 - ((15/10)/2)px;
+    top: 50%;
+    animation: spin 2000ms linear infinite;
+  } 
+
+  &:after {
+    height: 30 - (15/10)px;
+    left: 30 - ((15/10)/2)px;
+    top: 50%;
+    animation: spin 0.5s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+} */
+
+@-moz-keyframes timer-loader {
+    0% {
+      -moz-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -moz-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes timer-loader {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes timer-loader {
+    0% {
+      -moz-transform: rotate(0deg);
+      -ms-transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -moz-transform: rotate(360deg);
+      -ms-transform: rotate(360deg);
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  /* :not(:required) hides this rule from IE9 and below */
+  .timer-loader:not(:required) {
+    border: 6px solid #c8d;
+    -moz-border-radius: 24px;
+    -webkit-border-radius: 24px;
+    border-radius: 24px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    text-indent: -9999px;
+    width: 48px;
+    height: 48px;
+  }
+  .timer-loader:not(:required)::before {
+    -moz-animation: timer-loader 1250ms infinite linear;
+    -webkit-animation: timer-loader 1250ms infinite linear;
+    animation: timer-loader 1250ms infinite linear;
+    -moz-transform-origin: 3px 3px;
+    -ms-transform-origin: 3px 3px;
+    -webkit-transform-origin: 3px 3px;
+    transform-origin: 3px 3px;
+    background: #c8d;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    content: '';
+    display: block;
+    position: absolute;
+    width: 6px;
+    height: 19.2px;
+    left: 15px;
+    top: 15px;
+  }
+  .timer-loader:not(:required)::after {
+    -moz-animation: timer-loader 15000ms infinite linear;
+    -webkit-animation: timer-loader 15000ms infinite linear;
+    animation: timer-loader 15000ms infinite linear;
+    -moz-transform-origin: 3px 3px;
+    -ms-transform-origin: 3px 3px;
+    -webkit-transform-origin: 3px 3px;
+    transform-origin: 3px 3px;
+    background: #c8d;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    content: '';
+    display: block;
+    position: absolute;
+    width: 6px;
+    height: 16px;
+    left: 15px;
+    top: 15px;
+  }

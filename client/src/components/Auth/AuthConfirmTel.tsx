@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import SpinnerCarRot from '../spinners/SpinnerCarRot';
+import SpinnerWait from '../spinners/SpinnerWait';
+import Timer from '../timer/Timer';
 
 const AuthConfirmTel = ({
     preSignUp, 
@@ -23,8 +26,10 @@ const AuthConfirmTel = ({
                 {!isSendSms ? 
                   <input className='inputAuthForm' 
                     type="tel" 
+                    pattern="[0-9]{3}"
+                    maxLength="12"
                     name="username" 
-                    placeholder="номер телефона"
+                    placeholder="номер телефона 38**********"
                     onChange={(e: any) => setWriteTel(+e.currentTarget.value)} 
                     required/>
                   :null
@@ -53,6 +58,14 @@ const AuthConfirmTel = ({
                     />
                   : null
                 }
+                {isSendSms ?
+                  <>
+                    <SpinnerWait />
+                    <Timer minutes={1} seconds={30} />
+                  </>
+                  : null
+                }
+                
                 {/* {signUp ?
                   <input className='inputAuthForm' 
                     type="submit" 

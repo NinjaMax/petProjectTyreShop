@@ -8,7 +8,7 @@ const sendSmsPass = async (valuePass: number, phoneNumber: bigint) =>
       },
       action: 'SENDMESSAGE',
       data: {
-        recipient: String(phoneNumber),
+        recipient: phoneNumber.toString(),
         channels: ['sms'],
         sms: {
           source: 'SkyParts',
