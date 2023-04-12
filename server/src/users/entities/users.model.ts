@@ -22,8 +22,8 @@ export class Users extends Model<Users, UsersConfigAttr> {
     @Column({type: DataType.STRING, unique: false, allowNull: false})
     password: string;
 
-    // @Column({type: DataType.STRING, unique: false, allowNull: false})
-    // confirm_password: string;
+    @Column({type: DataType.STRING, unique: false, allowNull: true})
+    delivery: string;
 
     @Column({type: DataType.BIGINT, unique: true, allowNull: false})
     phone: bigint;
