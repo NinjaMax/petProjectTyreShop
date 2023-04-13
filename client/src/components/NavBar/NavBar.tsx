@@ -45,21 +45,22 @@ const NavBar = observer(() => {
 
   const preSignUpAuth = async (telnumber: bigint) => {
 
-    console.log(telnumber);
+    console.log('TEL NUMBER: ',telnumber);
     try {
       const sendPass = await preSignUpUser(telnumber);
+      console.log('SEND SMS: ', sendPass);
       if (sendPass) {
         setPassSend(!isPassSend);
         setSmsPass(sendPass);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
   const matchGetPass = async (passFromTel: number) => {
     const matchPass = await matchPassSms(smsPass!, passFromTel);
-    console.log(matchPass);
+    console.log('MATCH PASS: ', matchPass);
     if (matchPass) {
       setIsMatchPass(!isMatchPass);
       setAuthConfirm(!activeAuthConfirm);  
