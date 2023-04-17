@@ -42,7 +42,7 @@ export const matchPassSms = async (randomPass: number, passMatch: number) => {
 // }
 
 export const signInGoogle = async () => {
-    const {data} = await $authHostPost.get('/auth/google/url', 
+    const {data} = await $authHostGet.get('/auth/google/url', 
     )
     //cookie.setItem('token', data.token)
     console.log(data);
@@ -50,10 +50,10 @@ export const signInGoogle = async () => {
 }
 
 export const getGoogleCurUser = async () => {
-    const {data} = await $authHostPost.get('user/google', 
+    const {data} = await $authHostGet.get('/auth/user/google', 
     )
     //cookie.setItem('token', data.token)
-    console.log(data);
+    console.log('USER/GOOGLE', data.data);
     return data;
 }
 
