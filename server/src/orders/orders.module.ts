@@ -3,15 +3,15 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { OrdersService } from './orders.service';
 import { OrdersController } from './orders.controller';
 import { Orders } from './entities/order.model';
-import { StockModule } from 'src/stock/stock.module';
-import { BasketModule } from 'src/basket/basket.module';
-import { UsersModule } from 'src/users/users.module';
 import { Order_Storage } from './entities/order-storage.model';
-import { TyresModule } from 'src/tyres/tyres.module';
-import { PricesModule } from 'src/prices/prices.module';
-import { StorageModule } from 'src/storage/storage.module';
 import { OrdersStorageService } from './orders-storage.service';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
+import { BasketModule } from '../basket/basket.module';
+import { PricesModule } from '../prices/prices.module';
+import { StockModule } from '../stock/stock.module';
+import { StorageModule } from '../storage/storage.module';
+import { TyresModule } from '../tyres/tyres.module';
+import { UsersModule } from '../users/users.module';
 
 @Module({
   controllers: [OrdersController],

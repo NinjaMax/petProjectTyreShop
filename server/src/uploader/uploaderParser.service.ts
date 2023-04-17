@@ -1,7 +1,7 @@
-import { Injectable,  HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import * as fs from 'fs';
 import { join } from 'path';
-import * as csvParser from 'csv-parser';
+import csvParser from 'csv-parser';
 import { ItemPriceTyresConfigAttr } from './interfaces/priceItemTyre.interface';
 import { AddTyresToDbService } from './addTyresToDataBase.service';
 import { ItemPriceWheelConfigAttr } from './interfaces/priceItemWheel.interface';

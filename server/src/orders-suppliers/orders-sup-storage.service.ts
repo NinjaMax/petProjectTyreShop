@@ -1,7 +1,7 @@
 import { Injectable, HttpException, HttpStatus  } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Op } from 'sequelize';
-import { OrdersService } from 'src/orders/orders.service';
+import { OrdersService } from '../orders/orders.service';
 import { CreateOrdersSupplierDto } from './dto/create-orders-supplier.dto';
 import { GetOrdersSuppliersDto } from './dto/get-orders-supplier.dto';
 import { UpdateOrdersSupplierDto } from './dto/update-orders-supplier.dto';

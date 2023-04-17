@@ -1,6 +1,6 @@
 import {Column, DataType, Model, Table, HasMany } from "sequelize-typescript";
 import { CashboxConfigAttr } from "../interfaces/cashbox.interface";
-import { Paynment } from "src/paynment/entities/paynment.model";
+import { Paynment } from "../../paynment/entities/paynment.model";
 
 @Table({tableName: 'cashbox', createdAt: false, updatedAt: false})
 export class Cashbox extends Model<Cashbox, CashboxConfigAttr>{ 

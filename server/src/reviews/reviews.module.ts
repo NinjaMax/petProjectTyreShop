@@ -3,18 +3,17 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { ReviewsService } from './reviews.service';
 import { ReviewsController } from './reviews.controller';
 import { ReviewTyres } from './entities/review-tyres.model';
-import { Tyres } from 'src/tyres/entities/tyres.model';
-import { RatingTyres } from 'src/ratings/entities/rating-tyres.model';
-import { TyresModule } from 'src/tyres/tyres.module';
-import { RatingsModule } from 'src/ratings/ratings.module';
-import { Users } from 'src/users/entities/users.model';
-import { TyreModel } from 'src/properties/entities/tyres/tyre-model.model';
-import { TyreBrand } from 'src/properties/entities/tyres/tyre-brand.model';
-import { PropertiesModule } from 'src/properties/properties.module';
-import { CustomersModule } from 'src/customers/customers.module';
-import { AuthModule } from 'src/auth/auth.module';
-import { UsersModule } from 'src/users/users.module';
-
+import { AuthModule } from '../auth/auth.module';
+import { CustomersModule } from '../customers/customers.module';
+import { TyreBrand } from '../properties/entities/tyres/tyre-brand.model';
+import { TyreModel } from '../properties/entities/tyres/tyre-model.model';
+import { PropertiesModule } from '../properties/properties.module';
+import { RatingTyres } from '../ratings/entities/rating-tyres.model';
+import { RatingsModule } from '../ratings/ratings.module';
+import { Tyres } from '../tyres/entities/tyres.model';
+import { TyresModule } from '../tyres/tyres.module';
+import { Users } from '../users/entities/users.model';
+import { UsersModule } from '../users/users.module';
 
 @Module({
   controllers: [ReviewsController],

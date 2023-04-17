@@ -6,7 +6,7 @@ import { UpdateStockDto } from './dto/update-stock.dto';
 import { StockTyres } from './entities/stock-tyres.model';
 import { TyresService } from '../tyres/tyres.service';
 import { SuppliersService } from '../suppliers/suppliers.service';
-import { StorageService } from 'src/storage/storage.service';
+import { StorageService } from '../storage/storage.service';
 //import { OrdersSuppliersService } from 'src/orders-suppliers/orders-suppliers.service';
 //import { OrdersSupStorageService } from 'src/orders-suppliers/orders-sup-storage.service';
 //import { ContractService } from 'src/contract/contract.service';

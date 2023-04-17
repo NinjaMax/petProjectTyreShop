@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { UserAuthDto } from './dto/user-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/logIn-dto';
 import { SignupDto } from './dto/signUp-dto';
@@ -30,7 +30,7 @@ export class AuthService {
   async createAccessToken(
     userAuthDto: UserAuthDto,
   ): Promise<{ accessToken: string }> {
-    return { accessToken: this.jwtService.sign({ sub: userAuthDto.phone }) };
+    return { accessToken: this.jwtService.sign({ sub: userAuthDto }) };
   }
 
   async signUp(signupDto: SignupDto): Promise<{ accessToken: string }> {
@@ -92,10 +92,10 @@ export class AuthService {
     return pass ? pass : null;
   }
 
-  async login(loginDto: LoginDto): Promise<{ accessToken: string }> {
+  async loginByPhone(loginDto: LoginDto): Promise<{ accessToken: string }> {
     try {
-      const existingUser = this.findUser(loginDto);
-      if (!loginDto.phone) {
+      const existingUser = await this.findUser(loginDto);
+      if (!existingUser) {
         throw new Error();
       }
       const passwordMatch = await argon2.verify(

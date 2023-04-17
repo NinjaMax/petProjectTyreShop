@@ -1,7 +1,5 @@
 import { Column, DataType, Model, Table, HasMany} from "sequelize-typescript";
-import { Battery } from "src/batteries/entities/battery.model";
-
-
+import { Battery } from "../../../batteries/entities/battery.model";
 
 @Table({tableName: 'battery_brand' , updatedAt: false, createdAt: false})
 export class BatteryBrand extends Model<BatteryBrand > {

@@ -3,8 +3,8 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { CustomersService } from './customers.service';
 import { CustomersController } from './customers.controller';
 import { Customer } from './entities/customer.model';
-import { ContractModule } from 'src/contract/contract.module';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
+import { ContractModule } from '../contract/contract.module';
 
 @Module({
   controllers: [CustomersController],

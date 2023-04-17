@@ -1,0 +1,31 @@
+import { Model } from 'sequelize-typescript';
+import { SuppliersConfigAttr } from '../interfaces/suppliers.interface';
+import { StockTyres } from '../../stock/entities/stock-tyres.model';
+import { Contract } from '../../contract/entities/contract.model';
+import { OrdersSupplier } from '../../orders-suppliers/entities/orders-supplier.model';
+import { PriceBatteries } from '../../prices/entities/price-battery.model';
+import { PriceOil } from '../../prices/entities/price-oils.model';
+import { PriceTyres } from '../../prices/entities/price-tyres.model';
+import { PriceWheels } from '../../prices/entities/price-wheels.model';
+import { StockBatteries } from '../../stock/entities/stock-batteries.model';
+import { StockOils } from '../../stock/entities/stock-oils.model';
+import { StockWheels } from '../../stock/entities/stock-wheels.model';
+export declare class Supplier extends Model<Supplier, SuppliersConfigAttr> {
+    id_supplier: number;
+    name: string;
+    city: string;
+    city_ua: string;
+    phone: bigint;
+    email: string;
+    delivery: string[];
+    stock_tyres: StockTyres[];
+    stock_wheels: StockWheels[];
+    stock_batteries: StockBatteries[];
+    stock_oils: StockOils[];
+    price_tyres: PriceTyres[];
+    price_wheels: PriceWheels[];
+    price_batteries: PriceBatteries[];
+    price_oils: PriceOil[];
+    orders_sup: OrdersSupplier[];
+    contract: Contract[];
+}

@@ -1,17 +1,18 @@
 import { Column, DataType, Model, Table, BelongsTo, ForeignKey, BelongsToMany, HasMany} from "sequelize-typescript";
 import { StorageConfigAttr } from '../interfaces/storage.interface';
-import { Order_Storage } from "src/orders/entities/order-storage.model";
-import { Sales } from "src/sales/entities/sale.model";
-import { StockTyres } from "src/stock/entities/stock-tyres.model";
-import { StockWheels } from "src/stock/entities/stock-wheels.model";
-import { StockBatteries } from "src/stock/entities/stock-batteries.model";
-import { StockOils } from "src/stock/entities/stock-oils.model";
-import { PriceTyres } from "src/prices/entities/price-tyres.model";
-import { PriceWheels } from "src/prices/entities/price-wheels.model";
-import { PriceBatteries } from "src/prices/entities/price-battery.model";
-import { PriceOil } from "src/prices/entities/price-oils.model";
-import { SaleStorage } from "src/sales/entities/sales-storage.model";
-import { OrdersSupStorage } from "src/orders-suppliers/entities/orders-sup-storage.model";
+import { OrdersSupStorage } from "../../orders-suppliers/entities/orders-sup-storage.model";
+import { Order_Storage } from "../../orders/entities/order-storage.model";
+import { PriceBatteries } from "../../prices/entities/price-battery.model";
+import { PriceOil } from "../../prices/entities/price-oils.model";
+import { PriceTyres } from "../../prices/entities/price-tyres.model";
+import { PriceWheels } from "../../prices/entities/price-wheels.model";
+import { Sales } from "../../sales/entities/sale.model";
+import { SaleStorage } from "../../sales/entities/sales-storage.model";
+import { StockBatteries } from "../../stock/entities/stock-batteries.model";
+import { StockOils } from "../../stock/entities/stock-oils.model";
+import { StockTyres } from "../../stock/entities/stock-tyres.model";
+import { StockWheels } from "../../stock/entities/stock-wheels.model";
+
 
 @Table({tableName: 'storage', createdAt: false, updatedAt: false})
 export class Storage extends Model<Storage, StorageConfigAttr> {

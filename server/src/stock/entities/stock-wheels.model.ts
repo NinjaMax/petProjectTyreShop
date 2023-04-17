@@ -1,8 +1,8 @@
 import { Column, DataType, Model, Table, BelongsTo, ForeignKey} from "sequelize-typescript";
 import {StockWheelsConfigAttr} from "../interfaces/stock-wheels.interface";
 import { Supplier } from '../../suppliers/entities/supplier.model';
-import { Wheel } from "src/wheels/entities/wheel.model";
-import { Storage } from "src/storage/entities/storage.model";
+import { Storage } from "../../storage/entities/storage.model";
+import { Wheel } from "../../wheels/entities/wheel.model";
 
 @Table({tableName: 'stock_wheel', createdAt: false, updatedAt: false})
 export class StockWheels extends Model<StockWheels, StockWheelsConfigAttr> {

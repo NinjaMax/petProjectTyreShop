@@ -1,8 +1,8 @@
 import {Column, DataType, Model, Table, ForeignKey, BelongsTo } from "sequelize-typescript";
 import { Supplier } from '../../suppliers/entities/supplier.model';
 import { PriceOilsConfigAttr } from "../interfaces/price-oils.interface";
-import { Oil } from "src/oils/entities/oil.model";
-import { Storage } from "src/storage/entities/storage.model";
+import { Oil } from "../../oils/entities/oil.model";
+import { Storage } from "../../storage/entities/storage.model";
 
 @Table({tableName: 'price_oil', createdAt: false, updatedAt: false})
 export class PriceOil extends Model<PriceOil, PriceOilsConfigAttr>{ 

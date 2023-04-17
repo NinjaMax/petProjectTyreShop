@@ -1,6 +1,6 @@
 import { Column, DataType, Model, Table, HasMany} from "sequelize-typescript";
-import { Wheel } from "src/wheels/entities/wheel.model"; 
-import { WheelPropsConfigAttr } from "src/properties/interfaces/wheels/wheel-props.interface";
+import { Wheel } from "../../../wheels/entities/wheel.model"; 
+import { WheelPropsConfigAttr } from "../../interfaces/wheels/wheel-props.interface";
 
 @Table({tableName: 'wheel_brand' , updatedAt: false, createdAt: false})
 export class WheelBrand extends Model<WheelBrand, WheelPropsConfigAttr> {

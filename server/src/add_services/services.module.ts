@@ -3,7 +3,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { ServicesService } from './services.service';
 import { ServicesController } from './services.controller';
 import { Service } from './entities/service.model';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   controllers: [ServicesController],

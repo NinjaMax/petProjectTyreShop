@@ -1,6 +1,6 @@
 import { Injectable, HttpException, HttpStatus  } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { TyresService } from 'src/tyres/tyres.service';
+import { TyresService } from '../../tyres/tyres.service';
 import { CreatePropertyDto } from '../dto/create-property.dto';
 import { GetPropertyDto } from '../dto/get-property.dto';
 import { UpdatePropertyDto } from '../dto/update-property.dto';

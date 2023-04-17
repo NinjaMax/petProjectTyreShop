@@ -1,6 +1,6 @@
 import { Column, DataType, Model, Table, HasMany} from "sequelize-typescript";
 import { IncomeConfigAttr } from '../interfaces/income.interface';
-import { Paynment } from "src/paynment/entities/paynment.model";
+import { Paynment } from '../../paynment/entities/paynment.model';
 
 @Table({tableName: 'income', createdAt: false, updatedAt: false })
 export class Incomes extends Model<Incomes, IncomeConfigAttr> {

@@ -4,16 +4,16 @@ import { CreatePriceDto } from './dto/create-price.dto';
 import { UpdatePriceTyresDto } from './dto/update-price_tyres.dto';
 import { GetPriceDto } from './dto/get-price.dto';
 import { PriceTyres } from './entities/price-tyres.model';
-import { TyresService } from 'src/tyres/tyres.service';
-import { SuppliersService } from 'src/suppliers/suppliers.service';
-import { StorageService } from 'src/storage/storage.service';
+import { StorageService } from '../storage/storage.service';
+import { SuppliersService } from '../suppliers/suppliers.service';
+import { TyresService } from '../tyres/tyres.service';
 
 @Injectable()
 export class PriceTyresService {
 
   constructor(@InjectModel(PriceTyres) private priceTyresRepository: typeof PriceTyres,
     private tyresService: TyresService, 
-    private suppliersService : SuppliersService, 
+    private suppliersService: SuppliersService, 
     private storageService: StorageService
   ) {}
 

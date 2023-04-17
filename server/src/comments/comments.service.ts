@@ -1,12 +1,12 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { OrdersSuppliersService } from 'src/orders-suppliers/orders-suppliers.service';
-import { OrdersService } from 'src/orders/orders.service';
-import { UsersService } from 'src/users/users.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { GetCommentDto } from './dto/get-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { Comments } from './entities/comment.model';
+import { OrdersSuppliersService } from '../orders-suppliers/orders-suppliers.service';
+import { OrdersService } from '../orders/orders.service';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class CommentsService {

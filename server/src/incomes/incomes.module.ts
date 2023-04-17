@@ -3,7 +3,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { IncomesService } from './incomes.service';
 import { IncomesController } from './incomes.controller';
 import { Incomes } from './entities/income.model';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   controllers: [IncomesController],

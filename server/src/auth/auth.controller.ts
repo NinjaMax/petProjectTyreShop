@@ -8,27 +8,33 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
-  Request,
+  Req,
   Res,
 } from '@nestjs/common';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { AuthService } from './auth.service';
 import { UserAuthDto } from './dto/user-auth.dto';
 import { SignupDto } from './dto/signUp-dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { Public } from './decorators/public.decorator';
 import { LoginDto } from './dto/logIn-dto';
+import { ConfigService } from '../config/config.service';
+import { GoogleAuthService } from './socialApi/google-auth/google-auth.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private configService: ConfigService,
+    private googleAuthService: GoogleAuthService,
+  ) {}
 
   //@Public()
   //@HttpCode(HttpStatus.OK)
   @Post('signup')
   signUp(@Res() res: Response, @Body() signupDto: SignupDto) {
     const tokenAccess = this.authService.signUp(signupDto);
-    res.cookie('cookie_Name', tokenAccess, {
+    res.cookie(this.configService.get('COOKIE_NAME'), tokenAccess, {
       maxAge: 900000,
       httpOnly: true,
       secure: false,
@@ -37,13 +43,13 @@ export class AuthController {
   }
 
   @Get('profile')
-  getProfile(@Request() req) {
+  getProfile(@Req() req) {
     return req.user;
   }
 
   @Post('login')
-  login(@Body() loginDto: LoginDto) {
-    return this.authService.login(loginDto);
+  loginByPhone(@Body() loginDto: LoginDto) {
+    return this.authService.loginByPhone(loginDto);
   }
 
   //@Public()
@@ -56,6 +62,21 @@ export class AuthController {
   @Post('matchpass')
   matchPass(@Body() rndmPass: number, pass: number) {
     return this.authService.matchPass(rndmPass, pass);
+  }
+
+  @Get('google/url')
+  getGoogleLogin() {
+    return this.googleAuthService.getGoogleAuthURL();
+  }
+
+  @Get('google')
+  getGoogleUser(@Res() res: Response, @Req() req: Request) {
+    return this.googleAuthService.getGoogleUser(req, res);
+  }
+
+  @Get('user/google')
+  getCurrentGoogleUser(@Res() res: Response, @Req() req: Request) {
+    return this.googleAuthService.getCurrentUser(req, res);
   }
 
   // @Post()
@@ -77,6 +98,10 @@ export class AuthController {
   // update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
   //   return this.authService.update(+id, updateAuthDto);
   // }
+  @Delete('logout')
+  logOut(@Res() res: Response) {
+    return res.clearCookie('auth_token', { httpOnly: true });
+  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

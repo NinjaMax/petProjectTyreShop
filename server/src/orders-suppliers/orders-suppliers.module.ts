@@ -3,12 +3,13 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { OrdersSuppliersService } from './orders-suppliers.service';
 import { OrdersSuppliersController } from './orders-suppliers.controller';
 import { OrdersSupplier } from './entities/orders-supplier.model';
-import { OrdersModule } from 'src/orders/orders.module';
 import { OrdersSupStorage } from './entities/orders-sup-storage.model';
 import { OrdersSupStorageService } from './orders-sup-storage.service';
-import { StockModule } from 'src/stock/stock.module';
-import { ContractModule } from 'src/contract/contract.module';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
+import { ContractModule } from '../contract/contract.module';
+import { OrdersModule } from '../orders/orders.module';
+import { StockModule } from '../stock/stock.module';
+
 
 @Module({
   controllers: [OrdersSuppliersController],

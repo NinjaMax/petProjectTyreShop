@@ -3,7 +3,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { StorageService } from './storage.service';
 import { StorageController } from './storage.controller';
 import { Storage } from './entities/storage.model';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   controllers: [StorageController],

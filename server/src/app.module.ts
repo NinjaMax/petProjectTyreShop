@@ -99,7 +99,7 @@ import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     SequelizeModule.forRootAsync({
-      imports: [ConfigModule.register({ folder: './config' }),],
+      imports: [ConfigModule.register({ folder: './config' })],
       useFactory:  (configService: ConfigService) => ({
         dialect: 'postgres',
         host: configService.get('POSTGRES_HOST'),

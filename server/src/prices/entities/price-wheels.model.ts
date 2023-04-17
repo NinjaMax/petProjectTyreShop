@@ -1,8 +1,8 @@
 import {Column, DataType, Model, Table, ForeignKey, BelongsTo } from "sequelize-typescript";
 import { Supplier } from '../../suppliers/entities/supplier.model';
 import { PriceWheelsConfigAttr } from "../interfaces/price-wheels.interface";
-import { Wheel } from "src/wheels/entities/wheel.model";
-import { Storage } from "src/storage/entities/storage.model";
+import { Storage } from "../../storage/entities/storage.model";
+import { Wheel } from "../../wheels/entities/wheel.model";
 
 @Table({tableName: 'price_wheel', createdAt: false, updatedAt: false})
 export class PriceWheels extends Model<PriceWheels, PriceWheelsConfigAttr>{ 

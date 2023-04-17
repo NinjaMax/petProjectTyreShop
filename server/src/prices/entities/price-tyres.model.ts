@@ -2,7 +2,7 @@ import {Column, DataType, Model, Table, ForeignKey, BelongsTo } from "sequelize-
 import { Tyres } from "../../tyres/entities/tyres.model";
 import { Supplier } from '../../suppliers/entities/supplier.model';
 import { PriceTyresConfigAttr } from "../interfaces/price-tyres.interface";
-import { Storage } from "src/storage/entities/storage.model";
+import { Storage } from "../../storage/entities/storage.model";
 
 @Table({tableName: 'price_tyres', createdAt: false, updatedAt: false})
 export class PriceTyres extends Model<PriceTyres, PriceTyresConfigAttr>{ 

@@ -5,10 +5,8 @@ import { GetStockDto } from './dto/get-stock.dto';
 import { UpdateStockDto } from './dto/update-stock.dto';
 import { SuppliersService } from '../suppliers/suppliers.service';
 import { StockWheels } from './entities/stock-wheels.model';
-import { WheelsService } from 'src/wheels/wheels.service';
-import { StorageService } from 'src/storage/storage.service';
-//import { ContractService } from 'src/contract/contract.service';
-//import { OrdersSupStorageService } from 'src/orders-suppliers/orders-sup-storage.service';
+import { StorageService } from '../storage/storage.service';
+import { WheelsService } from '../wheels/wheels.service';
 
 @Injectable()
 export class StockWheelsService {

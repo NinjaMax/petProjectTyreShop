@@ -20,7 +20,7 @@ export class PriceOilsController {
   }
 
   @Get()
-  findOne(@Query() getPriceDto : GetPriceDto) {
+  findOne(@Query() getPriceDto: GetPriceDto) {
     return this.priceOilsService.findPriceOilsById(getPriceDto);
   }
 

@@ -2,21 +2,24 @@ import { Module, forwardRef } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { RatingsService } from './ratings.service';
 import { RatingsController } from './ratings.controller';
-import { Tyres } from 'src/tyres/entities/tyres.model';
-import { ReviewTyres } from 'src/reviews/entities/review-tyres.model';
-import { TyreBrand } from 'src/properties/entities/tyres/tyre-brand.model';
-import { TyreModel } from 'src/properties/entities/tyres/tyre-model.model';
-import { TyresModule } from 'src/tyres/tyres.module';
+import { AuthModule } from '../auth/auth.module';
+import { TyreBrand } from '../properties/entities/tyres/tyre-brand.model';
+import { TyreModel } from '../properties/entities/tyres/tyre-model.model';
+import { ReviewTyres } from '../reviews/entities/review-tyres.model';
+import { ReviewsModule } from '../reviews/reviews.module';
+import { Tyres } from '../tyres/entities/tyres.model';
+import { TyresModule } from '../tyres/tyres.module';
 import { RatingTyres } from './entities/rating-tyres.model';
-import { ReviewsModule } from 'src/reviews/reviews.module';
-import { AuthModule } from 'src/auth/auth.module';
-//import { PropertiesTyreModule } from 'src/properties/propertiesTyre.module';
 
 @Module({
   controllers: [RatingsController],
   providers: [RatingsService], 
   imports: [ 
-    SequelizeModule.forFeature([RatingTyres, Tyres, ReviewTyres, TyreBrand,
+    SequelizeModule.forFeature([
+      RatingTyres,
+      Tyres,
+      ReviewTyres,
+      TyreBrand,
     TyreModel]), 
     forwardRef(() => AuthModule), 
     forwardRef(() => TyresModule), 

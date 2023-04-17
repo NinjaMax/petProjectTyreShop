@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { TyresModule } from 'src/tyres/tyres.module';
-import { RatingsModule } from 'src/ratings/ratings.module';
+import { TyresModule } from '../tyres/tyres.module';
+import { RatingsModule } from '../ratings/ratings.module';
 import { TyreModel } from './entities/tyres/tyre-model.model';
 import { WheelBoltCount } from './entities/wheels/wheel-boltCount.model';
 import { WheelBoltCountPcd } from './entities/wheels/wheel-boltCountPcd.model';
@@ -29,7 +29,7 @@ import { PropsWheelPcd2Service } from './props-wheel-services/props-wheel-pcd2.s
 import { PropsWheelSizeDigitsService } from './props-wheel-services/props-wheel-sizeDigits.service';
 import { PropsWheelTypeService } from './props-wheel-services/props-wheel-type.service';
 import { PropsWheelWidthService } from './props-wheel-services/props-wheel-width.service';
-import { WheelsModule } from 'src/wheels/wheels.module';
+import { WheelsModule } from '../wheels/wheels.module';
 
 
 @Module({

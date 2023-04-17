@@ -1,8 +1,8 @@
 import { Column, DataType, Model, Table, BelongsTo, ForeignKey} from "sequelize-typescript";
 import {StockBatteriesConfigAttr} from "../interfaces/stock-batteries.interface";
 import { Supplier } from '../../suppliers/entities/supplier.model';
-import { Battery } from "src/batteries/entities/battery.model";
-import { Storage } from "src/storage/entities/storage.model";
+import { Battery } from "../../batteries/entities/battery.model";
+import { Storage } from "../../storage/entities/storage.model";
 
 @Table({tableName: 'stock_batterie', createdAt: false, updatedAt: false})
 export class StockBatteries extends Model<StockBatteries, StockBatteriesConfigAttr> {

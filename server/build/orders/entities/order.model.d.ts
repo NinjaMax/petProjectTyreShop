@@ -1,0 +1,36 @@
+import { Model } from 'sequelize-typescript';
+import { OrdersConfigAttr } from '../interfaces/orders.interface';
+import { Order_Storage } from './order-storage.model';
+import { Basket } from '../../basket/entities/basket.model';
+import { Comments } from '../../comments/entities/comment.model';
+import { Customer } from '../../customers/entities/customer.model';
+import { OrdersSupplier } from '../../orders-suppliers/entities/orders-supplier.model';
+import { Paynment } from '../../paynment/entities/paynment.model';
+import { Sales } from '../../sales/entities/sale.model';
+import { Users } from '../../users/entities/users.model';
+export declare class Orders extends Model<Orders, OrdersConfigAttr> {
+    id_order: number;
+    organisation: string;
+    storage: string;
+    order_view: string;
+    delivery: string;
+    status_delivery: string;
+    delivery_ttn: string;
+    status: string;
+    pay_view: string;
+    status_pay: string;
+    notes: string;
+    dop_garanty: string;
+    id_customer: number;
+    id_contract: number;
+    id_user: number;
+    id_basket: number;
+    user: Users;
+    customer: Customer;
+    basket: Basket;
+    comments: Comments[];
+    order_storage: Order_Storage[];
+    order_sup: OrdersSupplier[];
+    paynment: Paynment[];
+    sales: Sales[];
+}

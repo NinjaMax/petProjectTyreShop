@@ -1,11 +1,11 @@
 import { Column, DataType, Model, Table, HasMany, HasOne} from "sequelize-typescript";
 import { UsersConfigAttr } from "../interfaces/users.interface";
-import { ReviewTyres } from "src/reviews/entities/review-tyres.model";
-import { Orders } from "src/orders/entities/order.model";
-import { Basket } from "src/basket/entities/basket.model";
-import { Comments } from "src/comments/entities/comment.model";
-import { OrdersSupplier } from "src/orders-suppliers/entities/orders-supplier.model";
-import { Contract } from "src/contract/entities/contract.model";
+import { ReviewTyres } from "../../reviews/entities/review-tyres.model";
+import { Orders } from "../../orders/entities/order.model";
+import { Basket } from "../../basket/entities/basket.model";
+import { Comments } from "../../comments/entities/comment.model";
+import { OrdersSupplier } from '../../orders-suppliers/entities/orders-supplier.model';
+import { Contract } from '../../contract/entities/contract.model';
 
 @Table({tableName: 'user', createdAt: false, updatedAt: false})
 export class Users extends Model<Users, UsersConfigAttr> {

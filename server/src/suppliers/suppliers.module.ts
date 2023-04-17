@@ -5,8 +5,9 @@ import { SuppliersController } from './suppliers.controller';
 import { Supplier } from './entities/supplier.model';
 import { Tyres } from '../tyres/entities/tyres.model';
 import { StockTyres } from '../stock/entities/stock-tyres.model';
-import { ContractModule } from 'src/contract/contract.module';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
+import { ContractModule } from '../contract/contract.module';
+
 
 @Module({
   controllers: [SuppliersController],

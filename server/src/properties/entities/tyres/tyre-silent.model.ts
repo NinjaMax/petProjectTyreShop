@@ -1,6 +1,6 @@
 import { Column, DataType, Model, Table, HasMany} from "sequelize-typescript";
-import { Tyres } from "src/tyres/entities/tyres.model";
-import { TyrePropsConfigAttr } from "src/properties/interfaces/tyres/tyre-props.interface";
+import { Tyres } from "../../../tyres/entities/tyres.model";
+import { TyrePropsConfigAttr } from "../../interfaces/tyres/tyre-props.interface";
 
 @Table({tableName: 'tyre_silent' , updatedAt: false, createdAt: false})
 export class TyreSilent extends Model<TyreSilent, TyrePropsConfigAttr> {

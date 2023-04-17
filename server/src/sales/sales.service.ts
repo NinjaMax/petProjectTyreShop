@@ -1,17 +1,17 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { ContractService } from 'src/contract/contract.service';
-import { OrdersStorageService } from 'src/orders/orders-storage.service';
-import { OrdersService } from 'src/orders/orders.service';
-import { StockBatteriesService } from 'src/stock/stock-batteries.service';
-import { StockOilsService } from 'src/stock/stock-oils.service';
-import { StockTyresService } from 'src/stock/stock-tyres.service';
-import { StockWheelsService } from 'src/stock/stock-wheels.service';
 import { CreateSaleDto } from './dto/create-sale.dto';
 import { GetSaleDto } from './dto/get-sale.dto';
 import { UpdateSaleDto } from './dto/update-sale.dto';
 import { Sales } from './entities/sale.model';
 import { SalesStorageService } from './sales-storage.service';
+import { ContractService } from '../contract/contract.service';
+import { OrdersStorageService } from '../orders/orders-storage.service';
+import { OrdersService } from '../orders/orders.service';
+import { StockBatteriesService } from '../stock/stock-batteries.service';
+import { StockOilsService } from '../stock/stock-oils.service';
+import { StockTyresService } from '../stock/stock-tyres.service';
+import { StockWheelsService } from '../stock/stock-wheels.service';
 
 @Injectable()
 export class SalesService {

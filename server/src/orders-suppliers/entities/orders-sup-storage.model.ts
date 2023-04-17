@@ -1,6 +1,6 @@
 import { Column, DataType, Model, Table, BelongsTo, ForeignKey, HasMany} from "sequelize-typescript";
 //import { Orders } from "src/orders/entities/order.model";
-import { Storage } from "src/storage/entities/storage.model";
+import { Storage } from "../../storage/entities/storage.model";
 //import { Supplier } from "src/suppliers/entities/supplier.model";
 import { OrdersSupStorConfigAttr } from '../interfaces/orders-sup-stor.interface';
 import { OrdersSupplier } from "./orders-supplier.model";

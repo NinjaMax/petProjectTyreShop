@@ -1,68 +1,77 @@
-import {Column, DataType, Model, Table, ForeignKey, BelongsTo } from "sequelize-typescript";
-import { PaynmentConfigAttr } from "../interfaces/paynment.interface";
-import { Cashbox } from "src/cashbox/entities/cashbox.model";
-import { Sales } from "src/sales/entities/sale.model";
-import { Orders } from "src/orders/entities/order.model";
-import { OrdersSupplier } from "src/orders-suppliers/entities/orders-supplier.model";
-import { Incomes } from "src/incomes/entities/income.model";
-import { Expense } from "src/expenses/entities/expense.model";
-import { Contract } from "src/contract/entities/contract.model";
+import {
+  Column,
+  DataType,
+  Model,
+  Table,
+  ForeignKey,
+  BelongsTo,
+} from 'sequelize-typescript';
+import { PaynmentConfigAttr } from '../interfaces/paynment.interface';
+import { Cashbox } from '../../cashbox/entities/cashbox.model';
+import { Contract } from '../../contract/entities/contract.model';
+import { Expense } from '../../expenses/entities/expense.model';
+import { Incomes } from '../../incomes/entities/income.model';
+import { OrdersSupplier } from '../../orders-suppliers/entities/orders-supplier.model';
+import { Orders } from '../../orders/entities/order.model';
 
-@Table({tableName: 'paynment'})
-export class Paynment extends Model<Paynment, PaynmentConfigAttr>{ 
-    
-   @Column({type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true})
-   id_paynment: number;
+@Table({ tableName: 'paynment' })
+export class Paynment extends Model<Paynment, PaynmentConfigAttr> {
+  @Column({
+    type: DataType.INTEGER,
+    unique: true,
+    autoIncrement: true,
+    primaryKey: true,
+  })
+  id_paynment: number;
 
-   @Column({type: DataType.INTEGER, unique: false, allowNull: false})
-   price: number;
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: false })
+  price: number;
 
-   @Column({type: DataType.STRING, unique: false, allowNull: true})
-   notes: string;
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  notes: string;
 
-   @Column({type: DataType.STRING, unique: false, allowNull: true})
-   status: string;
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  status: string;
 
-   @ForeignKey(() => Cashbox)
-   @Column({type: DataType.INTEGER, allowNull: false})
-   id_cashbox: number;
+  @ForeignKey(() => Cashbox)
+  @Column({ type: DataType.INTEGER, allowNull: false })
+  id_cashbox: number;
 
-   @ForeignKey(() => Orders)
-   @Column({type: DataType.INTEGER})
-   id_order: number;
+  @ForeignKey(() => Orders)
+  @Column({ type: DataType.INTEGER })
+  id_order: number;
 
-   @ForeignKey(() => OrdersSupplier)
-   @Column({type: DataType.INTEGER})
-   id_order_sup: number;
+  @ForeignKey(() => OrdersSupplier)
+  @Column({ type: DataType.INTEGER })
+  id_order_sup: number;
 
-   @ForeignKey(() => Contract)
-   @Column({type: DataType.INTEGER})
-   id_contract: number;
+  @ForeignKey(() => Contract)
+  @Column({ type: DataType.INTEGER })
+  id_contract: number;
 
-   @ForeignKey(() => Incomes)
-   @Column({type: DataType.INTEGER})
-   id_income: number;
+  @ForeignKey(() => Incomes)
+  @Column({ type: DataType.INTEGER })
+  id_income: number;
 
-   @ForeignKey(() => Expense)
-   @Column({type: DataType.INTEGER})
-   id_expense: number;
+  @ForeignKey(() => Expense)
+  @Column({ type: DataType.INTEGER })
+  id_expense: number;
 
-   @BelongsTo( () => Expense , 'id_expense')
-   expenses: Expense;
+  @BelongsTo(() => Expense, 'id_expense')
+  expenses: Expense;
 
-   @BelongsTo( () => Cashbox , 'id_cashbox')
-   cashbox: Cashbox;
+  @BelongsTo(() => Cashbox, 'id_cashbox')
+  cashbox: Cashbox;
 
-   @BelongsTo( () => Orders , 'id_order')
-   order: Orders;
+  @BelongsTo(() => Orders, 'id_order')
+  order: Orders;
 
-   @BelongsTo( () => OrdersSupplier , 'id_order_sup')
-   order_sup: OrdersSupplier;
+  @BelongsTo(() => OrdersSupplier, 'id_order_sup')
+  order_sup: OrdersSupplier;
 
-   @BelongsTo( () => Incomes , 'id_income')
-   incomes: Incomes;
+  @BelongsTo(() => Incomes, 'id_income')
+  incomes: Incomes;
 
-   @BelongsTo( () => Contract , 'id_contract')
-   contract: Contract;
-
+  @BelongsTo(() => Contract, 'id_contract')
+  contract: Contract;
 }

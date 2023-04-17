@@ -3,18 +3,18 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { PaynmentService } from './paynment.service';
 import { PaynmentController } from './paynment.controller';
 import { Paynment } from './entities/paynment.model';
-import { Orders } from 'src/orders/entities/order.model';
-import { OrdersSupplier } from 'src/orders-suppliers/entities/orders-supplier.model';
-import { Cashbox } from 'src/cashbox/entities/cashbox.model';
-import { Expense } from 'src/expenses/entities/expense.model';
-import { Incomes } from 'src/incomes/entities/income.model';
-import { OrdersModule } from 'src/orders/orders.module';
-import { OrdersSuppliersModule } from 'src/orders-suppliers/orders-suppliers.module';
-import { CashboxModule } from 'src/cashbox/cashbox.module';
-import { ExpensesModule } from 'src/expenses/expenses.module';
-import { IncomesModule } from 'src/incomes/incomes.module';
-import { ContractModule } from 'src/contract/contract.module';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
+import { CashboxModule } from '../cashbox/cashbox.module';
+import { Cashbox } from '../cashbox/entities/cashbox.model';
+import { ContractModule } from '../contract/contract.module';
+import { Expense } from '../expenses/entities/expense.model';
+import { ExpensesModule } from '../expenses/expenses.module';
+import { Incomes } from '../incomes/entities/income.model';
+import { IncomesModule } from '../incomes/incomes.module';
+import { OrdersSupplier } from '../orders-suppliers/entities/orders-supplier.model';
+import { OrdersSuppliersModule } from '../orders-suppliers/orders-suppliers.module';
+import { Orders } from '../orders/entities/order.model';
+import { OrdersModule } from '../orders/orders.module';
 
 @Module({
   controllers: [PaynmentController],

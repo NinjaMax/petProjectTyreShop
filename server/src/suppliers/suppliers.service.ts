@@ -4,7 +4,7 @@ import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { UpdateSupplierDto } from './dto/update-supplier.dto';
 import { GetSupplierDto } from './dto/get-supplier.dto';
 import { Supplier } from './entities/supplier.model';
-import { ContractService } from 'src/contract/contract.service';
+import { ContractService } from '../contract/contract.service';
 
 
 @Injectable()

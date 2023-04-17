@@ -1,0 +1,30 @@
+import { CreateSaleDto } from './dto/create-sale.dto';
+import { GetSaleDto } from './dto/get-sale.dto';
+import { UpdateSaleDto } from './dto/update-sale.dto';
+import { Sales } from './entities/sale.model';
+import { SalesStorageService } from './sales-storage.service';
+import { ContractService } from '../contract/contract.service';
+import { OrdersStorageService } from '../orders/orders-storage.service';
+import { OrdersService } from '../orders/orders.service';
+import { StockBatteriesService } from '../stock/stock-batteries.service';
+import { StockOilsService } from '../stock/stock-oils.service';
+import { StockTyresService } from '../stock/stock-tyres.service';
+import { StockWheelsService } from '../stock/stock-wheels.service';
+export declare class SalesService {
+    private salesRepository;
+    private ordersService;
+    private ordersStorageService;
+    private salesStorageService;
+    private stockTyresService;
+    private stockWheelsService;
+    private stockBatteriesService;
+    private stockOilsService;
+    private contractService;
+    constructor(salesRepository: typeof Sales, ordersService: OrdersService, ordersStorageService: OrdersStorageService, salesStorageService: SalesStorageService, stockTyresService: StockTyresService, stockWheelsService: StockWheelsService, stockBatteriesService: StockBatteriesService, stockOilsService: StockOilsService, contractService: ContractService);
+    createSale(createSaleDto: CreateSaleDto): Promise<Sales>;
+    addGoodsSale(createSaleDto: CreateSaleDto): Promise<Sales | "ORDER DOESN'T EXIST">;
+    findAllSales(): Promise<Sales[]>;
+    findSaleById(getSaleDto: GetSaleDto): Promise<Sales>;
+    update(id: number, updateSaleDto: UpdateSaleDto): string;
+    removeSale(getSaleDto: GetSaleDto): Promise<number>;
+}

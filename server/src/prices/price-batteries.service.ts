@@ -3,17 +3,17 @@ import { InjectModel } from '@nestjs/sequelize';
 import { CreatePriceDto } from './dto/create-price.dto';
 import { UpdatePriceTyresDto } from './dto/update-price_tyres.dto';
 import { GetPriceDto } from './dto/get-price.dto';
-import { SuppliersService } from 'src/suppliers/suppliers.service';
 import { PriceBatteries } from './entities/price-battery.model';
-import { BatteriesService } from 'src/batteries/batteries.service';
-import { StorageService } from 'src/storage/storage.service';
+import { BatteriesService } from '../batteries/batteries.service';
+import { StorageService } from '../storage/storage.service';
+import { SuppliersService } from '../suppliers/suppliers.service';
 
 @Injectable()
 export class PriceBatteryService {
 
   constructor(@InjectModel(PriceBatteries) private priceBatteryRepository: typeof PriceBatteries,
     private batteriesService: BatteriesService, 
-    private suppliersService : SuppliersService,
+    private suppliersService: SuppliersService,
     private storageService: StorageService
   ) {}
 

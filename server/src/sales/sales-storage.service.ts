@@ -1,13 +1,11 @@
 import { Injectable, HttpException, HttpStatus  } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Op } from 'sequelize';
-import { OrdersService } from 'src/orders/orders.service';
+import { OrdersService } from '../orders/orders.service';
 import { CreateSaleDto } from './dto/create-sale.dto';
 import { GetSaleDto } from './dto/get-sale.dto';
 import { UpdateSaleDto } from './dto/update-sale.dto';
 import { SaleStorage } from './entities/sales-storage.model';
-//import { OrdersSupStorage } from './entities/orders-sup-storage.model';
-//import { OrdersSupplier } from './entities/orders-supplier.model';
 
 @Injectable()
 export class SalesStorageService {

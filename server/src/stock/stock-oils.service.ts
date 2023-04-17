@@ -5,17 +5,15 @@ import { GetStockDto } from './dto/get-stock.dto';
 import { UpdateStockDto } from './dto/update-stock.dto';
 import { SuppliersService } from '../suppliers/suppliers.service';
 import { StockOils } from './entities/stock-oils.model';
-import { OilsService } from 'src/oils/oils.service';
-import { StorageService } from 'src/storage/storage.service';
-//import { ContractService } from 'src/contract/contract.service';
-//import { OrdersSupStorageService } from 'src/orders-suppliers/orders-sup-storage.service';
+import { OilsService } from '../oils/oils.service';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable()
 export class StockOilsService {
 
   constructor(@InjectModel(StockOils) private stockOilsRepository: typeof StockOils,
     private oilsService: OilsService, 
-    private suppliersService : SuppliersService,
+    private suppliersService: SuppliersService,
     private storageService: StorageService
     //private ordersSupStorageService: OrdersSupStorageService,
     //private contractService: ContractService

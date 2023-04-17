@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PaynmentService } from './paynment.service';
 import { CreatePaynmentDto } from './dto/create-paynment.dto';
 import { GetPaynmentDto } from './dto/get-paynment.dto';
@@ -19,7 +27,7 @@ export class PaynmentController {
   }
 
   @Get('/id')
-  findOne( @Body()getPaynmentDto: GetPaynmentDto) {
+  findOne(@Body() getPaynmentDto: GetPaynmentDto) {
     return this.paynmentService.findPaynmentById(getPaynmentDto);
   }
 

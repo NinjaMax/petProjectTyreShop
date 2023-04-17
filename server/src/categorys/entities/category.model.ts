@@ -1,7 +1,7 @@
 import { Column, DataType, Model, Table, HasMany} from "sequelize-typescript";
-import { Tyres } from "src/tyres/entities/tyres.model";
-import { Wheel } from "src/wheels/entities/wheel.model";
 import { CategoryConfigAttr } from '../interfaces/category.interface';
+import { Tyres } from "../../tyres/entities/tyres.model";
+import { Wheel } from "../../wheels/entities/wheel.model";
 
 @Table({tableName: 'category', createdAt: false, updatedAt: false })
 export class Category extends Model<Category, CategoryConfigAttr> {

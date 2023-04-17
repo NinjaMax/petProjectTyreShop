@@ -1,6 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { ContractService } from 'src/contract/contract.service';
+import { ContractService } from '../contract/contract.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { GetCustomerDto } from './dto/get-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';

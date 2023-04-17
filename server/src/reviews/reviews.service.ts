@@ -1,14 +1,16 @@
 import { Injectable,  HttpException, HttpStatus  } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { RatingsService } from 'src/ratings/ratings.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { GetReviewDto } from './dto/get-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { ReviewTyres } from './entities/review-tyres.model';
-import { TyresService } from 'src/tyres/tyres.service';
-import { PropsModelService } from 'src/properties/props-tyres-services/props-tyre-model.service';
-import { PropsBrandService } from 'src/properties/props-tyres-services/props-tyre-brand.service';
-import { CustomersService } from 'src/customers/customers.service';
+import { CustomersService } from '../customers/customers.service';
+import { PropsBrandService } from '../properties/props-tyres-services/props-tyre-brand.service';
+import { PropsModelService } from '../properties/props-tyres-services/props-tyre-model.service';
+import { RatingsService } from '../ratings/ratings.service';
+import { TyresService } from '../tyres/tyres.service';
+
+
 
 @Injectable()
 export class ReviewsService {

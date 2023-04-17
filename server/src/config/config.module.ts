@@ -10,6 +10,7 @@ export interface ConfigModuleOptions {
 export class ConfigModule {
   static register(options: ConfigModuleOptions): DynamicModule {
     return {
+      global: true,
       module: ConfigModule,
       providers: [
         {

@@ -1,13 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { MESSAGES } from '@nestjs/core/constants';
 import { InjectModel } from '@nestjs/sequelize';
-import { BasketService } from 'src/basket/basket.service';
-//import { PriceTyresService } from 'src/prices/price-tyres.service';
-import { StockBatteriesService } from 'src/stock/stock-batteries.service';
-import { StockOilsService } from 'src/stock/stock-oils.service';
-import { StockTyresService } from 'src/stock/stock-tyres.service';
-import { StockWheelsService } from 'src/stock/stock-wheels.service';
-import { StorageService } from 'src/storage/storage.service';
 import { scheduler } from 'timers/promises';
 import { yieldToMain } from './createOrder.service';
 //import { TyresService } from 'src/tyres/tyres.service';
@@ -17,6 +10,12 @@ import { UpdateOrderDto } from './dto/update-order.dto';
 import { Orders } from './entities/order.model';
 //import { OrdersConfigAttr } from './interfaces/orders.interface';
 import { OrdersStorageService } from './orders-storage.service';
+import { BasketService } from '../basket/basket.service';
+import { StockBatteriesService } from '../stock/stock-batteries.service';
+import { StockOilsService } from '../stock/stock-oils.service';
+import { StockTyresService } from '../stock/stock-tyres.service';
+import { StockWheelsService } from '../stock/stock-wheels.service';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable()
 export class OrdersService {

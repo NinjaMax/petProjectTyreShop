@@ -5,14 +5,15 @@ import { TyresController } from './tyres.controller';
 import { Tyres } from './entities/tyres.model';
 import { PriceTyres } from '../prices/entities/price-tyres.model';
 import { StockTyres } from '../stock/entities/stock-tyres.model';
-import { Supplier } from 'src/suppliers/entities/supplier.model';
 import { SuppliersModule } from '../suppliers/suppliers.module';
 import { StockModule } from '../stock/stock.module';
-import { TyreModel } from 'src/properties/entities/tyres/tyre-model.model';
-import { TyreBrand } from 'src/properties/entities/tyres/tyre-brand.model';
-import { RatingTyres } from 'src/ratings/entities/rating-tyres.model';
-import { ReviewTyres } from 'src/reviews/entities/review-tyres.model';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
+import { TyreBrand } from '../properties/entities/tyres/tyre-brand.model';
+import { TyreModel } from '../properties/entities/tyres/tyre-model.model';
+import { RatingTyres } from '../ratings/entities/rating-tyres.model';
+import { ReviewTyres } from '../reviews/entities/review-tyres.model';
+import { Supplier } from '../suppliers/entities/supplier.model';
+
 //import { PropertiesTyreModule } from 'src/properties/propertiesTyre.module';
 
 @Module({

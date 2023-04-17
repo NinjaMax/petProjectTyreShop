@@ -4,7 +4,7 @@ import { CreatePropertyDto } from '../dto/create-property.dto';
 import { GetPropertyDto } from '../dto/get-property.dto';
 import { UpdatePropertyDto } from '../dto/update-property.dto';
 import { TyreModel } from '../entities/tyres/tyre-model.model';
-import { TyresService } from 'src/tyres/tyres.service';
+import { TyresService } from '../../tyres/tyres.service';
 
 @Injectable()
 export class PropsModelService {

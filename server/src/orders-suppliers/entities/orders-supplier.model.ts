@@ -1,12 +1,11 @@
 import { Column, DataType, Model, Table, BelongsTo, ForeignKey, HasMany} from "sequelize-typescript";
-import { Comments } from "src/comments/entities/comment.model";
-import { Orders } from "src/orders/entities/order.model";
-import { Paynment } from "src/paynment/entities/paynment.model";
-//import { Storage } from "src/storage/entities/storage.model";
-import { Supplier } from "src/suppliers/entities/supplier.model";
-import { Users } from "src/users/entities/users.model";
 import { OrdersSupConfigAttr } from '../interfaces/order-sup.interface';
 import { OrdersSupStorage } from "./orders-sup-storage.model";
+import { Comments } from "../../comments/entities/comment.model";
+import { Orders } from "../../orders/entities/order.model";
+import { Paynment } from "../../paynment/entities/paynment.model";
+import { Supplier } from "../../suppliers/entities/supplier.model";
+import { Users } from "../../users/entities/users.model";
 
 @Table({tableName: 'order_supplier'})
 export class OrdersSupplier extends Model<OrdersSupplier, OrdersSupConfigAttr> {

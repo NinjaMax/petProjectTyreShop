@@ -1,20 +1,28 @@
-import { Column, DataType, Model, Table, BelongsTo, ForeignKey, HasMany} from "sequelize-typescript";
-import { Category } from "src/categorys/entities/category.model";
-import { PriceWheels } from "src/prices/entities/price-wheels.model";
-import { WheelBoltCount } from "src/properties/entities/wheels/wheel-boltCount.model";
-import { WheelBoltCountPcd } from "src/properties/entities/wheels/wheel-boltCountPcd.model";
-import { WheelBrand } from "src/properties/entities/wheels/wheel-brand.model";
-import { WheelColor } from "src/properties/entities/wheels/wheel-color.model";
-import { WheelDia } from "src/properties/entities/wheels/wheel-dia.model";
-import { WheelDiameter } from "src/properties/entities/wheels/wheel-diameter.model";
-import { WheelEt } from "src/properties/entities/wheels/wheel-et.model";
-import { WheelModel } from "src/properties/entities/wheels/wheel-model.model";
-import { WheelPcd } from "src/properties/entities/wheels/wheel-pcd.model";
-import { WheelPcd2 } from "src/properties/entities/wheels/wheel-pcd2.model";
-import { WheelSizeDigits } from "src/properties/entities/wheels/wheel-sizeDigits.model";
-import { WheelType } from "src/properties/entities/wheels/wheel-type.model";
-import { WheelWidth } from "src/properties/entities/wheels/wheel-width.model";
-import { StockWheels } from "src/stock/entities/stock-wheels.model";
+import {
+  Column,
+  DataType,
+  Model,
+  Table,
+  BelongsTo,
+  ForeignKey,
+  HasMany,
+} from 'sequelize-typescript';
+import { Category } from "../../categorys/entities/category.model";
+import { PriceWheels } from "../../prices/entities/price-wheels.model";
+import { WheelBoltCount } from "../../properties/entities/wheels/wheel-boltCount.model";
+import { WheelBoltCountPcd } from "../../properties/entities/wheels/wheel-boltCountPcd.model";
+import { WheelBrand } from "../../properties/entities/wheels/wheel-brand.model";
+import { WheelColor } from "../../properties/entities/wheels/wheel-color.model";
+import { WheelDia } from "../../properties/entities/wheels/wheel-dia.model";
+import { WheelDiameter } from "../../properties/entities/wheels/wheel-diameter.model";
+import { WheelEt } from "../../properties/entities/wheels/wheel-et.model";
+import { WheelModel } from "../../properties/entities/wheels/wheel-model.model";
+import { WheelPcd } from "../../properties/entities/wheels/wheel-pcd.model";
+import { WheelPcd2 } from "../../properties/entities/wheels/wheel-pcd2.model";
+import { WheelSizeDigits } from '../../properties/entities/wheels/wheel-sizeDigits.model';
+import { WheelType } from '../../properties/entities/wheels/wheel-type.model';
+import { WheelWidth } from '../../properties/entities/wheels/wheel-width.model';
+import { StockWheels } from '../../stock/entities/stock-wheels.model';
 import { WheelConfigAttr } from '../interfaces/wheel.interface';
 
 @Table({tableName: 'wheel', updatedAt: false})

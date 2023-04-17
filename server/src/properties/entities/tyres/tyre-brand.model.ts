@@ -1,8 +1,8 @@
 import { Column, DataType, Model, Table, HasMany} from "sequelize-typescript";
 import { TyreBrandConfigAttr } from '../../interfaces/tyres/tyre-brand.interface';
 import { RatingTyres } from "../../../ratings/entities/rating-tyres.model";
-import { Tyres } from "src/tyres/entities/tyres.model";
-import { ReviewTyres } from "src/reviews/entities/review-tyres.model";
+import { Tyres } from "../../../tyres/entities/tyres.model";
+import { ReviewTyres } from "../../../reviews/entities/review-tyres.model";
 
 @Table({tableName: 'tyre_brand' , updatedAt: false, createdAt: false})
 export class TyreBrand extends Model<TyreBrand, TyreBrandConfigAttr> {
