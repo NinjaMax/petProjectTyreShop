@@ -65,8 +65,8 @@ export class AuthController {
   }
 
   @Get('google/url')
-  getGoogleLogin() {
-    return this.googleAuthService.getGoogleAuthURL();
+  getGoogleLogIn(@Res() res: Response) {
+    return res.send(this.googleAuthService.getGoogleAuthURL());
   }
 
   @Get('google')
@@ -76,7 +76,7 @@ export class AuthController {
 
   @Get('user/google')
   getCurrentGoogleUser(@Res() res: Response, @Req() req: Request) {
-    return this.googleAuthService.getCurrentUser(req, res);
+    return res.send(this.googleAuthService.getCurrentUser(req, res));
   }
 
   // @Post()
@@ -100,7 +100,9 @@ export class AuthController {
   // }
   @Delete('logout')
   logOut(@Res() res: Response) {
-    return res.clearCookie('auth_token', { httpOnly: true });
+    return res.clearCookie(this.configService.get('COOKIE_NAME'), {
+      httpOnly: true,
+    });
   }
 
   @Delete(':id')

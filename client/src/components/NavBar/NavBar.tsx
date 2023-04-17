@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import '../../css/NavBarCss/NavBar.css';
 import logoShop from '../../assets/logoShop/logoSample_1_302_100.png';
 import { observer } from 'mobx-react-lite';
@@ -12,20 +12,53 @@ import Modal from '../modal/Modal';
 import NavBarSearch from '../searchForm/NavBarSearch';
 import { Context } from '../../context/Context';
 import AuthConfirmTel from '../auth/AuthConfirmTel';
-import { preSignUpUser, matchPassSms } from '../../restAPI/restUsersApi';
+import { 
+  preSignUpUser, 
+  matchPassSms, 
+  signInGoogle, 
+  logOut,
+  getGoogleCurUser } from '../../restAPI/restUsersApi';
 import AuthSignUp from '../auth/AuthSignUp';
-
 
 const NavBar = observer(() => {
   const {user} = useContext<any | null>(Context);
   
   const [activeAuth, setActiveAuth] = useState(false);
+  const [googleIsAuth, setGoogleIsAuth] = useState('');
   const [activeAuthConfirm, setAuthConfirm] = useState(false);
   const [searchBtn, setSearchBtn] = useState(false);
   const [activeBasket, setActiveBasket] = useState(false);
   const [isPassSend, setPassSend] = useState(false);
   const [isMatchPass, setIsMatchPass] = useState(false);
   const [smsPass, setSmsPass] = useState<number | null>(null);
+
+  useEffect(() => {
+    let isUser = true;
+    const googleSignIn = async () => {
+      const authGoogle = await signInGoogle();
+      if(authGoogle && isUser) {
+        setGoogleIsAuth(authGoogle.data);
+      } else {
+        console.log('ПОМИЛКА СЕРВІСА');
+      }
+    }
+      googleSignIn()
+    return () => {isUser = false}
+    //}
+  },[])
+
+  useEffect(() => {
+    let isCurUser = true;
+    const googleCurUser = async () => {
+      const curUser = await getGoogleCurUser();
+      if(curUser && isCurUser) {
+        user.setIsAuth(true);
+        user.setUser(curUser.data)
+      }
+    }
+    googleCurUser();
+    return () => {isCurUser = false}
+  },[user])
 
   const openBasket = () => {
     setActiveBasket(!activeBasket);
@@ -67,6 +100,16 @@ const NavBar = observer(() => {
     }  
   }
 
+
+
+  const logOutUser = async () => {
+    try {
+      await logOut();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
 
   <div className="navbar">
@@ -86,12 +129,13 @@ const NavBar = observer(() => {
     :null}
     <FavoriteGoods/>
     {user._isAuth ?
-      <AuthView/>
+      <AuthView userData={user} logOutUser={logOutUser}/>
       : <span onClick={authActive}>Вхід / Реєстрація</span>
     }
     {activeAuth ?
       <Modal active={activeAuth} setActive={authActive}>
-        <AuthForm confirmActive={authActiveConfirm}/>
+        <AuthForm confirmActive={authActiveConfirm}
+          socialGoogle={googleIsAuth}/>
       </Modal>
     : null
     }

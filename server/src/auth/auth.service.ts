@@ -18,6 +18,7 @@ import { sendSmsPass } from './gatewayApi/smsGateway';
 @Injectable()
 export class AuthService {
   constructor(
+    //@Inject(ConfigService) private configService: ConfigService,
     private usersService: UsersService,
     private jwtService: JwtService,
   ){}
@@ -117,6 +118,12 @@ export class AuthService {
 
   // create(createAuthDto: CreateAuthDto) {
   //   return 'This action adds a new auth';
+  // }
+
+  // async getLogOut(req: any, res: any) {
+  //   return res.clearCookie(this.configService.get('COOKIE_NAME'), {
+  //     httpOnly: true,
+  //   });
   // }
 
   findAll() {

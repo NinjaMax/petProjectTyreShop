@@ -33,10 +33,35 @@ export const matchPassSms = async (randomPass: number, passMatch: number) => {
     return data;
 }
 
-export const signUpUser = async (phoneNum: number, password: number) => {
-    const {data} = await $authHostPost.post('/auth/presignup', 
-    {phoneNum, password})
+// export const signUpUser = async (phoneNum: number, password: number) => {
+//     const {data} = await $authHostPost.post('/auth/presignup', 
+//     {phoneNum, password})
+//     //cookie.setItem('token', data.token)
+//     console.log(data);
+//     return data;
+// }
+
+export const signInGoogle = async () => {
+    const {data} = await $authHostPost.get('/auth/google/url', 
+    )
     //cookie.setItem('token', data.token)
     console.log(data);
     return data;
 }
+
+export const getGoogleCurUser = async () => {
+    const {data} = await $authHostPost.get('user/google', 
+    )
+    //cookie.setItem('token', data.token)
+    console.log(data);
+    return data;
+}
+
+export const logOut = async () => {
+    const {data} = await $authHostPost.post('/auth/logout', 
+    )
+    //cookie.setItem('token', data.token)
+    console.log(data);
+    return data;
+}
+

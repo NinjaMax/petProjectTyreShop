@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../css/AuthCss/AuthForm.css';
 
-const AuthForm = ({confirmActive}: any) => {
+const AuthForm = ({confirmActive, socialGoogle}: any) => {
 
     return (
           <div className='authFormMain'>
@@ -19,7 +19,7 @@ const AuthForm = ({confirmActive}: any) => {
                     <a href="/#" className="twitter btnAuthForm">
                       <i className="fa fa-twitter fa-fw"></i> Увійти з Twitter
                     </a>
-                    <a href="/#" className="google btnAuthForm">
+                    <a href={socialGoogle} role='button' className="google btnAuthForm" >
                       <i className="fa fa-google fa-fw"></i> Увійти з Google+
                     </a>
                   </div>
