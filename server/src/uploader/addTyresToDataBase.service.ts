@@ -29,7 +29,7 @@ import { TyresService } from '../tyres/tyres.service';
 
 @Injectable()
 export class AddTyresToDbService {
-  constructor( 
+  constructor(
     private categoryService: CategorysService,
     private tyresservice: TyresService,
     private supplierService: SuppliersService,
@@ -55,167 +55,167 @@ export class AddTyresToDbService {
     private propsTyreVehicleType: PropsTyreVehicleTypeService,
     private propsTyreWidth: PropsTyreWidthService,
     private propsTyreYear: PropsTyreYearService,
-  ) {
+  ) {}
 
+  async addTyresToDb(item: ItemPriceTyresConfigAttr) {
+    try {
+      await this.tyresservice.createTyresFromPrice(
+        +item.id,
+        item.full_name ?? '',
+        item.photo_url ?? '',
+        item.update_date,
+      );
+
+      await this.categoryService.createCategoryFromPrice(
+        +item.id,
+        item.price_list_type ?? '',
+      );
+
+      await this.supplierService.createSupplierFromPrice(
+        +item.provider_id,
+        item.provider ?? '',
+        item.city ?? '',
+        item.city_ua ?? '',
+      );
+
+      await this.propsBrandService.createTyreBrandFromPrice(
+        +item.id,
+        +item.brand_id,
+        item.brand ?? '',
+      );
+
+      await this.propsTyreModel.createTyreModelFromPrice(
+        +item.id,
+        +item.model_id,
+        String(item.model) === 'undefined' ? '' : String(item.model),
+      );
+
+      await this.propsTyreCountry.createTyreCountryFromPrice(
+        +item.id,
+        item.country_manufacturer ?? '',
+        item.country_manufacturer_ua ?? '',
+      );
+
+      await this.propsTyreDemo.createTyreDemoFromPrice(
+        +item.id,
+        item.demo ?? '',
+      );
+
+      await this.propsTyreDiameter.createTyreDiameterFromPrice(
+        +item.id,
+        String(item.diameter).replace(/,/g, '.') === 'undefined'
+          ? ''
+          : String(item.diameter).replace(/,/g, '.'),
+      );
+
+      await this.propsTyreHeight.createTyreHeightFromPrice(
+        +item.id,
+        String(item.height).replace(/,/g, '.') === 'undefined'
+          ? ''
+          : String(item.height).replace(/,/g, '.'),
+      );
+
+      await this.propsTyreHomologation.createTyreHomologationFromPrice(
+        +item.id,
+        item.homologation ?? '',
+      );
+
+      await this.propsTyreLoadIndex.createLoadIndexFromPrice(
+        +item.id,
+        String(item.load_index) === 'undefined' ? '' : String(item.load_index),
+        item.load_index_with_desc ?? '',
+      );
+
+      await this.propsTyreParams.createParamsFromPrice(
+        +item.id,
+        item.params ?? '',
+      );
+
+      await this.propsTyreReinforce.createTyreReinforceFromPrice(
+        +item.id,
+        item.reinforce ?? '',
+      );
+
+      await this.propsTyreRunFlat.createTyreRunFlatFromPrice(
+        +item.id,
+        item.run_flat ?? '',
+      );
+
+      await this.propsTyreSeal.createTyreSealFromPrice(
+        +item.id,
+        item.seal ?? '',
+      );
+
+      await this.propsTyreSeason.createTyreSeasonFromPrice(
+        +item.id,
+        +item.season_id,
+        item.season ?? '',
+        item.season_ua ?? '',
+      );
+
+      await this.propsTyreSilent.createTyreSilentFromPrice(
+        +item.id,
+        item.silent ?? '',
+      );
+
+      await this.propsTyreSizeDigits.createTyreSizeDigitsFromPrice(
+        +item.id,
+        item.size_only_digits ?? '',
+      );
+
+      await this.propsTyreSpeedIndex.createTyreSpeedIndexFromPrice(
+        +item.id,
+        item.speed_index ?? '',
+        item.speed_index_with_desc ?? '',
+      );
+
+      await this.propsTyreStudded.createTyreStuddedFromPrice(
+        +item.id,
+        item.studded ?? '',
+      );
+
+      await this.propsTyreVehicleType.createTyreVehicleTypeFromPrice(
+        +item.id,
+        +item.vehicle_type_id,
+        item.vehicle_type ?? '',
+        item.vehicle_type_ua ?? '',
+      );
+
+      await this.propsTyreWidth.createTyreWidthFromPrice(
+        +item.id,
+        String(item.width).replace(/,/g, '.') === 'undefined'
+          ? ''
+          : String(item.width).replace(/,/g, '.'),
+      );
+
+      await this.propsTyreYear.createTyreYearFromPrice(
+        +item.id,
+        item.manufacture_year ?? '',
+      );
+
+      await this.stockTyresService.createStockTyreFromPrice(
+        +item.id,
+        +item.in_stock,
+        +item.provider_id,
+        item.update_date,
+      );
+
+      await this.priceTyreService.createPriceTyresFromPrice(
+        +item.id,
+        +item.user_price_wholesale,
+        +item.user_price,
+        +item.user_delivery_price,
+        +item.user_price_plus_user_delivery_price,
+        +item.provider_id,
+        item.update_date,
+      );
+
+      return 'Price added to DATA BASE';
+    } catch (error) {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
-    
-    async addTyresToDb(item: ItemPriceTyresConfigAttr) {
-    
-        try {
-
-            await this.tyresservice.createTyresFromPrice(
-                +item.id, 
-                item.full_name ?? '', 
-                item.photo_url ?? '',
-                item.update_date,
-            );
-   
-            await this.categoryService.createCategoryFromPrice(
-                +item.id,
-                item.price_list_type ?? ''
-            );
-    
-            await this.supplierService.createSupplierFromPrice(
-                +item.provider_id, 
-                item.provider ?? '',
-                item.city ?? '', 
-                item.city_ua ?? ''
-            );
-
-            await this.propsBrandService.createTyreBrandFromPrice(
-                +item.id, 
-                +item.brand_id, 
-                item.brand ?? ''
-            );
-
-            await this.propsTyreModel.createTyreModelFromPrice(
-                +item.id,
-                +item.model_id,
-                String(item.model) === 'undefined' ? '' : String(item.model)
-            );
-
-            await this.propsTyreCountry.createTyreCountryFromPrice(
-                +item.id,
-                item.country_manufacturer ?? '' ,
-                item.country_manufacturer_ua ?? '',
-            );
-
-            await this.propsTyreDemo.createTyreDemoFromPrice(
-                +item.id,
-                item.demo ?? '',
-            );
-
-            await this.propsTyreDiameter.createTyreDiameterFromPrice(
-                +item.id,
-                String(item.diameter).replace(/,/g, ".") === 'undefined' ? '' : String(item.diameter).replace(/,/g, "."),
-            );
-
-            await this.propsTyreHeight.createTyreHeightFromPrice(
-                +item.id,
-                String(item.height).replace(/,/g, ".") === 'undefined' ? '' : String(item.height).replace(/,/g, "."),
-            );
-
-            await this.propsTyreHomologation.createTyreHomologationFromPrice(
-                +item.id,
-                item.homologation ?? ''
-            );
-
-            await this.propsTyreLoadIndex.createLoadIndexFromPrice(
-                +item.id,
-                String(item.load_index) === 'undefined' ? '' : String(item.load_index),
-                item.load_index_with_desc ?? ''
-            );
-   
-            await this.propsTyreParams.createParamsFromPrice(
-                +item.id,
-                item.params ?? ''
-            );
-
-            await this.propsTyreReinforce.createTyreReinforceFromPrice(
-                +item.id,
-                item.reinforce ?? ''
-            );
-
-            await this.propsTyreRunFlat.createTyreRunFlatFromPrice(
-                +item.id,
-                item.run_flat ?? ''
-            );
-
-            await this.propsTyreSeal.createTyreSealFromPrice(
-                +item.id,
-                item.seal ?? ''
-            );
-
-            await this.propsTyreSeason.createTyreSeasonFromPrice(
-                +item.id,
-                +item.season_id,
-                item.season ?? '',
-                item.season_ua ?? ''
-            );
-
-            await this.propsTyreSilent.createTyreSilentFromPrice(
-                +item.id,
-                item.silent ?? ''
-            );
-
-            await this.propsTyreSizeDigits.createTyreSizeDigitsFromPrice(
-                +item.id,
-                item.size_only_digits ?? ''
-            );
-
-            await this.propsTyreSpeedIndex.createTyreSpeedIndexFromPrice(
-                +item.id,
-                item.speed_index ?? '',
-                item.speed_index_with_desc ?? ''
-            );
-
-            await this.propsTyreStudded.createTyreStuddedFromPrice(
-                +item.id,
-                item.studded ?? ''
-            );
-
-            await this.propsTyreVehicleType.createTyreVehicleTypeFromPrice(
-                +item.id,
-                +item.vehicle_type_id,
-                item.vehicle_type ?? '',
-                item.vehicle_type_ua ?? '',
-            );
-
-            await this.propsTyreWidth.createTyreWidthFromPrice(
-                +item.id,
-                String(item.width).replace(/,/g, ".") === 'undefined' ? '' : String(item.width).replace(/,/g, "."),
-            );
-
-            await this.propsTyreYear.createTyreYearFromPrice(
-                +item.id,
-                item.manufacture_year ?? ''
-            );
-
-            await this.stockTyresService.createStockTyreFromPrice(
-                +item.id,
-                +item.in_stock,
-                +item.provider_id,
-                item.update_date,
-            );
-        
-            await this.priceTyreService.createPriceTyresFromPrice(
-                +item.id,
-                +item.user_price_wholesale,
-                +item.user_price,
-                +item.user_delivery_price,
-                +item.user_price_plus_user_delivery_price,
-                +item.provider_id,
-                item.update_date,
-            );
-
-            return  'Price added to DATA BASE';
-
-        } catch (error) {
-
-           throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
-
-        }
-
-    } 
-
 }

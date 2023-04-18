@@ -1,12 +1,22 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete,
-  UploadedFile, UseInterceptors, ParseFilePipe, MaxFileSizeValidator,
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UploadedFile,
+  UseInterceptors,
+  ParseFilePipe,
+  MaxFileSizeValidator,
   FileTypeValidator,
   Header,
-  Res, } from '@nestjs/common';
+} from '@nestjs/common';
 import { Express } from 'express';
 import { UploaderService } from './uploader.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { CreateUploaderDto } from './dto/create-uploader.dto';
+//import { CreateUploaderDto } from './dto/create-uploader.dto';
 import { UpdateUploaderDto } from './dto/update-uploader.dto';
 import { diskStorage } from 'multer';
 
@@ -18,21 +28,19 @@ export class UploaderController {
   @Post('/tyres')
   @Header('Content-Type', 'multipart/form-data')
   @Header('Accept-Charset', 'utf-8')
-  @UseInterceptors(FileInterceptor( 'file', 
-    {
+  @UseInterceptors(
+    FileInterceptor('file', {
       storage: diskStorage({
         destination: './upload_prices',
         filename: (req, file, cb) => {
-
-          if(!file.mimetype.includes('csv')) {
-           throw "not supported format"
+          if (!file.mimetype.includes('csv')) {
+            throw 'not supported format';
           }
 
           const fileName: string = file.originalname;
           const newFileName: string = fileName;
           cb(null, `${newFileName}`)
-        }, 
-        
+        },
       })
     } 
   ))
@@ -42,10 +50,11 @@ export class UploaderController {
       new ParseFilePipe({
         validators: [
           new MaxFileSizeValidator({ maxSize: 15000000 }),
-          new FileTypeValidator({fileType: 'csv' }),
+          new FileTypeValidator({ fileType: 'csv' }),
         ]
       })
-    ) file: Express.Multer.File, 
+    )
+    file: Express.Multer.File,
   ) {    
     return await this.uploaderService.parseTyresPrice(file.path, file.filename);
   }
@@ -53,22 +62,19 @@ export class UploaderController {
   @Post('/wheels')
   @Header('Content-Type', 'multipart/form-data')
   @Header('Accept-Charset', 'utf-8')
-  @UseInterceptors(FileInterceptor( 'file', 
-    {
-      
+  @UseInterceptors(
+    FileInterceptor('file', {
       storage: diskStorage({
         destination: './upload_prices',
         filename: (res, file, cb) => {
-
-          if(!file.mimetype.includes('csv')) {
-           throw "Not supported format"
+          if (!file.mimetype.includes('csv')) {
+            throw 'Not supported format';
           }
 
           const fileName: string = file.originalname;
           const newFileName: string = fileName;
           cb(null, `${newFileName}`)
-        }, 
-        
+        },
       })
     } 
   ))
@@ -81,9 +87,13 @@ export class UploaderController {
           new FileTypeValidator({ fileType: 'csv' }),
         ]
       })
-    ) file: Express.Multer.File, 
-  ) {    
-    return await this.uploaderService.parseWheelsPrice(file.path, file.filename);
+    )
+    file: Express.Multer.File,
+  ) {
+    return await this.uploaderService.parseWheelsPrice(
+      file.path,
+      file.filename,
+    );
   }
 
   @Get()
@@ -97,7 +107,10 @@ export class UploaderController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUploaderDto: UpdateUploaderDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateUploaderDto: UpdateUploaderDto,
+  ) {
     return this.uploaderService.update(+id, updateUploaderDto);
   }
 

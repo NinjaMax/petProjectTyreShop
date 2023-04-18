@@ -10,11 +10,7 @@ import { ConfigModule } from 'src/config/config.module';
 @Module({
   controllers: [AuthController],
   providers: [AuthService, GoogleAuthService],
-  imports: [
-    JwtModule.register({ secret: jwtConstants.secret }),
-    UsersModule,
-    ConfigModule,
-  ],
+  imports: [JwtModule.register({ secret: jwtConstants.secret }), UsersModule],
   exports: [JwtModule, AuthService],
 })
 export class AuthModule {}

@@ -11,56 +11,62 @@ import { AddWheelsToDbService } from './addWheelToDataBase.service';
 export class UploaderPaprserService {
   constructor(
     private addTyresToDataBase: AddTyresToDbService,
-    private addWheelToDataBase: AddWheelsToDbService
-    
+    private addWheelToDataBase: AddWheelsToDbService  
   ) {}
   
   async csvParserTyres(path: string) {
-
     try {
-      let resultsTyre = [];
+      let resultsTyre: any[] = [];
       fs.createReadStream(join(process.cwd(), path))
-      .pipe(csvParser())
-      .on('data', (data) => {resultsTyre.push(data)})
-      .on('error', (error) => {
-        if(error) {console.log("PARSER ERROR: ", error)}})
-      .on('end', () => {
-        resultsTyre.forEach((item: ItemPriceTyresConfigAttr) => {  
+        .pipe(csvParser())
+        .on('data', (data: any) => {
+          resultsTyre.push(data);
+        })
+        .on('error', (error) => {
+          if (error) {
+            console.log('PARSER ERROR: ', error);
+          }
+        })
+        .on('end', () => {
+          resultsTyre.forEach((item: ItemPriceTyresConfigAttr) => {
             this.addTyresToDataBase.addTyresToDb(item);
           });
-      });
+        });
       resultsTyre = null;
-      return `Price File ${path} has been succeeded, parse and added to Database`
-        
+      return `Price File ${path} has been succeeded, parse and added to Database`;
     } catch {
-        
-     throw new HttpException('Some Problems with Upload and Parce price', HttpStatus.SERVICE_UNAVAILABLE);
-        
+      throw new HttpException(
+        'Some Problems with Upload and Parce price',
+        HttpStatus.SERVICE_UNAVAILABLE,
+      );
     } 
   }
 
   async csvParserWheels(path: string) {
-
     try {
-      
-      let resultsWheel = [];
+      let resultsWheel: any[] = [];
       fs.createReadStream(join(process.cwd(), path))
-      .pipe(csvParser())
-      .on('data', (data) => {resultsWheel.push(data)})
-      .on('error', (error) => {
-        if(error) {console.log("PARSER ERROR: ", error)}})
-      .on('end', () => {
-        resultsWheel.forEach((item: ItemPriceWheelConfigAttr) => {  
+        .pipe(csvParser())
+        .on('data', (data: any) => {
+          resultsWheel.push(data);
+        })
+        .on('error', (error) => {
+          if (error) {
+            console.log('PARSER ERROR: ', error);
+          }
+        })
+        .on('end', () => {
+          resultsWheel.forEach((item: ItemPriceWheelConfigAttr) => {
             this.addWheelToDataBase.addWheelsToDb(item);
           });
-      });
+        });
       resultsWheel = null;
-      return `Price File ${path} has been succeeded, parse and added to Database`
-         
+      return `Price File ${path} has been succeeded, parse and added to Database`;
     } catch {
-        
-      throw new HttpException('Some Problems with Upload and Parce price', HttpStatus.SERVICE_UNAVAILABLE);
-        
+      throw new HttpException(
+        'Some Problems with Upload and Parce price',
+        HttpStatus.SERVICE_UNAVAILABLE,
+      );
     } 
   }
  }

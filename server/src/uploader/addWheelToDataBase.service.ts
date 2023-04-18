@@ -1,4 +1,4 @@
-import { Injectable,  HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { SuppliersService } from '../suppliers/suppliers.service';
 import { CategorysService } from '../categorys/categorys.service';
 import { PriceWheelsService } from '../prices/price-wheels.service';
@@ -21,14 +21,14 @@ import { ItemPriceWheelConfigAttr } from './interfaces/priceItemWheel.interface'
 
 @Injectable()
 export class AddWheelsToDbService {
-  constructor( 
+  constructor(
     private categoryService: CategorysService,
     private supplierService: SuppliersService,
     private wheelsService: WheelsService,
     private stockWheelService: StockWheelsService,
     private priceWheelService: PriceWheelsService,
     private propsWheelBrandService: PropsWheelBrandService,
-    private propsWheelBoltCountService: PropsWheelBoltCountService, 
+    private propsWheelBoltCountService: PropsWheelBoltCountService,
     private propsWheelBoltCountPcdService: PropsWheelBoltCountPcdService,
     private propsWheelColorService: PropsWheelColorService,
     private propsWheelDiaService: PropsWheelDiaService,
@@ -39,103 +39,119 @@ export class AddWheelsToDbService {
     private propsWheelPcd2Service: PropsWheelPcd2Service,
     private propsWheelSizeDigitsService: PropsWheelSizeDigitsService,
     private propsWheelTypeService: PropsWheelTypeService,
-    private propsWheelWidthService: PropsWheelWidthService
-  ) {
+    private propsWheelWidthService: PropsWheelWidthService,
+  ) {}
 
-  }
-    
   async addWheelsToDb(item: ItemPriceWheelConfigAttr) {
-    
     try {
-
       await this.wheelsService.createWheelFromPrice(
-        +item.id, 
+        +item.id,
         item.full_name ?? '',
         item.fullname_color_full ?? '',
         item.fullname_hotline ?? '',
         item.photo_url ?? '',
-        item.update_date 
+        item.update_date,
       );
-   
+
       await this.categoryService.createCategoryWheelFromPrice(
         +item.id,
-        item.price_list_type ?? ''
+        item.price_list_type ?? '',
       );
-    
+
       await this.supplierService.createSupplierFromPrice(
-        +item.provider_id, 
+        +item.provider_id,
         String(item.provider) === 'undefined' ? '' : String(item.provider),
-        item.city ?? '', 
-        item.city_ua ?? ''
+        item.city ?? '',
+        item.city_ua ?? '',
       );
 
       await this.propsWheelBrandService.createWheelBrandFromPrice(
-        +item.id, 
-        item.brand ?? ''
+        +item.id,
+        item.brand ?? '',
       );
 
       await this.propsWheelModelService.createWheelModelFromPrice(
-        +item.id, 
+        +item.id,
         item.model_id,
-        String(item.model) === 'undefined' ? '' : String(item.model)
+        String(item.model) === 'undefined' ? '' : String(item.model),
       );
 
-      await this.propsWheelWidthService.createWheelWidthFromPrice( 
+      await this.propsWheelWidthService.createWheelWidthFromPrice(
         +item.id,
-        String(item.width).replace(/,/g, ".") === 'undefined' ? '' : String(item.width).replace(/,/g, "."),
+        String(item.width).replace(/,/g, '.') === 'undefined'
+          ? ''
+          : String(item.width).replace(/,/g, '.'),
       );
 
       await this.propsWheelPcdService.createWheelPcdFromPrice(
         item.id,
-        String(item.pcd).replace(/,/g, ".") === 'undefined' ? '' : String(item.pcd).replace(/,/g, "."),
+        String(item.pcd).replace(/,/g, '.') === 'undefined'
+          ? ''
+          : String(item.pcd).replace(/,/g, '.'),
       );
 
-      await this.propsWheelPcd2Service.createWheelPcd2FromPrice( 
+      await this.propsWheelPcd2Service.createWheelPcd2FromPrice(
         item.id,
-        String(item.pcd2).replace(/,/g, ".") === 'undefined' ? '' : String(item.pcd2).replace(/,/g, "."),
+        String(item.pcd2).replace(/,/g, '.') === 'undefined'
+          ? ''
+          : String(item.pcd2).replace(/,/g, '.'),
       );
 
-      await this.propsWheelBoltCountService.createWheelBoltCountFromPrice( 
+      await this.propsWheelBoltCountService.createWheelBoltCountFromPrice(
         +item.id,
-        String(item.bolt_count).replace(/,/g, ".") === 'undefined' ? '' : String(item.bolt_count).replace(/,/g, "."),
+        String(item.bolt_count).replace(/,/g, '.') === 'undefined'
+          ? ''
+          : String(item.bolt_count).replace(/,/g, '.'),
       );
 
-      await this.propsWheelBoltCountPcdService.createWheelBoltCountPcdFromPrice( 
-        +item.id, 
-        String(item.bolt_count_pcd).replace(/,/g, ".") === 'undefined' ? '' : String(item.bolt_count_pcd).replace(/,/g, "."),
-      );
-
-      await this.propsWheelColorService.createWheelColorFromPrice( 
+      await this.propsWheelBoltCountPcdService.createWheelBoltCountPcdFromPrice(
         +item.id,
-        item.color_id === '' || item.color_id  === 'undefined' ? '999': item.color_id, 
-        item.color ?? '', 
-        item.color_short ?? ''
+        String(item.bolt_count_pcd).replace(/,/g, '.') === 'undefined'
+          ? ''
+          : String(item.bolt_count_pcd).replace(/,/g, '.'),
       );
 
-      await this.propsWheelDiameter.createWheelDiameterFromPrice( 
-        item.id,
-        String(item.diameter).replace(/,/g, ".") === 'undefined' ? '' : String(item.diameter).replace(/,/g, "."),
-      );
-
-      await this.propsWheelDiaService.createWheelDiaFromPrice( 
-        item.id,
-        String(item.dia).replace(/,/g, ".") === 'undefined' ? '' : String(item.dia).replace(/,/g, "."),
-      );
-
-      await this.propsWheelEtService.createWheelEtFromPrice( 
-        item.id,
-        String(item.et).replace(/,/g, ".") === 'undefined' ? '' : String(item.et).replace(/,/g, "."),
-      );
-
-      await this.propsWheelTypeService.createWheelTypeFromPrice( 
+      await this.propsWheelColorService.createWheelColorFromPrice(
         +item.id,
-        item.type_id  === '' || item.type_id  === 'undefined' ? '999' : item.type_id,
-        item.type ?? ''
+        item.color_id === '' || item.color_id === 'undefined'
+          ? '999'
+          : item.color_id,
+        item.color ?? '',
+        item.color_short ?? '',
       );
 
-      await this.propsWheelSizeDigitsService.createWheelSizeDigitsFromPrice( 
+      await this.propsWheelDiameter.createWheelDiameterFromPrice(
         item.id,
-        item.size_only_digits ?? ''
+        String(item.diameter).replace(/,/g, '.') === 'undefined'
+          ? ''
+          : String(item.diameter).replace(/,/g, '.'),
+      );
+
+      await this.propsWheelDiaService.createWheelDiaFromPrice(
+        item.id,
+        String(item.dia).replace(/,/g, '.') === 'undefined'
+          ? ''
+          : String(item.dia).replace(/,/g, '.'),
+      );
+
+      await this.propsWheelEtService.createWheelEtFromPrice(
+        item.id,
+        String(item.et).replace(/,/g, '.') === 'undefined'
+          ? ''
+          : String(item.et).replace(/,/g, '.'),
+      );
+
+      await this.propsWheelTypeService.createWheelTypeFromPrice(
+        +item.id,
+        item.type_id === '' || item.type_id === 'undefined'
+          ? '999'
+          : item.type_id,
+        item.type ?? '',
+      );
+
+      await this.propsWheelSizeDigitsService.createWheelSizeDigitsFromPrice(
+        item.id,
+        item.size_only_digits ?? '',
       );
 
       await this.stockWheelService.createStockWheelFromPrice(
@@ -144,7 +160,7 @@ export class AddWheelsToDbService {
         +item.provider_id,
         item.update_date,
       );
-        
+
       await this.priceWheelService.createPriceWheelsFromPrice(
         +item.id,
         +item.user_price_wholesale,
@@ -155,14 +171,12 @@ export class AddWheelsToDbService {
         item.update_date,
       );
 
-      return  'Price added to DATA BASE';
-
+      return 'Price added to DATA BASE';
     } catch (error) {
-
-      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
     }
-
-  } 
-
+  }
 }
