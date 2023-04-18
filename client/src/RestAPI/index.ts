@@ -31,13 +31,13 @@ const $authHostPost = axios.create({
     }, withCredentials: true,
 })
 
-const authInterceptor = (config: any) => {
-    config.headers.authorization = `Bearer ${localStorage.getItem('token')}`
-    return config
-}
+// const authInterceptor = (config: any) => {
+//     config.headers.authorization = `Bearer ${localStorage.getItem('token')}`
+//     return config
+// }
 
-$authHostPost.interceptors.request.use(authInterceptor)
-$authHostGet.interceptors.request.use(authInterceptor)
+// $authHostPost.interceptors.request.use(authInterceptor)
+// $authHostGet.interceptors.request.use(authInterceptor)
 
 export {
     $hostPost,

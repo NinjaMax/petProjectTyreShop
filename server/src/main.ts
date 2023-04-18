@@ -3,8 +3,6 @@ import { AppModule } from './app.module';
 import { ConfigService } from './config/config.service';
 import * as fs from 'fs';
 import { join } from 'path';
-//import * as cookieParser from 'cookie-parser';
-//import cors from 'cors';
 
 async function bootstrap() {
   try {
@@ -15,11 +13,11 @@ async function bootstrap() {
     };
     const app = await NestFactory.create(AppModule, { httpsOptions });
     const configService = app.get(ConfigService);
-      //app.use(cookieParser());
+      
     app.enableCors({
       origin: [
         'http://localhost:3000',
-        'http://localhost:4000'
+        'https://localhost:4000',
           //configService.get('CORS');
         ],
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],

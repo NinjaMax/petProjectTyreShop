@@ -18,18 +18,18 @@ export class UploaderPaprserService {
   async csvParserTyres(path: string) {
 
     try {
-      const results = [];
+      let resultsTyre = [];
       fs.createReadStream(join(process.cwd(), path))
       .pipe(csvParser())
-      .on('data', (data) => {results.push(data)})
+      .on('data', (data) => {resultsTyre.push(data)})
       .on('error', (error) => {
         if(error) {console.log("PARSER ERROR: ", error)}})
       .on('end', () => {
-        results.forEach((item: ItemPriceTyresConfigAttr) => {  
+        resultsTyre.forEach((item: ItemPriceTyresConfigAttr) => {  
             this.addTyresToDataBase.addTyresToDb(item);
           });
       });
-
+      resultsTyre = null;
       return `Price File ${path} has been succeeded, parse and added to Database`
         
     } catch {
@@ -43,18 +43,18 @@ export class UploaderPaprserService {
 
     try {
       
-      const results = [];
+      let resultsWheel = [];
       fs.createReadStream(join(process.cwd(), path))
       .pipe(csvParser())
-      .on('data', (data) => {results.push(data)})
+      .on('data', (data) => {resultsWheel.push(data)})
       .on('error', (error) => {
         if(error) {console.log("PARSER ERROR: ", error)}})
       .on('end', () => {
-        results.forEach((item: ItemPriceWheelConfigAttr) => {  
+        resultsWheel.forEach((item: ItemPriceWheelConfigAttr) => {  
             this.addWheelToDataBase.addWheelsToDb(item);
           });
       });
-        
+      resultsWheel = null;
       return `Price File ${path} has been succeeded, parse and added to Database`
          
     } catch {
