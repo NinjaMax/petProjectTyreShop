@@ -7,7 +7,8 @@ import queryString from 'querystring';
 @Injectable()
 export class GoogleAuthService {
   constructor(
-    @Inject(ConfigService) private configService: ConfigService,
+    //@Inject(ConfigService) private configService: ConfigService,
+    private configService: ConfigService,
     // private usersService: UsersService,
     private jwtService: JwtService,
   ) {}

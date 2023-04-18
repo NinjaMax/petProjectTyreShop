@@ -5,7 +5,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { UsersModule } from '../users/users.module';
 import { jwtConstants } from './constants';
 import { GoogleAuthService } from './socialApi/google-auth/google-auth.service';
-import { ConfigModule } from 'src/config/config.module';
+//import { ConfigModule } from 'src/config/config.module';
 
 @Module({
   controllers: [AuthController],
