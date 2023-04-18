@@ -5,11 +5,16 @@ import { JwtModule } from '@nestjs/jwt';
 import { UsersModule } from '../users/users.module';
 import { jwtConstants } from './constants';
 import { GoogleAuthService } from './socialApi/google-auth/google-auth.service';
+import { ConfigModule } from 'src/config/config.module';
 
 @Module({
   controllers: [AuthController],
   providers: [AuthService, GoogleAuthService],
-  imports: [JwtModule.register({ secret: jwtConstants.secret }), UsersModule],
+  imports: [
+    JwtModule.register({ secret: jwtConstants.secret }),
+    UsersModule,
+    ConfigModule,
+  ],
   exports: [JwtModule, AuthService],
 })
 export class AuthModule {}
