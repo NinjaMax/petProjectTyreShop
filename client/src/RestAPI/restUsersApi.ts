@@ -45,7 +45,7 @@ export const signInGoogle = async () => {
     const {data} = await $authHostGet.get('/auth/google/url', 
     )
     //cookie.setItem('token', data.token)
-    console.log(data);
+    console.log('URL_GOOGLE_USER_Auth: ', data);
     return data;
 }
 
@@ -53,15 +53,15 @@ export const getGoogleCurUser = async () => {
     const {data} = await $authHostGet.get('/auth/user/google', 
     )
     //cookie.setItem('token', data.token)
-    console.log('USER/GOOGLE', data.data);
+    console.log('USER/GOOGLE: ', data);
     return data;
 }
 
 export const logOut = async () => {
-    const {data} = await $authHostPost.post('/auth/logout', 
+    const {data} = await $authHostPost.delete('/auth/logout', 
     )
     //cookie.setItem('token', data.token)
-    console.log(data);
+    //console.log(data);
     return data;
 }
 

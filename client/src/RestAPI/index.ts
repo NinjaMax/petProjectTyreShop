@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 const $hostPost = axios.create({
     baseURL: process.env.REACT_APP_HOST,
     headers: {
@@ -20,7 +21,7 @@ const $authHostGet = axios.create({
     baseURL: process.env.REACT_APP_HOST,
     headers: { 
         'Access-Control-Allow-Origin': `${process.env.CORS}`
-    }, withCredentials: true
+    }, withCredentials: true,
 })
 
 const $authHostPost = axios.create({

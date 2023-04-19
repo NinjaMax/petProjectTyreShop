@@ -7,9 +7,6 @@ import { ConfigOptions, EnvConfig } from './interfaces';
 
 @Injectable()
 export class ConfigService {
-  //static get(_arg0: string): string {
- //   throw new Error('Method not implemented.');
- // }
   private readonly envConfig: EnvConfig;
 
   constructor(@Inject(CONFIG_OPTIONS) options: ConfigOptions) {

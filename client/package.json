@@ -37,9 +37,9 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": " react-scripts --openssl-legacy-provider start",
-    "build": " react-scripts --openssl-legacy-provider build",
-    "test": "react-scripts test",
+    "start": "set HTTPS=true&&set SSL_CRT_FILE=cert.crt&&set SSL_KEY_FILE=cert.key&& react-scripts start",
+    "build": "react-scripts --openssl-legacy-provider build",
+    "test": "react-scripts --openssl-legacy-provider test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

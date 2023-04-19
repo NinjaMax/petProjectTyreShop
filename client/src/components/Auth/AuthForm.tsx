@@ -19,7 +19,7 @@ const AuthForm = ({confirmActive, socialGoogle}: any) => {
                     <a href="/#" className="twitter btnAuthForm">
                       <i className="fa fa-twitter fa-fw"></i> Увійти з Twitter
                     </a>
-                    <a href={socialGoogle} role='button' className="google btnAuthForm" >
+                    <a href={socialGoogle} className="google btnAuthForm" >
                       <i className="fa fa-google fa-fw"></i> Увійти з Google+
                     </a>
                   </div>

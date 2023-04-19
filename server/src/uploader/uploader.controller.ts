@@ -36,7 +36,6 @@ export class UploaderController {
           if (!file.mimetype.includes('csv')) {
             throw 'not supported format';
           }
-
           const fileName: string = file.originalname;
           const newFileName: string = fileName;
           cb(null, `${newFileName}`)

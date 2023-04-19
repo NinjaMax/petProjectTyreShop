@@ -37,15 +37,15 @@ export class AuthController {
     res.cookie(this.configService.get('COOKIE_NAME'), tokenAccess, {
       maxAge: 900000,
       httpOnly: true,
-      secure: false,
+      secure: true,
     });
     return 'Cookie set successfully';
   }
 
-  @Get('profile')
-  getProfile(@Req() req) {
-    return req.user;
-  }
+  // @Get('profile')
+  // getProfile(@Req() req: Request) {
+  //   return req.user;
+  // }
 
   @Post('login')
   loginByPhone(@Body() loginDto: LoginDto) {
@@ -65,18 +65,19 @@ export class AuthController {
   }
 
   @Get('google/url')
-  getGoogleLogIn(@Res() res: Response) {
-    return res.send(this.googleAuthService.getGoogleAuthURL());
+  async getGoogleLogIn(@Res() res: Response) {
+    return res.send(await this.googleAuthService.getGoogleAuthURL());
   }
 
   @Get('google')
-  getGoogleUser(@Res() res: Response, @Req() req: Request) {
-    return this.googleAuthService.getGoogleUser(req, res);
+  async getGoogleUser(@Res() res: Response, @Req() req: Request) {
+    return await this.googleAuthService.getGoogleUser(req, res);
   }
 
   @Get('user/google')
-  getCurrentGoogleUser(@Res() res: Response, @Req() req: Request) {
-    return res.send(this.googleAuthService.getCurrentUser(req, res));
+  async getCurrentGoogleUser(@Req() req: Request, @Res() res: Response) {
+    //const getCoockies = await req.cookies['auth_token'];
+    return await this.googleAuthService.getCurrentUser(req, res);
   }
 
   // @Post()
@@ -97,7 +98,8 @@ export class AuthController {
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
   //   return this.authService.update(+id, updateAuthDto);
-  // }
+  //}
+
   @Delete('logout')
   logOut(@Res() res: Response) {
     return res.clearCookie(this.configService.get('COOKIE_NAME'), {

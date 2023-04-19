@@ -33,31 +33,33 @@ const NavBar = observer(() => {
   const [smsPass, setSmsPass] = useState<number | null>(null);
 
   useEffect(() => {
-    let isUser = true;
+    let isUser = false;
     const googleSignIn = async () => {
       const authGoogle = await signInGoogle();
-      if(authGoogle && isUser) {
-        setGoogleIsAuth(authGoogle.data);
+      if(authGoogle && !isUser) {
+        setGoogleIsAuth(authGoogle);
+        console.log('SET_GOOGLE_AUTH: ', authGoogle)
       } else {
         console.log('ПОМИЛКА СЕРВІСА');
       }
     }
       googleSignIn()
-    return () => {isUser = false}
+    return () => {isUser = true}
     //}
   },[])
 
   useEffect(() => {
-    let isCurUser = true;
+    let isCurUser = false;
     const googleCurUser = async () => {
       const curUser = await getGoogleCurUser();
-      if(curUser && isCurUser) {
+      console.log('CURRENT_USER', curUser)
+      if(curUser && !isCurUser) {
         user.setIsAuth(true);
-        user.setUser(curUser.data)
+        user.setUser(curUser)
       }
     }
     googleCurUser();
-    return () => {isCurUser = false}
+    return () => {isCurUser = true}
   },[user])
 
   const openBasket = () => {
@@ -129,8 +131,10 @@ const NavBar = observer(() => {
     :null}
     <FavoriteGoods/>
     {user._isAuth ?
-      <AuthView userData={user} logOutUser={logOutUser}/>
-      : <span onClick={authActive}>Вхід / Реєстрація</span>
+      <AuthView logOutUser={logOutUser}/>
+      : <span className='enterAuthNavBar' onClick={authActive}>
+          Вхід / Реєстрація
+        </span>
     }
     {activeAuth ?
       <Modal active={activeAuth} setActive={authActive}>

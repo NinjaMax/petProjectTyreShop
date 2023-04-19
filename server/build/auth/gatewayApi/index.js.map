@@ -1,1 +1,0 @@
-{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/auth/gatewayApi/index.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,MAAM,OAAO,CAAC;AAK1B,MAAM,SAAS,GAAG,KAAK,CAAC,MAAM,CAAC;IAC7B,OAAO,EAAE,oBAAoB;IAC7B,OAAO,EAAE;QACP,cAAc,EAAE,iCAAiC;KAGlD;CAEF,CAAC,CAAA;AAEF,OAAO,EAAE,SAAS,EAAE,CAAC"}

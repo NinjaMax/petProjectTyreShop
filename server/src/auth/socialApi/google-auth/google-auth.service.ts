@@ -1,5 +1,6 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { Response, Request } from 'express';
 import axios from 'axios';
 import { ConfigService } from '../../../config/config.service';
 import queryString from 'querystring';
@@ -14,7 +15,7 @@ export class GoogleAuthService {
   ) {}
 
   async getGoogleAuthURL() {
-    const rootUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
+    const rootUrl = 'https://accounts.google.com/o/oauth2/auth';
     const options = {
       redirect_uri: `${this.configService.get(
         'SERVER_ROOT_URI',
@@ -28,7 +29,6 @@ export class GoogleAuthService {
         'https://www.googleapis.com/auth/userinfo.email',
       ].join(' '),
     };
-
     return `${rootUrl}?${queryString.stringify(options)}`;
   }
 
@@ -71,8 +71,8 @@ export class GoogleAuthService {
       });
   }
 
-  async getGoogleUser(req: any, res: any) {
-    const code = req.query.code;
+  async getGoogleUser(req: Request, res: Response) {
+    const code: any = req.query.code;
     const { id_token, access_token } = await this.getTokensGoogle({
       code,
       clientId: this.configService.get('GOOGLE_CLIENT_ID'),
@@ -82,45 +82,46 @@ export class GoogleAuthService {
       )}/${this.configService.get('REDIRECT_URI')}`,
     });
 
- 
     const googleUser = await axios
-    .get(
-      `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${access_token}`,
-      {
-        headers: {
+      .get(
+        `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${access_token}`,
+        {
+          headers: {
             Authorization: `Bearer ${id_token}`,
+          },
         },
-      }
-    )
-    .then((res) => res.data)
-    .catch((error) => {
+      )
+      .then((res) => res.data)
+      .catch((error) => {
         console.error(`Failed to fetch user`);
         throw new Error(error.message);
-    });
+      });
 
     const token = this.jwtService.sign(googleUser);
 
     res.cookie(this.configService.get('COOKIE_NAME'), token, {
       maxAge: 900000,
       httpOnly: true,
-      secure: false,
+      secure: true,
     });
+    res.redirect(this.configService.get('APP_ROOT_URI'));
+  }
 
-    res.redirect(this.configService.get('APP_ROOT_URI'));  
-    }
-
-  async getCurrentUser(req: any, res: any) {
+  async getCurrentUser(req: Request, res: Response) {
     console.log('get user');
     try {
-      const decoded = this.jwtService.verify(
-        req.cookies[this.configService.get('COOKIE_NAME')],
-        );
-      console.log('decoded', decoded);
+      const getCoockies: string | undefined = req.cookies[this.configService.get('COOKIE_NAME')];
+      console.log('GET COOCKIES', getCoockies);
+      if (getCoockies) {
+        const decoded = this.jwtService.verify(getCoockies);
+        console.log('decoded', decoded);
         return res.send(decoded);
+      } else {
+        console.log('Користувач не авторизован');
+      }
     } catch (err) {
-        console.log(err);
+      console.log(err);
       res.send('No Data');
-        }
     }
-
+  }
 }

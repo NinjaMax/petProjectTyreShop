@@ -1,3 +1,7 @@
+.authView {
+    display:block;
+    overflow:hidden;
+}
 
 #imgCustomerAuth {
     width: 35px;
@@ -9,6 +13,7 @@
 }
 
 .btnAuthView {
+    
     border:none;
     vertical-align: middle;
     background-color:#ffff;
@@ -17,19 +22,47 @@
     font-size: 14px;
 }
 
-.btnAuthView:hover {
+.authView:hover .btnAuthView{
     border:#71C2FF solid;
     border-width: 0 0 5px 0;
 }
 
 .authApprove {
     display: none;
+    position: absolute;
+    /* width: 100%; */
+    /* left: 0; */
+    border-radius: 5px;
+    background-color:#ffff;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+} 
+
+.authView:hover .authApprove {
+    display: block;
+    overflow: hidden;
 }
 
-.authApprove.active {
+.authApproveActive {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; 
+    gap: 5px;
+    padding: 6px;
+    /* border-radius: 5px; */
+    width:max-content;
+    /*background-color:#ffff;*/
+    color: #444B54;
     align-items:center;
     font-family: var(--main-font-family);
     font-size: 14px;
+    cursor: pointer;
+}
+
+.authApproveSpan {
+    padding: 6px;
+}
+
+.authApproveSpan:hover {
+    background-color:#71C2FF;
+    border-radius: 13px;
 }
