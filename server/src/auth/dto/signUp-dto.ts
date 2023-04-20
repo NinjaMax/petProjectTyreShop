@@ -1,12 +1,13 @@
 export class SignupDto {
   name: string;
   id_user: number;
+  id_customer: number;
   email: string;
   full_name: string;
   password: string;
-  //confirm_password: string;
+  photo: string;
   phone: bigint;
-  token: string;
   id_contract: number;
   balance: number;
+  address: string;
 }

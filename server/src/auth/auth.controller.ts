@@ -32,9 +32,9 @@ export class AuthController {
   //@Public()
   //@HttpCode(HttpStatus.OK)
   @Post('signup')
-  signUp(@Res() res: Response, @Body() signupDto: SignupDto) {
-    const tokenAccess = this.authService.signUp(signupDto);
-    res.cookie(this.configService.get('COOKIE_NAME'), tokenAccess, {
+  async signUpCust(@Res() res: Response, @Body() signupDto: SignupDto) {
+    const tokenAccess = await this.authService.signUpCustm(signupDto);
+    res.cookie('auth_custm', tokenAccess, {
       maxAge: 900000,
       httpOnly: true,
       secure: true,
@@ -48,20 +48,27 @@ export class AuthController {
   // }
 
   @Post('login')
-  loginByPhone(@Body() loginDto: LoginDto) {
-    return this.authService.loginByPhone(loginDto);
+  async loginByPhoneCustm(@Res() res: Response, @Body() loginDto: LoginDto) {
+    const loginCustomer = await this.authService.loginCustmByPhone(loginDto);
+    return res.cookie('auth_custm', loginCustomer, {
+      maxAge: 900000,
+      httpOnly: true,
+      secure: true,
+    });
   }
 
   //@Public()
   //@HttpCode(HttpStatus.OK)
   @Post('presignup')
-  preSignUp(@Body() signupDto: SignupDto) {
-    return this.authService.preSignUp(signupDto);
+  async preSignUpCustomer(@Body() signupDto: SignupDto) {
+    return await this.authService.preSignUpCustm(signupDto);
   }
 
   @Post('matchpass')
-  matchPass(@Body() rndmPass: number, pass: number) {
-    return this.authService.matchPass(rndmPass, pass);
+  async matchPass(
+    @Body() matchPass: { randomPass: number; passMatch: number },
+  ) {
+    return await this.authService.matchPass(matchPass);
   }
 
   @Get('google/url')

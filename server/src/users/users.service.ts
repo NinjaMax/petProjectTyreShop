@@ -8,13 +8,12 @@ import { Users } from './entities/users.model';
 
 @Injectable()
 export class UsersService {
-
-  constructor(@InjectModel(Users) private usersRepository: typeof Users,
-    private contractService: ContractService
-    ) {}
+  constructor(
+    @InjectModel(Users) private usersRepository: typeof Users,
+    private contractService: ContractService,
+  ) {}
 
   async createUser(createUserDto: CreateUserDto, password: string) {
-
     try {
       const newUser = await this.usersRepository.create({
         password: password,
@@ -51,7 +50,6 @@ export class UsersService {
       });
 
       return usersAll;
-
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',
@@ -62,94 +60,92 @@ export class UsersService {
 
   async findUserById(getUserDto: GetUserDto) {
     try {
-      const userId = await this.usersRepository.findByPk(getUserDto.id_user, {include: {all: true}});
+      const userId = await this.usersRepository.findByPk(getUserDto.id_user, {
+        include: { all: true },
+      });
 
       return userId;
-
     } catch {
       throw new HttpException(
         'Data ID is incorrect or Not Found',
         HttpStatus.NOT_FOUND,
       );
     }
-
   }
 
   async findUserByName(getUserDto: GetUserDto) {
     try {
-      const userByName = await this.usersRepository.findOne({where: {name: getUserDto.name}});
+      const userByName = await this.usersRepository.findOne({
+        where: { name: getUserDto.name },
+      });
 
       return userByName;
-
     } catch {
       throw new HttpException(
         'Data ID is incorrect or Not Found',
         HttpStatus.NOT_FOUND,
       );
     }
-
   }
 
   async findUserByPhone(getUserDto: GetUserDto) {
     try {
       const userByPhone = await this.usersRepository.findOne({
-        where: { phone: getUserDto.phone }
+        where: { phone: getUserDto.phone },
       });
 
       return userByPhone;
-
     } catch {
-
       throw new HttpException(
         'Data PHONE is incorrect or Not Found',
         HttpStatus.NOT_FOUND,
       );
     }
-
   }
 
-  async updateUserByUser (id_user: number, updateUserDto: UpdateUserDto) {
+  async updateUserByUser(id_user: number, updateUserDto: UpdateUserDto) {
     try {
       const userId = await this.usersRepository.findByPk(
         updateUserDto.id_user,
         { include: { all: true } },
       );
-      
-    if (userId) {
-      await this.usersRepository.update(
-      {  
-        name: updateUserDto.name,
-        full_name: updateUserDto.full_name,
-        email: updateUserDto.email,
-        //update_date : updateTyreDto.update_date
+
+      if (userId) {
+        await this.usersRepository.update(
+          {
+            name: updateUserDto.name,
+            full_name: updateUserDto.full_name,
+            email: updateUserDto.email,
+            //update_date : updateTyreDto.update_date
           },
           { where: { id_user: userId.id_user } },
         );
 
         userId.save();
-      //const updateTyres = await this.tyresRepository.findByPk(updateTyreDto.id, {include: {all: true}});
+        //const updateTyres = await this.tyresRepository.findByPk(updateTyreDto.id, {include: {all: true}});
 
-      return userId; 
-    }
-
+        return userId;
+      }
     } catch {
-      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
     }
-    
   }
 
   async removeUser(getUserDto: GetUserDto) {
-
     try {
+      const removeTyres = await this.usersRepository.destroy({
+        where: { id_user: getUserDto.id_user },
+      });
 
-      const removeTyres = await this.usersRepository.destroy({where: {id_user : getUserDto.id_user}});
-      
       return removeTyres;
-
     } catch {
-      
-      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 }

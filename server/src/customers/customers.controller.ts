@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { CustomersService } from './customers.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { GetCustomerDto } from './dto/get-customer.dto';
@@ -9,8 +18,11 @@ export class CustomersController {
   constructor(private readonly customersService: CustomersService) {}
 
   @Post()
-  createCustomer(@Body() createCustomerDto: CreateCustomerDto) {
-    return this.customersService.createCustomer(createCustomerDto);
+  createCustomer(
+    @Body() createCustomerDto: CreateCustomerDto,
+    password: string,
+  ) {
+    return this.customersService.createCustomer(createCustomerDto, password);
   }
 
   @Get('/all')
@@ -18,15 +30,22 @@ export class CustomersController {
     return this.customersService.findAllCustomer();
   }
 
-  @Get()
-  findCustomerById(@Query() getCustomerDto: GetCustomerDto) {
-    return this.customersService.findCustomerById(getCustomerDto);
+  @Get('/byphone')
+  findCustomerByPhone(@Body() getCustomerDto: GetCustomerDto) {
+    return this.customersService.findCustomerByPhone(getCustomerDto);
+  }
 
+  @Get('/byemail')
+  findCustomerByEmail(@Body() getCustomerDto: GetCustomerDto) {
+    return this.customersService.findCustomerByEmail(getCustomerDto);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCustomerDto: UpdateCustomerDto) {
-    return this.customersService.update(+id, updateCustomerDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateCustomerDto: UpdateCustomerDto,
+  ) {
+    return this.customersService.updateCustomer(+id, updateCustomerDto);
   }
 
   @Delete('/remove')

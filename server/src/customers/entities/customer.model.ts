@@ -11,6 +11,7 @@ import { Basket } from '../../basket/entities/basket.model';
 import { Contract } from '../../contract/entities/contract.model';
 import { Orders } from '../../orders/entities/order.model';
 import { ReviewTyres } from '../../reviews/entities/review-tyres.model';
+import { Comments } from '../../comments/entities/comment.model';
 
 @Table({ tableName: 'customer', createdAt: false, updatedAt: false })
 export class Customer extends Model<Customer, CustomerConfigAttr> {
@@ -36,13 +37,16 @@ export class Customer extends Model<Customer, CustomerConfigAttr> {
   email: string;
 
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
-  adress: string;
+  address: string;
 
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
   delivery: string;
 
+  @Column({ type: DataType.STRING, unique: false, allowNull: false })
+  password: string;
+
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
-  token: string;
+  photo: string;
 
   @Column({
     type: DataType.STRING,
@@ -61,8 +65,8 @@ export class Customer extends Model<Customer, CustomerConfigAttr> {
   @HasMany(() => Orders, 'id_customer')
   orders: Orders[];
 
-  //@HasMany(() => Comments, 'id_customer')
-  //comments: Comments[];
+  @HasMany(() => Comments, 'id_customer')
+  comments: Comments[];
 
   @HasMany(() => Contract, 'id_customer')
   contract: Contract[];

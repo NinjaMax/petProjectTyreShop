@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AuthSignUp = () => {
+const AuthSignUp = ({phoneNumber}:any) => {
     return (
         <div className='authFormMain'>
         <div className="containerAuthForm">
@@ -14,10 +14,25 @@ const AuthSignUp = () => {
                 <div className="hide-md-lg">
                   <p>Or sign in manually:</p>
                 </div>
-                <input className='inputAuthForm' type="tel" name="phone" placeholder="номер телефона" required/>
-                <input className='inputAuthForm' type="text" name="lastName" placeholder="номер телефона" required/>
-                <input className='inputAuthForm' type="password" name="password" placeholder="Пароль" required/>
-                <input className='inputAuthForm' type="submit" value="Увійти"/>
+                <input className='inputAuthForm' 
+                  type="tel" 
+                  name="phone" 
+                  placeholder="номер телефона"
+                  defaultValue={phoneNumber} 
+                  required/>
+                <input className='inputAuthForm'
+                  type="text" 
+                  name="lastName" 
+                  placeholder="імя'я" 
+                  required/>
+                <input className='inputAuthForm' 
+                  type="password" 
+                  name="password" 
+                  placeholder="Пароль" 
+                  required/>
+                <input className='inputAuthForm' 
+                  type="submit" 
+                  value="Увійти"/>
               </div>
             </div>
           </form>

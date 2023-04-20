@@ -6,84 +6,150 @@ import { GetCustomerDto } from './dto/get-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { Customer } from './entities/customer.model';
 
-
 @Injectable()
 export class CustomersService {
+  constructor(
+    @InjectModel(Customer) private customersRepository: typeof Customer,
+    private contractService: ContractService,
+  ) {}
 
-  constructor(@InjectModel(Customer) private customersRepository: typeof Customer,
-    private contractService: ContractService
-    ) {}
-
-  async createCustomer(createCustomerDto: CreateCustomerDto) {
-
+  async createCustomer(createCustomerDto: CreateCustomerDto, password: string) {
     try {
-      
-      const customer = await this.customersRepository.create(createCustomerDto);
+      const customer = await this.customersRepository.create({
+        id_customer: createCustomerDto.id_customer,
+        password: password,
+        email: createCustomerDto.email,
+        id_contract: createCustomerDto.id_contract,
+        balance: createCustomerDto.balance,
+        name: createCustomerDto.name,
+        phone: createCustomerDto.phone,
+        full_name: createCustomerDto.full_name,
+      });
 
-      const contractUser = await this.contractService.createContract(createCustomerDto);
+      const contractCustomer = await this.contractService.createContract(
+        createCustomerDto,
+      );
 
-      await customer.$add('contract', contractUser);
+      await customer.$add('contract', contractCustomer);
 
       await customer.reload();
 
       return customer;
-
     } catch {
-
-      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
     }
-    
   }
 
   async findAllCustomer() {
-
     try {
-
-      const customerAll = await this.customersRepository.findAll({include: {all: true}});
+      const customerAll = await this.customersRepository.findAll({
+        include: { all: true },
+      });
 
       return customerAll;
-
     } catch {
-
-      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
     }
-
   }
 
   async findCustomerById(getCustomerDto: GetCustomerDto) {
-
     try {
-
-      const customerId = await this.customersRepository.findByPk(getCustomerDto.id_customer, {include: {all: true}});
+      const customerId = await this.customersRepository.findByPk(
+        getCustomerDto.id_customer,
+        { include: { all: true } },
+      );
 
       return customerId;
-
     } catch {
-
-      throw new HttpException('Data ID is incorrect or Not Found', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data ID is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
     }
-
   }
 
-  update(id: number, updateCustomerDto: UpdateCustomerDto) {
-    return `This action updates a #${id} user`;
+  async findCustomerByPhone(getCustomerDto: GetCustomerDto) {
+    try {
+      const customerByPhone = await this.customersRepository.findOne({
+        where: { phone: getCustomerDto.phone },
+      });
+
+      return customerByPhone;
+    } catch {
+      throw new HttpException(
+        'Data Customer PHONE is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async findCustomerByEmail(getCustomerDto: GetCustomerDto) {
+    try {
+      const customerByEmail = await this.customersRepository.findOne({
+        where: { email: getCustomerDto.email },
+      });
+
+      return customerByEmail;
+    } catch {
+      throw new HttpException(
+        'Data Customer Email is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async updateCustomer(id: number, updateCustomerDto: UpdateCustomerDto) {
+    try {
+      const customerId = await this.customersRepository.findByPk(
+        updateCustomerDto.id_customer,
+        { include: { all: true } },
+      );
+
+      if (customerId) {
+        await this.customersRepository.update(
+          {
+            name: updateCustomerDto.name,
+            full_name: updateCustomerDto.full_name,
+            email: updateCustomerDto.email,
+            address: updateCustomerDto.address,
+            delivery: updateCustomerDto.delivery,
+            phone: updateCustomerDto.phone,
+            password: updateCustomerDto.password,
+            //update_date : updateTyreDto.update_date
+          },
+          { where: { id_customer: customerId.id_customer } },
+        );
+
+        customerId.save();
+
+        return customerId;
+      }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async removeCustomer(getCustomerDto: GetCustomerDto) {
-
     try {
+      const removeCustomer = await this.customersRepository.destroy({
+        where: { id_customer: getCustomerDto.id_customer },
+      });
 
-      const removeCustomer = await this.customersRepository.destroy({where: {id_customer : getCustomerDto.id_customer}});
-      
       return removeCustomer;
-
     } catch {
-      
-      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 }

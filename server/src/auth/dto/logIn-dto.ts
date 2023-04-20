@@ -1,10 +1,13 @@
 export class LoginDto {
-  name: string;
   id_user: number;
+  id_customer: number;
+  name: string;
   email: string;
   full_name: string;
   password: string;
-  //confirm_password: string;
+  photo: string;
   phone: bigint;
-  token: string;
+  address: string;
+  id_contract: number;
+  balance: number;
 }

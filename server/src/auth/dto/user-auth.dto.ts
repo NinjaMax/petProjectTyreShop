@@ -4,7 +4,6 @@ export class UserAuthDto {
   email: string;
   full_name: string;
   password: string;
-  //confirm_password: string;
+  photo: string;
   phone: bigint;
-  token: string;
 }

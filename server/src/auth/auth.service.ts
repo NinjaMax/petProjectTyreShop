@@ -10,81 +10,118 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/logIn-dto';
 import { SignupDto } from './dto/signUp-dto';
-import argon2 from 'argon2';
+import { CustomerAuthDto } from './dto/customer-auth-dto';
+import * as argon2 from 'argon2';
 import { randomInt } from 'crypto';
 import { sendSmsPass } from './gatewayApi/smsGateway';
+import { CustomersService } from '../customers/customers.service';
+import { Request, Response } from 'express';
 
 @Injectable()
 export class AuthService {
   constructor(
-    //@Inject(ConfigService) private configService: ConfigService,
+    private customersService: CustomersService,
     private usersService: UsersService,
     private jwtService: JwtService,
-  ){}
+  ) {}
 
-  async findUser(userAuthDto: UserAuthDto) {
+  async findUserByPhone(userAuthDto: UserAuthDto) {
     const userIsExist = await this.usersService.findUserByPhone(userAuthDto);
     return userIsExist;
   }
-  
+
+  async findCustomersByPhone(customersDto: CustomerAuthDto) {
+    return await this.customersService.findCustomerByPhone(customersDto);
+  }
+
+  async findCustomersByEmail(customersDto: CustomerAuthDto) {
+    return await this.customersService.findCustomerByEmail(customersDto);
+  }
+
   async createAccessToken(
     userAuthDto: UserAuthDto,
   ): Promise<{ accessToken: string }> {
     return { accessToken: this.jwtService.sign({ sub: userAuthDto }) };
   }
 
-  async signUp(signupDto: SignupDto): Promise<{ accessToken: string }> {
-    if (this.findUser(signupDto)) {
-      throw new ConflictException(
-        `User with username or phone ${signupDto.phone} already exists`,
+  async signUpCustm(signupDto: SignupDto): Promise<{ accessToken: string }> {
+    try {
+      const custByPhone = await this.customersService.findCustomerByPhone(
+        signupDto,
       );
-    }
-    const createPass = {
-      // id_user: signupDto.id_user,
-      // email: signupDto.email,
-      // id_contract: signupDto.id_contract,
-      // balance: signupDto.balance,
-      // name: signupDto.name,
-      password: await argon2.hash(signupDto.password),
-      // phone: signupDto.phone,
-      // full_name: signupDto.full_name,
-    };
-    // this.users.push(user);
-    const newUser = await this.usersService.createUser(
-      signupDto,
-      createPass.password,
-    );
+      if (custByPhone) {
+        throw new ConflictException(
+          `User with username or phone ${signupDto.phone} already exists`,
+        );
+      }
+      const createPass = {
+        // id_user: signupDto.id_user,
+        // email: signupDto.email,
+        // id_contract: signupDto.id_contract,
+        // balance: signupDto.balance,
+        // name: signupDto.name,
+        password: await argon2.hash(signupDto.password),
+        // phone: signupDto.phone,
+        // full_name: signupDto.full_name,
+      };
+      // this.users.push(user);
+      const newUser = await this.usersService.createUser(
+        signupDto,
+        createPass.password,
+      );
 
-    return this.createAccessToken(newUser);
+      return this.createAccessToken(newUser);
+    } catch (error) {
+      console.log('SIGNUP: ', error);
+    }
   }
 
-  async preSignUp(signupDto: SignupDto) {
-    if (this.findUser(signupDto)) {
-      throw new ConflictException(
-        `Користувач з ім'ям або номером ${signupDto.phone} вже існує.`,
+  async preSignUpCustm(signupDto: SignupDto) {
+    try {
+      const custPhone = await this.customersService.findCustomerByPhone(
+        signupDto,
       );
+      if (custPhone) {
+        throw new ConflictException(
+          `Користувач з ім'ям або номером ${signupDto.phone} вже існує.`,
+        );
+      } else {
+        const dataReq = {
+          auth: {
+            key: 'n7GyAj36j6uZyBA5y1AUwVxNZrml9R2r',
+        },
+          action: 'GETBALANCE',
+        };
+        const randomPass: number = randomInt(1000, 9000);
+        const sendSms = await sendSmsPass(dataReq);
+        //const sendSms = await sendSmsPass(randomPass, signupDto.phone);
+        if (!sendSms.success) {
+          throw new HttpException(
+            `Помилка, або не вірно вказаний номер телефону`,
+            HttpStatus.BAD_REQUEST,
+        );
+      }
+        console.log(sendSms.success);
+        console.log(randomPass);
+      // //const match = await this.matchPass.bind(null, randomPass);
+      // setTimeout(() => (randomPass = null), 60000);
+        //const sendSms = await sendSmsPass(dataReq);
+        return randomPass;
+      }
+    } catch (error) {
+      console.log('preSignUp: ', error);
     }
-    let randomPass: number = await randomInt(1000, 9000);
-    const sendSms = await sendSmsPass(randomPass, signupDto.phone);
-
-    if (!sendSms) {
-      throw new HttpException (
-        `Помилка, або не вірно вказаний номер телефону`,
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-    //const match = await this.matchPass.bind(null, randomPass);
-    setTimeout(() => (randomPass = null), 60000);
-
-    return sendSms;
   }
 
-  async matchPass(rndmPass: number, pass: number) {
-    if (pass === rndmPass) {
+  async matchPass(matchPass: { randomPass: number; passMatch: number }) {
+    setTimeout(() => (matchPass.randomPass = null), 90000);
+    console.log('RNDM_SMS ', matchPass.randomPass);
+    console.log('PASSW_USER ', matchPass.passMatch);
+    if (matchPass.randomPass === matchPass.passMatch) {
       return true;
     } else {
       return false;
-    //  throw new UnauthorizedException('Пароль не вірний або вже недійсний');
+      //  throw new UnauthorizedException('Пароль не вірний або вже недійсний');
     }
   }
 
@@ -92,15 +129,17 @@ export class AuthService {
     return pass ? pass : null;
   }
 
-  async loginByPhone(loginDto: LoginDto): Promise<{ accessToken: string }> {
+  async loginCustmByPhone(
+    loginDto: LoginDto,
+  ): Promise<{ accessToken: string }> {
     try {
-      const existingUser = await this.findUser(loginDto);
-      if (!existingUser) {
+      const existingCustomer = await this.findCustomersByPhone(loginDto);
+      if (!existingCustomer) {
         throw new Error();
       }
       const passwordMatch = await argon2.verify(
         (
-          await existingUser
+          await existingCustomer
         ).password,
         loginDto.password,
       );
@@ -119,11 +158,22 @@ export class AuthService {
   //   return 'This action adds a new auth';
   // }
 
-  // async getLogOut(req: any, res: any) {
-  //   return res.clearCookie(this.configService.get('COOKIE_NAME'), {
-  //     httpOnly: true,
-  //   });
-  // }
+  async getCurrentCustm(req: Request, res: Response) {
+    try {
+      const getCoockiesCustm: string | undefined = req.cookies['auth_custm'];
+      console.log('GET_COOCKIES_CUSTM', getCoockiesCustm);
+      if (getCoockiesCustm) {
+        const decodedCustm = this.jwtService.verify(getCoockiesCustm);
+        console.log('decoded', decodedCustm);
+        return res.send(decodedCustm);
+      } else {
+        console.log('Користувач не авторизован');
+      }
+    } catch (err) {
+      console.log(err);
+      res.send('No Data');
+    }
+  }
 
   findAll() {
     return `This action returns all auth`;

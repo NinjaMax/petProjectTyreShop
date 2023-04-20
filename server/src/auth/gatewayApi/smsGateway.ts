@@ -1,10 +1,12 @@
 import { $hostPost } from './index';
 
-const sendSmsPass = async (valuePass: number, phoneNumber: bigint) =>
+const sendSmsPass = async (data: any) =>
   await $hostPost
-    .post('/api/v2/api.php', {
+    .post(
+      '/api/v2/api.php',
+      data,
       // auth: {
-      //   key: 'n7GyAj36j6uZyBA5y1AUwVxNZrml9R2r',
+      //   key: 'n7GyAj36j6uZyBA5y1AUwVxNZrml9R2r',valuePass: number, phoneNumber: bigint
       // },
       // action: 'SENDMESSAGE',
       // data: {
@@ -17,13 +19,14 @@ const sendSmsPass = async (valuePass: number, phoneNumber: bigint) =>
       //     text: `Пароль для регістрації: ${valuePass}`,
       //   },
       // },
-
-      auth: {
-        key: 'n7GyAj36j6uZyBA5y1AUwVxNZrml9R2r',
-      },
-      action: 'GETBALANCE',
-      data: {},
-    })
+      // {
+      //   auth: {
+      //     key: 'n7GyAj36j6uZyBA5y1AUwVxNZrml9R2r',
+      //   },
+      //   action: 'GETBALANCE',
+      // }
+    )
+    .then((response) => response.data)
     .catch((error: any) => {
       console.log('Не вистачає залишків, або не вірно вказані дані', error);
     });

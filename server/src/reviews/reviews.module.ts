@@ -32,8 +32,8 @@ import { UsersModule } from '../users/users.module';
     RatingsModule,
     PropertiesModule,
     CustomersModule,
-    forwardRef(() => AuthModule)
+    forwardRef(() => AuthModule),
   ],
-  exports: [ReviewsService]
+  exports: [ReviewsService],
 })
 export class ReviewsModule {}

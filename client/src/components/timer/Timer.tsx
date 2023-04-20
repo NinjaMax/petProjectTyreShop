@@ -24,10 +24,14 @@ function Timer({minutes, seconds}: ITimer) {
 
   return (
     <div>
+      { totalSeconds ? 
         <h2>{`${minutesRemaining
-        .toString()
-        .padStart(2, "0")}:${secondsRemaining.toString().padStart(2, "0")}`}
+          .toString()
+          .padStart(2, "0")}:${secondsRemaining.toString().padStart(2, "0")}`}
         </h2>
+      : <h3>На жаль час вичерпано</h3>
+      }
+        
     </div>
   );
 }

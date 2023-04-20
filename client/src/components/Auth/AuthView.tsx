@@ -9,14 +9,14 @@ interface IAuthView {
 }   
 
 const AuthView = observer(({logOutUser}:IAuthView) => {
-    const {user} = useContext<any | null>(Context);
-    console.log('USER', user._user.name);
+    const {customer} = useContext<any | null>(Context);
+    console.log('USER', customer._customer.name);
 
     return (
         <div className='authView'>
             <label htmlFor='btnAuth'>
                 <img id='imgCustomerAuth' 
-                    src={user._user.picture ?? userImg} 
+                    src={customer._customer.picture ?? userImg} 
                     alt='imgUser'
                 />
                 {/* <span>{userData.name ?? 'Користувач'}</span> */}

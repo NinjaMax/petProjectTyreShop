@@ -21,8 +21,8 @@ import {
 import AuthSignUp from '../auth/AuthSignUp';
 
 const NavBar = observer(() => {
-  const {user} = useContext<any | null>(Context);
-  
+  const {customer} = useContext<any | null>(Context);
+  const [signUp, setSignUp] = useState(false);
   const [activeAuth, setActiveAuth] = useState(false);
   const [googleIsAuth, setGoogleIsAuth] = useState('');
   const [activeAuthConfirm, setAuthConfirm] = useState(false);
@@ -31,6 +31,7 @@ const NavBar = observer(() => {
   const [isPassSend, setPassSend] = useState(false);
   const [isMatchPass, setIsMatchPass] = useState(false);
   const [smsPass, setSmsPass] = useState<number | null>(null);
+  const [phoneTel, setPhoneTel] = useState<bigint | undefined>();
 
   useEffect(() => {
     let isUser = false;
@@ -54,13 +55,19 @@ const NavBar = observer(() => {
       const curUser = await getGoogleCurUser();
       console.log('CURRENT_USER', curUser)
       if(curUser && !isCurUser) {
-        user.setIsAuth(true);
-        user.setUser(curUser)
+        customer.setIsAuth(true);
+        customer.setUser(curUser)
       }
     }
     googleCurUser();
     return () => {isCurUser = true}
-  },[user])
+  },[customer])
+
+  useEffect(() => {
+    if(isPassSend) {
+      setTimeout(() => setPassSend(false), 118000);
+    }
+  },[isPassSend])
 
   const openBasket = () => {
     setActiveBasket(!activeBasket);
@@ -78,10 +85,15 @@ const NavBar = observer(() => {
     setSearchBtn(!searchBtn);
   }
 
+  const signActiveUp = () => {
+    setSignUp(!signUp);
+  }
+
   const preSignUpAuth = async (telnumber: bigint) => {
 
-    console.log('TEL NUMBER: ',telnumber);
+    console.log('TEL NUMBER: ', telnumber);
     try {
+      setPhoneTel(telnumber);
       const sendPass = await preSignUpUser(telnumber);
       console.log('SEND SMS: ', sendPass);
       if (sendPass) {
@@ -95,14 +107,16 @@ const NavBar = observer(() => {
 
   const matchGetPass = async (passFromTel: number) => {
     const matchPass = await matchPassSms(smsPass!, passFromTel);
+    console.log('PASS_TEL: ', passFromTel);
     console.log('MATCH PASS: ', matchPass);
+    console.log('SMS: ', smsPass)
     if (matchPass) {
       setIsMatchPass(!isMatchPass);
       setAuthConfirm(!activeAuthConfirm);  
-    }  
+    } else {
+
+    } 
   }
-
-
 
   const logOutUser = async () => {
     try {
@@ -130,7 +144,7 @@ const NavBar = observer(() => {
       <NavBarSearch searchBtn={searchBtn} clickSearchBtn={clickSearchBtn}/>
     :null}
     <FavoriteGoods/>
-    {user._isAuth ?
+    {customer._isAuth ?
       <AuthView logOutUser={logOutUser}/>
       : <span className='enterAuthNavBar' onClick={authActive}>
           Вхід / Реєстрація
@@ -155,7 +169,9 @@ const NavBar = observer(() => {
       : null
     }
     {isMatchPass ?
-      <AuthSignUp/>
+      <Modal active={signUp} setActive={signActiveUp}>
+        <AuthSignUp phoneNumber={phoneTel}/>
+      </Modal> 
       :null
     }
     <BasketNavBar setActive={openBasket}/>

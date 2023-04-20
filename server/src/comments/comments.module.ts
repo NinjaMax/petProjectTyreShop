@@ -7,15 +7,19 @@ import { AuthModule } from '../auth/auth.module';
 import { OrdersSuppliersModule } from '../orders-suppliers/orders-suppliers.module';
 import { OrdersModule } from '../orders/orders.module';
 import { UsersModule } from '../users/users.module';
+import { CustomersModule } from '../customers/customers.module';
 
 @Module({
   controllers: [CommentsController],
   providers: [CommentsService],
-  imports: [ 
+  imports: [
     SequelizeModule.forFeature([Comments]),
-    forwardRef(()=> OrdersModule),
-    OrdersSuppliersModule, UsersModule, AuthModule
+    forwardRef(() => OrdersModule),
+    OrdersSuppliersModule,
+    UsersModule,
+    AuthModule,
+    CustomersModule,
   ],
-  exports: [CommentsService]
+  exports: [CommentsService],
 })
 export class CommentsModule {}
