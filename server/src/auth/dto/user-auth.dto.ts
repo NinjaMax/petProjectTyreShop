@@ -4,6 +4,6 @@ export class UserAuthDto {
   email: string;
   full_name: string;
   password: string;
-  photo: string;
+  picture: string;
   phone: bigint;
 }

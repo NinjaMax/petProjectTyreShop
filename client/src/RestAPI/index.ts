@@ -5,7 +5,7 @@ const $hostPost = axios.create({
     baseURL: process.env.REACT_APP_HOST,
     headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Access-Control-Allow-Origin': `${process.env.CORS}`
+        'Access-Control-Allow-Origin': `${process.env.CORS}` 
     }, withCredentials: true,
 })
 

@@ -79,8 +79,8 @@ const AuthConfirmTel = ({
         </div>
         <div className="bottomContainer">
           <div className="rowAuthForm">
-              <a href="/#" className="btnAuthForm">Зареєструватися</a>
-              <a href="/#" className="btnAuthForm">Забули пароль?</a>
+              <a href="/" className="btnAuthForm">Зареєструватися</a>
+              <a href="/" className="btnAuthForm">Забули пароль?</a>
           </div>
         </div>
       </div>

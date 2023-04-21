@@ -5,7 +5,7 @@ export class LoginDto {
   email: string;
   full_name: string;
   password: string;
-  photo: string;
+  picture: string;
   phone: bigint;
   address: string;
   id_contract: number;

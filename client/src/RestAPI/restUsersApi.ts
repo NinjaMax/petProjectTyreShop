@@ -1,16 +1,18 @@
 import { $authHostGet, $authHostPost, } from "./index";
 import jwt_decode from 'jwt-decode';
 
-export const registration = async (email: string, password: string) => {
-    const {data} = await $authHostPost.post('api/user/registration', {email, password, role: 'ADMIN'})
-    //localStorage.setItem('token', data.token)
-    return jwt_decode(data.token)
+export const signUpCustomer = async (dataSignIn: {}) => {
+    const {data} = await $authHostPost.post('auth/signup', dataSignIn)
+    //localStorage.setItem('token', data.token)phone: string, password: string
+    console.log('SIGNUP', data);
+    return data;
 }
 
-export const login = async (email: string, password: string) => {
-    const {data} = await $authHostPost.post('api/user/login', {email, password})
-    //localStorage.setItem('token', data.token)
-    return jwt_decode(data.token)
+export const logInCustm = async (dataLogIn: {}) => {
+    const {data} = await $authHostPost.post('auth/login', dataLogIn)
+    //localStorage.setItem('token', data.token){phone, password}phone: string, password: string
+    console.log('LOGIN: ', data);
+    return data;
 }
 
 export const check = async () => {
@@ -56,10 +58,18 @@ export const signInGoogle = async () => {
 }
 
 export const getGoogleCurUser = async () => {
-    const {data} = await $authHostGet.get('/auth/user/google', 
+    const {data} = await $authHostGet.get('/auth/customer/google', 
     )
     //cookie.setItem('token', data.token)
     console.log('USER/GOOGLE: ', data);
+    return data;
+}
+
+export const getCurCustomer = async () => {
+    const {data} = await $authHostGet.get('/auth/customer', 
+    )
+    //cookie.setItem('token', data.token)
+    console.log('CURR_CUSTOMER: ', data);
     return data;
 }
 

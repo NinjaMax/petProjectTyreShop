@@ -46,7 +46,7 @@ export class Customer extends Model<Customer, CustomerConfigAttr> {
   password: string;
 
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
-  photo: string;
+  picture: string;
 
   @Column({
     type: DataType.STRING,

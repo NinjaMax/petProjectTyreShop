@@ -110,7 +110,8 @@ export class GoogleAuthService {
   async getCurrentUser(req: Request, res: Response) {
     console.log('get user');
     try {
-      const getCoockies: string | undefined = req.cookies[this.configService.get('COOKIE_NAME')];
+      const getCoockies: string | undefined =
+        req.cookies[this.configService.get('COOKIE_NAME')];
       console.log('GET COOCKIES', getCoockies);
       if (getCoockies) {
         const decoded = this.jwtService.verify(getCoockies);

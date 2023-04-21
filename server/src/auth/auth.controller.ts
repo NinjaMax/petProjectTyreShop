@@ -33,13 +33,7 @@ export class AuthController {
   //@HttpCode(HttpStatus.OK)
   @Post('signup')
   async signUpCust(@Res() res: Response, @Body() signupDto: SignupDto) {
-    const tokenAccess = await this.authService.signUpCustm(signupDto);
-    res.cookie('auth_custm', tokenAccess, {
-      maxAge: 900000,
-      httpOnly: true,
-      secure: true,
-    });
-    return 'Cookie set successfully';
+    return await this.authService.signUpCustm(res, signupDto);
   }
 
   // @Get('profile')
@@ -49,12 +43,7 @@ export class AuthController {
 
   @Post('login')
   async loginByPhoneCustm(@Res() res: Response, @Body() loginDto: LoginDto) {
-    const loginCustomer = await this.authService.loginCustmByPhone(loginDto);
-    return res.cookie('auth_custm', loginCustomer, {
-      maxAge: 900000,
-      httpOnly: true,
-      secure: true,
-    });
+    return await this.authService.loginCustmByPhone(res, loginDto);
   }
 
   //@Public()
@@ -81,16 +70,16 @@ export class AuthController {
     return await this.googleAuthService.getGoogleUser(req, res);
   }
 
-  @Get('user/google')
+  @Get('customer/google')
   async getCurrentGoogleUser(@Req() req: Request, @Res() res: Response) {
     //const getCoockies = await req.cookies['auth_token'];
     return await this.googleAuthService.getCurrentUser(req, res);
   }
 
-  // @Post()
-  // create(@Body(userauth: UserAuthDto)) {
-  //   return this.authService.create(userauth);
-  // }
+  @Get('customer')
+  async getCurCusrtm(@Req() req: Request, @Res() res: Response) {
+    return await this.authService.getCurrentCustm(req, res);
+  }
 
   @Get()
   findAll() {
@@ -111,6 +100,7 @@ export class AuthController {
   logOut(@Res() res: Response) {
     return res.clearCookie(this.configService.get('COOKIE_NAME'), {
       httpOnly: true,
+      secure: true,
     });
   }
 

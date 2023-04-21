@@ -17,7 +17,11 @@ import {
   matchPassSms, 
   signInGoogle, 
   logOut,
-  getGoogleCurUser } from '../../restAPI/restUsersApi';
+  getGoogleCurUser,
+  signUpCustomer,
+  logInCustm,
+  getCurCustomer,
+} from '../../restAPI/restUsersApi';
 import AuthSignUp from '../auth/AuthSignUp';
 
 const NavBar = observer(() => {
@@ -51,15 +55,20 @@ const NavBar = observer(() => {
 
   useEffect(() => {
     let isCurUser = false;
-    const googleCurUser = async () => {
+    const getCurUser = async () => {
       const curUser = await getGoogleCurUser();
+      const curCustm = await getCurCustomer();
       console.log('CURRENT_USER', curUser)
       if(curUser && !isCurUser) {
         customer.setIsAuth(true);
-        customer.setUser(curUser)
+        customer.setUser(curUser);
+      }
+      if(curCustm && !isCurUser) {
+        customer.setIsAuth(true);
+        customer.setUser(curUser);
       }
     }
-    googleCurUser();
+    getCurUser();
     return () => {isCurUser = true}
   },[customer])
 
@@ -112,7 +121,8 @@ const NavBar = observer(() => {
     console.log('SMS: ', smsPass)
     if (matchPass) {
       setIsMatchPass(!isMatchPass);
-      setAuthConfirm(!activeAuthConfirm);  
+      setAuthConfirm(!activeAuthConfirm); 
+      setSignUp(!signUp);
     } else {
 
     } 
@@ -125,7 +135,24 @@ const NavBar = observer(() => {
       console.log(error);
     }
   }
+  const signUpCustm = async (dataSignIn: any) => {
+    try {
+      await signUpCustomer(dataSignIn);
+      console.log( 'SIGN_UP_DATA: ', dataSignIn);
+    } catch (error) {
+      console.log('SIGN_UP_ERROR', error);
+    }
+  }
 
+  const logInCustomer = async (dataLogIn: any) => {
+    try {
+      await logInCustm(dataLogIn);
+    } catch (error) {
+      console.log('LOGIN_ERROR', error);
+    }
+    
+  }
+ 
   return (
 
   <div className="navbar">
@@ -135,10 +162,10 @@ const NavBar = observer(() => {
     <NavBarDropTyres/>
     <NavBarDropTyres/>
     <NavBarDropTyres/>
-    <a href="/#home" className='anchorBtn'>Доставка і оплата</a>
+    <a href="/home" className='anchorBtn'>Доставка і оплата</a>
     <a href='/contact' className='anchorBtn'>Контакти</a>
-    <span data-href="/#home">067 777 77 77</span>
-    <span data-href="/#">Більше</span>
+    <span data-href="/home">067 777 77 77</span>
+    <span data-href="/">Більше</span>
     <ButtonSearch clickSearchBtn={clickSearchBtn}/>
     {searchBtn? 
       <NavBarSearch searchBtn={searchBtn} clickSearchBtn={clickSearchBtn}/>
@@ -153,7 +180,9 @@ const NavBar = observer(() => {
     {activeAuth ?
       <Modal active={activeAuth} setActive={authActive}>
         <AuthForm confirmActive={authActiveConfirm}
-          socialGoogle={googleIsAuth}/>
+          socialGoogle={googleIsAuth}
+          logIn={logInCustomer}
+        />
       </Modal>
     : null
     }
@@ -170,7 +199,9 @@ const NavBar = observer(() => {
     }
     {isMatchPass ?
       <Modal active={signUp} setActive={signActiveUp}>
-        <AuthSignUp phoneNumber={phoneTel}/>
+        <AuthSignUp phoneNumber={phoneTel}
+          signUpAuth={signUpCustm}
+        />
       </Modal> 
       :null
     }

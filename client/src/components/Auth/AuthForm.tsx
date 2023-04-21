@@ -1,12 +1,14 @@
 import React from 'react';
 import '../../css/AuthCss/AuthForm.css';
+import { useForm } from "react-hook-form";
 
-const AuthForm = ({confirmActive, socialGoogle}: any) => {
+const AuthForm = ({confirmActive, socialGoogle, logIn}: any) => {
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
     return (
           <div className='authFormMain'>
             <div className="containerAuthForm">
-              <form action="">
+              <form onSubmit={handleSubmit(data => logIn(data))}>
                   <div className='titleAuthForm'>Вхід / Реєстрація</div>
                   <div className="vl">
                     <span>або</span>
@@ -25,20 +27,32 @@ const AuthForm = ({confirmActive, socialGoogle}: any) => {
                   </div>
 
                   <div className="colAuthForm">
-                    <div className="hide-md-lg">
-                      <p>Or sign in manually:</p>
-                    </div>
-                    <input className='inputAuthForm' type="text" name="username" placeholder="номер телефона" required/>
-                    <input className='inputAuthForm' type="password" name="password" placeholder="Пароль" required/>
-                    <input className='inputAuthForm' type="submit" value="Увійти"/>
+                    <input className='inputAuthForm'
+                     type="tel" 
+                     //name="phone" 
+                     placeholder="номер телефона" 
+                     {...register("phone", { required: true, maxLength: 12 })} 
+                     required/>
+                     {errors.phone && <span style={{color : "red"}}>Не вірно вказані данні*</span>}
+                    <input className='inputAuthForm' 
+                      type="password" 
+                      //name="password" 
+                      placeholder="Пароль" 
+                      {...register("password", { required: true, minLength: 4 })}
+                      required/>
+                      {errors.password && <span style={{color : "red"}}>Це обов'язкове поле</span>}
+                    <input className='inputAuthForm' 
+                      type="submit"
+                      value="Увійти"
+                    />
                   </div>
                 </div>
               </form>
             </div>
             <div className="bottomContainer">
               <div className="rowAuthForm">
-                  <a href="/#" className="btnAuthForm" onClick={confirmActive}>Зареєструватися</a>
-                  <a href="/#" className="btnAuthForm">Забули пароль?</a>
+                  <button type="button" className="btnAuthForm" onClick={confirmActive}>Зареєструватися</button>
+                  <a href="/" className="btnAuthForm">Забули пароль?</a>
               </div>
             </div>
           </div>

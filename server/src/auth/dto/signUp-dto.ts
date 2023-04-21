@@ -5,7 +5,7 @@ export class SignupDto {
   email: string;
   full_name: string;
   password: string;
-  photo: string;
+  picture: string;
   phone: bigint;
   id_contract: number;
   balance: number;

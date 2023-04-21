@@ -41,7 +41,7 @@ export class Users extends Model<Users, UsersConfigAttr> {
   email: string;
 
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
-  photo: string;
+  picture: string;
 
   @Column({
     type: DataType.STRING,
