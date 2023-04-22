@@ -19,7 +19,8 @@ import { UpdateAuthDto } from './dto/update-auth.dto';
 import { Public } from './decorators/public.decorator';
 import { LoginDto } from './dto/logIn-dto';
 import { ConfigService } from '../config/config.service';
-import { GoogleAuthService } from './socialApi/google-auth/google-auth.service';
+import { GoogleAuthService } from './socialApi/google-auth.service';
+import { FacebookAuthService } from './socialApi/facebook-auth.service';
 
 @Controller('auth')
 export class AuthController {
@@ -27,6 +28,7 @@ export class AuthController {
     private readonly authService: AuthService,
     private configService: ConfigService,
     private googleAuthService: GoogleAuthService,
+    private facebookAuthService: FacebookAuthService,
   ) {}
 
   //@Public()
@@ -74,6 +76,21 @@ export class AuthController {
   async getCurrentGoogleUser(@Req() req: Request, @Res() res: Response) {
     //const getCoockies = await req.cookies['auth_token'];
     return await this.googleAuthService.getCurrentUser(req, res);
+  }
+
+  @Get('facebook/url')
+  async getFacebookLogIn(@Res() res: Response) {
+    return res.send(await this.facebookAuthService.getFacebookAuthURL());
+  }
+
+  @Get('facebook')
+  async getFacebookUser(@Res() res: Response, @Req() req: Request) {
+    return await this.facebookAuthService.getFacebookUser(req, res);
+  }
+
+  @Get('customer/facebook')
+  async getCurrentFacebookUser(@Req() req: Request, @Res() res: Response) {
+    return await this.facebookAuthService.getCurrentFacebookUser(req, res);
   }
 
   @Get('customer')

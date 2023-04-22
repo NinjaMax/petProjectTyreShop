@@ -4,13 +4,14 @@ import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { UsersModule } from '../users/users.module';
 import { jwtConstants } from './constants';
-import { GoogleAuthService } from './socialApi/google-auth/google-auth.service';
+import { GoogleAuthService } from './socialApi/google-auth.service';
 import { CustomersModule } from '../customers/customers.module';
+import { FacebookAuthService } from './socialApi/facebook-auth.service';
 //import { ConfigModule } from 'src/config/config.module';
 
 @Module({
   controllers: [AuthController],
-  providers: [AuthService, GoogleAuthService],
+  providers: [AuthService, GoogleAuthService, FacebookAuthService],
   imports: [
     JwtModule.register({ secret: jwtConstants.secret }),
     UsersModule,

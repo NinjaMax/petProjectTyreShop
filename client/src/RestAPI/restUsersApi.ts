@@ -1,4 +1,4 @@
-import { $authHostGet, $authHostPost, } from "./index";
+import { $authHostGet, $authHostPost, $authHostPostLogIn } from "./index";
 import jwt_decode from 'jwt-decode';
 
 export const signUpCustomer = async (dataSignIn: {}) => {
@@ -9,7 +9,7 @@ export const signUpCustomer = async (dataSignIn: {}) => {
 }
 
 export const logInCustm = async (dataLogIn: {}) => {
-    const {data} = await $authHostPost.post('auth/login', dataLogIn)
+    const {data} = await $authHostPostLogIn.post('auth/login', dataLogIn)
     //localStorage.setItem('token', data.token){phone, password}phone: string, password: string
     console.log('LOGIN: ', data);
     return data;
@@ -70,6 +70,22 @@ export const getCurCustomer = async () => {
     )
     //cookie.setItem('token', data.token)
     console.log('CURR_CUSTOMER: ', data);
+    return data;
+}
+
+export const signInFacebook = async () => {
+    const {data} = await $authHostGet.get('/auth/facebook/url', 
+    )
+    //cookie.setItem('token', data.token)
+    console.log('URL_FACEBOOK_USER_Auth: ', data);
+    return data;
+}
+
+export const getFacebookCurUser = async () => {
+    const {data} = await $authHostGet.get('/auth/customer/facebook', 
+    )
+    //cookie.setItem('token', data.token)
+    console.log('USER/FACEBOOK: ', data);
     return data;
 }
 

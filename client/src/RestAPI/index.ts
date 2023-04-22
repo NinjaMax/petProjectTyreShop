@@ -32,6 +32,14 @@ const $authHostPost = axios.create({
     }, withCredentials: true,
 })
 
+const $authHostPostLogIn = axios.create({
+    baseURL: process.env.REACT_APP_HOST,
+    headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Access-Control-Allow-Origin': '*'
+    }, withCredentials: true,
+})
+
 // const authInterceptor = (config: any) => {
 //     config.headers.authorization = `Bearer ${localStorage.getItem('token')}`
 //     return config
@@ -44,5 +52,6 @@ export {
     $hostPost,
     $hostGet,
     $authHostGet,
-    $authHostPost
+    $authHostPost,
+    $authHostPostLogIn
 }

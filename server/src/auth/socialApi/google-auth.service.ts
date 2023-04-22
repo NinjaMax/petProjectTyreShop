@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Response, Request } from 'express';
 import axios from 'axios';
-import { ConfigService } from '../../../config/config.service';
+import { ConfigService } from '../../config/config.service';
 import queryString from 'querystring';
 
 @Injectable()

@@ -21,6 +21,8 @@ import {
   signUpCustomer,
   logInCustm,
   getCurCustomer,
+  signInFacebook,
+  getFacebookCurUser
 } from '../../restAPI/restUsersApi';
 import AuthSignUp from '../auth/AuthSignUp';
 
@@ -36,19 +38,25 @@ const NavBar = observer(() => {
   const [isMatchPass, setIsMatchPass] = useState(false);
   const [smsPass, setSmsPass] = useState<number | null>(null);
   const [phoneTel, setPhoneTel] = useState<bigint | undefined>();
+  const [facebookIsAuth, setFacebookIsAuth] = useState('');
 
   useEffect(() => {
     let isUser = false;
-    const googleSignIn = async () => {
+    const socialSignIn = async () => {
       const authGoogle = await signInGoogle();
+      const authFacebook = await signInFacebook();
       if(authGoogle && !isUser) {
         setGoogleIsAuth(authGoogle);
         console.log('SET_GOOGLE_AUTH: ', authGoogle)
-      } else {
-        console.log('ПОМИЛКА СЕРВІСА');
-      }
+      } 
+      if (authFacebook && !isUser){
+        setFacebookIsAuth(authFacebook);
+      } 
+      // else {
+      //   console.log('ПОМИЛКА СЕРВІСА');
+      // }
     }
-      googleSignIn()
+    socialSignIn();
     return () => {isUser = true}
     //}
   },[])
@@ -56,16 +64,21 @@ const NavBar = observer(() => {
   useEffect(() => {
     let isCurUser = false;
     const getCurUser = async () => {
-      const curUser = await getGoogleCurUser();
+      const curGoogleUser = await getGoogleCurUser();
+      const curFacebookUser = await getFacebookCurUser();
       const curCustm = await getCurCustomer();
-      console.log('CURRENT_USER', curUser)
-      if(curUser && !isCurUser) {
+      console.log('CURRENT_USER', curCustm)
+      if(curGoogleUser && !isCurUser) {
         customer.setIsAuth(true);
-        customer.setUser(curUser);
+        customer.setUser(curGoogleUser);
       }
       if(curCustm && !isCurUser) {
         customer.setIsAuth(true);
-        customer.setUser(curUser);
+        customer.setUser(curCustm);
+      }
+      if(curFacebookUser && !isCurUser) {
+        customer.setIsAuth(true);
+        customer.setUser(curFacebookUser);
       }
     }
     getCurUser();
@@ -108,6 +121,8 @@ const NavBar = observer(() => {
       if (sendPass) {
         setPassSend(!isPassSend);
         setSmsPass(sendPass);
+      } else {
+        console.log(`Помилка номера. Або користувач з номером ${telnumber} вже існує.`);
       }
     } catch (error) {
       console.log(error);
@@ -181,6 +196,7 @@ const NavBar = observer(() => {
       <Modal active={activeAuth} setActive={authActive}>
         <AuthForm confirmActive={authActiveConfirm}
           socialGoogle={googleIsAuth}
+          socialFacebook={facebookIsAuth}
           logIn={logInCustomer}
         />
       </Modal>

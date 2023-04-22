@@ -2,7 +2,7 @@ import React from 'react';
 import '../../css/AuthCss/AuthForm.css';
 import { useForm } from "react-hook-form";
 
-const AuthForm = ({confirmActive, socialGoogle, logIn}: any) => {
+const AuthForm = ({confirmActive, socialGoogle, socialFacebook, logIn}: any) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
     return (
@@ -15,7 +15,7 @@ const AuthForm = ({confirmActive, socialGoogle, logIn}: any) => {
                   </div>
                 <div className="rowAuthForm">
                   <div className="colAuthForm">
-                    <a href="/#" className="fb btnAuthForm">
+                    <a href={socialFacebook} className="fb btnAuthForm">
                       <i className="fa fa-facebook fa-fw"></i> Увійти з Facebook
                     </a>
                     <a href="/#" className="twitter btnAuthForm">
@@ -52,7 +52,7 @@ const AuthForm = ({confirmActive, socialGoogle, logIn}: any) => {
             <div className="bottomContainer">
               <div className="rowAuthForm">
                   <button type="button" className="btnAuthForm" onClick={confirmActive}>Зареєструватися</button>
-                  <a href="/" className="btnAuthForm">Забули пароль?</a>
+                  <button type="button" className="btnAuthForm">Забули пароль?</button>
               </div>
             </div>
           </div>
