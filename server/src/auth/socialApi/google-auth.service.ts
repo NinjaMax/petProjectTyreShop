@@ -108,17 +108,16 @@ export class GoogleAuthService {
   }
 
   async getCurrentUser(req: Request, res: Response) {
-    console.log('get user');
+    console.log('get Google user');
     try {
-      const getCoockies: string | undefined =
-        req.cookies[this.configService.get('COOKIE_NAME')];
-      console.log('GET COOCKIES', getCoockies);
+      const getCoockies: string | undefined = req.cookies['auth_token'];
+      console.log('GET_COOCKIES_GOOGLE: ', getCoockies);
       if (getCoockies) {
         const decoded = this.jwtService.verify(getCoockies);
         console.log('decoded', decoded);
         return res.send(decoded);
       } else {
-        console.log('Користувач не авторизован');
+        console.log('Користувач Google не авторизован');
       }
     } catch (err) {
       console.log(err);

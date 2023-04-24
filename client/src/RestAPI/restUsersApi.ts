@@ -1,4 +1,4 @@
-import { $authHostGet, $authHostPost, $authHostPostLogIn } from "./index";
+import { $authHostGet, $authHostPost, $authHostPostLogIn, $authHostDeleteLogOut } from "./index";
 import jwt_decode from 'jwt-decode';
 
 export const signUpCustomer = async (dataSignIn: {}) => {
@@ -61,12 +61,12 @@ export const getGoogleCurUser = async () => {
     const {data} = await $authHostGet.get('/auth/customer/google', 
     )
     //cookie.setItem('token', data.token)
-    console.log('USER/GOOGLE: ', data);
+    console.log('USER_GOOGLE: ', data);
     return data;
 }
 
 export const getCurCustomer = async () => {
-    const {data} = await $authHostGet.get('/auth/customer', 
+    const {data} = await $authHostGet.get('/auth/customer/phone', 
     )
     //cookie.setItem('token', data.token)
     console.log('CURR_CUSTOMER: ', data);
@@ -85,12 +85,12 @@ export const getFacebookCurUser = async () => {
     const {data} = await $authHostGet.get('/auth/customer/facebook', 
     )
     //cookie.setItem('token', data.token)
-    console.log('USER/FACEBOOK: ', data);
+    console.log('USER_FACEBOOK: ', data);
     return data;
 }
 
 export const logOut = async () => {
-    const {data} = await $authHostPost.delete('/auth/logout', 
+    const {data} = await $authHostDeleteLogOut.delete('/auth/logout', 
     )
     //cookie.setItem('token', data.token)
     //console.log(data);

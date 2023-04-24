@@ -79,7 +79,8 @@ export class AuthService {
           httpOnly: true,
           secure: true,
         });
-        return res.redirect(this.configService.get('APP_ROOT_URI'));
+        //return tokenCutmAccess;
+        //return res.redirect(this.configService.get('APP_ROOT_URI'));
       }
     } catch (error) {
       console.log('SIGNUP_ERROR: ', error);
@@ -142,25 +143,31 @@ export class AuthService {
         loginDto,
       );
       if (!existingCustomer) {
-        throw new Error('Користувач з таким номером телефону не існує.');
+        throw new HttpException(
+          `Користувач з таким номером ${loginDto.phone} телефону не існує.`,
+          HttpStatus.UNAUTHORIZED,
+        );
       } else {
         const passwordMatch = await argon2.verify(
-          (
-            await existingCustomer
-          ).password,
+          existingCustomer.password,
           loginDto.password,
         );
         if (!passwordMatch) {
-          throw new Error();
+          throw new HttpException(
+            `Не вірно вказаний пароль`,
+            HttpStatus.UNAUTHORIZED,
+          );
+        } else {
+          const loginCustomer = await this.createAccessToken(existingCustomer);
+          console.log('LOGIN_CUSTOMER: ', loginCustomer);
+          res.cookie('auth_custm', loginCustomer, {
+            maxAge: 900000,
+            httpOnly: true,
+            secure: true,
+          });
+          return true;
         }
-        const loginCustomer = await this.createAccessToken(existingCustomer);
-        console.log('LOGIN_CUSTOMER: ', loginCustomer);
-        res.cookie('auth_custm', loginCustomer, {
-          maxAge: 900000,
-          httpOnly: true,
-          secure: true,
-        });
-        return res.redirect(this.configService.get('APP_ROOT_URI'));
+        //return res.redirect(this.configService.get('APP_ROOT_URI'));
       }
     } catch (e) {
       throw new UnauthorizedException(
@@ -169,11 +176,8 @@ export class AuthService {
     }
   }
 
-  // create(createAuthDto: CreateAuthDto) {
-  //   return 'This action adds a new auth';
-  // }
-
   async getCurrentCustm(req: Request, res: Response) {
+    console.log('get Customer user');
     try {
       const getCoockiesCustm: string | undefined = req.cookies['auth_custm'];
       console.log('GET_COOCKIES_CUSTM', getCoockiesCustm);

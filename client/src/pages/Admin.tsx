@@ -86,24 +86,8 @@ const Admin = () => {
 
   
     useEffect(()=> {
-        //const getAllTyre = getTyres();
-        // let isMounted = false;
-        //  const fetchDataTyre = async () => {
-        //     const result: any = await getTyres();
-        //     //await getTyres().then(data => {
-        //     if (!isMounted) {
-        //            //setTyreData(data.data) 
-        //         setTyreData(result.data);
-        //                //console.log(result.data);
-        //     }
-        // }
-    
-        // fetchDataTyre();
-
-
         let isMounted = false;
             const postTask = async() => {
-            
                 const tasks:any[] = [
                     //addGoodsToOrder,
                     //createGoodsToOrder,

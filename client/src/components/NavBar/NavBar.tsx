@@ -25,6 +25,7 @@ import {
   getFacebookCurUser
 } from '../../restAPI/restUsersApi';
 import AuthSignUp from '../auth/AuthSignUp';
+import { yieldToMain } from '../../restAPI/yieldMain';
 
 const NavBar = observer(() => {
   const {customer} = useContext<any | null>(Context);
@@ -43,42 +44,59 @@ const NavBar = observer(() => {
   useEffect(() => {
     let isUser = false;
     const socialSignIn = async () => {
-      const authGoogle = await signInGoogle();
-      const authFacebook = await signInFacebook();
-      if(authGoogle && !isUser) {
-        setGoogleIsAuth(authGoogle);
-        console.log('SET_GOOGLE_AUTH: ', authGoogle)
-      } 
-      if (authFacebook && !isUser){
-        setFacebookIsAuth(authFacebook);
-      } 
-      // else {
-      //   console.log('ПОМИЛКА СЕРВІСА');
-      // }
+      const taskSocial: any[] = [
+        signInGoogle,
+        signInFacebook,       
+      ];
+      let i:number = 0;
+      while(taskSocial.length > i) {
+        if(!isUser && taskSocial[i] === signInGoogle) {
+          let authGoogle: any = await taskSocial[i]();
+          setGoogleIsAuth(authGoogle);
+          console.log('SET_GOOGLE_AUTH: ', authGoogle)
+        } 
+        if (!isUser && taskSocial[i] === signInFacebook){
+          let authFacebook: any = await taskSocial[i]();
+          setFacebookIsAuth(authFacebook);
+          console.log('SET_FACEBOOK_AUTH: ', authFacebook)
+        }
+        const task = taskSocial.shift();
+        task();
+        await yieldToMain(); 
+      }
     }
     socialSignIn();
     return () => {isUser = true}
-    //}
   },[])
 
   useEffect(() => {
     let isCurUser = false;
     const getCurUser = async () => {
-      const curGoogleUser = await getGoogleCurUser();
-      const curFacebookUser = await getFacebookCurUser();
-      const curCustm = await getCurCustomer();
-      console.log('CURRENT_USER', curCustm)
-      if(curGoogleUser && !isCurUser) {
-        customer.setIsAuth(true);
-        customer.setUser(curGoogleUser);
-      }
-      if(curCustm && !isCurUser) {
-        customer.setIsAuth(true);
-        customer.setUser(curCustm);
-      }
-      if(curFacebookUser && !isCurUser) {
-        customer.setIsAuth(true);
-        customer.setUser(curFacebookUser);
+      const taskCustm: any[] = [
+        getGoogleCurUser,
+        getFacebookCurUser,
+        getCurCustomer,
+      ];
+      let i:number = 0;
+      while(taskCustm.length > i) {
+        if(!isCurUser && taskCustm[i] === getGoogleCurUser) {
+          let curGoogleUser: any = await taskCustm[i]();
+          customer.setIsAuth(true);
+          customer.setUser(curGoogleUser);
+        }
+        if(!isCurUser && taskCustm[i] === getFacebookCurUser) {
+          let curFacebookUser: any = await taskCustm[i]();
+          customer.setIsAuth(true);
+          customer.setUser(curFacebookUser);
+        }
+        if(!isCurUser && taskCustm[i] === getCurCustomer) {
+          let curCustm: any = await taskCustm[i]();
+          customer.setIsAuth(true);
+          customer.setUser(curCustm);
+        }
+        const task = taskCustm.shift();
+        task();
+        await yieldToMain();
       }
     }
     getCurUser();
@@ -144,12 +162,11 @@ const NavBar = observer(() => {
   }
 
   const logOutUser = async () => {
-    try {
-      await logOut();
-    } catch (error) {
-      console.log(error);
-    }
+    await logOut();
+    customer.setIsAuth(false);
+    customer.setUser({});
   }
+
   const signUpCustm = async (dataSignIn: any) => {
     try {
       await signUpCustomer(dataSignIn);
@@ -161,7 +178,10 @@ const NavBar = observer(() => {
 
   const logInCustomer = async (dataLogIn: any) => {
     try {
-      await logInCustm(dataLogIn);
+      const logInData: boolean = await logInCustm(dataLogIn);
+      if(logInData) {
+        setActiveAuth(!activeAuth);
+      }
     } catch (error) {
       console.log('LOGIN_ERROR', error);
     }

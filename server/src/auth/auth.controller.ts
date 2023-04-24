@@ -10,6 +10,7 @@ import {
   HttpStatus,
   Req,
   Res,
+  Redirect,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { AuthService } from './auth.service';
@@ -21,6 +22,7 @@ import { LoginDto } from './dto/logIn-dto';
 import { ConfigService } from '../config/config.service';
 import { GoogleAuthService } from './socialApi/google-auth.service';
 import { FacebookAuthService } from './socialApi/facebook-auth.service';
+import cors from 'cors';
 
 @Controller('auth')
 export class AuthController {
@@ -35,7 +37,12 @@ export class AuthController {
   //@HttpCode(HttpStatus.OK)
   @Post('signup')
   async signUpCust(@Res() res: Response, @Body() signupDto: SignupDto) {
-    return await this.authService.signUpCustm(res, signupDto);
+    return res.send(await this.authService.signUpCustm(res, signupDto));
+    // return res.cookie('auth_custm', tokenCutmAccess, {
+    //   maxAge: 900000,
+    //   httpOnly: true,
+    //   secure: true,
+    // });
   }
 
   // @Get('profile')
@@ -45,7 +52,12 @@ export class AuthController {
 
   @Post('login')
   async loginByPhoneCustm(@Res() res: Response, @Body() loginDto: LoginDto) {
-    return await this.authService.loginCustmByPhone(res, loginDto);
+    return res.send(await this.authService.loginCustmByPhone(res, loginDto));
+    // return res.cookie('auth_custm', loginCustomer, {
+    //   maxAge: 900000,
+    //   httpOnly: true,
+    //   secure: true,
+    // });
   }
 
   //@Public()
@@ -93,7 +105,7 @@ export class AuthController {
     return await this.facebookAuthService.getCurrentFacebookUser(req, res);
   }
 
-  @Get('customer')
+  @Get('customer/phone')
   async getCurCusrtm(@Req() req: Request, @Res() res: Response) {
     return await this.authService.getCurrentCustm(req, res);
   }
@@ -114,6 +126,7 @@ export class AuthController {
   //}
 
   @Delete('logout')
+  @Redirect('https://localhost:3000')
   logOut(@Res() res: Response) {
     return res.clearCookie(this.configService.get('COOKIE_NAME'), {
       httpOnly: true,

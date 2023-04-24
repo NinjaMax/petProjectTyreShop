@@ -36,7 +36,15 @@ const $authHostPostLogIn = axios.create({
     baseURL: process.env.REACT_APP_HOST,
     headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': `${process.env.CORS}`
+    }, withCredentials: true,
+})
+
+const $authHostDeleteLogOut = axios.create({
+    baseURL: process.env.REACT_APP_HOST,
+    headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Access-Control-Allow-Origin': `${process.env.CORS}`
     }, withCredentials: true,
 })
 
@@ -53,5 +61,6 @@ export {
     $hostGet,
     $authHostGet,
     $authHostPost,
-    $authHostPostLogIn
+    $authHostPostLogIn,
+    $authHostDeleteLogOut
 }

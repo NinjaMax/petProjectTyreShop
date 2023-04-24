@@ -15,16 +15,17 @@ export class FacebookAuthService {
   ) {}
 
   async getFacebookAuthURL() {
-    const rootUrl = 'https://www.facebook.com/v8.0/dialog/oauth';
+    const rootUrl = 'https://www.facebook.com/v16.0/dialog/oauth';
     const options = {
       redirect_uri: `https://localhost:4000/auth/facebook`,
       client_id: '161637870174443',
       //access_type: 'offline',
       response_type: 'code',
-      prompt: 'consent',
-      auth_type: 'rerequest',
+      //prompt: 'consent',
+      //auth_type: 'rerequest',
+      display: 'popup',
       //version: 'v16.0',
-      scope: ['public_profile', 'email'].join(','),
+      scope: ['email', 'name', 'id'].join(','),
     };
     return `${rootUrl}?${queryString.stringify(options)}`;
   }
@@ -42,11 +43,11 @@ export class FacebookAuthService {
   }): Promise<{
     access_token: string;
     //expires_in: Number;
-    refresh_token: string;
+    //refresh_token: string;
     scope: string;
     id_token: string;
   }> {
-    const url = 'https://graph.facebook.com/v8.0/oauth/access_token';
+    const url = 'https://graph.facebook.com/v16.0/oauth/access_token?';
     const values = {
       code,
       client_id: clientId,
@@ -78,7 +79,7 @@ export class FacebookAuthService {
     });
 
     const facebookUser = await axios
-      .get(`https://graph.facebook.com/v8.0/me?access_token=${access_token}`, {
+      .get(`https://graph.facebook.com/v16.0/me?fields=id%2Cname%2Cemail&access_token=${access_token}`, {
         headers: {
           Authorization: `Bearer ${id_token}`,
         },
@@ -100,16 +101,16 @@ export class FacebookAuthService {
   }
 
   async getCurrentFacebookUser(req: Request, res: Response) {
-    console.log('get user');
+    console.log('get Facebook user');
     try {
       const getCoockies: string | undefined = req.cookies['auth_facebook'];
-      console.log('GET COOCKIES', getCoockies);
+      console.log('GET_COOCKIES_FACEBOOK', getCoockies);
       if (getCoockies) {
         const decoded = this.jwtService.verify(getCoockies);
         console.log('decoded', decoded);
         return res.send(decoded);
       } else {
-        console.log('Користувач не авторизован');
+        console.log('Користувач Facebook не авторизован');
       }
     } catch (err) {
       console.log(err);
