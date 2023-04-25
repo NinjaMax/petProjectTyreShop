@@ -23,7 +23,7 @@ export class FacebookAuthService {
       response_type: 'code',
       //prompt: 'consent',
       //auth_type: 'rerequest',
-      display: 'popup',
+      //display: 'popup',
       //version: 'v16.0',
       scope: ['email', 'name', 'id'].join(','),
     };
@@ -79,11 +79,14 @@ export class FacebookAuthService {
     });
 
     const facebookUser = await axios
-      .get(`https://graph.facebook.com/v16.0/me?fields=id%2Cname%2Cemail&access_token=${access_token}`, {
-        headers: {
-          Authorization: `Bearer ${id_token}`,
+      .get(
+        `https://graph.facebook.com/v16.0/me?fields=id%2Cname%2Cemail&access_token=${access_token}`,
+        {
+          headers: {
+            Authorization: `Bearer ${id_token}`,
+          },
         },
-      })
+      )
       .then((res) => res.data)
       .catch((error) => {
         console.error(`Failed to fetch user`);
@@ -92,7 +95,7 @@ export class FacebookAuthService {
 
     const token = this.jwtService.sign(facebookUser);
 
-    res.cookie('auth_facebook', token, {
+    res.cookie('auth_custm', token, {
       maxAge: 900000,
       httpOnly: true,
       secure: true,
@@ -100,15 +103,15 @@ export class FacebookAuthService {
     res.redirect(`https://localhost:4000/auth/facebook`);
   }
 
-  async getCurrentFacebookUser(req: Request, res: Response) {
+  async getCurrentFacebookUser(req: Request, res: Response, cookies: string) {
     console.log('get Facebook user');
     try {
-      const getCoockies: string | undefined = req.cookies['auth_facebook'];
-      console.log('GET_COOCKIES_FACEBOOK', getCoockies);
-      if (getCoockies) {
-        const decoded = this.jwtService.verify(getCoockies);
-        console.log('decoded', decoded);
-        return res.send(decoded);
+      //const getCoockies: string | undefined = req.cookies[name];
+      console.log('GET_COOCKIES_FACEBOOK', cookies);
+      if (cookies) {
+        const decoded = this.jwtService.verify(cookies);
+        console.log('decoded FACEBOOK', decoded);
+        return decoded;
       } else {
         console.log('Користувач Facebook не авторизован');
       }

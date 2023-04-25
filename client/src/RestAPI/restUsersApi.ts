@@ -61,7 +61,7 @@ export const getGoogleCurUser = async () => {
     const {data} = await $authHostGet.get('/auth/customer/google', 
     )
     //cookie.setItem('token', data.token)
-    console.log('USER_GOOGLE: ', data);
+    console.log('CUSTM_GOOGLE: ', data);
     return data;
 }
 
@@ -85,7 +85,7 @@ export const getFacebookCurUser = async () => {
     const {data} = await $authHostGet.get('/auth/customer/facebook', 
     )
     //cookie.setItem('token', data.token)
-    console.log('USER_FACEBOOK: ', data);
+    console.log('CUSTM_FACEBOOK: ', data);
     return data;
 }
 

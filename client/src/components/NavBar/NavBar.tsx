@@ -40,6 +40,7 @@ const NavBar = observer(() => {
   const [smsPass, setSmsPass] = useState<number | null>(null);
   const [phoneTel, setPhoneTel] = useState<bigint | undefined>();
   const [facebookIsAuth, setFacebookIsAuth] = useState('');
+  const [formError, setFormError] = useState('');
 
   useEffect(() => {
     let isUser = false;
@@ -79,18 +80,9 @@ const NavBar = observer(() => {
       ];
       let i:number = 0;
       while(taskCustm.length > i) {
-        if(!isCurUser && taskCustm[i] === getGoogleCurUser) {
-          let curGoogleUser: any = await taskCustm[i]();
-          customer.setIsAuth(true);
-          customer.setUser(curGoogleUser);
-        }
-        if(!isCurUser && taskCustm[i] === getFacebookCurUser) {
-          let curFacebookUser: any = await taskCustm[i]();
-          customer.setIsAuth(true);
-          customer.setUser(curFacebookUser);
-        }
-        if(!isCurUser && taskCustm[i] === getCurCustomer) {
-          let curCustm: any = await taskCustm[i]();
+        let curCustm: any = await taskCustm[i]();
+        console.log('CURR_CUSTM: ', typeof curCustm);
+        if (!isCurUser && curCustm) {
           customer.setIsAuth(true);
           customer.setUser(curCustm);
         }
@@ -148,17 +140,20 @@ const NavBar = observer(() => {
   }
 
   const matchGetPass = async (passFromTel: number) => {
-    const matchPass = await matchPassSms(smsPass!, passFromTel);
-    console.log('PASS_TEL: ', passFromTel);
-    console.log('MATCH PASS: ', matchPass);
-    console.log('SMS: ', smsPass)
-    if (matchPass) {
-      setIsMatchPass(!isMatchPass);
-      setAuthConfirm(!activeAuthConfirm); 
-      setSignUp(!signUp);
-    } else {
-
-    } 
+    try {
+      const matchPass = await matchPassSms(smsPass!, passFromTel);
+      console.log('PASS_TEL: ', passFromTel);
+      console.log('MATCH PASS: ', matchPass);
+      console.log('SMS: ', smsPass)
+      if (matchPass) {
+        setIsMatchPass(!isMatchPass);
+        setAuthConfirm(!activeAuthConfirm); 
+        setSignUp(!signUp);
+      } 
+    } catch (error: any) {
+      console.log(error);
+    }
+    
   }
 
   const logOutUser = async () => {
@@ -171,8 +166,9 @@ const NavBar = observer(() => {
     try {
       await signUpCustomer(dataSignIn);
       console.log( 'SIGN_UP_DATA: ', dataSignIn);
-    } catch (error) {
+    } catch (error: any) {
       console.log('SIGN_UP_ERROR', error);
+      setFormError(error.response.data.message);
     }
   }
 
@@ -181,11 +177,12 @@ const NavBar = observer(() => {
       const logInData: boolean = await logInCustm(dataLogIn);
       if(logInData) {
         setActiveAuth(!activeAuth);
+        customer.setIsAuth(true);
       }
-    } catch (error) {
-      console.log('LOGIN_ERROR', error);
+    } catch (error: any) {
+      console.log('LOGIN_ERROR_DATA:', error.response.data.message);
+      setFormError(error.response.data.message);
     }
-    
   }
  
   return (
@@ -218,6 +215,7 @@ const NavBar = observer(() => {
           socialGoogle={googleIsAuth}
           socialFacebook={facebookIsAuth}
           logIn={logInCustomer}
+          formError={formError}
         />
       </Modal>
     : null
@@ -229,6 +227,7 @@ const NavBar = observer(() => {
           preSignUp ={preSignUpAuth}
           isSendSms={isPassSend}
           matchUserPass={matchGetPass}
+          formError={formError}
         />
       </Modal>
       : null
@@ -237,6 +236,7 @@ const NavBar = observer(() => {
       <Modal active={signUp} setActive={signActiveUp}>
         <AuthSignUp phoneNumber={phoneTel}
           signUpAuth={signUpCustm}
+          formError={formError}
         />
       </Modal> 
       :null

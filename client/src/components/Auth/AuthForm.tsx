@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../../css/AuthCss/AuthForm.css';
 import { useForm } from "react-hook-form";
 
-const AuthForm = ({confirmActive, socialGoogle, socialFacebook, logIn}: any) => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+const AuthForm = ({confirmActive, socialGoogle, socialFacebook, logIn, formError}: any) => {
+  const { register, handleSubmit, setError, formState: { errors } } = useForm({
+    criteriaMode: 'all',
+  });
+
+  useEffect(() => {
+    let isError = false;
+    if(!isError && formError) {
+      setError('root.serverError', { 
+        type: formError,
+      })
+    }
+    return () => {isError = true}
+  },[formError, setError]);
 
     return (
           <div className='authFormMain'>
@@ -33,14 +45,26 @@ const AuthForm = ({confirmActive, socialGoogle, socialFacebook, logIn}: any) => 
                      placeholder="номер телефона" 
                      {...register("phone", { required: true, maxLength: 12 })} 
                      required/>
-                     {errors.phone && <span style={{color : "red"}}>Не вірно вказані данні*</span>}
+                     {errors.phone && 
+                      <span style={{color : "red", fontSize: "10px"}}>
+                        *номер повинен починатись на 38 та містити взагалі 12 цифр*
+                      </span>}
                     <input className='inputAuthForm' 
                       type="password" 
                       //name="password" 
                       placeholder="Пароль" 
                       {...register("password", { required: true, minLength: 4 })}
                       required/>
-                      {errors.password && <span style={{color : "red"}}>Це обов'язкове поле</span>}
+                      {errors.password && 
+                      <span style={{color : "red", fontSize: "10px"}}>
+                        Це обов'язкове поле
+                      </span>
+                      }
+                      {errors.root?.serverError.type && 
+                        <span style={{color : "red", fontSize: "10px"}}>
+                          {formError}
+                        </span>
+                      }
                     <input className='inputAuthForm' 
                       type="submit"
                       value="Увійти"

@@ -10,7 +10,8 @@ interface IAuthView {
 
 const AuthView = observer(({logOutUser}:IAuthView) => {
     const {customer} = useContext<any | null>(Context);
-    console.log('USER', customer._customer.name);
+    console.log('USER_PHONE_NAME', customer._customer?.sub?.name);
+    console.log('USER_SOCIAL_NAME', customer._customer?.name);
 
     return (
         <div className='authView'>
@@ -19,7 +20,16 @@ const AuthView = observer(({logOutUser}:IAuthView) => {
                     src={customer._customer.picture ?? userImg} 
                     alt='imgUser'
                 />
-                {/* <span>{userData.name ?? 'Користувач'}</span> */}
+                {customer._customer?.name ?
+                <span style={{color : "#444B54", fontSize: "8px"}}>
+                    {customer._customer?.name ?? 'Користувач'}
+                </span> : null
+                }
+                {customer._customer?.sub?.name ?
+                <span style={{color : "#444B54", fontSize: "8px"}}>
+                    {customer._customer?.sub?.name ?? 'Користувач'}
+                </span> : null
+                }
                 <button className='btnAuthView' name='btnAuth' >
                     <span>Мій кабінет</span>
                 </button>

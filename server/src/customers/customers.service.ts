@@ -43,6 +43,40 @@ export class CustomersService {
     }
   }
 
+  async createCustomerByEmail(
+    createCustomerDto: CreateCustomerDto,
+    password: string,
+    phone: bigint,
+  ) {
+    try {
+      const customer = await this.customersRepository.create({
+        id_customer: createCustomerDto.id_customer,
+        password: password,
+        email: createCustomerDto.email,
+        id_contract: createCustomerDto.id_contract,
+        balance: createCustomerDto.balance,
+        name: createCustomerDto.name,
+        phone: phone,
+        full_name: createCustomerDto.full_name,
+      });
+
+      const contractCustomer = await this.contractService.createContract(
+        createCustomerDto,
+      );
+
+      await customer.$add('contract', contractCustomer);
+
+      await customer.reload();
+
+      return customer;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
   async findAllCustomer() {
     try {
       const customerAll = await this.customersRepository.findAll({

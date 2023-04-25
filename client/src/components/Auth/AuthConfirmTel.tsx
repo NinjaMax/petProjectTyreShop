@@ -1,23 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SpinnerCarRot from '../spinners/SpinnerCarRot';
 import SpinnerWait from '../spinners/SpinnerWait';
 import Timer from '../timer/Timer';
+import { useForm } from 'react-hook-form';
 
 const AuthConfirmTel = ({
     preSignUp, 
     isSendSms,
-    matchUserPass
+    matchUserPass,
+    formError
   }: any) => {
 
-    const [writeTel, setWriteTel] = useState<number | null>(null);
-    const [passTel, setPassTel] = useState< number| null>(null);
+  const [writeTel, setWriteTel] = useState<number | null>(null);
+  const [passTel, setPassTel] = useState< number| null>(null);
+  const { register, handleSubmit, setError, formState: { errors } } = useForm({
+    criteriaMode: 'all',
+  });
 
-    console.log(typeof(writeTel));
+  useEffect(() => {
+    let isError = false;
+    if(!isError && formError) {
+      setError('root.serverError', { 
+        type: formError,
+      })
+    }
+    return () => {isError = true}
+    },[formError, setError]);
+  console.log(typeof(writeTel));
 
     return (
         <div className='authFormMain'>
         <div className="containerAuthForm">
-          <form action="">
+          <form onSubmit={handleSubmit(data => preSignUp(+data))}>
               <div className='titleAuthForm'>Вхід / Реєстрація</div>
               <div className="colAuthForm">
                 <div className="hide-md-lg">
@@ -28,9 +42,10 @@ const AuthConfirmTel = ({
                     type="tel" 
                     pattern="[0-9]{3}"
                     maxLength="12"
-                    name="username" 
+                    //name="username" 
                     placeholder="номер телефона 38**********"
-                    onChange={(e: any) => setWriteTel(+e.currentTarget.value)} 
+                    //onChange={(e: any) => setWriteTel(+e.currentTarget.value)}
+                    {...register("phone", { required: true, maxLength: 12 })} 
                     required/>
                   :null
                 }
@@ -45,9 +60,10 @@ const AuthConfirmTel = ({
                 }
                 {!isSendSms ?
                   <input className='inputAuthForm' 
-                    type="button" 
+                    type="submit" 
                     value="Відправити SMS"
-                    onClick={() => preSignUp(writeTel)}/>
+                    //onClick={() => preSignUp(writeTel)}
+                  />
                   : null
                 }
                 {isSendSms ?
@@ -65,15 +81,11 @@ const AuthConfirmTel = ({
                   </>
                   : null
                 }
-                
-                {/* {signUp ?
-                  <input className='inputAuthForm' 
-                    type="submit" 
-                    value="Зареєструватися"
-                    onClick={authNewCustomer}
-                    />
-                  : null
-                } */}
+                {errors.root?.serverError.type && 
+                  <span style={{color : "red", fontSize: "10px"}}>
+                    {formError}
+                  </span>
+                }
               </div>
           </form>
         </div>

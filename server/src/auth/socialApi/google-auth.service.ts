@@ -4,13 +4,14 @@ import { Response, Request } from 'express';
 import axios from 'axios';
 import { ConfigService } from '../../config/config.service';
 import queryString from 'querystring';
+import { CustomersService } from '../../customers/customers.service';
 
 @Injectable()
 export class GoogleAuthService {
   constructor(
     //@Inject(ConfigService) private configService: ConfigService,
     private configService: ConfigService,
-    // private usersService: UsersService,
+    private customersService: CustomersService,
     private jwtService: JwtService,
   ) {}
 
@@ -98,7 +99,18 @@ export class GoogleAuthService {
       });
 
     const token = this.jwtService.sign(googleUser);
-
+    console.log('GOOGLE_USER: ', googleUser);
+    const custmByGoogle = await this.customersService.findCustomerByEmail(
+      googleUser,
+    );
+    if (!custmByGoogle) {
+      const phone: any = 380000000000;
+      await this.customersService.createCustomerByEmail(
+        googleUser,
+        googleUser.email,
+        phone,
+      );
+    }
     res.cookie(this.configService.get('COOKIE_NAME'), token, {
       maxAge: 900000,
       httpOnly: true,
@@ -107,15 +119,15 @@ export class GoogleAuthService {
     res.redirect(this.configService.get('APP_ROOT_URI'));
   }
 
-  async getCurrentUser(req: Request, res: Response) {
-    console.log('get Google user');
+  async getCurrentUser(req: Request, res: Response, cookies: string) {
+    console.log('get_CUSTOMER');
     try {
-      const getCoockies: string | undefined = req.cookies['auth_token'];
-      console.log('GET_COOCKIES_GOOGLE: ', getCoockies);
-      if (getCoockies) {
-        const decoded = this.jwtService.verify(getCoockies);
-        console.log('decoded', decoded);
-        return res.send(decoded);
+      //const getCoockies: string | undefined = req.cookies[name];
+      console.log('GET_COOCKIES_GOOGLE: ', cookies);
+      if (cookies) {
+        const decoded = this.jwtService.verify(cookies);
+        console.log('decoded_GOOGLE', decoded);
+        return decoded;
       } else {
         console.log('Користувач Google не авторизован');
       }

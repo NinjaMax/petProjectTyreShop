@@ -32,14 +32,6 @@ export class AuthService {
     return userIsExist;
   }
 
-  // async findCustomersByPhone(customersDto: CustomerAuthDto) {
-  //   return await this.customersService.findCustomerByPhone(customersDto);
-  // }
-
-  // async findCustomersByEmail(customersDto: CustomerAuthDto) {
-  //   return await this.customersService.findCustomerByEmail(customersDto);
-  // }
-
   async createAccessToken(
     customerAuthDto: CustomerAuthDto,
   ): Promise<{ accessToken: string }> {
@@ -52,21 +44,14 @@ export class AuthService {
         signupDto,
       );
       if (custByPhone) {
-        throw new ConflictException(
+        throw new HttpException(
           `Користувач з ім'ям або номер ${signupDto.phone} вже існує`,
+          HttpStatus.BAD_REQUEST,
         );
       } else {
         const createPass = {
-          // id_user: signupDto.id_user,
-          // email: signupDto.email,
-          // id_contract: signupDto.id_contract,
-          // balance: signupDto.balance,
-          // name: signupDto.name,
           password: await argon2.hash(signupDto.password),
-          // phone: signupDto.phone,
-          // full_name: signupDto.full_name,
         };
-        // this.users.push(user);
         const newCustomer = await this.customersService.createCustomer(
           signupDto,
           createPass.password,
@@ -79,11 +64,10 @@ export class AuthService {
           httpOnly: true,
           secure: true,
         });
-        //return tokenCutmAccess;
-        //return res.redirect(this.configService.get('APP_ROOT_URI'));
       }
     } catch (error) {
       console.log('SIGNUP_ERROR: ', error);
+      throw new HttpException(`${error.message}`, HttpStatus.UNAUTHORIZED);
     }
   }
 
@@ -93,8 +77,9 @@ export class AuthService {
         signupDto,
       );
       if (custPhone) {
-        throw new ConflictException(
+        throw new HttpException(
           `Користувач з ім'ям або номером ${signupDto.phone} вже існує.`,
+          HttpStatus.BAD_REQUEST,
         );
       } else {
         const dataReq = {
@@ -117,19 +102,26 @@ export class AuthService {
         return randomPass;
       }
     } catch (error) {
-      console.log('preSignUp: ', error);
+      //console.log('preSignUp: ', error);
+      throw new HttpException(`${error.message}`, HttpStatus.UNAUTHORIZED);
     }
   }
 
   async matchPass(matchPass: { randomPass: number; passMatch: number }) {
-    setTimeout(() => (matchPass.randomPass = null), 90000);
-    console.log('RNDM_SMS ', matchPass.randomPass);
-    console.log('PASSW_USER ', matchPass.passMatch);
-    if (matchPass.randomPass === matchPass.passMatch) {
-      return true;
-    } else {
-      return false;
-      //  throw new UnauthorizedException('Пароль не вірний або вже недійсний');
+    try {
+      setTimeout(() => (matchPass.randomPass = null), 90000);
+      console.log('RNDM_SMS ', matchPass.randomPass);
+      console.log('PASSW_USER ', matchPass.passMatch);
+      if (matchPass.randomPass === matchPass.passMatch) {
+        return true;
+      } else {
+        throw new HttpException(
+          `Не дійсний або не вірний пароль.`,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    } catch (error) {
+      throw new HttpException(`${error.message}`, HttpStatus.UNAUTHORIZED);
     }
   }
 
@@ -170,21 +162,25 @@ export class AuthService {
         //return res.redirect(this.configService.get('APP_ROOT_URI'));
       }
     } catch (e) {
-      throw new UnauthorizedException(
-        'Username or password may be incorrect. Please try again',
-      );
+      throw new HttpException(`${e.message}`, HttpStatus.UNAUTHORIZED);
     }
   }
 
-  async getCurrentCustm(req: Request, res: Response) {
-    console.log('get Customer user');
+  async getCurrentCustm(
+    req: Request,
+    res: Response,
+    cookie_custm: { accessToken: string },
+  ) {
+    console.log('GET_Customer');
     try {
-      const getCoockiesCustm: string | undefined = req.cookies['auth_custm'];
-      console.log('GET_COOCKIES_CUSTM', getCoockiesCustm);
-      if (getCoockiesCustm) {
-        const decodedCustm = this.jwtService.verify(getCoockiesCustm);
-        console.log('decoded', decodedCustm);
-        return res.send(decodedCustm);
+      // const getCoockiesCustm: string | undefined = req.cookies[name];
+      // console.log('GET_COOCKIES_CUSTM', getCoockiesCustm);
+      if (cookie_custm) {
+        const decodedCustm: any = this.jwtService.verify(
+          cookie_custm.accessToken,
+        );
+        console.log('decoded_COOKIE_CUSTM: ', decodedCustm);
+        return decodedCustm;
       } else {
         console.log('Користувач не авторизован');
       }

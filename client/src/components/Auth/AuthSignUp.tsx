@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../../css/AuthCss/AuthSignUp.css';
 import { useForm } from "react-hook-form";
 
 
-const AuthSignUp = ({phoneNumber, signUpAuth}:any) => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  //const onSubmit = (data: any) => console.log(data);
+const AuthSignUp = ({phoneNumber, signUpAuth, formError}:any) => {
+  const { register, handleSubmit, setError, formState: { errors } } = useForm({
+    criteriaMode: 'all',
+  });
+  useEffect(() => {
+    let isError = false;
+    if(!isError && formError) {
+      setError('root.serverError', { 
+        type: formError,
+      })
+    }
+    return () => {isError = true}
+  },[formError, setError]);
 
     return (
         <div className='authFormMain'>
@@ -45,6 +55,11 @@ const AuthSignUp = ({phoneNumber, signUpAuth}:any) => {
                   <span style={{color : "red", fontSize: "10px"}}>
                     *Мінімальна кількість символів 4*
                   </span>}
+                  {errors.root?.serverError.type && 
+                    <span style={{color : "red", fontSize: "10px"}}>
+                      {formError}
+                    </span>
+                  }
                 <input className='inputAuthSignUp' 
                   type="submit" 
                   value="Увійти"/>

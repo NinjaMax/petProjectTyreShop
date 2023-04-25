@@ -22,6 +22,7 @@ import { LoginDto } from './dto/logIn-dto';
 import { ConfigService } from '../config/config.service';
 import { GoogleAuthService } from './socialApi/google-auth.service';
 import { FacebookAuthService } from './socialApi/facebook-auth.service';
+import { Cookies } from './decorators/cookies.decorator';
 import cors from 'cors';
 
 @Controller('auth')
@@ -85,9 +86,13 @@ export class AuthController {
   }
 
   @Get('customer/google')
-  async getCurrentGoogleUser(@Req() req: Request, @Res() res: Response) {
+  async getCurrentGoogleUser(
+    @Cookies('auth_token') cookies: string,
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ) {
     //const getCoockies = await req.cookies['auth_token'];
-    return await this.googleAuthService.getCurrentUser(req, res);
+    return await this.googleAuthService.getCurrentUser(req, res, cookies);
   }
 
   @Get('facebook/url')
@@ -101,13 +106,26 @@ export class AuthController {
   }
 
   @Get('customer/facebook')
-  async getCurrentFacebookUser(@Req() req: Request, @Res() res: Response) {
-    return await this.facebookAuthService.getCurrentFacebookUser(req, res);
+  async getCurrentFacebookUser(
+    @Cookies('auth_facebook') cookies: string,
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    return await this.facebookAuthService.getCurrentFacebookUser(
+      req,
+      res,
+      cookies,
+    );
   }
 
   @Get('customer/phone')
-  async getCurCusrtm(@Req() req: Request, @Res() res: Response) {
-    return await this.authService.getCurrentCustm(req, res);
+  async getCurCusrtm(
+    @Cookies('auth_custm') cookies: { accessToken: string },
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    console.log('COOKIES_CUST: ', cookies);
+    return await this.authService.getCurrentCustm(req, res, cookies);
   }
 
   @Get()
@@ -126,9 +144,17 @@ export class AuthController {
   //}
 
   @Delete('logout')
-  @Redirect('https://localhost:3000')
-  logOut(@Res() res: Response) {
-    return res.clearCookie(this.configService.get('COOKIE_NAME'), {
+  //@Redirect('https://localhost:3000')
+  logOut(@Res({ passthrough: true }) res: Response) {
+    res.clearCookie('auth_token', {
+      httpOnly: true,
+      secure: true,
+    });
+    res.clearCookie('auth_facebook', {
+      httpOnly: true,
+      secure: true,
+    });
+    res.clearCookie('auth_custm', {
       httpOnly: true,
       secure: true,
     });
