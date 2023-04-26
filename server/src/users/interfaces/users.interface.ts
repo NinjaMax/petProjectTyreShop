@@ -4,6 +4,7 @@ export interface UsersConfigAttr {
   full_name: string;
   phone: bigint;
   email: string;
+  picture: string;
   id_contract: number;
   password: string;
   balance: number;

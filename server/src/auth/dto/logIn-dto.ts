@@ -1,13 +1,13 @@
 export class LoginDto {
-  id_user: number;
-  id_customer: number;
-  name: string;
-  email: string;
-  full_name: string;
-  password: string;
-  picture: string;
-  phone: bigint;
-  address: string;
-  id_contract: number;
-  balance: number;
+  readonly id_user: number;
+  readonly id_customer: number;
+  readonly name: string;
+  readonly email: string;
+  readonly full_name: string;
+  readonly password: string;
+  readonly picture: string;
+  readonly phone: bigint;
+  readonly address: string;
+  readonly id_contract: number;
+  readonly balance: number;
 }

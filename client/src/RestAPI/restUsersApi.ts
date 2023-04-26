@@ -4,14 +4,36 @@ import jwt_decode from 'jwt-decode';
 export const signUpCustomer = async (dataSignIn: {}) => {
     const {data} = await $authHostPost.post('auth/signup', dataSignIn)
     //localStorage.setItem('token', data.token)phone: string, password: string
-    console.log('SIGNUP', data);
+    console.log('SIGNUP_CUSTOMER', data);
     return data;
 }
 
 export const logInCustm = async (dataLogIn: {}) => {
-    const {data} = await $authHostPostLogIn.post('auth/login', dataLogIn)
+    const {data} = await $authHostPost.post('auth/login', dataLogIn)
     //localStorage.setItem('token', data.token){phone, password}phone: string, password: string
     console.log('LOGIN: ', data);
+    return data;
+}
+
+export const logInUser = async (dataLogIn: {}) => {
+    const {data} = await $authHostPostLogIn.post('auth/user/login', dataLogIn)
+    //localStorage.setItem('token', data.token){phone, password}phone: string, password: string
+    console.log('LOGIN_USER: ', data);
+    return data;
+}
+
+export const getCurUser = async () => {
+    const {data} = await $authHostGet.get('/auth/user/admin', 
+    )
+    //cookie.setItem('token', data.token)
+    console.log('CURR_USER: ', data);
+    return data;
+}
+
+export const signUpUser = async (dataSignIn: {}) => {
+    const {data} = await $authHostPost.post('auth/user/signup', dataSignIn)
+    //localStorage.setItem('token', data.token)phone: string, password: string
+    console.log('SIGNUP_USER', data);
     return data;
 }
 

@@ -128,6 +128,41 @@ export class AuthController {
     return await this.authService.getCurrentCustm(req, res, cookies);
   }
 
+  @Get('user/admin')
+  async getCurUser(
+    @Cookies('auth_user') cookies: { accessToken: string },
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    console.log('COOKIES_CUST: ', cookies);
+    return await this.authService.getCurrentCustm(req, res, cookies);
+  }
+
+  @Post('user/login')
+  @Redirect('https://localhost:3000/admin', 200)
+  async loginByPhoneUser(
+    @Res({ passthrough: true }) res: Response,
+    @Body() loginDto: LoginDto,
+  ) {
+     const logIn = await this.authService.loginUserByPhone(res, loginDto);
+      if (!logIn.status) {
+        return res.redirect('https://localhost:3000/admin/auth');
+      } 
+      // else {
+      //   return res.redirect('https://localhost:3000/admin');
+      // }
+  }
+
+  @Post('user/signup')
+  async signUpUser(@Res() res: Response, @Body() signupDto: SignupDto) {
+    return res.send(await this.authService.signUpUser(res, signupDto));
+    // return res.cookie('auth_custm', tokenCutmAccess, {
+    //   maxAge: 900000,
+    //   httpOnly: true,
+    //   secure: true,
+    // });
+  }
+
   @Get()
   findAll() {
     return this.authService.findAll();

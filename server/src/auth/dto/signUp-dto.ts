@@ -1,13 +1,13 @@
 export class SignupDto {
-  name: string;
-  id_user: number;
-  id_customer: number;
-  email: string;
-  full_name: string;
-  password: string;
-  picture: string;
-  phone: bigint;
-  id_contract: number;
-  balance: number;
-  address: string;
+  readonly name: string;
+  readonly id_user: number;
+  readonly id_customer: number;
+  readonly email: string;
+  readonly full_name: string;
+  readonly password: string;
+  readonly picture: string;
+  readonly phone: bigint;
+  readonly id_contract: number;
+  readonly balance: number;
+  readonly address: string;
 }

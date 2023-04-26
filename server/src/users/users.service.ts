@@ -18,9 +18,9 @@ export class UsersService {
       const newUser = await this.usersRepository.create({
         password: password,
         id_user: createUserDto.id_user,
-        email: createUserDto.email,
         id_contract: createUserDto.id_contract,
         balance: createUserDto.balance,
+        email: createUserDto.email,
         name: createUserDto.name,
         phone: createUserDto.phone,
         full_name: createUserDto.full_name,

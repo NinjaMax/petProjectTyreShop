@@ -1,87 +1,98 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../../css/AuthCss/AdminAuth.css';
 import { useForm } from 'react-hook-form';
+import { Context } from '../../context/Context';
+import { getCurUser, logInUser } from '../../restAPI/restUsersApi';
 
-const Admin = ({formError}:any) => {
-    const { register, handleSubmit, setError, formState: { errors } } = useForm({
-        criteriaMode: 'all',
-      });
+const Admin = () => {
+  const {user} = useContext<any | null>(Context);
+  const [formError, setFormError] = useState('');
+  const { register, handleSubmit, setError, formState: { errors } } = useForm({
+      criteriaMode: 'all',
+    });
+
+  const logInAdmin = async(data: any) => {
+    try {
+      const logIn = await logInUser(data);
+      console.log('LOGIN_ADMIN_DATA:', typeof logIn);
+      console.log('LOGIN_ADMIN_DATA STATUS:', logIn.split('.') );
+      console.log('USER_isAUTH: ',user.isAuth);
+      const userLogIn:[string] = logIn.split('.');
+      if (userLogIn[0] === 'OK') {
+
+        user.setIsAuth(true);
+        console.log('USER_isAUTH: ', user.isAuth);
+      }
+    } catch (error: any) {
+      setFormError(error.response?.message)
+      setError('root.serverError', { 
+        type: formError,
+      })
+    }  
+  };
     
-      useEffect(() => {
-        let isError = false;
-        if(!isError && formError) {
-          setError('root.serverError', { 
-            type: formError,
-          })
-        }
-        return () => {isError = true}
-      },[formError, setError]);
+  useEffect(() => {
+    let isUser = false;
+    const getAdminUser = async() => {
+      const curUser = await getCurUser()
+      if(!isUser && curUser) {
+        user.setIsAuth(true);
+        user.setUser(curUser);
+      } 
+    }
+    getAdminUser();
+    return () => {isUser = true}
+  },[user]);
 
     return (
-
-        <div className='authFormMain'>
-            <div className="containerAuthForm">
-              <form onSubmit={handleSubmit((data:any) => console.log(data))}>
-              <div className='titleAuthForm'>Вхід в Адмін сторінку.</div>
-                  {/* <div className="vl">
-                    <span>або</span>
-                  </div> */}
-                <div className="rowAuthForm">
-                  {/* <div className="colAuthForm">
-                    <a href='/' className="fb btnAuthForm">
-                      <i className="fa fa-facebook fa-fw"></i> Увійти з Facebook
-                    </a>
-                    <a href="/#" className="twitter btnAuthForm">
-                      <i className="fa fa-twitter fa-fw"></i> Увійти з Twitter
-                    </a>
-                    <a href='/' className="google btnAuthForm" >
-                      <i className="fa fa-google fa-fw"></i> Увійти з Google+
-                    </a>
-                  </div> */}
-
-                  <div className="colAuthForm">
-                    <input className='inputAuthForm'
-                     type="tel" 
-                     //name="phone" 
-                     placeholder="номер телефона" 
-                     {...register("phone", { required: true, maxLength: 12 })} 
-                     required/>
-                     {errors.phone && 
+      <div className='authFormAdmin'>
+        <div className="containerAuthAdmin">
+          <form onSubmit={handleSubmit((data:any) => logInAdmin(data))}>
+            <div className='titleAuthForm'>Вхід в Адмін сторінку.</div>
+              <div className="rowAuthAdmin">
+                <div className="colAuthAdmin">
+                  <input className='inputAuthAdmin'
+                   type="tel" 
+                   placeholder="номер телефона 38**" 
+                   {...register("phone", { required: true, maxLength: 12 })} 
+                   required
+                  />
+                   {errors.phone && 
+                    <span style={{color : "red", fontSize: "10px"}}>
+                      *номер повинен починатись на 38 та містити взагалі 12 цифр*
+                    </span>}
+                  <input className='inputAuthAdmin' 
+                    type="password" 
+                    placeholder="Пароль" 
+                    {...register("password", { required: true, minLength: 4 })}
+                    required
+                  />
+                    {errors.password && 
+                    <span style={{color : "red", fontSize: "10px"}}>
+                      *Це обов'язкове поле*
+                    </span>
+                    }
+                    {errors.root?.serverError.type && 
                       <span style={{color : "red", fontSize: "10px"}}>
-                        *номер повинен починатись на 38 та містити взагалі 12 цифр*
-                      </span>}
-                    <input className='inputAuthForm' 
-                      type="password" 
-                      //name="password" 
-                      placeholder="Пароль" 
-                      {...register("password", { required: true, minLength: 4 })}
-                      required/>
-                      {errors.password && 
-                      <span style={{color : "red", fontSize: "10px"}}>
-                        Це обов'язкове поле
+                        {formError}
                       </span>
-                      }
-                      {errors.root?.serverError.type && 
-                        <span style={{color : "red", fontSize: "10px"}}>
-                          {formError}
-                        </span>
-                      }
-                    <input className='inputAuthForm' 
-                      type="submit"
-                      value="Увійти"
-                    />
-                  </div>
+                    }
+                  <input className='inputAuthAdmin' 
+                    type="submit"
+                    value="Увійти"
+                  />
                 </div>
-              </form>
-            </div>
-            <div className="bottomContainer">
-              <div className="rowAuthForm">
-                  <button type="button" className="btnAuthForm" >Зареєструватися</button>
-                  <button type="button" className="btnAuthForm">Забули пароль?</button>
               </div>
-            </div>
+          </form>
         </div>
-    );
+        <div className="bottomContainerAdmin">
+          <div className="rowAuthAdmin">
+            <button type="button" className="btnAuthAdmin">Зареєструватися</button>
+            <button type="button" className="btnAuthAdmin">Забули пароль?</button>
+          </div>
+        </div>
+    </div>
+  );
 };
 
 export default Admin;

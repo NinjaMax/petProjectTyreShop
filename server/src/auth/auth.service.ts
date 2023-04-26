@@ -27,15 +27,21 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async findUserByPhone(userAuthDto: UserAuthDto) {
-    const userIsExist = await this.usersService.findUserByPhone(userAuthDto);
-    return userIsExist;
-  }
+  // async findUserByPhone(userAuthDto: UserAuthDto) {
+  //   const userIsExist = await this.usersService.findUserByPhone(userAuthDto);
+  //   return userIsExist;
+  // }
 
   async createAccessToken(
     customerAuthDto: CustomerAuthDto,
   ): Promise<{ accessToken: string }> {
     return { accessToken: this.jwtService.sign({ sub: customerAuthDto }) };
+  }
+
+  async createAccessTokenUser(
+    userAuthDto: UserAuthDto,
+  ): Promise<{ accessToken: string }> {
+    return { accessToken: this.jwtService.sign({ sub: userAuthDto }) };
   }
 
   async signUpCustm(res: Response, signupDto: SignupDto) {
@@ -125,10 +131,6 @@ export class AuthService {
     }
   }
 
-  async comparePass(pass: number) {
-    return pass ? pass : null;
-  }
-
   async loginCustmByPhone(res: Response, loginDto: LoginDto) {
     try {
       const existingCustomer = await this.customersService.findCustomerByPhone(
@@ -150,9 +152,9 @@ export class AuthService {
             HttpStatus.UNAUTHORIZED,
           );
         } else {
-          const loginCustomer = await this.createAccessToken(existingCustomer);
-          console.log('LOGIN_CUSTOMER: ', loginCustomer);
-          res.cookie('auth_custm', loginCustomer, {
+          const loginUser = await this.createAccessToken(existingCustomer);
+          console.log('LOGIN_CUSTOMER: ', loginUser);
+          res.cookie('auth_custm', loginUser, {
             maxAge: 900000,
             httpOnly: true,
             secure: true,
@@ -179,7 +181,7 @@ export class AuthService {
         const decodedCustm: any = this.jwtService.verify(
           cookie_custm.accessToken,
         );
-        console.log('decoded_COOKIE_CUSTM: ', decodedCustm);
+        console.log('decoded_COOKIE: ', decodedCustm);
         return decodedCustm;
       } else {
         console.log('Користувач не авторизован');
@@ -187,6 +189,78 @@ export class AuthService {
     } catch (err) {
       console.log(err);
       res.send('No Data');
+    }
+  }
+
+  async signUpUser(res: Response, signupDto: SignupDto) {
+    try {
+      const userByPhone = await this.usersService.findUserByPhone(signupDto);
+      if (userByPhone) {
+        throw new HttpException(
+          `Користувач з ім'ям або номер ${signupDto.phone} вже існує`,
+          HttpStatus.BAD_REQUEST,
+        );
+      } else {
+        const createPass = {
+          password: await argon2.hash(signupDto.password),
+        };
+        const newUser = await this.usersService.createUser(
+          signupDto,
+          createPass.password,
+        );
+        const tokenUserAccess = await this.createAccessTokenUser(newUser);
+        console.log('SIGN_UP', tokenUserAccess);
+        res.cookie('auth_user', tokenUserAccess, {
+          maxAge: 1800000,
+          httpOnly: true,
+          secure: true,
+        });
+      }
+    } catch (error) {
+      console.log('SIGNUP_ERROR: ', error);
+      throw new HttpException(`${error.message}`, HttpStatus.UNAUTHORIZED);
+    }
+  }
+
+  async loginUserByPhone(res: Response, loginDto: LoginDto) {
+    try {
+      const existingUser = await this.usersService.findUserByPhone(loginDto);
+      if (!existingUser) {
+        throw new HttpException(
+          `Користувач з таким номером ${loginDto.phone} телефону не існує.`,
+          HttpStatus.UNAUTHORIZED,
+        );
+      } else {
+        const passwordMatch = await argon2.verify(
+          existingUser.password,
+          loginDto.password,
+        );
+        if (!passwordMatch) {
+          throw new HttpException(
+            `Не вірно вказаний пароль`,
+            HttpStatus.UNAUTHORIZED,
+          );
+        } else {
+          const loginUser = await this.createAccessTokenUser(existingUser);
+          console.log('LOGIN_USER: ', loginUser);
+          res.cookie('auth_user', loginUser, {
+            maxAge: 900000,
+            httpOnly: true,
+            secure: true,
+          });
+          // res.setHeader(
+          // //   'Location',
+          // //   'https://localhost:3000/admin/',
+          //   'Access-Control-Allow-Origin',
+          //  'https://localhost:3000/admin',
+          //  );
+          //return res.redirect('https://localhost:3000/admin/');
+          return res.status(200);
+        }
+        //return res.redirect(this.configService.get('APP_ROOT_URI'));
+      }
+    } catch (e) {
+      throw new HttpException(`${e.message}`, HttpStatus.UNAUTHORIZED);
     }
   }
 

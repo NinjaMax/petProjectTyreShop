@@ -5,6 +5,7 @@ export class CreateUserDto {
   readonly phone: bigint;
   readonly email: string;
   readonly password: string;
+  readonly picture: string;
   readonly id_contract: number;
   readonly balance: number;
 }
