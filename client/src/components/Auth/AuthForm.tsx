@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import '../../css/AuthCss/AuthForm.css';
 import { useForm } from "react-hook-form";
 
-const AuthForm = ({confirmActive, socialGoogle, socialFacebook, logIn, formError}: any) => {
+const AuthForm = (
+  {confirmActive, socialGoogle, socialFacebook, 
+    socialTwitter, logIn, formError}: any) => {
   const { register, handleSubmit, setError, formState: { errors } } = useForm({
     criteriaMode: 'all',
   });
@@ -30,7 +32,7 @@ const AuthForm = ({confirmActive, socialGoogle, socialFacebook, logIn, formError
                     <a href={socialFacebook} className="fb btnAuthForm">
                       <i className="fa fa-facebook fa-fw"></i> Увійти з Facebook
                     </a>
-                    <a href="/#" className="twitter btnAuthForm">
+                    <a href={socialTwitter} className="twitter btnAuthForm">
                       <i className="fa fa-twitter fa-fw"></i> Увійти з Twitter
                     </a>
                     <a href={socialGoogle} className="google btnAuthForm" >

@@ -1,49 +1,51 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { Response, Request } from 'express';
-import axios from 'axios';
 import { ConfigService } from '../../config/config.service';
-import queryString from 'querystring';
 import { CustomersService } from '../../customers/customers.service';
+import queryString from 'querystring';
+import axios from 'axios';
+import { Request, Response } from 'express';
 import { randomInt } from 'crypto';
 
 @Injectable()
-export class GoogleAuthService {
+export class TwitterAuthService {
   constructor(
-    //@Inject(ConfigService) private configService: ConfigService,
     private configService: ConfigService,
     private customersService: CustomersService,
     private jwtService: JwtService,
   ) {}
 
-  async getGoogleAuthURL() {
-    const rootUrl = 'https://accounts.google.com/o/oauth2/auth';
+  async getTwitterAuthURL() {
+    const rootUrl = 'https://twitter.com/i/oauth2/authorize';
     const options = {
-      redirect_uri: `${this.configService.get(
-        'SERVER_ROOT_URI',
-      )}/${this.configService.get('REDIRECT_URI')}`,
-      client_id: this.configService.get('GOOGLE_CLIENT_ID'),
-      access_type: 'offline',
+      redirect_uri: `https://localhost:4000/auth/twitter`,
+      client_id: 'LXRNSzl1cmszbXhkZHlQRVNuei06MTpjaQ',
+      state: 'state',
       response_type: 'code',
-      prompt: 'consent',
-      scope: [
-        'https://www.googleapis.com/auth/userinfo.profile',
-        'https://www.googleapis.com/auth/userinfo.email',
-      ].join(' '),
+      code_challenge: 'y_SfRG4BmOES02uqWeIkIgLQAlTBggyf_G7uKT51ku8',
+      code_challenge_method: 'S256',
+      scope: ['users.read', 'tweet.read'].join(' '),
     };
     return `${rootUrl}?${queryString.stringify(options)}`;
   }
 
-  async getTokensGoogle({
+  BasicAuthToken = Buffer.from(
+    `${'LXRNSzl1cmszbXhkZHlQRVNuei06MTpjaQ'}:${'rMIqWIQ3aU0CKx9ExjBRrGfrUvhR5jCkbp4ilWtKGkd1Ty0gwz'}`,
+    'utf8',
+  ).toString('base64');
+
+  async getTokensTwitter({
     code,
     clientId,
     clientSecret,
     redirectUri,
+    code_verifier,
   }: {
     code: string;
     clientId: string;
     clientSecret: string;
     redirectUri: string;
+    code_verifier: string;
   }): Promise<{
     access_token: string;
     //expires_in: Number;
@@ -51,19 +53,22 @@ export class GoogleAuthService {
     scope: string;
     id_token: string;
   }> {
-    const url = 'https://oauth2.googleapis.com/token';
+    const url = 'https://api.twitter.com/2/oauth2/token';
     const values = {
       code,
       client_id: clientId,
       client_secret: clientSecret,
       redirect_uri: redirectUri,
       grant_type: 'authorization_code',
+      //grant_type: 'client_credentials',
+      code_verifier: code_verifier,
     };
 
     return axios
       .post(url, queryString.stringify(values), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: `Basic ${this.BasicAuthToken}`,
         },
       })
       .then((res) => res.data)
@@ -73,24 +78,23 @@ export class GoogleAuthService {
       });
   }
 
-  async getGoogleUser(req: Request, res: Response) {
+  async getTwitterUser(req: Request, res: Response) {
     try {
       const code: any = req.query.code;
-      const { id_token, access_token } = await this.getTokensGoogle({
+      const { id_token, access_token } = await this.getTokensTwitter({
         code,
-        clientId: this.configService.get('GOOGLE_CLIENT_ID'),
-        clientSecret: this.configService.get('GOOGLE_CLIENT_SECRET'),
-        redirectUri: `${this.configService.get(
-          'SERVER_ROOT_URI',
-        )}/${this.configService.get('REDIRECT_URI')}`,
+        clientId: 'LXRNSzl1cmszbXhkZHlQRVNuei06MTpjaQ',
+        clientSecret: 'rMIqWIQ3aU0CKx9ExjBRrGfrUvhR5jCkbp4ilWtKGkd1Ty0gwz',
+        redirectUri: `https://localhost:4000/auth/twitter`,
+        code_verifier: '8KxxO-RPl0bLSxX5AWwgdiFbMnry_VOKzFeIlVA7NoA',
       });
 
-      const googleUser = await axios
+      const twitterUser = await axios
         .get(
-          `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${access_token}`,
+          `https://api.twitter.com/2/users/me?user.fields=id,name,profile_image_url,username`,
           {
             headers: {
-              Authorization: `Bearer ${id_token}`,
+              Authorization: `Bearer ${access_token}`,
             },
           },
         )
@@ -100,41 +104,41 @@ export class GoogleAuthService {
           throw new Error(error.message);
         });
 
-      const token = this.jwtService.sign(googleUser);
-      console.log('GOOGLE_USER: ', googleUser);
-      const custmByGoogle = await this.customersService.findCustomerByEmail(
-        googleUser,
+      const token = this.jwtService.sign(twitterUser);
+      console.log('TWITTER_USER: ', twitterUser.data);
+      const custmByTwitter = await this.customersService.findCustmByEmailOrName(
+        twitterUser.data,
       );
-      if (!custmByGoogle) {
+      if (!custmByTwitter) {
         const phone: any = randomInt(380000000000, 990000000000);
         await this.customersService.createCustomerByEmail(
-          googleUser,
-          googleUser.email,
+          twitterUser.data,
+          twitterUser.data.email ?? twitterUser.data.id,
           phone,
         );
       }
-      res.cookie(this.configService.get('COOKIE_NAME'), token, {
+      res.cookie('auth_twitter', token, {
         maxAge: 900000,
         httpOnly: true,
         secure: true,
       });
-      res.redirect(this.configService.get('APP_ROOT_URI'));
+      res.redirect('https://localhost:3000');
     } catch (e) {
       throw new HttpException(`${e.message}`, HttpStatus.UNAUTHORIZED);
     }
   }
 
-  async getCurrentUser(req: Request, res: Response, cookies: string) {
-    console.log('get_CUSTOMER');
+  async getCurrentTwitterUser(req: Request, res: Response, cookies: string) {
+    console.log('get_CUSTOMER_TWITTER');
     try {
       //const getCoockies: string | undefined = req.cookies[name];
-      console.log('GET_COOCKIES_GOOGLE: ', cookies);
+      console.log('GET_COOCKIES_TWITTER: ', cookies);
       if (cookies) {
         const decoded = this.jwtService.verify(cookies);
-        console.log('decoded_GOOGLE', decoded);
-        return decoded;
+        console.log('decoded_TWITTER', decoded.data);
+        return decoded.data;
       } else {
-        console.log('Користувач Google не авторизован');
+        console.log('Користувач TWITER не авторизован');
       }
     } catch (err) {
       console.log(err);

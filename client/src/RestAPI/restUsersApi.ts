@@ -111,6 +111,22 @@ export const getFacebookCurUser = async () => {
     return data;
 }
 
+export const signInTwitter = async () => {
+    const {data} = await $authHostGet.get('/auth/twitter/url', 
+    )
+    //cookie.setItem('token', data.token)
+    console.log('URL_TWITTER_USER_Auth: ', data);
+    return data;
+}
+
+export const getTwitterCurUser = async () => {
+    const {data} = await $authHostGet.get('/auth/customer/twitter', 
+    )
+    //cookie.setItem('token', data.token)
+    console.log('CUSTM_TWITTER: ', data);
+    return data;
+}
+
 export const logOut = async () => {
     const {data} = await $authHostDeleteLogOut.delete('/auth/logout', 
     )

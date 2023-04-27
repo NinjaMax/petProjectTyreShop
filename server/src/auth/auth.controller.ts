@@ -24,6 +24,7 @@ import { GoogleAuthService } from './socialApi/google-auth.service';
 import { FacebookAuthService } from './socialApi/facebook-auth.service';
 import { Cookies } from './decorators/cookies.decorator';
 import cors from 'cors';
+import { TwitterAuthService } from './socialApi/twitter-auth.service';
 
 @Controller('auth')
 export class AuthController {
@@ -32,6 +33,7 @@ export class AuthController {
     private configService: ConfigService,
     private googleAuthService: GoogleAuthService,
     private facebookAuthService: FacebookAuthService,
+    private twitterAuthService: TwitterAuthService,
   ) {}
 
   //@Public()
@@ -118,6 +120,30 @@ export class AuthController {
     );
   }
 
+  @Get('twitter/url')
+  async getTwitterLogIn(@Res() res: Response) {
+    return res.send(await this.twitterAuthService.getTwitterAuthURL());
+  }
+
+  @Get('twitter')
+  async getTwitterUser(@Res() res: Response, @Req() req: Request) {
+    return await this.twitterAuthService.getTwitterUser(req, res);
+  }
+
+  @Get('customer/twitter')
+  async getCurrentTwitterUser(
+    @Cookies('auth_twitter') cookies: string,
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    //const getCoockies = await req.cookies['auth_token'];
+    return await this.twitterAuthService.getCurrentTwitterUser(
+      req,
+      res,
+      cookies,
+    );
+  }
+
   @Get('customer/phone')
   async getCurCusrtm(
     @Cookies('auth_custm') cookies: { accessToken: string },
@@ -144,13 +170,13 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
     @Body() loginDto: LoginDto,
   ) {
-     const logIn = await this.authService.loginUserByPhone(res, loginDto);
-      if (!logIn.status) {
-        return res.redirect('https://localhost:3000/admin/auth');
-      } 
-      // else {
-      //   return res.redirect('https://localhost:3000/admin');
-      // }
+    const logIn = await this.authService.loginUserByPhone(res, loginDto);
+    if (!logIn.status) {
+      return res.redirect('https://localhost:3000/admin/auth');
+    }
+    // else {
+    //   return res.redirect('https://localhost:3000/admin');
+    // }
   }
 
   @Post('user/signup')
@@ -190,6 +216,10 @@ export class AuthController {
       secure: true,
     });
     res.clearCookie('auth_custm', {
+      httpOnly: true,
+      secure: true,
+    });
+    res.clearCookie('auth_twitter', {
       httpOnly: true,
       secure: true,
     });

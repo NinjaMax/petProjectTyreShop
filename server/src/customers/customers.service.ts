@@ -5,6 +5,7 @@ import { CreateCustomerDto } from './dto/create-customer.dto';
 import { GetCustomerDto } from './dto/get-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { Customer } from './entities/customer.model';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class CustomersService {
@@ -50,11 +51,11 @@ export class CustomersService {
   ) {
     try {
       const customer = await this.customersRepository.create({
-        id_customer: createCustomerDto.id_customer,
+        //id_customer: createCustomerDto.id_customer,
         password: password,
         email: createCustomerDto.email,
-        id_contract: createCustomerDto.id_contract,
-        balance: createCustomerDto.balance,
+        // id_contract: createCustomerDto.id_contract,
+        // balance: createCustomerDto.balance,
         name: createCustomerDto.name,
         phone: phone,
         full_name: createCustomerDto.full_name,
@@ -127,6 +128,26 @@ export class CustomersService {
     try {
       const customerByEmail = await this.customersRepository.findOne({
         where: { email: getCustomerDto.email },
+      });
+
+      return customerByEmail;
+    } catch {
+      throw new HttpException(
+        'Data Customer Email is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async findCustmByEmailOrName(getCustomerDto: GetCustomerDto) {
+    try {
+      const customerByEmail = await this.customersRepository.findOne({
+        where: {
+          [Op.or]: [
+            { email: getCustomerDto.email ?? 'mail@example.com' },
+            { name: getCustomerDto.name },
+          ],
+        },
       });
 
       return customerByEmail;

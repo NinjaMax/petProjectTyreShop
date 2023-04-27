@@ -22,7 +22,9 @@ import {
   logInCustm,
   getCurCustomer,
   signInFacebook,
-  getFacebookCurUser
+  getFacebookCurUser,
+  signInTwitter,
+  getTwitterCurUser
 } from '../../restAPI/restUsersApi';
 import AuthSignUp from '../auth/AuthSignUp';
 import { yieldToMain } from '../../restAPI/yieldMain';
@@ -40,6 +42,7 @@ const NavBar = observer(() => {
   const [smsPass, setSmsPass] = useState<number | null>(null);
   const [phoneTel, setPhoneTel] = useState<bigint | undefined>();
   const [facebookIsAuth, setFacebookIsAuth] = useState('');
+  const [twitterIsAuth, setTwitterIsAuth] = useState('');
   const [formError, setFormError] = useState('');
 
   useEffect(() => {
@@ -47,7 +50,8 @@ const NavBar = observer(() => {
     const socialSignIn = async () => {
       const taskSocial: any[] = [
         signInGoogle,
-        signInFacebook,       
+        signInFacebook,
+        signInTwitter,       
       ];
       let i:number = 0;
       while(taskSocial.length > i) {
@@ -60,6 +64,11 @@ const NavBar = observer(() => {
           let authFacebook: any = await taskSocial[i]();
           setFacebookIsAuth(authFacebook);
           console.log('SET_FACEBOOK_AUTH: ', authFacebook)
+        }
+        if (!isUser && taskSocial[i] === signInTwitter){
+          let authTwitter: any = await taskSocial[i]();
+          setTwitterIsAuth(authTwitter);
+          console.log('SET_TWITTER_AUTH: ', authTwitter)
         }
         const task = taskSocial.shift();
         task();
@@ -77,11 +86,12 @@ const NavBar = observer(() => {
         getGoogleCurUser,
         getFacebookCurUser,
         getCurCustomer,
+        getTwitterCurUser,
       ];
       let i:number = 0;
       while(taskCustm.length > i) {
         let curCustm: any = await taskCustm[i]();
-        console.log('CURR_CUSTM: ', typeof curCustm);
+        console.log(`CURR_CUSTM: `, curCustm);
         if (!isCurUser && curCustm) {
           customer.setIsAuth(true);
           customer.setUser(curCustm);
@@ -214,6 +224,7 @@ const NavBar = observer(() => {
         <AuthForm confirmActive={authActiveConfirm}
           socialGoogle={googleIsAuth}
           socialFacebook={facebookIsAuth}
+          socialTwitter={twitterIsAuth}
           logIn={logInCustomer}
           formError={formError}
         />

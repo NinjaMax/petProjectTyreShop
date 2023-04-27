@@ -4,13 +4,15 @@ import { Response, Request } from 'express';
 import axios from 'axios';
 import { ConfigService } from '../../config/config.service';
 import queryString from 'querystring';
+import { CustomersService } from '../../customers/customers.service';
+import { randomInt } from 'crypto';
 
 @Injectable()
 export class FacebookAuthService {
   constructor(
     //@Inject(ConfigService) private configService: ConfigService,
     private configService: ConfigService,
-    // private usersService: UsersService,
+    private customersService: CustomersService,
     private jwtService: JwtService,
   ) {}
 
@@ -47,7 +49,7 @@ export class FacebookAuthService {
     scope: string;
     id_token: string;
   }> {
-    const url = 'https://graph.facebook.com/v16.0/oauth/access_token?';
+    const url = 'https://graph.facebook.com/v16.0/oauth/access_token';
     const values = {
       code,
       client_id: clientId,
@@ -80,7 +82,7 @@ export class FacebookAuthService {
 
     const facebookUser = await axios
       .get(
-        `https://graph.facebook.com/v16.0/me?fields=id%2Cname%2Cemail&access_token=${access_token}`,
+        `https://graph.facebook.com/v16.0/me?fields=id,name,email,first_name,last_name&access_token=${access_token}`,
         {
           headers: {
             Authorization: `Bearer ${id_token}`,
@@ -94,6 +96,18 @@ export class FacebookAuthService {
       });
 
     const token = this.jwtService.sign(facebookUser);
+    console.log('FACEBOOK_USER: ', facebookUser);
+    const custmByFacebook = await this.customersService.findCustmByEmailOrName(
+      facebookUser,
+    );
+    if (!custmByFacebook) {
+      const phone: any = randomInt(380000000000, 990000000000);
+      await this.customersService.createCustomerByEmail(
+        facebookUser,
+        facebookUser.email,
+        phone,
+      );
+    }
 
     res.cookie('auth_custm', token, {
       maxAge: 900000,
