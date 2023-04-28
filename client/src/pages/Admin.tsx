@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import '../css/Admin.css';
 //import axios from 'axios';
 import { getTyres, 
@@ -29,6 +29,8 @@ import AdminOptionContent from '../components/AdminComponents/adminContent/Admin
 import AdminProfile from '../components/AdminComponents/AdminProfile';
 import AdminHeader from '../components/AdminComponents/AdminHeader';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
+import { observer } from 'mobx-react-lite';
+import { Context } from '../context/Context';
 //import { postTask } from '../restAPI/postTaskAdmin';
 //import { scheduler } from 'timers/promises';
 
@@ -57,8 +59,8 @@ import { yieldToMain } from '../restAPI/postTaskAdmin';
 //}
 
 
-const Admin = () => {
-
+const Admin = observer(() => {
+    const {user} = useContext<any | null>(Context);
     const [sideBarItem, setSideBarItem] = useState("golovna");
     const [tyreData, setTyreData] = useState(null);
     const [tyreStockData, setTyreStockData] = useState(null);
@@ -276,6 +278,6 @@ const Admin = () => {
             </div>            
         </div>
     );
-};
+});
 
 export default Admin;

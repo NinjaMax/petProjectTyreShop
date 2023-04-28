@@ -19,8 +19,8 @@ export class FacebookAuthService {
   async getFacebookAuthURL() {
     const rootUrl = 'https://www.facebook.com/v16.0/dialog/oauth';
     const options = {
-      redirect_uri: `https://localhost:4000/auth/facebook`,
       client_id: '161637870174443',
+      redirect_uri: `https://localhost:4000/auth/facebook`,
       //access_type: 'offline',
       response_type: 'code',
       //prompt: 'consent',

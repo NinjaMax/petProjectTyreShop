@@ -38,9 +38,10 @@ export const signUpUser = async (dataSignIn: {}) => {
 }
 
 export const check = async () => {
-    const {data} = await $authHostGet.get('api/user/auth')
+    const {data} = await $authHostGet.get('auth/user/admin')
     //localStorage.setItem('token', data.token)
-    return jwt_decode(data.token)
+    console.log('AUTH_USER_ADMIN: ', data )
+    return data;
 }
 
 export const preSignUpUser = async (phoneNum: bigint) => 
