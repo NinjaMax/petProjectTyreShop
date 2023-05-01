@@ -118,7 +118,7 @@ const BasketOrder = () => {
                     <label htmlFor="commentsOrder">Додати коментар до замовлення:</label>
                     <textarea id="commentsOrder" name="commentsOrder"
                         placeholder='Залишити коментар для замовлення'
-                        rows="5" cols="80">
+                        rows={5} cols={80}>
                     </textarea>
                 </div>
                 <ButtonAction props={"Оформити замовлення"} widthBtn={250} eventItem={undefined}/>

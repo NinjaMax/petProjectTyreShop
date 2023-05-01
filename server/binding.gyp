@@ -2,7 +2,7 @@
   "targets": [ 
     { 
       "target_name": "binding", 
-      "sources": [ "C:/Users/Work/VscodeProjects/petTyreShop/server/binding.gyp" ]
+      "sources": [ "C:/Users/Max/VScodeProjects/petTyreShop/server/binding.gyp" ]
     }
   ]
 }

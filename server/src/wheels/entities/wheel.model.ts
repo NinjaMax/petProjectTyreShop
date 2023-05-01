@@ -24,6 +24,7 @@ import { WheelType } from '../../properties/entities/wheels/wheel-type.model';
 import { WheelWidth } from '../../properties/entities/wheels/wheel-width.model';
 import { StockWheels } from '../../stock/entities/stock-wheels.model';
 import { WheelConfigAttr } from '../interfaces/wheel.interface';
+import { CreateWheelDto } from '../dto/create-wheel.dto';
 
 @Table({tableName: 'wheel', updatedAt: false})
 export class Wheel extends Model<Wheel, WheelConfigAttr> {

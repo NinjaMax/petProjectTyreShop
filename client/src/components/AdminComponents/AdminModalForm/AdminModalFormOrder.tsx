@@ -1,14 +1,13 @@
 import React, { useReducer, Reducer, useState, useCallback, useEffect} from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminFormOrder.css';
-//import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import ModalAdmin from '../../modal/ModalAdmin';
-import AdminComment from '../adminContent/AdminComment';
-import AdminModalCustmCreate from './AdminModalCustmCreate';
-import AdminModalCustomers from './AdminModalCustomers';
-import AdminModalGoods from './AdminModalGoods';
 import {addGoodsToOrder, createGoodsToOrder, responseForm} from '../../../restAPI/restAdminAPI';
 import { yieldToMain } from '../../../restAPI/yieldMain';
+import AdminComment from '../adminContent/AdminComment';
+import AdminModalCustmCreate from '../adminModalForm/AdminModalCustmCreate';
+import AdminModalCustomers from '../adminModalForm/AdminModalCustomers';
+import AdminModalGoods from '../adminModalForm/AdminModalGoods';
 
 interface IFormOrder {
     props: [[] | null, ...any[][]] | [[] | null, ...null[]];
@@ -511,7 +510,7 @@ const AdminFormOrder = (
                             <input  className="admFormOrderName"
                                 type="text"
                                 name="customer" 
-                                maxLength='45'
+                                maxLength={45}
                                 placeholder="Ім'я або назва.."
                                 value={addCustomer ? 
                                     addCustomer?.full_name : 
@@ -576,7 +575,7 @@ const AdminFormOrder = (
                         <label htmlFor="order_ttn">ТТН </label>
                         <input className="admFormOrderTtn"
                             type="text"  
-                            maxLength='45'
+                            maxLength={45}
                             placeholder="ТТН замовлення.."
                             {...register('delivery_ttn')}
                             name="delivery_ttn"

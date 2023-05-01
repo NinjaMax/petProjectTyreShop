@@ -1,15 +1,14 @@
 import React, {useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminGoodsContent.css';
 import ButtonSearch from '../../buttons/ButtonSearch';
+import ModalAdmin from '../../modal/ModalAdmin';
+import AdminFormOrder from '../adminModalForm/AdminModalFormOrder';
 import AdminBatteryContent from './AdminBatteryContent';
 import AdminOilContent from './AdminOilContent';
 import AdminTyreContent from './AdminTyreContent';
-import AdminWheelContent from './AdminWheelContent';
-//import axios from 'axios';
 import AdminTyreStockPriceRow from './AdminTyreStockPriceRow';
+import AdminWheelContent from './AdminWheelContent';
 import AdminWheelStockPriceRow from './AdminWheelStockPriceRow';
-import ModalAdmin from '../../modal/ModalAdmin';
-import AdminFormOrder from '../adminModalForm/AdminModalFormOrder';
 
 interface IGoodsContent {
     

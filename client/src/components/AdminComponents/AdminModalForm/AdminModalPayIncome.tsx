@@ -13,7 +13,7 @@ const AdminModalPayIncome = () => {
                         <input type="text" 
                             className="admFormPayIncomeId" 
                             name="firstname" 
-                            maxLength='45'
+                            maxLength={45}
                             placeholder="Контракт покупця.."
                         />  
                     </div>
@@ -43,7 +43,7 @@ const AdminModalPayIncome = () => {
                             <input type="text" 
                                 className="admPayIncomeName" 
                                 name="lastname" 
-                                maxLength='45'
+                                maxLength={45}
                                 placeholder="номер заказу покупця"
                             />
                             <div onClick={(e)=>e.preventDefault()}>
@@ -56,7 +56,7 @@ const AdminModalPayIncome = () => {
                         <input type="text" 
                             className="admFormPayIncomeId" 
                             name="firstname" 
-                            maxLength='45'
+                            maxLength={45}
                             placeholder="введіть сумму.."
                         />  
                     </div>

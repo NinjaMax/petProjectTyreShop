@@ -1,9 +1,8 @@
 import React from 'react';
 import '../../css/TabsCss/TabMain.css';
-import FilterMainTyre from '../mainFilterButton/filterMainTyres/FilterMainTyre';
 import PopularSizeTyre from '../popularGoods/PopularSizeTyre';
 import PopularDiametrTyre from '../popularGoods/PopularDiametrTyre';
-
+import FilterMainTyre from '../mainFilterButton/filterMainTyres/FilterMainTyre';
 
 const TabMain = () => {
 
@@ -14,7 +13,7 @@ const TabMain = () => {
             <button className="tablinksTyres" 
                 value={'ШИНИ'}       
                 onClick={(e) => e.currentTarget.value}>
-                ШИНB<span className='arrowTabTyres'></span>
+                ШИНИ<span className='arrowTabTyres'></span>
             </button>
             <button className="tablinksWheel" 
                 value={'ДИСКИ'} 

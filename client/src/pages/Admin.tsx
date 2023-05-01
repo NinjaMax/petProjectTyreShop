@@ -11,26 +11,26 @@ import { getTyres,
         getCommentData,
         getOrderData,
         getCustomers } from '../restAPI/restAdminAPI';
-import AdminSideBar from '../components/AdminComponents/AdminSideBar';
-import AdminMainContent from '../components/AdminComponents/AdminMainContent';
-import AdminGoodsContent from '../components/AdminComponents/adminContent/AdminGoodsContent';
-import AdminOrderContent from '../components/AdminComponents/adminContent/AdminOrderContent';
-import AdminSalesContent from '../components/AdminComponents/adminContent/AdminSalesContent';
-import AdminOrderSupContent from '../components/AdminComponents/adminContent/AdminOrderSupContent';
-import AdminCashBoxContent from '../components/AdminComponents/adminContent/AdminCashBoxContent';
-import AdminPayIncomesContent from '../components/AdminComponents/adminContent/AdminPayIncomesContent';
-import AdminPayExpensesContent from '../components/AdminComponents/adminContent/AdminPayExpensesContent';
-import AdminSupplierContent from '../components/AdminComponents/adminContent/AdminSupplierContent';
-import AdminCustomersContent from '../components/AdminComponents/adminContent/AdminCustomersContent';
-import AdminUsersContent from '../components/AdminComponents/adminContent/AdminUsersContent';
-import AdminUploaderContent from '../components/AdminComponents/adminContent/AdminUploaderContent';
-import AdminReportsContent from '../components/AdminComponents/adminContent/AdminReportsContent';
-import AdminOptionContent from '../components/AdminComponents/adminContent/AdminOptionContent';
-import AdminProfile from '../components/AdminComponents/AdminProfile';
-import AdminHeader from '../components/AdminComponents/AdminHeader';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../context/Context';
+import AdminHeader from '../components/adminComponents/AdminHeader';
+import AdminMainContent from '../components/adminComponents/AdminMainContent';
+import AdminProfile from '../components/adminComponents/AdminProfile';
+import AdminSideBar from '../components/adminComponents/AdminSideBar';
+import AdminCashBoxContent from '../components/adminComponents/adminContent/AdminCashBoxContent';
+import AdminCustomersContent from '../components/adminComponents/adminContent/AdminCustomersContent';
+import AdminGoodsContent from '../components/adminComponents/adminContent/AdminGoodsContent';
+import AdminOptionContent from '../components/adminComponents/adminContent/AdminOptionContent';
+import AdminOrderContent from '../components/adminComponents/adminContent/AdminOrderContent';
+import AdminOrderSupContent from '../components/adminComponents/adminContent/AdminOrderSupContent';
+import AdminPayExpensesContent from '../components/adminComponents/adminContent/AdminPayExpensesContent';
+import AdminPayIncomesContent from '../components/adminComponents/adminContent/AdminPayIncomesContent';
+import AdminReportsContent from '../components/adminComponents/adminContent/AdminReportsContent';
+import AdminSalesContent from '../components/adminComponents/adminContent/AdminSalesContent';
+import AdminSupplierContent from '../components/adminComponents/adminContent/AdminSupplierContent';
+import AdminUploaderContent from '../components/adminComponents/adminContent/AdminUploaderContent';
+import AdminUsersContent from '../components/adminComponents/adminContent/AdminUsersContent';
 //import { postTask } from '../restAPI/postTaskAdmin';
 //import { scheduler } from 'timers/promises';
 

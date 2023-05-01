@@ -27,7 +27,7 @@ const AdminModalOrderSup = ({storages}: IModalOrderSup) => {
                         <input type="text" 
                             className="admFormOrderSupId" 
                             name="firstname" 
-                            maxLength='30'
+                            maxLength={30}
                             placeholder="Ид.."
                         />  
                     </div>
@@ -37,7 +37,7 @@ const AdminModalOrderSup = ({storages}: IModalOrderSup) => {
                             <input type="text" 
                                 className="admFormOrderSupName" 
                                 name="lastname" 
-                                maxLength='45'
+                                maxLength={30}
                                 placeholder="Ім'я або назва.."
                             />
                             <div onClick={(e)=>e.preventDefault()}>
@@ -58,7 +58,7 @@ const AdminModalOrderSup = ({storages}: IModalOrderSup) => {
                         <input type="text" 
                             className="admFormOrderSupId" 
                             name="firstname" 
-                            maxLength='45'
+                            maxLength={30}
                             placeholder="Контракт покупця.."
                         />  
                     </div>

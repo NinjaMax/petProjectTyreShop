@@ -14,7 +14,7 @@ const AdminModalUsers = () => {
                         <input type="text" 
                             className="admFormUsersName" 
                             name="lastname" 
-                            maxLength='45'
+                            maxLength={45}
                             placeholder="Ім'я або назва.."
                         />        
                     </div>    
@@ -24,7 +24,7 @@ const AdminModalUsers = () => {
                     <input type="text" 
                         className="admFormUsersId" 
                         name="firstname" 
-                        maxLength='45'
+                        maxLength={45}
                         placeholder="Контракт покупця.."
                     />  
                 </div>
@@ -33,7 +33,7 @@ const AdminModalUsers = () => {
                     <input type="text" 
                         className="admFormUsersId" 
                         name="firstname" 
-                        maxLength='45'
+                        maxLength={45}
                         placeholder="Контракт покупця.."
                     />  
                 </div>
@@ -42,7 +42,7 @@ const AdminModalUsers = () => {
                     <input type="text" 
                         className="admFormUsersId" 
                         name="firstname" 
-                        maxLength='45'
+                        maxLength={45}
                         placeholder="Контракт покупця.."
                     />  
                 </div>
@@ -51,7 +51,7 @@ const AdminModalUsers = () => {
                     <input type="text" 
                         className="admFormUsersId" 
                         name="firstname" 
-                        maxLength='45'
+                        maxLength={45}
                         placeholder="Контракт покупця.."
                     />  
                 </div>
