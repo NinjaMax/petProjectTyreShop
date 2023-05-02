@@ -58,7 +58,6 @@ import AdminUsersContent from '../components/adminComponents/adminContent/AdminU
     //result.data: [];
 //}
 
-
 const Admin = observer(() => {
     const {user} = useContext<any | null>(Context);
     const [sideBarItem, setSideBarItem] = useState("golovna");
@@ -142,7 +141,7 @@ const Admin = observer(() => {
                     
                     if(!isMounted && tasks[i] === getStorageAll) {
                         let result: any = await tasks[i]();
-                        setStorageAll(result.data);
+                        setStorageAll(result?.data);
                         //console.log('STORAGE DATA', result.data )
                     } 
                     
@@ -169,26 +168,18 @@ const Admin = observer(() => {
                         setCommentData(result.data);
                         //console.log('COMMENTS DATA', result.data )
                     } 
-
                     const task = tasks.shift();
-  
                     // Run the task:
                     task();
                     //i++;
                     await yieldToMain()   
                 }
-                
             }
-
             postTask();
-
         return () => {
             isMounted = true;
         };
-
     },[commentId])
-
-    
 
     const sideBarItemChange = async (e: any) => {
         setSideBarItem(e.target.value);
@@ -198,7 +189,6 @@ const Admin = observer(() => {
     const showCommentData = async (e: {target: {value: React.SetStateAction<null>;};}) => {
         setCommentId(e.target.value);
     }
-    
 
     return (
         <div className='adminPageMain'>

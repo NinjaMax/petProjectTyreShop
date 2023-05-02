@@ -11,6 +11,7 @@ import {
   Req,
   Res,
   Redirect,
+  Header,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { AuthService } from './auth.service';
@@ -165,16 +166,19 @@ export class AuthController {
   }
 
   @Post('user/login')
-  @Redirect('https://localhost:3000/admin', 200)
+  
+  //@Header('Access-Control-Allow-Origin', 'https://localhost:3000')
+  //@Redirect('https://localhost:3000/admin', 200)
   async loginByPhoneUser(
-    @Res({ passthrough: true }) res: Response,
+    @Res() res: Response,
     @Body() loginDto: LoginDto,
   ) {
-    const logIn = await this.authService.loginUserByPhone(res, loginDto);
-    if (!logIn.status) {
-      return res.redirect('https://localhost:3000/admin/auth');
-    }
-    // else {
+    return await this.authService.loginUserByPhone(res, loginDto);
+    // console.log(logIn.statusCode);
+    // if (logIn.statusCode !== 200) {
+    //   return res.redirect('https://localhost:3000/admin/auth');
+    // } 
+    //else {
     //   return res.redirect('https://localhost:3000/admin');
     // }
   }

@@ -3,33 +3,38 @@ import '../../css/AuthCss/AdminAuth.css';
 import { useForm } from 'react-hook-form';
 import { Context } from '../../context/Context';
 import { getCurUser, logInUser } from '../../restAPI/restUsersApi';
+import { observer } from 'mobx-react-lite';
 
-const Admin = () => {
+const AdminAuth = observer(() => {
   const {user} = useContext<any | null>(Context);
   const [formError, setFormError] = useState('');
   const { register, handleSubmit, setError, formState: { errors } } = useForm({
       criteriaMode: 'all',
     });
-
+  useEffect(() => {
+    setError('root.serverError', { 
+        type: formError,
+      })
+  },[formError, setError])
+  
   const logInAdmin = async(data: any) => {
     try {
       const logIn = await logInUser(data);
-      console.log('LOGIN_ADMIN_DATA:', typeof logIn);
+      console.log('LOGIN_ADMIN_DATA:', logIn);
       console.log('LOGIN_ADMIN_DATA STATUS:', logIn.split('.') );
       console.log('USER_isAUTH: ',user.isAuth);
-      const userLogIn:[string] = logIn.split('.');
-      if (userLogIn[0] === 'OK') {
+      //const userLogIn:[string] = logIn.split('.');
+      //if (userLogIn[0] === 'OK') {
 
         user.setIsAuth(true);
         console.log('USER_isAUTH: ', user.isAuth);
-      }
+      //}
     } catch (error: any) {
-      setFormError(error.response?.message)
-      setError('root.serverError', { 
-        type: formError,
-      })
+      setFormError(error.response?.data.message);
+      console.log(error.response?.data.message);
     }  
   };
+ 
     
   useEffect(() => {
     let isUser = false;
@@ -69,7 +74,7 @@ const Admin = () => {
                   />
                     {errors.password && 
                     <span style={{color : "red", fontSize: "10px"}}>
-                      *Це обов'язкове поле*
+                      *Це обов'язкове поле*не менше 4-х символів*
                     </span>
                     }
                     {errors.root?.serverError.type && 
@@ -93,6 +98,6 @@ const Admin = () => {
         </div>
     </div>
   );
-};
+});
 
-export default Admin;
+export default AdminAuth;

@@ -248,14 +248,15 @@ export class AuthService {
             httpOnly: true,
             secure: true,
           });
-          // res.setHeader(
-          // //   'Location',
-          // //   'https://localhost:3000/admin/',
-          //   'Access-Control-Allow-Origin',
-          //  'https://localhost:3000/admin',
-          //  );
-          //return res.redirect('https://localhost:3000/admin/');
-          return res.status(200);
+          res.setHeader(
+          //   'Location',
+          //   'https://localhost:3000/admin/',
+            'Access-Control-Allow-Origin',
+            'https://localhost:3000',
+           );
+           //res.setHeader("Access-Control-Allow-Credentials", "true");
+           res.redirect('https://localhost:3000/admin');
+          //return res.status(200);
         }
         //return res.redirect(this.configService.get('APP_ROOT_URI'));
       }

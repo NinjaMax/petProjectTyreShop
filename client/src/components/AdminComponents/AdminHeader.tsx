@@ -1,10 +1,7 @@
 import React from 'react';
 import '../../css/AdminComponentCss/AdminHeader.css';
 
-
 const AdminHeader = () => {
-
- 
 
     return (    
         <div className='adminHeader'>
