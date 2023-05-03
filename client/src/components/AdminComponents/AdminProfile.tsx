@@ -13,6 +13,7 @@ const AdminProfile = observer(() => {
                 <img src={user._user.picture} alt='user'/> :
                 <i className="fas fa-user-circle"></i>    
             }
+            <div className='admProfileItem'>id:{user._user?.sub?.id_user ?? 'немає данних'}</div>
             <div className='admProfileItem'>Ім'я:{user._user?.sub?.name ?? 'немає данних'}</div>
             <div className='admProfileItem'>{user._user?.sub?.role ?? 'немає данних'}</div>
             <div className='admProfileItem'>{user._user?.sub?.email ?? 'не вказано'}</div>

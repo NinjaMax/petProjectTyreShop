@@ -50,6 +50,7 @@ type IOrdersItem = {
     organisation: string;
     order_storage: any [];
     [Symbol.iterator](): any;
+    comments: any[];
 }
 
 const AdminOrderContent = (

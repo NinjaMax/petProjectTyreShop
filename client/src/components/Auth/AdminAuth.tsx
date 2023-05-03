@@ -4,9 +4,12 @@ import { useForm } from 'react-hook-form';
 import { Context } from '../../context/Context';
 import { getCurUser, logInUser } from '../../restAPI/restUsersApi';
 import { observer } from 'mobx-react-lite';
+import { useHistory } from 'react-router-dom';
 
 const AdminAuth = observer(() => {
   const {user} = useContext<any | null>(Context);
+  const history = useHistory();
+  const [userAuth, setUserAuth] = useState(false);
   const [formError, setFormError] = useState('');
   const { register, handleSubmit, setError, formState: { errors } } = useForm({
       criteriaMode: 'all',
@@ -21,33 +24,31 @@ const AdminAuth = observer(() => {
     try {
       const logIn = await logInUser(data);
       console.log('LOGIN_ADMIN_DATA:', logIn);
-      console.log('LOGIN_ADMIN_DATA STATUS:', logIn.split('.') );
       console.log('USER_isAUTH: ',user.isAuth);
-      //const userLogIn:[string] = logIn.split('.');
-      //if (userLogIn[0] === 'OK') {
-
+      if(logIn) {
         user.setIsAuth(true);
-        console.log('USER_isAUTH: ', user.isAuth);
-      //}
+        setUserAuth(true);
+      }
     } catch (error: any) {
       setFormError(error.response?.data.message);
       console.log(error.response?.data.message);
     }  
   };
  
-    
   useEffect(() => {
     let isUser = false;
-    const getAdminUser = async() => {
-      const curUser = await getCurUser()
-      if(!isUser && curUser) {
-        user.setIsAuth(true);
+    const getUserAuth = async() => {
+    const curUser = await getCurUser();
+      if (userAuth || (curUser && !isUser)) {
         user.setUser(curUser);
-      } 
-    }
-    getAdminUser();
-    return () => {isUser = true}
-  },[user]);
+        user.setIsAuth(true);
+        setUserAuth(true);
+        history.push('/admin');
+      }
+    }  
+      getUserAuth(); 
+    return () => {isUser= true}
+  }, [user, history, userAuth])
 
     return (
       <div className='authFormAdmin'>

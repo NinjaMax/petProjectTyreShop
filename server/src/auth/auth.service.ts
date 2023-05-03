@@ -248,17 +248,8 @@ export class AuthService {
             httpOnly: true,
             secure: true,
           });
-          res.setHeader(
-          //   'Location',
-          //   'https://localhost:3000/admin/',
-            'Access-Control-Allow-Origin',
-            'https://localhost:3000',
-           );
-           //res.setHeader("Access-Control-Allow-Credentials", "true");
-           res.redirect('https://localhost:3000/admin');
-          //return res.status(200);
+          return true;
         }
-        //return res.redirect(this.configService.get('APP_ROOT_URI'));
       }
     } catch (e) {
       throw new HttpException(`${e.message}`, HttpStatus.UNAUTHORIZED);

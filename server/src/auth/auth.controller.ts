@@ -169,17 +169,19 @@ export class AuthController {
   
   //@Header('Access-Control-Allow-Origin', 'https://localhost:3000')
   //@Redirect('https://localhost:3000/admin', 200)
+  //@Redirect()
   async loginByPhoneUser(
-    @Res() res: Response,
+    @Res({ passthrough: true }) res: Response,
     @Body() loginDto: LoginDto,
   ) {
     return await this.authService.loginUserByPhone(res, loginDto);
     // console.log(logIn.statusCode);
     // if (logIn.statusCode !== 200) {
+    //   //return { url: 'https://localhost:3000/admin/auth', status: 302};
     //   return res.redirect('https://localhost:3000/admin/auth');
     // } 
-    //else {
-    //   return res.redirect('https://localhost:3000/admin');
+    // else {
+    //   return logIn;
     // }
   }
 

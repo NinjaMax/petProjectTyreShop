@@ -341,6 +341,22 @@ await $hostGet.get('/customers/all')
     // .catch(error => {
     //   console.log(error)
     // })
+//type ICreateComments = {id_user: number; id_order:number; comments: string;}
+const addCommentsToOrder = async (
+    id_user: number | undefined,
+    id_order: number, 
+    comments: string) => 
+await $hostPost.post('/comments', {
+    id_order: id_order,
+    id_user: id_user,
+    comments: comments,
+})
+.catch(error => {
+    console.log(
+    'Заказ не створено (не існує), або не вірно вказані дані',
+    error)
+});
+    
 
 export {
     addGoodsToOrder,
@@ -355,5 +371,6 @@ export {
     getPriceWheels,
     getCommentData,
     getOrderData,
-    getCustomers
+    getCustomers,
+    addCommentsToOrder
 };

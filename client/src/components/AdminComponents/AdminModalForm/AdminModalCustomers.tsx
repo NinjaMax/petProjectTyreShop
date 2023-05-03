@@ -8,6 +8,7 @@ interface IModalCustomers {
 
 type IAllCustomer = {
     id_customer: number;
+    name: string;
     full_name: string;
     contract: [
         {name: string; id_contract: number;}

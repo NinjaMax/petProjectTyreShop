@@ -1,13 +1,15 @@
-import React, { useReducer, Reducer, useState, useCallback, useEffect} from 'react';
+import React, { useReducer, Reducer, useState, useCallback, useEffect, useContext} from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminFormOrder.css';
 import { useForm } from 'react-hook-form';
 import ModalAdmin from '../../modal/ModalAdmin';
-import {addGoodsToOrder, createGoodsToOrder, responseForm} from '../../../restAPI/restAdminAPI';
+import {addCommentsToOrder, addGoodsToOrder, createGoodsToOrder, responseForm} from '../../../restAPI/restAdminAPI';
 import { yieldToMain } from '../../../restAPI/yieldMain';
 import AdminComment from '../adminContent/AdminComment';
 import AdminModalCustmCreate from '../adminModalForm/AdminModalCustmCreate';
 import AdminModalCustomers from '../adminModalForm/AdminModalCustomers';
 import AdminModalGoods from '../adminModalForm/AdminModalGoods';
+import { Context } from '../../../context/Context';
+import { observer } from 'mobx-react-lite';
 
 interface IFormOrder {
     props: [[] | null, ...any[][]] | [[] | null, ...null[]];
@@ -94,6 +96,7 @@ type DataGoods = {
     customer:{full_name: string;}
     [Symbol.iterator](): any;
     order_storage: any[];
+    comments: any[];
     // id_order_storage: number;
     // id: number;
     // id_supplier: number;
@@ -194,15 +197,16 @@ function createInitialState (goodsId: any | undefined, ordersData?: DataGoods | 
     return initialState;    
 };
 
-const AdminFormOrder = (
+const AdminFormOrder = observer((
     {props, goodsId, comments, setActive, customer, storages, ordersData}:IFormOrder
     ) => {
+    const {user} = useContext<any | null>(Context);
     const [tyreDatas, wheelDatas] = props;
     const [orderId, setOrderId] = useState<number | null>(null);
     const [addGoods, setAddGoods] = useState<boolean>(false);
     const [createCustomer, setCreateCustomer] = useState<boolean>(false);
     const [openCustomers, setOpenCustomers] = useState<boolean>(false);
-    const [addCustomer, setAddCustomer] = useState<IModalFormOrder | null>(null);
+    const [addCustomer, setAddCustomer] = useState<IModalFormOrder | undefined>(undefined);
     const [disableBtn, setDisableBtn] = useState<boolean>(false);
     const [disableBtnOk, setDisableBtnOk] = useState<boolean>(false);
     const [orderStorage, setOrderStorage] = useState<any[]>([]);
@@ -210,6 +214,7 @@ const AdminFormOrder = (
     const [state, dispatch] = useReducer<Reducer<StateReducer, ActionReducer>>(
         reducer, createInitialState(goodsId, ordersData)
         );
+    const [newComment, setNewComment] = useState<string>('Пишить коментар..');
     //const [orderData, setOrderData] = useState<{}>();
      
     useEffect(() => {
@@ -263,16 +268,13 @@ const AdminFormOrder = (
     };
     const openCustomerForm = () => {
         setOpenCustomers(!openCustomers);
-    };
-    
+    };    
     //const actions = useMemo(() => ({
-
         const addCustToOrder = async (valueCust: number) => {
             //console.log(valueCust);
             const findCustomer = customer!.find(
                 (items:{id_customer:number}) => items?.id_customer === +valueCust
             );
-
             if (findCustomer) {
                 setAddCustomer(findCustomer);  
             }
@@ -388,6 +390,17 @@ const AdminFormOrder = (
     //console.log('TYRE DATAS: ', tyreDatas);
     console.log(errors);
     console.log('ORDER STORG ARRAY: ', orderStorage);
+
+    const addComment = async() => {
+        try {
+           await addCommentsToOrder(
+            ordersData?.id_order,
+            user._user?.sub.id_user, 
+            newComment); 
+        } catch (error) {
+            console.log(error)
+        }    
+    }
 
     return (
         <div >
@@ -512,10 +525,9 @@ const AdminFormOrder = (
                                 name="customer" 
                                 maxLength={45}
                                 placeholder="Ім'я або назва.."
-                                value={addCustomer ? 
-                                    addCustomer?.full_name : 
-                                    ordersData?.customer.full_name}
-                                onChange={() => setAddCustomer(addCustomer)}
+                                value={addCustomer?.full_name ?? ordersData?.customer.full_name ?? ''}
+                                readOnly={true}
+                                //onChange={() => setAddCustomer(addCustomer)}
                             />
                             <div onClick={(e)=>e.preventDefault()}>
                                 <button onClick={openCustomerForm} className='admFormSearchCustm'>
@@ -776,14 +788,21 @@ const AdminFormOrder = (
                 <div className='admFormOrderCommit'
                     onClick={(e)=>e.preventDefault()}>
                     <div className='admFormOrderAddCommit'>
-                    <button onClick={() => console.log('Add Commit')} 
-                        className='admFormOrderBtnAdd'>Додати коментар
+                    <button className='admFormOrderBtnAdd'
+                        onClick={addComment} 
+                        >Додати коментар
                     </button>
-                        <textarea  name="subject" className='admOrderCommitText'
-                        placeholder="Пишить коментар.."></textarea>
+                        <textarea 
+                        className='admOrderCommitText'
+                        value={newComment}
+                        onChange={e =>setNewComment(e.target.value)}
+                        //name="subject" 
+                        //</div>placeholder="Пишить коментар.."
+                        >        
+                        </textarea>
                     </div>
                     <div className='admFormOrderCommitChat'>
-                        <AdminComment/>
+                        <AdminComment comments={ordersData?.comments}/>
                     </div>  
                 </div>
                 <div className='admOrderFormGrp'
@@ -814,6 +833,10 @@ const AdminFormOrder = (
                     <div onClick={(e) => e.stopPropagation()}>
                         <button className='admFormOrderBtn' onClick={() =>setActive(false)}>Відмінити</button>
                     </div>
+                    <span>id: {user._user?.sub.id_user ?? ordersData?.id_user}</span>
+                    <span>користувач: {user._user?.sub.name ?? ordersData?.id_user}</span>
+                    <span>посада: {user._user?.sub.user?.role ?? ordersData?.id_user}</span>
+
                 </div>
             </form>
         </div>
@@ -840,6 +863,6 @@ const AdminFormOrder = (
             }
         </div>
     );
-};
+});
 
 export default AdminFormOrder;
