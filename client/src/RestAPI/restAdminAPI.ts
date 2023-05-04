@@ -1,6 +1,6 @@
 // //React Axios Post Request:
 //import axios from "axios";
-import { $hostGet, $hostPost } from "./index";
+import { $hostGet, $hostPost, $hostPostUpload } from "./index";
 import { IRestAdminApi } from "./interfaces/restAdmin.interface";
 
 const createGoodsToOrder = async (
@@ -356,11 +356,34 @@ await $hostPost.post('/comments', {
     'Заказ не створено (не існує), або не вірно вказані дані',
     error)
 });
-    
 
+const uploadPriceTyreForm = async (file: any, onUploadProgress: any) => {
+    let formData = new FormData();
+  
+    formData.append("file", file);
+
+    return await $hostPostUpload.post('/uploader/tyres', formData,{
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+        onUploadProgress,
+    })
+    .catch(error => {
+    console.log(error);
+    });
+};
+
+const getFiles = async () => 
+await $hostGet.get('/files')
+.catch(error => {
+    console.log(error)
+});
+    
 export {
     addGoodsToOrder,
     createGoodsToOrder,
+    uploadPriceTyreForm,
+    getFiles,
     responseForm,
     getTyres, 
     getStockTyres, 

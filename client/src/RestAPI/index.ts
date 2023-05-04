@@ -9,6 +9,14 @@ const $hostPost = axios.create({
     }, withCredentials: true,
 })
 
+const $hostPostUpload = axios.create({
+    baseURL: process.env.REACT_APP_HOST,
+    headers: {
+        'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
+        'Access-Control-Allow-Origin': `${process.env.CORS}` 
+    }, withCredentials: true,
+})
+
 const $hostGet = axios.create({
     baseURL: process.env.REACT_APP_HOST,
     headers: {
@@ -62,5 +70,6 @@ export {
     $authHostGet,
     $authHostPost,
     $authHostPostLogIn,
-    $authHostDeleteLogOut
+    $authHostDeleteLogOut,
+    $hostPostUpload
 }

@@ -22,8 +22,7 @@ import { diskStorage } from 'multer';
 
 @Controller('uploader')
 export class UploaderController {
-  constructor(private readonly uploaderService: UploaderService,
-  ) {}
+  constructor(private readonly uploaderService: UploaderService) {}
 
   @Post('/tyres')
   @Header('Content-Type', 'multipart/form-data')
@@ -54,7 +53,7 @@ export class UploaderController {
       })
     )
     file: Express.Multer.File,
-  ) {    
+  ) {
     return await this.uploaderService.parseTyresPrice(file.path, file.filename);
   }
 

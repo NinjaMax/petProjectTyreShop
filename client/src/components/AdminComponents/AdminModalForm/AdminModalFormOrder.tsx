@@ -2,7 +2,11 @@ import React, { useReducer, Reducer, useState, useCallback, useEffect, useContex
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminFormOrder.css';
 import { useForm } from 'react-hook-form';
 import ModalAdmin from '../../modal/ModalAdmin';
-import {addCommentsToOrder, addGoodsToOrder, createGoodsToOrder, responseForm} from '../../../restAPI/restAdminAPI';
+import {
+    addCommentsToOrder,
+    addGoodsToOrder, 
+    createGoodsToOrder, 
+    responseForm} from '../../../restAPI/restAdminAPI';
 import { yieldToMain } from '../../../restAPI/yieldMain';
 import AdminComment from '../adminContent/AdminComment';
 import AdminModalCustmCreate from '../adminModalForm/AdminModalCustmCreate';
@@ -316,7 +320,7 @@ const AdminFormOrder = observer((
             e.preventDefault();
             //e.stopPropagation();
             console.log('CREATE ORDER: ', data)
-        //try {
+        try {
             if (!orderId && state.length === 0) {
                let resultForm: any = await responseForm(data);
                 setOrderId(+resultForm.data.id_order);
@@ -354,9 +358,11 @@ const AdminFormOrder = observer((
                 alert("Треба добавити товари.");
             }
             e.stopPropagation();
-        // } catch {
+         } catch {
+            console.log('ERROR_CR_ORDERR: ', e);
+        
         //     reset();
-        // }    
+         }    
     }    
     //const onError = (errors:any, e:any) => console.log(errors, e);
     //GOOD PERFORM
