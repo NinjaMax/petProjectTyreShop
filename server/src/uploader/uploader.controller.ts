@@ -38,6 +38,7 @@ export class UploaderController {
           const fileName: string = file.originalname;
           const newFileName: string = fileName;
           cb(null, `${newFileName}`)
+          console.log('FILE_NAME: ', newFileName)
         },
       })
     } 

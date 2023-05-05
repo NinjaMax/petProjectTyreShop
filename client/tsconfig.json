@@ -3,6 +3,12 @@
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "module": "esnext",
+    "typeRoots": [
+      "@types",
+      "@types/react",
+      "node_modules/@types",
+      "src/types"
+    ],
     "target": "es5",
     "allowJs": true,
     "lib": [
@@ -20,10 +26,19 @@
     "noEmit": true,
     "jsx": "preserve"
   },
+
+  "exclude": [
+    "node_modules",
+    "dist",
+    "assets",
+    ".git"
+   ],  
   "files": [
-    "src/index.ts"
+    "src/index.tsx"
   ],
   "include": [
-    "src"
+    "src",
+    "src/**/*",
+    "src/index.d.ts"
   ]
 }

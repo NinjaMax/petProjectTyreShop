@@ -18,7 +18,7 @@ const InputDataText = ({inputItem}: IinputDataTex) => {
                 id={inputItem.name}  
                 placeholder={inputItem.discr} 
                 minLength={4} 
-                maxLength={inputItem.max} 
+                maxLength={+inputItem.max} 
                 data-size={inputItem.size} 
                 required
                 autoComplete='true'/> 

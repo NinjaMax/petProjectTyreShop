@@ -14,7 +14,7 @@ const AdminModalCashbox = () => {
                         <input type="text" 
                             className="admFormCashBoxName" 
                             name="lastname" 
-                            maxLength="45"
+                            maxLength={45}
                             placeholder="Ім'я або назва.."
                         />        
                     </div>    

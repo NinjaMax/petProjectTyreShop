@@ -13,9 +13,11 @@ export class UploaderService {
 
   async parseTyresPrice(path: string, fileName: string) {
     try {
-      await this.uploaderParser.csvParserTyres(path);
-
-      return `Price File ${fileName} has been succeeded upload`;
+      const uploadPriceTyre = await this.uploaderParser.csvParserTyres(path);
+      if (uploadPriceTyre) {
+        console.log(uploadPriceTyre);
+        return `${fileName} Успішно завантажено (has been succeeded upload)`;
+      }
     } catch {
       throw new HttpException(
         'Some Problems with Upload and Parce price',
@@ -26,9 +28,11 @@ export class UploaderService {
 
   async parseWheelsPrice(path: string, fileName: string) {
     try {
-      await this.uploaderParser.csvParserWheels(path);
-
-      return `Price File ${fileName} has been succeeded upload`;
+      const uploadPriceWheel = await this.uploaderParser.csvParserWheels(path);
+      if (uploadPriceWheel) {
+        return `${fileName} Успішно завантажено (has been succeeded upload)`;
+      }
+      return `${fileName} has been succeeded upload`;
     } catch {
       throw new HttpException(
         'Some Problems with Upload and Parce price',

@@ -12,7 +12,7 @@ const $hostPost = axios.create({
 const $hostPostUpload = axios.create({
     baseURL: process.env.REACT_APP_HOST,
     headers: {
-        'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
+        'Content-Type': 'multipart/form-data; charset=utf-8',
         'Access-Control-Allow-Origin': `${process.env.CORS}` 
     }, withCredentials: true,
 })

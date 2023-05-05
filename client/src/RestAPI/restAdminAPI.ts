@@ -268,7 +268,7 @@ await $hostGet.get('/price/wheels/all')
     // });
 
 const getStorageAll = async () => 
-await $hostGet.get('/storage/all`')
+await $hostGet.get('/storage/all')
 .catch(error => {
     console.log(error)
 });
@@ -364,7 +364,7 @@ const uploadPriceTyreForm = async (file: any, onUploadProgress: any) => {
 
     return await $hostPostUpload.post('/uploader/tyres', formData,{
         headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "multipart/form-data; charset=utf-8",
         },
         onUploadProgress,
     })
@@ -372,6 +372,22 @@ const uploadPriceTyreForm = async (file: any, onUploadProgress: any) => {
     console.log(error);
     });
 };
+
+const uploadPriceWheelForm = async (file: any, onUploadProgress: any) => {
+    let formData = new FormData();
+  
+    formData.append("file", file);
+
+    return await $hostPostUpload.post('/uploader/wheels', formData,{
+        headers: {
+            "Content-Type": "multipart/form-data; charset=utf-8",
+        },
+        onUploadProgress,
+    })
+    .catch(error => {
+    console.log(error);
+    });
+}
 
 const getFiles = async () => 
 await $hostGet.get('/files')
@@ -383,6 +399,7 @@ export {
     addGoodsToOrder,
     createGoodsToOrder,
     uploadPriceTyreForm,
+    uploadPriceWheelForm,
     getFiles,
     responseForm,
     getTyres, 

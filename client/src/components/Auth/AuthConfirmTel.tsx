@@ -31,7 +31,7 @@ const AuthConfirmTel = ({
     return (
         <div className='authFormMain'>
         <div className="containerAuthForm">
-          <form onSubmit={handleSubmit(data => preSignUp(+data))}>
+          <form onSubmit={handleSubmit((data:any) => preSignUp(+data))}>
               <div className='titleAuthForm'>Вхід / Реєстрація</div>
               <div className="colAuthForm">
                 <div className="hide-md-lg">
@@ -41,7 +41,7 @@ const AuthConfirmTel = ({
                   <input className='inputAuthForm' 
                     type="tel" 
                     pattern="[0-9]{3}"
-                    maxLength="12"
+                    maxLength={12}
                     //name="username" 
                     placeholder="номер телефона 38**********"
                     //onChange={(e: any) => setWriteTel(+e.currentTarget.value)}

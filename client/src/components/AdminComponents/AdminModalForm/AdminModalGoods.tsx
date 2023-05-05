@@ -5,7 +5,7 @@ interface IModalGoods {
     props: [[] | null, ...any[][] | null[]];
     storageGoods: [ 
         {id_storage: number;
-        storage: string} 
+        storage?: string} 
     ] | null;
     
     showRowModData(e: any): void;
@@ -92,10 +92,10 @@ const AdminModalGoods = ({props, showRowModData, storageGoods}: IModalGoods) => 
                                 <td>{item.full_name}</td>
                                 <td>{item.category?.category ?? ''}</td>
                                 <td>{item.price[indexEntity]?.price ?? ''}</td>                             
-                                <td>{item.stock[item.stock.findIndex(
+                                <td>{item.stock[item.stock?.findIndex(
                                     itemI => itemI.id_storage === entity.id_storage)]?.remainder ?? ''}</td>
                                 <td>{storageGoods![storageGoods!.findIndex((itemS) => itemS.id_storage === entity.id_storage)]?.storage}</td>     
-                                <td>{item.stock[item.stock.findIndex(
+                                <td>{item.stock[item.stock?.findIndex(
                                     itemI => itemI.id_storage === entity.id_storage)]?.id_storage ?? ''}</td>     
                             </Fragment>       
                         </tr>

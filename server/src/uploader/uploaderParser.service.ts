@@ -13,32 +13,33 @@ export class UploaderPaprserService {
     private addTyresToDataBase: AddTyresToDbService,
     private addWheelToDataBase: AddWheelsToDbService  
   ) {}
-  
+
   async csvParserTyres(path: string) {
     try {
       let resultsTyre: any[] = [];
       fs.createReadStream(join(process.cwd(), path))
         .pipe(csvParser())
         .on('data', (data: any) => {
-          resultsTyre.push(data);
+          resultsTyre?.push(data);
         })
         .on('error', (error) => {
           if (error) {
             console.log('PARSER ERROR: ', error);
+            throw new HttpException(
+              'SOME PROBLEM WITH PARSER',
+              HttpStatus.BAD_REQUEST,
+            );
           }
         })
         .on('end', () => {
-          resultsTyre.forEach((item: ItemPriceTyresConfigAttr) => {
+          resultsTyre?.forEach((item: ItemPriceTyresConfigAttr) => {
             this.addTyresToDataBase.addTyresToDb(item);
           });
+          resultsTyre = null;
         });
-      resultsTyre = null;
-      return `Price File ${path} has been succeeded, parse and added to Database`;
-    } catch {
-      throw new HttpException(
-        'Some Problems with Upload and Parce price',
-        HttpStatus.SERVICE_UNAVAILABLE,
-      );
+      return `Price File ${path} (has been succeeded, parse and added to Database)`;
+    } catch (err) {
+      throw new HttpException(`${err.message}`, HttpStatus.SERVICE_UNAVAILABLE);
     } 
   }
 
@@ -48,28 +49,26 @@ export class UploaderPaprserService {
       fs.createReadStream(join(process.cwd(), path))
         .pipe(csvParser())
         .on('data', (data: any) => {
-          resultsWheel.push(data);
+          resultsWheel?.push(data);
         })
         .on('error', (error) => {
           if (error) {
             console.log('PARSER ERROR: ', error);
+            throw new HttpException(
+              'SOME PROBLEM WITH PARSER',
+              HttpStatus.BAD_REQUEST,
+            );
           }
         })
         .on('end', () => {
-          resultsWheel.forEach((item: ItemPriceWheelConfigAttr) => {
+          resultsWheel?.forEach((item: ItemPriceWheelConfigAttr) => {
             this.addWheelToDataBase.addWheelsToDb(item);
           });
+          resultsWheel = null;
         });
-      resultsWheel = null;
       return `Price File ${path} has been succeeded, parse and added to Database`;
-    } catch {
-      throw new HttpException(
-        'Some Problems with Upload and Parce price',
-        HttpStatus.SERVICE_UNAVAILABLE,
-      );
+    } catch (err) {
+      throw new HttpException(`${err.message}`, HttpStatus.SERVICE_UNAVAILABLE);
     } 
   }
  }
-
-
-
