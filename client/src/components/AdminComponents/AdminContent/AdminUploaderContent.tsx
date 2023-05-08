@@ -113,7 +113,7 @@ const AdminUploaderContent = () => {
                         onChange={selectFile}
                         //{...register("file")}
                         //name="file"
-                        //accept=".csv"
+                        accept=".csv"
                         />
                     </div>
                 <div>
@@ -152,7 +152,7 @@ const AdminUploaderContent = () => {
                         onChange={selectFile}
                         //{...register("file")}
                         //name="file"
-                        //accept=".csv"
+                        accept=".csv"
                         />
                     </div>
                 <div>
@@ -191,7 +191,7 @@ const AdminUploaderContent = () => {
                         onChange={selectFile}
                         //{...register("file")}
                         //name="file"
-                        //accept=".csv"
+                        accept=".csv"
                         />
                     </div>
                 <div>
@@ -230,7 +230,7 @@ const AdminUploaderContent = () => {
                         onChange={selectFile}
                         //{...register("file")}
                         //name="file"
-                        //accept=".csv"
+                        accept=".csv"
                         />
                     </div>
                 <div>

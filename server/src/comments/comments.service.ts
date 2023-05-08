@@ -44,13 +44,11 @@ export class CommentsService {
         );
         await user.$add('comments', [commentOrderSup.id_comment]);
         await orderSup.$add('comments', [commentOrderSup.id_comment]);
-
         user.comments.push(commentOrderSup);
         order.comments.push(commentOrderSup);
 
         return commentOrderSup;
       }
-
       return new HttpException(
         `Data user "User ID or Order ID" is incorrect or not found`,
         HttpStatus.NOT_FOUND,
@@ -93,6 +91,26 @@ export class CommentsService {
       );
     }
   }
+
+  async findCommentByOrderId(getCommentDto: GetCommentDto) {
+    try {
+      const commentByOrderId = await this.commentsRepository.findAll({
+        where: { id_order: getCommentDto.id_order },
+        include: { all: true },
+      });
+      //if (commentByOrderId) {
+        return commentByOrderId;
+      // } else {
+      //   return null;
+      // }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+  
 
   update(id: number, updateCommentDto: UpdateCommentDto) {
     return `This action updates a #${id} comment`;

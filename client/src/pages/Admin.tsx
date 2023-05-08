@@ -8,7 +8,7 @@ import { getTyres,
         getStockWheel,
         getStorageAll,
         getPriceWheels,
-        getCommentData,
+        getCommentOrderData,
         getOrderData,
         getCustomers } from '../restAPI/restAdminAPI';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
@@ -81,7 +81,7 @@ const Admin = observer(() => {
     // const [payExpenseAll, setPayExpenseAll] = useState(null);
     const [customers, setCustomers] = useState(null);
     const [commentData, setCommentData] = useState(null);
-    const [commentId, setCommentId] = useState(null);
+    const [commentByOrder, setCommentByOrder] = useState<number | null>(null);
     const [orderAllData, setOrderAllData] = useState(null);
     const [storageAll, setStorageAll] = useState(null);
 
@@ -100,7 +100,7 @@ const Admin = observer(() => {
                     getStockWheel,
                     getPriceWheels,
                     getStorageAll,
-                    getCommentData,
+                    getCommentOrderData,
                     getOrderData,
                     getCustomers
                 ]
@@ -153,7 +153,7 @@ const Admin = observer(() => {
                     
                     if(!isMounted && tasks[i] === getOrderData) {
                         let result: any = await tasks[i]();
-                        setOrderAllData(result.data);
+                        setOrderAllData(result?.data);
                         //console.log('ORDERS DATA', result.data )
                     } 
                     
@@ -163,9 +163,11 @@ const Admin = observer(() => {
                         //console.log('CUSTOMERS DATA', result.data )
                     } 
 
-                    if(!isMounted && tasks[i] === getCommentData) {
-                        let result: any = await tasks[i](commentId);
-                        setCommentData(result.data);
+                    if(!isMounted && tasks[i] === getCommentOrderData) {
+                        if (commentByOrder) {
+                            let result: any = await tasks[i](commentByOrder);
+                            setCommentData(result?.data);  
+                        }
                         //console.log('COMMENTS DATA', result.data )
                     } 
                     const task = tasks.shift();
@@ -179,15 +181,16 @@ const Admin = observer(() => {
         return () => {
             isMounted = true;
         };
-    },[commentId])
+    },[commentByOrder])
 
     const sideBarItemChange = async (e: any) => {
         setSideBarItem(e.target.value);
         console.log(e.target.value);
     }
 
-    const showCommentData = async (e: {target: {value: React.SetStateAction<null>;};}) => {
-        setCommentId(e.target.value);
+    const showCommentOrderData = async (e: any) => {
+        setCommentByOrder(+e.currentTarget.getAttribute('data-value'));
+        console.log('COMMIT_BY_ID_ORDER: ', +e.currentTarget.getAttribute('data-value'));
     }
 
     return (
@@ -218,7 +221,7 @@ const Admin = observer(() => {
                     <AdminOrderContent 
                         props={[tyreData, tyreStockData, tyrePriceData,
                             wheelData, wheelPriceData, wheelStockData]}
-                        showComment={showCommentData}
+                        showComment={showCommentOrderData}
                         orders={orderAllData}
                         customer={customers} 
                         comments={commentData}

@@ -286,8 +286,8 @@ await $hostGet.get('/storage/all')
     //   console.log(error)
     // });
 
-const getCommentData = async (commentId: number | null) =>
-await $hostGet.get('/comments', {params: {id_comment: commentId}})
+const getCommentOrderData = async (orderId: number | null) =>
+await $hostGet.get('/comments/byorderid', {params: {id_order: orderId}})
 .catch(error => {
     console.log(error)
 });
@@ -343,9 +343,9 @@ await $hostGet.get('/customers/all')
     // })
 //type ICreateComments = {id_user: number; id_order:number; comments: string;}
 const addCommentsToOrder = async (
-    id_user: number | undefined,
-    id_order: number, 
-    comments: string) => 
+    id_user: number,
+    id_order: number | null, 
+    comments: string | undefined) => 
 await $hostPost.post('/comments', {
     id_order: id_order,
     id_user: id_user,
@@ -409,7 +409,7 @@ export {
     getStockWheel,
     getStorageAll,
     getPriceWheels,
-    getCommentData,
+    getCommentOrderData,
     getOrderData,
     getCustomers,
     addCommentsToOrder

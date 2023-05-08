@@ -141,6 +141,7 @@ type StateReducer = {
     map(arg0: any, ...arg: any[]): any;
     slice(arg0?: number, arg1?: number): any;
     [Symbol.iterator](): any;
+    reduce(arg0: any, ...arg: any[]): any
 }
 
 function reducer (state: StateReducer, action: ActionReducer) {
@@ -218,14 +219,16 @@ const AdminFormOrder = observer((
     const [state, dispatch] = useReducer<Reducer<StateReducer, ActionReducer>>(
         reducer, createInitialState(goodsId, ordersData)
         );
-    const [newComment, setNewComment] = useState<string>('Пишить коментар..');
+    const [newComment, setNewComment] = useState<string | undefined>(undefined);
     //const [orderData, setOrderData] = useState<{}>();
      
     useEffect(() => {
         register("id_customer", {required: 'Це необхідні дані'});
+        register("id_user", {required: 'Це необхідні дані'});
+        setValue("id_user", user._user?.sub.id_user);
         setValue("id_customer", addCustomer?.id_customer,
         { shouldValidate: true })
-      }, [register, setValue, addCustomer?.id_customer])
+      }, [register, setValue, addCustomer?.id_customer, user])
     
     useEffect(() => {
         register('id_contract', {required: 'Це необхідні дані'})
@@ -233,12 +236,12 @@ const AdminFormOrder = observer((
         { shouldValidate: true })
       }, [register, setValue, addCustomer?.contract])
 
-      useEffect(() => {
+    useEffect(() => {
         if (ordersData) {
             setDisableBtn(true);
             setDisableBtnOk(true);
         }
-      },[ordersData])
+    },[ordersData])
 //
     const onChangeInput = useCallback(
         (e: any, id: number, indexItem: number) => {
@@ -324,24 +327,22 @@ const AdminFormOrder = observer((
             if (!orderId && state.length === 0) {
                let resultForm: any = await responseForm(data);
                 setOrderId(+resultForm.data.id_order);
-                alert(`Заказ створено, id ${resultForm.data.id_order},
+                alert(`Замовлення створено, id ${resultForm.data.id_order},
                     але товари не додані.
                 `); 
             }
 
             if(!orderId && state.length > 0) {
-
                 let resultForm: any = await responseForm(data);
                 setOrderId(+resultForm.data.id_order);
-
                 state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
                     let resultOrder: any = await createGoodsToOrder(itemGoods, resultForm.data.id_order!);
                     setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder.data]);
                     await yieldToMain(); 
                 console.log('Order_storage', resultOrder.data);
                 }) 
-                alert(`Заказ створено, id ${resultForm.data.id_order}`);
-                setDisableBtn(!disableBtn);
+                alert(`Замовлення створено, id ${resultForm.data.id_order}`);
+                //setDisableBtn(!disableBtn);
             }
 
             if(orderId && state.length > 0) {
@@ -352,36 +353,38 @@ const AdminFormOrder = observer((
                 await yieldToMain(); 
                 console.log('Order_storage', resultOrder.data);
             }) 
-                alert(`Заказ створено, id ${orderId}`);
-                setDisableBtn(!disableBtn);
-            } else if(orderId && state.length === 0){
-                alert("Треба добавити товари.");
+                alert(`Замовлення збереженно, id ${orderId}`);
+                //setDisableBtn(!disableBtn);
+            } 
+            if(orderId && state.length === 0){
+                alert("Товари не додані");
             }
             e.stopPropagation();
          } catch {
             console.log('ERROR_CR_ORDERR: ', e);
-        
         //     reset();
-         }    
+        }    
     }    
     //const onError = (errors:any, e:any) => console.log(errors, e);
     //GOOD PERFORM
     const onSubmitOrder = async () => {
-
         //if(orderStorage.length !== 0) {
-         
         try {
             //let respDone = async () => {
-            orderStorage?.forEach(async(itemsOrd): Promise<any> => {
-                let resOrd: any = await addGoodsToOrder(itemsOrd);
-                await yieldToMain();
-                console.log('onSubmOrder', resOrd.data);
-            })
-            //}
-        //alert(`Заказ ${1} проведено`)
-        //console.log('Order Done', resp.data)
-            alert(`Заказ ${orderId} проведено`)
-            setDisableBtnOk(!disableBtnOk);
+            if(orderId) {
+                orderStorage?.forEach(async(itemsOrd): Promise<any> => {
+                    let resOrd: any = await addGoodsToOrder(itemsOrd);
+                    await yieldToMain();
+                    console.log('onSubmOrder', resOrd.data);
+                })
+                //}
+            //alert(`Заказ ${1} проведено`)
+            //console.log('Order Done', resp.data)
+                alert(`Замовлення ${orderId} проведено`)
+                setDisableBtnOk(!disableBtnOk);
+            } else {
+                alert("Треба добавити товари. І зберегти замовлення");
+            }
         } catch (error) {
             alert (
                 `Помилка. Не вірні данні, не вистачае залишків,
@@ -389,6 +392,10 @@ const AdminFormOrder = observer((
             )
         }      
     };
+
+    const orderSum = state?.reduce((sum:any, current:any) => 
+        sum + (current.price.price * current.price.quantity), 0
+    ) ?? 0;
     //)
     console.log('STATE: ', state);
     //console.log('GOODSID', goodsId);
@@ -399,10 +406,18 @@ const AdminFormOrder = observer((
 
     const addComment = async() => {
         try {
-           await addCommentsToOrder(
-            ordersData?.id_order,
-            user._user?.sub.id_user, 
+            const addCommit = await addCommentsToOrder(
+            user._user?.sub.id_user,    
+            orderId,
             newComment); 
+            if (addCommit?.data.status === 200) {
+                alert('Коментар додано');
+                console.log('КОММЕНТАР: ', addCommit)
+            } else {
+                alert(
+                    'Коментар не додано, помилка! (можливо ви не зберегли замовлення)'
+                );
+            }
         } catch (error) {
             console.log(error)
         }    
@@ -426,10 +441,9 @@ const AdminFormOrder = observer((
                             //type="datetime-local"
                             name="order_date" 
                             data-value={ordersData ? ordersData?.createdAt : ''}
-                            defaultValue=''
+                            defaultValue={new Date(ordersData!.createdAt).toLocaleString() ?? ''}
                             placeholder="Дата"
                             readOnly={true}
-                            //min="2023-01-01" 
                         />  
                     </div>
                     <div>
@@ -689,7 +703,7 @@ const AdminFormOrder = observer((
                             <th>Резерв</th>
                             <th>Ціна</th>
                             <th>Сума</th>
-                            <th>склад</th>
+                            <th>Склад</th>
                             <th>Опціі</th>
                         </tr>     
                     </thead>
@@ -788,6 +802,7 @@ const AdminFormOrder = observer((
                     <textarea className="admFormOrderNotesText"  
                         {...register('notes')}
                         name="notes"
+                        value={ordersData?.notes}
                         placeholder="Пишить нотатку..">
                     </textarea>  
                 </div>
@@ -803,12 +818,12 @@ const AdminFormOrder = observer((
                         value={newComment}
                         onChange={e =>setNewComment(e.target.value)}
                         //name="subject" 
-                        //</div>placeholder="Пишить коментар.."
+                        placeholder="Пишить коментар.."
                         >        
                         </textarea>
                     </div>
                     <div className='admFormOrderCommitChat'>
-                        <AdminComment comments={ordersData?.comments}/>
+                        <AdminComment comments={comments}/>
                     </div>  
                 </div>
                 <div className='admOrderFormGrp'
@@ -829,8 +844,8 @@ const AdminFormOrder = observer((
                         <button className={!disableBtn ? 'admFormOrderBtnSave' : 'admFormOrderBtnSaveDsb'}
                             disabled={disableBtn} 
                             //type="button"
-                            type="submit"
-                            //onClick={handleSubmit(onSubmit)}
+                            //type="submit"
+                            onClick={handleSubmit(onSubmit)}
                             //onClickCapture={e=>e.stopPropagation()}
                             >
                             Зберегти
@@ -841,8 +856,8 @@ const AdminFormOrder = observer((
                     </div>
                     <span>id: {user._user?.sub.id_user ?? ordersData?.id_user}</span>
                     <span>користувач: {user._user?.sub.name ?? ordersData?.id_user}</span>
-                    <span>посада: {user._user?.sub.user?.role ?? ordersData?.id_user}</span>
-
+                    <span>посада: {user._user?.sub?.role ?? ordersData?.id_user}</span>
+                    <span>Сума замовлення: {orderSum ?? ordersData?.id_user ?? ''}</span>
                 </div>
             </form>
         </div>

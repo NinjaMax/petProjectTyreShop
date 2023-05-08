@@ -12,7 +12,7 @@ import { OrdersSupplier } from '../../orders-suppliers/entities/orders-supplier.
 import { Sales } from '../../sales/entities/sale.model';
 import { Users } from '../../users/entities/users.model';
 
-@Table({ tableName: 'comment' })
+@Table({ tableName: 'comment', updatedAt: false})
 export class Comments extends Model<Comments, CommentsConfigAttr> {
   @Column({
     type: DataType.BIGINT,
@@ -41,6 +41,16 @@ export class Comments extends Model<Comments, CommentsConfigAttr> {
   @ForeignKey(() => Sales)
   @Column({ type: DataType.INTEGER })
   id_sale: number;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: false,
+    defaultValue: DataType.NOW,
+    get() {
+      return this.getDataValue('createdAt').getTime();
+    }
+  })
+  createdAt: Date;
 
   @BelongsTo(() => Users, 'id_user')
   user: Users;

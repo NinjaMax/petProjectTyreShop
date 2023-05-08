@@ -27,9 +27,14 @@ export class CommentsController {
     return this.commentsService.findAllComments();
   }
 
-  @Get()
+  @Get('/id')
   findOne(@Query() getCommentDto: GetCommentDto) {
     return this.commentsService.findCommentById(getCommentDto);
+  }
+
+  @Get('/byorderid')
+  findAllByorder(@Query() getCommentDto: GetCommentDto) {
+    return this.commentsService.findCommentByOrderId(getCommentDto);
   }
 
   @Patch(':id')

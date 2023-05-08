@@ -23,9 +23,9 @@ interface IAdminOrder {
 
 type IOrderComments ={
         id_order: number;
-        user: string;
+        user: {name:string};
         createdAt: Date;
-        comment: string;
+        comments: string;
 }      
 
 type IOrdersItem = {
@@ -117,12 +117,12 @@ const AdminOrderContent = (
                 <tbody>
                     {orders ? orders.map((items: IOrdersItem) => (
                     <tr key={'or' + items.id_order}
-                        onDoubleClick={e =>showOrderData(e)}
-                        onClick={showComment}
+                        onDoubleClick={e => showOrderData(e)}
+                        onClick={e => showComment(e)}
                         data-value={items.id_order}>
                         <td>{items.id_order}</td>
-                        <td>{items.createdAt.toString()}</td>
-                        <td>{items.updatedAt.toString()}</td>
+                        <td>{new Date(items.createdAt).toLocaleString()}</td>
+                        <td>{new Date(items.updatedAt).toLocaleString()}</td>
                         <td>{items.customer.full_name}</td>
                         <td>{items?.storage}</td>
                         <td>{items?.total}</td>
@@ -164,12 +164,13 @@ const AdminOrderContent = (
                     </tr>  
                 </thead>
                 <tbody>
-                    {comments ? comments.map((value: IOrderComments) => (
-                    <tr>
+                    {comments ? comments.map(
+                        (value: IOrderComments, index: number) => (
+                    <tr key={value.user.name + index}>
                         <td>{value.id_order}</td>
-                        <td>{value.user}</td>
-                        <td>{value.createdAt.toString()}</td>
-                        <td>{value.comment}</td>
+                        <td>{value.user.name}</td>
+                        <td>{new Date(value.createdAt).toLocaleString()}</td>
+                        <td>{value.comments}</td>
                     </tr>
                     ))
                     : <tr><td></td></tr>
@@ -185,6 +186,7 @@ const AdminOrderContent = (
                         props={props}
                         storages={storage}
                         ordersData={orderData}
+                        comments={comments}
                     />
                 </ModalAdmin>  
                 : null

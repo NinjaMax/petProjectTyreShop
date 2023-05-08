@@ -23,7 +23,7 @@ export class UsersService {
         email: createUserDto.email,
         name: createUserDto.name,
         phone: createUserDto.phone,
-        full_name: createUserDto.full_name,
+        full_name: createUserDto.full_name ?? createUserDto.name,
       });
 
       const contractUser = await this.contractService.createContract(
