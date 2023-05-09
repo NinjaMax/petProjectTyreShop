@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminOrderContent.css';
 import ButtonSearch from '../../buttons/ButtonSearch';
 import ModalAdmin from '../../modal/ModalAdmin';
@@ -18,14 +18,13 @@ interface IAdminOrder {
     wheelData?:[]; 
     wheelPriceData?:[];
     wheelStockData?:[];
-
 }
 
 type IOrderComments ={
-        id_order: number;
-        user: {name:string};
-        createdAt: Date;
-        comments: string;
+    id_order: number;
+    user: {name:string};
+    createdAt: Date;
+    comments: string;
 }      
 
 type IOrdersItem = {
@@ -40,6 +39,7 @@ type IOrdersItem = {
     status_delivery: string;
     pay_view: string;
     status_pay: string;
+    user:{name: string};
     id_user: number;
     notes: string;
     total: number;
@@ -51,6 +51,7 @@ type IOrdersItem = {
     order_storage: any [];
     [Symbol.iterator](): any;
     comments: any[];
+    reduce(arg0: any, ...arg: any[]): any
 }
 
 const AdminOrderContent = (
@@ -60,9 +61,10 @@ const AdminOrderContent = (
     const [activeOrderSup, setActiveOrderSup] = useState(false);
     const [orderData, setOrderData] = useState<IOrdersItem | null>(null);
 
-    const activeFormOrder = () => {
+    const activeFormOrder = async (e: any) => {
         if (orderData) {
             setOrderData(null);
+            showComment(e); 
         }
         setActiveOrder(!activeOrder);
     }
@@ -80,13 +82,17 @@ const AdminOrderContent = (
             setActiveOrder(!activeOrder);
         }
     }
-
+    // const orderTotal = order_storage?.reduce((sum:any, current:any) => 
+    //     sum + (current.price.price * current.price.quantity), 0
+    // ) ?? 0;
     return (
         <div>
             <div className="admOrderContent">
                 <span>Замовлення Покупців:</span>
                 <div className='admOrderHeader'>
-                    <button className='admOrderHeaderBtn' onClick={activeFormOrder}>
+                    <button className='admOrderHeaderBtn'
+                        data-value={undefined} 
+                        onClick={e => activeFormOrder(e)}>
                         Додати замовлення
                     </button>
                 </div>
@@ -125,14 +131,17 @@ const AdminOrderContent = (
                         <td>{new Date(items.updatedAt).toLocaleString()}</td>
                         <td>{items.customer.full_name}</td>
                         <td>{items?.storage}</td>
-                        <td>{items?.total}</td>
+                        <td>{items?.order_storage?.reduce(
+                                (sum:any, current:any) => 
+                                sum + current.total, 0)}
+                        </td>
                         <td>{items.status}</td>
                         <td>{items.order_view}</td>
                         <td>{items.delivery}</td>
                         <td>{items.status_delivery}</td>
                         <td>{items.pay_view}</td>
                         <td>{items.status_pay}</td>
-                        <td>{items.id_user}</td>
+                        <td>{items.user.name}</td>
                         <td>{items.notes}</td>
                         <td>
                             <button className='basketAdmGoods'
@@ -187,6 +196,7 @@ const AdminOrderContent = (
                         storages={storage}
                         ordersData={orderData}
                         comments={comments}
+                        showComment={showComment}
                     />
                 </ModalAdmin>  
                 : null

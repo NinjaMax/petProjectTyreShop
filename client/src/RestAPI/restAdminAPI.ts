@@ -210,7 +210,7 @@ await $hostGet.get('/price/tyres/all')
 
 const getWheels = async () =>
 await $hostGet.get('/wheels')
-.catch(error => {
+.catch((error) => {
     console.log(error)
 });
 
@@ -286,9 +286,10 @@ await $hostGet.get('/storage/all')
     //   console.log(error)
     // });
 
-const getCommentOrderData = async (orderId: number | null) =>
-await $hostGet.get('/comments/byorderid', {params: {id_order: orderId}})
+const getCommentOrderData = async (orderId: number) =>
+await $hostGet.get('/comments/byorderid', {params: {id_order: orderId ?? 0}})
 .catch(error => {
+    console.log('ORDERID: ', orderId)
     console.log(error)
 });
 

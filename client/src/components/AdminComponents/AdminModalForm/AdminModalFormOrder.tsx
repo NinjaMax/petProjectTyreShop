@@ -23,6 +23,7 @@ interface IFormOrder {
     setActive(arg0: any):void;
     storages: [any] | null;
     ordersData?: DataGoods | null;
+    showComment(arg0: any):void;
 }
 
 type IModalFormOrder = {
@@ -101,6 +102,7 @@ type DataGoods = {
     [Symbol.iterator](): any;
     order_storage: any[];
     comments: any[];
+    reduce(arg0: any, ...arg: any[]): any;
     // id_order_storage: number;
     // id: number;
     // id_supplier: number;
@@ -184,26 +186,30 @@ function reducer (state: StateReducer, action: ActionReducer) {
     
 }
 
-function createInitialState (goodsId: any | undefined, ordersData?: DataGoods | null) {
-            
+function createInitialState (goodsId: any | undefined, ordersData?: DataGoods | null) {        
     let initialState = [];
-
     if (goodsId) {
         initialState.push({...goodsId, 
             "price":{...goodsId.price[0],
                "quantity": "4"},  
         });
     } 
-    
     if (ordersData) {
         initialState.push(...ordersData.order_storage);
     }
-
     return initialState;    
 };
 
 const AdminFormOrder = observer((
-    {props, goodsId, comments, setActive, customer, storages, ordersData}:IFormOrder
+    { props, 
+        goodsId, 
+        comments, 
+        setActive, 
+        customer, 
+        storages, 
+        ordersData,
+        showComment,
+    }:IFormOrder
     ) => {
     const {user} = useContext<any | null>(Context);
     const [tyreDatas, wheelDatas] = props;
@@ -219,7 +225,7 @@ const AdminFormOrder = observer((
     const [state, dispatch] = useReducer<Reducer<StateReducer, ActionReducer>>(
         reducer, createInitialState(goodsId, ordersData)
         );
-    const [newComment, setNewComment] = useState<string | undefined>(undefined);
+    const [newComment, setNewComment] = useState<string | undefined>();
     //const [orderData, setOrderData] = useState<{}>();
      
     useEffect(() => {
@@ -261,7 +267,6 @@ const AdminFormOrder = observer((
                             : item
                         )}
                         )
-                //indexPrice: indexValue,
             });
 
     },[state])
@@ -368,18 +373,13 @@ const AdminFormOrder = observer((
     //const onError = (errors:any, e:any) => console.log(errors, e);
     //GOOD PERFORM
     const onSubmitOrder = async () => {
-        //if(orderStorage.length !== 0) {
         try {
-            //let respDone = async () => {
             if(orderId) {
                 orderStorage?.forEach(async(itemsOrd): Promise<any> => {
                     let resOrd: any = await addGoodsToOrder(itemsOrd);
                     await yieldToMain();
                     console.log('onSubmOrder', resOrd.data);
                 })
-                //}
-            //alert(`Заказ ${1} проведено`)
-            //console.log('Order Done', resp.data)
                 alert(`Замовлення ${orderId} проведено`)
                 setDisableBtnOk(!disableBtnOk);
             } else {
@@ -395,23 +395,30 @@ const AdminFormOrder = observer((
 
     const orderSum = state?.reduce((sum:any, current:any) => 
         sum + (current.price.price * current.price.quantity), 0
-    ) ?? 0;
+    );
+    const orderDataSum = ordersData?.order_storage.reduce(
+        (sum:any, current:any) => 
+        sum + current.total, 0
+    );
+    console.log('orderSum', orderSum);
+    console.log('orderDataSum', orderDataSum);
     //)
     console.log('STATE: ', state);
     //console.log('GOODSID', goodsId);
     //console.log('CUSTOMER', customer);
     //console.log('TYRE DATAS: ', tyreDatas);
+    console.log('ORDERS_DATA: ', ordersData?.order_storage);
     console.log(errors);
     console.log('ORDER STORG ARRAY: ', orderStorage);
 
-    const addComment = async() => {
+    const addComment = async(e: any) => {
         try {
-            const addCommit = await addCommentsToOrder(
-            user._user?.sub.id_user,    
-            orderId,
-            newComment); 
-            if (addCommit?.data.status === 200) {
+            const addCommit: any = await addCommentsToOrder(
+                user._user?.sub.id_user, orderId, newComment
+            ); 
+            if (addCommit.data.status === '200' || '201') {
                 alert('Коментар додано');
+                showComment(e);
                 console.log('КОММЕНТАР: ', addCommit)
             } else {
                 alert(
@@ -441,7 +448,8 @@ const AdminFormOrder = observer((
                             //type="datetime-local"
                             name="order_date" 
                             data-value={ordersData ? ordersData?.createdAt : ''}
-                            defaultValue={new Date(ordersData!.createdAt).toLocaleString() ?? ''}
+                            defaultValue={ordersData ?
+                                new Date(ordersData?.createdAt).toLocaleString() : ''}
                             placeholder="Дата"
                             readOnly={true}
                         />  
@@ -451,8 +459,8 @@ const AdminFormOrder = observer((
                         <input className="admFormOrderId"
                             type="text"
                             name="firstname"
-                            value={orderId ? orderId : ordersData?.id_order} 
-                            defaultValue=''
+                            value={orderId ?? ordersData?.id_order ?? ''} 
+                            //defaultValue=''
                             placeholder="id замовлення"
                             readOnly={true}
                         />  
@@ -810,7 +818,8 @@ const AdminFormOrder = observer((
                     onClick={(e)=>e.preventDefault()}>
                     <div className='admFormOrderAddCommit'>
                     <button className='admFormOrderBtnAdd'
-                        onClick={addComment} 
+                        data-value={orderId ? orderId : ordersData?.id_order}
+                        onClick={e => addComment(e)}
                         >Додати коментар
                     </button>
                         <textarea 
@@ -857,7 +866,9 @@ const AdminFormOrder = observer((
                     <span>id: {user._user?.sub.id_user ?? ordersData?.id_user}</span>
                     <span>користувач: {user._user?.sub.name ?? ordersData?.id_user}</span>
                     <span>посада: {user._user?.sub?.role ?? ordersData?.id_user}</span>
-                    <span>Сума замовлення: {orderSum ?? ordersData?.id_user ?? ''}</span>
+                    <span>
+                        Сума замовлення: {orderSum ? orderSum : orderDataSum}
+                    </span>
                 </div>
             </form>
         </div>

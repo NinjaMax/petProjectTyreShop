@@ -94,12 +94,17 @@ export class CommentsService {
 
   async findCommentByOrderId(getCommentDto: GetCommentDto) {
     try {
-      const commentByOrderId = await this.commentsRepository.findAll({
-        where: { id_order: getCommentDto.id_order },
-        include: { all: true },
-      });
-      //if (commentByOrderId) {
+      if (getCommentDto.id_order !== 0) {
+        const commentByOrderId = await this.commentsRepository.findAll({
+          where: { id_order: getCommentDto.id_order },
+          include: { all: true },
+        });
         return commentByOrderId;
+      } else {
+        return null;
+      }
+      // if (commentByOrderId) {
+        //return commentByOrderId;
       // } else {
       //   return null;
       // }

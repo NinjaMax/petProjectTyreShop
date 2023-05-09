@@ -22,10 +22,12 @@ interface IGoodsContent {
     wheelData?:[]; 
     wheelPriceData?:[];
     wheelStockData?:[]; 
+    showComment(arg0:any):void;
     //stockByIdTyre: [];
 }
 
-const AdminGoodsContent = ({comments, props, customer, storage}:IGoodsContent) => {
+const AdminGoodsContent = (
+    {showComment, comments, props, customer, storage}:IGoodsContent) => {
     const [tyreData, tyreStockData, tyrePriceData,
         wheelData, wheelPriceData, wheelStockData] = props;
     const [chooseCat, setChooseCat] = useState<string>('Шини');
@@ -264,6 +266,7 @@ const AdminGoodsContent = ({comments, props, customer, storage}:IGoodsContent) =
                         customer={customer} 
                         comments={null} 
                         setActive={addToOrder}
+                        showComment={showComment}
                         />
                 </ModalAdmin>
                 : null

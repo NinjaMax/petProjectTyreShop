@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminComment.css';
 
 const AdminComment = ({comments}:any) => {
+    // const [commentNew, setCommentNew] = useState<any>();
+
+    // useEffect(() => {
+    //     setCommentNew(comments);
+    // },[comments])
+
     return (
     <div className='admCommitBox'>
         {comments ?
-            comments.map((item:any, index: number) => {
+            comments?.map((item:any, index: number) => {
                 return (
                 <div key={index + 1} className="containerAdmComment">
                     <img src={item.user?.picture ?? "../../../assets/icons/customer64.png"} 

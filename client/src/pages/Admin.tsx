@@ -81,10 +81,9 @@ const Admin = observer(() => {
     // const [payExpenseAll, setPayExpenseAll] = useState(null);
     const [customers, setCustomers] = useState(null);
     const [commentData, setCommentData] = useState(null);
-    const [commentByOrder, setCommentByOrder] = useState<number | null>(null);
+    const [commentByOrder, setCommentByOrder] = useState<number>(0);
     const [orderAllData, setOrderAllData] = useState(null);
     const [storageAll, setStorageAll] = useState(null);
-
   
     useEffect(()=> {
         let isMounted = false;
@@ -104,11 +103,9 @@ const Admin = observer(() => {
                     getOrderData,
                     getCustomers
                 ]
-                
                 let i: number = 0;
                 while(tasks.length > i) {
                 //for (let i = 0; tasks.length > i; i++) {
-
                     if(!isMounted && tasks[i] === getTyres) {    
                         let result: any = await tasks[i]();
                         setTyreData(result.data);
@@ -164,10 +161,10 @@ const Admin = observer(() => {
                     } 
 
                     if(!isMounted && tasks[i] === getCommentOrderData) {
-                        if (commentByOrder) {
+                        //if (commentByOrder) {
                             let result: any = await tasks[i](commentByOrder);
                             setCommentData(result?.data);  
-                        }
+                        //}
                         //console.log('COMMENTS DATA', result.data )
                     } 
                     const task = tasks.shift();
@@ -189,8 +186,13 @@ const Admin = observer(() => {
     }
 
     const showCommentOrderData = async (e: any) => {
-        setCommentByOrder(+e.currentTarget.getAttribute('data-value'));
-        console.log('COMMIT_BY_ID_ORDER: ', +e.currentTarget.getAttribute('data-value'));
+        if (+e.currentTarget?.getAttribute('data-value') !== 0) {
+            setCommentByOrder(+e.currentTarget?.getAttribute('data-value'));
+            console.log('COMMIT_BY_ID_ORDER_IF: ', e.currentTarget?.getAttribute('data-value'));
+        } else {
+            setCommentByOrder(0);
+          console.log('COMMIT_BY_ID_ORDER_ELSE: ', e.currentTarget?.getAttribute('data-value'));  
+        }
     }
 
     return (
@@ -214,7 +216,8 @@ const Admin = observer(() => {
                             wheelData, wheelPriceData, wheelStockData]}
                         customer={customers}
                         comments={commentData}
-                        storage={storageAll}  
+                        storage={storageAll}
+                        showComment={showCommentOrderData}  
                         />
                 : null}
                 {sideBarItem === 'zamovlenia' ?
