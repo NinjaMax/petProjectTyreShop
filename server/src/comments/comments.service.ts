@@ -34,8 +34,12 @@ export class CommentsService {
 
         user.comments.push(commentOrder);
         order.comments.push(commentOrder);
+        const findCommentOrder = await this.commentsRepository.findByPk(
+          commentOrder.id_comment,
+          { include: { all: true } },
+        );
 
-        return commentOrder;
+        return findCommentOrder;
       }
 
       if (user && orderSup) {
@@ -46,8 +50,12 @@ export class CommentsService {
         await orderSup.$add('comments', [commentOrderSup.id_comment]);
         user.comments.push(commentOrderSup);
         order.comments.push(commentOrderSup);
+        const findCommentOrderSup = await this.commentsRepository.findByPk(
+          commentOrderSup.id_comment,
+          { include: { all: true } },
+        );
 
-        return commentOrderSup;
+        return findCommentOrderSup;
       }
       return new HttpException(
         `Data user "User ID or Order ID" is incorrect or not found`,

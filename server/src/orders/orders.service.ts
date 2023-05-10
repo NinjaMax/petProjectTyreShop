@@ -127,204 +127,248 @@ export class OrdersService {
   }
 
   async tyreStockOrder(createOrderDto: CreateOrderDto) {
-
     const orderIdTyre = await this.ordersRepository.findByPk(
-        createOrderDto.id_order, {include: { all: true }},
-      );
+      createOrderDto.id_order,
+      { include: { all: true } },
+    );
 
-      const tyreStock = await this.stockTyresService.findStockTyreById(
-        createOrderDto,
-      );
-      const storageTyreStorage = await this.storageService.findStorageByIdOrder(
-        createOrderDto,
-      );
-      const orderStorageIdTyre =
-        await this.ordersStorageService.findOrderStorageById(createOrderDto);
-    
-        let stockTyreExists = null;
-        let newReserveTyre = 0;
-            
+    const tyreStock = await this.stockTyresService.findStockTyreById(
+      createOrderDto,
+    );
+    const storageTyreStorage = await this.storageService.findStorageByIdOrder(
+      createOrderDto,
+    );
+    const orderStorageIdTyre =
+      await this.ordersStorageService.findOrderStorageById(createOrderDto);
 
-      if (tyreStock) {
-        if (tyreStock.remainder < createOrderDto.quantity && tyreStock.stock !== 0) {
-          newReserveTyre = createOrderDto.quantity - (createOrderDto.quantity - tyreStock.remainder);
-          stockTyreExists = tyreStock;
-        } else if (tyreStock.remainder >= createOrderDto.quantity && tyreStock.stock !== 0) {
-          stockTyreExists = tyreStock;
-        } else {
-          throw new HttpException (
-            `Ви не можете поставити резерв, томущо немає залишків ("Залишки 0"), або не вірно вказаний склад чи інша помилка.`,
-          HttpStatus.BAD_REQUEST);
-        }
+    let stockTyreExists = null;
+    let newReserveTyre = 0;
+
+    if (tyreStock) {
+      if (
+        tyreStock.remainder < createOrderDto.quantity &&
+        tyreStock.stock !== 0
+      ) {
+        newReserveTyre =
+          createOrderDto.quantity -
+          (createOrderDto.quantity - tyreStock.remainder);
+        stockTyreExists = tyreStock;
+      } else if (
+        tyreStock.remainder >= createOrderDto.quantity &&
+        tyreStock.stock !== 0
+      ) {
+        stockTyreExists = tyreStock;
+      } else {
+        throw new HttpException(
+          `Ви не можете поставити резерв, томущо немає залишків ("Залишки 0"), або не вірно вказаний склад чи інша помилка.`,
+          HttpStatus.BAD_REQUEST,
+        );
       }
-    
-      if (stockTyreExists) {
-        await stockTyreExists.increment('reserve', { by: newReserveTyre || createOrderDto.quantity });
-        //await stockTyreExists.reload();
-        await orderStorageIdTyre.increment('reserve', { by: newReserveTyre || createOrderDto.quantity });
-        //await orderStorageIdTyre.reload();
-        await orderIdTyre.$add('order_storage', orderStorageIdTyre);
-        await storageTyreStorage.$add('order_storage', orderStorageIdTyre);
-        
-      }
-      //oilStock = null;
-      await orderIdTyre.reload();
-
-      return orderIdTyre;
-    }
-    
-    async wheelStockOrder(createOrderDto: CreateOrderDto) {
-    
-        const orderIdWheel = await this.ordersRepository.findByPk(
-            createOrderDto.id_order, {include: { all: true }},
-          );
-          const wheelStock = await this.stockWheelsService.findStockWheelById(
-            createOrderDto,
-          );
-          const storageStorageWheel = await this.storageService.findStorageById(
-            createOrderDto,
-          );
-          const orderStorageIdWheel =
-            await this.ordersStorageService.findOrderStorageById(createOrderDto);
-    
-            let stockWheelExists = null;
-            let newReserveWheel = 0;
-                
-    
-          if (wheelStock) {
-            if (wheelStock.remainder < createOrderDto.quantity && wheelStock.stock !== 0) {
-              newReserveWheel = createOrderDto.quantity - (createOrderDto.quantity - wheelStock.remainder);
-              stockWheelExists = wheelStock;
-            } else if (wheelStock.remainder >= createOrderDto.quantity && wheelStock.stock !== 0) {
-              stockWheelExists = wheelStock;
-            } else {
-              throw new HttpException (
-                `Ви не можете поставити резерв, томущо немає залишків ("Залишки 0"), або не вірно вказаний склад чи інша помилка.`,
-                HttpStatus.BAD_REQUEST);
-            }
-          }
-        
-          if (stockWheelExists) {
-            await stockWheelExists.increment('reserve', { by: newReserveWheel || createOrderDto.quantity });
-            //await stockWheelExists.reload();
-            await orderStorageIdWheel.increment('reserve', { by: newReserveWheel || createOrderDto.quantity });
-            //await orderStorageIdWheel.reload();
-            await orderIdWheel.$add('order_storage', orderStorageIdWheel);
-            await storageStorageWheel.$add('order_storage', orderStorageIdWheel);
-            
-          }
-          //oilStock = null;
-          await orderIdWheel.reload();
-          return orderIdWheel;
     }
 
-    async batteryStockOrder(createOrderDto: CreateOrderDto) {
-        const orderIdBattery = await this.ordersRepository.findByPk(
-            createOrderDto.id_order, {include: { all: true }},
-          );
-    
-          const batteryStock =
-            await this.stockBatteriesService.findStockBatteryById(createOrderDto);
-    
-          const storageStorageBattery = await this.storageService.findStorageById(
-            createOrderDto,
-          );
-          const orderStorageIdBattery =
-            await this.ordersStorageService.findOrderStorageById(createOrderDto);
-    
-            let stockBatteryExists = null;
-            let newReserveBattery = 0;
-                
-    
-          if (batteryStock) {
-            if (batteryStock.remainder < createOrderDto.quantity && batteryStock.stock !== 0) {
-              newReserveBattery = createOrderDto.quantity - (createOrderDto.quantity - batteryStock.remainder);
-              stockBatteryExists = batteryStock;
-            } else if (batteryStock.remainder >= createOrderDto.quantity && batteryStock.stock !== 0) {
-              stockBatteryExists = batteryStock;
-            } else {
-              throw new HttpException (
-                `Ви не можете поставити резерв, томущо немає залишків ("Залишки 0"), або не вірно вказаний склад чи інша помилка.`,
-              HttpStatus.BAD_REQUEST);
-            }
-          }
-        
-          if (stockBatteryExists) {
-            await stockBatteryExists.increment('reserve', { by: newReserveBattery || createOrderDto.quantity });
-            //await stockBatteryExists.reload();
-            await orderStorageIdBattery.increment('reserve', { by: newReserveBattery || createOrderDto.quantity });
-            //await orderStorageIdBattery.reload();
-            await orderIdBattery.$add('order_storage', orderStorageIdBattery);
-            await storageStorageBattery.$add('order_storage', orderStorageIdBattery);
-            
-          }
-          //oilStock = null;
-          await orderIdBattery.reload();
-          return orderIdBattery;
-        // } catch {
-        //   throw new HttpException(
-        //     'Data is incorrect and must be uniq',
-        //     HttpStatus.NOT_FOUND,
-        //   );
-        // }
+    if (stockTyreExists) {
+      await stockTyreExists.increment('reserve', {
+        by: newReserveTyre || createOrderDto.quantity,
+      });
+      //await stockTyreExists.reload();
+      await orderStorageIdTyre.increment('reserve', {
+        by: newReserveTyre || createOrderDto.quantity,
+      });
+      //await orderStorageIdTyre.reload();
+      await orderIdTyre.$add('order_storage', orderStorageIdTyre);
+      await storageTyreStorage.$add('order_storage', orderStorageIdTyre);
     }
-    
-    async oilStockOrder(createOrderDto: CreateOrderDto) {
-        const orderIdOil = await this.ordersRepository.findByPk(
-            createOrderDto.id_order, {include: { all: true }},
-          );
-        
-        const oilStock = await this.stockOilsService.findStockOilById(
-            createOrderDto,
-          );
-        const storageStorageOil = await this.storageService.findStorageById(
-            createOrderDto,
-          );
-        const orderStorageIdOil =
-            await this.ordersStorageService.findOrderStorageById(createOrderDto);
-          
-      
-        let stockOilExists = null;
-        let newReserveOil = 0;
-            
+    //oilStock = null;
+    await orderIdTyre.reload();
 
-      if (oilStock) {
-        if (oilStock.remainder < createOrderDto.quantity && oilStock.stock !== 0) {
-          newReserveOil = createOrderDto.quantity - (createOrderDto.quantity - oilStock.remainder);
-          stockOilExists = oilStock;
-        } else if (oilStock.remainder >= createOrderDto.quantity && oilStock.stock !== 0) {
-          stockOilExists = oilStock;
-        } else {
-          throw new HttpException (
-            `Ви не можете поставити резерв, томущо немає залишків ("Залишки 0"), або не вірно вказаний склад чи інша помилка.`,
-            HttpStatus.BAD_REQUEST);
-        }
+    return orderIdTyre;
+  }
+
+  async wheelStockOrder(createOrderDto: CreateOrderDto) {
+    const orderIdWheel = await this.ordersRepository.findByPk(
+      createOrderDto.id_order,
+      { include: { all: true } },
+    );
+    const wheelStock = await this.stockWheelsService.findStockWheelById(
+      createOrderDto,
+    );
+    const storageStorageWheel = await this.storageService.findStorageById(
+      createOrderDto,
+    );
+    const orderStorageIdWheel =
+      await this.ordersStorageService.findOrderStorageById(createOrderDto);
+
+    let stockWheelExists = null;
+    let newReserveWheel = 0;
+
+    if (wheelStock) {
+      if (
+        wheelStock.remainder < createOrderDto.quantity &&
+        wheelStock.stock !== 0
+      ) {
+        newReserveWheel =
+          createOrderDto.quantity -
+          (createOrderDto.quantity - wheelStock.remainder);
+        stockWheelExists = wheelStock;
+      } else if (
+        wheelStock.remainder >= createOrderDto.quantity &&
+        wheelStock.stock !== 0
+      ) {
+        stockWheelExists = wheelStock;
+      } else {
+        throw new HttpException(
+          `Ви не можете поставити резерв, томущо немає залишків ("Залишки 0"), або не вірно вказаний склад чи інша помилка.`,
+          HttpStatus.BAD_REQUEST,
+        );
       }
-    
-      if (stockOilExists) {
-        await stockOilExists.increment('reserve', { by: newReserveOil || createOrderDto.quantity });
-        //await stockOilExists.reload();
-        await orderStorageIdOil.increment('reserve', { by: newReserveOil || createOrderDto.quantity });
-        //await orderStorageIdOil.reload();
-        await orderIdOil.$add('order_storage', orderStorageIdOil);
-        await storageStorageOil.$add('order_storage', orderStorageIdOil);
-        
+    }
+
+    if (stockWheelExists) {
+      await stockWheelExists.increment('reserve', {
+        by: newReserveWheel || createOrderDto.quantity,
+      });
+      //await stockWheelExists.reload();
+      await orderStorageIdWheel.increment('reserve', {
+        by: newReserveWheel || createOrderDto.quantity,
+      });
+      //await orderStorageIdWheel.reload();
+      await orderIdWheel.$add('order_storage', orderStorageIdWheel);
+      await storageStorageWheel.$add('order_storage', orderStorageIdWheel);
+    }
+    //oilStock = null;
+    await orderIdWheel.reload();
+    return orderIdWheel;
+  }
+
+  async batteryStockOrder(createOrderDto: CreateOrderDto) {
+    const orderIdBattery = await this.ordersRepository.findByPk(
+      createOrderDto.id_order,
+      { include: { all: true } },
+    );
+
+    const batteryStock = await this.stockBatteriesService.findStockBatteryById(
+      createOrderDto,
+    );
+
+    const storageStorageBattery = await this.storageService.findStorageById(
+      createOrderDto,
+    );
+    const orderStorageIdBattery =
+      await this.ordersStorageService.findOrderStorageById(createOrderDto);
+
+    let stockBatteryExists = null;
+    let newReserveBattery = 0;
+
+    if (batteryStock) {
+      if (
+        batteryStock.remainder < createOrderDto.quantity &&
+        batteryStock.stock !== 0
+      ) {
+        newReserveBattery =
+          createOrderDto.quantity -
+          (createOrderDto.quantity - batteryStock.remainder);
+        stockBatteryExists = batteryStock;
+      } else if (
+        batteryStock.remainder >= createOrderDto.quantity &&
+        batteryStock.stock !== 0
+      ) {
+        stockBatteryExists = batteryStock;
+      } else {
+        throw new HttpException(
+          `Ви не можете поставити резерв, томущо немає залишків ("Залишки 0"), або не вірно вказаний склад чи інша помилка.`,
+          HttpStatus.BAD_REQUEST,
+        );
       }
-      //oilStock = null;
-      
-      await orderIdOil.reload();
-      return orderIdOil;
-      // } catch {
-      //   throw new HttpException(
-      //     'Data is incorrect and must be uniq',
-      //     HttpStatus.NOT_FOUND,
-      //   );
-      // }
-    
+    }
+
+    if (stockBatteryExists) {
+      await stockBatteryExists.increment('reserve', {
+        by: newReserveBattery || createOrderDto.quantity,
+      });
+      //await stockBatteryExists.reload();
+      await orderStorageIdBattery.increment('reserve', {
+        by: newReserveBattery || createOrderDto.quantity,
+      });
+      //await orderStorageIdBattery.reload();
+      await orderIdBattery.$add('order_storage', orderStorageIdBattery);
+      await storageStorageBattery.$add('order_storage', orderStorageIdBattery);
+    }
+    //oilStock = null;
+    await orderIdBattery.reload();
+    return orderIdBattery;
+    // } catch {
+    //   throw new HttpException(
+    //     'Data is incorrect and must be uniq',
+    //     HttpStatus.NOT_FOUND,
+    //   );
+    // }
+  }
+
+  async oilStockOrder(createOrderDto: CreateOrderDto) {
+    const orderIdOil = await this.ordersRepository.findByPk(
+      createOrderDto.id_order,
+      { include: { all: true } },
+    );
+
+    const oilStock = await this.stockOilsService.findStockOilById(
+      createOrderDto,
+    );
+    const storageStorageOil = await this.storageService.findStorageById(
+      createOrderDto,
+    );
+    const orderStorageIdOil =
+      await this.ordersStorageService.findOrderStorageById(createOrderDto);
+
+    let stockOilExists = null;
+    let newReserveOil = 0;
+
+    if (oilStock) {
+      if (
+        oilStock.remainder < createOrderDto.quantity &&
+        oilStock.stock !== 0
+      ) {
+        newReserveOil =
+          createOrderDto.quantity -
+          (createOrderDto.quantity - oilStock.remainder);
+        stockOilExists = oilStock;
+      } else if (
+        oilStock.remainder >= createOrderDto.quantity &&
+        oilStock.stock !== 0
+      ) {
+        stockOilExists = oilStock;
+      } else {
+        throw new HttpException(
+          `Ви не можете поставити резерв, томущо немає залишків ("Залишки 0"), або не вірно вказаний склад чи інша помилка.`,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    }
+
+    if (stockOilExists) {
+      await stockOilExists.increment('reserve', {
+        by: newReserveOil || createOrderDto.quantity,
+      });
+      //await stockOilExists.reload();
+      await orderStorageIdOil.increment('reserve', {
+        by: newReserveOil || createOrderDto.quantity,
+      });
+      //await orderStorageIdOil.reload();
+      await orderIdOil.$add('order_storage', orderStorageIdOil);
+      await storageStorageOil.$add('order_storage', orderStorageIdOil);
+    }
+    //oilStock = null;
+
+    await orderIdOil.reload();
+    return orderIdOil;
+    // } catch {
+    //   throw new HttpException(
+    //     'Data is incorrect and must be uniq',
+    //     HttpStatus.NOT_FOUND,
+    //   );
+    // }
   }
 
   async addGoodsToOrder(createOrderDto: CreateOrderDto) {
-
     const tyreStock = await this.stockTyresService.findStockTyreById(
       createOrderDto,
     );
@@ -337,27 +381,26 @@ export class OrdersService {
     const oilStock = await this.stockOilsService.findStockOilById(
       createOrderDto,
     );
-   
-      if (tyreStock) {
-        const orderAddTyre = await this.tyreStockOrder(createOrderDto);
-        return orderAddTyre;
-      }
 
-      if (wheelStock) {
-        const orderAddWheel = await this.wheelStockOrder(createOrderDto);
-        return orderAddWheel;
-      }
+    if (tyreStock) {
+      const orderAddTyre = await this.tyreStockOrder(createOrderDto);
+      return orderAddTyre;
+    }
 
-      if (batteryStock) {
-        const orderAddBattery = await this.batteryStockOrder(createOrderDto);
-        return orderAddBattery;
-      }
+    if (wheelStock) {
+      const orderAddWheel = await this.wheelStockOrder(createOrderDto);
+      return orderAddWheel;
+    }
 
-      if (oilStock) {
-        const orderAddOil = await this.oilStockOrder(createOrderDto);
-        return orderAddOil;
-      }
+    if (batteryStock) {
+      const orderAddBattery = await this.batteryStockOrder(createOrderDto);
+      return orderAddBattery;
+    }
 
+    if (oilStock) {
+      const orderAddOil = await this.oilStockOrder(createOrderDto);
+      return orderAddOil;
+    }
   }
 
   async updateOrder(updateOrderDto: UpdateOrderDto) {
@@ -368,21 +411,33 @@ export class OrdersService {
       );
 
       if (ordersId) {
-        await this.ordersRepository.update(
+        const updateOrder = await this.ordersRepository.update(
           {
             id: updateOrderDto.id,
             id_user: updateOrderDto.id_user,
             notes: updateOrderDto.notes,
+            organisation: updateOrderDto.organisation,
+            storage: updateOrderDto.storage,
+            order_view: updateOrderDto.order_view,
+            delivery: updateOrderDto.delivery,
+            status_delivery: updateOrderDto.status_delivery,
+            delivery_ttn: updateOrderDto.delivery_ttn,
+            status: updateOrderDto.status,
+            pay_view: updateOrderDto.pay_view,
+            status_pay: updateOrderDto.status_pay,
+            dop_garanty: updateOrderDto.dop_garanty,
+            id_customer: updateOrderDto.id_customer,
+            id_contract: updateOrderDto.id_contract,
           },
           { where: { id_order: updateOrderDto.id_order } },
         );
 
-        const orderAfterUpdate = await this.ordersRepository.findByPk(
-          updateOrderDto.id_order,
-          { include: { all: true } },
-        );
-
-        return orderAfterUpdate;
+        // const orderAfterUpdate = await this.ordersRepository.findByPk(
+        //   updateOrderDto.id_order,
+        //   { include: { all: true } },
+        // );
+        // updateOrder.reload();
+        return updateOrder;
       }
     } catch {
       throw new HttpException(

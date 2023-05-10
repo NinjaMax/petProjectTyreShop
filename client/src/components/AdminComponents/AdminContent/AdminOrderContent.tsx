@@ -39,7 +39,6 @@ type IOrdersItem = {
     status_delivery: string;
     pay_view: string;
     status_pay: string;
-    user:{name: string};
     id_user: number;
     notes: string;
     total: number;
@@ -51,7 +50,8 @@ type IOrdersItem = {
     order_storage: any [];
     [Symbol.iterator](): any;
     comments: any[];
-    reduce(arg0: any, ...arg: any[]): any
+    reduce(arg0: any, ...arg: any[]): any;
+    user:{name: string; role: string; id_user: number;}
 }
 
 const AdminOrderContent = (
@@ -61,12 +61,14 @@ const AdminOrderContent = (
     const [activeOrderSup, setActiveOrderSup] = useState(false);
     const [orderData, setOrderData] = useState<IOrdersItem | null>(null);
 
-    const activeFormOrder = async (e: any) => {
+    const activeFormOrder = async(e:any) => {
         if (orderData) {
             setOrderData(null);
-            showComment(e); 
+            showComment(e);
+            //comments=null;
         }
         setActiveOrder(!activeOrder);
+        showComment(e);
     }
 
     const activeFormOrderSup = () => {
@@ -91,8 +93,8 @@ const AdminOrderContent = (
                 <span>Замовлення Покупців:</span>
                 <div className='admOrderHeader'>
                     <button className='admOrderHeaderBtn'
-                        data-value={undefined} 
-                        onClick={e => activeFormOrder(e)}>
+                        onClick={(e) => activeFormOrder(e)}
+                        value={0} >
                         Додати замовлення
                     </button>
                 </div>

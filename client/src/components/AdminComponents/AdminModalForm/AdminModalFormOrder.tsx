@@ -6,7 +6,8 @@ import {
     addCommentsToOrder,
     addGoodsToOrder, 
     createGoodsToOrder, 
-    responseForm} from '../../../restAPI/restAdminAPI';
+    responseForm,
+    updateOrder} from '../../../restAPI/restAdminAPI';
 import { yieldToMain } from '../../../restAPI/yieldMain';
 import AdminComment from '../adminContent/AdminComment';
 import AdminModalCustmCreate from '../adminModalForm/AdminModalCustmCreate';
@@ -103,6 +104,7 @@ type DataGoods = {
     order_storage: any[];
     comments: any[];
     reduce(arg0: any, ...arg: any[]): any;
+    user:{name: string; role: string; id_user: number;}
     // id_order_storage: number;
     // id: number;
     // id_supplier: number;
@@ -226,7 +228,7 @@ const AdminFormOrder = observer((
         reducer, createInitialState(goodsId, ordersData)
         );
     const [newComment, setNewComment] = useState<string | undefined>();
-    //const [orderData, setOrderData] = useState<{}>();
+    const [addNewCommit, setAddNewCommit] = useState();
      
     useEffect(() => {
         register("id_customer", {required: 'Це необхідні дані'});
@@ -248,7 +250,7 @@ const AdminFormOrder = observer((
             setDisableBtnOk(true);
         }
     },[ordersData])
-//
+
     const onChangeInput = useCallback(
         (e: any, id: number, indexItem: number) => {
 
@@ -351,7 +353,7 @@ const AdminFormOrder = observer((
             }
 
             if(orderId && state.length > 0) {
-        
+            await updateOrder(data);    
             state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
                 let resultOrder: any = await createGoodsToOrder(itemGoods, orderId);
                 setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder.data]);
@@ -414,12 +416,19 @@ const AdminFormOrder = observer((
     const addComment = async(e: any) => {
         try {
             const addCommit: any = await addCommentsToOrder(
-                user._user?.sub.id_user, orderId, newComment
+                user._user?.sub.id_user, 
+                orderId ?? ordersData?.id_order, 
+                newComment
             ); 
             if (addCommit.data.status === '200' || '201') {
                 alert('Коментар додано');
                 showComment(e);
-                console.log('КОММЕНТАР: ', addCommit)
+                setAddNewCommit(addCommit.data);
+                console.log('ADD_КОММЕНТАР: ', addCommit);
+                console.log('ADD_COMMIT_TO_NEW_ORDERID: ', orderId);
+                console.log('ADD_COMMIT_TO_ORDERS_ID: ', ordersData?.id_order);
+                console.log('ADD_ІВЕНТ_КОМЕНТ: ',e.target.value);
+                //console.log('ADD_ІВЕНТ_КОМЕНТ: ',e.currentTarget?.getAttribute('data-value'));
             } else {
                 alert(
                     'Коментар не додано, помилка! (можливо ви не зберегли замовлення)'
@@ -557,12 +566,16 @@ const AdminFormOrder = observer((
                                 readOnly={true}
                                 //onChange={() => setAddCustomer(addCustomer)}
                             />
-                            <div onClick={(e)=>e.preventDefault()}>
+                            <div 
+                            //onClick={(e)=>e.preventDefault()}
+                            >
                                 <button onClick={openCustomerForm} className='admFormSearchCustm'>
                                     <i className="fas fa-search"></i>    
                                 </button> 
                             </div>
-                            <div onClick={(e)=>e.preventDefault()}>
+                            <div 
+                            //onClick={(e)=>e.preventDefault()}
+                            >
                                 <button onClick={activeCustomer}
                                     className='admFormAddCustm'>
                                     <i className="fas fa-plus"></i>    
@@ -647,7 +660,9 @@ const AdminFormOrder = observer((
                             
                         </select>    
                     </div>
-                    <div onClick={(e)=>e.preventDefault()}>
+                    <div 
+                    //onClick={(e)=>e.preventDefault()}
+                    >
                         <button onClick={addGoodsForm} className='admFormOrderBtnAdd'>Додати товар</button>  
                     </div>
                     <div>
@@ -779,7 +794,7 @@ const AdminFormOrder = observer((
                                 <div 
                                     //onClick={(e) => e.target.addEventListener("click", deleteItem, false)}
                                     //onClickCapture={e=>e.stopPropagation()}
-                                    onClick={e=>e.stopPropagation()}
+                                    //onClick={e=>e.stopPropagation()}
                                     //onClick={(e)=>e.preventDefault()}
                                 >
                                 <button className='closeAdmGoods' 
@@ -815,24 +830,36 @@ const AdminFormOrder = observer((
                     </textarea>  
                 </div>
                 <div className='admFormOrderCommit'
-                    onClick={(e)=>e.preventDefault()}>
+                    //onClick={(e)=>e.preventDefault()}
+                    //onClick={(e) => e.stopPropagation()}
+                    >
                     <div className='admFormOrderAddCommit'>
                     <button className='admFormOrderBtnAdd'
-                        data-value={orderId ? orderId : ordersData?.id_order}
-                        onClick={e => addComment(e)}
+                        value={orderId ?? ordersData?.id_order}
+                        onClick={(e) => addComment(e)}
+                        //onInput={(e) => showComment(e)}
+                        //data-order={ordersData?.id_order}
                         >Додати коментар
                     </button>
                         <textarea 
                         className='admOrderCommitText'
                         value={newComment}
+                        //data-order={ordersData?.id_order}
                         onChange={e =>setNewComment(e.target.value)}
+                        
+                        //placeholder="Введіть коментар.."    
                         //name="subject" 
                         placeholder="Пишить коментар.."
                         >        
                         </textarea>
                     </div>
                     <div className='admFormOrderCommitChat'>
-                        <AdminComment comments={comments}/>
+                        {/* {comments?.length !== 0 ? */}
+                          <AdminComment 
+                            newCommit={addNewCommit}
+                            comments={comments}/>
+                        {/* //   : <span>... очікуємо коментарі ...</span>  
+                        // } */}
                     </div>  
                 </div>
                 <div className='admOrderFormGrp'
@@ -861,11 +888,11 @@ const AdminFormOrder = observer((
                         </button>
                     </div>
                     <div onClick={(e) => e.stopPropagation()}>
-                        <button className='admFormOrderBtn' onClick={() =>setActive(false)}>Відмінити</button>
+                        <button className='admFormOrderBtn' onClick={setActive}>Відмінити</button>
                     </div>
-                    <span>id: {user._user?.sub.id_user ?? ordersData?.id_user}</span>
-                    <span>користувач: {user._user?.sub.name ?? ordersData?.id_user}</span>
-                    <span>посада: {user._user?.sub?.role ?? ordersData?.id_user}</span>
+                    <span>id: {ordersData?.user.id_user ?? user._user?.sub.id_user}</span>
+                    <span>користувач: {ordersData?.user.name ?? user._user?.sub.name}</span>
+                    <span>посада: {ordersData?.user.role ?? user._user?.sub?.role}</span>
                     <span>
                         Сума замовлення: {orderSum ? orderSum : orderDataSum}
                     </span>

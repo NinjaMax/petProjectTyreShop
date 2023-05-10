@@ -47,7 +47,11 @@ const createGoodsToOrder = async (
         //         console.log(error)
         //     }
         // )
-
+const updateOrder = async (data: any) => 
+await $hostPost.patch('/orders/update', data)
+.catch(error => {
+    console.log(error);
+});
        
     
 
@@ -345,7 +349,7 @@ await $hostGet.get('/customers/all')
 //type ICreateComments = {id_user: number; id_order:number; comments: string;}
 const addCommentsToOrder = async (
     id_user: number,
-    id_order: number | null, 
+    id_order: number | null | undefined, 
     comments: string | undefined) => 
 await $hostPost.post('/comments', {
     id_order: id_order,
@@ -403,6 +407,7 @@ export {
     uploadPriceWheelForm,
     getFiles,
     responseForm,
+    updateOrder,
     getTyres, 
     getStockTyres, 
     getPriceTyres,
