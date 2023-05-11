@@ -14,6 +14,7 @@ const createGoodsToOrder = async (
     storage_index: +item.price?.id_storage!,
     quantity: +item.price?.quantity!,
     price: +item.price?.price!,
+    id_order_storage: item.id_order_storage ?? null,
     // delivery: 'Flintstone',
 })
 .catch(error => {
@@ -47,9 +48,24 @@ const createGoodsToOrder = async (
         //         console.log(error)
         //     }
         // )
-const updateOrder = async (data: any) => 
-await $hostPost.patch('/orders/update', data)
-.catch(error => {
+const updateOrder = async (data: any, id_order: number) => 
+await $hostPost.patch('/orders/update', {
+    id_order: id_order,
+    id_user: data.number,
+    notes: data.notes,
+    organisation: data.organisation,
+    storage: data.storage,
+    order_view: data.order_view,
+    delivery: data.delivery,
+    status_delivery: data.status_delivery,
+    delivery_ttn: data.delivery_ttn,
+    status: data.status,
+    pay_view: data.pay_view,
+    status_pay: data.status_pay,
+    dop_garanty: data.dop_garanty,
+    id_customer: data.id_customer,
+    id_contract: data.id_contract,
+}).catch(error => {
     console.log(error);
 });
        

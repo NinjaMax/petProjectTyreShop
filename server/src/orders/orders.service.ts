@@ -104,13 +104,14 @@ export class OrdersService {
 
   async createGoodsToOrder(createOrderDto: CreateOrderDto) {
     try {
-      if (createOrderDto.id_order_storage) {
-        await this.ordersStorageService.updateOrderStorage(createOrderDto);
+      const findGoodsToOrder =
+        await this.ordersStorageService.findOrderStorageOne(createOrderDto);
 
-        const findGoodsToOrder =
-          await this.ordersStorageService.findOrderStorageOne(createOrderDto);
+      if (findGoodsToOrder) {
+        const updateOrderStor =
+          await this.ordersStorageService.updateOrderStorage(createOrderDto);
 
-        return findGoodsToOrder;
+        return updateOrderStor;
       } else {
         const orderStorage = await this.ordersStorageService.createOrderStorage(
           createOrderDto,
@@ -438,6 +439,50 @@ export class OrdersService {
         // );
         // updateOrder.reload();
         return updateOrder;
+      }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async updateOrderStorage(updateOrderDto: UpdateOrderDto) {
+    try {
+      const ordersIdStor = await this.ordersRepository.findByPk(
+        updateOrderDto.id_order,
+        { include: { all: true } },
+      );
+
+      if (ordersIdStor) {
+        const updateOrderStor = await this.ordersRepository.update(
+          {
+            id: updateOrderDto.id,
+            id_user: updateOrderDto.id_user,
+            notes: updateOrderDto.notes,
+            organisation: updateOrderDto.organisation,
+            storage: updateOrderDto.storage,
+            order_view: updateOrderDto.order_view,
+            delivery: updateOrderDto.delivery,
+            status_delivery: updateOrderDto.status_delivery,
+            delivery_ttn: updateOrderDto.delivery_ttn,
+            status: updateOrderDto.status,
+            pay_view: updateOrderDto.pay_view,
+            status_pay: updateOrderDto.status_pay,
+            dop_garanty: updateOrderDto.dop_garanty,
+            id_customer: updateOrderDto.id_customer,
+            id_contract: updateOrderDto.id_contract,
+          },
+          { where: { id_order: updateOrderDto.id_order } },
+        );
+
+        // const orderAfterUpdate = await this.ordersRepository.findByPk(
+        //   updateOrderDto.id_order,
+        //   { include: { all: true } },
+        // );
+        // updateOrder.reload();
+        return updateOrderStor;
       }
     } catch {
       throw new HttpException(

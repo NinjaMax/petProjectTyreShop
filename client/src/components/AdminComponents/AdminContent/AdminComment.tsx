@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminComment.css';
 
-const AdminComment = ({comments, newCommit}:any) => {
+const AdminComment = ({newCommit, comments}:any) => {
     const [commentNew, setCommentNew] = useState<any>(comments);
 
     useEffect(() => {
         if(newCommit) {
-            setCommentNew([newCommit, ...comments]);   
-        }    
+            setCommentNew([ ...comments, newCommit]);   
+        }   
     },[comments, newCommit])
 
-    console.log('ADMIN_COMMENT_NEW_ADD', commentNew)
+    useEffect(() => {
+        if (comments) {
+            setCommentNew([ ...comments]);
+        }   
+    },[comments])
+
+    console.log('ADMIN_COMMENT_GET_COMMENTS', comments);
+    console.log('ADMIN_COMMENT_GET_COMMENT_NEW', newCommit);
+    console.log('ADMIN_COMMENT_NEW_ADD', commentNew);
+
     return (
     <div className='admCommitBox'>
         {commentNew ?

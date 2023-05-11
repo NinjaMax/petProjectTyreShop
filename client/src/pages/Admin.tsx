@@ -192,20 +192,20 @@ const Admin = observer(() => {
             //console.log('COMMIT_BY_ID_ORDER_VALUE: ', e.currentTarget?.getAttribute('data-value'));
             console.log('COMMIT_BY_ID_ORDER_VALUE: ', +e.target.value);
         } 
-        //else if (+e.target.value === 0) {
-        //  else {
-        //     setCommentByOrder(0); 
-        //     console.log('COMMIT_BY_ID_ORDER_VALUE: 0',)
-        //  }
+        if (e.target.value === '0') {
+            setCommentByOrder(0); 
+            console.log('COMMIT_BY_ID_ORDER_VALUE: 0',)
+        }
+
         if (e.currentTarget?.getAttribute('data-value')){
             setCommentByOrder(+e.currentTarget?.getAttribute('data-value'));
             console.log('COMMIT_BY_ID_ORDER_DATA_VALUE: ', +e.currentTarget?.getAttribute('data-value'));  
         } 
         //else if (+e.currentTarget?.getAttribute('data-value') === 0) 
-        // else {
-        //     setCommentByOrder(0); 
-        //     console.log('COMMIT_BY_ID_ORDER_DATA_VALUE: 0',)
-        // }
+        if (e.currentTarget?.getAttribute('data-value') === '0') {
+            setCommentByOrder(0); 
+            console.log('COMMIT_BY_ID_ORDER_DATA_VALUE: 0',)
+        }
         // if (+e.currentTarget?.getAttribute('data-order')) {
         //     setCommentByOrder(+e.currentTarget?.getAttribute('data-order'));
         //   console.log('COMMIT_BY_ID_ORDER_ORDER: ', e.currentTarget?.getAttribute('data-order'));  

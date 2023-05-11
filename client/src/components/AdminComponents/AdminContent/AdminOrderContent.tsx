@@ -64,8 +64,8 @@ const AdminOrderContent = (
     const activeFormOrder = async(e:any) => {
         if (orderData) {
             setOrderData(null);
-            showComment(e);
-            //comments=null;
+            //showComment(e);
+            //comments=[];
         }
         setActiveOrder(!activeOrder);
         showComment(e);
@@ -82,6 +82,7 @@ const AdminOrderContent = (
         if(orderInfo) {
             setOrderData(orderInfo);
             setActiveOrder(!activeOrder);
+            showComment(e);
         }
     }
     // const orderTotal = order_storage?.reduce((sum:any, current:any) => 
@@ -91,17 +92,22 @@ const AdminOrderContent = (
         <div>
             <div className="admOrderContent">
                 <span>Замовлення Покупців:</span>
-                <div className='admOrderHeader'>
+                <div className='admOrderHeader'
+                    onClick={(e) => e.stopPropagation()}
+                >
                     <button className='admOrderHeaderBtn'
                         onClick={(e) => activeFormOrder(e)}
-                        value={0} >
+                        value={'0'} 
+                        >
                         Додати замовлення
                     </button>
                 </div>
                 <input className='inputAdminOrder' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
                 <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
             </div>
-            <div className='admOrdersTable'>
+            <div className='admOrdersTable'
+            //onClick={(e) => e.stopPropagation()}
+            >
             <table className='admListOrdersTable'>
                 <thead>
                     <tr className='headerOrderTable'>
@@ -125,8 +131,8 @@ const AdminOrderContent = (
                 <tbody>
                     {orders ? orders.map((items: IOrdersItem) => (
                     <tr key={'or' + items.id_order}
-                        onDoubleClick={e => showOrderData(e)}
                         onClick={e => showComment(e)}
+                        onDoubleClick={e => showOrderData(e)}
                         data-value={items.id_order}>
                         <td>{items.id_order}</td>
                         <td>{new Date(items.createdAt).toLocaleString()}</td>

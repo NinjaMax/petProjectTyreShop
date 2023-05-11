@@ -80,8 +80,11 @@ export class OrdersStorageService {
       const orderStorageOne = await this.ordersStorageRepository.findOne({
         where: { id_order_storage: getOrdersDto.id_order_storage },
       });
-
-      return orderStorageOne;
+      if(orderStorageOne) {
+        return orderStorageOne;
+      } else {
+        return null;
+      }
     } catch {
       throw new HttpException(
         'Data is incorrect and must be uniq',
@@ -115,6 +118,9 @@ export class OrdersStorageService {
           quantity: updateOrderDto.quantity,
           price: updateOrderDto.price,
           id_supplier: updateOrderDto.id_supplier,
+          category: updateOrderDto.category,
+          id_order: updateOrderDto.id_order,
+          id_storage: updateOrderDto.id_storage
         },
         { where: { id_order_storage: updateOrderDto.id_order_storage } },
       );

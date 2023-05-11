@@ -324,11 +324,9 @@ const AdminFormOrder = observer((
                 deleteItem: itemIndex,
             });
         } 
-    
     //GOOD PERFORM
     const onSubmit = async (data:{}, e: any) => {
             e.preventDefault();
-            //e.stopPropagation();
             console.log('CREATE ORDER: ', data)
         try {
             if (!orderId && state.length === 0) {
@@ -338,38 +336,54 @@ const AdminFormOrder = observer((
                     але товари не додані.
                 `); 
             }
-
             if(!orderId && state.length > 0) {
                 let resultForm: any = await responseForm(data);
+                console.log('CREATE_ORDER_DATA: ', resultForm.data);
                 setOrderId(+resultForm.data.id_order);
                 state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
                     let resultOrder: any = await createGoodsToOrder(itemGoods, resultForm.data.id_order!);
+                    console.log('CREATE_ORDER_DATA_RESULT: ', resultOrder?.data);
                     setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder.data]);
                     await yieldToMain(); 
                 console.log('Order_storage', resultOrder.data);
                 }) 
                 alert(`Замовлення створено, id ${resultForm.data.id_order}`);
-                //setDisableBtn(!disableBtn);
             }
-
-            if(orderId && state.length > 0) {
-            await updateOrder(data);    
+            if(orderId && state.length > 0 && !disableBtnOk) {   
             state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
                 let resultOrder: any = await createGoodsToOrder(itemGoods, orderId);
                 setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder.data]);
-                await yieldToMain(); 
-                console.log('Order_storage', resultOrder.data);
+                await yieldToMain();
+                console.log('Order_storage', resultOrder.data); 
             }) 
+            orderStorage?.forEach(async(itemsOrd): Promise<any> => {
+                await addGoodsToOrder(itemsOrd);
+            })
+                await updateOrder(data, orderId);    
                 alert(`Замовлення збереженно, id ${orderId}`);
-                //setDisableBtn(!disableBtn);
             } 
             if(orderId && state.length === 0){
                 alert("Товари не додані");
             }
+            if (orderId && state.length !== 0 && disableBtnOk){
+                state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
+                    let resultOrder: any = await createGoodsToOrder(itemGoods, orderId);
+                    console.log('RESULT_OEDER_DATA: ',resultOrder?.data);
+                    setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder?.data]);
+                    await yieldToMain();
+                    console.log('Order_storage', resultOrder.data); 
+                }) 
+                orderStorage?.forEach(async(itemsOrd): Promise<any> => {
+                    let resOrd: any = await addGoodsToOrder(itemsOrd);
+                    await yieldToMain();
+                    console.log('onSubmOrder', resOrd.data);
+                })
+                await updateOrder(data, orderId);
+                alert(`Замовлення збереженно, id ${orderId}`);
+            }
             e.stopPropagation();
          } catch {
             console.log('ERROR_CR_ORDERR: ', e);
-        //     reset();
         }    
     }    
     //const onError = (errors:any, e:any) => console.log(errors, e);
@@ -425,6 +439,7 @@ const AdminFormOrder = observer((
                 showComment(e);
                 setAddNewCommit(addCommit.data);
                 console.log('ADD_КОММЕНТАР: ', addCommit);
+                console.log('ADD_КОММЕНТАР: ', addCommit.data);
                 console.log('ADD_COMMIT_TO_NEW_ORDERID: ', orderId);
                 console.log('ADD_COMMIT_TO_ORDERS_ID: ', ordersData?.id_order);
                 console.log('ADD_ІВЕНТ_КОМЕНТ: ',e.target.value);
@@ -661,7 +676,7 @@ const AdminFormOrder = observer((
                         </select>    
                     </div>
                     <div 
-                    //onClick={(e)=>e.preventDefault()}
+                        onClick={(e)=>e.preventDefault()}
                     >
                         <button onClick={addGoodsForm} className='admFormOrderBtnAdd'>Додати товар</button>  
                     </div>
@@ -714,7 +729,7 @@ const AdminFormOrder = observer((
                 </div>
                 <div className='admFormOrderTableBox'
                     //onInput={(e) => e.stopPropagation()}
-                    //onClick={(e)=>e.preventDefault()}
+                    onClick={(e)=>e.preventDefault()}
                     >   
                 <table className='admFormOrderTable'>
                     <thead className='admFormOrderTableTh'>
@@ -794,7 +809,7 @@ const AdminFormOrder = observer((
                                 <div 
                                     //onClick={(e) => e.target.addEventListener("click", deleteItem, false)}
                                     //onClickCapture={e=>e.stopPropagation()}
-                                    //onClick={e=>e.stopPropagation()}
+                                    onClick={e=>e.stopPropagation()}
                                     //onClick={(e)=>e.preventDefault()}
                                 >
                                 <button className='closeAdmGoods' 
@@ -830,7 +845,7 @@ const AdminFormOrder = observer((
                     </textarea>  
                 </div>
                 <div className='admFormOrderCommit'
-                    //onClick={(e)=>e.preventDefault()}
+                    onClick={(e)=>e.preventDefault()}
                     //onClick={(e) => e.stopPropagation()}
                     >
                     <div className='admFormOrderAddCommit'>

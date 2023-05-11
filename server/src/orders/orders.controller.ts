@@ -46,6 +46,11 @@ export class OrdersController {
     return await this.ordersService.updateOrder(updateOrderDto);
   }
 
+  @Patch('/update/orderstorage')
+  async updateOrderStorage(@Body() updateOrderDto: UpdateOrderDto) {
+    return await this.ordersService.updateOrderStorage(updateOrderDto);
+  }
+
   @Delete('/remove')
   removeOrder(@Body() getOrdersDto: GetOrdersDto) {
     return this.ordersService.removeOrder(getOrdersDto);

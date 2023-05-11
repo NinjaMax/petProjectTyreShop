@@ -42,4 +42,5 @@ export class CreateOrderDto {
   readonly delivery_ttn: string;
   readonly pay_view: string;
   readonly status_pay: string;
+  readonly category: string;
 }

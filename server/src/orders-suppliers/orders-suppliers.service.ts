@@ -39,19 +39,20 @@ export class OrdersSuppliersService {
         const ordersGoodsIdSup = orderGoods.map(item => item.id_supplier);
         const idSuppliers = Array.from(new Set(ordersGoodsIdSup));
         
-        for( let i = 0; i < idSuppliers.length; i++ ) {
+        for (let i = 0; i < idSuppliers.length; i++) {
           await this.ordersSupRepository.create(
-           { id_order: order.id_order,
-            id_supplier: idSuppliers[i],
-            id_contract: 0 },
+            {
+              id_order: order.id_order,
+              id_supplier: idSuppliers[i],
+              id_contract: 0,
+            },
            { fields: ["id_order", "id_supplier", 
-           "delivery", "status", "notes", "id_contract"] }
+           "delivery", "status", "notes", "id_contract"]}
           );
 
         }
         
-        for(let j = 0; j < orderGoods.length; j++) {
-
+        for (let j = 0; j < orderGoods.length; j++) {
           await this.ordersSupStorageService.createOrderSupStorageNew(
             orderGoods[j].id,
             orderGoods[j].id_order,
@@ -76,8 +77,10 @@ export class OrdersSuppliersService {
 
     } catch {
 
-      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
