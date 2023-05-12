@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminComment.css';
 
 const AdminComment = ({newCommit, comments}:any) => {
-    const [commentNew, setCommentNew] = useState<any>(comments);
+    const [commentNew, setCommentNew] = useState<any[]>(comments);
 
     useEffect(() => {
         if(newCommit) {
-            setCommentNew([ ...comments, newCommit]);   
+            setCommentNew(oldComments => [ ...oldComments, newCommit]);   
         }   
-    },[comments, newCommit])
+    },[newCommit])
 
     useEffect(() => {
         if (comments) {

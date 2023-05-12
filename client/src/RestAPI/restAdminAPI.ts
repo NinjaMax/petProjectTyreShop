@@ -68,9 +68,13 @@ await $hostPost.patch('/orders/update', {
 }).catch(error => {
     console.log(error);
 });
-       
-    
 
+const updateOrderStorage = async (data: any) => 
+await $hostPost.post('/orders/update/orderstorage', data)
+.catch(error => {
+    console.log(error);
+});
+       
 const responseForm = async (data: any) => 
 await $hostPost.post('/orders', data)
 .catch(error => {
@@ -424,6 +428,7 @@ export {
     getFiles,
     responseForm,
     updateOrder,
+    updateOrderStorage,
     getTyres, 
     getStockTyres, 
     getPriceTyres,

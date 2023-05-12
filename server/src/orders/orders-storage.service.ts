@@ -134,7 +134,7 @@ export class OrdersStorageService {
     }
   }
 
-  async removeOrderSup(getOrdersDto: GetOrdersDto) {
+  async removeOrderStorageById(getOrdersDto: GetOrdersDto) {
     try {
       const orderSup = await this.ordersStorageRepository.destroy({
         where: { id_order_storage: getOrdersDto.id_order_storage },
