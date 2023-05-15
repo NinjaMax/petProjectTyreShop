@@ -135,18 +135,20 @@ type ActionReducer =
     | { type: ActionType.EDITITEM, editItem: any};
 
 type StateReducer = {
+    [index: number]: any;
     i?:number;
     //stateData?: any[];
     length: number;
     state?: any[];
     //newStateData?:[];
     forEach(arg0: (itemGoods: {}) => Promise<void |any>): unknown;
+    forEach(arg0: any, ...arg: any[]): any;
     push(arg0: { price: any; }): unknown;
     splice(itemIndex: number, arg1: number): any;
     map(arg0: any, ...arg: any[]): any;
     slice(arg0?: number, arg1?: number): any;
     [Symbol.iterator](): any;
-    reduce(arg0: any, ...arg: any[]): any
+    reduce(arg0: any, ...arg: any[]): any;
 }
 
 function reducer (state: StateReducer, action: ActionReducer) {
@@ -252,6 +254,12 @@ const AdminFormOrder = observer((
         }
     },[ordersData])
 
+    // useEffect(() => {
+    //     if (orderStorage.length !== 0) {
+    //        setOrderStorage(oldStorage => [...oldStorage, orderStorage]);  
+    //     }
+    // },[orderStorage])
+
     const onChangeInput = useCallback(
         (e: any, id: number, indexItem: number) => {
 
@@ -330,6 +338,7 @@ const AdminFormOrder = observer((
             e.preventDefault();
             console.log('CREATE ORDER: ', data)
         try {
+            let newOrderStorage: any[] | null = [];
             if (!orderId && state.length === 0) {
                let resultForm: any = await responseForm(data);
                 setOrderId(+resultForm.data.id_order);
@@ -344,62 +353,111 @@ const AdminFormOrder = observer((
                 state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
                     let resultOrder: any = await createGoodsToOrder(itemGoods, resultForm.data.id_order!);
                     console.log('CREATE_ORDER_DATA_RESULT: ', resultOrder?.data);
-                    setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder.data]);
+                    //setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder.data]);
+                    orderStorage.push(resultOrder?.data);
                     //await yieldToMain(); 
-                console.log('Order_storage', resultOrder.data);
-                }) 
+                //console.log('Order_storage', resultOrder.data);
+                })
+                //orderStorage.splice(0, orderStorage.length); 
                 alert(`Замовлення створено, id ${resultForm.data.id_order}`);
             }
             if(orderId && state.length > 0 && disableBtnOk === false) {
-                console.log('disableBTN_OK: FALSE :', disableBtnOk);
+            console.log('disableBTN_OK: FALSE :', disableBtnOk);
+            //let newStorageBtnFalse: any[] = [];
             orderStorage?.forEach(async(itemsOrd): Promise<any> => {
                 await updateOrderStorage(itemsOrd);
+                //setOrderStorage(orderStorage.filter(item => item.id !== itemsOrd.id));
+                //orderStorage.shift();
+                //setOrderStorage(orderStorage.splice(index, 1));
             });
             orderStorage.splice(0, orderStorage.length);
-            console.log('Order_storage_clean: ',orderStorage);
+            // orderStorage.map((item:any, index) => 
+            // {return (item.id === state[index].id ? item : null);});
+            console.log('Order_storage_clean: ', orderStorage);
+            // state.forEach(async (item) => orderStorage.push(item));
+            // console.log('Order_storage_push: ', orderStorage);
             state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
                 let resultOrder: any = await createGoodsToOrder(itemGoods, orderId);
-                setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder.data]);
+                //setOrderStorage([...orderStorage, resultOrder?.data])
+                //setOrderStorage(oldStorage => [resultOrder.data, ...oldStorage]);
+                //setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder?.data]);
                 //await yieldToMain();
-                //orderStorage.push(resultOrder.data);
-                console.log('Order_storage_add', resultOrder.data);
-                 
+                orderStorage.push(resultOrder.data);
+                //newStorageBtnFalse.push(resultOrder.data);
+                //newOrderStorage?.push(resultOrder?.data);
+                //console.log('Order_storage_add_push', resultOrder.data);   
             });
+            //newStorageBtnFalse.forEach((entity:any) => {
+            //    orderStorage.push(entity);
+            //});
             // orderStorage?.forEach(async(itemsOrd): Promise<any> => {
             //     await addGoodsToOrder(itemsOrd);
-            // });
+                //setOrderStorage(state.map((item:any) => item));
+                
                 console.log('Order_storage_full_BTN_FALSE_AFTER: ', orderStorage);
                 await updateOrder(data, orderId);    
                 alert(`Замовлення збереженно, id ${orderId}`);
+                //orderStorage.splice(0, orderStorage.length);
+                //newStorageBtnFalse.splice(0, newStorageBtnFalse.length);
             } 
             if(orderId && state.length === 0){
                 alert("Товари не додані");
             }
             if (orderId && state.length !== 0 && disableBtnOk === true){
                 console.log('disableBTN_OK: TRUE :', disableBtnOk);
-                orderStorage?.forEach(async(itemsOrd): Promise<any> => {
+                //let newStorageBtnTrue: any|null[] =[];
+                //newOrderStorage?
+                orderStorage.forEach(async(itemsOrd): Promise<any> => {
                     await updateOrderStorage(itemsOrd);
+                    
+                    //orderStorage.shift();
+                    //setOrderStorage(orderStorage.filter(item => item.id !== itemsOrd.id));
                 });
                 orderStorage.splice(0, orderStorage.length);
-                console.log('Order_storage_clean: ',orderStorage);
-                state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
-                    let resultOrder: any = await createGoodsToOrder(itemGoods, orderId);
-                    console.log('RESULT_ORDER_DATA: ',resultOrder?.data);
-                    setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder?.data]);
+                
+                console.log('Order_storage_clean: ', orderStorage);
+                //setOrderStorage(state.forEach(async (item) => orderStorage.push(item));)
+                //console.log('Order_storage_newState: ', orderStorage);
+                //state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
+                //    let resultOrder: any = await createGoodsToOrder(itemGoods, orderId);
+                state.forEach((itemGoods: {}) => {
+                    let resultOrder: any =  createGoodsToOrder(itemGoods, orderId);
+                    //console.log('RESULT_ORDER_DATA: ', resultOrder?.data);
+                    //setOrderStorage([...orderStorage, resultOrder?.data])
+                    //setOrderStorage(oldStorage => [ resultOrder?.data, ...oldStorage]);
+                    //setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder?.data]);
                     //await yieldToMain();
-                    //orderStorage.push(resultOrder.data);
-                    console.log('Order_Storage_add', resultOrder.data);
+                    orderStorage.push(resultOrder.data);
+                    newOrderStorage?.push(resultOrder.data);
+                    console.log('Order_Storage_add_push: ', resultOrder.data);
                 });
-                console.log('Order_Storage_full: ', orderStorage);
-                orderStorage?.forEach(async(itemsOrd): Promise<any> => {
+                //setOrderStorage(state.map((item:any) => item))
+                // newStorageBtnTrue.forEach((entity: any) => {
+                //     orderStorage.push(entity);
+                // });
+                console.log('Order_Storage_full_OK: ', orderStorage);
+                console.log('NewOrder_Storage_full_OK: ', newOrderStorage);
+                orderStorage.forEach(async(itemsOrd): Promise<any> => {
                     let resOrd: any = await addGoodsToOrder(itemsOrd);
                     //await yieldToMain();
-                    console.log('onSubmOrder', resOrd.data);
+                    console.log('ON_ADD_GOODS_TOORDER: ', resOrd?.data);
                 });
+
+                // newOrderStorage.forEach(async(itemsOrd): Promise<any> => {
+                //     let resOrd: any = await addGoodsToOrder(itemsOrd);
+                //     //await yieldToMain();
+                //     console.log('ONSUBMIT_ORDER: ', resOrd?.data);
+                // });
+                //orderStorage.splice(0, orderStorage.length);
                 console.log('Order_Storage_full_BTN_TRUE_AFTER: ', orderStorage);
+                console.log('newOrder_Storage_full_BTN_TRUE_AFTER: ', newOrderStorage);
                 await updateOrder(data, orderId);
                 alert(`Замовлення збереженно, id ${orderId}`);
+                //newOrderStorage.splice(0, newOrderStorage.length);
+                //newStorageBtnTrue.splice(0, newStorageBtnTrue.length);
             }
+            //orderStorage.splice(0, orderStorage.length);
+            //newOrderStorage.splice(0, newOrderStorage.length);
             e.stopPropagation();
          } catch {
             console.log('ERROR_ORDER: ', e);
@@ -412,18 +470,18 @@ const AdminFormOrder = observer((
             if(orderId) {
                 orderStorage?.forEach(async(itemsOrd): Promise<any> => {
                     let resOrd: any = await addGoodsToOrder(itemsOrd);
-                    await yieldToMain();
-                    console.log('onSubmOrder', resOrd.data);
+                    //await yieldToMain();
+                    console.log('ON_SUBMIT_GOODS_TO_ORDER: ', resOrd.data);
                 })
                 alert(`Замовлення ${orderId} проведено`)
                 setDisableBtnOk(!disableBtnOk);
             } else {
                 alert("Треба добавити товари. І зберегти замовлення");
             }
-        } catch (error) {
+        } catch (error:any) {
             alert (
                 `Помилка. Не вірні данні, не вистачае залишків,
-                або системна помилка: ` + error
+                або системна помилка: ` + error.message
             )
         }      
     };
