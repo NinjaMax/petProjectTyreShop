@@ -9,7 +9,7 @@ import {
     responseForm,
     updateOrder,
     updateOrderStorage} from '../../../restAPI/restAdminAPI';
-import { yieldToMain } from '../../../restAPI/yieldMain';
+//import { yieldToMain } from '../../../restAPI/yieldMain';
 import AdminComment from '../adminContent/AdminComment';
 import AdminModalCustmCreate from '../adminModalForm/AdminModalCustmCreate';
 import AdminModalCustomers from '../adminModalForm/AdminModalCustomers';
@@ -232,7 +232,8 @@ const AdminFormOrder = observer((
         );
     const [newComment, setNewComment] = useState<string | undefined>();
     const [addNewCommit, setAddNewCommit] = useState();
-     
+    const [updateBtn, setUpdateBtn] = useState<string | null>(null); 
+    
     useEffect(() => {
         register("id_customer", {required: 'Це необхідні дані'});
         register("id_user", {required: 'Це необхідні дані'});
@@ -254,20 +255,9 @@ const AdminFormOrder = observer((
         }
     },[ordersData])
 
-    // useEffect(() => {
-    //     if (orderStorage.length !== 0) {
-    //        setOrderStorage(oldStorage => [...oldStorage, orderStorage]);  
-    //     }
-    // },[orderStorage])
-
     const onChangeInput = useCallback(
         (e: any, id: number, indexItem: number) => {
-
         let {name, value} = e.target;
-        //console.log('INPUT', ref.current)
-        // console.log('name', name);
-         console.log('valueINPUT', value);
-        // console.log('ITEM Id', id);
 
             dispatch({type: ActionType.EDITITEM, 
                 editItem: state.map(
@@ -304,15 +294,8 @@ const AdminFormOrder = observer((
         }
 
         const addGoodsToList = async (value:string) => {
-            //let [idValue, indexValue] = value;
             const newArr = value.split(',');
-            //console.log('VALUE: ', newArr);
-            // console.log('ID', newArr[0]);
-            // console.log('INDEX', newArr[1]);
             let [idValue, indexValue] = newArr;
-            // console.log('ARR ID', +idValue);
-            //console.log('ARR INDX', +indexValue);
-            //setPriceIndex(+indexValue); 
 
             dispatch({type: ActionType.ADDTYRE, 
                 addTyre: tyreDatas?.find((item:{id:string}) => item?.id === idValue),
@@ -338,7 +321,6 @@ const AdminFormOrder = observer((
             e.preventDefault();
             console.log('CREATE ORDER: ', data)
         try {
-            let newOrderStorage: any[] | null = [];
             if (!orderId && state.length === 0) {
                let resultForm: any = await responseForm(data);
                 setOrderId(+resultForm.data.id_order);
@@ -348,135 +330,64 @@ const AdminFormOrder = observer((
             }
             if(!orderId && state.length > 0) {
                 let resultForm: any = await responseForm(data);
-                console.log('CREATE_ORDER_DATA: ', resultForm.data);
                 setOrderId(+resultForm.data.id_order);
                 state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
                     let resultOrder: any = await createGoodsToOrder(itemGoods, resultForm.data.id_order!);
-                    console.log('CREATE_ORDER_DATA_RESULT: ', resultOrder?.data);
-                    //setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder.data]);
-                    orderStorage.push(resultOrder?.data);
-                    //await yieldToMain(); 
-                //console.log('Order_storage', resultOrder.data);
+                    setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder.data]);
                 })
-                //orderStorage.splice(0, orderStorage.length); 
-                alert(`Замовлення створено, id ${resultForm.data.id_order}`);
+                setUpdateBtn('Оновити');
+                alert(`Замовлення створено, id ${resultForm.data.id_order}. 
+                    Для підкріплення товарів до замовлення треба натиснути ОК.`);
             }
             if(orderId && state.length > 0 && disableBtnOk === false) {
-            console.log('disableBTN_OK: FALSE :', disableBtnOk);
-            //let newStorageBtnFalse: any[] = [];
-            orderStorage?.forEach(async(itemsOrd): Promise<any> => {
-                await updateOrderStorage(itemsOrd);
-                //setOrderStorage(orderStorage.filter(item => item.id !== itemsOrd.id));
-                //orderStorage.shift();
-                //setOrderStorage(orderStorage.splice(index, 1));
-            });
-            orderStorage.splice(0, orderStorage.length);
-            // orderStorage.map((item:any, index) => 
-            // {return (item.id === state[index].id ? item : null);});
-            console.log('Order_storage_clean: ', orderStorage);
-            // state.forEach(async (item) => orderStorage.push(item));
-            // console.log('Order_storage_push: ', orderStorage);
-            state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
-                let resultOrder: any = await createGoodsToOrder(itemGoods, orderId);
-                //setOrderStorage([...orderStorage, resultOrder?.data])
-                //setOrderStorage(oldStorage => [resultOrder.data, ...oldStorage]);
-                //setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder?.data]);
-                //await yieldToMain();
-                orderStorage.push(resultOrder.data);
-                //newStorageBtnFalse.push(resultOrder.data);
-                //newOrderStorage?.push(resultOrder?.data);
-                //console.log('Order_storage_add_push', resultOrder.data);   
-            });
-            //newStorageBtnFalse.forEach((entity:any) => {
-            //    orderStorage.push(entity);
-            //});
-            // orderStorage?.forEach(async(itemsOrd): Promise<any> => {
-            //     await addGoodsToOrder(itemsOrd);
-                //setOrderStorage(state.map((item:any) => item));
-                
-                console.log('Order_storage_full_BTN_FALSE_AFTER: ', orderStorage);
+                orderStorage?.forEach(async(itemsOrd): Promise<any> => {
+                    await updateOrderStorage(itemsOrd);
+                });
+                orderStorage.splice(0, orderStorage.length);
+                state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
+                    let resultOrder: any = await createGoodsToOrder(itemGoods, orderId);
+                    setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder?.data]);  
+                });  
                 await updateOrder(data, orderId);    
-                alert(`Замовлення збереженно, id ${orderId}`);
-                //orderStorage.splice(0, orderStorage.length);
-                //newStorageBtnFalse.splice(0, newStorageBtnFalse.length);
+                alert(`Замовлення збереженно, id ${orderId} товари оновлені.`);
+            
             } 
             if(orderId && state.length === 0){
                 alert("Товари не додані");
             }
             if (orderId && state.length !== 0 && disableBtnOk === true){
-                console.log('disableBTN_OK: TRUE :', disableBtnOk);
-                //let newStorageBtnTrue: any|null[] =[];
-                //newOrderStorage?
+                const newStorage = () => {
                 orderStorage.forEach(async(itemsOrd): Promise<any> => {
                     await updateOrderStorage(itemsOrd);
-                    
-                    //orderStorage.shift();
-                    //setOrderStorage(orderStorage.filter(item => item.id !== itemsOrd.id));
                 });
                 orderStorage.splice(0, orderStorage.length);
-                
-                console.log('Order_storage_clean: ', orderStorage);
-                //setOrderStorage(state.forEach(async (item) => orderStorage.push(item));)
-                //console.log('Order_storage_newState: ', orderStorage);
-                //state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
-                //    let resultOrder: any = await createGoodsToOrder(itemGoods, orderId);
-                state.forEach((itemGoods: {}) => {
-                    let resultOrder: any =  createGoodsToOrder(itemGoods, orderId);
-                    //console.log('RESULT_ORDER_DATA: ', resultOrder?.data);
-                    //setOrderStorage([...orderStorage, resultOrder?.data])
-                    //setOrderStorage(oldStorage => [ resultOrder?.data, ...oldStorage]);
-                    //setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder?.data]);
-                    //await yieldToMain();
-                    orderStorage.push(resultOrder.data);
-                    newOrderStorage?.push(resultOrder.data);
-                    console.log('Order_Storage_add_push: ', resultOrder.data);
+                state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
+                    let resultOrder: any = await createGoodsToOrder(itemGoods, orderId);
+                    setOrderStorage(oldOrdStor => [...oldOrdStor, resultOrder?.data]);
                 });
-                //setOrderStorage(state.map((item:any) => item))
-                // newStorageBtnTrue.forEach((entity: any) => {
-                //     orderStorage.push(entity);
-                // });
-                console.log('Order_Storage_full_OK: ', orderStorage);
-                console.log('NewOrder_Storage_full_OK: ', newOrderStorage);
-                orderStorage.forEach(async(itemsOrd): Promise<any> => {
-                    let resOrd: any = await addGoodsToOrder(itemsOrd);
-                    //await yieldToMain();
-                    console.log('ON_ADD_GOODS_TOORDER: ', resOrd?.data);
-                });
-
-                // newOrderStorage.forEach(async(itemsOrd): Promise<any> => {
-                //     let resOrd: any = await addGoodsToOrder(itemsOrd);
-                //     //await yieldToMain();
-                //     console.log('ONSUBMIT_ORDER: ', resOrd?.data);
-                // });
-                //orderStorage.splice(0, orderStorage.length);
-                console.log('Order_Storage_full_BTN_TRUE_AFTER: ', orderStorage);
-                console.log('newOrder_Storage_full_BTN_TRUE_AFTER: ', newOrderStorage);
+                }
+                newStorage();
+                setDisableBtnOk(!disableBtnOk);
                 await updateOrder(data, orderId);
-                alert(`Замовлення збереженно, id ${orderId}`);
-                //newOrderStorage.splice(0, newOrderStorage.length);
-                //newStorageBtnTrue.splice(0, newStorageBtnTrue.length);
+                alert(`Товари до замовлення id ${orderId}, оновлено.`);
             }
-            //orderStorage.splice(0, orderStorage.length);
-            //newOrderStorage.splice(0, newOrderStorage.length);
             e.stopPropagation();
          } catch {
             console.log('ERROR_ORDER: ', e);
         }    
     }    
-    //const onError = (errors:any, e:any) => console.log(errors, e);
     //GOOD PERFORM
     const onSubmitOrder = async () => {
         try {
-            if(orderId) {
+            if(orderId && orderStorage.length !== 0) {
                 orderStorage?.forEach(async(itemsOrd): Promise<any> => {
                     let resOrd: any = await addGoodsToOrder(itemsOrd);
-                    //await yieldToMain();
                     console.log('ON_SUBMIT_GOODS_TO_ORDER: ', resOrd.data);
                 })
-                alert(`Замовлення ${orderId} проведено`)
+                alert(`Замовлення id${orderId} проведено, товари до замовлення додані і збережені `)
                 setDisableBtnOk(!disableBtnOk);
             } else {
-                alert("Треба добавити товари. І зберегти замовлення");
+                alert("Треба добавити товари. І зберегти замовлення.");
             }
         } catch (error:any) {
             alert (
@@ -493,16 +404,6 @@ const AdminFormOrder = observer((
         (sum:any, current:any) => 
         sum + current.total, 0
     );
-    console.log('orderSum', orderSum);
-    console.log('orderDataSum', orderDataSum);
-    //)
-    console.log('STATE: ', state);
-    //console.log('GOODSID', goodsId);
-    //console.log('CUSTOMER', customer);
-    //console.log('TYRE DATAS: ', tyreDatas);
-    console.log('ORDERS_DATA: ', ordersData?.order_storage);
-    console.log(errors);
-    console.log('ORDER_STORG_ARRAY: ', orderStorage);
 
     const addComment = async(e: any) => {
         try {
@@ -515,12 +416,6 @@ const AdminFormOrder = observer((
                 alert('Коментар додано');
                 showComment(e);
                 setAddNewCommit(addCommit.data);
-                console.log('ADD_КОММЕНТАР: ', addCommit);
-                console.log('ADD_КОММЕНТАР: ', addCommit.data);
-                console.log('ADD_COMMIT_TO_NEW_ORDERID: ', orderId);
-                console.log('ADD_COMMIT_TO_ORDERS_ID: ', ordersData?.id_order);
-                console.log('ADD_ІВЕНТ_КОМЕНТ: ',e.target.value);
-                //console.log('ADD_ІВЕНТ_КОМЕНТ: ',e.currentTarget?.getAttribute('data-value'));
             } else {
                 alert(
                     'Коментар не додано, помилка! (можливо ви не зберегли замовлення)'
@@ -530,7 +425,7 @@ const AdminFormOrder = observer((
             console.log(error)
         }    
     }
-
+    console.log(errors);
     return (
         <div >
             Замовлення Покупця
@@ -976,7 +871,7 @@ const AdminFormOrder = observer((
                             onClick={handleSubmit(onSubmit)}
                             //onClickCapture={e=>e.stopPropagation()}
                             >
-                            Зберегти
+                            {updateBtn ?? 'Зберегти'}
                         </button>
                     </div>
                     <div onClick={(e) => e.stopPropagation()}>
