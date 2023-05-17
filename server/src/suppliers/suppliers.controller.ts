@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { SuppliersService } from './suppliers.service';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { UpdateSupplierDto } from './dto/update-supplier.dto';
@@ -13,13 +21,13 @@ export class SuppliersController {
     return this.suppliersService.createSupplier(createSupplierDto);
   }
 
-  @Get()
+  @Get('/all')
   findAll() {
     return this.suppliersService.findAllSupplier();
   }
 
   @Get('/id')
-  findOne( @Body() getSupplierDto: GetSupplierDto) {
+  findOne(@Body() getSupplierDto: GetSupplierDto) {
     return this.suppliersService.findSupplierById(getSupplierDto);
   }
 

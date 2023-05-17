@@ -12,9 +12,11 @@ import { CreateOrdersSupplierDto } from './dto/create-orders-supplier.dto';
 import { GetOrdersSuppliersDto } from './dto/get-orders-supplier.dto';
 import { UpdateOrdersSupplierDto } from './dto/update-orders-supplier.dto';
 
-@Controller('orders-suppliers')
+@Controller('ordersup')
 export class OrdersSuppliersController {
-  constructor(private readonly ordersSuppliersService: OrdersSuppliersService) {}
+  constructor(
+    private readonly ordersSuppliersService: OrdersSuppliersService,
+  ) {}
 
   @Post()
   createOrderSup(@Body() createOrdersSupplierDto: CreateOrdersSupplierDto) {
@@ -23,7 +25,9 @@ export class OrdersSuppliersController {
 
   @Post('/add')
   addGoodsToOrderSup(@Body() createOrdersSupplierDto: CreateOrdersSupplierDto) {
-    return this.ordersSuppliersService.addGoodsToOrderSup(createOrdersSupplierDto);
+    return this.ordersSuppliersService.addGoodsToOrderSup(
+      createOrdersSupplierDto,
+    );
   }
 
   @Post('/add/stock')
@@ -31,23 +35,31 @@ export class OrdersSuppliersController {
     return this.ordersSuppliersService.addGoodsToStock(createOrdersSupplierDto);
   }
 
-  @Get()
+  @Get('all')
   findAll() {
     return this.ordersSuppliersService.findAllOrdersSup();
   }
 
   @Get('/id')
-  findOne( @Body() getOrdersSupDto: GetOrdersSuppliersDto) {
+  findOne(@Body() getOrdersSupDto: GetOrdersSuppliersDto) {
     return this.ordersSuppliersService.findOrderSupById(getOrdersSupDto);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrdersSupplierDto: UpdateOrdersSupplierDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateOrdersSupplierDto: UpdateOrdersSupplierDto,
+  ) {
     return this.ordersSuppliersService.update(+id, updateOrdersSupplierDto);
   }
 
   @Delete('/remove')
-  remove( @Body() getOrdersSupDto: GetOrdersSuppliersDto) {
+  remove(@Body() getOrdersSupDto: GetOrdersSuppliersDto) {
     return this.ordersSuppliersService.removeOrderSup(getOrdersSupDto);
+  }
+
+  @Delete('/remove/ordersupstorage')
+  removeOrderSup(@Body() getOrdersSupDto: GetOrdersSuppliersDto) {
+    return this.ordersSuppliersService.removeOrderSupStorage(getOrdersSupDto);
   }
 }

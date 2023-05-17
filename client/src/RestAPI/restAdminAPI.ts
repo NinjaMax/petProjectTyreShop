@@ -80,6 +80,12 @@ await $hostPost.post('/orders', data)
 .catch(error => {
     console.log(error);
 });
+
+const createOrderSupForm = async (data: any) => 
+await $hostPost.post('/ordersup', data)
+.catch(error => {
+    console.log(error);
+});
         // await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders`, data, {
         //        headers: {
         //            'Content-Type': 'application/json; charset=utf-8',
@@ -123,6 +129,51 @@ await $hostPost.post('/orders/add', {
     quantity: value.quantity,
     price: value.price
 })
+.catch(error => {
+    console.log(
+    'Не вистачає залишків, або не вірно вказані дані',
+    error)
+});
+
+const addGoodsToOrderSup = async (value: IRestAdminApi) => 
+await $hostPost.post('/ordersup/add', value
+// {
+//     id_order_storage: value?.id_order_storage,
+//     id: value.id,
+//     id_supplier: value.id_supplier,
+//     id_order: value.order_index,
+//     id_storage: value.storage_index,
+//     quantity: value.quantity,
+//     price: value.price
+// }
+)
+.catch(error => {
+    console.log(
+    'Не вистачає залишків, або не вірно вказані дані',
+    error)
+});
+
+const addGoodsOrderSupToStock = async (value: IRestAdminApi) => 
+await $hostPost.post('/ordersup/add/stock', value
+// {
+//     id_order_storage: value?.id_order_storage,
+//     id: value.id,
+//     id_supplier: value.id_supplier,
+//     id_order: value.order_index,
+//     id_storage: value.storage_index,
+//     quantity: value.quantity,
+//     price: value.price
+// }
+)
+.catch(error => {
+    console.log(
+    'Не вистачає залишків, або не вірно вказані дані',
+    error)
+});
+
+const deleteGoodsFromOrderSup = async (value: any) => 
+await $hostPost.delete('/ordersup/remove/ordersupstorage', value
+)
 .catch(error => {
     console.log(
     'Не вистачає залишків, або не вірно вказані дані',
@@ -317,6 +368,13 @@ await $hostGet.get('/comments/byorderid', {params: {id_order: orderId ?? 0}})
     console.log(error)
 });
 
+const getCommentOrderSupData = async (orderSupId: number) =>
+await $hostGet.get('/comments/byordersupid', {params: {id_order_sup: orderSupId ?? 0}})
+.catch(error => {
+    console.log('ORDER_SUP_ID: ', orderSupId);
+    console.log(error);
+});
+
     // await axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/comments`, {
     //     headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
     //     withCredentials: true,
@@ -336,6 +394,12 @@ await $hostGet.get('/orders/all')
     console.log(error)
 });
 
+const getOrderSupData = async () => 
+await $hostGet.get('/ordersup/all')
+.catch(error => {
+    console.log(error)
+});
+
     // await axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders/all`, {
     //     headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
     //     withCredentials: true,
@@ -351,6 +415,12 @@ await $hostGet.get('/orders/all')
 
 const getCustomers = async () => 
 await $hostGet.get('/customers/all')
+.catch(error => {
+    console.log(error)
+});
+
+const getSuppliers = async () => 
+await $hostGet.get('/suppliers/all')
 .catch(error => {
     console.log(error)
 });
@@ -422,13 +492,18 @@ await $hostGet.get('/files')
     
 export {
     addGoodsToOrder,
+    addGoodsToOrderSup,
     createGoodsToOrder,
+    createOrderSupForm,
     uploadPriceTyreForm,
     uploadPriceWheelForm,
+    deleteGoodsFromOrderSup,
+    addGoodsOrderSupToStock,
     getFiles,
     responseForm,
     updateOrder,
     updateOrderStorage,
+    getCommentOrderSupData,
     getTyres, 
     getStockTyres, 
     getPriceTyres,
@@ -438,6 +513,8 @@ export {
     getPriceWheels,
     getCommentOrderData,
     getOrderData,
+    getOrderSupData,
     getCustomers,
+    getSuppliers,
     addCommentsToOrder
 };

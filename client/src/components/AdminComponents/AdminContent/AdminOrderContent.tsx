@@ -78,7 +78,8 @@ const AdminOrderContent = (
     const showOrderData = async (e: any) => {
         const orderInfo = orders?.find(
             (item:{id_order: number}) => 
-                item.id_order === e.currentTarget.getAttribute("data-value"));
+                item.id_order === e.currentTarget.getAttribute("data-value") || 
+                e.target.value);
         if(orderInfo) {
             setOrderData(orderInfo);
             setActiveOrder(!activeOrder);
@@ -153,13 +154,17 @@ const AdminOrderContent = (
                         <td>{items.notes}</td>
                         <td>
                             <button className='basketAdmGoods'
+                                value={items.id_order}
                                 onClick={activeFormOrderSup}>
                                 <i className="fas fa-truck-loading"></i>
                             </button>
-                            <button className='editAdmGoods'>
+                            <button className='editAdmGoods'
+                                value={items.id_order}
+                                onClick={(e) => showOrderData(e)}>
                                 <i className="fas fa-edit"></i>
                             </button>
-                            <button className='closeAdmGoods'>
+                            <button className='closeAdmGoods'
+                                value={items.id_order}>
                                 <i className="fa fa-remove"></i>
                             </button>                  
                         </td>

@@ -16,10 +16,6 @@ const AdminComment = ({newCommit, comments}:any) => {
         }   
     },[comments])
 
-    console.log('ADMIN_COMMENT_GET_COMMENTS', comments);
-    console.log('ADMIN_COMMENT_GET_COMMENT_NEW', newCommit);
-    console.log('ADMIN_COMMENT_NEW_ADD', commentNew);
-
     return (
     <div className='admCommitBox'>
         {commentNew ?

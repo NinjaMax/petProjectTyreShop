@@ -111,11 +111,6 @@ export class CommentsService {
       } else {
         return null;
       }
-      // if (commentByOrderId) {
-        //return commentByOrderId;
-      // } else {
-      //   return null;
-      // }
     } catch {
       throw new HttpException(
         'Data is incorrect and must be uniq',
@@ -123,7 +118,25 @@ export class CommentsService {
       );
     }
   }
-  
+
+  async findCommentByOrderSupId(getCommentDto: GetCommentDto) {
+    try {
+      if (getCommentDto.id_order_sup !== 0) {
+        const commentByOrderSupId = await this.commentsRepository.findAll({
+          where: { id_order_sup: getCommentDto.id_order_sup },
+          include: { all: true },
+        });
+        return commentByOrderSupId;
+      } else {
+        return null;
+      }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
 
   update(id: number, updateCommentDto: UpdateCommentDto) {
     return `This action updates a #${id} comment`;

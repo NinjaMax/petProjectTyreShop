@@ -37,6 +37,11 @@ export class CommentsController {
     return this.commentsService.findCommentByOrderId(getCommentDto);
   }
 
+  @Get('/byordersupid')
+  findAllByOrderSup(@Query() getCommentDto: GetCommentDto) {
+    return this.commentsService.findCommentByOrderSupId(getCommentDto);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCommentDto: UpdateCommentDto) {
     return this.commentsService.update(+id, updateCommentDto);

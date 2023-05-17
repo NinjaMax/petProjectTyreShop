@@ -10,7 +10,8 @@ import { getTyres,
         getPriceWheels,
         getCommentOrderData,
         getOrderData,
-        getCustomers } from '../restAPI/restAdminAPI';
+        getCustomers, 
+        getCommentOrderSupData} from '../restAPI/restAdminAPI';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../context/Context';
@@ -73,14 +74,15 @@ const Admin = observer(() => {
     // const [batteryData, setBatteryData] = useState(null);
     // const [batteryStockData, setBatteryStockData] = useState(null);
     // const [batteryPriceData, setBatteryPriceData] = useState(null);
-    // const [ordeSupAllData, setOrderSupAlldata] = useState(null);
+    const [ordeSupAllData, setOrderSupAlldata] = useState(null);
     // const [usersAllData, setUsersAllData] = useState(null);
-    // const [supplierAll, setSupplierAll] = useState(null);
+    const [supplierAll, setSupplierAll] = useState(null);
     // const [cashBoxAll, setCashBoxAll] = useState(null);
     // const [payIncomesAll, setPayIncomeAll] = useState(null);
     // const [payExpenseAll, setPayExpenseAll] = useState(null);
     const [customers, setCustomers] = useState(null);
     const [commentData, setCommentData] = useState(null);
+    const [commentByOrderSup, setCommentByOrderSup] = useState<number>(0);
     const [commentByOrder, setCommentByOrder] = useState<number>(0);
     const [orderAllData, setOrderAllData] = useState(null);
     const [storageAll, setStorageAll] = useState(null);
@@ -109,68 +111,50 @@ const Admin = observer(() => {
                     if(!isMounted && tasks[i] === getTyres) {    
                         let result: any = await tasks[i]();
                         setTyreData(result.data);
-                       // console.log('TYRE DATA', result.data )
                     }
-
                     if(!isMounted && tasks[i] === getStockTyres) {
                         let result: any = await tasks[i]();
                         setTyreStockData(result.data);
-                        //console.log('TYRE STOCK DATA', result.data )
                     } 
-                    
                     if(!isMounted && tasks[i] === getPriceTyres) {   
                         let result: any = await tasks[i]();
                         setTyrePriceData(result.data);
-                        //console.log('TYRE PRICE DATA', result.data )
                     } 
-                    
                     if(!isMounted && tasks[i] === getWheels) {   
                         let result: any = await tasks[i]();
                         setWheelData(result.data);
-                        //console.log('WHEELS DATA', result.data )
                     } 
-                    
                     if(!isMounted && tasks[i] === getStockWheel) {
                         let result: any = await tasks[i]();
                         setWheelStockData(result.data);
-                        //console.log('WHEELS STOCK DATA', result.data )
                     } 
-                    
                     if(!isMounted && tasks[i] === getStorageAll) {
                         let result: any = await tasks[i]();
                         setStorageAll(result?.data);
-                        //console.log('STORAGE DATA', result.data )
                     } 
-                    
                     if(!isMounted && tasks[i] === getPriceWheels) {
                         let result: any = await tasks[i]();
                         setWheelPriceData(result.data);
-                        //console.log('WHEELS PRICE DATA', result.data )
                     } 
-                    
                     if(!isMounted && tasks[i] === getOrderData) {
                         let result: any = await tasks[i]();
                         setOrderAllData(result?.data);
-                        //console.log('ORDERS DATA', result.data )
                     } 
-                    
                     if(!isMounted && tasks[i] === getCustomers) {
                         let result: any = await tasks[i]();
                         setCustomers(result.data);
-                        //console.log('CUSTOMERS DATA', result.data )
                     } 
-
                     if(!isMounted && tasks[i] === getCommentOrderData) {
-                        //if (commentByOrder) {
                             let result: any = await tasks[i](commentByOrder);
                             setCommentData(result?.data);  
-                        //}
-                        //console.log('COMMENTS DATA', result.data )
                     } 
+                    if(!isMounted && tasks[i] === getCommentOrderSupData) {
+                        let result: any = await tasks[i](commentByOrderSup);
+                        setCommentByOrderSup(result?.data);
+                    }
                     const task = tasks.shift();
                     // Run the task:
                     task();
-                    //i++;
                     await yieldToMain()   
                 }
             }
@@ -188,35 +172,18 @@ const Admin = observer(() => {
     const showCommentOrderData = async (e: any) => {
         if (e.target.value) {
             setCommentByOrder(+e.target.value);
-            //setCommentByOrder(+e.currentTarget?.getAttribute('data-value'));
-            //console.log('COMMIT_BY_ID_ORDER_VALUE: ', e.currentTarget?.getAttribute('data-value'));
-            console.log('COMMIT_BY_ID_ORDER_VALUE: ', +e.target.value);
         } 
         if (e.target.value === '0') {
             setCommentByOrder(0); 
             console.log('COMMIT_BY_ID_ORDER_VALUE: 0',)
         }
-
         if (e.currentTarget?.getAttribute('data-value')){
             setCommentByOrder(+e.currentTarget?.getAttribute('data-value'));
-            console.log('COMMIT_BY_ID_ORDER_DATA_VALUE: ', +e.currentTarget?.getAttribute('data-value'));  
         } 
-        //else if (+e.currentTarget?.getAttribute('data-value') === 0) 
         if (e.currentTarget?.getAttribute('data-value') === '0') {
             setCommentByOrder(0); 
-            console.log('COMMIT_BY_ID_ORDER_DATA_VALUE: 0',)
         }
-        // if (+e.currentTarget?.getAttribute('data-order')) {
-        //     setCommentByOrder(+e.currentTarget?.getAttribute('data-order'));
-        //   console.log('COMMIT_BY_ID_ORDER_ORDER: ', e.currentTarget?.getAttribute('data-order'));  
-        // // }
-        // if(!e.currentTarget?.getAttribute('data-order') ||
-        //  !e.currentTarget?.getAttribute('data-value')) {
-            
-        // }
     }
-
-    console.log('COMMENT_DATA: ', commentData);
 
     return (
         <div className='adminPageMain'>

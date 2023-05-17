@@ -11,7 +11,6 @@ import AdminWheelContent from './AdminWheelContent';
 import AdminWheelStockPriceRow from './AdminWheelStockPriceRow';
 
 interface IGoodsContent {
-    
     props:[[] | null, ...[][] | null[]];
     comments?:[] | null;
     customer: [] | null;
@@ -23,7 +22,6 @@ interface IGoodsContent {
     wheelPriceData?:[];
     wheelStockData?:[]; 
     showComment(arg0:any):void;
-    //stockByIdTyre: [];
 }
 
 const AdminGoodsContent = (
@@ -149,25 +147,15 @@ const AdminGoodsContent = (
         let itemWheel = wheelData?.find((item:{id:string}) => item.id === e.currentTarget?.value);
         //const itemTyre = tyreData.find(item => item ==e.currentTarget.value);
         //const itemTyre = tyreData.find(item => item ==e.currentTarget.value);
-        
         //console.log('GOODS: ', itemTyre);
-
         if(itemTyre) {
             setItemId(itemTyre);
             //setAddGoods(!addGoods);
-        }
-            
+        }   
         if(itemWheel) {
-             setItemId(itemWheel);
-            
+            setItemId(itemWheel);    
         }  
     }
-
-    //console.log('ITEMID',itemId);
-    //console.log(tyreStockData);
-    //console.log(tyreData);
-    // console.log(stockTyre);
-    // console.log(priceTyre);
 
     return (
         <div>

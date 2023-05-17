@@ -1,4 +1,11 @@
-import React, { useReducer, Reducer, useState, useCallback, useEffect, useContext} from 'react';
+import React, { 
+    useReducer, 
+    Reducer, 
+    useState, 
+    useCallback, 
+    useEffect, 
+    useContext
+} from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminFormOrder.css';
 import { useForm } from 'react-hook-form';
 import ModalAdmin from '../../modal/ModalAdmin';
@@ -16,194 +23,197 @@ import AdminModalCustomers from '../adminModalForm/AdminModalCustomers';
 import AdminModalGoods from '../adminModalForm/AdminModalGoods';
 import { Context } from '../../../context/Context';
 import { observer } from 'mobx-react-lite';
+import { IFormOrder } from './interfaces/FormOrders.interface';
+import { CreateGoods } from './types/CreateGoods.type';
+//import { DataGoods } from './types/DataGoods.type';
+import { IModalFormOrder } from './types/FormOrders.type';
+import { StateReducer, ActionReducer, ActionType } from './types/OrderReducer.type';
+import { reducer } from './reducer/goodsReducer';
+import { createInitialState } from './reducer/initialState';
 
-interface IFormOrder {
-    props: [[] | null, ...any[][]] | [[] | null, ...null[]];
-    goodsId?: {};
-    comments?: [] | null;
-    customer: [] | null;
-    setActive(arg0: any):void;
-    storages: [any] | null;
-    ordersData?: DataGoods | null;
-    showComment(arg0: any):void;
-}
-
-type IModalFormOrder = {
-    full_name?: string;
-    name?: string;
-    contract: [{id_contract: number, name: string}];
-    id_contract?: number,
-    id_customer?: number;
-    addCustomer?: {
-        full_name: string,
-        contract: [],
-        id_customer: number
-    };
-    map(arg0: any, ...arg: any[]): any;
-}
-
-// type ICreateInitial ={
-//     createInitialState():void;
+// interface IFormOrder {
+//     props: [[] | null, ...any[][]] | [[] | null, ...null[]];
+//     goodsId?: {};
+//     comments?: [] | null;
+//     customer: [] | null;
+//     setActive(arg0: any):void;
+//     storages: [any] | null;
+//     ordersData?: DataGoods | null;
+//     showComment(arg0: any):void;
 // }
 
-type CreateGoods = {
-    id?: number | string;
-    full_name?: string;
-    //category?: {category: {category:string}};
-    category?: { category: string; };
-    order_index?: number;
-    //createGoodsToOrder(arg0: {}, id_order: number): void;
-    id_supplier?: number;
-    // storage_index?: {price: {id_storage?: number}};
-    id_order_storage?: number;
-    storage_index?: number;
-    //id_supplier: number;
-    quantity?: number;
-    //quantity: number;
-    //id: any;
-    //id_order: number;
+// type IModalFormOrder = {
+//     full_name?: string;
+//     name?: string;
+//     contract: [{id_contract: number, name: string}];
+//     id_contract?: number,
+//     id_customer?: number;
+//     addCustomer?: {
+//         full_name: string,
+//         contract: [],
+//         id_customer: number
+//     };
+//     map(arg0: any, ...arg: any[]): any;
+// }
 
-    price?: {
-        quantity: number;
-        id_storage: number | string;
-        id_supplier: number | string; 
-        price: number;
-    };
-    ////////
-    //itemGoods:[];
-    // i:number;
-    //stateData?: [];
-    // length: number;
-    // state?: [];
-    // forEach(arg0: (itemGoods?: {}) => Promise<void | any>): unknown;
-    // push(arg0: { price: any; }): unknown;
-    // splice(itemIndex: number, arg1: number): unknown;
-    // map(arg0: any, ...arg: any[]): any;
-    ////////
-}
+// // type ICreateInitial ={
+// //     createInitialState():void;
+// // }
 
-type DataGoods = {
-    id_order: number;
-    delivery: string;
-    delivery_ttn: string;
-    id_contract: number | string;
-    id_customer: number;
-    notes: string;
-    order_view: string;
-    organisation: string;
-    pay_view: string;
-    status: string;
-    status_delivery: string;
-    status_pay: string;
-    storage: string;
-    createdAt: Date;
-    updatedAt: Date;
-    id_user: number;
-    total: number;
-    customer:{full_name: string;}
-    [Symbol.iterator](): any;
-    order_storage: any[];
-    comments: any[];
-    reduce(arg0: any, ...arg: any[]): any;
-    user:{name: string; role: string; id_user: number;}
-    // id_order_storage: number;
-    // id: number;
-    // id_supplier: number;
-    // order_index: number;
-    // storage_index: number;
-    // quantity: number;
-    // price: number;
-}
+// type CreateGoods = {
+//     id?: number | string;
+//     full_name?: string;
+//     //category?: {category: {category:string}};
+//     category?: { category: string; };
+//     order_index?: number;
+//     //createGoodsToOrder(arg0: {}, id_order: number): void;
+//     id_supplier?: number;
+//     // storage_index?: {price: {id_storage?: number}};
+//     id_order_storage?: number;
+//     storage_index?: number;
+//     //id_supplier: number;
+//     quantity?: number;
+//     //quantity: number;
+//     //id: any;
+//     //id_order: number;
 
-enum ActionType {
-    ADDTYRE = 'addTyreToOrder',
-    ADDWHEEL = 'addWheelToOrder',
-    DELETEITEM = 'deleteItemFromOrder',
-    EDITITEM = 'editItemFromOrder',
-}
+//     price?: {
+//         quantity: number;
+//         id_storage: number | string;
+//         id_supplier: number | string; 
+//         price: number;
+//     };
+//     ////////
+//     //itemGoods:[];
+//     // i:number;
+//     //stateData?: [];
+//     // length: number;
+//     // state?: [];
+//     // forEach(arg0: (itemGoods?: {}) => Promise<void | any>): unknown;
+//     // push(arg0: { price: any; }): unknown;
+//     // splice(itemIndex: number, arg1: number): unknown;
+//     // map(arg0: any, ...arg: any[]): any;
+//     ////////
+// }
 
-interface ICreateInitial {   
-    ordersData: DataGoods | undefined;
-    goodsId:  {} | undefined | any; 
-    //[Symbol.iterator](): any;
-}  
+// type DataGoods = {
+//     id_order: number;
+//     delivery: string;
+//     delivery_ttn: string;
+//     id_contract: number | string;
+//     id_customer: number;
+//     notes: string;
+//     order_view: string;
+//     organisation: string;
+//     pay_view: string;
+//     status: string;
+//     status_delivery: string;
+//     status_pay: string;
+//     storage: string;
+//     createdAt: Date;
+//     updatedAt: Date;
+//     id_user: number;
+//     total: number;
+//     customer:{full_name: string;}
+//     [Symbol.iterator](): any;
+//     order_storage: any[];
+//     comments: any[];
+//     reduce(arg0: any, ...arg: any[]): any;
+//     user:{name: string; role: string; id_user: number;}
+//     // id_order_storage: number;
+//     // id: number;
+//     // id_supplier: number;
+//     // order_index: number;
+//     // storage_index: number;
+//     // quantity: number;
+//     // price: number;
+// }
 
-type ActionReducer = 
-    | { type: ActionType.ADDTYRE, addTyre:any, indexPrice: string}
-    | { type: ActionType.ADDWHEEL, addWheel:any, indexPrice: string}
-    | { type: ActionType.DELETEITEM, deleteItem: any}
-    | { type: ActionType.EDITITEM, editItem: any};
+// enum ActionType {
+//     ADDTYRE = 'addTyreToOrder',
+//     ADDWHEEL = 'addWheelToOrder',
+//     DELETEITEM = 'deleteItemFromOrder',
+//     EDITITEM = 'editItemFromOrder',
+// }
 
-type StateReducer = {
-    [index: number]: any;
-    i?:number;
-    //stateData?: any[];
-    length: number;
-    state?: any[];
-    //newStateData?:[];
-    forEach(arg0: (itemGoods: {}) => Promise<void |any>): unknown;
-    forEach(arg0: any, ...arg: any[]): any;
-    push(arg0: { price: any; }): unknown;
-    splice(itemIndex: number, arg1: number): any;
-    map(arg0: any, ...arg: any[]): any;
-    slice(arg0?: number, arg1?: number): any;
-    [Symbol.iterator](): any;
-    reduce(arg0: any, ...arg: any[]): any;
-}
+// interface ICreateInitial {   
+//     ordersData: DataGoods | undefined;
+//     goodsId:  {} | undefined | any; 
+//     //[Symbol.iterator](): any;
+// }  
 
-function reducer (state: StateReducer, action: ActionReducer) {
-    switch (action.type) {
-        case 'addTyreToOrder': {
-            if (action.addTyre) {
-                state?.push({...action.addTyre, 
-                    "price":{...(action.addTyre.price[action.indexPrice] as object),
-                       "quantity": "4"},  
-                });
-            }
-            return state;
-        }
+// type ActionReducer = 
+//     | { type: ActionType.ADDTYRE, addTyre:any, indexPrice: string}
+//     | { type: ActionType.ADDWHEEL, addWheel:any, indexPrice: string}
+//     | { type: ActionType.DELETEITEM, deleteItem: any}
+//     | { type: ActionType.EDITITEM, editItem: any};
 
-        case 'addWheelToOrder': {
-            if (action.addWheel) {
-                state.push({...action.addWheel, 
-                    "price":{...(action.addWheel.price[action.indexPrice] as object),
-                        "quantity": "4"}, 
-                }); 
-            }
-            return state;
-        }
+// type StateReducer = {
+//     [index: number]: any;
+//     i?:number;
+//     //stateData?: any[];
+//     length: number;
+//     state?: any[];
+//     //newStateData?:[];
+//     forEach(arg0: (itemGoods: {}) => Promise<void |any>): unknown;
+//     forEach(arg0: any, ...arg: any[]): any;
+//     push(arg0: { price: any; }): unknown;
+//     splice(itemIndex: number, arg1: number): any;
+//     map(arg0: any, ...arg: any[]): any;
+//     slice(arg0?: number, arg1?: number): any;
+//     [Symbol.iterator](): any;
+//     reduce(arg0: any, ...arg: any[]): any;
+// }
 
-        case 'deleteItemFromOrder': {
-            if (state.length > 0) {
-                state.splice(action.deleteItem, 1); 
-            }
-            return state;
-        }
-
-        case 'editItemFromOrder': { 
-            return [...action.editItem];
-        }
-
-        default: {
-            throw Error('Unknown action: ' + action.type);
-        } 
-    }
+// function reducer (state: StateReducer, action: ActionReducer) {
+//     switch (action.type) {
+//         case 'addTyreToOrder': {
+//             if (action.addTyre) {
+//                 state?.push({...action.addTyre, 
+//                     "price":{...(action.addTyre.price[action.indexPrice] as object),
+//                        "quantity": "4"},  
+//                 });
+//             }
+//             return state;
+//         }
+//         case 'addWheelToOrder': {
+//             if (action.addWheel) {
+//                 state.push({...action.addWheel, 
+//                     "price":{...(action.addWheel.price[action.indexPrice] as object),
+//                         "quantity": "4"}, 
+//                 }); 
+//             }
+//             return state;
+//         }
+//         case 'deleteItemFromOrder': {
+//             if (state.length > 0) {
+//                 state.splice(action.deleteItem, 1); 
+//             }
+//             return state;
+//         }
+//         case 'editItemFromOrder': { 
+//             return [...action.editItem];
+//         }
+//         default: {
+//             throw Error('Unknown action: ' + action.type);
+//         } 
+//     }
     
-}
+// }
 
-function createInitialState (goodsId: any | undefined, ordersData?: DataGoods | null) {        
-    let initialState = [];
-    if (goodsId) {
-        initialState.push({...goodsId, 
-            "price":{...goodsId.price[0],
-               "quantity": "4"},  
-        });
-    } 
-    if (ordersData) {
-        initialState.push(...ordersData.order_storage);
-    }
-    return initialState;    
-};
+// function createInitialState (goodsId: any | undefined, ordersData?: DataGoods | null) {        
+//     let initialState = [];
+//     if (goodsId) {
+//         initialState.push({...goodsId, 
+//             "price":{...goodsId.price[0],
+//                "quantity": "4"},  
+//         });
+//     } 
+//     if (ordersData) {
+//         initialState.push(...ordersData.order_storage);
+//     }
+//     return initialState;    
+// };
 
 const AdminFormOrder = observer((
     { props, 
@@ -258,18 +268,16 @@ const AdminFormOrder = observer((
     const onChangeInput = useCallback(
         (e: any, id: number, indexItem: number) => {
         let {name, value} = e.target;
-
-            dispatch({type: ActionType.EDITITEM, 
-                editItem: state.map(
-                            (item: {id: number; price:{price: number}}, index: number) => {
-                        return (
-                            item.id === id && index === indexItem ?
-                            {...item, price: {...item.price, [name]: value ?? '0'}}
-                            : item
+        dispatch({type: ActionType.EDITITEM, 
+            editItem: state.map(
+                (item: {id: number; price:{price: number}}, index: number) => {
+                    return (
+                        item.id === id && index === indexItem ?
+                        {...item, price: {...item.price, [name]: value ?? '0'}}
+                        : item
                         )}
-                        )
-            });
-
+            )
+        });
     },[state])
     
     const addGoodsForm = () => {
@@ -283,43 +291,43 @@ const AdminFormOrder = observer((
         setOpenCustomers(!openCustomers);
     };    
     //const actions = useMemo(() => ({
-        const addCustToOrder = async (valueCust: number) => {
+    const addCustToOrder = async (valueCust: number) => {
             //console.log(valueCust);
-            const findCustomer = customer!.find(
+        const findCustomer = customer!.find(
                 (items:{id_customer:number}) => items?.id_customer === +valueCust
-            );
-            if (findCustomer) {
-                setAddCustomer(findCustomer);  
-            }
+        );
+        if (findCustomer) {
+            setAddCustomer(findCustomer);  
         }
+    }
 
-        const addGoodsToList = async (value:string) => {
-            const newArr = value.split(',');
-            let [idValue, indexValue] = newArr;
+    const addGoodsToList = async (value:string) => {
+        const newArr = value.split(',');
+        let [idValue, indexValue] = newArr;
 
-            dispatch({type: ActionType.ADDTYRE, 
-                addTyre: tyreDatas?.find((item:{id:string}) => item?.id === idValue),
-                indexPrice: indexValue,
-            });
+        dispatch({type: ActionType.ADDTYRE, 
+            addTyre: tyreDatas?.find((item:{id:string}) => item?.id === idValue),
+            indexPrice: indexValue,
+        });
 
-            dispatch({type: ActionType.ADDWHEEL, 
-                addWheel: wheelDatas?.find((item:{id:string}) => item?.id === idValue),
-                indexPrice: indexValue,
-            });            
-        }
+        dispatch({type: ActionType.ADDWHEEL, 
+            addWheel: wheelDatas?.find((item:{id:string}) => item?.id === idValue),
+            indexPrice: indexValue,
+        });            
+    }
     //}),[tyreDatas, wheelDatas, customer])
 
-        const deleteItem = async (itemIndex: number) => {
+    const deleteItem = async (itemIndex: number) => {
             //e.preventDefault();
             //e.stopPropagation();
-            dispatch({type: ActionType.DELETEITEM, 
-                deleteItem: itemIndex,
-            });
-        } 
+        dispatch({type: ActionType.DELETEITEM, 
+            deleteItem: itemIndex,
+        });
+    } 
     //GOOD PERFORM
     const onSubmit = async (data:{}, e: any) => {
-            e.preventDefault();
-            console.log('CREATE ORDER: ', data)
+        e.preventDefault();
+        console.log('CREATE ORDER: ', data)
         try {
             if (!orderId && state.length === 0) {
                let resultForm: any = await responseForm(data);
@@ -372,7 +380,7 @@ const AdminFormOrder = observer((
                 alert(`Товари до замовлення id ${orderId}, оновлено.`);
             }
             e.stopPropagation();
-         } catch {
+        } catch {
             console.log('ERROR_ORDER: ', e);
         }    
     }    
@@ -426,6 +434,7 @@ const AdminFormOrder = observer((
         }    
     }
     console.log(errors);
+    
     return (
         <div >
             Замовлення Покупця

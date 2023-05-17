@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus  } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateOrdersSupplierDto } from './dto/create-orders-supplier.dto';
 import { GetOrdersSuppliersDto } from './dto/get-orders-supplier.dto';
@@ -15,8 +15,9 @@ import { StockWheelsService } from '../stock/stock-wheels.service';
 
 @Injectable()
 export class OrdersSuppliersService {
-
-  constructor(@InjectModel(OrdersSupplier) private ordersSupRepository: typeof OrdersSupplier,
+  constructor(
+    @InjectModel(OrdersSupplier) 
+    private ordersSupRepository: typeof OrdersSupplier,
     private ordersService: OrdersService,
     private ordersSupStorageService: OrdersSupStorageService,
     private ordersStorageService: OrdersStorageService,
@@ -28,17 +29,19 @@ export class OrdersSuppliersService {
   ) {}
 
   async createOrderSup(createOrdersSupplierDto: CreateOrdersSupplierDto) {
-    
     try {
-      
-      const order = await this.ordersService.findOrderById(createOrdersSupplierDto);
+      const order = await this.ordersService.findOrderById(
+        createOrdersSupplierDto
+      );
 
-      if(order) {
-        
-        const orderGoods = await this.ordersStorageService.findAllGoodsOrderStorage(createOrdersSupplierDto);
-        const ordersGoodsIdSup = orderGoods.map(item => item.id_supplier);
+      if (order) {
+        const orderGoods =
+          await this.ordersStorageService.findAllGoodsOrderStorage(
+            createOrdersSupplierDto,
+          );
+        const ordersGoodsIdSup = orderGoods.map((item) => item.id_supplier);
         const idSuppliers = Array.from(new Set(ordersGoodsIdSup));
-        
+
         for (let i = 0; i < idSuppliers.length; i++) {
           await this.ordersSupRepository.create(
             {
@@ -46,12 +49,19 @@ export class OrdersSuppliersService {
               id_supplier: idSuppliers[i],
               id_contract: 0,
             },
-           { fields: ["id_order", "id_supplier", 
-           "delivery", "status", "notes", "id_contract"]}
+            {
+              fields: [
+                'id_order',
+                'id_supplier',
+                'delivery',
+                'status',
+                'notes',
+                'id_contract',
+              ],
+            }
           );
-
         }
-        
+
         for (let j = 0; j < orderGoods.length; j++) {
           await this.ordersSupStorageService.createOrderSupStorageNew(
             orderGoods[j].id,
@@ -61,22 +71,18 @@ export class OrdersSuppliersService {
             orderGoods[j].price,
             orderGoods[j].storage_index 
           );
-
         }
-
-        const orderSupAll = await this.ordersSupRepository.findAll({include:{all: true}});
+        const orderSupAll = await this.ordersSupRepository.findAll({
+          include: { all: true },
+        });
         return orderSupAll;  
-
       } else {
-
-        const orderSup = await this.ordersSupRepository.create(createOrdersSupplierDto);
-
+        const orderSup = await this.ordersSupRepository.create(
+          createOrdersSupplierDto
+        );
         return orderSup;
-
       }
-
     } catch {
-
       throw new HttpException(
         'Data is incorrect and must be uniq',
         HttpStatus.NOT_FOUND,
@@ -85,185 +91,235 @@ export class OrdersSuppliersService {
   }
 
   async addGoodsToOrderSup(createOrdersSupplierDto: CreateOrdersSupplierDto) {
-    
     try {
+      const findByOrderSup =
+        await this.ordersSupStorageService.findOrdersSupStorageByOrdSup(
+          createOrdersSupplierDto,
+        );
+      const findByIdOrder =
+        await this.ordersSupStorageService.findAllOrdersSupStorageByOrd(
+          createOrdersSupplierDto,
+        );
 
-      const findByOrderSup = await this.ordersSupStorageService.
-      findOrdersSupStorageByOrdSup(createOrdersSupplierDto);
-      const findByIdOrder = await this.ordersSupStorageService.
-      findAllOrdersSupStorageByOrd(createOrdersSupplierDto);
-
-      if(findByOrderSup) {
+      if (findByOrderSup) {
         const orderSup = await this.ordersSupRepository.findByPk(
           createOrdersSupplierDto.id_order_sup);
         await orderSup.$add('orders_sup_storage', findByOrderSup);
         await findByOrderSup.$add('storage', findByOrderSup.storage_index);
         await orderSup.reload();
-        
         return orderSup;
-
       }
 
-      if(findByIdOrder) {
-
-        const orderSupByOrder = await this.ordersSupRepository.
-        findAll({where:{id_order: createOrdersSupplierDto.id_order}});
-        const ordersGoodsIdSup = findByIdOrder.map(item => item.id_supplier);
+      if (findByIdOrder) {
+        const orderSupByOrder = await this.ordersSupRepository.findAll({ 
+          where: { id_order: createOrdersSupplierDto.id_order }
+        });
+        const ordersGoodsIdSup = findByIdOrder.map((item) => item.id_supplier);
         const idSuppliers = Array.from(new Set(ordersGoodsIdSup));
 
-        for( let i = 0; i < idSuppliers.length; i++) {
-          let orderSupStorageGoods = findByIdOrder.filter(
-            item => item.id_supplier == idSuppliers[i]);
-          let orderSup = await this.ordersSupRepository.findOne(
-            {where:{id_supplier: idSuppliers[i]}} );
+        for (let i = 0; i < idSuppliers.length; i++) {
+          const orderSupStorageGoods = findByIdOrder.filter(
+            (item) => item.id_supplier == idSuppliers[i],
+          );
+          const orderSup = await this.ordersSupRepository.findOne({
+            where: { id_supplier: idSuppliers[i] },
+          });
 
           await orderSup.$add('orders_sup_storage', orderSupStorageGoods);
-          await orderSupStorageGoods[i].$add('storage', findByIdOrder[i].storage_index);
-          
+          await orderSupStorageGoods[i].$add(
+            'storage',
+            findByIdOrder[i].storage_index,
+          );
         }
-
         return orderSupByOrder;
-
       }
-
     } catch {
-
-      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
   async addGoodsToStock(createOrdersSupplierDto: CreateOrdersSupplierDto) {
-    
     try {
+      const goodsOrderSup = 
+        await this.ordersSupStorageService.findAllOrdersSupStorageByOrdSup(
+          createOrdersSupplierDto,
+        );
+      const contractSupplier = await this.contractService.findContractById(
+        createOrdersSupplierDto
+      );
 
-      const goodsOrderSup = await this.ordersSupStorageService.
-      findAllOrdersSupStorageByOrdSup(createOrdersSupplierDto);
-      const contractSupplier = await this.contractService.findContractById(createOrdersSupplierDto);
+      for (let i = 0; i < goodsOrderSup.length; i++) {
+        const tyresStock =
+          await this.stockTyresService.findStockTyreByIdForSale(
+            goodsOrderSup[i].id,
+          );
+        const batteryStock =
+          await this.stockBatteriesService.findStockBatteryByIdForSale(
+            goodsOrderSup[i].id
+          );
+        const oilStock = await this.stockOilsService.findStockOilByIdForSale(
+          goodsOrderSup[i].id,
+        );
+        const wheelsStock =
+          await this.stockWheelsService.findStockWheelByIdForSale(
+            goodsOrderSup[i].id
+          );
 
-        for(let i = 0; i < goodsOrderSup.length; i++) {
-
-          let tyresStock = await this.stockTyresService.
-          findStockTyreByIdForSale(goodsOrderSup[i].id);
-          let batteryStock = await this.stockBatteriesService.
-          findStockBatteryByIdForSale(goodsOrderSup[i].id);
-          let oilStock = await this.stockOilsService.
-          findStockOilByIdForSale(goodsOrderSup[i].id);
-          let wheelsStock = await this.stockWheelsService.
-          findStockWheelByIdForSale(goodsOrderSup[i].id);
-
-          if(tyresStock) {
-        
-            await tyresStock.increment('stock', {by: goodsOrderSup[i].quantity });
-            await contractSupplier.decrement('balance', 
-            {by: goodsOrderSup[i].price_wholesale * goodsOrderSup[i].quantity});
-            goodsOrderSup[i].id_storage = null;
-            goodsOrderSup[i].save();
-            await tyresStock.reload();
-            await contractSupplier.reload();
-    
-            return tyresStock;
-    
-          }
-
-          if(batteryStock) {
-        
-            await batteryStock.increment('stock', {by: goodsOrderSup[i].quantity });
-            await contractSupplier.decrement('balance', 
-            {by: goodsOrderSup[i].price_wholesale * goodsOrderSup[i].quantity});
-            goodsOrderSup[i].id_storage = null;
-            goodsOrderSup[i].save();
-            await batteryStock.reload();
-            await contractSupplier.reload();
-
-            return batteryStock;
-    
-          }
-
-          if(oilStock) {
-        
-            await oilStock.increment('stock', {by: goodsOrderSup[i].quantity });
-            await contractSupplier.decrement('balance', 
-            {by: goodsOrderSup[i].price_wholesale * goodsOrderSup[i].quantity});
-            goodsOrderSup[i].id_storage = null;
-            goodsOrderSup[i].save();
-            await oilStock.reload();
-            await contractSupplier.reload();
-    
-            return oilStock;
-    
-          }
-
-          if(wheelsStock) {
-        
-            await wheelsStock.increment('stock', {by: goodsOrderSup[i].quantity });
-            await contractSupplier.decrement('balance', 
-            {by: goodsOrderSup[i].price_wholesale * goodsOrderSup[i].quantity});
-            goodsOrderSup[i].id_storage = null;
-            goodsOrderSup[i].save();
-            await wheelsStock.reload();
-            await contractSupplier.reload();
-    
-            return wheelsStock;
-    
-          }
-
-          
+        if (tyresStock) {
+          await tyresStock.increment('stock', {
+            by: goodsOrderSup[i].quantity,
+          });
+          await contractSupplier.decrement('balance', {
+            by: goodsOrderSup[i].price_wholesale * goodsOrderSup[i].quantity
+          });
+          goodsOrderSup[i].id_storage = null;
+          goodsOrderSup[i].save();
+          await tyresStock.reload();
+          await contractSupplier.reload();
+          return tyresStock;
         }
 
+        if (batteryStock) {
+          await batteryStock.increment('stock', {
+            by: goodsOrderSup[i].quantity 
+          });
+          await contractSupplier.decrement('balance', {
+            by: goodsOrderSup[i].price_wholesale * goodsOrderSup[i].quantity
+          });
+          goodsOrderSup[i].id_storage = null;
+          goodsOrderSup[i].save();
+          await batteryStock.reload();
+          await contractSupplier.reload();
+          return batteryStock;
+        }
+
+        if (oilStock) {
+          await oilStock.increment('stock', {
+            by: goodsOrderSup[i].quantity 
+          });
+          await contractSupplier.decrement('balance', {
+            by: goodsOrderSup[i].price_wholesale * goodsOrderSup[i].quantity
+          });
+          goodsOrderSup[i].id_storage = null;
+          goodsOrderSup[i].save();
+          await oilStock.reload();
+          await contractSupplier.reload();
+          return oilStock;
+        }
+
+        if (wheelsStock) {
+          await wheelsStock.increment('stock', {
+            by: goodsOrderSup[i].quantity 
+          });
+          await contractSupplier.decrement('balance', {
+            by: goodsOrderSup[i].price_wholesale * goodsOrderSup[i].quantity
+          });
+          goodsOrderSup[i].id_storage = null;
+          goodsOrderSup[i].save();
+          await wheelsStock.reload();
+          await contractSupplier.reload();
+          return wheelsStock;
+        }   
+      }
     } catch {
-
-      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
   async findAllOrdersSup() {
-
-    try {
-      
+    try {  
       const orderSupAll = await this.ordersSupRepository.findAll({include:{all: true}});
 
       return orderSupAll;
-
     } catch {
-
-      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
   async findOrderSupById(getOrdersSupDto: GetOrdersSuppliersDto) {
-
-    try {
-      
-      const orderSupId = await this.ordersSupRepository.findByPk(getOrdersSupDto.id_order_sup, {include: {all: true}});
-
+    try {  
+      const orderSupId = await this.ordersSupRepository.findByPk(
+        getOrdersSupDto.id_order_sup, 
+        { include: { all: true }}
+      );
       return orderSupId;
-
     } catch {
-
-      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
-  update(id: number, updateOrdersSupplierDto: UpdateOrdersSupplierDto) {
-    return `This action updates a #${id} ordersSupplier`;
+  async update(updateOrdersSupplierDto: UpdateOrdersSupplierDto) {
+    try {
+      const orderStorageUpdate = await this.ordersSupRepository.update(
+        {
+          id: updateOrdersSupplierDto.id,
+          id_order_sup: updateOrdersSupplierDto.id_order_sup,
+          storage: updateOrdersSupplierDto.storage, 
+          quantity: updateOrdersSupplierDto.quantity,
+          price: updateOrdersSupplierDto.price,
+          price_wholesale: updateOrdersSupplierDto.price_wholesale,
+          organisation: updateOrdersSupplierDto.organisation,
+          order_view: updateOrdersSupplierDto.order_view,
+          delivery: updateOrdersSupplierDto.delivery,
+          status_delivery: updateOrdersSupplierDto.status_delivery,
+          delivery_ttn: updateOrdersSupplierDto.delivery_ttn,
+          pay_view: updateOrdersSupplierDto.pay_view,
+          status_pay: updateOrdersSupplierDto.status_pay,
+          notes: updateOrdersSupplierDto.notes,
+        },
+        {
+          where: {
+            id_order_sup: updateOrdersSupplierDto.id_order_sup,
+          },
+        },
+      );
+      return orderStorageUpdate;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async removeOrderSup(getOrdersSupDto: GetOrdersSuppliersDto) {
-
-    try {
-      
-      const orderSup = await this.ordersSupRepository.destroy({where: {id_order_sup: getOrdersSupDto.id_order_sup}});
-
+    try {  
+      const orderSup = await this.ordersSupRepository.destroy({
+        where: { id_order_sup: getOrdersSupDto.id_order_sup },
+      });
       return orderSup;
-
     } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
 
-      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
-
+  async removeOrderSupStorage(getOrdersSupDto: GetOrdersSuppliersDto) {
+    try {  
+      const remOrderSupStorage =
+        await this.ordersSupStorageService.removeOrderSupStorage(
+          getOrdersSupDto,
+      );
+      return remOrderSupStorage;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 }

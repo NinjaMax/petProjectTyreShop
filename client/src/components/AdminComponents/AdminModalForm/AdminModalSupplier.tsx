@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminModalSupplier.css';
 
-const AdminModalSupplier = () => {
+const AdminModalSupplier = ({allsupplier, addSupplier}:any) => {
     return (
         <div>
             Створити постачальника
