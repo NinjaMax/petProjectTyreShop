@@ -30,8 +30,8 @@ export class OrdersSupStorage extends Model<OrdersSupStorage, OrdersSupStorConfi
     })
     total: number;
 
-    @Column({type: DataType.STRING, unique: false, allowNull: true})
-    notes: string;
+    // @Column({type: DataType.STRING, unique: false, allowNull: true})
+    // notes: string;
 
     @Column({type: DataType.INTEGER, allowNull: true})
     id_supplier: number;

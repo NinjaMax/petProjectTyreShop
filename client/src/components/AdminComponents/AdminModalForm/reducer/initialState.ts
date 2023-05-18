@@ -3,7 +3,7 @@ import { DataGoods } from "../types/DataGoods.type";
 export function createInitialState (
     goodsId: any | undefined, 
     ordersData?: DataGoods | null,
-    ordersSupData?: any | null
+    ordersSupData?: DataGoods | null
     ) {        
     let initialState = [];
     if (goodsId) {
@@ -13,10 +13,10 @@ export function createInitialState (
         });
     } 
     if (ordersData) {
-        initialState.push(...ordersData.order_storage);
+        initialState.push(...ordersData.order_storage ?? []);
     }
     if (ordersSupData) {
-        initialState.push(...ordersSupData.order_sup_storage);
+        initialState.push(...ordersSupData.order_sup_storage ?? []);
     }
 
     return initialState;    

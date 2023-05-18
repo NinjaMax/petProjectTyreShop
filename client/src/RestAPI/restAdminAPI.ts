@@ -20,34 +20,28 @@ const createGoodsToOrder = async (
 .catch(error => {
         console.log(error)
 });  
-        
-        
-        //     await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders/creategoods`,
-        //     {
-        //         id: +item?.id!,
-        //         full_name: item.full_name,
-        //         category: item.category?.category,
-        //         order_index: id_order,
-        //         id_supplier: +item.price?.id_supplier!,
-        //         storage_index: +item.price?.id_storage!,
-        //         quantity: +item.price?.quantity!,
-        //         price: +item.price?.price!,
-        //         // delivery: 'Flintstone',
-        //     },{headers: {
-        //         'Content-Type': 'application/json; charset=utf-8',
-        //         'Access-Control-Allow-Origin': `${process.env.CORS}`
-        //     }, withCredentials: true,
-        //     //})
-        //     //.then(response => {
-                
-        //         //setOrderStorage(oldOrdStor => [...oldOrdStor, response.data]);
-        //         //console.log('Order_storage', response.data);
-        //     //return response
-        //     })
-        //     .catch(error => {
-        //         console.log(error)
-        //     }
-        // )
+
+const createGoodsToOrderSup = async (
+    item: IRestAdminApi, id_order_sup: number) =>
+    await $hostPost.post('/ordersup/creategoods', 
+    {
+    id: +item?.id!,
+    full_name: item.full_name,
+    category: item.category?.category,
+    order_sup_index: id_order_sup,
+    id_supplier: +item.price?.id_supplier!,
+    storage_index: +item.price?.id_storage!,
+    quantity: +item.price?.quantity!,
+    price: +item.price?.price!,
+    price_wholesale: +item.price_wholesale?.price_wholesale!,
+    id_order_storage_sup: item.id_order_storage ?? null,
+    // delivery: 'Flintstone',
+    }
+)
+.catch(error => {
+        console.log(error)
+}); 
+
 const updateOrder = async (data: any, id_order: number) => 
 await $hostPost.patch('/orders/update', {
     id_order: id_order,
@@ -69,12 +63,33 @@ await $hostPost.patch('/orders/update', {
     console.log(error);
 });
 
+const updateOrderSup = async (data: any, id_order_sup: number) => 
+await $hostPost.patch('/ordersup/update', {
+    id_order: id_order_sup,
+    id_user: data.number,
+    notes: data.notes,
+    organisation: data.organisation,
+    storage: data.storage,
+    order_view: data.order_view,
+    delivery: data.delivery,
+    status_delivery: data.status_delivery,
+    delivery_ttn: data.delivery_ttn,
+    status: data.status,
+    pay_view: data.pay_view,
+    status_pay: data.status_pay,
+    dop_garanty: data.dop_garanty,
+    id_supplier: data.id_customer,
+    id_contract: data.id_contract,
+}).catch(error => {
+    console.log(error);
+});
+
 const updateOrderStorage = async (data: any) => 
 await $hostPost.post('/orders/update/orderstorage', data)
 .catch(error => {
     console.log(error);
 });
-       
+      
 const responseForm = async (data: any) => 
 await $hostPost.post('/orders', data)
 .catch(error => {
@@ -86,39 +101,7 @@ await $hostPost.post('/ordersup', data)
 .catch(error => {
     console.log(error);
 });
-        // await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders`, data, {
-        //        headers: {
-        //            'Content-Type': 'application/json; charset=utf-8',
-        //            'Access-Control-Allow-Origin': `${process.env.CORS}`
-        //        }, withCredentials: true,
-        //        })
-            //    .then(response => {
-            //    //setOrderAllData(response.data);
-               
-            //    alert(`Заказ створено, id ${response.data.id_order}`);
-            //    console.log('Order id: ', response.data.id_order);
-            //    setOrderId(+response.data.id_order);
    
-            //    //if (stateData.length !== 0) {
-            //     // for (let i =0; i < stateData.length; i++) {
-            //     //     createGoodsToOrder(stateData[i], response.data.id_order)
-                    
-            //     // }
-            //        stateData.forEach((itemGoods) => (
-            //          createGoodsToOrder(itemGoods, response.data.id_order)
-            //        ));
-            //    //}
-   
-            //    console.log('ORDER ID', response.data.id_order);
-            //     //   return response.data;
-            //    })
-            //    .catch(error => {
-            //        console.log(error);
-            //    }
-            // )
-
-   
-
 const addGoodsToOrder = async (value: IRestAdminApi) => 
 await $hostPost.post('/orders/add', {
     id_order_storage: value?.id_order_storage,
@@ -136,16 +119,17 @@ await $hostPost.post('/orders/add', {
 });
 
 const addGoodsToOrderSup = async (value: IRestAdminApi) => 
-await $hostPost.post('/ordersup/add', value
-// {
-//     id_order_storage: value?.id_order_storage,
-//     id: value.id,
-//     id_supplier: value.id_supplier,
-//     id_order: value.order_index,
-//     id_storage: value.storage_index,
-//     quantity: value.quantity,
-//     price: value.price
-// }
+await $hostPost.post('/ordersup/add', 
+{
+    id_order_sup_storage: value?.id_order_sup_storage,
+    id: value.id,
+    id_supplier: value.id_supplier,
+    id_order: value.order_sup_index,
+    id_storage: value.storage_index,
+    quantity: value.quantity,
+    price: value.price,
+    price_wholesale: value.price_wholesale
+}
 )
 .catch(error => {
     console.log(
@@ -180,68 +164,11 @@ await $hostPost.delete('/ordersup/remove/ordersupstorage', value
     error)
 });
 
-//     await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders/add`,
-//     {
-//         // id: +item.id,
-//         // full_name: item.full_name,
-//         // category: item.category.category,
-//         // order_index: +orderId,
-//         // id_supplier: +item.stock[0].id_supplier,
-//         // storage_index: +item.stock[0].id_storage,
-//         // quantity: +item.price.quantity,
-//         // price: +item.price.price,
-//         id_order_storage: value?.id_order_storage,
-//         id: value.id,
-//         id_supplier: value.id_supplier,
-//         id_order: value.order_index,
-//         id_storage: value.storage_index,
-//         quantity: value.quantity,
-//         price: value.price
-//         // delivery: 'Flintstone',
-//     },{headers: {
-//         'Content-Type': 'application/json; charset=utf-8',
-//         'Access-Control-Allow-Origin': `${process.env.CORS}`
-//     },withCredentials: true,
-//     })
-//     // .then(response => {
-//     // //setOrderAllData(response.data);
-//     // alert(`Заказ ${response.data.id_order} проведено`)
-
-//     // console.log('Order Done', response.data);
-//     // })
-//     .catch(error => {
-//         console.log(
-//             'Не вистачає залишків, або не вірно вказані дані',
-//              error)
-//     }
-// )
-
 const getTyres = async () => 
 await $hostGet.get('/tyres')
 .catch(error => {
     console.log(error)
 });
-//{
-///const allTyres = async () =>
-//try {
-    // await axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/tyres`, {
-    // headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-    // withCredentials: true})
-//.then(response => { 
-    //Object.assign()
-//    setTyreData(response.data);
-    //console.log(response.data);
-    
-//})
-// .catch(error => {
-//  console.log(error)
-// })
-// } catch (error) {
-//     console.log(error)
-// }
-//return allTyres;
-//}
-
 
 const getStockTyres = async () => 
 await $hostGet.get('/stock/tyres/all')
@@ -249,39 +176,11 @@ await $hostGet.get('/stock/tyres/all')
     console.log(error)
 });
 
-//     await axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/stock/tyres/all`, {
-//         headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-//         withCredentials: true,
-//     //params: {id_tyre: itemIdTyre}
-// })
-// .then(response => {
-//     //setTyreStockData(response.data);
-//     //console.log('STOCK TYRE: ',response.data)
-// })
-// .catch(error => {
-//   console.log(error)
-// });
-
 const getPriceTyres = async () => 
 await $hostGet.get('/price/tyres/all')
 .catch(error => {
     console.log(error)
 });
-
-    // await axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/price/tyres/all`, {
-    //     headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-    //     withCredentials: true,
-    //     //params: {id_tyre: itemIdTyre}
-    // })
-    // .then(response => {
-    //     setTyrePriceData(response.data);
-    //     //console.log('PRICE TYRE: ',response.data)
-    // })
-    // .catch(error => {
-    //   console.log(error)
-    // });
-
-
 
 const getWheels = async () =>
 await $hostGet.get('/wheels')
@@ -289,39 +188,11 @@ await $hostGet.get('/wheels')
     console.log(error)
 });
 
-
-    // await axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/wheels`, {
-    //     headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-    //     withCredentials: true
-    // })
-    // // .then(response => {
-    // //     setWheelData(response.data);
-    // //     //console.log(response.data);
-    // // })
-    // .catch(error => {
-    //   console.log(error)
-    // })
-
-
-
 const getStockWheel = async () =>
 await $hostGet.get('/stock/wheels/all')
 .catch(error => {
     console.log(error)
 });
-
-    // await axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/stock/wheels/all`, {
-    //     headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-    //     withCredentials: true,
-    //     //params: {id_tyre: itemIdTyre}
-    // })
-    // // .then(response => {
-    // //     setWheelStockData(response.data);
-    //     //console.log('STOCK TYRE: ',response.data)
-    // //})
-    // .catch(error => {
-    //   console.log(error)
-    // });
 
 const getPriceWheels = async () =>
 await $hostGet.get('/price/wheels/all')
@@ -329,37 +200,11 @@ await $hostGet.get('/price/wheels/all')
     console.log(error)
 });
 
-    // await axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/price/wheels/all`, {
-    //     headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-    //     withCredentials: true,
-    //     //params: {id_tyre: itemIdTyre}
-    // })
-    // // .then(response => {
-    // //     setWheelPriceData(response.data);
-    // //     //console.log('PRICE TYRE: ',response.data)
-    // // })
-    // .catch(error => {
-    //   console.log(error)
-    // });
-
 const getStorageAll = async () => 
 await $hostGet.get('/storage/all')
 .catch(error => {
     console.log(error)
 });
-
-    // await axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/storage/all`, {
-    //     headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-    //     withCredentials: true,
-    //     //params: {id_tyre: itemIdTyre}
-    // })
-    // //.then(response => {
-    //     //setStorageAll(response.data);
-    //     //console.log('STOCK TYRE: ',response.data)
-    // //})
-    // .catch(error => {
-    //   console.log(error)
-    // });
 
 const getCommentOrderData = async (orderId: number) =>
 await $hostGet.get('/comments/byorderid', {params: {id_order: orderId ?? 0}})
@@ -375,19 +220,6 @@ await $hostGet.get('/comments/byordersupid', {params: {id_order_sup: orderSupId 
     console.log(error);
 });
 
-    // await axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/comments`, {
-    //     headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-    //     withCredentials: true,
-    //     params: {id_comment: commentId}
-    // })
-    // // .then(response => {
-    // //     setCommentData(response.data);
-    // //     //console.log('COMMENTS',response.data);
-    // // })
-    // .catch(error => {
-    //   console.log(error)
-    // })
-
 const getOrderData = async () => 
 await $hostGet.get('/orders/all')
 .catch(error => {
@@ -400,18 +232,11 @@ await $hostGet.get('/ordersup/all')
     console.log(error)
 });
 
-    // await axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/orders/all`, {
-    //     headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-    //     withCredentials: true,
-    //     //params: {id_comment: commentId}
-    // })
-    // // .then(response => {
-    // //     setOrderAllData(response.data);
-    // //     //console.log('COMMENTS',response.data);
-    // // })
-    // .catch(error => {
-    //   console.log(error)
-    // })
+const getUsers = async () => 
+await $hostGet.get('/users/all')
+.catch(error => {
+    console.log(error)
+});
 
 const getCustomers = async () => 
 await $hostGet.get('/customers/all')
@@ -425,18 +250,6 @@ await $hostGet.get('/suppliers/all')
     console.log(error)
 });
 
-    // await axios.get(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/customers/all`, {
-    //     headers: { 'Access-Control-Allow-Origin': `${process.env.CORS}`},
-    //     withCredentials: true
-    // })
-    // // .then(response => {
-    // //     setCustomers(response.data);
-    // //     //console.log(response.data);
-    // // })
-    // .catch(error => {
-    //   console.log(error)
-    // })
-//type ICreateComments = {id_user: number; id_order:number; comments: string;}
 const addCommentsToOrder = async (
     id_user: number,
     id_order: number | null | undefined, 
@@ -499,9 +312,11 @@ export {
     uploadPriceWheelForm,
     deleteGoodsFromOrderSup,
     addGoodsOrderSupToStock,
+    createGoodsToOrderSup,
     getFiles,
     responseForm,
     updateOrder,
+    updateOrderSup,
     updateOrderStorage,
     getCommentOrderSupData,
     getTyres, 
@@ -516,5 +331,6 @@ export {
     getOrderSupData,
     getCustomers,
     getSuppliers,
+    getUsers,
     addCommentsToOrder
 };

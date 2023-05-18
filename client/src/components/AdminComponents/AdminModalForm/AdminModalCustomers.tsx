@@ -2,7 +2,7 @@ import React from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminModalCustomers.css';
 
 interface IModalCustomers {
-    allCustomer: [] | null;
+    allCustomer: [] | null | undefined;
     addCustomer(arg0: any): void;
 }
 

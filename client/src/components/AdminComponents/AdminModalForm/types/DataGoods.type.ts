@@ -1,11 +1,13 @@
 export type DataGoods = {
-    id_order: number;
+    id_order?: number;
+    id_order_sup?: number;
     delivery: string;
     delivery_ttn: string;
     id_contract: number | string;
     id_customer: number;
     notes: string;
-    order_view: string;
+    order_view?: string;
+    order_sup_view?: string;
     organisation: string;
     pay_view: string;
     status: string;
@@ -16,9 +18,11 @@ export type DataGoods = {
     updatedAt: Date;
     id_user: number;
     total: number;
-    customer:{full_name: string;}
+    customer?:{full_name: string;}
+    supplier?:{full_name: string;}
     [Symbol.iterator](): any;
-    order_storage: any[];
+    order_storage?: any[];
+    order_sup_storage?: any[];
     comments: any[];
     reduce(arg0: any, ...arg: any[]): any;
     user:{name: string; role: string; id_user: number;}

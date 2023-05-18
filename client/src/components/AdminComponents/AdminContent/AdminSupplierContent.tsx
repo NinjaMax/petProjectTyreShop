@@ -3,8 +3,9 @@ import '../../../css/AdminComponentCss/AdminContentCss/AdminSuppliersContent.css
 import ButtonSearch from '../../buttons/ButtonSearch';
 import ModalAdmin from '../../modal/ModalAdmin';
 import AdminModalSupplier from '../adminModalForm/AdminModalSupplier';
+import { ISupplierItem } from './types/SupplierItem.type';
 
-const AdminSupplierContent = () => {
+const AdminSupplierContent = ({suppliers}:any) => {
 
     const [createSupplier, setCreateSupplier] = useState(false);
 
@@ -41,322 +42,41 @@ const AdminSupplierContent = () => {
                 </tr>
             </thead>    
             <tbody>
-                <tr>
-                    <td>26430200</td>
-                    <td>ФОП Гайворонский</td>
-                    <td>Київ</td>
-                    <td>0957553141</td>
-                    <td>fgh5555gggg.tatarbu@gmai.com</td>
-                    <td>0125</td>
-                    <td>ФОП Гайворонский Основний договір</td>
-                    <td>10000</td>
-                    <th>Делівері, Нова Пошта, УкрПошта, Глово</th>
-                    <td>
-                        <button className='basketAdmGoods'>
-                            <i className="fa fa-shopping-cart"></i>
-                        </button>
-                        <button className='editAdmGoods'>
-                            <i className="fas fa-edit"></i>
-                        </button>
-                        <button className='closeAdmGoods'>
-                            <i className="fa fa-remove"></i>
-                        </button>                  
-                    </td>
-                </tr>          
-                <tr>
-                    <td>26430200</td>
-                    <td>ФОП Гайворонский</td>
-                    <td>Київ</td>
-                    <td>0957553141</td>
-                    <td>fgh5555gggg.tatarbu@gmai.com</td>
-                    <td>0125</td>
-                    <td>ФОП Гайворонский Основний договір</td>
-                    <td>10000</td>
-                    <td>
-                        <button className='basketAdmGoods'>
-                            <i className="fa fa-shopping-cart"></i>
-                        </button>
-                        <button className='editAdmGoods'>
-                            <i className="fas fa-edit"></i>
-                        </button>
-                        <button className='closeAdmGoods'>
-                            <i className="fa fa-remove"></i>
-                        </button>                  
-                    </td>
-                </tr>          
-                <tr>
-                    <td>26430200</td>
-                    <td>ФОП Гайворонский</td>
-                    <td>Київ</td>
-                    <td>0957553141</td>
-                    <td>fgh5555gggg.tatarbu@gmai.com</td>
-                    <td>0125</td>
-                    <td>ФОП Гайворонский Основний договір</td>
-                    <td>10000</td>
-                    <td>
-                        <button className='basketAdmGoods'>
-                            <i className="fa fa-shopping-cart"></i>
-                        </button>
-                        <button className='editAdmGoods'>
-                            <i className="fas fa-edit"></i>
-                        </button>
-                        <button className='closeAdmGoods'>
-                            <i className="fa fa-remove"></i>
-                        </button>                  
-                    </td>
-                </tr>             
-                <tr>
-                    <td>26430200</td>
-                    <td>ФОП Гайворонский</td>
-                    <td>Київ</td>
-                    <td>0957553141</td>
-                    <td>fgh5555gggg.tatarbu@gmai.com</td>
-                    <td>0125</td>
-                    <td>ФОП Гайворонский Основний договір</td>
-                    <td>10000</td>
-                    <td>
-                        <button className='basketAdmGoods'>
-                            <i className="fa fa-shopping-cart"></i>
-                        </button>
-                        <button className='editAdmGoods'>
-                            <i className="fas fa-edit"></i>
-                        </button>
-                        <button className='closeAdmGoods'>
-                            <i className="fa fa-remove"></i>
-                        </button>                  
-                    </td>
-                </tr>          
-                <tr>
-                    <td>26430200</td>
-                    <td>ФОП Гайворонский</td>
-                    <td>Київ</td>
-                    <td>0957553141</td>
-                    <td>fgh5555gggg.tatarbu@gmai.com</td>
-                    <td>0125</td>
-                    <td>ФОП Гайворонский Основний договір</td>
-                    <td>10000</td>
-                    <td>
-                        <button className='basketAdmGoods'>
-                            <i className="fa fa-shopping-cart"></i>
-                        </button>
-                        <button className='editAdmGoods'>
-                            <i className="fas fa-edit"></i>
-                        </button>
-                        <button className='closeAdmGoods'>
-                            <i className="fa fa-remove"></i>
-                        </button>                  
-                    </td>
-                </tr>          
-                <tr>
-                    <td>26430200</td>
-                    <td>ФОП Гайворонский</td>
-                    <td>Київ</td>
-                    <td>0957553141</td>
-                    <td>fgh5555gggg.tatarbu@gmai.com</td>
-                    <td>0125</td>
-                    <td>ФОП Гайворонский Основний договір</td>
-                    <td>10000</td>
-                    <td>
-                        <button className='basketAdmGoods'>
-                            <i className="fa fa-shopping-cart"></i>
-                        </button>
-                        <button className='editAdmGoods'>
-                            <i className="fas fa-edit"></i>
-                        </button>
-                        <button className='closeAdmGoods'>
-                            <i className="fa fa-remove"></i>
-                        </button>                  
-                    </td>
-                </tr>          
-                <tr>
-                    <td>26430200</td>
-                    <td>ФОП Гайворонский</td>
-                    <td>Київ</td>
-                    <td>0957553141</td>
-                    <td>fgh5555gggg.tatarbu@gmai.com</td>
-                    <td>0125</td>
-                    <td>ФОП Гайворонский Основний договір</td>
-                    <td>10000</td>
-                    <td>
-                        <button className='basketAdmGoods'>
-                            <i className="fa fa-shopping-cart"></i>
-                        </button>
-                        <button className='editAdmGoods'>
-                            <i className="fas fa-edit"></i>
-                        </button>
-                        <button className='closeAdmGoods'>
-                            <i className="fa fa-remove"></i>
-                        </button>                  
-                    </td>
-                </tr>          
-                <tr>
-                    <td>26430200</td>
-                    <td>ФОП Гайворонский</td>
-                    <td>Київ</td>
-                    <td>0957553141</td>
-                    <td>fgh5555gggg.tatarbu@gmai.com</td>
-                    <td>0125</td>
-                    <td>ФОП Гайворонский Основний договір</td>
-                    <td>10000</td>
-                    <td>
-                        <button className='basketAdmGoods'>
-                            <i className="fa fa-shopping-cart"></i>
-                        </button>
-                        <button className='editAdmGoods'>
-                            <i className="fas fa-edit"></i>
-                        </button>
-                        <button className='closeAdmGoods'>
-                            <i className="fa fa-remove"></i>
-                        </button>                  
-                    </td>
-                </tr>          
-                <tr>
-                    <td>26430200</td>
-                    <td>ФОП Гайворонский</td>
-                    <td>Київ</td>
-                    <td>0957553141</td>
-                    <td>fgh5555gggg.tatarbu@gmai.com</td>
-                    <td>0125</td>
-                    <td>ФОП Гайворонский Основний договір</td>
-                    <td>10000</td>
-                    <td>
-                        <button className='basketAdmGoods'>
-                            <i className="fa fa-shopping-cart"></i>
-                        </button>
-                        <button className='editAdmGoods'>
-                            <i className="fas fa-edit"></i>
-                        </button>
-                        <button className='closeAdmGoods'>
-                            <i className="fa fa-remove"></i>
-                        </button>                  
-                    </td>
-                </tr>          
-                <tr>
-                    <td>26430200</td>
-                    <td>ФОП Гайворонский</td>
-                    <td>Київ</td>
-                    <td>0957553141</td>
-                    <td>fgh5555gggg.tatarbu@gmai.com</td>
-                    <td>0125</td>
-                    <td>ФОП Гайворонский Основний договір</td>
-                    <td>10000</td>
-                    <td>
-                        <button className='basketAdmGoods'>
-                            <i className="fa fa-shopping-cart"></i>
-                        </button>
-                        <button className='editAdmGoods'>
-                            <i className="fas fa-edit"></i>
-                        </button>
-                        <button className='closeAdmGoods'>
-                            <i className="fa fa-remove"></i>
-                        </button>                  
-                    </td>
-                </tr>          
-                <tr>
-                    <td>26430200</td>
-                    <td>ФОП Гайворонский</td>
-                    <td>Київ</td>
-                    <td>0957553141</td>
-                    <td>fgh5555gggg.tatarbu@gmai.com</td>
-                    <td>0125</td>
-                    <td>ФОП Гайворонский Основний договір</td>
-                    <td>10000</td>
-                    <td>
-                        <button className='basketAdmGoods'>
-                            <i className="fa fa-shopping-cart"></i>
-                        </button>
-                        <button className='editAdmGoods'>
-                            <i className="fas fa-edit"></i>
-                        </button>
-                        <button className='closeAdmGoods'>
-                            <i className="fa fa-remove"></i>
-                        </button>                  
-                    </td>
-                </tr>          
-                <tr>
-                    <td>26430200</td>
-                    <td>ФОП Гайворонский</td>
-                    <td>Київ</td>
-                    <td>0957553141</td>
-                    <td>fgh5555gggg.tatarbu@gmai.com</td>
-                    <td>0125</td>
-                    <td>ФОП Гайворонский Основний договір</td>
-                    <td>10000</td>
-                    <td>
-                        <button className='basketAdmGoods'>
-                            <i className="fa fa-shopping-cart"></i>
-                        </button>
-                        <button className='editAdmGoods'>
-                            <i className="fas fa-edit"></i>
-                        </button>
-                        <button className='closeAdmGoods'>
-                            <i className="fa fa-remove"></i>
-                        </button>                  
-                    </td>
-                </tr>          
-                <tr>
-                    <td>26430200</td>
-                    <td>ФОП Гайворонский</td>
-                    <td>Київ</td>
-                    <td>0957553141</td>
-                    <td>fgh5555gggg.tatarbu@gmai.com</td>
-                    <td>0125</td>
-                    <td>ФОП Гайворонский Основний договір</td>
-                    <td>10000</td>
-                    <td>
-                        <button className='basketAdmGoods'>
-                            <i className="fa fa-shopping-cart"></i>
-                        </button>
-                        <button className='editAdmGoods'>
-                            <i className="fas fa-edit"></i>
-                        </button>
-                        <button className='closeAdmGoods'>
-                            <i className="fa fa-remove"></i>
-                        </button>                  
-                    </td>
-                </tr>          
-                <tr>
-                    <td>26430200</td>
-                    <td>ФОП Гайворонский</td>
-                    <td>Київ</td>
-                    <td>0957553141</td>
-                    <td>fgh5555gggg.tatarbu@gmai.com</td>
-                    <td>0125</td>
-                    <td>ФОП Гайворонский Основний договір</td>
-                    <td>10000</td>
-                    <td>
-                        <button className='basketAdmGoods'>
-                            <i className="fa fa-shopping-cart"></i>
-                        </button>
-                        <button className='editAdmGoods'>
-                            <i className="fas fa-edit"></i>
-                        </button>
-                        <button className='closeAdmGoods'>
-                            <i className="fa fa-remove"></i>
-                        </button>                  
-                    </td>
-                </tr>          
-                <tr>
-                    <td>26430200</td>
-                    <td>ФОП Гайворонский</td>
-                    <td>Київ</td>
-                    <td>0957553141</td>
-                    <td>fgh5555gggg.tatarbu@gmai.com</td>
-                    <td>0125</td>
-                    <td>ФОП Гайворонский Основний договір</td>
-                    <td>10000</td>
-                    <td>
-                        <button className='basketAdmGoods'>
-                            <i className="fa fa-shopping-cart"></i>
-                        </button>
-                        <button className='editAdmGoods'>
-                            <i className="fas fa-edit"></i>
-                        </button>
-                        <button className='closeAdmGoods'>
-                            <i className="fa fa-remove"></i>
-                        </button>                  
-                    </td>
-                </tr>          
+            {suppliers ? suppliers.map((items: ISupplierItem) => (
+                    <tr key={'or' + items.id_supplier}
+                        //onClick={e => showComment(e)}
+                        //onDoubleClick={e => showOrderData(e)}
+                        data-value={items.id_supplier}>
+                        <td>{items.id_supplier}</td>
+                        <td>{items.name}</td>
+                        <td>{items.city}</td>
+                        <td>{items?.phone}</td>
+                        <td>{items?.email}</td>
+                        <td>{items.contract[0].id_contract}</td>
+                        <td>{items.contract[0].name}</td>
+                        <td>{items.contract[0].balance}</td>
+                        <td>{items.delivery}</td>
+                        <td>
+                            <button className='basketAdmGoods'
+                                value={items.id_supplier}
+                            >
+                                <i className="fa fa-shopping-cart"></i>
+                            </button>
+                            <button className='editAdmGoods'
+                                value={items.id_supplier}
+                            >
+                                <i className="fas fa-edit"></i>
+                            </button>
+                            <button className='closeAdmGoods'
+                                value={items.id_supplier}
+                            >
+                                <i className="fa fa-remove"></i>
+                            </button>                  
+                        </td>
+                    </tr>
+                    ))
+                    : <tr><td>.....Очікуемо постачальників.....</td></tr>
+                    }                          
             </tbody>
         </table>
         </div> 

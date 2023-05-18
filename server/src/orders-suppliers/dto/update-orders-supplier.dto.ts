@@ -31,4 +31,6 @@ export class UpdateOrdersSupplierDto extends PartialType(
   readonly pay_view: string;
   readonly status_pay: string;
   readonly category: string;
+  readonly id_supplier: number;
+  readonly id_contract: number;
 }

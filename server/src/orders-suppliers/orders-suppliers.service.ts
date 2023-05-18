@@ -33,7 +33,6 @@ export class OrdersSuppliersService {
       const order = await this.ordersService.findOrderById(
         createOrdersSupplierDto
       );
-
       if (order) {
         const orderGoods =
           await this.ordersStorageService.findAllGoodsOrderStorage(
@@ -72,10 +71,10 @@ export class OrdersSuppliersService {
             orderGoods[j].storage_index 
           );
         }
-        const orderSupAll = await this.ordersSupRepository.findAll({
+        const orderSupById = await this.ordersSupRepository.findAll({
           include: { all: true },
         });
-        return orderSupAll;  
+        return orderSupById;  
       } else {
         const orderSup = await this.ordersSupRepository.create(
           createOrdersSupplierDto
@@ -85,6 +84,21 @@ export class OrdersSuppliersService {
     } catch {
       throw new HttpException(
         'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async createOrderSupGoods(createOrdersSupplierDto: CreateOrdersSupplierDto){
+    try {
+      const orderSupStorGoods =
+        await this.ordersSupStorageService.createOrderSupStorage(
+          createOrdersSupplierDto,
+        );
+      return orderSupStorGoods;
+    } catch (error) {
+      throw new HttpException(
+        `Data is incorrect and must be uniq ${error.message}`,
         HttpStatus.NOT_FOUND,
       );
     }
@@ -234,7 +248,9 @@ export class OrdersSuppliersService {
 
   async findAllOrdersSup() {
     try {  
-      const orderSupAll = await this.ordersSupRepository.findAll({include:{all: true}});
+      const orderSupAll = await this.ordersSupRepository.findAll({
+        include: { all: true }
+      });
 
       return orderSupAll;
     } catch {
@@ -260,16 +276,28 @@ export class OrdersSuppliersService {
     }
   }
 
-  async update(updateOrdersSupplierDto: UpdateOrdersSupplierDto) {
+  async findOrderSupByIdOrder(getOrdersSupDto: GetOrdersSuppliersDto) {
+    try {  
+      const allOrderSupIdOrder = await this.ordersSupRepository.findAll({
+        where: { id_order: getOrdersSupDto.id_order },
+        include: { all: true },
+      });
+      return allOrderSupIdOrder;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async updateOrderSup(updateOrdersSupplierDto: UpdateOrdersSupplierDto) {
     try {
       const orderStorageUpdate = await this.ordersSupRepository.update(
         {
           id: updateOrdersSupplierDto.id,
           id_order_sup: updateOrdersSupplierDto.id_order_sup,
-          storage: updateOrdersSupplierDto.storage, 
-          quantity: updateOrdersSupplierDto.quantity,
-          price: updateOrdersSupplierDto.price,
-          price_wholesale: updateOrdersSupplierDto.price_wholesale,
+          storage: updateOrdersSupplierDto.storage,
           organisation: updateOrdersSupplierDto.organisation,
           order_view: updateOrdersSupplierDto.order_view,
           delivery: updateOrdersSupplierDto.delivery,
@@ -278,6 +306,8 @@ export class OrdersSuppliersService {
           pay_view: updateOrdersSupplierDto.pay_view,
           status_pay: updateOrdersSupplierDto.status_pay,
           notes: updateOrdersSupplierDto.notes,
+          id_supplier: updateOrdersSupplierDto.id_supplier,
+          id_contract: updateOrdersSupplierDto.id_contract,
         },
         {
           where: {

@@ -408,7 +408,7 @@ const AdminFormOrder = observer((
     const orderSum = state?.reduce((sum:any, current:any) => 
         sum + (current.price.price * current.price.quantity), 0
     );
-    const orderDataSum = ordersData?.order_storage.reduce(
+    const orderDataSum = ordersData?.order_storage?.reduce(
         (sum:any, current:any) => 
         sum + current.total, 0
     );
@@ -558,7 +558,7 @@ const AdminFormOrder = observer((
                                 name="customer" 
                                 maxLength={45}
                                 placeholder="Ім'я або назва.."
-                                value={addCustomer?.full_name ?? ordersData?.customer.full_name ?? ''}
+                                value={addCustomer?.full_name ?? ordersData?.customer?.full_name ?? ''}
                                 readOnly={true}
                                 //onChange={() => setAddCustomer(addCustomer)}
                             />

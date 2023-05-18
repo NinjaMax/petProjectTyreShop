@@ -3,12 +3,13 @@ import '../../../css/AdminComponentCss/AdminContentCss/AdminCustomersContent.css
 import ButtonSearch from '../../buttons/ButtonSearch';
 import ModalAdmin from '../../modal/ModalAdmin';
 import AdminModalCustmCreate from '../adminModalForm/AdminModalCustmCreate';
+import { ICustomerItem } from './types/CustomerItem.type';
 
 interface ICustomer {
-    customer: [] | null;
+    customers: [] | null;
 }
 
-const AdminCustomersContent = ({customer}: ICustomer) => {
+const AdminCustomersContent = ({customers}: ICustomer) => {
     const [createCustm, setCreateCustm] = useState(false);
 
     const createCustomer = () => {
@@ -33,6 +34,7 @@ const AdminCustomersContent = ({customer}: ICustomer) => {
                         <tr className='headerCustomersTable'>
                             <th>Код</th>
                             <th>Покупець</th>
+                            <th>Повне і'мя</th>
                             <th>Місто</th>
                             <th>Телефон</th>
                             <th>Email</th>
@@ -43,321 +45,41 @@ const AdminCustomersContent = ({customer}: ICustomer) => {
                         </tr>
                     </thead>    
                     <tbody>
-                    <tr>
-                        <td>26430200</td>
-                        <td>Гайворонский Николай</td>
-                        <td>Київ</td>
-                        <td>0957553141</td>
-                        <td>fgh5555gggg.tatarbu@gmai.com</td>
-                        <td>0125</td>
-                        <td>Гайворонский Николай Основний договір</td>
-                        <td>10000</td>
+                    {customers ? customers.map((items: ICustomerItem) => (
+                    <tr key={'or' + items.id_customer}
+                        //onClick={e => showComment(e)}
+                        //onDoubleClick={e => showOrderData(e)}
+                        data-value={items.id_customer}>
+                        <td>{items.id_customer}</td>
+                        <td>{items.name}</td>
+                        <td>{items.full_name}</td>
+                        <td>{items.city}</td>
+                        <td>{items?.phone}</td>
+                        <td>{items?.email}</td>
+                        <td>{items.contract[0].id_contract}</td>
+                        <td>{items.contract[0].name}</td>
+                        <td>{items.contract[0].balance}</td>
                         <td>
-                            <button className='basketAdmGoods'>
+                            <button className='basketAdmGoods'
+                                value={items.id_customer}
+                            >
                                 <i className="fa fa-shopping-cart"></i>
                             </button>
-                            <button className='editAdmGoods'>
+                            <button className='editAdmGoods'
+                                value={items.id_customer}
+                            >
                                 <i className="fas fa-edit"></i>
                             </button>
-                            <button className='closeAdmGoods'>
+                            <button className='closeAdmGoods'
+                                value={items.id_customer}
+                            >
                                 <i className="fa fa-remove"></i>
                             </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>26430200</td>
-                        <td>Гайворонский Николай</td>
-                        <td>Київ</td>
-                        <td>0957553141</td>
-                        <td>fgh5555gggg.tatarbu@gmai.com</td>
-                        <td>0125</td>
-                        <td>Гайворонский Николай Основний договір</td>
-                        <td>10000</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>26430200</td>
-                        <td>Гайворонский Николай</td>
-                        <td>Київ</td>
-                        <td>0957553141</td>
-                        <td>fgh5555gggg.tatarbu@gmai.com</td>
-                        <td>0125</td>
-                        <td>Гайворонский Николай Основний договір</td>
-                        <td>10000</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>26430200</td>
-                        <td>Гайворонский Николай</td>
-                        <td>Київ</td>
-                        <td>0957553141</td>
-                        <td>fgh5555gggg.tatarbu@gmai.com</td>
-                        <td>0125</td>
-                        <td>Гайворонский Николай Основний договір</td>
-                        <td>10000</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                        <tr>
-                        <td>26430200</td>
-                        <td>Гайворонский Николай</td>
-                        <td>Київ</td>
-                        <td>0957553141</td>
-                        <td>fgh5555gggg.tatarbu@gmai.com</td>
-                        <td>0125</td>
-                        <td>Гайворонский Николай Основний договір</td>
-                        <td>10000</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                        <tr>
-                        <td>26430200</td>
-                        <td>Гайворонский Николай</td>
-                        <td>Київ</td>
-                        <td>0957553141</td>
-                        <td>fgh5555gggg.tatarbu@gmai.com</td>
-                        <td>0125</td>
-                        <td>Гайворонский Николай Основний договір</td>
-                        <td>10000</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>26430200</td>
-                        <td>Гайворонский Николай</td>
-                        <td>Київ</td>
-                        <td>0957553141</td>
-                        <td>fgh5555gggg.tatarbu@gmai.com</td>
-                        <td>0125</td>
-                        <td>Гайворонский Николай Основний договір</td>
-                        <td>10000</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>26430200</td>
-                        <td>Гайворонский Николай</td>
-                        <td>Київ</td>
-                        <td>0957553141</td>
-                        <td>fgh5555gggg.tatarbu@gmai.com</td>
-                        <td>0125</td>
-                        <td>Гайворонский Николай Основний договір</td>
-                        <td>10000</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>26430200</td>
-                        <td>Гайворонский Николай</td>
-                        <td>Київ</td>
-                        <td>0957553141</td>
-                        <td>fgh5555gggg.tatarbu@gmai.com</td>
-                        <td>0125</td>
-                        <td>Гайворонский Николай Основний договір</td>
-                        <td>10000</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>26430200</td>
-                        <td>Гайворонский Николай</td>
-                        <td>Київ</td>
-                        <td>0957553141</td>
-                        <td>fgh5555gggg.tatarbu@gmai.com</td>
-                        <td>0125</td>
-                        <td>Гайворонский Николай Основний договір</td>
-                        <td>10000</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>26430200</td>
-                        <td>Гайворонский Николай</td>
-                        <td>Київ</td>
-                        <td>0957553141</td>
-                        <td>fgh5555gggg.tatarbu@gmai.com</td>
-                        <td>0125</td>
-                        <td>Гайворонский Николай Основний договір</td>
-                        <td>10000</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>26430200</td>
-                        <td>Гайворонский Николай</td>
-                        <td>Київ</td>
-                        <td>0957553141</td>
-                        <td>fgh5555gggg.tatarbu@gmai.com</td>
-                        <td>0125</td>
-                        <td>Гайворонский Николай Основний договір</td>
-                        <td>10000</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>26430200</td>
-                        <td>Гайворонский Николай</td>
-                        <td>Київ</td>
-                        <td>0957553141</td>
-                        <td>fgh5555gggg.tatarbu@gmai.com</td>
-                        <td>0125</td>
-                        <td>Гайворонский Николай Основний договір</td>
-                        <td>10000</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>26430200</td>
-                        <td>Гайворонский Николай</td>
-                        <td>Київ</td>
-                        <td>0957553141</td>
-                        <td>fgh5555gggg.tatarbu@gmai.com</td>
-                        <td>0125</td>
-                        <td>Гайворонский Николай Основний договір</td>
-                        <td>10000</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
-                    <tr>
-                        <td>26430200</td>
-                        <td>Гайворонский Николай</td>
-                        <td>Київ</td>
-                        <td>0957553141</td>
-                        <td>fgh5555gggg.tatarbu@gmai.com</td>
-                        <td>0125</td>
-                        <td>Гайворонский Николай Основний договір</td>
-                        <td>10000</td>
-                        <td>
-                            <button className='basketAdmGoods'>
-                                <i className="fa fa-shopping-cart"></i>
-                            </button>
-                            <button className='editAdmGoods'>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>          
+                            </td>
+                    </tr>
+                    ))
+                    : <tr><td>.....Очікуемо покупців.....</td></tr>
+                    }              
                     </tbody>
                 </table>
             </div>

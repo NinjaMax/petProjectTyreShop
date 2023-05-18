@@ -4,6 +4,7 @@ export type IModalFormOrder = {
     contract: [{id_contract: number, name: string}];
     id_contract?: number,
     id_customer?: number;
+    id_supplier?: number;
     addCustomer?: {
         full_name: string,
         contract: [],

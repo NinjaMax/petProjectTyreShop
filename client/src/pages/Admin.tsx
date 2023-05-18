@@ -11,7 +11,10 @@ import { getTyres,
         getCommentOrderData,
         getOrderData,
         getCustomers, 
-        getCommentOrderSupData} from '../restAPI/restAdminAPI';
+        getCommentOrderSupData,
+        getSuppliers,
+        getOrderSupData,
+        getUsers} from '../restAPI/restAdminAPI';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../context/Context';
@@ -74,14 +77,15 @@ const Admin = observer(() => {
     // const [batteryData, setBatteryData] = useState(null);
     // const [batteryStockData, setBatteryStockData] = useState(null);
     // const [batteryPriceData, setBatteryPriceData] = useState(null);
-    const [ordeSupAllData, setOrderSupAlldata] = useState(null);
-    // const [usersAllData, setUsersAllData] = useState(null);
-    const [supplierAll, setSupplierAll] = useState(null);
+    const [orderSupAllData, setOrderSupAllData] = useState(null);
+    const [users, setUsers] = useState(null);
+    const [suppliers, setSuppliers] = useState(null);
     // const [cashBoxAll, setCashBoxAll] = useState(null);
     // const [payIncomesAll, setPayIncomeAll] = useState(null);
     // const [payExpenseAll, setPayExpenseAll] = useState(null);
     const [customers, setCustomers] = useState(null);
-    const [commentData, setCommentData] = useState(null);
+    const [commentOrder, setCommentOrder] = useState(null);
+    const [commentOrderSup, setCommentOrderSup] = useState(null);
     const [commentByOrderSup, setCommentByOrderSup] = useState<number>(0);
     const [commentByOrder, setCommentByOrder] = useState<number>(0);
     const [orderAllData, setOrderAllData] = useState(null);
@@ -94,6 +98,9 @@ const Admin = observer(() => {
                     //addGoodsToOrder,
                     //createGoodsToOrder,
                     //responseForm,
+                    getUsers,
+                    getOrderSupData,
+                    getSuppliers,
                     getTyres,
                     getStockTyres,
                     getPriceTyres,
@@ -139,18 +146,30 @@ const Admin = observer(() => {
                     if(!isMounted && tasks[i] === getOrderData) {
                         let result: any = await tasks[i]();
                         setOrderAllData(result?.data);
+                    }
+                    if(!isMounted && tasks[i] === getOrderSupData) {
+                        let result: any = await tasks[i]();
+                        setOrderSupAllData(result?.data);
                     } 
                     if(!isMounted && tasks[i] === getCustomers) {
                         let result: any = await tasks[i]();
                         setCustomers(result.data);
-                    } 
+                    }
+                    if(!isMounted && tasks[i] === getUsers) {
+                        let result: any = await tasks[i]();
+                        setUsers(result.data);
+                    }  
+                    if(!isMounted && tasks[i] === getSuppliers) {
+                        let result: any = await tasks[i]();
+                        setSuppliers(result.data);
+                    }
                     if(!isMounted && tasks[i] === getCommentOrderData) {
-                            let result: any = await tasks[i](commentByOrder);
-                            setCommentData(result?.data);  
-                    } 
+                        let result: any = await tasks[i](commentByOrder);
+                        setCommentOrder(result?.data);  
+                    }
                     if(!isMounted && tasks[i] === getCommentOrderSupData) {
                         let result: any = await tasks[i](commentByOrderSup);
-                        setCommentByOrderSup(result?.data);
+                        setCommentOrderSup(result?.data);
                     }
                     const task = tasks.shift();
                     // Run the task:
@@ -162,20 +181,19 @@ const Admin = observer(() => {
         return () => {
             isMounted = true;
         };
-    },[commentByOrder])
+    },[commentByOrder, commentByOrderSup])
 
     const sideBarItemChange = async (e: any) => {
         setSideBarItem(e.target.value);
         console.log(e.target.value);
     }
 
-    const showCommentOrderData = async (e: any) => {
+    const showCommentOrder = async (e: any) => {
         if (e.target.value) {
             setCommentByOrder(+e.target.value);
         } 
         if (e.target.value === '0') {
             setCommentByOrder(0); 
-            console.log('COMMIT_BY_ID_ORDER_VALUE: 0',)
         }
         if (e.currentTarget?.getAttribute('data-value')){
             setCommentByOrder(+e.currentTarget?.getAttribute('data-value'));
@@ -185,6 +203,22 @@ const Admin = observer(() => {
         }
     }
 
+    const showCommentOrderSup = async (e: any) => {
+        if (e.target.value) {
+            setCommentByOrderSup(+e.target.value);
+        } 
+        if (e.target.value === '0') {
+            setCommentByOrderSup(0); 
+        }
+        if (e.currentTarget?.getAttribute('data-value')){
+            setCommentByOrderSup(+e.currentTarget?.getAttribute('data-value'));
+        } 
+        if (e.currentTarget?.getAttribute('data-value') === '0') {
+            setCommentByOrderSup(0); 
+        }
+    }
+    console.log('USERS: ', users);
+    console.log('CUSTOMERS: ',customers);
     return (
         <div className='adminPageMain'>
             <div className='profileAdmin'>
@@ -205,19 +239,19 @@ const Admin = observer(() => {
                         props={[tyreData, tyreStockData, tyrePriceData,
                             wheelData, wheelPriceData, wheelStockData]}
                         customer={customers}
-                        comments={commentData}
+                        comments={commentOrder}
                         storage={storageAll}
-                        showComment={showCommentOrderData}  
+                        showComment={showCommentOrder}  
                         />
                 : null}
                 {sideBarItem === 'zamovlenia' ?
                     <AdminOrderContent 
                         props={[tyreData, tyreStockData, tyrePriceData,
                             wheelData, wheelPriceData, wheelStockData]}
-                        showComment={showCommentOrderData}
+                        showComment={showCommentOrder}
                         orders={orderAllData}
                         customer={customers} 
-                        comments={commentData}
+                        comments={commentOrder}
                         storage={storageAll}
                     />
                 : null}
@@ -228,9 +262,11 @@ const Admin = observer(() => {
                     <AdminOrderSupContent 
                         props={[tyreData, tyreStockData, tyrePriceData,
                             wheelData, wheelPriceData, wheelStockData]}
-                        customer={customers} 
-                        comments={commentData}
+                        supplier={suppliers} 
+                        comments={commentOrderSup}
                         storage={storageAll}
+                        ordersSup={orderSupAllData}
+                        showComment={showCommentOrderSup}
                     />
                 :null}
                 {sideBarItem === 'kasi' ?
@@ -243,14 +279,19 @@ const Admin = observer(() => {
                     <AdminPayExpensesContent />
                 : null}
                 {sideBarItem === 'postachal' ?
-                    <AdminSupplierContent />
+                    <AdminSupplierContent
+                        suppliers={suppliers}
+                    />
                 : null}
                 {sideBarItem === 'pokupci' ?
                     <AdminCustomersContent 
-                    customer={customers}/>
+                        customers={customers}
+                    />
                 : null}
                 {sideBarItem === 'koristuvachi' ?
-                    <AdminUsersContent />
+                    <AdminUsersContent 
+                            users={users}
+                    />
                 : null}
                 {sideBarItem === 'zavantag' ?
                     <AdminUploaderContent />

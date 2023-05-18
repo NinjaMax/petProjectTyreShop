@@ -17,8 +17,7 @@ import { Users } from '../../users/entities/users.model';
 
 @Table({ tableName: 'order_supplier' })
 export class OrdersSupplier extends Model<OrdersSupplier, OrdersSupConfigAttr> {
-
-    @Column({
+  @Column({
     type: DataType.BIGINT,
     unique: true, 
     allowNull: false,

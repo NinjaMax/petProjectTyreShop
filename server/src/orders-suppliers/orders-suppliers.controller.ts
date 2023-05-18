@@ -23,6 +23,15 @@ export class OrdersSuppliersController {
     return this.ordersSuppliersService.createOrderSup(createOrdersSupplierDto);
   }
 
+  @Post('/creategoods')
+  createOrderSupGoods(
+    @Body() createOrdersSupplierDto: CreateOrdersSupplierDto,
+  ) {
+    return this.ordersSuppliersService.createOrderSupGoods(
+      createOrdersSupplierDto,
+    );
+  }
+
   @Post('/add')
   addGoodsToOrderSup(@Body() createOrdersSupplierDto: CreateOrdersSupplierDto) {
     return this.ordersSuppliersService.addGoodsToOrderSup(
@@ -45,12 +54,12 @@ export class OrdersSuppliersController {
     return this.ordersSuppliersService.findOrderSupById(getOrdersSupDto);
   }
 
-  @Patch(':id')
+  @Patch('/update')
   update(
-    @Param('id') id: string,
+    //@Param('id') id: string,
     @Body() updateOrdersSupplierDto: UpdateOrdersSupplierDto,
   ) {
-    return this.ordersSuppliersService.update(+id, updateOrdersSupplierDto);
+    return this.ordersSuppliersService.updateOrderSup(updateOrdersSupplierDto);
   }
 
   @Delete('/remove')
