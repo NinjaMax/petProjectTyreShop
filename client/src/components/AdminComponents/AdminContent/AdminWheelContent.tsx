@@ -17,8 +17,13 @@ type IWheelContentItem = {
 
 
 const AdminWheelContent = (
-    {props, showRowData, addWheelToOrder}: IAdminWheelContent
+    {
+        props,
+        showRowData,
+        addWheelToOrder
+    }: IAdminWheelContent
     ) => {
+        
     return (
         <div>
             <div className='admWheelTable'>
@@ -45,15 +50,15 @@ const AdminWheelContent = (
                 </thead>    
                 <tbody> 
                 {props ? props.map((item: IWheelContentItem) => (
-                
-                <tr key={'w' + item.id} onClick={showRowData} 
+                <tr key={'w' + item.id} 
+                    onClick={showRowData} 
                     data-value={item.id}>
                     <td >{item.id}</td>
                     <td >{item.full_name_color}</td>
                     <td >{item.type?.type ?? ''}</td>
                     <td >{item.color?.color_short ?? ''}</td>
                     <td >{item.category?.category ?? ''}</td>
-                    <td  onClick={(e)=>e.preventDefault()}>
+                    <td  onClick={(e)=> e.preventDefault()}>
                             <button className='basketAdmWheel' value={item.id} 
                                 onClick={addWheelToOrder}>
                                 <i className="fa fa-shopping-cart"></i>

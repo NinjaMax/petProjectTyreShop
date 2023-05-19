@@ -80,9 +80,10 @@ const Admin = observer(() => {
     const [orderSupAllData, setOrderSupAllData] = useState(null);
     const [users, setUsers] = useState(null);
     const [suppliers, setSuppliers] = useState(null);
-    // const [cashBoxAll, setCashBoxAll] = useState(null);
-    // const [payIncomesAll, setPayIncomeAll] = useState(null);
-    // const [payExpenseAll, setPayExpenseAll] = useState(null);
+    const [sales, setSales] = useState(null);
+    const [cashBoxAll, setCashBoxAll] = useState(null);
+    const [payIncomes, setPayIncomes] = useState(null);
+    const [payExpenses, setPayExpenses] = useState(null);
     const [customers, setCustomers] = useState(null);
     const [commentOrder, setCommentOrder] = useState(null);
     const [commentOrderSup, setCommentOrderSup] = useState(null);
@@ -256,7 +257,9 @@ const Admin = observer(() => {
                     />
                 : null}
                 {sideBarItem === 'prodagi' ?
-                    <AdminSalesContent />
+                    <AdminSalesContent 
+                        sales={sales}
+                    />
                 : null}
                 {sideBarItem === 'zamovleniaPost' ?
                     <AdminOrderSupContent 
@@ -270,13 +273,19 @@ const Admin = observer(() => {
                     />
                 :null}
                 {sideBarItem === 'kasi' ?
-                    <AdminCashBoxContent />
+                    <AdminCashBoxContent 
+                        cashboxData={cashBoxAll}
+                    />
                 : null}
                 {sideBarItem === 'plategiVh' ?
-                    <AdminPayIncomesContent />
+                    <AdminPayIncomesContent 
+                        payIncomes={payIncomes}
+                    />
                 : null}
                 {sideBarItem === 'plategiVih' ?
-                    <AdminPayExpensesContent />
+                    <AdminPayExpensesContent 
+                        payExpenses={payExpenses}
+                    />
                 : null}
                 {sideBarItem === 'postachal' ?
                     <AdminSupplierContent

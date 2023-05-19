@@ -36,7 +36,9 @@ const AdminTyreStockPriceRow = (
             {stockTyres ?
                 <Fragment key={'stt' + stockTyres[index]?.id} >
                     <td >{stockTyres[index]?.storage.storage ?? ''}</td>
-                    <td >{stockTyres[index]?.update_date ?? ''}</td>
+                    <td >{
+                    new Date(stockTyres[index]?.update_date).toLocaleString() ?? ''
+                    }</td>
                     <td >{stockTyres[index]?.supplier.name ?? ''}</td>
                     <td >{stockTyres[index]?.supplier.city_ua ?? ''}</td>
                     <td >{stockTyres[index]?.stock ?? ''}</td>
@@ -62,7 +64,7 @@ const AdminTyreStockPriceRow = (
             }  
           </tr> ))
           : <tr>Покищо немає данних...</tr>
-          }
+        }
         </>
     );
 };

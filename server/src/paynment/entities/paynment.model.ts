@@ -13,6 +13,7 @@ import { Expense } from '../../expenses/entities/expense.model';
 import { Incomes } from '../../incomes/entities/income.model';
 import { OrdersSupplier } from '../../orders-suppliers/entities/orders-supplier.model';
 import { Orders } from '../../orders/entities/order.model';
+import { Paytype } from '../../paytypes/entities/paytype.entity';
 
 @Table({ tableName: 'paynment' })
 export class Paynment extends Model<Paynment, PaynmentConfigAttr> {
@@ -57,6 +58,10 @@ export class Paynment extends Model<Paynment, PaynmentConfigAttr> {
   @Column({ type: DataType.INTEGER })
   id_expense: number;
 
+  @ForeignKey(() => Paytype)
+  @Column({ type: DataType.INTEGER })
+  id_paytype: number;
+
   @BelongsTo(() => Expense, 'id_expense')
   expenses: Expense;
 
@@ -71,6 +76,9 @@ export class Paynment extends Model<Paynment, PaynmentConfigAttr> {
 
   @BelongsTo(() => Incomes, 'id_income')
   incomes: Incomes;
+
+  @BelongsTo(() => Paytype, 'id_paytype')
+  paytype: Paytype;
 
   @BelongsTo(() => Contract, 'id_contract')
   contract: Contract;

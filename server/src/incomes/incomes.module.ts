@@ -8,10 +8,7 @@ import { AuthModule } from '../auth/auth.module';
 @Module({
   controllers: [IncomesController],
   providers: [IncomesService],
-  imports: [ 
-    SequelizeModule.forFeature([Incomes]),
-    AuthModule
-  ],
+  imports: [SequelizeModule.forFeature([Incomes]), AuthModule],
   exports: [IncomesService]
 })
 export class IncomesModule {}

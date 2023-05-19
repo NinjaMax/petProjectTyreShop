@@ -28,10 +28,13 @@ const AdminWheelStockPriceRow = (
     ) => {
     return (
         <>
+            <tr>
             {stockWheels ? stockWheels?.map((item: IStockWheelRow) => (
                 <Fragment key={'stw' + item.id}>
                     <td >{item.storage?.storage ?? ''}</td>
-                    <td >{item?.update_date.toString() ?? ''}</td>
+                    <td >{
+                    new Date(item?.update_date).toLocaleString() ?? ''
+                    }</td>
                     <td >{item.supplier?.name ?? ''}</td>
                     <td >{item.supplier?.city_ua ?? ''}</td>
                     <td >{item?.stock ?? ''}</td>
@@ -49,7 +52,8 @@ const AdminWheelStockPriceRow = (
                 </Fragment> 
                 ))
                : <td>Покищо немає данних. Очікуємо...</td>
-            }     
+            } 
+            </tr>
         </>
     );
 };

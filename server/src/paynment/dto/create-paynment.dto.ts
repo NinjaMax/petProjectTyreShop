@@ -35,7 +35,7 @@ export class CreatePaynmentDto {
   readonly name: string;
   readonly balance: number;
   readonly id_customer: number;
-
+  readonly cashboxType: string;
   readonly organisation: string;
   readonly order_view: string;
   readonly delivery: string;

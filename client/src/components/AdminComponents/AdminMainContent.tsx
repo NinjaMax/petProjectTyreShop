@@ -15,18 +15,19 @@ interface IMainContent {
     height: string; }[]; 
 }
 
-const AdminMainContent = () => {
+const AdminMainContent = ({}) => {
 
     const [dataCat, setDataCat] = useState<IMainContent>();
     const [dataManager, setDataManager] =useState<IMainContent>();
-    const [dataSales, setDataSales] =useState<IMainContent>();
+    const [dataOrders, setDataOrders] =useState<IMainContent>();
+
     useEffect(() => {
       //if(data){
         setDataCat(responseCat);
         setDataManager(responseManger);
-        setDataSales(responseSales);
+        setDataOrders(responseSales);
       //}
-    }, [dataCat, dataManager, dataSales]);
+    }, [dataCat, dataManager, dataOrders]);
 
     return (
         <div className='adminMainContent'>
@@ -52,9 +53,9 @@ const AdminMainContent = () => {
                 </div>
             </div>
             <div className='adminMainContentChart'>
-                { dataSales ?
+                { dataOrders ?
                 
-                dataSales && dataSales.charts.map((chartData, i) => ( 
+                dataOrders && dataOrders.charts.map((chartData, i) => ( 
                     <div className='admMainContentItem' key={i + 1}>     
                         <Charts chart={chartData} key={i + 1}/>
                     </div>     

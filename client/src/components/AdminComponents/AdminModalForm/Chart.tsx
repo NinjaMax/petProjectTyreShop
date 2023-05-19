@@ -1,7 +1,8 @@
 import React from 'react';
-import { Chart, GoogleChartTicks } from "react-google-charts";
+import { Chart } from "react-google-charts";
+import { IChartType } from './types/Chart.type';
 
-const Charts = (prop: { chart: { chartType?: any; data: {} | any[] | undefined; options: Partial<{ [otherOptionKey: string]: any; width: number; height: number; is3D: boolean; title: string; backgroundColor: string; hAxis?: { [otherOptionKey: string]: any; minValue?: any; maxValue?: any; ticks?: GoogleChartTicks | undefined; title?: string | undefined; viewWindow?: { max?: any; min?: any; } | undefined; } | undefined; vAxis?: { [otherOptionKey: string]: any; minValue?: any; maxValue?: any; ticks?: GoogleChartTicks | undefined; title?: string | undefined; viewWindow?: { max?: any; min?: any; } | undefined; } | undefined; legend: any; colors: string[]; }> | undefined; }; }) => {
+const Charts = (prop: IChartType) => {
 
     return (
         <Chart

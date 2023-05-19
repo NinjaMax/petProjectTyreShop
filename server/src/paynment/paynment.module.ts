@@ -15,16 +15,31 @@ import { OrdersSupplier } from '../orders-suppliers/entities/orders-supplier.mod
 import { OrdersSuppliersModule } from '../orders-suppliers/orders-suppliers.module';
 import { Orders } from '../orders/entities/order.model';
 import { OrdersModule } from '../orders/orders.module';
+import { Paytype } from '../paytypes/entities/paytype.entity';
+import { PaytypesModule } from '../paytypes/paytypes.module';
 
 @Module({
   controllers: [PaynmentController],
   providers: [PaynmentService],
-  imports: [ 
-    SequelizeModule.forFeature([Paynment, Orders, OrdersSupplier,
-    Cashbox, Expense, Incomes]),
-    OrdersModule, OrdersSuppliersModule, CashboxModule, ExpensesModule,
-    IncomesModule, ContractModule, AuthModule
+  imports: [
+    SequelizeModule.forFeature([
+      Paynment,
+      Orders,
+      OrdersSupplier,
+      Cashbox,
+      Expense,
+      Incomes,
+      Paytype,
+    ]),
+    OrdersModule,
+    OrdersSuppliersModule,
+    CashboxModule,
+    ExpensesModule,
+    IncomesModule,
+    ContractModule,
+    AuthModule,
+    PaytypesModule,
   ],
-  exports: [PaynmentService]
+  exports: [PaynmentService],
 })
 export class PaynmentModule {}

@@ -8,55 +8,6 @@ import { IComments } from './types/Comment.type';
 import { IAdminOrder } from './interfaces/AdminOrder.interface';
 import { IOrdersItem } from './types/OrderItem.type';
 
-// interface IAdminOrder {
-//     comments?:[] | null;
-//     props:[[] | null, ...any[][] | null[]];
-//     showComment(arg0: any):void;
-//     orders: [] | null;
-//     customer: [] | null;
-//     storage:[any] | null;
-//     stockByIdTyre?: []; 
-//     tyreStockData?:[];
-//     tyrePriceData?:[];
-//     wheelData?:[]; 
-//     wheelPriceData?:[];
-//     wheelStockData?:[];
-// }
-
-// type IComments ={
-//     id_order: number;
-//     user: {name:string};
-//     createdAt: Date;
-//     comments: string;
-// }      
-
-// type IOrdersItem = {
-//     id_order: number;
-//     createdAt: Date;
-//     updatedAt: Date;
-//     customer:{full_name: string;}
-//     storage: string;
-//     status: string;
-//     order_view: string;
-//     delivery: string;
-//     status_delivery: string;
-//     pay_view: string;
-//     status_pay: string;
-//     id_user: number;
-//     notes: string;
-//     total: number;
-//     quantity?: number;
-//     delivery_ttn: string;
-//     id_contract: number | string;
-//     id_customer: number;
-//     organisation: string;
-//     order_storage: any [];
-//     [Symbol.iterator](): any;
-//     comments: any[];
-//     reduce(arg0: any, ...arg: any[]): any;
-//     user:{name: string; role: string; id_user: number;}
-// }
-
 const AdminOrderContent = (
     {props, orders, customer, comments, showComment, storage}:IAdminOrder
     ) => {

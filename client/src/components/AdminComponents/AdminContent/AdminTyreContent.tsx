@@ -53,8 +53,9 @@ const AdminTyreContent = ({props, showRowData, addTyreToOrder}: ITyreContent) =>
                 </thead>    
                 <tbody> 
                     {props ? props.map((item: TyreContent) => (
-                
-                    <tr key={'t' + item.id} onClick={showRowData} data-value={item.id}>
+                    <tr key={'t' + item.id} 
+                        onClick={showRowData} 
+                        data-value={item.id}>
                         <td >{item.id}</td>
                         <td >{item.full_name}</td>
                         <td >{item.tyre_brand?.brand ?? ''}</td>
@@ -75,7 +76,6 @@ const AdminTyreContent = ({props, showRowData, addTyreToOrder}: ITyreContent) =>
                             </button>                  
                         </td>
                     </tr> 
-                    
                     ))
                     : <tr><td>"Нема товарів"</td></tr>
                     }         

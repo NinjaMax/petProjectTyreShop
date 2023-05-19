@@ -3,8 +3,13 @@ import '../../../css/AdminComponentCss/AdminContentCss/AdminCashboxContent.css';
 import ButtonSearch from '../../buttons/ButtonSearch';
 import ModalAdmin from '../../modal/ModalAdmin';
 import AdminModalCashbox from '../adminModalForm/AdminModalCashbox';
+import { ICashboxItem } from './types/CashboxItem.type';
 
-const AdminCashBoxContent = () => {
+interface ICashbox {
+    cashboxData?: [] | null;  
+}
+
+const AdminCashBoxContent = ({cashboxData}: ICashbox) => {
     const [cashbox, setCashbox] = useState(false);
     
     const createCashbox = () => {
@@ -31,52 +36,33 @@ const AdminCashBoxContent = () => {
                     <th>Каса</th>
                     <th>Організація</th>
                     <th>Баланс</th>
+                    <th>Вид Касси</th>
                     <th>Опції</th>
                 </tr>
             </thead>    
             <tbody>
-                <tr>
-                    <td>26430200</td>
-                    <td>Касса Гайворонский</td>
-                    <td>ФОП Гайворонский Н</td>
-                    <td>25500</td>
-                    <td>
+            {cashboxData ? cashboxData.map((items: ICashboxItem) => (
+                    <tr key={'or' + items.id_cashbox}
+                        //onClick={e => showComment(e)}
+                        //onDoubleClick={e => showOrderData(e)}
+                        data-value={items.id_cashbox}>
+                        <td>{items.id_cashbox}</td>
+                        <td>{items.cashbox}</td>
+                        <td>{items.organisation}</td>
+                        <td>{items.cashboxType}</td>
+                        <td>{items.funds}</td>
+                        <td>
                         <button className='editAdmGoods'>
                             <i className="fas fa-edit"></i>
                         </button>
                         <button className='closeAdmGoods'>
                             <i className="fa fa-remove"></i>
-                        </button>                  
-                    </td>
-                </tr>          
-                <tr>
-                    <td>26430200</td>
-                    <td>Касса Директор</td>
-                    <td>ФОП Гайворонский Н</td>
-                    <td>20500</td>
-                    <td>
-                        <button className='editAdmGoods'>
-                            <i className="fas fa-edit"></i>
                         </button>
-                        <button className='closeAdmGoods'>
-                            <i className="fa fa-remove"></i>
-                        </button>                  
-                    </td>
-                </tr>          
-                <tr>
-                    <td>26430200</td>
-                    <td>Касса НИКНЕЙМ</td>
-                    <td>ТОВ НИКНЕЙМ</td>
-                    <td>50500</td>
-                    <td>
-                        <button className='editAdmGoods'>
-                            <i className="fas fa-edit"></i>
-                        </button>
-                        <button className='closeAdmGoods'>
-                            <i className="fa fa-remove"></i>
-                        </button>                  
-                    </td>
-                </tr>          
+                        </td>
+                        </tr>
+                    ))
+                    : <tr><td>......Очікуемо ордери......</td></tr>
+                    }            
             </tbody>
         </table>
         </div> 
