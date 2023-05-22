@@ -6,15 +6,39 @@ import AdminModalSupplier from '../adminModalForm/AdminModalSupplier';
 import { ISupplierItem } from './types/SupplierItem.type';
 
 const AdminSupplierContent = ({suppliers}:any) => {
-
     const [createSupplier, setCreateSupplier] = useState(false);
+    const [value, setValue] = useState('');
+    const [isSearch, setIsSearch] = useState(true);
 
     const createSupplierBtn = () => {
         setCreateSupplier(!createSupplier);
     };
+
+    const filteredSupplierData = suppliers?.filter((supplierItem: any) => {
+        return supplierItem.id_supplier.toLowerCase().includes(+value.toLowerCase()) ||
+        supplierItem.name.toLowerCase().includes(value.toLowerCase())  
+    })
+
+    const itemClickHandler = (e: any) => {
+        const entity = e.target.textContent.split(':')
+        setValue(entity[1]);
+        //setValue(e.target.value);
+        setIsSearch(!isSearch);
+    }
+
+    const inputHandler = () => {
+        setIsSearch(true);
+    }
+
+    const inputCancelHandler = () => {
+        if(isSearch){
+           setIsSearch(false); 
+        }
+    }
+
     
     return (
-        <div>
+        <div onClick={inputCancelHandler}>
         <div className="admSupplierContent">
             <span>Постачальники:</span>
             <div className='admSupplierHeader'>
@@ -22,7 +46,31 @@ const AdminSupplierContent = ({suppliers}:any) => {
                     onClick={createSupplierBtn}>Додати постачальника
                 </button>
             </div>
-            <input className='inputAdminSupplier' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
+            <input 
+                className='inputAdminSupplier' 
+                type="text" 
+                id="myInput"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                onClick={inputHandler} 
+                placeholder="Введіть значення для пошуку..."
+            />
+                    <ul className='inputSupplierContent'>
+                        {value && isSearch ?
+                            filteredSupplierData?.map(
+                                (item: ISupplierItem, index: number) =>{
+                            return (
+                            <li key={'fullName' + index}
+                                className='inputSupplierContentItem'
+                                onClick={itemClickHandler}
+                            >
+                            {`${item.id_supplier}: ${item.name}`}
+                            </li>
+                            ) 
+                            })  
+                        : null  
+                        }
+                    </ul>
             <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
         </div>
         <div className='admSupplierTable'>
@@ -42,7 +90,8 @@ const AdminSupplierContent = ({suppliers}:any) => {
                 </tr>
             </thead>    
             <tbody>
-            {suppliers ? suppliers.map((items: ISupplierItem) => (
+            {filteredSupplierData ? filteredSupplierData.map(
+                (items: ISupplierItem) => (
                     <tr key={'or' + items.id_supplier}
                         //onClick={e => showComment(e)}
                         //onDoubleClick={e => showOrderData(e)}

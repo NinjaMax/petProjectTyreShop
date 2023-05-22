@@ -3,64 +3,15 @@ import '../../../css/AdminComponentCss/AdminContentCss/AdminOrderSupContent.css'
 import ButtonSearch from '../../buttons/ButtonSearch';
 import ModalAdmin from '../../modal/ModalAdmin';
 import AdminModalOrderSup from '../adminModalForm/AdminModalOrderSup';
-
-interface IOrderSupContent {
-    
-    props:[[] | null, ...[][] | null[]];
-    showComment(arg0: any):void;
-    customer?:{} | null;
-    storage:[any] | null;
-    comments?:[] | null;
-    supplier?:[] | null;
-    ordersSup?:[] | null;
-    stockByIdTyre?:[]; 
-    tyreStockData?:[];
-    tyrePriceData?:[];
-    wheelData?:[]; 
-    wheelPriceData?:[];
-    wheelStockData?:[]; 
-}
-
-type IOrderComments ={
-    id_order_sup: number;
-    user: {name:string};
-    createdAt: Date;
-    comments: string;
-}  
-
-type IOrdersSupItem = {
-    id_order_sup: number;
-    createdAt: Date;
-    updatedAt: Date;
-    supplier:{full_name: string;}
-    storage: string;
-    status: string;
-    order_view: string;
-    delivery: string;
-    status_delivery: string;
-    pay_view: string;
-    status_pay: string;
-    id_user: number;
-    notes: string;
-    total: number;
-    quantity?: number;
-    delivery_ttn: string;
-    id_contract: number | string;
-    id_supplier: number;
-    organisation: string;
-    order_storage: any [];
-    [Symbol.iterator](): any;
-    comments: any[];
-    reduce(arg0: any, ...arg: any[]): any;
-    user:{name: string; role: string; id_user: number;}
-}
+import { IOrderSupContent } from './interfaces/AdminOrderSup.interface';
+import { IOrdersSupItem } from './types/OrderSupItem.type';
+import { IComments } from './types/Comment.type';
 
 const AdminOrderSupContent = (
     {
         props,
         storage,
         ordersSup,
-
         comments,
         supplier,
         showComment
@@ -68,6 +19,9 @@ const AdminOrderSupContent = (
     const [activeOrderSup, setActiveOrderSup] = useState(false);
     //const [activeOrderSup, setActiveOrderSup] = useState(false);
     const [orderSupData, setOrderSupData] = useState(null);
+    const [value, setValue] = useState('');
+    const [isSearch, setIsSearch] = useState(true);
+
 
     const activeFormOrderSup = async(e:any) => {
         if (orderSupData) {
@@ -95,8 +49,30 @@ const AdminOrderSupContent = (
         }
     }
 
+    const filteredOrderSupData = ordersSup?.filter((orderSupItem: any) => {
+        return orderSupItem.id_order_sup.toLowerCase().includes(+value.toLowerCase()) ||
+        orderSupItem.supplier.full_name.toLowerCase().includes(value.toLowerCase())  
+    })
+
+    const itemClickHandler = (e: any) => {
+        const entity = e.target.textContent.split(':')
+        setValue(entity[1]);
+        //setValue(e.target.value);
+        setIsSearch(!isSearch);
+    }
+
+    const inputHandler = () => {
+        setIsSearch(true);
+    }
+
+    const inputCancelHandler = () => {
+        if(isSearch){
+           setIsSearch(false); 
+        }
+    }
+
     return (
-        <div>
+        <div  onClick={inputCancelHandler}>
         <div className="admOrderSupContent">
             <span>Замовлення Постачальника:</span>
             <div className='admOrderSupHeader'>
@@ -106,7 +82,31 @@ const AdminOrderSupContent = (
                 >Додати замовлення постачальника
                 </button>
             </div>
-            <input className='inputAdminOrderSup' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
+            <input
+                id="myInput" 
+                className='inputAdminOrderSup' 
+                type="text"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                onClick={inputHandler} 
+                placeholder="Введіть значення для пошуку..."
+            />
+            <ul className='inputOrderSupContent'>
+                        {value && isSearch ?
+                            filteredOrderSupData?.map(
+                                (item: IOrdersSupItem, index: number) =>{
+                            return (
+                            <li key={'fullName' + index}
+                                className='inputOrderSupContentItem'
+                                onClick={itemClickHandler}
+                            >
+                            {`${item.id_order_sup}: ${item.supplier.full_name}`}
+                            </li>
+                            ) 
+                            })  
+                        : null  
+                        }
+                    </ul>
             <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
         </div>
         <div className='admOrdersSupTable'>
@@ -132,7 +132,7 @@ const AdminOrderSupContent = (
                 </tr>
             </thead>    
             <tbody>
-            {ordersSup ? ordersSup.map((items: IOrdersSupItem) => (
+            {filteredOrderSupData ? filteredOrderSupData.map((items: IOrdersSupItem) => (
                     <tr key={'orSup' + items.id_order_sup}
                         onClick={e => showComment(e)}
                         onDoubleClick={e => showOrderSupData(e)}
@@ -189,7 +189,7 @@ const AdminOrderSupContent = (
                 </thead>
                 <tbody>
                     {comments ? comments.map(
-                        (value: IOrderComments, index: number) => (
+                        (value: IComments, index: number) => (
                     <tr key={value.user.name + index}>
                         <td>{value.id_order_sup}</td>
                         <td>{value.user.name}</td>

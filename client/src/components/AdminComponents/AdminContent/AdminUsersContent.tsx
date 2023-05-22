@@ -11,13 +11,39 @@ interface IUser {
 
 const AdminUsersContent = ({users}:IUser) => {
     const [createUser, setCreateUser] =useState(false);
+    const [value, setValue] = useState('');
+    const [isSearch, setIsSearch] = useState(true);
 
     const createUserBtn = () => {
         setCreateUser(!createUser);
     };
 
+    const filteredUserData = users?.filter((userItem: any) => {
+        return userItem.id_user.toLowerCase().includes(+value.toLowerCase()) ||
+        userItem.name.toLowerCase().includes(value.toLowerCase())  
+    })
+
+    const itemClickHandler = (e: any) => {
+        const entity = e.target.textContent.split(':')
+        setValue(entity[1]);
+        //setValue(e.target.value);
+        setIsSearch(!isSearch);
+    }
+
+    const inputHandler = () => {
+        setIsSearch(true);
+    }
+
+    const inputCancelHandler = () => {
+        if(isSearch){
+           setIsSearch(false); 
+        }
+    }
+
     return (
-        <div className='admUserContentBox'>
+        <div className='admUserContentBox'
+            onClick={inputCancelHandler}
+        >
         <div className="admUsersContent">
             <span>Користувачі:</span>
             <div className='admUsersHeader'>
@@ -25,7 +51,31 @@ const AdminUsersContent = ({users}:IUser) => {
                     onClick={createUserBtn}>Додати користувача
                 </button>
             </div>
-            <input className='inputAdminUsers' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
+            <input 
+                className='inputAdminUsers' 
+                type="text" 
+                id="myInput"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                onClick={inputHandler} 
+                placeholder="Введіть значення для пошуку..."
+            />
+                <ul className='inputSupplierContent'>
+                    {value && isSearch ?
+                            filteredUserData?.map(
+                                (item: IUserItem, index: number) =>{
+                            return (
+                            <li key={'fullName' + index}
+                                className='inputSupplierContentItem'
+                                onClick={itemClickHandler}
+                            >
+                            {`${item.id_user}: ${item.name}`}
+                            </li>
+                            ) 
+                            })  
+                        : null  
+                    }
+                </ul>
             <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
         </div>
         <div className='admUsersTable'>
@@ -44,7 +94,8 @@ const AdminUsersContent = ({users}:IUser) => {
                 </tr>
             </thead>    
             <tbody>
-            {users ? users.map((items: IUserItem) => (
+            {filteredUserData ? filteredUserData.map(
+                (items: IUserItem) => (
                     <tr key={'or' + items.id_user}
                         //onClick={e => showComment(e)}
                         //onDoubleClick={e => showOrderData(e)}

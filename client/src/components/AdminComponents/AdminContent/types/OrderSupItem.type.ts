@@ -1,8 +1,8 @@
-export type IOrdersItem = {
-    id_order: number;
+export type IOrdersSupItem = {
+    id_order_sup: number;
     createdAt: Date;
     updatedAt: Date;
-    customer:{full_name: string;}
+    supplier:{full_name: string;}
     storage: string;
     status: string;
     order_view: string;
@@ -16,12 +16,11 @@ export type IOrdersItem = {
     quantity?: number;
     delivery_ttn: string;
     id_contract: number | string;
-    id_customer: number;
+    id_supplier: number;
     organisation: string;
     order_storage: any [];
     [Symbol.iterator](): any;
     comments: any[];
     reduce(arg0: any, ...arg: any[]): any;
-    filter(arg0: any, ...arg: any[]): any;
     user:{name: string; role: string; id_user: number;}
 }

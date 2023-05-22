@@ -11,13 +11,37 @@ interface ICustomer {
 
 const AdminCustomersContent = ({customers}: ICustomer) => {
     const [createCustm, setCreateCustm] = useState(false);
+    const [value, setValue] = useState('');
+    const [isSearch, setIsSearch] = useState(true);
 
     const createCustomer = () => {
         setCreateCustm(!createCustm);
     };
 
+    const filteredCustomerData = customers?.filter((customerItem: any) => {
+        return customerItem.id_customer.toLowerCase().includes(+value.toLowerCase()) ||
+        customerItem.full_name.toLowerCase().includes(value.toLowerCase())  
+    })
+
+    const itemClickHandler = (e: any) => {
+        const entity = e.target.textContent.split(':')
+        setValue(entity[1]);
+        //setValue(e.target.value);
+        setIsSearch(!isSearch);
+    }
+
+    const inputHandler = () => {
+        setIsSearch(true);
+    }
+
+    const inputCancelHandler = () => {
+        if(isSearch){
+           setIsSearch(false); 
+        }
+    }
+
     return (
-        <div>
+        <div onClick={inputCancelHandler}>
             <div className="admCustomersContent">
                 <span>Покупці:</span>
                 <div className='admCustomersHeader'>
@@ -25,7 +49,31 @@ const AdminCustomersContent = ({customers}: ICustomer) => {
                         onClick={createCustomer}>Додати покупця
                     </button>
                 </div>
-                <input className='inputAdminCustomers' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
+                <input 
+                    className='inputAdminCustomers' 
+                    type="text" 
+                    id="myInput"
+                    value={value}
+                    onChange={(e) => setValue(e.target.value)}
+                    onClick={inputHandler} 
+                    placeholder="Введіть значення для пошуку..."
+                />
+                <ul className='inputOrderContent'>
+                        {value && isSearch ?
+                            filteredCustomerData?.map(
+                                (item: ICustomerItem, index: number) =>{
+                            return (
+                            <li key={'fullName' + index}
+                                className='inputOrderContentItem'
+                                onClick={itemClickHandler}
+                            >
+                            {`${item.id_customer}: ${item.full_name}`}
+                            </li>
+                            ) 
+                            })  
+                        : null  
+                        }
+                    </ul>
                     <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
             </div>
             <div className='admCustomersTable'>
@@ -45,7 +93,8 @@ const AdminCustomersContent = ({customers}: ICustomer) => {
                         </tr>
                     </thead>    
                     <tbody>
-                    {customers ? customers.map((items: ICustomerItem) => (
+                    {filteredCustomerData ? filteredCustomerData.map(
+                        (items: ICustomerItem) => (
                     <tr key={'or' + items.id_customer}
                         //onClick={e => showComment(e)}
                         //onDoubleClick={e => showOrderData(e)}

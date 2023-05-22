@@ -9,20 +9,9 @@ import AdminTyreContent from './AdminTyreContent';
 import AdminTyreStockPriceRow from './AdminTyreStockPriceRow';
 import AdminWheelContent from './AdminWheelContent';
 import AdminWheelStockPriceRow from './AdminWheelStockPriceRow';
+import { IGoodsContent } from './interfaces/GoodsContent.interface';
+import { TyreContent } from './types/TyreContent.type';
 
-interface IGoodsContent {
-    props:[[] | null, ...[][] | null[]];
-    comments?:[] | null;
-    customer: [] | null;
-    storage:[any] | null;
-    stockByIdTyre?: []; 
-    tyreStockData?:[];
-    tyrePriceData?:[];
-    wheelData?:[]; 
-    wheelPriceData?:[];
-    wheelStockData?:[]; 
-    showComment(arg0:any):void;
-}
 
 const AdminGoodsContent = (
     {showComment, comments, props, customer, storage}:IGoodsContent) => {
@@ -48,61 +37,11 @@ const AdminGoodsContent = (
     // const [priceOil, setPriceOil] = useState([]);
     // const [stockBattery, setStockBattery] = useState([]);
     // const [priceBattery, setPriceBattery] = useState([]);
+    const [value, setValue] = useState('');
+    //const [valueItem, setValueItem] = useState<string | null>(null);
+    const [isSearch, setIsSearch] = useState(false);
 
-    // useEffect(()=>{
-    //     axios.get("http://localhost:4000/stock/tyres/", {
-    //         headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
-    //         withCredentials: true,
-    //         params: {id_tyre: itemIdTyre}
-    //     })
-    //     .then(response => {
-    //         setStockTyre([response.data]);
-    //         console.log('STOCK TYRE: ',response.data)
-    //     })
-    //     .catch(error => {
-    //       console.log(error)
-    //     });
-
-    //     axios.get("http://localhost:4000/price/tyres/", {
-    //         headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
-    //         withCredentials: true,
-    //         params: {id_tyre: itemIdTyre}
-    //     })
-    //     .then(response => {
-    //         setPriceTyre([response.data]);
-    //         console.log('PRICE TYRE: ',response.data)
-    //     })
-    //     .catch(error => {
-    //       console.log(error)
-    //     });
-    // },[itemIdTyre]);
-
-    // useEffect(()=>{
-    //     axios.get("http://localhost:4000/stock/wheels/", {
-    //         headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
-    //         withCredentials: true,
-    //         params: {id_wheel: itemIdWheel}
-    //     })
-    //     .then(response => {
-    //         setStockWheel([response.data]);
-    //     })
-    //     .catch(error => {
-    //       console.log(error)
-    //     });
-
-    //     axios.get("http://localhost:4000/price/wheels/", {
-    //         headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000'},
-    //         withCredentials: true,
-    //         params: {id_wheel: itemIdWheel}
-    //     })
-    //     .then(response => {
-    //         setPriceWheel([response.data]);
-    //         //console.log(response.data)
-    //     })
-    //     .catch(error => {
-    //       console.log(error)
-    //     });
-    // },[itemIdWheel]);
+   
 
     const showStockPriceTyre = (e: { currentTarget: { getAttribute: (arg0: string) => any; }; }) => {
         //console.log(typeof(e.currentTarget.getAttribute("data-value")));
@@ -157,9 +96,35 @@ const AdminGoodsContent = (
         }  
     }
 
+    const filteredGoodsData: any = tyreData?.filter((goodsItem: any) => {
+        return goodsItem.id.toLowerCase().includes(value.toLowerCase()) ||
+        goodsItem.full_name.toLowerCase().includes(value.toLowerCase())  
+    })
+
+    const itemClickHandler = (e: any) => {
+        const entity = e.target.textContent.split(':')
+        setValue(entity[1]);
+        setIsSearch(!isSearch);
+    }
+
+    const inputHandler = () => {
+        setIsSearch(true);
+    }
+
+    const inputCancelHandler = () => {
+        if(isSearch){
+           setIsSearch(false); 
+        }
+    }
+
     return (
-        <div>
-            <div id="myDIV" className="headerGoods">
+        <div 
+            
+            onClick={inputCancelHandler}
+        >
+            <div id="myDIV" className="headerGoods"
+
+            >
                 <span>Каталог товарів: {chooseCat}</span>
                 <div className='admHeaderCatalog'>  
                   <label className='admChooseLabel'>
@@ -190,18 +155,46 @@ const AdminGoodsContent = (
                     <button className='admGoodsAddBtn'>Створити товар</button>
                 </div>
                 <div className='admBtnSearch'>
-                    <input className='inputAdminGoods' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
+                    <input 
+                        id="myInput"
+                        className='inputAdminGoods' 
+                        type="text" 
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
+                        onClick={inputHandler}
+                        placeholder="Введіть значення для пошуку..."
+                    />
+                    <ul className='inputGoodsContent'>
+                        {value && isSearch ?
+                            filteredGoodsData?.map(
+                                (item: TyreContent, index: number) =>{
+                            return (
+                            <li key={'fullName' + index}
+                                className='inputGoodsContentItem'
+                                onClick={(e) => itemClickHandler(e)}
+                            >
+                            {`${item.id}:${item.full_name}`}
+                            </li>
+                            ) 
+                            })  
+                        : null  
+                        }
+                    </ul>
                     <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>  
                 </div>
             </div>
             <div className='admGoodsTable'>
             { chooseCat === 'Шини' ?
-                <AdminTyreContent props={tyreData} showRowData={showStockPriceTyre}
+                <AdminTyreContent 
+                    props={filteredGoodsData} 
+                    showRowData={showStockPriceTyre}
                     addTyreToOrder={addToOrder}/>
                 : null
             }
             { chooseCat === 'Диски' ?
-                <AdminWheelContent props={wheelData} showRowData={showStockPriceWheel}
+                <AdminWheelContent 
+                    props={wheelData} 
+                    showRowData={showStockPriceWheel}
                     addWheelToOrder={addToOrder}/>
                 : null
             }
@@ -231,17 +224,19 @@ const AdminGoodsContent = (
                         <th>Ціна Закупка</th>
                         <th>Ціна Роздріб</th>
                         <th>Ціна Роздріб+Дост</th>
-                    </tr>
-                   
+                    </tr>    
                     {chooseCat === 'Шини'? 
-                        <AdminTyreStockPriceRow stockTyres={stockTyre} priceTyres={priceTyre}/>
+                        <AdminTyreStockPriceRow 
+                        stockTyres={stockTyre} 
+                        priceTyres={priceTyre}/>
                     :   null
                     } 
                     {chooseCat === 'Диски'?
-                       <AdminWheelStockPriceRow stockWheels={stockWheel} priceWheels={priceWheel}/>
+                       <AdminWheelStockPriceRow 
+                       stockWheels={stockWheel} 
+                       priceWheels={priceWheel}/>
                     :   null
-                    }     
-                 
+                    }                   
                 </tbody>
                 </table>     
             </div>

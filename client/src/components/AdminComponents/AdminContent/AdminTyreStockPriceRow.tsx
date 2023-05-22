@@ -1,20 +1,6 @@
 import React, {Fragment} from 'react';
-
-interface IAdmTyreStockPriceRow {
-    stockTyres: any[] | undefined; 
-    priceTyres: any[] | undefined;
-   
-}
-
-type IStockTyrelRow = {
-    id: number;
-    storage: {storage: string};
-    update_date: Date;
-    supplier: {name: string; city_ua: string;};
-    stock: number;
-    reserve: number;
-    remainder: number;
-}
+import { IAdmTyreStockPriceRow } from './interfaces/AdminTyreRow.interface';
+import { IStockTyreRow } from './types/StockTyreRow.type';
 
 // type IPriceTyreRow = {
 //     id: number;
@@ -30,7 +16,7 @@ const AdminTyreStockPriceRow = (
         <>
         {stockTyres?.length !==0 || priceTyres?.length !==0 ? 
             priceTyres?.map((
-                item: IStockTyrelRow,
+                item: IStockTyreRow,
                 index: number) => (
         <tr key={'tyrerow ' + item?.id}>
             {stockTyres ?

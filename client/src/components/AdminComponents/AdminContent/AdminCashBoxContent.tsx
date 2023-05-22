@@ -11,13 +11,37 @@ interface ICashbox {
 
 const AdminCashBoxContent = ({cashboxData}: ICashbox) => {
     const [cashbox, setCashbox] = useState(false);
+    const [value, setValue] = useState('');
+    const [isSearch, setIsSearch] = useState(true);
     
     const createCashbox = () => {
         setCashbox(!cashbox);
     };
 
+    const filteredCashBoxData = cashboxData?.filter((orderItem: any) => {
+        return orderItem.id_order.toLowerCase().includes(+value.toLowerCase()) ||
+        orderItem.customer.full_name.toLowerCase().includes(value.toLowerCase())  
+    })
+
+    const itemClickHandler = (e: any) => {
+        const entity = e.target.textContent.split(':')
+        setValue(entity[1]);
+        //setValue(e.target.value);
+        setIsSearch(!isSearch);
+    }
+
+    const inputHandler = () => {
+        setIsSearch(true);
+    }
+
+    const inputCancelHandler = () => {
+        if(isSearch){
+           setIsSearch(false); 
+        }
+    }
+
     return (
-        <div>
+        <div onClick={inputCancelHandler}>
         <div className="admCashBoxContent">
             <span>Каси:</span>
             <div className='admUsersHeader'>
@@ -25,7 +49,32 @@ const AdminCashBoxContent = ({cashboxData}: ICashbox) => {
                     onClick={createCashbox}>Додати касу
                 </button>
             </div>
-            <input className='inputAdminCashBox' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
+            <input 
+                className='inputAdminCashBox' 
+                type="text" 
+                id="myInput" 
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                onClick={inputHandler}
+                placeholder="Введіть значення для пошуку..."
+            />
+            <ul className='inputCashBoxContent'>
+                        {value && isSearch ?
+                            filteredCashBoxData?.map(
+                                (item: ICashboxItem, index: number) =>{
+                            return (
+                            <li key={'fullName' + index}
+                                className='inputCashBoxContentItem'
+                                onClick={(e) => itemClickHandler(e)}
+                            >
+                            {`${item.id_cashbox}:${item.cashbox}`}
+                            </li>
+                            ) 
+                            })  
+                        : null  
+                        }
+                    </ul>
+
             <ButtonSearch clickSearchBtn={() => console.log('seaachBTN')}/>
         </div>
         <div className='admCashBoxTable'>
@@ -41,7 +90,8 @@ const AdminCashBoxContent = ({cashboxData}: ICashbox) => {
                 </tr>
             </thead>    
             <tbody>
-            {cashboxData ? cashboxData.map((items: ICashboxItem) => (
+            {filteredCashBoxData ? filteredCashBoxData.map(
+                (items: ICashboxItem) => (
                     <tr key={'or' + items.id_cashbox}
                         //onClick={e => showComment(e)}
                         //onDoubleClick={e => showOrderData(e)}

@@ -8,13 +8,37 @@ import { IAdminPayment } from './interfaces/AdminPayment.interface';
 
 const AdminPayIncomesContent = ({payIncomes}: IAdminPayment) => {
     const [incomePay, setIncomePay] = useState(false);
+    const [value, setValue] = useState('');
+    const [isSearch, setIsSearch] = useState(true);
 
     const createIncPay = () => {
         setIncomePay(!incomePay);
     };
 
+    const filteredPayIncomesData = payIncomes?.filter((payItem: any) => {
+        return payItem.id_paynment.toLowerCase().includes(+value.toLowerCase()) ||
+        payItem.incomes.incomes.toLowerCase().includes(value.toLowerCase())  
+    })
+
+    const itemClickHandler = (e: any) => {
+        const entity = e.target.textContent.split(':')
+        setValue(entity[1]);
+        //setValue(e.target.value);
+        setIsSearch(!isSearch);
+    }
+
+    const inputHandler = () => {
+        setIsSearch(true);
+    }
+
+    const inputCancelHandler = () => {
+        if(isSearch){
+           setIsSearch(false); 
+        }
+    }
+
     return (
-        <div>
+        <div onClick={inputCancelHandler}>
         <div className="admIncomesContent">
             <span>Платежі вхідні:</span>
             <div className='admIncomesHeader'>
@@ -22,7 +46,31 @@ const AdminPayIncomesContent = ({payIncomes}: IAdminPayment) => {
                     onClick={createIncPay}>Додати платіж
                 </button>
             </div>
-            <input className='inputAdminIncomes' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
+            <input 
+                className='inputAdminIncomes' 
+                type="text" 
+                id="myInput" 
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                onClick={inputHandler} 
+                placeholder="Введіть значення для пошуку..."
+            />
+            <ul className='inputPayExpenseContent'>
+                        {value && isSearch ?
+                            filteredPayIncomesData?.map(
+                                (item: IPaymentItem, index: number) =>{
+                            return (
+                            <li key={'fullName' + index}
+                                className='inputPayExpenseContentItem'
+                                onClick={itemClickHandler}
+                            >
+                            {`${item.id_paynment}: ${item.incomes?.income}`}
+                            </li>
+                            ) 
+                            })  
+                        : null  
+                        }
+                    </ul>
             <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
         </div>
         <div className='admIncomesTable'>

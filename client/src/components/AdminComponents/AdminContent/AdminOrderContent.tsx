@@ -14,6 +14,9 @@ const AdminOrderContent = (
     const [activeOrder, setActiveOrder] = useState(false);
     const [activeOrderSup, setActiveOrderSup] = useState(false);
     const [orderData, setOrderData] = useState<IOrdersItem | null>(null);
+    //const [filteredOrder, setFilteredOrder] = useState(null);
+    const [value, setValue] = useState('');
+    const [isSearch, setIsSearch] = useState(true);
 
     const activeFormOrder = async(e:any) => {
         if (orderData) {
@@ -41,11 +44,34 @@ const AdminOrderContent = (
             showComment(e);
         }
     }
+
+    const filteredOrderData = orders?.filter((orderItem: any) => {
+        return orderItem.id_order.toLowerCase().includes(+value.toLowerCase()) ||
+        orderItem.customer.full_name.toLowerCase().includes(value.toLowerCase())  
+    })
+
+    const itemClickHandler = (e: any) => {
+        const entity = e.target.textContent.split(':')
+        setValue(entity[1]);
+        //setValue(e.target.value);
+        setIsSearch(!isSearch);
+    }
+
+    const inputHandler = () => {
+        setIsSearch(true);
+    }
+
+    const inputCancelHandler = () => {
+        if(isSearch){
+           setIsSearch(false); 
+        }
+    }
     // const orderTotal = order_storage?.reduce((sum:any, current:any) => 
     //     sum + (current.price.price * current.price.quantity), 0
     // ) ?? 0;
+
     return (
-        <div>
+        <div  onClick={inputCancelHandler}>
             <div className="admOrderContent">
                 <span>Замовлення Покупців:</span>
                 <div className='admOrderHeader'
@@ -58,7 +84,31 @@ const AdminOrderContent = (
                         Додати замовлення
                     </button>
                 </div>
-                <input className='inputAdminOrder' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
+                <input 
+                    className='inputAdminOrder' 
+                    type="text" 
+                    id="myInput" 
+                    value={value}
+                    onChange={(e) => setValue(e.target.value)}
+                    onClick={inputHandler}
+                    placeholder="Введіть значення для пошуку..."
+                />
+                    <ul className='inputOrderContent'>
+                        {value && isSearch ?
+                            filteredOrderData?.map(
+                                (item: IOrdersItem, index: number) =>{
+                            return (
+                            <li key={'fullName' + index}
+                                className='inputOrderContentItem'
+                                onClick={itemClickHandler}
+                            >
+                            {`${item.id_order}: ${item.customer.full_name}`}
+                            </li>
+                            ) 
+                            })  
+                        : null  
+                        }
+                    </ul>
                 <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
             </div>
             <div className='admOrdersTable'
@@ -85,7 +135,7 @@ const AdminOrderContent = (
                     </tr>
                 </thead>    
                 <tbody>
-                    {orders ? orders.map((items: IOrdersItem) => (
+                    {filteredOrderData ? filteredOrderData.map((items: IOrdersItem) => (
                     <tr key={'or' + items.id_order}
                         onClick={e => showComment(e)}
                         onDoubleClick={e => showOrderData(e)}

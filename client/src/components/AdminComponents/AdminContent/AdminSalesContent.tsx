@@ -1,31 +1,67 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminSalesContent.css';
 import ButtonSearch from '../../buttons/ButtonSearch';
 import { ISalesItem } from './types/SalesItem.type';
+import { IAdminSales } from './interfaces/AdminSales.interface';
 
-interface IAdminSales {
-    sales: [] | null;
-//     comments?:[] | null;
-//     props:[[] | null, ...any[][] | null[]];
-//     showComment(arg0: any):void;
-//     orders: [] | null;
-//     customer: [] | null;
-//     storage:[any] | null;
-//     stockByIdTyre?: []; 
-//     tyreStockData?:[];
-//     tyrePriceData?:[];
-//     wheelData?:[]; 
-//     wheelPriceData?:[];
-//     wheelStockData?:[];
-}
+
 
 const AdminSalesContent = ({sales}: IAdminSales) => {
+    const [value, setValue] = useState('');
+    const [isSearch, setIsSearch] = useState(true);
+
+    const filteredSalesData = sales?.filter((salesItem: any) => {
+        return salesItem.id_sales.toLowerCase().includes(+value.toLowerCase()) ||
+        salesItem.customer.full_name.toLowerCase().includes(value.toLowerCase())  
+    })
+
+    const itemClickHandler = (e: any) => {
+        const entity = e.target.textContent.split(':')
+        setValue(entity[1]);
+        //setValue(e.target.value);
+        setIsSearch(!isSearch);
+    }
+
+    const inputHandler = () => {
+        setIsSearch(true);
+    }
+
+    const inputCancelHandler = () => {
+        if(isSearch){
+           setIsSearch(false); 
+        }
+    }
+
     return (
-        <div>
+        <div onClick={inputCancelHandler}>
         <div className="admSalesContent">
             <span>Продажі:</span>
             <div className='admSalesHeader'></div>
-            <input className='inputAdminSales' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
+            <input 
+                id="myInput"
+                className='inputAdminSales' 
+                type="text" 
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                onClick={inputHandler} 
+                placeholder="Введіть значення для пошуку..."
+            />
+                <ul className='inputSalesContent'>
+                        {value && isSearch ?
+                            filteredSalesData?.map(
+                                (item: ISalesItem, index: number) =>{
+                            return (
+                            <li key={'fullName' + index}
+                                className='inputSalesContentItem'
+                                onClick={itemClickHandler}
+                            >
+                            {`${item.id_sales}: ${item.customer.full_name}`}
+                            </li>
+                            ) 
+                            })  
+                        : null  
+                        }
+                    </ul>
             <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
         </div>
         <div className='admSalesTable'>
@@ -51,7 +87,7 @@ const AdminSalesContent = ({sales}: IAdminSales) => {
                 </tr>
             </thead>    
             <tbody>
-            {sales ? sales.map((items: ISalesItem) => (
+            {filteredSalesData ? filteredSalesData.map((items: ISalesItem) => (
                     <tr key={'or' + items.id_sales}
                         //onClick={e => showComment(e)}
                         //onDoubleClick={e => showOrderData(e)}

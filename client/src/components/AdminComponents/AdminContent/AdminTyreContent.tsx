@@ -1,23 +1,8 @@
 import React, {MouseEvent} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminTyreContent.css';
+import { TyreContent } from './types/TyreContent.type';
+import { ITyreContent } from './interfaces/TyreContent.interface';
 
-interface ITyreContent {
-    props: any[] | null;
-    showRowData(e: any):void;
-    addTyreToOrder(e: any): void;
-    //stockByIdTyre: [];
-}
-
-type TyreContent = {
-    tyre_brand: {brand: string;};
-    country: {country_manufacturer_ua :string};
-    year: {manufacture_year: number};
-    id: string; 
-    full_name: string;
-    season: {season_ua: string}; 
-    manufacture_year: string;
-    category: {category: string};
-}
 
 const AdminTyreContent = ({props, showRowData, addTyreToOrder}: ITyreContent) => {
 

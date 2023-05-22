@@ -8,20 +8,68 @@ import { IAdminPayment } from './interfaces/AdminPayment.interface';
 
 const AdminPayExpensesContent = ({payExpenses}: IAdminPayment) => {
     const [outgoingPay, setOutgoingPay] = useState(false);
+    const [value, setValue] = useState('');
+    const [isSearch, setIsSearch] = useState(true);
     
     const outgoingCreate = () => {
         setOutgoingPay(!outgoingPay);
     };  
 
+    const filteredPayExpensesData = payExpenses?.filter((payItem: any) => {
+        return payItem.id_paynment.toLowerCase().includes(+value.toLowerCase()) ||
+        payItem.expenses.expenses.toLowerCase().includes(value.toLowerCase())  
+    })
+
+    const itemClickHandler = (e: any) => {
+        const entity = e.target.textContent.split(':')
+        setValue(entity[1]);
+        //setValue(e.target.value);
+        setIsSearch(!isSearch);
+    }
+
+    const inputHandler = () => {
+        setIsSearch(true);
+    }
+
+    const inputCancelHandler = () => {
+        if(isSearch){
+           setIsSearch(false); 
+        }
+    }
+
+
     return (
-        <div>
+        <div onClick={inputCancelHandler}>
         <div className="admExpenseContent">
             <span>Платежі вихідні:</span>
             <div className='admExpenseHeader'>
                 <button className='admExpenseAddBtn'
                     onClick={outgoingCreate}>Додати платіж</button>
             </div>
-            <input className='inputAdminExpense' type="text" id="myInput" placeholder="Введіть значення для пошуку..."/>
+            <input 
+                className='inputAdminExpense' 
+                type="text" 
+                id="myInput" 
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                onClick={inputHandler} 
+                placeholder="Введіть значення для пошуку..."/>
+                <ul className='inputPayExpenseContent'>
+                        {value && isSearch ?
+                            filteredPayExpensesData?.map(
+                                (item: IPaymentItem, index: number) =>{
+                            return (
+                            <li key={'fullName' + index}
+                                className='inputPayExpenseContentItem'
+                                onClick={itemClickHandler}
+                            >
+                            {`${item.id_paynment}: ${item.expenses?.expense}`}
+                            </li>
+                            ) 
+                            })  
+                        : null  
+                        }
+                    </ul>
             <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
         </div>
         <div className='admExpenseTable'>
@@ -43,7 +91,8 @@ const AdminPayExpensesContent = ({payExpenses}: IAdminPayment) => {
                 </tr>
             </thead>    
             <tbody>
-            {payExpenses ? payExpenses.map((items: IPaymentItem) => (
+            {filteredPayExpensesData ? filteredPayExpensesData.map(
+                (items: IPaymentItem) => (
                     <tr key={'or' + items.id_paynment}
                         //onClick={e => showComment(e)}
                         //onDoubleClick={e => showOrderData(e)}
