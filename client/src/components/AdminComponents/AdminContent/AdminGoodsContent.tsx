@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminGoodsContent.css';
 import ButtonSearch from '../../buttons/ButtonSearch';
 import ModalAdmin from '../../modal/ModalAdmin';
@@ -11,6 +11,7 @@ import AdminWheelContent from './AdminWheelContent';
 import AdminWheelStockPriceRow from './AdminWheelStockPriceRow';
 import { IGoodsContent } from './interfaces/GoodsContent.interface';
 import { TyreContent } from './types/TyreContent.type';
+import { sortTyres } from '../../sortService/sortAdminGoods';
 
 
 const AdminGoodsContent = (
@@ -38,25 +39,26 @@ const AdminGoodsContent = (
     // const [stockBattery, setStockBattery] = useState([]);
     // const [priceBattery, setPriceBattery] = useState([]);
     const [value, setValue] = useState('');
-    //const [valueItem, setValueItem] = useState<string | null>(null);
+    const [changedTyresData, setChangedTyresData] = useState<any[] | null>(null);
     const [isSearch, setIsSearch] = useState(false);
-
-   
+    
+    
+    // useEffect(() => {
+    //     if(filteredTyreData) {
+    //         setChangedTyresData(filteredTyreData);  
+    //     }
+    // },[filteredTyreData]);
 
     const showStockPriceTyre = (e: { currentTarget: { getAttribute: (arg0: string) => any; }; }) => {
-        //console.log(typeof(e.currentTarget.getAttribute("data-value")));
-        //console.log(e.currentTarget.getAttribute("data-value"));
         let stockByIdTyre: any[] | undefined = tyreStockData?.filter(
-            //item => item.id_tyre === Number(308282)
             (item:{id_tyre:number}) => item.id_tyre === Number(e.currentTarget.getAttribute("data-value"))
         );
         setStockTyre(stockByIdTyre);
-        console.log('STOCK TYRE: ',stockByIdTyre);
+
         let priceByIdTyre: any[] | undefined = tyrePriceData?.filter(
             (item:{id_tyre:number}) => item.id_tyre === Number(e.currentTarget.getAttribute("data-value"))
         );
         setPriceTyre(priceByIdTyre);
-        console.log('PRICE TYRE: ',priceByIdTyre);
     };
 
     const showStockPriceWheel = (e: { currentTarget: { getAttribute: (arg0: string) => any; }; }) => {
@@ -71,32 +73,25 @@ const AdminGoodsContent = (
         setPriceWheel(priceByIdWheel);
     };
 
-    // const showStockPriceOil = (e) => {
-    //     setItemIdO(e.currentTarget.getAttribute("value"));
-    // };
-
-    // const showStockPriceBattery = (e) => {
-    //     setItemIdB(e.currentTarget.getAttribute("value"));
-    // };
-
     const addToOrder = (e: { currentTarget: { value: string; }; }) => {
         setAddGoods(!addGoods);
-        //console.log(e.currentTarget.value)
         let itemTyre = tyreData?.find((item:{id:string}) => item.id === e.currentTarget?.value);
         let itemWheel = wheelData?.find((item:{id:string}) => item.id === e.currentTarget?.value);
-        //const itemTyre = tyreData.find(item => item ==e.currentTarget.value);
-        //const itemTyre = tyreData.find(item => item ==e.currentTarget.value);
-        //console.log('GOODS: ', itemTyre);
+
         if(itemTyre) {
             setItemId(itemTyre);
-            //setAddGoods(!addGoods);
         }   
         if(itemWheel) {
             setItemId(itemWheel);    
         }  
     }
 
-    const filteredGoodsData: any = tyreData?.filter((goodsItem: any) => {
+    const filteredTyreData: any = tyreData?.filter((goodsItem: any) => {
+        return goodsItem.id.toLowerCase().includes(value.toLowerCase()) ||
+        goodsItem.full_name.toLowerCase().includes(value.toLowerCase())  
+    })
+
+    const filteredWheelData: any = wheelData?.filter((goodsItem: any) => {
         return goodsItem.id.toLowerCase().includes(value.toLowerCase()) ||
         goodsItem.full_name.toLowerCase().includes(value.toLowerCase())  
     })
@@ -116,15 +111,99 @@ const AdminGoodsContent = (
            setIsSearch(false); 
         }
     }
+    const sortTyreContent = (e: any) => { 
+        console.log(e.target.textContent)
+        if (e.target.textContent === 'Код') {
+        //const sortTyresByCode = () => {
+            //const sortByCode: any = 
+            filteredTyreData?.sort(
+            (a:any, b:any) => (+a.id) - (+b.id));
+            
+           // return value;
+           console.log('sortCode: ', filteredTyreData);
+        //}    
+        }
+        if (e.target.textContent === 'Рік Виробн.') {
+        //const sortTyresByYear = () => {
+            //const sortByYear: any = 
+            filteredTyreData?.sort(
+            (a:any, b:any) => (+a.id) - (+b.id));
+            
+           // return value;
+           console.log('sortYear: ', filteredTyreData);
+        //}
+        }
+        if (e.target.textContent === 'Бренд') {
+        //const sortTyresByBrand = () => {
+            //const sortByBrand: any = 
+             filteredTyreData?.sort(
+                (a:any, b:any) => {
+                const brandA = a.tyre_brand?.brand.toLowerCase();
+                const brandB = b.tyre_brand?.brand.toLowerCase();
+                if(brandA < brandB) return -1;
+                if(brandA > brandB) return 1;
+                return 0;
+            })
+           // return value;
+           console.log('sortBrand: ', filteredTyreData);
+        //}
+        }
+        if (e.target.textContent === 'Сезон') {
+        //const sortTyresBySeason = () => {
+            //const sortBySeason: any = 
+            filteredTyreData?.sort(
+                (a:any, b:any) => {
+                const brandA = a.season?.season_ua.toLowerCase();
+                const brandB = b.season?.season_ua.toLowerCase();
+                if(brandA < brandB) return -1;
+                if(brandA > brandB) return 1;
+                return 0;
+            })
+            console.log('sortSeason: ', filteredTyreData);
+            //return value;
+        //}
+        }  
+        if (e.target.textContent === 'Країна поход.') { 
+        //const sortTyresByCountry = () => {
+            //const sortByCountry: any = 
+            filteredTyreData?.sort(
+                (a:any, b:any) => {
+                const brandA = a.country?.country_manufacturer_ua.toLowerCase();
+                const brandB = b.country?.country_manufacturer_ua.toLowerCase();
+                if(brandA < brandB) return -1;
+                if(brandA > brandB) return 1;
+                return 0;
+            })
+            console.log('sortCountry: ', filteredTyreData);
+            //return value;
+        //}
+        }
+        if (e.target.textContent === 'Категорія') {
+        //const sortTyresByCategory = () => {
+            //const sortByCategory: any = 
+            filteredTyreData?.sort(
+                (a:any, b:any) => {
+                const brandA = a.category?.category.toLowerCase();
+                const brandB = b.category?.category.toLowerCase();
+                if(brandA < brandB) return -1;
+                if(brandA > brandB) return 1;
+                return 0;
+            })
+            //return value;
+            console.log('sortCategory: ', filteredTyreData);
+        //}
+        }
+
+        //return filteredTyreData;
+    }
+
+
 
     return (
-        <div 
-            
+        <div  
             onClick={inputCancelHandler}
         >
-            <div id="myDIV" className="headerGoods"
-
-            >
+            <div id="myDIV" className="headerGoods">
                 <span>Каталог товарів: {chooseCat}</span>
                 <div className='admHeaderCatalog'>  
                   <label className='admChooseLabel'>
@@ -166,7 +245,21 @@ const AdminGoodsContent = (
                     />
                     <ul className='inputGoodsContent'>
                         {value && isSearch ?
-                            filteredGoodsData?.map(
+                            filteredTyreData?.map(
+                                (item: TyreContent, index: number) =>{
+                            return (
+                            <li key={'fullName' + index}
+                                className='inputGoodsContentItem'
+                                onClick={(e) => itemClickHandler(e)}
+                            >
+                            {`${item.id}:${item.full_name}`}
+                            </li>
+                            ) 
+                            })  
+                        : null  
+                        }
+                        {value && isSearch ?
+                            filteredWheelData?.map(
                                 (item: TyreContent, index: number) =>{
                             return (
                             <li key={'fullName' + index}
@@ -186,14 +279,16 @@ const AdminGoodsContent = (
             <div className='admGoodsTable'>
             { chooseCat === 'Шини' ?
                 <AdminTyreContent 
-                    props={filteredGoodsData} 
+                    props={filteredTyreData} 
                     showRowData={showStockPriceTyre}
-                    addTyreToOrder={addToOrder}/>
+                    addTyreToOrder={addToOrder}
+                    sortTyres={sortTyreContent}
+                    />
                 : null
             }
             { chooseCat === 'Диски' ?
                 <AdminWheelContent 
-                    props={wheelData} 
+                    props={filteredWheelData} 
                     showRowData={showStockPriceWheel}
                     addWheelToOrder={addToOrder}/>
                 : null

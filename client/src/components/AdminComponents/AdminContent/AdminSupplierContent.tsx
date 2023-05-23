@@ -22,7 +22,6 @@ const AdminSupplierContent = ({suppliers}:any) => {
     const itemClickHandler = (e: any) => {
         const entity = e.target.textContent.split(':')
         setValue(entity[1]);
-        //setValue(e.target.value);
         setIsSearch(!isSearch);
     }
 
@@ -64,7 +63,7 @@ const AdminSupplierContent = ({suppliers}:any) => {
                                 className='inputSupplierContentItem'
                                 onClick={itemClickHandler}
                             >
-                            {`${item.id_supplier}: ${item.name}`}
+                            {`${item.id_supplier}:${item.name}`}
                             </li>
                             ) 
                             })  

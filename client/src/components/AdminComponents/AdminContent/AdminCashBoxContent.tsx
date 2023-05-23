@@ -19,8 +19,8 @@ const AdminCashBoxContent = ({cashboxData}: ICashbox) => {
     };
 
     const filteredCashBoxData = cashboxData?.filter((orderItem: any) => {
-        return orderItem.id_order.toLowerCase().includes(+value.toLowerCase()) ||
-        orderItem.customer.full_name.toLowerCase().includes(value.toLowerCase())  
+        return orderItem.id_cashbox.toLowerCase().includes(+value.toLowerCase()) ||
+        orderItem.cashbox.toLowerCase().includes(value.toLowerCase())  
     })
 
     const itemClickHandler = (e: any) => {

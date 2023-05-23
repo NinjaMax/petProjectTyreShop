@@ -19,14 +19,13 @@ const AdminUsersContent = ({users}:IUser) => {
     };
 
     const filteredUserData = users?.filter((userItem: any) => {
-        return userItem.id_user.toLowerCase().includes(+value.toLowerCase()) ||
-        userItem.name.toLowerCase().includes(value.toLowerCase())  
+        return userItem.id_user === +value.toLowerCase() ||
+        userItem.name.toLowerCase().includes(value.toLowerCase()) 
     })
 
     const itemClickHandler = (e: any) => {
         const entity = e.target.textContent.split(':')
         setValue(entity[1]);
-        //setValue(e.target.value);
         setIsSearch(!isSearch);
     }
 
@@ -69,7 +68,7 @@ const AdminUsersContent = ({users}:IUser) => {
                                 className='inputSupplierContentItem'
                                 onClick={itemClickHandler}
                             >
-                            {`${item.id_user}: ${item.name}`}
+                            {`${item.id_user}:${item.name}`}
                             </li>
                             ) 
                             })  

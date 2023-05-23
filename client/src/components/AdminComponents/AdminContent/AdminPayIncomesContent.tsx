@@ -16,7 +16,7 @@ const AdminPayIncomesContent = ({payIncomes}: IAdminPayment) => {
     };
 
     const filteredPayIncomesData = payIncomes?.filter((payItem: any) => {
-        return payItem.id_paynment.toLowerCase().includes(+value.toLowerCase()) ||
+        return payItem.id_paynment === +value.toLowerCase() ||
         payItem.incomes.incomes.toLowerCase().includes(value.toLowerCase())  
     })
 

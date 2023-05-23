@@ -11,7 +11,7 @@ const AdminSalesContent = ({sales}: IAdminSales) => {
     const [isSearch, setIsSearch] = useState(true);
 
     const filteredSalesData = sales?.filter((salesItem: any) => {
-        return salesItem.id_sales.toLowerCase().includes(+value.toLowerCase()) ||
+        return salesItem.id_sales === +value.toLowerCase() ||
         salesItem.customer.full_name.toLowerCase().includes(value.toLowerCase())  
     })
 

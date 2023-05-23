@@ -25,6 +25,10 @@
     color: #444;
 }
 
+.admStockGoodsTable th:active {
+    background-color: #5a705a;
+}
+
 .admStockGoodsTable tr:nth-child(even) {
     background-color: #f2f2f2;
 }
@@ -205,13 +209,14 @@
 }
 
 .admChooseLabel {
-    border-radius: 3px;
+    /* border-radius: 8px; */
     background-color:#f2f2f2;
     padding: 10px;
     cursor: pointer;
 }
 
 .admChooseLabel:hover, .admChooseLabel:focus {
+    border-radius: 10px;
     background-color:#ddd;
 }
 

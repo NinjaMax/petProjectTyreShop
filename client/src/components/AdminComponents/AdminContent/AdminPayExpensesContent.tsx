@@ -16,7 +16,7 @@ const AdminPayExpensesContent = ({payExpenses}: IAdminPayment) => {
     };  
 
     const filteredPayExpensesData = payExpenses?.filter((payItem: any) => {
-        return payItem.id_paynment.toLowerCase().includes(+value.toLowerCase()) ||
+        return payItem.id_paynment === +value.toLowerCase() ||
         payItem.expenses.expenses.toLowerCase().includes(value.toLowerCase())  
     })
 

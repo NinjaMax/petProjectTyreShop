@@ -50,7 +50,7 @@ const AdminOrderSupContent = (
     }
 
     const filteredOrderSupData = ordersSup?.filter((orderSupItem: any) => {
-        return orderSupItem.id_order_sup.toLowerCase().includes(+value.toLowerCase()) ||
+        return orderSupItem.id_order_sup === +value.toLowerCase() ||
         orderSupItem.supplier.full_name.toLowerCase().includes(value.toLowerCase())  
     })
 

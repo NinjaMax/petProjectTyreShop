@@ -26,7 +26,6 @@ const AdminCustomersContent = ({customers}: ICustomer) => {
     const itemClickHandler = (e: any) => {
         const entity = e.target.textContent.split(':')
         setValue(entity[1]);
-        //setValue(e.target.value);
         setIsSearch(!isSearch);
     }
 
@@ -67,7 +66,7 @@ const AdminCustomersContent = ({customers}: ICustomer) => {
                                 className='inputOrderContentItem'
                                 onClick={itemClickHandler}
                             >
-                            {`${item.id_customer}: ${item.full_name}`}
+                            {`${item.id_customer}:${item.full_name}`}
                             </li>
                             ) 
                             })  

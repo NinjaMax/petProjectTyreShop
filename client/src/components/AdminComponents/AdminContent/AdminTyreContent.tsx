@@ -1,10 +1,55 @@
-import React, {MouseEvent} from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminTyreContent.css';
 import { TyreContent } from './types/TyreContent.type';
 import { ITyreContent } from './interfaces/TyreContent.interface';
+import { ActionGoodsType } from './enums/ActionGoods';
+import { reducer } from './reducer/sortGoodsReducer';
+import { createInitialState } from './reducer/initialStateGoods';
+
+const AdminTyreContent = (
+    {props, showRowData, addTyreToOrder, sortTyres}: ITyreContent) => {
+    const [state, dispatch] = useReducer(reducer, createInitialState(props))
 
 
-const AdminTyreContent = ({props, showRowData, addTyreToOrder}: ITyreContent) => {
+    const sortGoodsBrand = (e: any) => {
+        dispatch({ 
+            type: ActionGoodsType.SORT_BY_BRAND,
+            sortBrand: e.target.textContent,
+        });
+    }
+    const sortGoodsSeason = (e: any) => {
+        dispatch({ 
+            type: ActionGoodsType.SORT_BY_SEASON,
+            sortSeason: e.target.textContent,
+        });
+    }
+    const sortGoodsYear = (e: any) => {
+        dispatch({ 
+            type: ActionGoodsType.SORT_BY_YEAR,
+            sortYear: e.target.textContent,
+        });
+    }
+    const sortGoodsCountry = (e: any) => {
+        dispatch({ 
+            type: ActionGoodsType.SORT_BY_COUNTRY,
+            sortCountry: e.target.textContent,
+        });
+    }
+    const sortGoodsCategory = (e: any) => {
+        dispatch({ 
+            type: ActionGoodsType.SORT_BY_CATEGORY,
+            sortCategory: e.target.textContent,
+        });
+    };
+    const sortGoodsCode = (e: any) => {
+        dispatch({ 
+            type: ActionGoodsType.SORT_BY_CODE,
+            sortCode: e.target.textContent,
+        });
+    }
+    
+    console.log('TyreContentProps', props);
+    console.log('TyreContentState', state);
 
     return (
         <div>
@@ -12,32 +57,32 @@ const AdminTyreContent = ({props, showRowData, addTyreToOrder}: ITyreContent) =>
                 <table className='admListTyreTable'>
                 <thead>
                     <tr className='headerTyreTable'>
-                        <th>Код 
+                        <th onClick={sortGoodsCode}>Код 
                            <i className="fas fa-sort"></i>
                         </th>
                         <th>Назва товару
                             <i className="fas fa-sort"></i>
                         </th>
-                        <th>Бренд
+                        <th onClick={sortGoodsBrand}>Бренд
                             <i className="fas fa-sort"></i>
                         </th>
-                        <th>Сезон
+                        <th onClick={sortGoodsSeason}>Сезон
                             <i className="fas fa-sort"></i>
                         </th>
-                        <th>Рік Виробн.
+                        <th onClick={sortGoodsYear}>Рік Виробн.
                             <i className="fas fa-sort"></i>
                         </th>
-                        <th>Країна поход.
+                        <th onClick={sortGoodsCountry}>Країна поход.
                             <i className="fas fa-sort"></i>
                         </th>
-                        <th>Категорія
+                        <th onClick={sortGoodsCategory}>Категорія
                             <i className="fas fa-sort"></i>
                         </th>
                         <th>Опції</th> 
                     </tr>
                 </thead>    
                 <tbody> 
-                    {props ? props.map((item: TyreContent) => (
+                    {state ? state.map((item: TyreContent) => (
                     <tr key={'t' + item.id} 
                         onClick={showRowData} 
                         data-value={item.id}>
@@ -48,7 +93,7 @@ const AdminTyreContent = ({props, showRowData, addTyreToOrder}: ITyreContent) =>
                         <td >{item.year?.manufacture_year ?? ''}</td>
                         <td >{item.country?.country_manufacturer_ua ?? ''}</td>
                         <td >{item.category?.category ?? ''}</td>
-                        <td  onClick={(e: MouseEvent)=>e.preventDefault()}>
+                        <td  onClick={(e: any)=> e.preventDefault()}>
                             <button className='basketAdmTyre' value={item.id}
                                 onClick={addTyreToOrder}>
                                 <i className="fa fa-shopping-cart"></i>

@@ -3,5 +3,5 @@ export interface ITyreContent {
 
     showRowData(e: any):void;
     addTyreToOrder(e: any): void;
-    //stockByIdTyre: [];
+    sortTyres(e: any): void;
 }

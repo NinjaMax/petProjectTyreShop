@@ -46,7 +46,7 @@ const AdminOrderContent = (
     }
 
     const filteredOrderData = orders?.filter((orderItem: any) => {
-        return orderItem.id_order.toLowerCase().includes(+value.toLowerCase()) ||
+        return orderItem.id_order === +value.toLowerCase() ||
         orderItem.customer.full_name.toLowerCase().includes(value.toLowerCase())  
     })
 
