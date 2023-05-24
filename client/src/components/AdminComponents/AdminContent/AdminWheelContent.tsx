@@ -1,60 +1,58 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminWheelContent.css';
-
-interface IAdminWheelContent {
-    props: any[] | null;
-    showRowData(arg0: any):void;
-    addWheelToOrder(arg0: any): void;
-}
-
-type IWheelContentItem = {
-    id: number;
-    full_name_color: string;
-    type: {type: string;};
-    color: {color_short: string}
-    category:{category: string}
-}
-
+import { IWheelContentItem } from './types/WheelContent.type';
+import { IAdminWheelContent } from './interfaces/WheelContent.interface';
 
 const AdminWheelContent = (
     {
         props,
         showRowData,
-        addWheelToOrder
+        addWheelToOrder,
+        value,
+        sortWheels
     }: IAdminWheelContent
     ) => {
-        
+    const [newProps, setNewProps] = useState<any[] | null>(props);
+    
+    useEffect(() => {
+        setNewProps(props);
+    },[props, value])
+
     return (
         <div>
             <div className='admWheelTable'>
             <table className='admListWheelTable'>
                 <thead>
                     <tr className='headerWheelTable'>
-                        <th>Код 
+                        <th onClick={sortWheels}>Код 
                            <i className="fas fa-sort"></i>
                         </th>
-                        <th>Назва товару
+                        <th onClick={sortWheels}>Назва товару
                             <i className="fas fa-sort"></i>
                         </th>
-                        <th>Тип Диску
+                        <th onClick={sortWheels}>Бренд
                             <i className="fas fa-sort"></i>
                         </th>
-                        <th>Цвіт короткий
+                        <th onClick={sortWheels}>Тип Диску
                             <i className="fas fa-sort"></i>
                         </th>
-                        <th>Категорія
+                        <th onClick={sortWheels}>Цвіт короткий
+                            <i className="fas fa-sort"></i>
+                        </th>
+                        <th onClick={sortWheels}>Категорія
                             <i className="fas fa-sort"></i>
                         </th>
                         <th>Опції</th> 
                     </tr>
                 </thead>    
                 <tbody> 
-                {props ? props.map((item: IWheelContentItem) => (
+                {newProps ? newProps.map((item: IWheelContentItem) => (
                 <tr key={'w' + item.id} 
                     onClick={showRowData} 
                     data-value={item.id}>
                     <td >{item.id}</td>
                     <td >{item.full_name_color}</td>
+                    <td >{item.wheel_brand?.brand}</td>
                     <td >{item.type?.type ?? ''}</td>
                     <td >{item.color?.color_short ?? ''}</td>
                     <td >{item.category?.category ?? ''}</td>

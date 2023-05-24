@@ -19,7 +19,9 @@ export class PropsBrandService {
 
       if(tyreId) {
 
-        const tyreBrand = await this.tyreBrandRepository.create(createPropertyDto);
+        const tyreBrand = await this.tyreBrandRepository.create(
+          createPropertyDto,
+        );
         const createTyreBrand = await this.tyreBrandRepository.findByPk(
           tyreBrand.id_brand, {include: {all: true}});
         await createTyreBrand.$add('tyres', [createPropertyDto.id]);
@@ -31,7 +33,9 @@ export class PropsBrandService {
 
       } else {
 
-        const tyreBrand = await this.tyreBrandRepository.create(createPropertyDto);
+        const tyreBrand = await this.tyreBrandRepository.create(
+          createPropertyDto,
+        );
 
         return tyreBrand;
 

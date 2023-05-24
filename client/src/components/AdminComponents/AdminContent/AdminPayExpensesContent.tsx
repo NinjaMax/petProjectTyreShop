@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminPayExpenseContent.css';
 import ButtonSearch from '../../buttons/ButtonSearch';
 import ModalAdmin from '../../modal/ModalAdmin';
@@ -8,17 +8,27 @@ import { IAdminPayment } from './interfaces/AdminPayment.interface';
 
 const AdminPayExpensesContent = ({payExpenses}: IAdminPayment) => {
     const [outgoingPay, setOutgoingPay] = useState(false);
+    const [filteredPay, setFilteredPay] = useState< any[] | null | undefined>(payExpenses);
     const [value, setValue] = useState('');
     const [isSearch, setIsSearch] = useState(true);
     
+    useEffect(() => {
+        if(value.length !== 0) {
+            const filteredPayExpensesData = payExpenses?.filter((payItem: any) => {
+                return payItem.id_paynment === +value.toLowerCase() ||
+                payItem.expenses.expenses.toLowerCase().includes(value.toLowerCase())  
+            })
+            setFilteredPay(filteredPayExpensesData);
+        } else {
+            setFilteredPay(payExpenses);
+        }
+    },[payExpenses, value]);
+
     const outgoingCreate = () => {
         setOutgoingPay(!outgoingPay);
     };  
 
-    const filteredPayExpensesData = payExpenses?.filter((payItem: any) => {
-        return payItem.id_paynment === +value.toLowerCase() ||
-        payItem.expenses.expenses.toLowerCase().includes(value.toLowerCase())  
-    })
+    
 
     const itemClickHandler = (e: any) => {
         const entity = e.target.textContent.split(':')
@@ -34,6 +44,87 @@ const AdminPayExpensesContent = ({payExpenses}: IAdminPayment) => {
     const inputCancelHandler = () => {
         if(isSearch){
            setIsSearch(false); 
+        }
+    }
+
+    const sortPayExpense = (e: any) => {
+        if (e.target.textContent === 'Код') {
+            const sortByCode: any = 
+            filteredPay?.sort(
+            (a:any, b:any) => (+a.id_paynment) - (+b.id_paynment));
+            setFilteredPay(sortByCode);
+        }
+        if (e.target.textContent === 'Дата') {
+            const sortByDate: any = 
+            filteredPay?.sort(
+            (a:any, b:any) => 
+            (+(new Date(a.createdAt).toLocaleString())) - (+(new Date(b.createdAt).toLocaleString())));
+            setFilteredPay(sortByDate);
+        }
+        if (e.target.textContent === 'Дата оновлення') {
+            const sortByDateUpdate: any = 
+            filteredPay?.sort(
+            (a:any, b:any) => 
+            (+(new Date(a.updatedAt).toLocaleString())) - (+(new Date(b.updatedAt).toLocaleString())));
+            setFilteredPay(sortByDateUpdate);
+        }
+        if (e.target.textContent === 'Статус') { 
+            const sortByStatus: any = 
+            filteredPay?.sort(
+                (a:any, b:any) => 
+                a.status.toLowerCase().localeCompare(
+                    b.status.toLowerCase()
+                )
+            )
+            setFilteredPay(sortByStatus);
+        }
+        if (e.target.textContent === 'Вид Платежів') { 
+            const sortByOrderType: any = 
+            filteredPay?.sort(
+                (a:any, b:any) => 
+                a.expenses?.expense.toLowerCase().localeCompare(
+                    b.expenses?.expense.toLowerCase()
+                )
+            )
+            setFilteredPay(sortByOrderType);
+        }
+        if (e.target.textContent === 'Каса') { 
+            const sortByDelivery: any = 
+            filteredPay?.sort(
+                (a:any, b:any) => 
+                a.cashbox.cashbox.toLowerCase().localeCompare(
+                    b.cashbox.cashbox.toLowerCase()
+                )
+            )
+            setFilteredPay(sortByDelivery);
+        }
+        if (e.target.textContent === 'Сума') { 
+            const sortByDeliveryStatus: any = 
+            filteredPay?.sort(
+                (a:any, b:any) => 
+                +a.price - +b.price
+            )
+            setFilteredPay(sortByDeliveryStatus);
+        }
+        if (e.target.textContent === 'Тип платежа') { 
+            const sortByPayType: any = 
+            filteredPay?.sort(
+                (a:any, b:any) => 
+                a.paytype?.paytype.toLowerCase().localeCompare(
+                    b.paytype?.paytype.toLowerCase()
+                )
+            )
+            setFilteredPay(sortByPayType);
+        }
+        if (e.target.textContent === 'Користувач') {
+            const sortByUser: any = 
+            filteredPay?.sort(
+                (a:any, b:any) => 
+                    a.user.name.toLowerCase().localeCompare(
+                        b.user.name.toLowerCase()
+                    )
+            )
+            setFilteredPay(sortByUser);
         }
     }
 
@@ -56,7 +147,7 @@ const AdminPayExpensesContent = ({payExpenses}: IAdminPayment) => {
                 placeholder="Введіть значення для пошуку..."/>
                 <ul className='inputPayExpenseContent'>
                         {value && isSearch ?
-                            filteredPayExpensesData?.map(
+                            filteredPay?.map(
                                 (item: IPaymentItem, index: number) =>{
                             return (
                             <li key={'fullName' + index}
@@ -77,21 +168,21 @@ const AdminPayExpensesContent = ({payExpenses}: IAdminPayment) => {
             <thead>
                 <tr className='headerExpenseTable'>
                     <th>Тип</th>
-                    <th>Код</th>
-                    <th>Дата</th>
-                    <th>Дата оновлення</th>
-                    <th>Вид Платежів</th>
-                    <th>Каса</th>
-                    <th>Сума</th>
-                    <th>Статус</th>
-                    <th>Тип платежа</th>
-                    <th>Користувач</th>
+                    <th onClick={sortPayExpense}>Код</th>
+                    <th onClick={sortPayExpense}>Дата</th>
+                    <th onClick={sortPayExpense}>Дата оновлення</th>
+                    <th onClick={sortPayExpense}>Вид Платежів</th>
+                    <th onClick={sortPayExpense}>Каса</th>
+                    <th onClick={sortPayExpense}>Сума</th>
+                    <th onClick={sortPayExpense}>Статус</th>
+                    <th onClick={sortPayExpense}>Тип платежа</th>
+                    <th onClick={sortPayExpense}>Користувач</th>
                     <th>Коментар</th>
                     <th>Опції</th>
                 </tr>
             </thead>    
             <tbody>
-            {filteredPayExpensesData ? filteredPayExpensesData.map(
+            {filteredPay ? filteredPay.map(
                 (items: IPaymentItem) => (
                     <tr key={'or' + items.id_paynment}
                         //onClick={e => showComment(e)}

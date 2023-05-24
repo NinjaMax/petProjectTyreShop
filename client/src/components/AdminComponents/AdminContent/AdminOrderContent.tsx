@@ -14,15 +14,25 @@ const AdminOrderContent = (
     const [activeOrder, setActiveOrder] = useState(false);
     const [activeOrderSup, setActiveOrderSup] = useState(false);
     const [orderData, setOrderData] = useState<IOrdersItem | null>(null);
-    //const [filteredOrder, setFilteredOrder] = useState(null);
+    const [filteredOrder, setFilteredOrder] = useState< any[] | null>(orders);
     const [value, setValue] = useState('');
     const [isSearch, setIsSearch] = useState(true);
+
+    useEffect(() => {
+        if(value.length !== 0) {
+            const filteredOrderData: any = orders?.filter((orderItem: any) => {
+                return orderItem.id_order === +value.toLowerCase() ||
+                orderItem.customer.full_name.toLowerCase().includes(value.toLowerCase())  
+            })
+            setFilteredOrder(filteredOrderData);
+        } else {
+            setFilteredOrder(orders);
+        }
+    },[orders, value])
 
     const activeFormOrder = async(e:any) => {
         if (orderData) {
             setOrderData(null);
-            //showComment(e);
-            //comments=[];
         }
         setActiveOrder(!activeOrder);
         showComment(e);
@@ -45,15 +55,9 @@ const AdminOrderContent = (
         }
     }
 
-    const filteredOrderData = orders?.filter((orderItem: any) => {
-        return orderItem.id_order === +value.toLowerCase() ||
-        orderItem.customer.full_name.toLowerCase().includes(value.toLowerCase())  
-    })
-
     const itemClickHandler = (e: any) => {
         const entity = e.target.textContent.split(':')
         setValue(entity[1]);
-        //setValue(e.target.value);
         setIsSearch(!isSearch);
     }
 
@@ -66,9 +70,119 @@ const AdminOrderContent = (
            setIsSearch(false); 
         }
     }
-    // const orderTotal = order_storage?.reduce((sum:any, current:any) => 
-    //     sum + (current.price.price * current.price.quantity), 0
-    // ) ?? 0;
+
+    const sortOrder = (e: any) => {
+        if (e.target.textContent === 'Код') {
+            const sortByCode: any = 
+            filteredOrder?.sort(
+            (a:any, b:any) => (+a.id_order) - (+b.id_order));
+            setFilteredOrder(sortByCode);
+        }
+        if (e.target.textContent === 'Дата') {
+            const sortByDate: any = 
+            filteredOrder?.sort(
+            (a:any, b:any) => 
+            (+(new Date(a.createdAt).toLocaleString())) - (+(new Date(b.createdAt).toLocaleString())));
+            setFilteredOrder(sortByDate);
+        }
+        if (e.target.textContent === 'Дата оновлення') {
+            const sortByDateUpdate: any = 
+            filteredOrder?.sort(
+            (a:any, b:any) => 
+            (+(new Date(a.updatedAt).toLocaleString())) - (+(new Date(b.updatedAt).toLocaleString())));
+            setFilteredOrder(sortByDateUpdate);
+        }
+        if (e.target.textContent === 'Покупець') {
+            const sortByCustomer: any = 
+            filteredOrder?.sort(
+                    (a:any, b:any) => 
+                    a.customer.full_name.toLowerCase().localeCompare(
+                        b.customer.full_name.toLowerCase()
+                    )
+            )
+            setFilteredOrder(sortByCustomer);
+        }
+        if (e.target.textContent === 'Склад') {
+            const sortByStorage: any = 
+            filteredOrder?.sort(
+                (a:any, b:any) => 
+                a.storage.toLowerCase().localeCompare(
+                    b.storage.toLowerCase()
+                )
+        )
+            setFilteredOrder(sortByStorage)
+        }  
+        if (e.target.textContent === 'Статус') { 
+            const sortByStatus: any = 
+            filteredOrder?.sort(
+                (a:any, b:any) => 
+                a.status.toLowerCase().localeCompare(
+                    b.status.toLowerCase()
+                )
+            )
+            setFilteredOrder(sortByStatus);
+        }
+        if (e.target.textContent === 'Тип замовлення') { 
+            const sortByOrderType: any = 
+            filteredOrder?.sort(
+                (a:any, b:any) => 
+                a.order_view.toLowerCase().localeCompare(
+                    b.order_view.toLowerCase()
+                )
+            )
+            setFilteredOrder(sortByOrderType);
+        }
+        if (e.target.textContent === 'Перевізник') { 
+            const sortByDelivery: any = 
+            filteredOrder?.sort(
+                (a:any, b:any) => 
+                a.delivery.toLowerCase().localeCompare(
+                    b.delivery.toLowerCase()
+                )
+            )
+            setFilteredOrder(sortByDelivery);
+        }
+        if (e.target.textContent === 'Статус Доставки') { 
+            const sortByDeliveryStatus: any = 
+            filteredOrder?.sort(
+                (a:any, b:any) => 
+                a.status_delivery.toLowerCase().localeCompare(
+                    b.status_delivery.toLowerCase()
+                )
+            )
+            setFilteredOrder(sortByDeliveryStatus);
+        }
+        if (e.target.textContent === 'Тип оплати') { 
+            const sortByPayType: any = 
+            filteredOrder?.sort(
+                (a:any, b:any) => 
+                a.pay_view.toLowerCase().localeCompare(
+                    b.pay_view.toLowerCase()
+                )
+            )
+            setFilteredOrder(sortByPayType);
+        }
+        if (e.target.textContent === 'Статус Оплати') { 
+            const sortByPayStatus: any = 
+            filteredOrder?.sort(
+                (a:any, b:any) => 
+                a.status_pay.toLowerCase().localeCompare(
+                    b.status_pay.toLowerCase()
+                )
+            )
+            setFilteredOrder(sortByPayStatus);
+        }
+        if (e.target.textContent === 'Користувач') {
+            const sortByUser: any = 
+            filteredOrder?.sort(
+                (a:any, b:any) => 
+                    a.user.name.toLowerCase().localeCompare(
+                        b.user.name.toLowerCase()
+                    )
+            )
+            setFilteredOrder(sortByUser);
+        }
+    }
 
     return (
         <div  onClick={inputCancelHandler}>
@@ -95,14 +209,14 @@ const AdminOrderContent = (
                 />
                     <ul className='inputOrderContent'>
                         {value && isSearch ?
-                            filteredOrderData?.map(
+                            filteredOrder?.map(
                                 (item: IOrdersItem, index: number) =>{
                             return (
                             <li key={'fullName' + index}
                                 className='inputOrderContentItem'
                                 onClick={itemClickHandler}
                             >
-                            {`${item.id_order}: ${item.customer.full_name}`}
+                            {`${item.id_order}:${item.customer.full_name}`}
                             </li>
                             ) 
                             })  
@@ -117,25 +231,25 @@ const AdminOrderContent = (
             <table className='admListOrdersTable'>
                 <thead>
                     <tr className='headerOrderTable'>
-                        <th>Код</th>
-                        <th>Дата</th>
-                        <th>Дата оновлення</th>
-                        <th>Покупець</th>
-                        <th>Склад</th>
-                        <th>Сума</th>
-                        <th>Статус</th>
-                        <th>Тип замовлення</th>
-                        <th>Перевізник</th>
-                        <th>Статус Доставки</th>
-                        <th>Тип оплати</th>
-                        <th>Статус Оплати</th>
-                        <th>Користувач</th>
+                        <th onClick={sortOrder}>Код</th>
+                        <th onClick={sortOrder}>Дата</th>
+                        <th onClick={sortOrder}>Дата оновлення</th>
+                        <th onClick={sortOrder}>Покупець</th>
+                        <th onClick={sortOrder}>Склад</th>
+                        <th onClick={sortOrder}>Сума</th>
+                        <th onClick={sortOrder}>Статус</th>
+                        <th onClick={sortOrder}>Тип замовлення</th>
+                        <th onClick={sortOrder}>Перевізник</th>
+                        <th onClick={sortOrder}>Статус Доставки</th>
+                        <th onClick={sortOrder}>Тип оплати</th>
+                        <th onClick={sortOrder}>Статус Оплати</th>
+                        <th onClick={sortOrder}>Користувач</th>
                         <th>Нотатки</th>
                         <th>Опції</th>
                     </tr>
                 </thead>    
                 <tbody>
-                    {filteredOrderData ? filteredOrderData.map((items: IOrdersItem) => (
+                    {filteredOrder ? filteredOrder.map((items: IOrdersItem) => (
                     <tr key={'or' + items.id_order}
                         onClick={e => showComment(e)}
                         onDoubleClick={e => showOrderData(e)}

@@ -5,7 +5,7 @@ export interface IOrderSupContent {
     storage:[any] | null;
     comments?:[] | null;
     supplier?:[] | null;
-    ordersSup?:[] | null;
+    ordersSup:[] | null;
     stockByIdTyre?:[]; 
     tyreStockData?:[];
     tyrePriceData?:[];

@@ -11,8 +11,8 @@ import AdminWheelContent from './AdminWheelContent';
 import AdminWheelStockPriceRow from './AdminWheelStockPriceRow';
 import { IGoodsContent } from './interfaces/GoodsContent.interface';
 import { TyreContent } from './types/TyreContent.type';
-import { sortTyres } from '../../sortService/sortAdminGoods';
-
+import { IWheelContentItem } from './types/WheelContent.type';
+//import { sortTyres } from '../../sortService/sortAdminGoods';
 
 const AdminGoodsContent = (
     {showComment, comments, props, customer, storage}:IGoodsContent) => {
@@ -38,16 +38,36 @@ const AdminGoodsContent = (
     // const [priceOil, setPriceOil] = useState([]);
     // const [stockBattery, setStockBattery] = useState([]);
     // const [priceBattery, setPriceBattery] = useState([]);
-    const [value, setValue] = useState('');
-    const [changedTyresData, setChangedTyresData] = useState<any[] | null>(null);
+    const [valueSort, setValueSort] = useState<string>('')
+    const [valueTyre, setValueTyre] = useState('');
+    const [valueWheel, setValueWheel] = useState('');
+    const [changedTyresData, setChangedTyresData] = useState<any[] | null>(tyreData);
+    const [changedWheelsData, setChangedWheelsData] = useState<any[] | null>(wheelData);
     const [isSearch, setIsSearch] = useState(false);
     
-    
-    // useEffect(() => {
-    //     if(filteredTyreData) {
-    //         setChangedTyresData(filteredTyreData);  
-    //     }
-    // },[filteredTyreData]);
+    useEffect(() => {
+        if(valueTyre.length !== 0) {
+            const filteredTyreData: any = tyreData?.filter((goodsItem: any) => {
+            return goodsItem.id.toLowerCase().includes(valueTyre.toLowerCase()) ||
+            goodsItem.full_name.toLowerCase().includes(valueTyre.toLowerCase()) 
+            })
+            setChangedTyresData(filteredTyreData);  
+        } else {
+            setChangedTyresData(tyreData);
+        }
+    },[tyreData, valueTyre]);
+
+    useEffect(() => {
+        if(valueWheel.length !== 0) {
+            const filteredWheelData: any = wheelData?.filter((goodsItem: any) => {
+                return goodsItem.id.toLowerCase().includes(valueWheel.toLowerCase()) ||
+                goodsItem.full_name_color.toLowerCase().includes(valueWheel.toLowerCase())  
+            })
+            setChangedWheelsData(filteredWheelData);  
+        } else {
+            setChangedWheelsData(wheelData);
+        }
+    },[wheelData, valueWheel]);
 
     const showStockPriceTyre = (e: { currentTarget: { getAttribute: (arg0: string) => any; }; }) => {
         let stockByIdTyre: any[] | undefined = tyreStockData?.filter(
@@ -86,20 +106,16 @@ const AdminGoodsContent = (
         }  
     }
 
-    const filteredTyreData: any = tyreData?.filter((goodsItem: any) => {
-        return goodsItem.id.toLowerCase().includes(value.toLowerCase()) ||
-        goodsItem.full_name.toLowerCase().includes(value.toLowerCase())  
-    })
-
-    const filteredWheelData: any = wheelData?.filter((goodsItem: any) => {
-        return goodsItem.id.toLowerCase().includes(value.toLowerCase()) ||
-        goodsItem.full_name.toLowerCase().includes(value.toLowerCase())  
-    })
-
     const itemClickHandler = (e: any) => {
         const entity = e.target.textContent.split(':')
-        setValue(entity[1]);
-        setIsSearch(!isSearch);
+        if (chooseCat === 'Шини') {
+            setValueTyre(entity[1]);
+            setIsSearch(!isSearch);  
+        }
+        if (chooseCat === 'Диски') {
+            setValueWheel(entity[1]);
+            setIsSearch(!isSearch);  
+        }
     }
 
     const inputHandler = () => {
@@ -112,31 +128,22 @@ const AdminGoodsContent = (
         }
     }
     const sortTyreContent = (e: any) => { 
-        console.log(e.target.textContent)
         if (e.target.textContent === 'Код') {
-        //const sortTyresByCode = () => {
-            //const sortByCode: any = 
-            filteredTyreData?.sort(
+            const sortByCode: any = 
+            changedTyresData?.sort(
             (a:any, b:any) => (+a.id) - (+b.id));
-            
-           // return value;
-           console.log('sortCode: ', filteredTyreData);
-        //}    
+            setChangedTyresData(sortByCode);
         }
         if (e.target.textContent === 'Рік Виробн.') {
-        //const sortTyresByYear = () => {
-            //const sortByYear: any = 
-            filteredTyreData?.sort(
-            (a:any, b:any) => (+a.id) - (+b.id));
-            
-           // return value;
-           console.log('sortYear: ', filteredTyreData);
-        //}
+            const sortByYear: any = 
+            changedTyresData?.sort(
+            (a:any, b:any) => 
+            (+a.year?.manufacture_year) - (+b.year?.manufacture_year));
+            setChangedTyresData(sortByYear);
         }
         if (e.target.textContent === 'Бренд') {
-        //const sortTyresByBrand = () => {
-            //const sortByBrand: any = 
-             filteredTyreData?.sort(
+            const sortByBrand: any = 
+             changedTyresData?.sort(
                 (a:any, b:any) => {
                 const brandA = a.tyre_brand?.brand.toLowerCase();
                 const brandB = b.tyre_brand?.brand.toLowerCase();
@@ -144,14 +151,11 @@ const AdminGoodsContent = (
                 if(brandA > brandB) return 1;
                 return 0;
             })
-           // return value;
-           console.log('sortBrand: ', filteredTyreData);
-        //}
+           setChangedTyresData(sortByBrand);
         }
         if (e.target.textContent === 'Сезон') {
-        //const sortTyresBySeason = () => {
-            //const sortBySeason: any = 
-            filteredTyreData?.sort(
+            const sortBySeason: any = 
+            changedTyresData?.sort(
                 (a:any, b:any) => {
                 const brandA = a.season?.season_ua.toLowerCase();
                 const brandB = b.season?.season_ua.toLowerCase();
@@ -159,45 +163,86 @@ const AdminGoodsContent = (
                 if(brandA > brandB) return 1;
                 return 0;
             })
-            console.log('sortSeason: ', filteredTyreData);
-            //return value;
-        //}
+            setChangedTyresData(sortBySeason)
         }  
         if (e.target.textContent === 'Країна поход.') { 
-        //const sortTyresByCountry = () => {
-            //const sortByCountry: any = 
-            filteredTyreData?.sort(
-                (a:any, b:any) => {
-                const brandA = a.country?.country_manufacturer_ua.toLowerCase();
-                const brandB = b.country?.country_manufacturer_ua.toLowerCase();
-                if(brandA < brandB) return -1;
-                if(brandA > brandB) return 1;
-                return 0;
-            })
-            console.log('sortCountry: ', filteredTyreData);
-            //return value;
-        //}
+            const sortByCountry: any = 
+            changedTyresData?.sort(
+                (a:any, b:any) => 
+                a.country?.country_manufacturer_ua.toLowerCase().localeCompare(
+                    b.country?.country_manufacturer_ua.toLowerCase()
+                )
+            )
+            setChangedTyresData(sortByCountry);
         }
         if (e.target.textContent === 'Категорія') {
-        //const sortTyresByCategory = () => {
-            //const sortByCategory: any = 
-            filteredTyreData?.sort(
+            const sortByCategory: any = 
+            changedTyresData?.sort(
+                (a:any, b:any) => 
+                    a.category?.category.toLowerCase().localeCompare(
+                        b.category?.category.toLowerCase()
+                    )
+            )
+            setChangedTyresData(sortByCategory);
+        }
+        setValueSort(e.target.textContent);
+    }
+
+    const sortWheelContent =(e: any) => {
+        if (e.target.textContent === 'Код') {
+            const sortByCode: any = 
+            changedWheelsData?.sort(
+            (a:any, b:any) => (+a.id) - (+b.id));
+            setChangedWheelsData(sortByCode);
+        }
+        if (e.target.textContent === 'Бренд') {
+            const sortByBrand: any = 
+            changedWheelsData?.sort(
                 (a:any, b:any) => {
-                const brandA = a.category?.category.toLowerCase();
-                const brandB = b.category?.category.toLowerCase();
+                const brandA = a.wheel_brand?.brand.toLowerCase();
+                const brandB = b.wheel_brand?.brand.toLowerCase();
                 if(brandA < brandB) return -1;
                 if(brandA > brandB) return 1;
                 return 0;
             })
-            //return value;
-            console.log('sortCategory: ', filteredTyreData);
-        //}
+           setChangedWheelsData(sortByBrand);
         }
-
-        //return filteredTyreData;
+        if (e.target.textContent === 'Назва товару') {
+            const sortByFullName: any = 
+            changedWheelsData?.sort(
+                (a:any, b:any) => {
+                const brandA = a.full_name_color.toLowerCase();
+                const brandB = b.full_name_color.toLowerCase();
+                if(brandA < brandB) return -1;
+                if(brandA > brandB) return 1;
+                return 0;
+            })
+            setChangedWheelsData(sortByFullName);
+        }
+        if (e.target.textContent === 'Тип Диску') {
+            const sortByType: any = 
+            changedWheelsData?.sort(
+                (a:any, b:any) => {
+                const brandA = a.type?.type.toLowerCase();
+                const brandB = b.type?.type.toLowerCase();
+                if(brandA < brandB) return -1;
+                if(brandA > brandB) return 1;
+                return 0;
+            })
+            setChangedWheelsData(sortByType)
+        }  
+        if (e.target.textContent === 'Категорія') {
+            const sortByCategory: any = 
+            changedWheelsData?.sort(
+                (a:any, b:any) => 
+                    a.category?.category.toLowerCase().localeCompare(
+                        b.category?.category.toLowerCase()
+                    )
+            )
+            setChangedWheelsData(sortByCategory);
+        }
+        setValueSort(e.target.textContent);
     }
-
-
 
     return (
         <div  
@@ -234,18 +279,29 @@ const AdminGoodsContent = (
                     <button className='admGoodsAddBtn'>Створити товар</button>
                 </div>
                 <div className='admBtnSearch'>
-                    <input 
-                        id="myInput"
+                    { chooseCat === 'Шини' ?
+                    <input id="myInput"
                         className='inputAdminGoods' 
                         type="text" 
-                        value={value}
-                        onChange={(e) => setValue(e.target.value)}
+                        value={valueTyre}
+                        onChange={(e) => setValueTyre(e.target.value)}
                         onClick={inputHandler}
                         placeholder="Введіть значення для пошуку..."
-                    />
+                    /> : null
+                    }
+                    {chooseCat === 'Диски' ?
+                    <input id="myInput"
+                        className='inputAdminGoods' 
+                        type="text" 
+                        value={valueWheel}
+                        onChange={(e) => setValueWheel(e.target.value)}
+                        onClick={inputHandler}
+                        placeholder="Введіть значення для пошуку..."
+                    /> : null
+                    }
                     <ul className='inputGoodsContent'>
-                        {value && isSearch ?
-                            filteredTyreData?.map(
+                        {valueTyre && isSearch ?
+                            changedTyresData?.map(
                                 (item: TyreContent, index: number) =>{
                             return (
                             <li key={'fullName' + index}
@@ -258,15 +314,15 @@ const AdminGoodsContent = (
                             })  
                         : null  
                         }
-                        {value && isSearch ?
-                            filteredWheelData?.map(
-                                (item: TyreContent, index: number) =>{
+                        {valueWheel && isSearch ?
+                            changedWheelsData?.map(
+                                (item: IWheelContentItem, index: number) =>{
                             return (
                             <li key={'fullName' + index}
                                 className='inputGoodsContentItem'
                                 onClick={(e) => itemClickHandler(e)}
                             >
-                            {`${item.id}:${item.full_name}`}
+                            {`${item.id}:${item.full_name_color}`}
                             </li>
                             ) 
                             })  
@@ -279,18 +335,22 @@ const AdminGoodsContent = (
             <div className='admGoodsTable'>
             { chooseCat === 'Шини' ?
                 <AdminTyreContent 
-                    props={filteredTyreData} 
+                    props={changedTyresData} 
                     showRowData={showStockPriceTyre}
                     addTyreToOrder={addToOrder}
                     sortTyres={sortTyreContent}
+                    value={valueSort}
                     />
                 : null
             }
             { chooseCat === 'Диски' ?
                 <AdminWheelContent 
-                    props={filteredWheelData} 
+                    props={changedWheelsData} 
                     showRowData={showStockPriceWheel}
-                    addWheelToOrder={addToOrder}/>
+                    addWheelToOrder={addToOrder}
+                    sortWheels={sortWheelContent}
+                    value={valueSort}
+                    />
                 : null
             }
             { chooseCat === 'АКБ' ?

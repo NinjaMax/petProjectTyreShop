@@ -16,36 +16,25 @@ export class PropsWheelBrandService {
     try {
     
         const wheelId = await this.wheelsService.findWheelById(createPropertyDto);
-        const wheelBrand = await this.wheelBrandRepository.findOne(
-        { where: { brand: createPropertyDto.brand } })
 
-        if(wheelId && wheelBrand) {
+        if(wheelId) {
+            const wheelBrand = await this.wheelBrandRepository.create(createPropertyDto);
+            
+            const createWheelBrand = await this.wheelBrandRepository.findByPk(
+              wheelBrand.id_brand, {include: {all: true}});
+            await createWheelBrand.$add('wheels', [createPropertyDto.id])
+            createWheelBrand.wheels.push(wheelId);
+            createWheelBrand.reload();
 
-            const updateBrand = await this.wheelBrandRepository.update({
-             brand: createPropertyDto.brand}, {where: {id_brand: wheelBrand.id_brand}});
-            await wheelId.$set('brand', updateBrand);
-            //tyreId.country = tyreCountry;
-            //updateCountry.reload();
-
-            return updateBrand;
-
-        } else if(wheelId && !wheelBrand) {
-
-            const newWheelBrand = await this.wheelBrandRepository.create(createPropertyDto);
-
-            await wheelId.$set('brand', newWheelBrand);
-            //tyreId.country = tyreCountry;
-            //tyreCountry.reload();
-
-            return newWheelBrand;
+            return createWheelBrand;
 
         } else {
 
-            const wheelBrand = await this.wheelBrandRepository.create(createPropertyDto);
+            const newWheelBrand = await this.wheelBrandRepository.create(createPropertyDto);
 
-            return wheelBrand;
-        }
+            return newWheelBrand;
 
+        } 
     } catch {
 
       throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);

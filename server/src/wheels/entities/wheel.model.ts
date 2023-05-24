@@ -113,10 +113,10 @@ export class Wheel extends Model<Wheel, WheelConfigAttr> {
     price: PriceWheels[];
 
     @BelongsTo(() => WheelBrand, 'id_brand')
-    brand: WheelBrand;
+    wheel_brand: WheelBrand;
 
     @BelongsTo(() => WheelModel, 'id_model')
-    model: WheelModel;
+    wheel_model: WheelModel;
 
     @BelongsTo(() => WheelBoltCount, 'id_bolt_count')
     bolt_count: WheelBoltCount;

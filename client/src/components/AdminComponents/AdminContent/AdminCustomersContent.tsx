@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminCustomersContent.css';
 import ButtonSearch from '../../buttons/ButtonSearch';
 import ModalAdmin from '../../modal/ModalAdmin';
@@ -11,17 +11,25 @@ interface ICustomer {
 
 const AdminCustomersContent = ({customers}: ICustomer) => {
     const [createCustm, setCreateCustm] = useState(false);
+    const [filteredCustomer, setFilteredCustomer] = useState< any[] | null>(customers);
     const [value, setValue] = useState('');
     const [isSearch, setIsSearch] = useState(true);
+
+    useEffect(() => {
+        if(value.length !== 0) {
+            const filteredCustomerData: any = customers?.filter((customerItem: any) => {
+                return customerItem.id_customer.toLowerCase().includes(+value.toLowerCase()) ||
+                customerItem.full_name.toLowerCase().includes(value.toLowerCase())  
+            })
+            setFilteredCustomer(filteredCustomerData);
+        } else {
+            setFilteredCustomer(customers);
+        }
+    },[customers, value])
 
     const createCustomer = () => {
         setCreateCustm(!createCustm);
     };
-
-    const filteredCustomerData = customers?.filter((customerItem: any) => {
-        return customerItem.id_customer.toLowerCase().includes(+value.toLowerCase()) ||
-        customerItem.full_name.toLowerCase().includes(value.toLowerCase())  
-    })
 
     const itemClickHandler = (e: any) => {
         const entity = e.target.textContent.split(':')
@@ -36,6 +44,79 @@ const AdminCustomersContent = ({customers}: ICustomer) => {
     const inputCancelHandler = () => {
         if(isSearch){
            setIsSearch(false); 
+        }
+    }
+
+    const sortCustomer = (e: any) => {
+        if (e.target.textContent === 'Код') {
+            const sortByCode: any = 
+            filteredCustomer?.sort(
+            (a:any, b:any) => (+a.id_customer) - (+b.id_customer));
+            setFilteredCustomer(sortByCode);
+        }
+        if (e.target.textContent === 'Дата') {
+            const sortByDate: any = 
+            filteredCustomer?.sort(
+            (a:any, b:any) => 
+            (+(new Date(a.createdAt).toLocaleString())) - (+(new Date(b.createdAt).toLocaleString())));
+            setFilteredCustomer(sortByDate);
+        }
+        if (e.target.textContent === 'Дата оновлення') {
+            const sortByDateUpdate: any = 
+            filteredCustomer?.sort(
+            (a:any, b:any) => 
+            (+(new Date(a.updatedAt).toLocaleString())) - (+(new Date(b.updatedAt).toLocaleString())));
+            setFilteredCustomer(sortByDateUpdate);
+        }
+        if (e.target.textContent === 'Покупець') {
+            const sortByCustomer: any = 
+            filteredCustomer?.sort(
+                    (a:any, b:any) => 
+                    a.name.toLowerCase().localeCompare(
+                        b.name.toLowerCase()
+                    )
+            )
+            setFilteredCustomer(sortByCustomer);
+        }
+        if (e.target.textContent === 'Місто') {
+            const sortByStorage: any = 
+            filteredCustomer?.sort(
+                (a:any, b:any) => 
+                a.city.toLowerCase().localeCompare(
+                    b.city.toLowerCase()
+                )
+        )
+            setFilteredCustomer(sortByStorage)
+        }  
+        if (e.target.textContent === 'Телефон') { 
+            const sortByStatus: any = 
+            filteredCustomer?.sort(
+                (a:any, b:any) => 
+                a.phone.toLowerCase().localeCompare(
+                    b.phone.toLowerCase()
+                )
+            )
+            setFilteredCustomer(sortByStatus);
+        }
+        if (e.target.textContent === 'Email') { 
+            const sortByOrderType: any = 
+            filteredCustomer?.sort(
+                (a:any, b:any) => 
+                a.email.toLowerCase().localeCompare(
+                    b.email.toLowerCase()
+                )
+            )
+            setFilteredCustomer(sortByOrderType);
+        }
+        if (e.target.textContent === `Повне і'мя`) { 
+            const sortByFullName: any = 
+            filteredCustomer?.sort(
+                (a:any, b:any) => 
+                a.full_name.toLowerCase().localeCompare(
+                    b.full_name.toLowerCase()
+                )
+            )
+            setFilteredCustomer(sortByFullName);
         }
     }
 
@@ -59,7 +140,7 @@ const AdminCustomersContent = ({customers}: ICustomer) => {
                 />
                 <ul className='inputOrderContent'>
                         {value && isSearch ?
-                            filteredCustomerData?.map(
+                            filteredCustomer?.map(
                                 (item: ICustomerItem, index: number) =>{
                             return (
                             <li key={'fullName' + index}
@@ -79,12 +160,12 @@ const AdminCustomersContent = ({customers}: ICustomer) => {
                 <table className='admListCustomersTable'>
                     <thead>
                         <tr className='headerCustomersTable'>
-                            <th>Код</th>
-                            <th>Покупець</th>
-                            <th>Повне і'мя</th>
-                            <th>Місто</th>
-                            <th>Телефон</th>
-                            <th>Email</th>
+                            <th onClick={sortCustomer}>Код</th>
+                            <th onClick={sortCustomer}>Покупець</th>
+                            <th onClick={sortCustomer}>Повне і'мя</th>
+                            <th onClick={sortCustomer}>Місто</th>
+                            <th onClick={sortCustomer}>Телефон</th>
+                            <th onClick={sortCustomer}>Email</th>
                             <th>Ід Контракту</th>
                             <th>Контракт</th>
                             <th>Баланс</th>
@@ -92,7 +173,7 @@ const AdminCustomersContent = ({customers}: ICustomer) => {
                         </tr>
                     </thead>    
                     <tbody>
-                    {filteredCustomerData ? filteredCustomerData.map(
+                    {filteredCustomer ? filteredCustomer.map(
                         (items: ICustomerItem) => (
                     <tr key={'or' + items.id_customer}
                         //onClick={e => showComment(e)}
