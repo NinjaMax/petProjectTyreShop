@@ -1,9 +1,12 @@
-export {
-    
+import { $hostGet } from './index';
+
+const getTyresOffset = async () => {
+    const {data} = await $hostGet.get('tyres/offset')
+    //localStorage.setItem('token', data.token)
+    console.log('GET_TYRES_OFFSET9: ', data )
+    return data;
 }
-// const axiosInstance = axios.create({
-//         baseURL: 'http://localhost:4000/tyres',
-//         //timeout: 1000,
-//         //headers: {'X-Custom-Header': 'foobar'},
-//         method: 'get'
-//       });
+
+export {
+    getTyresOffset
+}

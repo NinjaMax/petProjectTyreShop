@@ -10,6 +10,8 @@ import NewsMainBox from '../components/news/NewsMainBox';
 import ReviewStore from '../components/reviews/ReviewStore';
 import ReviewsGoods from '../components/reviews/ReviewsGoods';
 
+
+
 const Main = () => {
     return (
     <div className='main'>    

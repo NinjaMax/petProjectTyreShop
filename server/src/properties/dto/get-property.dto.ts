@@ -1,5 +1,4 @@
 export class GetPropertyDto {
-
     readonly id: number;
     readonly id_model: number;
     readonly id_brand: number;
@@ -70,7 +69,4 @@ export class GetPropertyDto {
     readonly id_supplier: number;
     readonly update_date: Date;
     readonly full_name: string;
- 
-    
-       
 }

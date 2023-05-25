@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { TyresService } from './tyres.service';
 import { CreateTyreDto } from './dto/create-tyre.dto';
 import { UpdateTyreDto } from './dto/update-tyre.dto';
@@ -23,6 +32,11 @@ export class TyresController {
   @Get('/id')
   findTyresById(@Body() getTyreDto: GetTyreDto) {
     return this.tyresService.findTyresById(getTyreDto);
+  }
+
+  @Get('/offset')
+  findTyresByLimit(@Query('offset') offset: number) {
+    return this.tyresService.findAllTyresWithOffset(offset);
   }
 
   @Patch('/update')

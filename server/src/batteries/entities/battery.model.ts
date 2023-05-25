@@ -11,6 +11,7 @@ import { BatteryConfigAttr } from '../interfaces/batteries.interface';
 import { Category } from '../../categorys/entities/category.model';
 import { PriceBatteries } from '../../prices/entities/price-battery.model';
 import { StockBatteries } from '../../stock/entities/stock-batteries.model';
+import { Description } from '../../description/entities/description.entity';
 
 @Table({ tableName: 'batterie', createdAt: false })
 export class Battery extends Model<Battery, BatteryConfigAttr> {
@@ -30,15 +31,19 @@ export class Battery extends Model<Battery, BatteryConfigAttr> {
   @Column({ type: DataType.INTEGER })
   id_cat: number;
 
+  @ForeignKey(() => Description)
+  @Column({ type: DataType.INTEGER })
+  id_description: number;
+
   @BelongsTo(() => Category, 'id_cat')
   category: Category;
+
+  @BelongsTo(() => Description, 'id_description')
+  description: Description;
 
   @HasMany(() => PriceBatteries, 'id_battery')
   price: PriceBatteries[];
 
   @HasMany(() => StockBatteries, 'id_battery')
   stock: StockBatteries[];
-
-  //@BelongsToMany(() => Orders, () => Orders_Goods)
-  //orders: Orders[];
 }

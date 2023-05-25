@@ -34,6 +34,7 @@ import { TyreWidth } from '../../properties/entities/tyres/tyre-width.model';
 import { TyreYear } from '../../properties/entities/tyres/tyre-year.model';
 import { RatingTyres } from '../../ratings/entities/rating-tyres.model';
 import { ReviewTyres } from '../../reviews/entities/review-tyres.model';
+import { Description } from '../../description/entities/description.entity';
 
 @Table({ tableName: 'tyres', updatedAt: false })
 export class Tyres extends Model<Tyres, TyresConfigAttr> {
@@ -142,6 +143,10 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
   @Column({ type: DataType.INTEGER })
   id_silent: number;
 
+  @ForeignKey(() => Description)
+  @Column({ type: DataType.INTEGER })
+  id_description: number;
+
   @HasMany(() => StockTyres, 'id_tyre')
   stock: StockTyres[];
 
@@ -216,4 +221,7 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
 
   @BelongsTo(() => TyreSilent, 'id_silent')
   silent: TyreSilent;
+
+  @BelongsTo(() => Description, 'id_description')
+  description: Description;
 }

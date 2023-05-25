@@ -1,25 +1,37 @@
-import { Column, DataType, Model, Table, HasMany} from "sequelize-typescript";
+import { Column, DataType, Model, Table, HasMany, BelongsTo, ForeignKey} from "sequelize-typescript";
 import { TyreBrandConfigAttr } from '../../interfaces/tyres/tyre-brand.interface';
-import { RatingTyres } from "../../../ratings/entities/rating-tyres.model";
-import { Tyres } from "../../../tyres/entities/tyres.model";
-import { ReviewTyres } from "../../../reviews/entities/review-tyres.model";
+import { RatingTyres } from '../../../ratings/entities/rating-tyres.model';
+import { Tyres } from '../../../tyres/entities/tyres.model';
+import { ReviewTyres } from '../../../reviews/entities/review-tyres.model';
+import { Description } from '../../../description/entities/description.entity';
 
-@Table({tableName: 'tyre_brand' , updatedAt: false, createdAt: false})
+@Table({ tableName: 'tyre_brand', updatedAt: false, createdAt: false })
 export class TyreBrand extends Model<TyreBrand, TyreBrandConfigAttr> {
-
-    @Column({type: DataType.INTEGER, unique: true, allowNull: false, primaryKey: true, autoIncrement:false})
-    id_brand: number;
+  @Column({
+    type: DataType.INTEGER,
+    unique: true,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: false,
+  })
+  id_brand: number;
    
-    @Column({type: DataType.STRING, unique: true, allowNull: false})
-    brand: string;
+  @Column({ type: DataType.STRING, unique: true, allowNull: false })
+  brand: string;
 
-    @HasMany(() => Tyres , 'id_brand')
-    tyres: Tyres[];
+  @ForeignKey(() => Description)
+  @Column({ type: DataType.INTEGER })
+  id_description: number;
 
-    @HasMany(() => RatingTyres , 'id_brand')
-    ratings: RatingTyres[];
+  @BelongsTo(() => Description, 'id_description')
+  description: Description;
 
-    @HasMany(() => ReviewTyres, 'id_brand')
-    reviews: ReviewTyres[];
-    
+  @HasMany(() => Tyres, 'id_brand')
+  tyres: Tyres[];
+
+  @HasMany(() => RatingTyres, 'id_brand')
+  ratings: RatingTyres[];
+
+  @HasMany(() => ReviewTyres, 'id_brand')
+  reviews: ReviewTyres[];
 }

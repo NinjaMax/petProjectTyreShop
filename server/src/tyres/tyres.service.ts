@@ -76,10 +76,25 @@ export class TyresService {
 
     } catch {
 
-      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,)
     }
-    
+  }
+
+  async findAllTyresWithOffset(offset: number) {
+    try {
+      const tyresAllLimit = await this.tyresRepository.findAll({
+        offset: offset ?? 0,
+        limit: 9,
+        include: { all: true },
+      });
+      return tyresAllLimit;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,)
+    }
   }
 
   async findTyresById(getTyreDto: GetTyreDto) {

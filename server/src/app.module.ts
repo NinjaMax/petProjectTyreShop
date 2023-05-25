@@ -97,6 +97,8 @@ import { WheelPcd } from './properties/entities/wheels/wheel-pcd.model';
 import { AuthModule } from './auth/auth.module';
 import { PaytypesModule } from './paytypes/paytypes.module';
 import { Paytype } from './paytypes/entities/paytype.entity';
+import { DescriptionModule } from './description/description.module';
+import { Description } from './description/entities/description.entity';
 
 @Module({
   imports: [
@@ -177,6 +179,7 @@ import { Paytype } from './paytypes/entities/paytype.entity';
           Basket,
           Contract,
           Customer,
+          Description,
         ],
         autoLoadModels: true,
         synchronize: true,
@@ -212,6 +215,7 @@ import { Paytype } from './paytypes/entities/paytype.entity';
     UploaderModule,
     AuthModule,
     PaytypesModule,
+    DescriptionModule,
   ],
   controllers: [],
   providers: [],
