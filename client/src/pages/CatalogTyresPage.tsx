@@ -6,12 +6,18 @@ import ReviewsMain from '../components/reviews/ReviewsMain';
 import ReviewsGoods from '../components/reviews/ReviewsGoods';
 import BreadCrumbs from '../components/BreadCrumbs';
 
-const CatalogTyresPage = () => {
-
+const CatalogTyresPage = ({crumbsItem}: any) => {
+  const crumbs ={ 
+    crumbs: '/season', 
+    title: 'Season'
+  }
     return (
       <div className='catalogTyres'>
         <div className='a'>
-          <BreadCrumbs route={['/','/tyres']} hrefTitle={['Home','Tyres']}/>
+          <BreadCrumbs 
+            route={['/','/tyres', `${crumbs.crumbs ?? null}`]} 
+            hrefTitle={['Home','Tyres',`${crumbs.title ?? null}`]}
+          />
         </div>
         <div className='b'>
           <FilterCatalogTyres/>

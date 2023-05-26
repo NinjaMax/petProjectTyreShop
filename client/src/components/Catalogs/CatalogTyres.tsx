@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import '../../css/Catalogs/CatalogTyres.css';
 import TyresCard from '../cards/TyresCard';
 import PopularSizeTyre from '../popularGoods/PopularSizeTyre';
@@ -7,9 +7,22 @@ import SelectRadio from '../select/SelectRadio';
 import Pagination from '../Pagination';
 import CheckOrder from '../modal/CheckOrder';
 import Modal from '../modal/Modal';
+import { Context } from '../../context/Context';
 
 const CatalogTyres = () => {
     const [active, setActive] = useState(false);
+    // const {goodsTyre} = useContext(Context);
+
+    // useEffect(() =>{
+    //     let isMounted = false;
+    //     const loadMaintask = async() => {
+    //         getTyresOffset()
+    //     }
+    //     loadMaintask();
+    //     return () => {
+    //         isMounted = true;
+    //     };
+    // },[]);
  
     const checkOrders = () => {
         setActive(!active);
@@ -43,14 +56,6 @@ const CatalogTyres = () => {
             </div>
             <div className="rowCatalogTyres">
                 <TyresCard optionsBox={true} checkOrders={checkOrders} forOrder={false}/>
-                <TyresCard optionsBox={true} checkOrders={checkOrders}/>
-                <TyresCard optionsBox={true} checkOrders={checkOrders}/>
-                <TyresCard optionsBox={true} checkOrders={checkOrders}/>
-                <TyresCard optionsBox={true} checkOrders={checkOrders}/>
-                <TyresCard optionsBox={true} checkOrders={checkOrders}/>
-                <TyresCard optionsBox={true} checkOrders={checkOrders}/>
-                <TyresCard optionsBox={true} checkOrders={checkOrders}/>
-                <TyresCard optionsBox={true} checkOrders={checkOrders}/>
             </div>
             {active?
                 <Modal active={active} setActive={setActive}>

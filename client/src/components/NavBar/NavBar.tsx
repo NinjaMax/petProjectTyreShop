@@ -30,7 +30,7 @@ import AuthSignUp from '../auth/AuthSignUp';
 import { yieldToMain } from '../../restAPI/yieldMain';
 
 const NavBar = observer(() => {
-  const {customer} = useContext<any | null>(Context);
+  const {customer, goodsTyre} = useContext<any | null>(Context);
   const [signUp, setSignUp] = useState(false);
   const [activeAuth, setActiveAuth] = useState(false);
   const [googleIsAuth, setGoogleIsAuth] = useState('');

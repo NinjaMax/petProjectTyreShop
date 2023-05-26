@@ -1,0 +1,17 @@
+import CustomersStore from "../CustomersStore";
+import GoodsBatteryStore from "../GoodsBatteryStore";
+import GoodsOilStore from "../GoodsOilStore";
+import GoodsTyreStore from "../GoodsTyreStore";
+import GoodsWheelStore from "../GoodsWheelStore";
+import UserStore from "../UserStore";
+
+export interface StoreData  {
+  user: UserStore, 
+  customer: CustomersStore,
+  isAuth: boolean,
+  isLoading: boolean,
+  goodsTyre: GoodsTyreStore,
+  goodsWheel: GoodsWheelStore,
+  goodsOil: GoodsOilStore,
+  goodsBattery: GoodsBatteryStore,
+};

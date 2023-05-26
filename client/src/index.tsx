@@ -2,16 +2,22 @@ import React from 'react';
 import * as ReactDOMClient from 'react-dom/client';
 import App from './App';
 import UserStore from './store/UserStore';
-import GoodsStore from './store/GoodsStore';
+import GoodsTyreStore from './store/GoodsTyreStore';
 import { Context } from './context/Context';
 import CustomersStore from './store/CustomersStore';
+import GoodsWheelStore from './store/GoodsWheelStore';
+import GoodsBatteryStore from './store/GoodsBatteryStore';
+import GoodsOilStore from './store/GoodsOilStore';
 
 const rootElement = document.getElementById("root") as HTMLElement;
 
 ReactDOMClient.createRoot(rootElement).render(
   <Context.Provider value={{
     user: new UserStore(),
-    goods: new GoodsStore(),
+    goodsTyre: new GoodsTyreStore(),
+    goodsWheel: new GoodsWheelStore(),
+    goodsBattery: new GoodsBatteryStore(),
+    goodsOil: new GoodsOilStore(),
     customer: new CustomersStore(),
     isAuth: false,
     isLoading: true, 

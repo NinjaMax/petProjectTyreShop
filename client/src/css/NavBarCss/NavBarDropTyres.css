@@ -26,6 +26,9 @@
     background-color: #71C2FF;
   }
   
+  .navbarAnchMain {
+    text-decoration: none;
+  }
   /* Dropdown content (hidden by default) */
   .dropdownContentNavbar {
     display: none;

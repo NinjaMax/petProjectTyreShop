@@ -53,5 +53,4 @@ export const publicRoutes = [
     path: ADMIN_AUTH_ROUTE,
     Component: AdminAuth
   }
-
 ];

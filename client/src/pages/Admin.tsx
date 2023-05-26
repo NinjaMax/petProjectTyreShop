@@ -218,8 +218,8 @@ const Admin = observer(() => {
             setCommentByOrderSup(0); 
         }
     }
-    console.log('USERS: ', users);
-    console.log('CUSTOMERS: ',customers);
+    // console.log('USERS: ', users);
+    // console.log('CUSTOMERS: ',customers);
     return (
         <div className='adminPageMain'>
             <div className='profileAdmin'>

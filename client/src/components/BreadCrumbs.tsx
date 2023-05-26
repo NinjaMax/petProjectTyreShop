@@ -7,15 +7,22 @@ interface IBreadCrumbs {
 }
 
 const BreadCrumbs = ({route, hrefTitle}: IBreadCrumbs) => {
+    const newRoute = route.slice(0, route.length -1);
     return (
         <div>
             <ul className="breadcrumb">
-                <li className='listBreadCrumbs'>
-                    <a href={route[0]} className='anchBreadCrumbs'>{hrefTitle[0]}</a>
-                </li>
-                <li className='listBreadCrumbs'>
-                    <a href={route[1]} className='anchBreadCrumbs'>{hrefTitle[1]}</a>
-                </li>
+                {newRoute ? newRoute.map(
+                    (item: string, index: number) => (
+                <>
+                  <li className='listBreadCrumbs' key={item + index}>
+                    <a href={item} className='anchBreadCrumbs'>{hrefTitle[index]}</a>
+                 </li>
+                </> 
+               
+                ))
+                 : null 
+                }
+                <span> / {hrefTitle[hrefTitle.length - 1]}</span>
             </ul>
         </div>
     );

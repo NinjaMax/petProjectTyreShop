@@ -2,11 +2,14 @@ import React from 'react';
 import '../../css/NavBarCss/NavBarDropTyres.css';
 
 const NavBarDropTyres = () => {
+
+
     return (
         
     <div className="dropdownNavbar">
-      <button className="dropbtnNavbar">Шини 
-        <i className="fa fa-caret-down"></i>
+      <button className="dropbtnNavbar" >
+        <a className='navbarAnchMain' href="/tyres">Шини </a> 
+         <i className="fa fa-caret-down"></i>
       </button>
       <div className="dropdownContentNavbar">
         <div className="headerNavbar">
