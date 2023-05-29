@@ -97,6 +97,20 @@ export class TyresService {
     }
   }
 
+  async findAllTyresBySeason(season: string) {
+    try {
+      const tyresAllByseason = await this.tyresRepository.findAll({
+        where: { season: season },
+        include: { all: true },
+      });
+      return tyresAllByseason;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,)
+    }
+  }
+
   async findTyresById(getTyreDto: GetTyreDto) {
 
     try {

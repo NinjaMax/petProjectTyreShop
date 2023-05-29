@@ -86,16 +86,36 @@ export class PropsTyreSeasonService {
 
     try {
 
-      const tyreAllSeason = await this.tyreSeasonRepository.findAll({include: {all: true}});
+      const tyreAllSeason = await this.tyreSeasonRepository.findAll({
+        include: { all: true },
+      });
 
       return tyreAllSeason;
 
     } catch {
-
-      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
     }
-    
+  }
+
+  async findByTyreSeason(season: string) {
+
+    try {
+      const tyreAllSeason = await this.tyreSeasonRepository.findAll({
+        where: { season: season },
+        include: { all: true },
+      });
+
+      return tyreAllSeason;
+
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async findTyreSeasonById(getPropertyDto: GetPropertyDto) {
@@ -129,8 +149,9 @@ export class PropsTyreSeasonService {
 
       }
 
-      return new HttpException(`Data "id_season" or "season" is incorrect or Not Found`, HttpStatus.NOT_FOUND);
-      
+      return new HttpException(
+        `Data "id_season" or "season" is incorrect or Not Found`,
+        HttpStatus.NOT_FOUND,)
     } catch {
 
       throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
@@ -138,7 +159,7 @@ export class PropsTyreSeasonService {
     }
   }
 
-  async removeTyreCountry(getPropertyDto: GetPropertyDto) { 
+  async removeTyreSeason(getPropertyDto: GetPropertyDto) { 
 
     try {
 

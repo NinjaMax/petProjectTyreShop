@@ -39,6 +39,11 @@ export class TyresController {
     return this.tyresService.findAllTyresWithOffset(offset);
   }
 
+  @Get('/season/:season')
+  findTyresSeason(@Param('season') season: string) {
+    return this.tyresService.findAllTyresBySeason(season);
+  }
+
   @Patch('/update')
   updateTyres(@Body() updateTyreDto: UpdateTyreDto) {
     return this.tyresService.updateTyres(updateTyreDto);

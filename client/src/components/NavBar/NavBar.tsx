@@ -28,6 +28,7 @@ import {
 } from '../../restAPI/restUsersApi';
 import AuthSignUp from '../auth/AuthSignUp';
 import { yieldToMain } from '../../restAPI/yieldMain';
+import NavBarDropWheels from './NavBarDropWheels';
 
 const NavBar = observer(() => {
   const {customer, goodsTyre} = useContext<any | null>(Context);
@@ -202,7 +203,7 @@ const NavBar = observer(() => {
       <img data-href='/' src={logoShop} alt='logoShop'/>
     </a>
     <NavBarDropTyres/>
-    <NavBarDropTyres/>
+    <NavBarDropWheels/>
     <NavBarDropTyres/>
     <a href="/home" className='anchorBtn'>Доставка і оплата</a>
     <a href='/contact' className='anchorBtn'>Контакти</a>

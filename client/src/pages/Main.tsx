@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../css/Main.css';
 import Slider from '../components/Slider';
 import CategorySlide from '../components/CategorySlide';
@@ -15,31 +15,36 @@ import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
 
 const Main = observer(() => {
-    const {goodsTyre} = useContext<any | null>(Context);
+    const {goodsTyre, page} = useContext<any | null>(Context);
+    const [pageNum, setPageNum] = useState(0);
 
-    useEffect(() =>{
-        let isMounted = false;
-        const loadMaintask = async() => {
-            const taskLoad: any[] = [
-                getTyresOffset
-            ];
-        let i:number = 0;
-        while(taskLoad.length > i) {
-        if(!isMounted && taskLoad[i] === getTyresOffset) {
-          let tyreGoods: any = await taskLoad[i](1);
-          goodsTyre.setTyres(tyreGoods);
-          console.log('SET_TYRES_PAGE_1: ', tyreGoods);
-        } 
-        }
-        const task = taskLoad.shift();
-        task();
-        await yieldToMain(); 
-        }
-        loadMaintask();
-        return () => {
-            isMounted = true;
-        };
-    },[]);
+    // useEffect(() =>{
+    //     let isMounted = false;
+    //     const loadMaintask = async() => {
+    //         const taskLoad: any[] = [
+    //             getTyresOffset
+    //         ];
+    //     let i:number = 0;
+    //     while(taskLoad.length > i) {
+    //     if(!isMounted && taskLoad[i] === getTyresOffset) {
+    //     //let tyreGoods: any = await taskLoad[i](page.offset);
+    //     //if(!isMounted && tyreGoods) {
+    //       let tyreGoods: any = await taskLoad[i](page.offset);
+    //       goodsTyre.setTyres(tyreGoods);
+    //       console.log('SET_TYRES_PAGE_1: ', tyreGoods);
+    //     } 
+    //     }
+    //     const task = taskLoad.shift();
+    //     task();
+    //     await yieldToMain(); 
+    //     }
+    //     loadMaintask();
+    //     return () => {
+    //         isMounted = true;
+    //     };
+    // },[goodsTyre, page.offset]);
+    console.log(pageNum);
+    console.log(goodsTyre.offset);
 
     return (
     <div className='main'>    

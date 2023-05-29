@@ -8,6 +8,7 @@ export default class GoodsTyreStore {
     _diameter: {}[];
     _tyres: {}[];
     _descriptions: {};
+    _offset: number;
     constructor() {  
          this._types = [
             // {id: 1, name: 'Легковые'},
@@ -28,6 +29,7 @@ export default class GoodsTyreStore {
         this._descriptions = {};
         this._season = [];
         this._diameter = [];
+        this._offset = 0;
         makeAutoObservable(this, {});
     }
 
@@ -51,6 +53,10 @@ export default class GoodsTyreStore {
         this._diameter = diameters;
     }
 
+    setOffset(offset: number) {
+        this._offset = offset;
+    }
+
     get types() {
         return this._types;
     }
@@ -68,5 +74,9 @@ export default class GoodsTyreStore {
     }
     get diameter() {
         return this._diameter;
+    }
+
+    get offset() {
+        return this._offset;
     }
 }

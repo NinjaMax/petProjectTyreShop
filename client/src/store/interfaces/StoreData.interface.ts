@@ -3,6 +3,7 @@ import GoodsBatteryStore from "../GoodsBatteryStore";
 import GoodsOilStore from "../GoodsOilStore";
 import GoodsTyreStore from "../GoodsTyreStore";
 import GoodsWheelStore from "../GoodsWheelStore";
+import PageStore from "../PageStore";
 import UserStore from "../UserStore";
 
 export interface StoreData  {
@@ -14,4 +15,5 @@ export interface StoreData  {
   goodsWheel: GoodsWheelStore,
   goodsOil: GoodsOilStore,
   goodsBattery: GoodsBatteryStore,
+  page: PageStore
 };

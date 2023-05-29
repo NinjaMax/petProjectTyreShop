@@ -1,26 +1,26 @@
 import React from 'react';
 import '../../css/NavBarCss/NavBarDropTyres.css';
-import { useParams } from 'react-router-dom';
+//import { useParams } from 'react-router-dom';
 
-const NavBarDropTyres = () => {
-  const litni = useParams();
+const NavBarDropWheels = () => {
+    //const { season } = useParams()
 
     return (
         
     <div className="dropdownNavbar">
       <button className="dropbtnNavbar" >
-        <a className='navbarAnchMain' href="/tyres">Шини </a> 
+        <a className='navbarAnchMain' href="/wheels">Диски </a> 
          <i className="fa fa-caret-down"></i>
       </button>
       <div className="dropdownContentNavbar">
         <div className="headerNavbar">
-          <h3>Каталог шин</h3>
+          <h3>Каталог дисків</h3>
         </div>
         <div className="rowNavbar">
           <div className="columnNavbar">
-            <h4>по сезону</h4>
-            <a className='columnNavbarAnch' href={`tyres/:${litni}`}>Літні шини</a>
-            <a className='columnNavbarAnch' href="/#">Зимові шини</a>
+            <h4>по типу диска</h4>
+            <a className='columnNavbarAnch' href="/#">Сталеві</a>
+            <a className='columnNavbarAnch' href="/#">Легкосплавні</a>
             <a className='columnNavbarAnch' href="/#">Всесезонні шини</a>
           </div>
           <div className="columnNavbar">
@@ -55,4 +55,4 @@ const NavBarDropTyres = () => {
     );
 };
 
-export default NavBarDropTyres;
+export default NavBarDropWheels;

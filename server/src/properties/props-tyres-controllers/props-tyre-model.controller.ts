@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PropsModelService } from '../props-tyres-services/props-tyre-model.service';
 import { CreatePropertyDto } from '../dto/create-property.dto';
 import { GetPropertyDto } from '../dto/get-property.dto';
@@ -24,7 +32,7 @@ export class PropertiesModelController {
   }
 
   @Patch('/model/update')
-  update( @Body() updatePropertyDto: UpdatePropertyDto) {
+  update(@Body() updatePropertyDto: UpdatePropertyDto) {
     return this.propertiesModelService.updateTyreModel(updatePropertyDto);
   }
 

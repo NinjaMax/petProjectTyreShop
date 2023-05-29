@@ -8,6 +8,7 @@ import CustomersStore from './store/CustomersStore';
 import GoodsWheelStore from './store/GoodsWheelStore';
 import GoodsBatteryStore from './store/GoodsBatteryStore';
 import GoodsOilStore from './store/GoodsOilStore';
+import PageStore from './store/PageStore';
 
 const rootElement = document.getElementById("root") as HTMLElement;
 
@@ -19,6 +20,7 @@ ReactDOMClient.createRoot(rootElement).render(
     goodsBattery: new GoodsBatteryStore(),
     goodsOil: new GoodsOilStore(),
     customer: new CustomersStore(),
+    page: new PageStore(),
     isAuth: false,
     isLoading: true, 
   }}>

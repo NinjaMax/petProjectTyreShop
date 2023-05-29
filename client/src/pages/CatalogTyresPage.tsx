@@ -11,6 +11,7 @@ const CatalogTyresPage = ({crumbsItem}: any) => {
     crumbs: '/season', 
     title: 'Season'
   }
+
     return (
       <div className='catalogTyres'>
         <div className='a'>
