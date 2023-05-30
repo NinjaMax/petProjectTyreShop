@@ -8,10 +8,13 @@ import Pagination from '../Pagination';
 import CheckOrder from '../modal/CheckOrder';
 import Modal from '../modal/Modal';
 import { Context } from '../../context/Context';
+import { observer } from 'mobx-react-lite';
 
-const CatalogTyres = () => {
+
+
+const CatalogTyres = observer(() => {
     const [active, setActive] = useState(false);
-    // const {goodsTyre} = useContext(Context);
+    const {goodsTyre} = useContext<any | null>(Context);
 
     // useEffect(() =>{
     //     let isMounted = false;
@@ -27,6 +30,8 @@ const CatalogTyres = () => {
     const checkOrders = () => {
         setActive(!active);
     }
+
+    console.log('GOODS_CATALOG_TYRE:', goodsTyre);
 
     return (
         <div>
@@ -55,7 +60,17 @@ const CatalogTyres = () => {
                 direction={"row"} />               
             </div>
             <div className="rowCatalogTyres">
-                <TyresCard optionsBox={true} checkOrders={checkOrders} forOrder={false}/>
+                {goodsTyre._tyres ? goodsTyre._tyres?.map(
+                    (goods: any, index: number) => (
+                 <TyresCard
+                    key={index + 1}
+                    goods={goods}
+                    optionsBox={true} 
+                    checkOrders={checkOrders} 
+                    forOrder={false}/> 
+                ))   
+                : null
+                }
             </div>
             {active?
                 <Modal active={active} setActive={setActive}>
@@ -65,6 +80,6 @@ const CatalogTyres = () => {
             <Pagination/>
         </div>
     );
-};
+});
 
 export default CatalogTyres;

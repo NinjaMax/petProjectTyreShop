@@ -18,32 +18,32 @@ const Main = observer(() => {
     const {goodsTyre, page} = useContext<any | null>(Context);
     const [pageNum, setPageNum] = useState(0);
 
-    // useEffect(() =>{
-    //     let isMounted = false;
-    //     const loadMaintask = async() => {
-    //         const taskLoad: any[] = [
-    //             getTyresOffset
-    //         ];
-    //     let i:number = 0;
-    //     while(taskLoad.length > i) {
-    //     if(!isMounted && taskLoad[i] === getTyresOffset) {
-    //     //let tyreGoods: any = await taskLoad[i](page.offset);
-    //     //if(!isMounted && tyreGoods) {
-    //       let tyreGoods: any = await taskLoad[i](page.offset);
-    //       goodsTyre.setTyres(tyreGoods);
-    //       console.log('SET_TYRES_PAGE_1: ', tyreGoods);
-    //     } 
-    //     }
-    //     const task = taskLoad.shift();
-    //     task();
-    //     await yieldToMain(); 
-    //     }
-    //     loadMaintask();
-    //     return () => {
-    //         isMounted = true;
-    //     };
-    // },[goodsTyre, page.offset]);
-    console.log(pageNum);
+    useEffect(() =>{
+        let isMounted = false;
+        const loadMaintask = async() => {
+            const taskLoad: any[] = [
+                getTyresOffset
+            ];
+        let i:number = 0;
+        while(taskLoad.length > i) {
+            if(!isMounted && taskLoad[i] === getTyresOffset) {
+            //let tyreGoods: any = await taskLoad[i](page.offset);
+            //if(!isMounted && tyreGoods) {
+            let tyreGoods: any = await taskLoad[i](page.offset);
+            goodsTyre.setTyres(tyreGoods);
+            console.log('SET_TYRES_PAGE_1: ', tyreGoods);
+            } 
+            const task = taskLoad.shift();
+            task();
+            await yieldToMain(); 
+        }
+        }
+        loadMaintask();
+        return () => {
+            isMounted = true;
+        };
+    },[goodsTyre, page.offset]);
+   
     console.log(goodsTyre.offset);
 
     return (

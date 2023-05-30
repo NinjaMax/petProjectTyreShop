@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import '../css/BreadCrumbs.css';
 
 interface IBreadCrumbs {
@@ -13,11 +13,11 @@ const BreadCrumbs = ({route, hrefTitle}: IBreadCrumbs) => {
             <ul className="breadcrumb">
                 {newRoute ? newRoute.map(
                     (item: string, index: number) => (
-                <>
-                  <li className='listBreadCrumbs' key={item + index}>
+                <Fragment key={item + index}>
+                  <li className='listBreadCrumbs' >
                     <a href={item} className='anchBreadCrumbs'>{hrefTitle[index]}</a>
                  </li>
-                </> 
+                </Fragment> 
                
                 ))
                  : null 

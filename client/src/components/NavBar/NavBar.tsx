@@ -164,7 +164,6 @@ const NavBar = observer(() => {
     } catch (error: any) {
       console.log(error);
     }
-    
   }
 
   const logOutUser = async () => {
@@ -197,7 +196,6 @@ const NavBar = observer(() => {
   }
  
   return (
-
   <div className="navbar">
     <a href='/'>
       <img data-href='/' src={logoShop} alt='logoShop'/>

@@ -44,6 +44,21 @@ export class TyresController {
     return this.tyresService.findAllTyresBySeason(season);
   }
 
+  @Get('/type/:type')
+  findTyresType(@Param('diameter') type: string) {
+    return this.tyresService.findAllTyresByType(type);
+  }
+
+  @Get('/diameter/:diameter')
+  findTyresDiameter(@Param('diameter') diameter: string) {
+    return this.tyresService.findAllTyresByDiameter(diameter);
+  }
+
+  @Get('/params/:params')
+  findTyresParams(@Param('params') params: string) {
+    return this.tyresService.findAllTyresByParams(params);
+  }
+
   @Patch('/update')
   updateTyres(@Body() updateTyreDto: UpdateTyreDto) {
     return this.tyresService.updateTyres(updateTyreDto);

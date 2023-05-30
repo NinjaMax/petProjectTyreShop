@@ -29,6 +29,10 @@ export const publicRoutes = [
     Component: CatalogTyresPage
   },
   {
+    path: CATALOG_TYRES_ROUTE + '/:category',
+    Component: CatalogTyresPage
+  },
+  {
     path: GOODS_ROUTE,
     //path: GOODS_ROUTE + '/:tyres',
     Component: GoodsPage

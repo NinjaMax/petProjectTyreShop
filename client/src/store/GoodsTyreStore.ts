@@ -79,4 +79,5 @@ export default class GoodsTyreStore {
     get offset() {
         return this._offset;
     }
+
 }
