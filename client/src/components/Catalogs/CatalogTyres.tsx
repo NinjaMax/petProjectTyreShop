@@ -31,7 +31,7 @@ const CatalogTyres = observer(() => {
         setActive(!active);
     }
 
-    console.log('GOODS_CATALOG_TYRE:', goodsTyre);
+    console.log('GOODS_CATALOG_TYRE:', goodsTyre._tyres.length);
 
     return (
         <div>
@@ -61,9 +61,9 @@ const CatalogTyres = observer(() => {
             </div>
             <div className="rowCatalogTyres">
                 {goodsTyre._tyres ? goodsTyre._tyres?.map(
-                    (goods: any, index: number) => (
+                    (goods: any) => (
                  <TyresCard
-                    key={index + 1}
+                    key={goods.id}
                     goods={goods}
                     optionsBox={true} 
                     checkOrders={checkOrders} 

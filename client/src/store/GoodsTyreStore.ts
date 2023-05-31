@@ -6,31 +6,19 @@ export default class GoodsTyreStore {
     _models: {}[];
     _season:{}[];
     _diameter: {}[];
-    _tyres: {}[];
+    _tyres: [];
     _descriptions: {};
     _offset: number;
     constructor() {  
-         this._types = [
-            // {id: 1, name: 'Легковые'},
-            // {id: 2, name: 'Микроавтобус'},
-            // {id: 3, name: 'Внедорожник'}               
-        ];
-        this._brands = [
-            // {id: 1, name: 'Michelin'},
-            // {id: 2, name: 'Bridgestone'},
-            // {id: 3, name: 'Continental'}
-        ];
+         this._types = [];
+        this._brands = [];
         this._models = [];
-        this._tyres = [
-            // {id: 1, name: 'Легковые', price: 1500, rating: 5, info:"Шины легковые", img: 'https://tshina.ua/upload/iblock/f65/Winter-icept-iz2-w616.png'},
-            // {id: 2, name: 'Микроавтобус',  price: 1500, rating: 5, info:"Шины легковые", img: 'https://tshina.ua/upload/iblock/f65/Winter-icept-iz2-w616.png'},
-            // {id: 3, name: 'Внедорожник',  price: 1500, rating: 5, info:"Шины легковые", img: 'https://tshina.ua/upload/iblock/f65/Winter-icept-iz2-w616.png'}
-        ];
+        this._tyres = [];
         this._descriptions = {};
         this._season = [];
         this._diameter = [];
         this._offset = 0;
-        makeAutoObservable(this, {});
+        makeAutoObservable(this);
     }
 
     setTypes(types: any[]) {
@@ -42,7 +30,7 @@ export default class GoodsTyreStore {
     setModels(models: any[]) {
         this._models = models;
     }
-    setTyres(tyres: any[]) {
+    setTyres(tyres:[]) {
         this._tyres = tyres;
     }
     setDescription(descriptions: {}) {
@@ -75,9 +63,7 @@ export default class GoodsTyreStore {
     get diameter() {
         return this._diameter;
     }
-
     get offset() {
         return this._offset;
     }
-
 }

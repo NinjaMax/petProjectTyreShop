@@ -15,36 +15,41 @@ import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
 
 const Main = observer(() => {
-    const {goodsTyre, page} = useContext<any | null>(Context);
-    const [pageNum, setPageNum] = useState(0);
+    // const {goodsTyre, user, customer} = useContext<any | null>(Context);
+    // const {page} = useContext<any | null>(Context);
+    // const [pageNum, setPageNum] = useState(0);
 
-    useEffect(() =>{
-        let isMounted = false;
-        const loadMaintask = async() => {
-            const taskLoad: any[] = [
-                getTyresOffset
-            ];
-        let i:number = 0;
-        while(taskLoad.length > i) {
-            if(!isMounted && taskLoad[i] === getTyresOffset) {
-            //let tyreGoods: any = await taskLoad[i](page.offset);
-            //if(!isMounted && tyreGoods) {
-            let tyreGoods: any = await taskLoad[i](page.offset);
-            goodsTyre.setTyres(tyreGoods);
-            console.log('SET_TYRES_PAGE_1: ', tyreGoods);
-            } 
-            const task = taskLoad.shift();
-            task();
-            await yieldToMain(); 
-        }
-        }
-        loadMaintask();
-        return () => {
-            isMounted = true;
-        };
-    },[goodsTyre, page.offset]);
+    // useEffect(() =>{
+    //     let isMounted = false;
+    //     const loadMaintask = async() => {
+    //         const taskLoad: any[] = [
+    //             getTyresOffset
+    //         ];
+    //     let i:number = 0;
+    //     while(taskLoad.length > i) {
+    //         if(!isMounted && taskLoad[i] === getTyresOffset) {
+    //         //let tyreGoods: any = await taskLoad[i](page.offset);
+    //         //if(!isMounted && tyreGoods) {
+    //         let tyreGoods: any = await taskLoad[i](page.offset);
+    //         goodsTyre?.setTyres(tyreGoods);
+    //         console.log('SET_TYRES_PAGE_1: ', tyreGoods);
+    //         } 
+    //         const task = taskLoad.shift();
+    //         task();
+    //         await yieldToMain(); 
+    //     }
+    //     }
+    //     loadMaintask();
+    //     return () => {
+    //         isMounted = true;
+    //     };
+    // },[goodsTyre, page.offset]);
    
-    console.log(goodsTyre.offset);
+    // console.log('OFFSET: ', goodsTyre.offset);
+    // console.log('SET_TYRES_CAT: ', goodsTyre._tyres);
+    // console.log('GOODS_MAIN: ', goodsTyre._tyres.length);
+    // console.log('CUSTOMER_MAIN: ', customer._customer.name);
+    // console.log('USER_MAIN: ', user._user);
 
     return (
     <div className='main'>    
