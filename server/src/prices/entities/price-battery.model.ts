@@ -20,6 +20,9 @@ export class PriceBatteries extends Model<PriceBatteries, PriceBatteryConfigAttr
    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
    price: number;
 
+   @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+   old_price: number;
+   
    @ForeignKey(() => Supplier)
    @Column({type: DataType.INTEGER})
    id_supplier: number;

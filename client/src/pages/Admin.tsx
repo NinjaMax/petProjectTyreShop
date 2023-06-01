@@ -117,60 +117,60 @@ const Admin = observer(() => {
                 while(tasks.length > i) {
                 //for (let i = 0; tasks.length > i; i++) {
                     if(!isMounted && tasks[i] === getTyres) {    
-                        let result: any = await tasks[i]();
-                        setTyreData(result.data);
+                        let resultTyre: any = await tasks[i]();
+                        setTyreData(resultTyre?.data);
                     }
                     if(!isMounted && tasks[i] === getStockTyres) {
-                        let result: any = await tasks[i]();
-                        setTyreStockData(result.data);
+                        let resultStockTyre: any = await tasks[i]();
+                        setTyreStockData(resultStockTyre?.data);
                     } 
                     if(!isMounted && tasks[i] === getPriceTyres) {   
-                        let result: any = await tasks[i]();
-                        setTyrePriceData(result.data);
+                        let resultPriceTyre: any = await tasks[i]();
+                        setTyrePriceData(resultPriceTyre?.data);
                     } 
                     if(!isMounted && tasks[i] === getWheels) {   
-                        let result: any = await tasks[i]();
-                        setWheelData(result.data);
+                        let resultWheels: any = await tasks[i]();
+                        setWheelData(resultWheels?.data);
                     } 
                     if(!isMounted && tasks[i] === getStockWheel) {
-                        let result: any = await tasks[i]();
-                        setWheelStockData(result.data);
+                        let resultStockWheel: any = await tasks[i]();
+                        setWheelStockData(resultStockWheel?.data);
                     } 
                     if(!isMounted && tasks[i] === getStorageAll) {
-                        let result: any = await tasks[i]();
-                        setStorageAll(result?.data);
+                        let resultStorage: any = await tasks[i]();
+                        setStorageAll(resultStorage?.data);
                     } 
                     if(!isMounted && tasks[i] === getPriceWheels) {
-                        let result: any = await tasks[i]();
-                        setWheelPriceData(result.data);
+                        let resultPriceWheel: any = await tasks[i]();
+                        setWheelPriceData(resultPriceWheel?.data);
                     } 
                     if(!isMounted && tasks[i] === getOrderData) {
-                        let result: any = await tasks[i]();
-                        setOrderAllData(result?.data);
+                        let resultOrder: any = await tasks[i]();
+                        setOrderAllData(resultOrder?.data);
                     }
                     if(!isMounted && tasks[i] === getOrderSupData) {
-                        let result: any = await tasks[i]();
-                        setOrderSupAllData(result?.data);
+                        let resultOrderSup: any = await tasks[i]();
+                        setOrderSupAllData(resultOrderSup?.data);
                     } 
                     if(!isMounted && tasks[i] === getCustomers) {
-                        let result: any = await tasks[i]();
-                        setCustomers(result.data);
+                        let resultCustomers: any = await tasks[i]();
+                        setCustomers(resultCustomers?.data);
                     }
                     if(!isMounted && tasks[i] === getUsers) {
-                        let result: any = await tasks[i]();
-                        setUsers(result.data);
+                        let resultUsers: any = await tasks[i]();
+                        setUsers(resultUsers?.data);
                     }  
                     if(!isMounted && tasks[i] === getSuppliers) {
-                        let result: any = await tasks[i]();
-                        setSuppliers(result.data);
+                        let resultSuppliers: any = await tasks[i]();
+                        setSuppliers(resultSuppliers?.data);
                     }
                     if(!isMounted && tasks[i] === getCommentOrderData) {
-                        let result: any = await tasks[i](commentByOrder);
-                        setCommentOrder(result?.data);  
+                        let resultComOrder: any = await tasks[i](commentByOrder);
+                        setCommentOrder(resultComOrder?.data);  
                     }
                     if(!isMounted && tasks[i] === getCommentOrderSupData) {
-                        let result: any = await tasks[i](commentByOrderSup);
-                        setCommentOrderSup(result?.data);
+                        let resultComOrderSup: any = await tasks[i](commentByOrderSup);
+                        setCommentOrderSup(resultComOrderSup?.data);
                     }
                     const task = tasks.shift();
                     // Run the task:

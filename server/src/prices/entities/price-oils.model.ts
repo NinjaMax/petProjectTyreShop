@@ -20,6 +20,9 @@ export class PriceOil extends Model<PriceOil, PriceOilsConfigAttr>{
    @Column({type: DataType.INTEGER, unique: false, allowNull: true})
    price: number;
 
+   @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+   old_price: number;
+
    @ForeignKey(() => Supplier)
    @Column({type: DataType.INTEGER})
    id_supplier: number;

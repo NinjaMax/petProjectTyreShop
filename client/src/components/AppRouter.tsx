@@ -15,7 +15,7 @@ const AppRouter = observer(() => {
             <Route key={path} path={path} component={Component} exact/>)
             }
             {publicRoutes.map(({path, Component}) => 
-            <Route key={path} path={path} component={Component} exact/>)
+            <Route key={path} path={path} component={Component}/>)
             }
             <Redirect to={MAIN_ROUTE}/>
         </Switch>

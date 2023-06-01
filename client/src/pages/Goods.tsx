@@ -1,4 +1,4 @@
-import React, { SetStateAction, useState} from 'react';
+import React, { SetStateAction, useEffect, useState} from 'react';
 import '../css/Goods.css';
 import BreadCrumbs from '../components/BreadCrumbs';
 import TabsGoodsCard from '../components/tabs/TabsGoodsCard';
@@ -14,16 +14,26 @@ import AllTyreModelSize from '../components/goods/AllTyreModelSize';
 import AllModelBrand from '../components/goods/AllModelBrand';
 import ProductPayDel from '../components/goods/ProductPayDel';
 import YouWatched from '../components/goods/YouWatched';
+import { useHistory, useParams } from 'react-router-dom';
+import { GOODS_ROUTE } from '../utils/consts';
 
 const GoodsPage = () => {
   const modelBrand = "CONTICROSSPREMIUMCONTACT";
   const brandName = "Continental";
   const [changeTabGoods, setChangeTabGoods] = useState<string>("vseProTovar");
+  const history =  useHistory();
+  const param = useParams<any>();
   
+  // useEffect(() => {
+  //   if (param.goods) {
+  //     history.push(GOODS_ROUTE + param.goods);
+  //   }
+  // },[history, param.goods])
+
   const handleChangeTab = (e: { currentTarget: { value: SetStateAction<string>; }; }) => {
     setChangeTabGoods(e.currentTarget.value);
   }
-
+  //console.log('PARAMS_GOODS: ', param.goods);
     return (
     
     <div className='goodsCard'>

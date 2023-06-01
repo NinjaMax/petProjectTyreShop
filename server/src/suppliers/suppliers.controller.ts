@@ -22,7 +22,7 @@ export class SuppliersController {
   }
 
   @Get('/all')
-  findAll() {
+  findSuppliersAll() {
     return this.suppliersService.findAllSupplier();
   }
 

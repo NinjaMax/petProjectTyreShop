@@ -146,6 +146,7 @@ export class PriceTyresService {
          await this.priceTyresRepository.update(
         { price_wholesale: updatePriceDto.price_wholesale, 
           price: updatePriceDto.price, 
+          old_price: updatePriceDto.price,
           id_supplier: updatePriceDto.id_supplier,
           delivery_price: updatePriceDto.delivery_price, 
           price_plus_delivery: updatePriceDto.price_plus_delivery,

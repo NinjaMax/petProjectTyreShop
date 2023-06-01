@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../../css/Goods/AllAboutProduct.css';
 import productImage from '../../assets/autotyrespilotspotps2.png';
 import heartImg from '../../assets/icons/heart_64BlueClear.png';
@@ -11,9 +11,17 @@ import FlagsIcon from '../cards/FlagsIcon';
 import CheckboxBtn from '../select/CheckboxBtn';
 import TyreMarking from './TyreMarking';
 import SocialMediaLinks from '../socialMedia/SocialMediaLinks';
+import { useParams } from 'react-router-dom';
 
 
 const AllAboutProduct = () => {
+    const param = useParams<any>();
+
+    // useEffect(() => {
+    //     if (0) {
+
+    //     }
+    // },[])
 
     return (
         <div className='allAboutProduct'>
@@ -21,7 +29,7 @@ const AllAboutProduct = () => {
                 <img id='productImgGoods' src={productImage} alt='productImg'/>   
             </div>
             <div className='allAboutProductInfo'>
-                <div className='productInfoName'>CONTINENTAL CONTICROSSPREMIUMCONTACT 6 UHPD 5P 195/65 R15 105T XL</div>
+                <div className='productInfoName'>{param.goods}</div>
                 <div className='productInfoRating'><Rating numScore={4.8}/><a className='productInfoRatingLink' href='/#'>0 отзывов</a></div>
                 <div className="productInfoCode">код товара: 0123565447</div>
                 <div className='productInfoProps'><PropsCardIcons/></div>

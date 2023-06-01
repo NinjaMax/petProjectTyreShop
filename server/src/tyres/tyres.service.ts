@@ -155,6 +155,20 @@ export class TyresService {
     }
   }
 
+  async findAllTyresByFullName(fullname: string) {
+    try {
+      const tyresOneByFull_name = await this.tyresRepository.findOne({
+        where: { full_name: fullname }, 
+        include: { all: true },
+      });
+      return tyresOneByFull_name;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,)
+    }
+  }
+
   async findTyresById(getTyreDto: GetTyreDto) {
     try {
       const tyresId = await this.tyresRepository.findByPk(getTyreDto.id, {

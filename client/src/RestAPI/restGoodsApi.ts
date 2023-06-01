@@ -39,6 +39,22 @@ const getTyresParams = async (params:string) => {
     return data;
 }
 
+const getTyresByFullName = async (fullname:string) => {
+    const {data} = await $hostGet.get('tyres/fullname/:fullname',
+     {params: {fullname: fullname}})
+    //localStorage.setItem('token', data.token)
+    console.log('GET_TYRES_BY_FULL_NAME: ', data )
+    return data;
+}
+
+const getTyresById = async (id:string) => {
+    const {data} = await $hostGet.get('tyres/id',
+     {params: {id: id}})
+    //localStorage.setItem('token', data.token)
+    console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
 
 
 
@@ -47,5 +63,7 @@ export {
     getTyresSeason,
     getTyresType,
     getTyresParams,
-    getTyresDiameter
+    getTyresDiameter,
+    getTyresById,
+    getTyresByFullName
 }

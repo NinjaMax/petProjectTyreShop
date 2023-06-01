@@ -59,6 +59,11 @@ export class TyresController {
     return this.tyresService.findAllTyresByParams(params);
   }
 
+  @Get('/fullname/:fullname')
+  findTyresFullName(@Param('fullname') fullname: string) {
+    return this.tyresService.findAllTyresByFullName(fullname);
+  }
+
   @Patch('/update')
   updateTyres(@Body() updateTyreDto: UpdateTyreDto) {
     return this.tyresService.updateTyres(updateTyreDto);

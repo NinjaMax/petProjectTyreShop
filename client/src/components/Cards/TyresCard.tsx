@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import '../../css/CardsCss/TyresCard.css';
 import FlagsIcon from './FlagsIcon';
 import PropsCardIcons from './PropsCardIcons';
@@ -7,20 +7,29 @@ import OptionsTyreBox from './OptionsTyreBox';
 import tyres from '../../assets/autotyrespilotspotps2.png';
 import ButtonAction from '../buttons/ButtonAction';
 import { ITyreCard } from './interfaces/tyreCard.interface';
+import CyrillicToTranslit from 'cyrillic-to-translit-js';
 import { GOODS_ROUTE } from '../../utils/consts';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const TyresCard = ({goods, optionsBox, checkOrders}:ITyreCard) => {
     const history = useHistory();
+
+    const cyrillicToTranslit = new (CyrillicToTranslit as any)();
+    const exampleCyr = 
+    cyrillicToTranslit.transform(
+        'Michelin X-Ice Snow SUV 245/60 R18 105T XL (шип)', '-'
+        ).toLowerCase();
+        //replace(/[()]/g, "-")
+    console.log(exampleCyr);
+
     return (
         <div className="tyresCard">
             <div >
                 <img id='imgTyres' src={tyres} alt="imgCards" /><p/>
                 <a id='tyresName'
-                    // onClick={() => history.push(GOODS_ROUTE +
-                    // goods?.full_name.toLowerCase().replace(/ /g, "-"))} 
-                    href={"/" + 
-                    goods?.full_name.toLowerCase().replace(/ /g, "-")}
+                    // onClick={ history.push(GOODS_ROUTE +
+                    //  goods?.full_name.toLowerCase().replace(/ /g, "-"))} 
+                    href={`/${goods?.full_name.toLowerCase().replace(/ /g, "-")}`}
                 >
                     {goods?.full_name}
                 </a>
@@ -34,15 +43,20 @@ const TyresCard = ({goods, optionsBox, checkOrders}:ITyreCard) => {
                     />
                 </div>
                 {goods?.price ? goods?.price.map((item: any) => (
-                    <div className="tyresCardPrice" key={item.id}>
-                        {item.price} UAH
-                    </div> 
-                  ))
-                  : <span>0</span>
-                }
+                    <Fragment key={item.id}>
+                    <div className="tyresCardPrice" >
+                        {item.price} &#8372;
+                    </div>
+                    {item.old_price ?
                     <div className="tyresCardOldPrice" >
-                        5000 UAH
+                        {item.old_price} &#8372;
                     </div> 
+                    : null
+                    } 
+                    </Fragment>
+                  ))
+                  : <span> немає в наявності </span>
+                }
                 <ButtonAction props={"КУПИТИ"} widthBtn={260} eventItem={checkOrders}/>
                 <p/>    
             </div>
