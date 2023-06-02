@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import '../../css/Goods/AllAboutProduct.css';
 import productImage from '../../assets/autotyrespilotspotps2.png';
 import heartImg from '../../assets/icons/heart_64BlueClear.png';
@@ -12,16 +12,19 @@ import CheckboxBtn from '../select/CheckboxBtn';
 import TyreMarking from './TyreMarking';
 import SocialMediaLinks from '../socialMedia/SocialMediaLinks';
 import { useParams } from 'react-router-dom';
+import { Context } from '../../context/Context';
 
 
-const AllAboutProduct = () => {
-    const param = useParams<any>();
-
+const AllAboutProduct = ({product}:any) => {
+    // const param = useParams<any>();
+    // const {page} = useContext<any>(Context);
     // useEffect(() => {
     //     if (0) {
 
     //     }
     // },[])
+    console.log('PRODUCT_COUNTRY: ', product?.country);
+    console.log('PRODUCT_YEAR: ', product?.year);
 
     return (
         <div className='allAboutProduct'>
@@ -29,12 +32,26 @@ const AllAboutProduct = () => {
                 <img id='productImgGoods' src={productImage} alt='productImg'/>   
             </div>
             <div className='allAboutProductInfo'>
-                <div className='productInfoName'>{param.goods}</div>
+                <div className='productInfoName'>{product?.full_name}</div>
                 <div className='productInfoRating'><Rating numScore={4.8}/><a className='productInfoRatingLink' href='/#'>0 отзывов</a></div>
-                <div className="productInfoCode">код товара: 0123565447</div>
+                <div className="productInfoCode">код товара: {product?.id}</div>
                 <div className='productInfoProps'><PropsCardIcons/></div>
-                <div className="productInfoCountry"><FlagsIcon/></div>
-                <div className="productInfoPrice">2005 UAH</div>
+                <div className="productInfoCountry">
+                    <FlagsIcon 
+                        country={product?.country} 
+                        year={product?.year}
+                    />
+                </div>
+                {product?.price ? product?.price.map((item: any) =>(
+                    <div className="productInfoPrice" key={item.id}>
+                        {item.price} &#8372;
+                    </div> 
+                    )) : 
+                <div className="productInfoPrice">
+                    немає в наявності
+                </div> 
+                }
+                
                 <div className='btnGoodsBox'>
                     <ButtonAction props={"КУПИТИ"} widthBtn={280} eventItem={undefined}/>      
                 </div>

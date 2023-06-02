@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import '../../css/CardsCss/TyresCard.css';
 import FlagsIcon from './FlagsIcon';
 import PropsCardIcons from './PropsCardIcons';
@@ -10,25 +10,40 @@ import { ITyreCard } from './interfaces/tyreCard.interface';
 import CyrillicToTranslit from 'cyrillic-to-translit-js';
 import { GOODS_ROUTE } from '../../utils/consts';
 import { Link, useHistory } from 'react-router-dom';
+import { Context } from '../../context/Context';
+import { observer } from 'mobx-react-lite';
 
-const TyresCard = ({goods, optionsBox, checkOrders}:ITyreCard) => {
+const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
     const history = useHistory();
-
+    const {page} = useContext<any>(Context);
+   
+    const addGoodsId = () => {
+        //page.setId(goods?.id);
+        localStorage.setItem('goodsId', JSON.stringify(goods?.id));
+    }
+    
     const cyrillicToTranslit = new (CyrillicToTranslit as any)();
+    const goodItem = 'Michelin X Force ZL (ZL) MPT (ведущая) 335/80 R20 150K (шип)';
+    const createArray = goodItem.split('');
+    const indexBraketLeft = goodItem.split('').findIndex(item => item ==='(');
+    createArray.splice(indexBraketLeft, 1);
+    const indexBraketRight = createArray.findIndex(item => item ===')');
+    console.log(indexBraketRight);
+    createArray.splice(indexBraketRight, 1);
+    const exampleParam = createArray.join('');
     const exampleCyr = 
     cyrillicToTranslit.transform(
-        'Michelin X-Ice Snow SUV 245/60 R18 105T XL (шип)', '-'
-        ).toLowerCase();
-        //replace(/[()]/g, "-")
+        exampleParam , '-'
+        ).toLowerCase().replace(/[/()]/g, "-");
     console.log(exampleCyr);
+    console.log(exampleParam);
 
     return (
         <div className="tyresCard">
             <div >
                 <img id='imgTyres' src={tyres} alt="imgCards" /><p/>
                 <a id='tyresName'
-                    // onClick={ history.push(GOODS_ROUTE +
-                    //  goods?.full_name.toLowerCase().replace(/ /g, "-"))} 
+                    onClick={addGoodsId} 
                     href={`/${goods?.full_name.toLowerCase().replace(/ /g, "-")}`}
                 >
                     {goods?.full_name}
@@ -55,17 +70,26 @@ const TyresCard = ({goods, optionsBox, checkOrders}:ITyreCard) => {
                     } 
                     </Fragment>
                   ))
-                  : <span> немає в наявності </span>
+                  :  <div className="tyresCardPrice">
+                        немає в наявності
+                    </div> 
                 }
-                <ButtonAction props={"КУПИТИ"} widthBtn={260} eventItem={checkOrders}/>
+                { goods?.price ?
+                    <ButtonAction 
+                        props={"КУПИТИ"} 
+                        widthBtn={260} 
+                        eventItem={checkOrders}
+                    />
+                    : null
+                }
                 <p/>    
             </div>
             { optionsBox ?
-                <OptionsTyreBox/>
+                <OptionsTyreBox character={goods}/>
             :null}
             <p/>     
         </div>
     );
-};
+});
 
 export default TyresCard;

@@ -16,24 +16,65 @@ import ProductPayDel from '../components/goods/ProductPayDel';
 import YouWatched from '../components/goods/YouWatched';
 import { useHistory, useParams } from 'react-router-dom';
 import { GOODS_ROUTE } from '../utils/consts';
+import { getTyresById, getTyresByIdParam } from '../restAPI/restGoodsApi';
+import { yieldToMain } from '../restAPI/postTaskAdmin';
 
 const GoodsPage = () => {
-  const modelBrand = "CONTICROSSPREMIUMCONTACT";
-  const brandName = "Continental";
+  const [product, setProduct] = useState<any>();
+  const [productId, setProductId] = useState<string | null>();
   const [changeTabGoods, setChangeTabGoods] = useState<string>("vseProTovar");
   const history =  useHistory();
   const param = useParams<any>();
-  
-  // useEffect(() => {
-  //   if (param.goods) {
-  //     history.push(GOODS_ROUTE + param.goods);
-  //   }
-  // },[history, param.goods])
 
-  const handleChangeTab = (e: { currentTarget: { value: SetStateAction<string>; }; }) => {
+  // useEffect(() => {
+  //   const getTyreId: string = 
+  //     JSON.parse(localStorage.getItem('goodsId')!);
+  //     if (getTyreId) {
+  //       setProductId(getTyreId)
+  //     }
+  // },[]) ;
+  // const getTyreId: string = 
+  //     JSON.parse(localStorage.getItem('goodsId')!);
+  
+  useEffect(() => {
+    let isMounted = false;
+    const getProduct = async () => {
+      const taskProduct: any[] = [
+        getTyresByIdParam,
+      ]
+    
+    const getTyreId: string = 
+      JSON.parse(localStorage.getItem('goodsId')!);
+    let i: number = 0; 
+    //console.log(getTyreId);
+    while (taskProduct.length > i) {
+
+      //if (getTyreId && !isMounted) {
+      if (!isMounted && taskProduct[i] === getTyresByIdParam && getTyreId) {
+        console.log(getTyreId);
+        const getProduct: any = await taskProduct[i](getTyreId);
+        //const getProduct = await getTyresByIdParam(getTyreId);
+        setProduct(getProduct)
+        //localStorage.removeItem('goodsId');
+      }
+      const task = taskProduct.shift();
+      task();
+      await yieldToMain();
+    }
+    };
+    getProduct();
+    return () => {
+      isMounted = true;
+    };
+  },[]);
+
+  console.log('PRODUCT: ', product);
+  console.log('LOCALSORAGE_GOODS_ID: ',JSON.parse(localStorage.getItem('goodsId')!));
+
+  const handleChangeTab = (e: any) => {
     setChangeTabGoods(e.currentTarget.value);
   }
-  //console.log('PARAMS_GOODS: ', param.goods);
+  //console.log('PARAMS_GOODS: ', param.goods); replace(/ /g, "-")
     return (
     
     <div className='goodsCard'>
@@ -51,7 +92,7 @@ const GoodsPage = () => {
             {id:4, titleGoodsTab:"ПИТАННЯ ТА ВІДПОВІДІ", value:"pitannja", 
             onChangeTab: handleChangeTab, checked: changeTabGoods}]}>
             {changeTabGoods==="vseProTovar" ?
-                <AllAboutProduct/>
+                <AllAboutProduct product={product}/>
             :null}
             {changeTabGoods==="charakteristiki"?
                 <PropertiesGoods/> 
@@ -82,11 +123,11 @@ const GoodsPage = () => {
         <SimilarGoods/>
       </div>
       <div className='allSizeModel'>
-        <span>Усі розміри моделі {modelBrand}</span>
+        <span>Усі розміри моделі {product?.model}</span>
         <AllTyreModelSize/>
       </div>
       <div className='allModelBrand'>
-        <span>Усі моделі бренда {brandName}</span>
+        <span>Усі моделі бренда {product?.brand}</span>
         <AllModelBrand/>
       </div>
       <div className='youWatched'>

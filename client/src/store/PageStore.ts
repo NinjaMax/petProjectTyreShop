@@ -2,24 +2,24 @@ import {makeAutoObservable} from 'mobx';
 
 export default class PageStore {
     _offset: number;
-    //_: {};
+    _id: string;
     constructor() { 
         this._offset = 0;
-        //this._user = {};
+        this._id = '0';
         makeAutoObservable(this);
     }
 
     setOffset(offset: number) {
         this._offset = offset;
     }
-    // setUser(_user: {}) {
-    //     this._user = _user;
-    // }
+    setId(id: string) {
+        this._id = id;
+    }
 
     get offset() {
         return this._offset;
     }
-    // get user() {
-    //     return this._user;
-    // }
+    get id() {
+        return this._id;
+    }
 }

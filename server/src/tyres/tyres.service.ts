@@ -157,11 +157,11 @@ export class TyresService {
 
   async findAllTyresByFullName(fullname: string) {
     try {
-      const tyresOneByFull_name = await this.tyresRepository.findOne({
+      const tyresOneByFullname = await this.tyresRepository.findOne({
         where: { full_name: fullname }, 
         include: { all: true },
       });
-      return tyresOneByFull_name;
+      return tyresOneByFullname;
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',
@@ -176,6 +176,20 @@ export class TyresService {
       });
 
       return tyresId;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found', 
+        HttpStatus.NOT_FOUND
+      );
+    }
+  }
+
+  async findTyresByIdParam(id: string) {
+    try {
+      const tyresIdParam = await this.tyresRepository.findByPk(id, {
+        include: { all: true }
+      });
+      return tyresIdParam;
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found', 

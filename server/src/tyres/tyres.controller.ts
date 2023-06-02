@@ -34,6 +34,11 @@ export class TyresController {
     return this.tyresService.findTyresById(getTyreDto);
   }
 
+  @Get('/paramid/:id')
+  findTyresByParamId(@Param('id') id: string) {
+    return this.tyresService.findTyresByIdParam(id);
+  }
+
   @Get('/offset')
   findTyresByLimit(@Query('offset') offset: number) {
     return this.tyresService.findAllTyresWithOffset(offset);
