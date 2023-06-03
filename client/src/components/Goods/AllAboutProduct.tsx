@@ -13,9 +13,9 @@ import TyreMarking from './TyreMarking';
 import SocialMediaLinks from '../socialMedia/SocialMediaLinks';
 import { useParams } from 'react-router-dom';
 import { Context } from '../../context/Context';
+import { ITyreCard } from '../cards/interfaces/tyreCard.interface';
 
-
-const AllAboutProduct = ({product}:any) => {
+const AllAboutProduct = ({goods}:ITyreCard) => {
     // const param = useParams<any>();
     // const {page} = useContext<any>(Context);
     // useEffect(() => {
@@ -23,8 +23,8 @@ const AllAboutProduct = ({product}:any) => {
 
     //     }
     // },[])
-    console.log('PRODUCT_COUNTRY: ', product?.country);
-    console.log('PRODUCT_YEAR: ', product?.year);
+    // console.log('PRODUCT_COUNTRY: ', goods?.country);
+    // console.log('PRODUCT_YEAR: ', goods?.year);
 
     return (
         <div className='allAboutProduct'>
@@ -32,17 +32,22 @@ const AllAboutProduct = ({product}:any) => {
                 <img id='productImgGoods' src={productImage} alt='productImg'/>   
             </div>
             <div className='allAboutProductInfo'>
-                <div className='productInfoName'>{product?.full_name}</div>
+                <div className='productInfoName'>{goods?.full_name}</div>
                 <div className='productInfoRating'><Rating numScore={4.8}/><a className='productInfoRatingLink' href='/#'>0 отзывов</a></div>
-                <div className="productInfoCode">код товара: {product?.id}</div>
-                <div className='productInfoProps'><PropsCardIcons/></div>
-                <div className="productInfoCountry">
-                    <FlagsIcon 
-                        country={product?.country} 
-                        year={product?.year}
+                <div className="productInfoCode">код товара: {goods?.id}</div>
+                <div className='productInfoProps'>
+                    <PropsCardIcons 
+                        type={goods?.vehicle_type}
+                        season={goods?.season}
                     />
                 </div>
-                {product?.price ? product?.price.map((item: any) =>(
+                <div className="productInfoCountry">
+                    <FlagsIcon 
+                        country={goods?.country} 
+                        year={goods?.year}
+                    />
+                </div>
+                {goods?.price ? goods?.price.map((item: any) =>(
                     <div className="productInfoPrice" key={item.id}>
                         {item.price} &#8372;
                     </div> 

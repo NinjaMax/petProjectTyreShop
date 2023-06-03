@@ -9,8 +9,7 @@ export interface ITyreCard {
         };
         year: {manufacture_year: number};
         id: string; 
-        full_name: string;
-        season: {season_ua: string}; 
+        full_name: string; 
         manufacture_year: string;
         category: {category: string};
         price: [{
@@ -18,7 +17,15 @@ export interface ITyreCard {
             price: number;
             delivery_price: number;
             price_plus_delivery: number;
-        }]
+        }];
+        vehicle_type: { 
+            vehicle_type: string,
+            vehicle_type_ua: string,
+        };
+        season:{
+            season: string,
+            season_ua: string
+        };
     };
     checkOrders?:()=> void | undefined;
 }

@@ -92,7 +92,7 @@ const GoodsPage = () => {
             {id:4, titleGoodsTab:"ПИТАННЯ ТА ВІДПОВІДІ", value:"pitannja", 
             onChangeTab: handleChangeTab, checked: changeTabGoods}]}>
             {changeTabGoods==="vseProTovar" ?
-                <AllAboutProduct product={product}/>
+                <AllAboutProduct goods={product}/>
             :null}
             {changeTabGoods==="charakteristiki"?
                 <PropertiesGoods/> 

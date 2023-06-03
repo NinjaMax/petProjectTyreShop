@@ -50,7 +50,12 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
                 </a>
                 <div className='ratingTyres'><Rating numScore={4.8}/><a className='reviewCard' href='/#'>0 отзывов</a></div>
                 <div className="tyresCardCode">код товара: {goods?.id}</div>
-                <div className='propsCard'><PropsCardIcons/></div>
+                <div className='propsCard'>
+                    <PropsCardIcons
+                        type={goods?.vehicle_type}
+                        season={goods?.season}
+                    />
+                </div>
                 <div className="tyresCardCountry">
                     <FlagsIcon 
                         country={goods?.country} 
