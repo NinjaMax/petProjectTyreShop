@@ -14,8 +14,9 @@ import SocialMediaLinks from '../socialMedia/SocialMediaLinks';
 import { useParams } from 'react-router-dom';
 import { Context } from '../../context/Context';
 import { ITyreCard } from '../cards/interfaces/tyreCard.interface';
+import { observer } from 'mobx-react-lite';
 
-const AllAboutProduct = ({goods}:ITyreCard) => {
+const AllAboutProduct = observer(({goods}:ITyreCard) => {
     // const param = useParams<any>();
     // const {page} = useContext<any>(Context);
     // useEffect(() => {
@@ -23,8 +24,8 @@ const AllAboutProduct = ({goods}:ITyreCard) => {
 
     //     }
     // },[])
-    // console.log('PRODUCT_COUNTRY: ', goods?.country);
-    // console.log('PRODUCT_YEAR: ', goods?.year);
+    console.log('PRODUCT_COUNTRY: ', goods?.country);
+    console.log('PRODUCT_YEAR: ', goods?.year);
 
     return (
         <div className='allAboutProduct'>
@@ -36,10 +37,15 @@ const AllAboutProduct = ({goods}:ITyreCard) => {
                 <div className='productInfoRating'><Rating numScore={4.8}/><a className='productInfoRatingLink' href='/#'>0 отзывов</a></div>
                 <div className="productInfoCode">код товара: {goods?.id}</div>
                 <div className='productInfoProps'>
+                {goods?.vehicle_type || goods?.season ?
                     <PropsCardIcons 
                         type={goods?.vehicle_type}
                         season={goods?.season}
                     />
+                    :
+                    <img src='iconsSeasons/noSeason.png' alt='noProd'/>
+                }
+                    
                 </div>
                 <div className="productInfoCountry">
                     <FlagsIcon 
@@ -94,6 +100,6 @@ const AllAboutProduct = ({goods}:ITyreCard) => {
             </div>
         </div>
     );
-};
+});
 
 export default AllAboutProduct;

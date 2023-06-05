@@ -2,24 +2,23 @@ import React, { useEffect, useState } from 'react';
 import '../../css/CardsCss/PropsCardIcon.css';
 // import seasonSummer from '../../assets/icons/iconsSeasons/seasonSummer.png';
 // import passCar from '../../assets/icons/iconsTypeCar/londonCabClear64.png';
-// import pickup from '../../assets/icons/iconsTypeCar/pickup.png';
 
 enum TyreSeasons {
-    SUMMER_SEASON = 'iconsSeasons/seasonSummer.png',
-    WINTER_SEASON = 'iconsSeasons/seasonWinter.png',
-    ALLSEASON_SEASON = 'iconsSeasons/seasonAll.png',
-    NOSEASON_SEASON = 'iconsSeasons/noSeason.png',
+    SUMMER_SEASON = '/iconsSeasons/seasonSummer.png',
+    WINTER_SEASON = '/iconsSeasons/seasonWinter.png',
+    ALLSEASON_SEASON = '/iconsSeasons/seasonAll.png',
+    NOSEASON_SEASON = '/iconsSeasons/noSeason.png',
 };
 
 enum TyreType {
-    LEGRKOVOI_TYPE = 'iconsTypeCar/londonCabClear64.png',
-    VNEDOROGNIK_TYPE = 'iconsTypeCar/pickup.png',
-    LEGKOGRUZ_TYPE = 'iconsTypeCar/van.png',
-    SELHOZ_TYPE = 'iconsTypeCar/tractor.png',
-    SPECTEHNIKA_TYPE = 'iconsTypeCar/bulldozer.png',
-    MOTO_TYPE = 'iconsTypeCar/scooter.png',
-    TRUCK_TYPE = 'iconsTypeCar/truck.png',
-    NO_TYPE = 'iconsTypeCar/noTypeCar.png',
+    LEGRKOVOI_TYPE = '/iconsTypeCar/londonCabClear64.png',
+    VNEDOROGNIK_TYPE = '/iconsTypeCar/pickup.png',
+    LEGKOGRUZ_TYPE = '/iconsTypeCar/van.png',
+    SELHOZ_TYPE = '/iconsTypeCar/tractor.png',
+    SPECTEHNIKA_TYPE = '/iconsTypeCar/bulldozer.png',
+    MOTO_TYPE = '/iconsTypeCar/scooter.png',
+    TRUCK_TYPE = '/iconsTypeCar/truck.png',
+    NO_TYPE = '/iconsTypeCar/noTypeCar.png',
 };
 
 type ITyreProps = {
@@ -84,8 +83,7 @@ const PropsCardIcons = ({type, season}:ITyreProps) => {
     useEffect(() => {
         let isSetFlag = false;
         const setFlag = async () => {
-            const seasonTyre = 
-            seasonCar(season?.season);
+        const seasonTyre = seasonCar(season?.season);
         const typeTyre = typeCar(type?.vehicle_type);
             if (!isSetFlag && seasonTyre) {
                 setShowSeason(seasonTyre);
@@ -98,16 +96,27 @@ const PropsCardIcons = ({type, season}:ITyreProps) => {
         return () => {
             isSetFlag = true;
         }
-    },[season?.season, type?.vehicle_type])
-    console.log('SHOW_TYPE_PROP: ', type);
-    console.log('SHOW_SEASON_PROP: ', season);
+    },[type?.vehicle_type, season?.season]);
+
+    console.log('SHOW_TYPE_PROP: ', type?.vehicle_type);
+    console.log('SHOW_SEASON_PROP: ', season?.season);
     console.log('SHOW_TYPE: ', showType);
     console.log('SHOW_SEASON: ', showSeason);
 
     return (
-        <div className='propsCardIcons'>
-            <img src={showType} alt='typesCar'/>
-            <img src={showSeason} alt='seasons'/>
+        <div className='propsCarIconBox'>
+            <div className='propsCardIcons'>
+                <img className='propsCarImg' src={showType} alt='typesCar'/>  
+                <span className="tooltipTextCardIcons">
+                    Тип транспорту: {type?.vehicle_type_ua}
+                </span>  
+            </div>
+            <div className='propsCardIcons'>
+                <img className='propsCarImg' src={showSeason} alt='seasons'/>
+                <span className="tooltipTextCardIcons">
+                    Сезон: {season?.season_ua} шина
+                </span>
+            </div>
         </div>
     );
 };

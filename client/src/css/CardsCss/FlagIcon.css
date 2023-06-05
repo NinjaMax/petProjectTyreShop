@@ -1,12 +1,51 @@
-.flagIcon {
+.flagIconBox {
+    display: block;
     font-size: 15px;
     font-family: var(--main-font-family);
+}
 
+
+.flagIcon {
+    display: inline-block;
+    position: relative;
 }
 
 .flagIcon .imgFlag {
     width: 33px;
     height: 33px;
     vertical-align: middle;
-    
+}
+
+.flagIcon .tooltipTextFlagIcons {
+    visibility: hidden;
+    width: auto;
+    background-color: #444;
+    color: #fff;
+    text-align: center;
+    padding: 5px 5px 5px 5px;
+    border-radius: 8px;
+    font-size: small;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    top: -45%;
+    left: 115%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+/* Tooltip arrow */
+.flagIcon .tooltipTextFlagIcons::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #444 transparent transparent;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.flagIcon:hover .tooltipTextFlagIcons {
+    visibility: visible;
+    opacity: 1;
 }

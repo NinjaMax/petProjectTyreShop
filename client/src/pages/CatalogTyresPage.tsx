@@ -10,8 +10,9 @@ import { useLocation, useParams } from 'react-router-dom';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { getTyresOffset } from '../restAPI/restGoodsApi';
 import { Context } from '../context/Context';
+import { observer } from 'mobx-react-lite';
 
-const CatalogTyresPage = ({crumbsItem}: any) => {
+const CatalogTyresPage = observer(({crumbsItem}: any) => {
   const {goodsTyre, user, customer} = useContext<any | null>(Context);
   const {page} = useContext<any | null>(Context);
   const [pageNum, setPageNum] = useState(0);
@@ -90,6 +91,6 @@ const CatalogTyresPage = ({crumbsItem}: any) => {
         </div>  
       </div>
     );
-};
+});
 
 export default CatalogTyresPage;

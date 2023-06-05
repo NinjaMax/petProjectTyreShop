@@ -23,6 +23,7 @@
     font-size: 14px;
     font-family: var(--main-font-family);
 }
+
 .tooltipCardTyres .tooltipTextCardTyres {
     visibility: hidden;
     width: 120px;
