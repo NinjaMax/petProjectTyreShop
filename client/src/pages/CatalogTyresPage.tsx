@@ -8,7 +8,7 @@ import BreadCrumbs from '../components/BreadCrumbs';
 //import CyrillicToTranslit from 'cyrillic-to-translit-js';
 import { useLocation, useParams } from 'react-router-dom';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
-import { getTyresOffset } from '../restAPI/restGoodsApi';
+import { getTyresCountAll, getTyresOffset } from '../restAPI/restGoodsApi';
 import { Context } from '../context/Context';
 import { observer } from 'mobx-react-lite';
 
@@ -23,16 +23,24 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
     let isMounted = false;
     const loadMaintask = async() => {
         const taskLoad: any[] = [
-            getTyresOffset
+            getTyresOffset,
+            getTyresCountAll,
         ];
     let i:number = 0;
     while(taskLoad.length > i) {
         if(!isMounted && taskLoad[i] === getTyresOffset) {
         //let tyreGoods: any = await taskLoad[i](page.offset);
         //if(!isMounted && tyreGoods) {
-        let tyreGoods: any = await taskLoad[i](page.offset);
+        let tyreGoods: any = await taskLoad[i](
+          page.offset, page.limit
+        );
         goodsTyre?.setTyres(tyreGoods);
         console.log('SET_TYRES_PAGE_1: ', tyreGoods);
+        }
+        if(!isMounted && taskLoad[i] === getTyresCountAll) {
+          let tyreTotalCount: any = await taskLoad[i]();
+          goodsTyre?.setTotalCount(tyreTotalCount.count);
+          console.log('SET_TYRES_TOTALCOUNT: ', tyreTotalCount.count);
         } 
         const task = taskLoad.shift();
         task();
@@ -43,7 +51,7 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
     return () => {
         isMounted = true;
     };
-},[goodsTyre, page.offset]);
+},[goodsTyre, page.limit, page.offset]);
 
   //const cyrillicToTranslit = new CyrillicToTranslit<any>();
   

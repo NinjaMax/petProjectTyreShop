@@ -31,7 +31,6 @@ const CatalogTyres = observer(() => {
         setActive(!active);
     }
 
-    console.log('GOODS_CATALOG_TYRE:', goodsTyre._tyres.length);
 
     return (
         <div>

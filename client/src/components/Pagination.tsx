@@ -1,52 +1,88 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import '../css/Pagination.css';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../context/Context';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const Pagination = observer(() => {
-    const {page} = useContext<any | null>(Context);
-//<span className='paginationItem' >&laquo;</span>
-//<span className='paginationItem' >&#706;</span>
-//<span className='paginationItem' >&#707;</span>
-//<span className='paginationItem' >&raquo;</span> 
-    const handlePage =(e: any) => {
-        page.setOffset(+e.currentTarget.getAttribute('data-value'));
-        console.log('OFFSET_CLICK: ', +e.currentTarget.getAttribute('data-value'));
+    const {page, goodsTyre} = useContext<any | null>(Context);
+    const location = useLocation();
+    const history = useHistory<any>();
+    const [lastIndexPage, setLastIndexPage] = useState<number>(5);
+    const [firstIndexPage, setFirstIndexPage] = useState<number>(0);
+    
+    const handlePage =(pageItem: any) => {
+    //     page.setOffset(+e.currentTarget.getAttribute('data-value'));
+    //     console.log('OFFSET_CLICK: ', +e.currentTarget.getAttribute('data-value'));
+            page.setOffset(pageItem * 9);
+            page.setPageItem(pageItem);
     }
 
+    const pageCount = Math.ceil(goodsTyre.totalCount / page.limit);
+    // index of last item of current page
+    
+    //const lastContentIndex = pageNumber * contentPerPage;
+    // index of first item of current page
+    //const firstContentIndex = lastContentIndex - contentPerPage;
+    const pages = []
+
+    for (let i = 0; i < pageCount; i++) {
+        pages.push(i + 1)
+    }
+    const firstPage = () => {
+        setFirstIndexPage(0);
+        setLastIndexPage(5);
+    };
+    const lastPage = () => {
+        setFirstIndexPage(pages.length - 6);
+        setLastIndexPage(pages.length - 1);
+    };
+    const nextPage = () => {
+        setFirstIndexPage(prevFirst => prevFirst + 1);
+        setLastIndexPage(prevLast => prevLast + 1);
+    };
+    const previousPage = () => {
+        setFirstIndexPage(prevFirst => prevFirst - 1);
+        setLastIndexPage(prevLast => prevLast - 1);
+    };
+    
+    console.log('PAGES: ', pages);
+    console.log('TYRE_COUNT: ', goodsTyre.totalCount);
+    console.log('PAGE_LIMIT: ', page.limit);
     console.log('OFFSET: ', page.offset);
+    console.log('PAGE_PAGEITEM: ', page.pageItem);
 
     return (
         <div className="pagination">
-            <span className='paginationItem' >&#8810;</span>
-            <span className='paginationItem' >&#706;</span>
-            <span 
-                className='paginationItem active'
-                onClick={handlePage}
-                data-value='0'
-            >1</span>
-            <span className='paginationItem '
-                data-value='9'
-                onClick={handlePage}
-            >2</span>
             <span className='paginationItem' 
-                data-value='18'
-                onClick={handlePage}
-            >3</span>
-            <span className='paginationItem'
-                data-value='27'
-                onClick={handlePage} 
-            >4</span>
+                onClick={firstPage}
+            >&#8810;</span>
             <span className='paginationItem' 
-                data-value='36'
-                onClick={handlePage}
-            >5</span>
+                onClick={previousPage}
+            >&#706;</span>
+            {pages.slice(firstIndexPage, lastIndexPage).map(
+                (pageItem, index) =>
+                <span key={pageItem}
+                    className={
+                        page.pageItem === pageItem ? 
+                        'paginationItem active' : 'paginationItem'
+                    }
+                    onClick={() => handlePage(pageItem)}
+                    data-value={index * 9}
+                >
+                <a onClick={(e: any) => e.preventDefault()}
+                    href={location.pathname + `?page=${pageItem}`}
+                >
+                    {pageItem}
+                </a>
+                </span>
+            )}
+            <span className='paginationItem' 
+                onClick={nextPage}
+            >&#707;</span>
             <span className='paginationItem'
-                data-value='45'
-                onClick={handlePage} 
-            >6</span>
-            <span className='paginationItem' >&#707;</span>
-            <span className='paginationItem' >&#8811;</span>
+                onClick={lastPage} 
+            >&#8811;</span>
         </div>
     );
 });

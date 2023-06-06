@@ -76,11 +76,11 @@ export class TyresService {
     }
   }
 
-  async findAllTyresWithOffset(offset: number) {
+  async findAllTyresWithOffset(offset: number, limit: number) {
     try {
       const tyresAllLimit = await this.tyresRepository.findAll({
         offset: offset ?? 0,
-        limit: 9,
+        limit: limit,
         include: { all: true },
       });
       return tyresAllLimit;
@@ -205,6 +205,19 @@ export class TyresService {
       });
 
       return tyresId;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found', 
+        HttpStatus.NOT_FOUND
+      );
+    }
+  }
+
+  async findAndCountAllTyres() {
+    try {
+      const tyresCountAll = await this.tyresRepository.findAndCountAll();
+
+      return tyresCountAll;
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found', 

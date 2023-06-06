@@ -1,7 +1,8 @@
 import { $hostGet } from './index';
 
-const getTyresOffset = async (offset:number) => {
-    const {data} = await $hostGet.get('tyres/offset', {params: {offset: offset ?? 0}})
+const getTyresOffset = async (offset:number, limit: number) => {
+    const {data} = await $hostGet.get('tyres/offset', 
+    {params: {offset: offset ?? 0, limit: limit}})
     //localStorage.setItem('token', data.token)
     //console.log('GET_TYRES_OFFSET9: ', data )
     return data;
@@ -64,6 +65,13 @@ const getTyresByIdParam = async (id:string) => {
     return data;
 }
 
+const getTyresCountAll = async () => {
+    const {data} = await $hostGet.get('tyres/count/all')
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
 
 
 
@@ -75,5 +83,6 @@ export {
     getTyresDiameter,
     getTyresById,
     getTyresByFullName,
-    getTyresByIdParam
+    getTyresByIdParam,
+    getTyresCountAll
 }

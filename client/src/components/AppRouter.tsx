@@ -12,7 +12,7 @@ const AppRouter = observer(() => {
         <Switch>
             {user.isAuth &&
             adminRoutes.map(({path, Component}) => 
-            <Route key={path} path={path} component={Component} exact/>)
+            <Route key={path} path={path} component={Component}/>)
             }
             {publicRoutes.map(({path, Component}) => 
             <Route key={path} path={path} component={Component}/>)

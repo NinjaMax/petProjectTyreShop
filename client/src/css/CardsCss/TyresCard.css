@@ -17,6 +17,9 @@
     border: #444 2px solid;
 }
 
+.tyresCardLinkName {
+    height: 80px;
+}
 .optionsTyreBox {
     display:none;
 }

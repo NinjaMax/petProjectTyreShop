@@ -40,8 +40,11 @@ export class TyresController {
   }
 
   @Get('/offset')
-  findTyresByLimit(@Query('offset') offset: number) {
-    return this.tyresService.findAllTyresWithOffset(offset);
+  findTyresByLimit(
+    @Query('offset') offset: number,
+    @Query('limit') limit: number,
+  ) {
+    return this.tyresService.findAllTyresWithOffset(offset, limit);
   }
 
   @Get('/season/:season')
@@ -67,6 +70,11 @@ export class TyresController {
   @Get('/fullname/:fullname')
   findTyresFullName(@Param('fullname') fullname: string) {
     return this.tyresService.findAllTyresByFullName(fullname);
+  }
+
+  @Get('count/all')
+  findCountAllTyres() {
+    return this.tyresService.findAndCountAllTyres();
   }
 
   @Patch('/update')

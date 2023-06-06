@@ -41,13 +41,16 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
     return (
         <div className="tyresCard">
             <div >
-                <img id='imgTyres' src={tyres} alt="imgCards" /><p/>
+                <img id='imgTyres' src={tyres} alt="imgCards" />
+                <p/>
+                <div className='tyresCardLinkName'>
                 <a id='tyresName'
                     onClick={addGoodsId} 
                     href={`/${goods?.full_name.toLowerCase().replace(/ /g, "-")}`}
                 >
                     {goods?.full_name}
                 </a>
+                </div>
                 <div className='ratingTyres'><Rating numScore={4.8}/><a className='reviewCard' href='/#'>0 отзывов</a></div>
                 <div className="tyresCardCode">код товара: {goods?.id}</div>
                 <div className='propsCard'>
