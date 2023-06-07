@@ -9,12 +9,12 @@ import CheckOrder from '../modal/CheckOrder';
 import Modal from '../modal/Modal';
 import { Context } from '../../context/Context';
 import { observer } from 'mobx-react-lite';
-
-
+import LoadMoreGoods from '../ux/LoadMoreGoods';
 
 const CatalogTyres = observer(() => {
     const [active, setActive] = useState(false);
-    const {goodsTyre} = useContext<any | null>(Context);
+    const [goodsCat, setGoodsCat] = useState([]);
+    const {goodsTyre, page} = useContext<any | null>(Context);
 
     // useEffect(() =>{
     //     let isMounted = false;
@@ -31,6 +31,13 @@ const CatalogTyres = observer(() => {
         setActive(!active);
     }
 
+    const loadMoreGoods = (e: any) => {
+        e.stopPropagation();
+        page.setLoadMore(page.loadMore + 1);
+        page.setOffset(page.offset + 9);
+    };
+
+    console.log('LOAD_MORE: ',page.loadMore)
 
     return (
         <div>
@@ -76,6 +83,7 @@ const CatalogTyres = observer(() => {
                     <CheckOrder/> 
                 </Modal>   
             :null}
+            <LoadMoreGoods loadMore={loadMoreGoods}/>
             <Pagination/>
         </div>
     );

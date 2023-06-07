@@ -8,18 +8,23 @@ import tyres from '../../assets/autotyrespilotspotps2.png';
 import ButtonAction from '../buttons/ButtonAction';
 import { ITyreCard } from './interfaces/tyreCard.interface';
 import CyrillicToTranslit from 'cyrillic-to-translit-js';
-import { GOODS_ROUTE } from '../../utils/consts';
-import { Link, useHistory } from 'react-router-dom';
+import { GOODS_ROUTE, MAIN_ROUTE } from '../../utils/consts';
+import { Link, NavLink, useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
 import { Context } from '../../context/Context';
 import { observer } from 'mobx-react-lite';
 
 const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
-    const history = useHistory();
     const {page} = useContext<any>(Context);
+    const history = useHistory();
+    const goodsItem = useParams();
+    const location = useLocation();
+    let match = useRouteMatch('/:goodsItem');
+    
    
     const addGoodsId = () => {
         //page.setId(goods?.id);
         localStorage.setItem('goodsId', JSON.stringify(goods?.id));
+        history.push(MAIN_ROUTE + `${goods?.full_name.toLowerCase().replace(/ /g, "-")}`);
     }
     
     const cyrillicToTranslit = new (CyrillicToTranslit as any)();
@@ -37,6 +42,7 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
         ).toLowerCase().replace(/[/()]/g, "-");
     console.log(exampleCyr);
     console.log(exampleParam);
+    console.log(location);
 
     return (
         <div className="tyresCard">
@@ -44,12 +50,12 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
                 <img id='imgTyres' src={tyres} alt="imgCards" />
                 <p/>
                 <div className='tyresCardLinkName'>
-                <a id='tyresName'
+                <NavLink id='tyresName'
                     onClick={addGoodsId} 
-                    href={`/${goods?.full_name.toLowerCase().replace(/ /g, "-")}`}
+                    to={`${goods?.full_name?.toLowerCase().replace(/ /g, "-")}`}
                 >
                     {goods?.full_name}
-                </a>
+                </NavLink>
                 </div>
                 <div className='ratingTyres'><Rating numScore={4.8}/><a className='reviewCard' href='/#'>0 отзывов</a></div>
                 <div className="tyresCardCode">код товара: {goods?.id}</div>

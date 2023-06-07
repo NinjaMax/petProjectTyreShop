@@ -1,0 +1,32 @@
+.loadMoreGoods {
+    width: max-content;
+    margin: 30px 200px 30px 425px;
+    padding: 20px;
+    border-radius: 10px;
+    font-family: var(--main-font-family);
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+    
+}
+
+.loadMoreGoods:hover {
+    background-color: #ddd;
+}
+
+.loadMoreGoods:active {
+    background-color:#71c2ff;
+}
+
+.loadMoreGoods:active i {
+    color:#ddd;
+}
+
+.loadMoreGoods i {
+    vertical-align:middle;
+    color: #71c2ff;
+    font-size:40px;
+    width: 50px;
+    height: 45px;
+}

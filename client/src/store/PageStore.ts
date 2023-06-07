@@ -5,11 +5,14 @@ export default class PageStore {
     _limit: number;
     _pageItem: number;
     _id: string;
+    _loadMore:number;
+
     constructor() { 
         this._offset = 0;
         this._limit = 9;
         this._pageItem = 0;
         this._id = '0';
+        this._loadMore = 0;
         makeAutoObservable(this);
     }
 
@@ -25,6 +28,9 @@ export default class PageStore {
     setPageItem(pageItem: number) {
         this._pageItem = pageItem;
     }
+    setLoadMore(loadMore: number) {
+        this._loadMore = loadMore;
+    }
 
 
     get offset() {
@@ -33,11 +39,13 @@ export default class PageStore {
     get id() {
         return this._id;
     }
-
     get limit() {
         return this._limit;
     }
     get pageItem() {
         return this._pageItem;
+    }
+    get loadMore() {
+        return this._loadMore;
     }
 }

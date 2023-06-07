@@ -13,6 +13,7 @@ import Main from './pages/Main';
 export const adminRoutes = [
   {
     path: ADMIN_ROUTE,
+    exact: true,
     Component: Admin
   }
  
@@ -22,38 +23,47 @@ export const publicRoutes = [
 
   {
     path: BASKET_ROUTE,
+    exact: true,
     Component: Basket
   },
   {
     path: CATALOG_TYRES_ROUTE,
+    exact: true,
     Component: CatalogTyresPage
   },
   {
     path: CATALOG_TYRES_ROUTE + '/:category',
+    exact: true,
     Component: CatalogTyresPage
   },
   {
     path: GOODS_ROUTE,
+    exact: false,
     Component: GoodsPage
   },
   {
     path: LOGIN_ROUTE,
+    exact: true,
     Component: Auth
   },
   {
     path: REGISTRATION_ROUTE,
+    exact: true,
     Component: Auth
   },
   {
     path: MAIN_ROUTE,
+    exact: true,
     Component: Main
   }, 
   {
     path: CONTACT_ROUTE,
+    exact: true,
     Component: Contact
   },
   {
     path: ADMIN_AUTH_ROUTE,
+    exact: true,
     Component: AdminAuth
   }
 ];

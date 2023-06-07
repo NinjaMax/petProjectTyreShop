@@ -11,11 +11,22 @@ const AppRouter = observer(() => {
     return (
         <Switch>
             {user.isAuth &&
-            adminRoutes.map(({path, Component}) => 
-            <Route key={path} path={path} component={Component}/>)
+            adminRoutes.map(({path, Component, exact}) => 
+            <Route key={path} 
+                path={path} 
+                component={Component} 
+                exact={exact}
+            />
+            )
             }
-            {publicRoutes.map(({path, Component}) => 
-            <Route key={path} path={path} component={Component}/>)
+            {publicRoutes.map(({path, Component, exact}) => 
+            <Route 
+                key={path} 
+                path={path} 
+                component={Component} 
+                exact={exact}
+            />
+            )
             }
             <Redirect to={MAIN_ROUTE}/>
         </Switch>

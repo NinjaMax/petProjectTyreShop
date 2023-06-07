@@ -7,23 +7,17 @@ import { useHistory, useLocation } from 'react-router-dom';
 const Pagination = observer(() => {
     const {page, goodsTyre} = useContext<any | null>(Context);
     const location = useLocation();
-    const history = useHistory<any>();
+    //const history = useHistory<any>();
     const [lastIndexPage, setLastIndexPage] = useState<number>(5);
     const [firstIndexPage, setFirstIndexPage] = useState<number>(0);
     
     const handlePage =(pageItem: any) => {
-    //     page.setOffset(+e.currentTarget.getAttribute('data-value'));
-    //     console.log('OFFSET_CLICK: ', +e.currentTarget.getAttribute('data-value'));
-            page.setOffset(pageItem * 9);
-            page.setPageItem(pageItem);
+        page.setOffset(pageItem * 9);
+        page.setPageItem(pageItem);
     }
 
     const pageCount = Math.ceil(goodsTyre.totalCount / page.limit);
-    // index of last item of current page
     
-    //const lastContentIndex = pageNumber * contentPerPage;
-    // index of first item of current page
-    //const firstContentIndex = lastContentIndex - contentPerPage;
     const pages = []
 
     for (let i = 0; i < pageCount; i++) {
@@ -68,7 +62,6 @@ const Pagination = observer(() => {
                         'paginationItem active' : 'paginationItem'
                     }
                     onClick={() => handlePage(pageItem)}
-                    data-value={index * 9}
                 >
                 <a onClick={(e: any) => e.preventDefault()}
                     href={location.pathname + `?page=${pageItem}`}

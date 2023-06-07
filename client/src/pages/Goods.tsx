@@ -14,7 +14,7 @@ import AllTyreModelSize from '../components/goods/AllTyreModelSize';
 import AllModelBrand from '../components/goods/AllModelBrand';
 import ProductPayDel from '../components/goods/ProductPayDel';
 import YouWatched from '../components/goods/YouWatched';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import { GOODS_ROUTE } from '../utils/consts';
 import { getTyresById, getTyresByIdParam } from '../restAPI/restGoodsApi';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
@@ -28,6 +28,7 @@ const GoodsPage = observer(() => {
   const [changeTabGoods, setChangeTabGoods] = useState<string>("vseProTovar");
   const history =  useHistory();
   const param = useParams<any>();
+  let match = useRouteMatch('/:goodsItem');
 
   // useEffect(() => {
   //   const getTyreId: string = 

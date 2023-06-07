@@ -9,7 +9,7 @@ const getTyresOffset = async (offset:number, limit: number) => {
 }
 
 const getTyresSeason = async (season:string) => {
-    const {data} = await $hostGet.get('tyres/season/:season',
+    const {data} = await $hostGet.get(`tyres/season/${season}`,
      {params: {season: season}})
     //localStorage.setItem('token', data.token)
     console.log('GET_TYRES_BY_SEASON: ', data )

@@ -5,19 +5,21 @@ import FilterCatalogTyres from '../components/filterCatalog/FilterCatalogTyres';
 import ReviewsMain from '../components/reviews/ReviewsMain';
 import ReviewsGoods from '../components/reviews/ReviewsGoods';
 import BreadCrumbs from '../components/BreadCrumbs';
-//import CyrillicToTranslit from 'cyrillic-to-translit-js';
+import CyrillicToTranslit from 'cyrillic-to-translit-js';
 import { useLocation, useParams } from 'react-router-dom';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
-import { getTyresCountAll, getTyresOffset } from '../restAPI/restGoodsApi';
+import { getTyresCountAll, getTyresOffset, getTyresSeason } from '../restAPI/restGoodsApi';
 import { Context } from '../context/Context';
 import { observer } from 'mobx-react-lite';
 
 const CatalogTyresPage = observer(({crumbsItem}: any) => {
   const {goodsTyre, user, customer} = useContext<any | null>(Context);
   const {page} = useContext<any | null>(Context);
-  const [pageNum, setPageNum] = useState(0);
+  const [paramUrl, setParamUrl] = useState(0);
   const params = useParams<any>();
   const location = useLocation();
+
+  const cyrillicToTranslit = new (CyrillicToTranslit as any)();
 
   useEffect(() =>{
     let isMounted = false;
@@ -25,23 +27,36 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
         const taskLoad: any[] = [
             getTyresOffset,
             getTyresCountAll,
+            getTyresSeason,
         ];
     let i:number = 0;
     while(taskLoad.length > i) {
         if(!isMounted && taskLoad[i] === getTyresOffset) {
-        //let tyreGoods: any = await taskLoad[i](page.offset);
-        //if(!isMounted && tyreGoods) {
-        let tyreGoods: any = await taskLoad[i](
-          page.offset, page.limit
-        );
-        goodsTyre?.setTyres(tyreGoods);
-        console.log('SET_TYRES_PAGE_1: ', tyreGoods);
+          let tyreGoods: any = await taskLoad[i](
+            page.offset, page.limit
+          );
+          page.loadMore > 0 ?
+          goodsTyre?.setTyres(
+            [...goodsTyre._tyres, ...tyreGoods]
+          ) :
+          goodsTyre?.setTyres(tyreGoods);
+          console.log('SET_TYRES_PAGE_1: ', tyreGoods);
         }
         if(!isMounted && taskLoad[i] === getTyresCountAll) {
           let tyreTotalCount: any = await taskLoad[i]();
           goodsTyre?.setTotalCount(tyreTotalCount.count);
           console.log('SET_TYRES_TOTALCOUNT: ', tyreTotalCount.count);
         } 
+        if(!isMounted && taskLoad[i] === getTyresSeason) {
+          let tyreSeason: any = await taskLoad[i](
+            cyrillicToTranslit.transform(params.category,''
+            ).toLowerCase()
+          );
+          if (tyreSeason) {
+            goodsTyre?.setTotalCount(tyreSeason);
+            console.log('SET_TYRES_BY_SEASON: ', tyreSeason);
+          }
+        }
         const task = taskLoad.shift();
         task();
         await yieldToMain(); 
@@ -51,9 +66,15 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
     return () => {
         isMounted = true;
     };
-},[goodsTyre, page.limit, page.offset]);
+},[
+  goodsTyre, 
+  params.category, 
+  page.limit, 
+  page.loadMore, 
+  page.offset
+]);
 
-  //const cyrillicToTranslit = new CyrillicToTranslit<any>();
+  
   
   // const crumbs ={ 
   //   crumbs: '/season', 

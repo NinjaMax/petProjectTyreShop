@@ -11,6 +11,7 @@ export default class GoodsTyreStore {
     _offset: number;
     _product: {};
     _totalCount: number;
+
     constructor() {  
          this._types = [];
         this._brands = [];
@@ -22,6 +23,7 @@ export default class GoodsTyreStore {
         this._offset = 0;
         this._product = {};
         this._totalCount = 0;
+
         makeAutoObservable(this);
     }
 
@@ -40,23 +42,19 @@ export default class GoodsTyreStore {
     setDescription(descriptions: {}) {
         this._descriptions = descriptions;
     }
-
     setDiameter(diameters: any[]) {
         this._diameter = diameters;
     }
-
     setOffset(offset: number) {
         this._offset = offset;
     }
-
     setProduct(product: {}) {
         this._product = product;
     }
-
     setTotalCount(totalCount: number) {
         this._totalCount = totalCount;
     }
-
+  
     get types() {
         return this._types;
     }
