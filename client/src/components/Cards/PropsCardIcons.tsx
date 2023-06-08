@@ -98,11 +98,6 @@ const PropsCardIcons = ({type, season}:ITyreProps) => {
         }
     },[type?.vehicle_type, season?.season]);
 
-    console.log('SHOW_TYPE_PROP: ', type?.vehicle_type);
-    console.log('SHOW_SEASON_PROP: ', season?.season);
-    console.log('SHOW_TYPE: ', showType);
-    console.log('SHOW_SEASON: ', showSeason);
-
     return (
         <div className='propsCarIconBox'>
             <div className='propsCardIcons'>

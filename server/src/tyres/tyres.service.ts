@@ -8,6 +8,8 @@ import { TyreSeason } from '../properties/entities/tyres/tyre-season.model';
 import { TyreVehicleType } from '../properties/entities/tyres/tyre-vehicleType.model';
 import { TyreDiameter } from '../properties/entities/tyres/tyre-diameter.model';
 import { TyreParams } from '../properties/entities/tyres/tyre-params.model';
+import { Op } from 'sequelize';
+
 
 @Injectable()
 export class TyresService {
@@ -76,12 +78,36 @@ export class TyresService {
     }
   }
 
-  async findAllTyresWithOffset(offset: number, limit: number) {
+  async findAllTyresWithOffset(
+    offset: number,
+    limit: number,
+    season: string,
+    type: string,
+  ) {
     try {
       const tyresAllLimit = await this.tyresRepository.findAll({
         offset: offset ?? 0,
         limit: limit,
-        include: { all: true },
+        include: [
+          //{ all: true },
+          {
+            model: TyreSeason,
+            right: false,
+            required: false,
+            where: { 
+              //[Op.or]: [
+                //{ 
+                  season_ua: season,
+                }, 
+              //  { season_ua: '' }
+              //],
+              //required: true,
+              //separate: true,
+            //},
+          },
+          { model: TyreSeason },
+          { model: TyreVehicleType, where: { vehicle_type_ua: type }},
+        ],
       });
       return tyresAllLimit;
     } catch {
@@ -96,7 +122,7 @@ export class TyresService {
       const tyresAllByseason = await this.tyresRepository.findAll({
         include: [
           { all: true },
-          { model: TyreSeason, where: { season: season } },
+          { model: TyreSeason, where: { season_ua: season } },
         ],
       });
       return tyresAllByseason;
@@ -112,7 +138,7 @@ export class TyresService {
       const tyresAllByType = await this.tyresRepository.findAll({
         include: [
           { all: true },
-          { model: TyreVehicleType, where: { vehicle_type: type } },
+          { model: TyreVehicleType, where: { vehicle_type_ua: type } },
         ],
       });
       return tyresAllByType;

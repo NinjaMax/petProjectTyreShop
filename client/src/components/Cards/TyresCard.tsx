@@ -33,7 +33,7 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
     const indexBraketLeft = goodItem.split('').findIndex(item => item ==='(');
     createArray.splice(indexBraketLeft, 1);
     const indexBraketRight = createArray.findIndex(item => item ===')');
-    console.log(indexBraketRight);
+    //console.log(indexBraketRight);
     createArray.splice(indexBraketRight, 1);
     const exampleParam = createArray.join('');
     const exampleCyr = 
@@ -41,8 +41,8 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
         exampleParam , '-'
         ).toLowerCase().replace(/[/()]/g, "-");
     console.log(exampleCyr);
-    console.log(exampleParam);
-    console.log(location);
+    // console.log(exampleParam);
+    // console.log(location);
 
     return (
         <div className="tyresCard">

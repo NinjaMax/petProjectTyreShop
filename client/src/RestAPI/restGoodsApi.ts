@@ -17,7 +17,7 @@ const getTyresSeason = async (season:string) => {
 }
 
 const getTyresType = async (type:string) => {
-    const {data} = await $hostGet.get('tyres/type/:type',
+    const {data} = await $hostGet.get(`tyres/type/${type}`,
      {params: {type: type}})
     //localStorage.setItem('token', data.token)
     console.log('GET_TYRES_BY_TYPE: ', data )
@@ -25,7 +25,7 @@ const getTyresType = async (type:string) => {
 }
 
 const getTyresDiameter = async (diameter:string) => {
-    const {data} = await $hostGet.get('tyres/diameter/:diameter',
+    const {data} = await $hostGet.get(`tyres/diameter/${diameter}`,
      {params: {diameter: diameter}})
     //localStorage.setItem('token', data.token)
     console.log('GET_TYRES_BY_DIAMETER: ', data )

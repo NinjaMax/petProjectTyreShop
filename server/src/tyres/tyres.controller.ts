@@ -43,8 +43,15 @@ export class TyresController {
   findTyresByLimit(
     @Query('offset') offset: number,
     @Query('limit') limit: number,
+    @Query('season') season: string,
+    @Query('type') type: string,
   ) {
-    return this.tyresService.findAllTyresWithOffset(offset, limit);
+    return this.tyresService.findAllTyresWithOffset(
+      offset,
+      limit,
+      season,
+      type,
+    );
   }
 
   @Get('/season/:season')
@@ -53,7 +60,7 @@ export class TyresController {
   }
 
   @Get('/type/:type')
-  findTyresType(@Param('diameter') type: string) {
+  findTyresType(@Param('type') type: string) {
     return this.tyresService.findAllTyresByType(type);
   }
 
