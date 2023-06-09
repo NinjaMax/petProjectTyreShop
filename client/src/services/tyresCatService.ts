@@ -5,7 +5,7 @@ import { TyreCatVehicles } from "./enum/ParamsVehicle";
 const tyreVehicleTypeCat = (type: string | undefined) => {
     switch (type) {
         case 'legkovi':
-            return TyreCatVehicles.LEGKOGRUZ_CAT_TYPE;
+            return TyreCatVehicles.LEGRKOVOI_CAT_TYPE;
         case 'vnedorognik':
             return TyreCatVehicles.VNEDOROGNIK_CAT_TYPE;
         case 'microavtobus':

@@ -36,7 +36,7 @@ const typeCar = (type: string | undefined) => {
     switch (type) {
         case 'легковой':
         case 'легковий':
-            return TyreType.LEGKOGRUZ_TYPE;
+            return TyreType.LEGRKOVOI_TYPE;
         case 'внедорожник':
         case 'позахляховик':
             return TyreType.VNEDOROGNIK_TYPE;

@@ -1,52 +1,83 @@
 import { $hostGet } from './index';
 
-const getTyresOffset = async (offset:number, limit: number) => {
+const getTyresOffset = async (
+    offset: number,
+    limit: number,
+    width: string,
+    height: string,
+    diameter: string,
+    season: string,
+    brand: string,
+    price: string,
+    type: string,
+    speed_index: string,
+    load_index: string,
+    studded: string,
+    run_flat: string,
+    homologation: string,
+    ) => {
     const {data} = await $hostGet.get('tyres/offset', 
-    {params: {offset: offset ?? 0, limit: limit}})
+    {params: {
+        offset: offset ?? 0,
+        limit: limit,
+        width: width,
+        height: height,
+        diameter: diameter,
+        season: season,
+        brand: brand,
+        price: price,
+        type: type,
+        speed_index: speed_index,
+        load_index: load_index,
+        studded: studded,
+        run_flat: run_flat,
+        homologation: homologation,
+        }
+    })
     //localStorage.setItem('token', data.token)
     //console.log('GET_TYRES_OFFSET9: ', data )
     return data;
 }
 
-const getTyresSeason = async (season:string) => {
-    const {data} = await $hostGet.get(`tyres/season/${season}`,
-     {params: {season: season}})
-    //localStorage.setItem('token', data.token)
-    console.log('GET_TYRES_BY_SEASON: ', data )
-    return data;
-}
+// const getTyresSeason = async (season:string) => {
+//     const {data} = await $hostGet.get(`tyres/season/${season}`,
+//      {params: {season: season}})
+//     //localStorage.setItem('token', data.token)
+//     console.log('GET_TYRES_BY_SEASON: ', data )
+//     return data;
+// }
 
-const getTyresType = async (type:string) => {
-    const {data} = await $hostGet.get(`tyres/type/${type}`,
-     {params: {type: type}})
-    //localStorage.setItem('token', data.token)
-    console.log('GET_TYRES_BY_TYPE: ', data )
-    return data;
-}
+// const getTyresType = async (type:string) => {
+//     const {data} = await $hostGet.get(`tyres/type/${type}`,
+//      {params: {type: type}})
+//     //localStorage.setItem('token', data.token)
+//     console.log('GET_TYRES_BY_TYPE: ', data )
+//     return data;
+// }
 
-const getTyresDiameter = async (diameter:string) => {
-    const {data} = await $hostGet.get(`tyres/diameter/${diameter}`,
-     {params: {diameter: diameter}})
-    //localStorage.setItem('token', data.token)
-    console.log('GET_TYRES_BY_DIAMETER: ', data )
-    return data;
-}
+// const getTyresDiameter = async (diameter:string) => {
+//     const {data} = await $hostGet.get(`tyres/diameter/${diameter}`,
+//      {params: {diameter: diameter}})
+//     //localStorage.setItem('token', data.token)
+//     console.log('GET_TYRES_BY_DIAMETER: ', data )
+//     return data;
+// }
 
-const getTyresParams = async (params:string) => {
-    const {data} = await $hostGet.get('tyres/params/:params',
-     {params: {params: params}})
-    //localStorage.setItem('token', data.token)
-    console.log('GET_TYRES_BY_PARAMS: ', data )
-    return data;
-}
+// const getTyresParams = async (params:string) => {
+//     const {data} = await $hostGet.get('tyres/params/:params',
+//      {params: {params: params}})
+//     //localStorage.setItem('token', data.token)
+//     console.log('GET_TYRES_BY_PARAMS: ', data )
+//     return data;
+// }
 
-const getTyresByFullName = async (fullname:string) => {
-    const {data} = await $hostGet.get('tyres/fullname/:fullname',
-     {params: {fullname: fullname}})
-    //localStorage.setItem('token', data.token)
-    console.log('GET_TYRES_BY_FULL_NAME: ', data )
-    return data;
-}
+// const getTyresByFullName = async (fullname:string) => {
+//     const {data} = await $hostGet.get('tyres/fullname/:fullname',
+//      {params: {fullname: fullname}})
+//     //localStorage.setItem('token', data.token)
+//     console.log('GET_TYRES_BY_FULL_NAME: ', data )
+//     return data;
+// }
 
 const getTyresById = async (id:string) => {
     const {data} = await $hostGet.get('tyres/id',
@@ -77,12 +108,12 @@ const getTyresCountAll = async () => {
 
 export {
     getTyresOffset,
-    getTyresSeason,
-    getTyresType,
-    getTyresParams,
-    getTyresDiameter,
+    //getTyresSeason,
+    //getTyresType,
+    //getTyresParams,
+    //getTyresDiameter,
     getTyresById,
-    getTyresByFullName,
+    //getTyresByFullName,
     getTyresByIdParam,
     getTyresCountAll
 }
