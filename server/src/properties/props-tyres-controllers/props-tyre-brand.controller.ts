@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PropsBrandService } from '../props-tyres-services/props-tyre-brand.service';
 import { CreatePropertyDto } from '../dto/create-property.dto';
 import { UpdatePropertyDto } from '../dto/update-property.dto';
@@ -24,7 +32,7 @@ export class PropertiesBrandController {
   }
 
   @Patch('/brand/update')
-  update( @Body() updatePropertyDto: UpdatePropertyDto) {
+  update(@Body() updatePropertyDto: UpdatePropertyDto) {
     return this.propertiesBrandService.updateTyreBrand(updatePropertyDto);
   }
 

@@ -48,12 +48,32 @@ import { TyreDiameter } from './entities/tyres/tyre-diameter.model';
 import { TyreDemo } from './entities/tyres/tyre-demo.model';
 import { TyreCountry } from './entities/tyres/tyre-country.model';
 import { PropertiesSeasonController } from './props-tyres-controllers/props-tyre.season.controller';
+import { PropertiesDiameterController } from './props-tyres-controllers/props-tyre-diameter.controller';
+import { PropertiesHeightController } from './props-tyres-controllers/props-tyre-height.controller';
+import { PropertiesHomologationController } from './props-tyres-controllers/props-tyre-homologation.controller';
+import { PropertiesLoadIndexController } from './props-tyres-controllers/props-tyre-loadIndex.controller';
+import { PropertiesReinforcedController } from './props-tyres-controllers/props-tyre-reinforced.controller';
+import { PropertiesRunFlatController } from './props-tyres-controllers/props-tyre-runFlat.controller';
+import { PropertiesSpeedIndexController } from './props-tyres-controllers/props-tyre-speedIndex.controller';
+import { PropertiesStuddedController } from './props-tyres-controllers/props-tyre-studded.controller';
+import { PropertiesVehicleTypeController } from './props-tyres-controllers/props-tyre-vehicleType.controller';
+import { PropertiesWidthController } from './props-tyres-controllers/props-tyre-width.controller';
 
 @Module({
   controllers: [
     PropertiesBrandController,
     PropertiesModelController,
     PropertiesSeasonController,
+    PropertiesDiameterController,
+    PropertiesHeightController,
+    PropertiesHomologationController,
+    PropertiesLoadIndexController,
+    PropertiesReinforcedController,
+    PropertiesRunFlatController,
+    PropertiesSpeedIndexController,
+    PropertiesStuddedController,
+    PropertiesVehicleTypeController,
+    PropertiesWidthController,
   ],
   providers: [
     PropsBrandService,
