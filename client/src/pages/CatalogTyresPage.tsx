@@ -14,7 +14,7 @@ import { observer } from 'mobx-react-lite';
 import { tyreDiameterCat, tyreSeasonCat, tyreVehicleTypeCat } from '../services/tyresCatService';
 
 const CatalogTyresPage = observer(({crumbsItem}: any) => {
-  const {goodsTyre, user, customer} = useContext<any | null>(Context);
+  const {goodsTyre, filter} = useContext<any | null>(Context);
   const {page} = useContext<any | null>(Context);
   const [paramUrl, setParamUrl] = useState(0);
   const params = useParams<any>();
@@ -23,16 +23,6 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
   const cyrillicToTranslit = new (CyrillicToTranslit as any)();
   const paramsCat = cyrillicToTranslit.transform(params.category,''
             ).toLowerCase();
-
-  const width=undefined;
-  const height=undefined;
-  const brand=undefined;
-  const price=undefined;
-  const speed_index=undefined;
-  const load_index=undefined;
-  const studded=undefined;
-  const run_flat=undefined;
-  const homologation=undefined;
 
   useEffect(() =>{
     let isMounted = false;
@@ -56,18 +46,18 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
           let tyreGoods: any = await taskLoad[i](
             page.offset, 
             page.limit, 
-            width,
-            height,
-            tyreCatDiameter,
-            tyreCatSeason,
-            brand,
-            price,
+            filter.width,
+            filter.height,
+            tyreCatDiameter ?? filter.diameter,
+            tyreCatSeason ?? filter.season,
+            filter.brand,
+            filter.price,
             tyreCatType,
-            speed_index,
-            load_index,
-            studded,
-            run_flat,
-            homologation,
+            filter.speed_index,
+            filter.load_index,
+            filter.studded,
+            filter.run_flat,
+            filter.homologation,
           );
           page.loadMore > 0 ?
           goodsTyre?.setTyres(
@@ -110,9 +100,22 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
   params.category, 
   page.limit, 
   page.loadMore, 
-  page.offset
-]);
+  page.offset, 
+  filter.width, 
+  filter.height, 
+  filter.diameter, 
+  filter.season, 
+  filter.brand, 
+  filter.price, 
+  filter.speed_index, 
+  filter.load_index, 
+  filter.studded, 
+  filter.run_flat, 
+  filter.homologation]);
 
+const handleFilterTyreChange = (e: any) => {
+  console.log(e.currentTarget.value);
+}  
   console.log('PARAMS: ', params.category);
   console.log('LOCATION: ', location.pathname);
 
@@ -131,7 +134,7 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
         </div>
         <div className='b'>
         {location.pathname.includes('tyres') ?
-          <FilterCatalogTyres/>
+          <FilterCatalogTyres handleChange={handleFilterTyreChange}/>
           : null
         }
         </div>

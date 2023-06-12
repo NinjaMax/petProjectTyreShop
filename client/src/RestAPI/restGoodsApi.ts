@@ -193,5 +193,18 @@ export {
     getTyresById,
     //getTyresByFullName,
     getTyresByIdParam,
-    getTyresCountAll
+    getTyresCountAll,
+    getTyresBrandPropsAll,
+    getTyresDiameterPropsAll,
+    getTyresHeightPropsAll,
+    getTyresHomologationPropsAll,
+    getTyresLoadIndexPropsAll,
+    getTyresModelPropsAll,
+    getTyresReinforcedPropsAll,
+    getTyresRunFlatPropsAll,
+    getTyresSpeedIndexPropsAll,
+    getTyresStuddedPropsAll,
+    getTyresVehicleTypePropsAll,
+    getTyresWidthPropsAll,
+    getTyresSeasonPropsAll
 }

@@ -9,6 +9,7 @@ import GoodsWheelStore from './store/GoodsWheelStore';
 import GoodsBatteryStore from './store/GoodsBatteryStore';
 import GoodsOilStore from './store/GoodsOilStore';
 import PageStore from './store/PageStore';
+import FilterStore from './store/FilterStore';
 
 const rootElement = document.getElementById("root") as HTMLElement;
 
@@ -21,6 +22,7 @@ ReactDOMClient.createRoot(rootElement).render(
     goodsOil: new GoodsOilStore(),
     customer: new CustomersStore(),
     page: new PageStore(),
+    filter: new FilterStore(),
     isAuth: false,
     isLoading: true, 
   }}>

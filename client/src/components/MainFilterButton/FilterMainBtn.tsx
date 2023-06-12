@@ -22,28 +22,30 @@ const FilterMainBtn = (
     //<ChipOptions props={'Continental Group'}/>
   }
 
-    return (
-        <div>
-            <div className="dropdownFilterMainBtn">
-                <button onClick={filterClick} 
-                  className="dropBtnFilterMainBtn" data-style={{"--widthBtn":width}}> 
-                  {titleFilter} <i className='fa fa-caret-down'/>
-                </button>
-                {stateClick?  
-                  <div id="myDropdown3" className="dropdownContentFilterMainBtn" 
-                    onClick={e=>e.stopPropagation()}>
-                    <input type="text" placeholder=" Пошук.." id="myInput" />
-                    <div className='contentOptionsFilterMainBtn'>
-                      {children}
-                    </div>
-                   {contentInfo?
-                    <ContentFilterInfo infoMarking={contentInfo} width={width}/>
-                    : null}
-                  </div>
+  return (
+    <div>
+        <div className="dropdownFilterMainBtn">
+            <button onClick={filterClick} 
+              className="dropBtnFilterMainBtn" 
+              style={{"--widthBtn":width} as React.CSSProperties}
+              > 
+              {titleFilter} <i className='fa fa-caret-down'/>
+            </button>
+            {stateClick?  
+              <div id="myDropdown3" className="dropdownContentFilterMainBtn" 
+                onClick={e=>e.stopPropagation()}>
+                <input type="text" placeholder=" Пошук.." id="myInput" />
+                <div className='contentOptionsFilterMainBtn'>
+                  {children}
+                </div>
+               {contentInfo?
+                <ContentFilterInfo infoMarking={contentInfo} width={width}/>
                 : null}
-            </div>       
-        </div>
-    );
+              </div>
+            : null}
+        </div>       
+    </div>
+  );
 };
 
 export default FilterMainBtn;

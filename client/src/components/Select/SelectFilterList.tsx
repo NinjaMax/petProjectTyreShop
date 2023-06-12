@@ -1,22 +1,14 @@
 import React from 'react';
 import '../../css/SelectCss/SelectFilterList.css';
-
-interface ISelectFilterList {
-    value: string;
-    items: string;
-    checked?: any;
-    onChange: (e: any) => void; 
-    width?: string;
-}
+import { ISelectFilterList } from './interfaces/SelectFilterList.interface';
 
 const SelectFilterList = (
         {items, value, checked, onChange, width}: ISelectFilterList
     ) => {
 
     return (
-
     <div className={checked === value? 'checkedList':'selectFilterList'}
-        data-style={{"--widthBtn":width}}>   
+        style={{"--widthBtn":width} as React.CSSProperties}>   
         <input className='selectFilterListInput'
             id={value}
             type="radio"

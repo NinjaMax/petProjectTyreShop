@@ -13,11 +13,11 @@ interface IContentInfo {
 
 const ContentFilterInfo = ({infoMarking, width}: IContentInfo) => {
     return (
-        
-        <div className='dropdownContentInfo' data-style={{"--widthBtn":width}}>
+        <div className='dropdownContentInfo' 
+            style={{"--widthBtn":width} as React.CSSProperties}>
             <h6>Як дізнатися розмір шини?</h6>
             <h6>Маркування на боковині.</h6>
-            {infoMarking==='A' ?
+            {infoMarking === 'A' ?
             <div>
                 <img src={imgMarkerA} alt='infoFilterImg'/>
                 <div className='info A'>
@@ -26,7 +26,6 @@ const ContentFilterInfo = ({infoMarking, width}: IContentInfo) => {
                 </div>
              </div>
             :null}
-
             {infoMarking==="B" ?
             <div>
                 <img src={imgMarkerB} alt='infoFilterImg'/>
@@ -59,7 +58,6 @@ const ContentFilterInfo = ({infoMarking, width}: IContentInfo) => {
             </div>
             </div>
             :null}
-
             {infoMarking==="E" ?
             <div>
                 <img src={imgMarketE} alt='infoFilterImg'/>
