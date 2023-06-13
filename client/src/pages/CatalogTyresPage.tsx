@@ -134,7 +134,7 @@ const handleFilterTyreChange = (e: any) => {
         </div>
         <div className='b'>
         {location.pathname.includes('tyres') ?
-          <FilterCatalogTyres handleChange={handleFilterTyreChange}/>
+          <FilterCatalogTyres />
           : null
         }
         </div>

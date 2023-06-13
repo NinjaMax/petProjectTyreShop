@@ -7,6 +7,7 @@
     top: 0px;
     border-radius:0px 5px 5px 0px;
     padding: 15px;
+    font-family: var(--main-font-family);
     /*overflow: scroll;*/
 }
 

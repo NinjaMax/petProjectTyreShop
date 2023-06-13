@@ -1,66 +1,95 @@
 /*list */
 .selectFilterList {
-    background-color:#eee;
-    margin: 0;
-    padding-left: 16px;
-    width: calc(var(--widthBtn)*1px);
+    display: inline;
+    /* background-color:red; */
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 5px;
+    
+    padding-left: 6px;
+    width: 100px;
+    /* height: 65px; */
+    /* width: calc(var(--widthBtn)*1px); */
+    /* text-align: center; */
 }
 .checkedList {
-    background-color:#888;
-    margin: 0;
-    padding-left: 16px;
-    width: calc(var(--widthBtn)*1px);
+    display: inline;
+    /* background-color:purple; */
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 5px;
+    /* margin: 10px; */
+    padding-left: 6px;
+    width: 100px;
+    /* height: 75px; */
+    /* width: calc(var(--widthBtn)*1px); */
 }
 /*style list item*/
 .selectFilterListItem {
     cursor: pointer;
     position: relative;
-    padding: 12px 8px 12px 8px;
-    margin-left: 10px;
-    background-color: #eee;
-    font-size: 18px;
+    width: 100px;
+    /* height: 50px; */
+    padding: 12px 80px 12px 80px;
+    /* margin: 1px 1px 1px 1px; */
+    background-color: chartreuse;
+    font-size: 16px;
     font-family: var(--main-font-family);
-    /*transition: 0.2s;*/
+    transition: 0.2s;
+    border-radius: 20px;
+    /* text-align: center; */
+    text-align: center;
     /* make the list items unselectable */
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
 }
-
-.selectFilterList:hover .selectFilterListItem {
-    background-color:#ddd;
-}
-.selectFilterList:hover {
-    background-color:#ddd;
-}
-
-.selectFilterListInput {
-    appearance: none;
-}
-
-.selectFilterListInput:checked {
-    border-color: #fff;
-    border-style: solid;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-    height: 15px;
-    width: 7px;
+.selectFilterListItem span {
+    width: 40px;
+    height: 40px;
+    /* padding: 3px; */
+    /* margin: 5px; */
 }
 
 .checkedItem {
     cursor: pointer;
     position: relative;
-    padding: 12px 8px 12px 8px;
-    margin-left: 10px;
-    background-color: #888;
-    color: #fff;
+    padding: 12px 80px 12px 80px;
+    /* margin: 10px 10px 10px 10px; */
+    background-color: blueviolet;
+    color: #444;
     font-size: 16px;
     font-family: var(--main-font-family);
-    /*transition: 0.2s;*/
+    transition: 0.2s;
+    border-radius: 20px;
+    /* width: 100px; */
     /* make the list items unselectable */
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
 }
+.selectFilterList:hover .selectFilterListItem {
+    background-color:#ddd;
+}
+/* .selectFilterList:hover {
+    background-color:#ddd;
+} */
+.selectFilterListInput {
+    appearance: none;
+}
+.selectFilterListInput:checked {
+    position: relative;
+    border-color: red;
+    border-style: solid;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    height: 15px;
+    width: 7px;
+    top: 20px;
+    left: 25px;
+    z-index: 10;
+}
+
+

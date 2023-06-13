@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 //import limitSpeed from '/iconsSigns/speed_limit_64_empty.png';
 import '../../css/FilterCatatogCss/FilterCatalogTyres.css';
-import imageThorn from '../../assets/icons/imagesThorn_1.png';
+//import imageThorn from '../../assets/icons/imagesThorn_1.png';
 import imageLegkovi from '../../assets/icons/iconsTypeCar/londonCabClear64.png';
 import imagePozashljahovik from '../../assets/icons/iconsTypeCar/pickup.png';
 import imageMikroavtobus from '../../assets/icons/iconsTypeCar/van.png';
@@ -40,7 +40,7 @@ interface IFilterCatTyres {
     handleChange(args0: any): void;
 }
 
-const FilterCatalogTyres = observer(({handleChange}: IFilterCatTyres) => {
+const FilterCatalogTyres = observer(() => {
     const {filter, goodsTyre} = useContext<any | null>(Context);
     const [handleItem, setHandleItem] = useState();
 
@@ -136,6 +136,11 @@ const FilterCatalogTyres = observer(({handleChange}: IFilterCatTyres) => {
         };
     },[goodsTyre]);
 
+    const handleChange  = (e: any) => {
+        setHandleItem(e.currentTarget.value);
+        console.log(e.currentTarget.value);
+      }  
+
     console.log('WIDTH_FILTER: ', goodsTyre._width);
 
     return (
@@ -195,10 +200,24 @@ const FilterCatalogTyres = observer(({handleChange}: IFilterCatTyres) => {
                     <CheckboxBtn value={'Litni'} titleCheckbox={'Літні'} imageSrc={imageSummer}/>
                     <CheckboxBtn value={'Vsesezonni'} titleCheckbox={'Всесезонні'} imageSrc={imageAllSeason}/>
                     <p/>
-                    <CheckboxBtn value={"ship"} titleCheckbox={"Шип"} imageSrc={imageThorn}/>
                 </Accordion>
                 <Accordion titleName={"Шип / Не шип"}>
-
+                    {goodsTyre._studded ? 
+                        goodsTyre._studded.map(
+                            (studdedItem: any, index: number) => (
+                       <CheckboxBtn 
+                        key={studdedItem.studded + index}
+                        value={studdedItem.studded} 
+                        titleCheckbox={studdedItem.studded.length === 0 ?
+                            'не шип'
+                            : studdedItem.studded} 
+                        imageSrc={studdedItem.studded.length === 0 ?
+                            './iconsSigns/imagesNoThorn_1_64.png' :
+                            './iconsSigns/imagesThorn_1_64.png'
+                        }
+                        /> 
+                       )) : null
+                    }
                 </Accordion>
                 <FilterMainBtn width={247.4} 
                     titleFilter={'Бренд'} 
@@ -223,16 +242,6 @@ const FilterCatalogTyres = observer(({handleChange}: IFilterCatTyres) => {
                     <CheckboxBtn value={"s/h"} titleCheckbox={"С/х"} imageSrc={imageSH}/>
                     <CheckboxBtn value={"specteh"} titleCheckbox={"Спецтехніка"} imageSrc={imageSpectehnika}/>
                 </Accordion>
-                <FilterMainBtn width={247.4} titleFilter={'Виробник'} contentInfo={false}>
-                    <SelectFilterList value={"Continental"} items={"Continental"} checked={handleItem} onChange={handleChange} width={247.4}/>
-                    <SelectFilterList value={"Michelin"} items={"Michelin"} checked={handleItem} onChange={handleChange} width={247.4}/>
-                    <SelectFilterList value={"Bridgestone"} items={"Bridgestone"} checked={handleItem} onChange={handleChange} width={247.4}/>
-                    <SelectFilterList value={"Yokohama"} items={"Yokohama"} checked={handleItem} onChange={handleChange} width={247.4}/>
-                    <SelectFilterList value={"Good Year"} items={"Good Year"} checked={handleItem} onChange={handleChange} width={247.4}/>
-                    <SelectFilterList value={"Nokian"} items={"Nokian"} checked={handleItem} onChange={handleChange} width={247.4}/>
-                    <SelectFilterList value={"Hankook"} items={"Hankook"} checked={handleItem} onChange={handleChange} width={247.4}/>
-                    <SelectFilterList value={"Fulda"} items={"Fulda"} checked={handleItem} onChange={handleChange} width={247.4}/>
-                </FilterMainBtn>
                 <Accordion titleName={"Індекс швидкості"}>
                     {goodsTyre._speed_index ? 
                         goodsTyre._speed_index.map((speedIndexItem: any) => (
@@ -240,7 +249,7 @@ const FilterCatalogTyres = observer(({handleChange}: IFilterCatTyres) => {
                         key={speedIndexItem.speed_index}
                         value={speedIndexItem.speed_index} 
                         titleCheckbox={speedIndexItem.speed_index_with_desc} 
-                        imageSrc={'/iconsSigns/speed_limit_64_empty.png'}
+                        imageSrc={'./iconsSigns/speed_limit_64.png'}
                     />  )) : null
                     }
                 </Accordion>    

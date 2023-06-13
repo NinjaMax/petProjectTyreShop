@@ -31,7 +31,7 @@ const FilterMainBtn = (
               > 
               {titleFilter} <i className='fa fa-caret-down'/>
             </button>
-            {stateClick?  
+            {stateClick ?  
               <div id="myDropdown3" className="dropdownContentFilterMainBtn" 
                 onClick={e=>e.stopPropagation()}>
                 <input type="text" placeholder=" Пошук.." id="myInput" />

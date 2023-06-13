@@ -7,7 +7,7 @@ const SelectFilterList = (
     ) => {
 
     return (
-    <div className={checked === value? 'checkedList':'selectFilterList'}
+    <div className={checked === value ? 'checkedList':'selectFilterList'}
         style={{"--widthBtn":width} as React.CSSProperties}>   
         <input className='selectFilterListInput'
             id={value}
@@ -15,12 +15,11 @@ const SelectFilterList = (
             value={value}
             checked={checked === value}
             onChange={onChange}/>
-            <label className={checked === value? 'checkedItem':'selectFilterListItem'} 
+            <label className={checked === value ? 'checkedItem':'selectFilterListItem'} 
                 htmlFor={value}>    
             <span>{items}</span>       
             </label>       
     </div>
-
     );
 };
 
