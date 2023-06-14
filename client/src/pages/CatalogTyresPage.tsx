@@ -17,9 +17,10 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
   const {goodsTyre, filter} = useContext<any | null>(Context);
   const {page} = useContext<any | null>(Context);
   const [paramUrl, setParamUrl] = useState(0);
+  const [stateClick, setStateClick]=useState(false);
   const params = useParams<any>();
   const location = useLocation();
-
+    
   const cyrillicToTranslit = new (CyrillicToTranslit as any)();
   const paramsCat = cyrillicToTranslit.transform(params.category,''
             ).toLowerCase();
@@ -95,32 +96,40 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
     return () => {
         isMounted = true;
     };
-},[
-  goodsTyre, 
-  params.category, 
-  page.limit, 
-  page.loadMore, 
-  page.offset, 
-  filter.width, 
-  filter.height, 
-  filter.diameter, 
-  filter.season, 
-  filter.brand, 
-  filter.price, 
-  filter.speed_index, 
-  filter.load_index, 
-  filter.studded, 
-  filter.run_flat, 
-  filter.homologation]);
+  },[
+    goodsTyre, 
+    params.category, 
+    page.limit, 
+    page.loadMore, 
+    page.offset, 
+    filter.width, 
+    filter.height, 
+    filter.diameter, 
+    filter.season, 
+    filter.brand, 
+    filter.price, 
+    filter.speed_index, 
+    filter.load_index, 
+    filter.studded, 
+    filter.run_flat, 
+    filter.homologation
+  ]);
 
-const handleFilterTyreChange = (e: any) => {
-  console.log(e.currentTarget.value);
-}  
+  const handleFilterTyreChange = (e: any) => {
+    console.log(e.currentTarget.value);
+  }  
+
+  const filterClick = () => {
+    setStateClick(!stateClick);
+    // console.log(e.target);
+  }
   console.log('PARAMS: ', params.category);
   console.log('LOCATION: ', location.pathname);
-
+  console.log('CATALOG_CLOSE_FILTER: ', stateClick);
     return (
-      <div className='catalogTyres'>
+      <div className='catalogTyres'
+        onClick={() => setStateClick(!stateClick)}
+      >
         <div className='a'>
         {location.pathname.includes('tyres') ?
           <BreadCrumbs 
@@ -134,7 +143,10 @@ const handleFilterTyreChange = (e: any) => {
         </div>
         <div className='b'>
         {location.pathname.includes('tyres') ?
-          <FilterCatalogTyres />
+          <FilterCatalogTyres
+            filterState={stateClick} 
+            setFilterAction={filterClick} 
+          />
           : null
         }
         </div>

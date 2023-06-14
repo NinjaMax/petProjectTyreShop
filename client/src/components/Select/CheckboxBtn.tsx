@@ -15,7 +15,10 @@ const CheckboxBtn = (
             <label className="containerCheckbox">
                 {imageSrc? <img className='imgThorn' 
                     src={imageSrc}
-                    alt='imgThorn'/> : null} {titleCheckbox}
+                    alt='imgThorn'/> 
+                    : null
+                } 
+                    {titleCheckbox}
                 <input className='inputCheckboxBtn' 
                     type="checkbox" 
                     value={value} 

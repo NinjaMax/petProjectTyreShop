@@ -4,4 +4,5 @@ export interface ISelectFilterList {
     checked?: any;
     onChange: (e: any) => void; 
     width?: number;
+    nameFilter?: string;
 }

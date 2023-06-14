@@ -1,7 +1,7 @@
 import {makeAutoObservable} from 'mobx';
 
 export default class FilterStore {
-    _width:string;
+    _width:string | undefined;
     _height:string;
     _brands: string;
     _models: string;

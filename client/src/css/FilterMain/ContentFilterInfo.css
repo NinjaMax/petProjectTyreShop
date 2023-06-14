@@ -17,3 +17,21 @@
     height: 185px;
 }
 
+.closeContentInfoBtn {
+    cursor: pointer;
+    color: #444;
+    font-size: 26px;
+    font-family: var(--main-font-family);
+    font-weight: bold;
+    padding-left: 7px;
+    padding-right: 7px;
+    /*padding: 3px;*/
+    vertical-align:middle;
+}
+.closeContentInfoBtn:hover {
+    /*background-color:rgb(248, 115, 115);*/
+    border-radius:25px;
+    color: #8888;
+   
+}
+

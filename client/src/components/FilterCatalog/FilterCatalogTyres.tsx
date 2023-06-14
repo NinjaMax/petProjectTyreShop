@@ -37,12 +37,15 @@ import {
 } from '../../restAPI/restGoodsApi';
 
 interface IFilterCatTyres {
-    handleChange(args0: any): void;
+    handleChange?(args0: any): void;
+    setFilterAction(args0: any): void;
+    filterState: boolean;
 }
 
-const FilterCatalogTyres = observer(() => {
+const FilterCatalogTyres = observer((
+    {filterState, setFilterAction}: IFilterCatTyres) => {
     const {filter, goodsTyre} = useContext<any | null>(Context);
-    const [handleItem, setHandleItem] = useState();
+    const [handleItem, setHandleItem] = useState<string | null>(null);
 
     useEffect(() =>{
         let isMounted = false;
@@ -68,62 +71,62 @@ const FilterCatalogTyres = observer(() => {
             if(!isMounted && taskLoad[i] === getTyresWidthPropsAll) {
                 let tyreWidthList: any = await taskLoad[i]();
                 goodsTyre?.setWidth(tyreWidthList);
-                console.log('SET_TYRES_WIDTH_LIST: ', tyreWidthList);
+                // console.log('SET_TYRES_WIDTH_LIST: ', tyreWidthList);
             }
             if(!isMounted && taskLoad[i] === getTyresHeightPropsAll) {
               let tyreHeightList: any = await taskLoad[i]();
               goodsTyre?.setHeight(tyreHeightList);
-              console.log('SET_TYRES_HEIGHT_LIST: ', tyreHeightList);
+            //   console.log('SET_TYRES_HEIGHT_LIST: ', tyreHeightList);
             }  
             if(!isMounted && taskLoad[i] === getTyresBrandPropsAll) {
               let tyreBrandList: any = await taskLoad[i]();
               goodsTyre?.setBrands(tyreBrandList);
-              console.log('SET_TYRES_BRAND_LIST: ', tyreBrandList);
+            //   console.log('SET_TYRES_BRAND_LIST: ', tyreBrandList);
             }
             if(!isMounted && taskLoad[i] === getTyresDiameterPropsAll) {
                 let tyreDiameterList: any = await taskLoad[i]();
                 goodsTyre?.setDiameter(tyreDiameterList);
-                console.log('SET_TYRES_DIAMETER_LIST: ', tyreDiameterList);
+                // console.log('SET_TYRES_DIAMETER_LIST: ', tyreDiameterList);
             }
             if(!isMounted && taskLoad[i] === getTyresSeasonPropsAll) {
               let tyreSeasonList: any = await taskLoad[i]();
               goodsTyre?.setSeason(tyreSeasonList);
-              console.log('SET_TYRES_SEASON_LIST: ', tyreSeasonList);
+            //   console.log('SET_TYRES_SEASON_LIST: ', tyreSeasonList);
             }
             if(!isMounted && taskLoad[i] === getTyresVehicleTypePropsAll) {
                 let tyreVehicleList: any = await taskLoad[i]();
                 goodsTyre?.setVehicleType(tyreVehicleList);
-                console.log('SET_TYRES_VEHICLE_LIST: ', tyreVehicleList);
+                // console.log('SET_TYRES_VEHICLE_LIST: ', tyreVehicleList);
             }
             if(!isMounted && taskLoad[i] === getTyresStuddedPropsAll) {
                 let tyreStuddedList: any = await taskLoad[i]();
                 goodsTyre?.setStudded(tyreStuddedList);
-                console.log('SET_TYRES_STUDDED_LIST: ', tyreStuddedList);
+                // console.log('SET_TYRES_STUDDED_LIST: ', tyreStuddedList);
             }
             if(!isMounted && taskLoad[i] === getTyresSpeedIndexPropsAll) {
                 let tyreSpeedIndexList: any = await taskLoad[i]();
                 goodsTyre?.setSpeedIndex(tyreSpeedIndexList);
-                console.log('SET_TYRES_SPEEDINDEX_LIST: ', tyreSpeedIndexList);
+                // console.log('SET_TYRES_SPEEDINDEX_LIST: ', tyreSpeedIndexList);
             }  
             if(!isMounted && taskLoad[i] === getTyresLoadIndexPropsAll) {
                 let tyreLoadIndexList: any = await taskLoad[i]();
                 goodsTyre?.setLoadIndex(tyreLoadIndexList);
-                console.log('SET_TYRES_LOADINDEX_LIST: ', tyreLoadIndexList);
+                // console.log('SET_TYRES_LOADINDEX_LIST: ', tyreLoadIndexList);
             }
             if(!isMounted && taskLoad[i] === getTyresHomologationPropsAll) {
                 let tyreHomologationList: any = await taskLoad[i]();
                 goodsTyre?.setHomologation(tyreHomologationList);
-                console.log('SET_TYRES_HOMOLOGATION_LIST: ', tyreHomologationList);
+                // console.log('SET_TYRES_HOMOLOGATION_LIST: ', tyreHomologationList);
             }
             if(!isMounted && taskLoad[i] === getTyresReinforcedPropsAll) {
                 let tyreReinforcedList: any = await taskLoad[i]();
                 goodsTyre?.setReinforced(tyreReinforcedList);
-                console.log('SET_TYRES_REINFORCED_LIST: ', tyreReinforcedList);
+                // console.log('SET_TYRES_REINFORCED_LIST: ', tyreReinforcedList);
             }
             if(!isMounted && taskLoad[i] === getTyresRunFlatPropsAll) {
                 let tyreRunFlatList: any = await taskLoad[i]();
                 goodsTyre?.setRunFlat(tyreRunFlatList);
-                console.log('SET_TYRES_RUNFLAT_LIST: ', tyreRunFlatList);
+                // console.log('SET_TYRES_RUNFLAT_LIST: ', tyreRunFlatList);
             }      
             const task = taskLoad.shift();
             task();
@@ -138,10 +141,24 @@ const FilterCatalogTyres = observer(() => {
 
     const handleChange  = (e: any) => {
         setHandleItem(e.currentTarget.value);
-        console.log(e.currentTarget.value);
+        console.log(e.currentTarget);
+        console.log(e.target.name);
+        if (e.target.name === 'Ширина') {
+            filter.setWidth(e.target.value);
+        }
+        if (e.target.name === 'Профіль') {
+            filter.setHeight(e.target.value);
+        }
+        if (e.target.name === 'Діаметр') {
+            filter.setDiameter(e.target.value);
+        }
+        if (e.target.name === 'Бренд') {
+            filter.setBrand(e.target.value);
+        }
+        
       }  
 
-    console.log('WIDTH_FILTER: ', goodsTyre._width);
+    // console.log('WIDTH_FILTER: ', goodsTyre._width);
 
     return (
         <div className='filterCatalogTyres'>
@@ -149,13 +166,18 @@ const FilterCatalogTyres = observer(() => {
                 Фильтр Підбір по авто
             </div>
             <div className='filterTyresOption'>
-                <FilterMainBtn width={247.4} 
+                <FilterMainBtn 
+                    filterState={filterState}
+                    chipItem={filter._width}
+                    setFilterClick={setFilterAction}
+                    width={247.4} 
                     titleFilter={'Ширина'} 
                     contentInfo={'A'}>
                     { goodsTyre._width ? 
                         goodsTyre._width.map((widthItem: any) => (
                        <SelectFilterList 
                         key={widthItem.width}
+                        nameFilter={'Ширина'}
                         value={widthItem.width} 
                         items={widthItem.width} 
                         checked={handleItem} 
@@ -166,12 +188,18 @@ const FilterCatalogTyres = observer(() => {
                         null
                     }
                 </FilterMainBtn>
-                <FilterMainBtn width={247.4} titleFilter={'Профіль'} 
+                <FilterMainBtn 
+                    filterState={filterState}
+                    chipItem={filter._height}
+                    setFilterClick={setFilterAction}
+                    width={247.4} 
+                    titleFilter={'Профіль'} 
                     contentInfo={'B'}>
                     {goodsTyre._height ? 
                         goodsTyre._height.map((heightItem: any) => (
                     <SelectFilterList
                         key={heightItem.height}
+                        nameFilter={'Профіль'}
                         value={heightItem.height}
                         items={heightItem.height}
                         checked={handleItem}
@@ -180,12 +208,18 @@ const FilterCatalogTyres = observer(() => {
                      /> )) : null  
                     }
                 </FilterMainBtn>
-                <FilterMainBtn width={247.4} titleFilter={'Діаметр'} 
+                <FilterMainBtn 
+                    filterState={filterState}
+                    chipItem={filter._diameter}
+                    setFilterClick={setFilterAction}
+                    width={247.4} 
+                    titleFilter={'Діаметр'} 
                     contentInfo={'C'}>
                     { goodsTyre._diameter ? 
                         goodsTyre._diameter.map((diameterItem: any) => (
                     <SelectFilterList
                         key={diameterItem.diameter}
+                        nameFilter={'Діаметр'}
                         value={diameterItem.diameter} 
                         items={diameterItem.diameter} 
                         checked={handleItem} 
@@ -219,7 +253,11 @@ const FilterCatalogTyres = observer(() => {
                        )) : null
                     }
                 </Accordion>
-                <FilterMainBtn width={247.4} 
+                <FilterMainBtn 
+                    filterState={filterState}
+                    chipItem={filter._brands}
+                    setFilterClick={setFilterAction}
+                    width={247.4} 
                     titleFilter={'Бренд'} 
                     contentInfo={false}>
                     {goodsTyre._brands ? 

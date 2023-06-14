@@ -14,10 +14,17 @@ const FilterMainTyre = () => {
         
         setHandleItem(e.currentTarget.value);
     } 
+
+    const filterClose = (e: any) => {
+        console.log('filter_close')
+    }
    
     return (
         <div className='filterMain'>
-            <FilterMainBtn width={130} titleFilter={'Ширина'}>
+            <FilterMainBtn 
+                setFilterClick={filterClose}
+                width={130} 
+                titleFilter={'Ширина'}>
                 <SelectFilterList value={"155"} items={"155"} checked={handleItem} onChange={handleChange}/>
                 <SelectFilterList value={"175"} items={"175"} checked={handleItem} onChange={handleChange}/>
                 <SelectFilterList value={"185"} items={"185"} checked={handleItem} onChange={handleChange}/>
@@ -30,7 +37,10 @@ const FilterMainTyre = () => {
                 <SelectFilterList value={"255"} items={"255"} checked={handleItem} onChange={handleChange}/>
                 <SelectFilterList value={"265"} items={"265"} checked={handleItem} onChange={handleChange}/>
             </FilterMainBtn>
-            <FilterMainBtn width={130} titleFilter={'Профіль'}>
+            <FilterMainBtn 
+                setFilterClick={filterClose}
+                width={130} 
+                titleFilter={'Профіль'}>
                 <SelectFilterList value={"40"} items={"40"} checked={handleItem} onChange={handleChange}/>
                 <SelectFilterList value={"45"} items={"45"} checked={handleItem} onChange={handleChange}/>
                 <SelectFilterList value={"50"} items={"50"} checked={handleItem} onChange={handleChange}/>
@@ -40,7 +50,10 @@ const FilterMainTyre = () => {
                 <SelectFilterList value={"70"} items={"70"} checked={handleItem} onChange={handleChange}/>
                 <SelectFilterList value={"80"} items={"80"} checked={handleItem} onChange={handleChange}/>
             </FilterMainBtn>
-            <FilterMainBtn width={130} titleFilter={'Діаметр'}>
+            <FilterMainBtn 
+                setFilterClick={filterClose}
+                width={130} 
+                titleFilter={'Діаметр'}>
                 <SelectFilterList value={"R13"} items={"R13"} checked={handleItem} onChange={handleChange}/>
                 <SelectFilterList value={"R14"} items={"R14"} checked={handleItem} onChange={handleChange}/>
                 <SelectFilterList value={"R15"} items={"R15"} checked={handleItem} onChange={handleChange}/>
@@ -50,12 +63,18 @@ const FilterMainTyre = () => {
                 <SelectFilterList value={"R19"} items={"R19"} checked={handleItem} onChange={handleChange}/>
                 <SelectFilterList value={"R20"} items={"R20"} checked={handleItem} onChange={handleChange}/>
             </FilterMainBtn> 
-            <FilterMainBtn width={130} titleFilter={'Сезон'}>
+            <FilterMainBtn 
+                setFilterClick={filterClose}
+                width={130} 
+                titleFilter={'Сезон'}>
                 <SelectFilter value={'Zimnie'} children={'Зимові'}/>
                 <SelectFilter value={'Litni'} children={'Літні'}/>
                 <SelectFilter value={'Vsesezonni'} children={'Всесезонні'}/>
             </FilterMainBtn>
-            <FilterMainBtn width={130} titleFilter={'Бренд'}>
+            <FilterMainBtn 
+                setFilterClick={filterClose}
+                width={130} 
+                titleFilter={'Бренд'}>
                 <CheckboxBtn value={"Continental"} titleCheckbox={"Continental"}/>
                 <CheckboxBtn value={"Michelin"} titleCheckbox={"Michelin"}/>
                 <CheckboxBtn value={"Yokohama"} titleCheckbox={"Yokohama"}/>

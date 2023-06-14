@@ -1,35 +1,46 @@
 import React, {useState} from 'react';
 import '../../css/FilterMain/FilterMainBtn.css';
 import ContentFilterInfo from './ContentFilterInfo';
-//import ChipOptions from '../ChipOptions';
+import ChipOptions from './ChipOptions';
+import { IFilterMainBtn } from './interfaces/FilterMainBtn.interface';
 
-interface IFilterMainBtn {
-  children: JSX.Element | JSX.Element[] | any;
-  titleFilter: string; 
-  width: number; 
-  contentInfo?: string | boolean; 
-}
-
-const FilterMainBtn = (
-    {children, titleFilter, width, contentInfo}: IFilterMainBtn
-  ) => {
+const FilterMainBtn = ({
+  children, 
+  titleFilter,
+  width,
+  contentInfo,
+  filterState,
+  setFilterClick,
+  chipItem,
+}: IFilterMainBtn
+) => {
   const [stateClick, setStateClick]=useState(false);
+  // const [filterClose, setFilterClose]=useState(filterState);
 
   const filterClick = () => {
-
     setStateClick(!stateClick);
-    //console.log(e.target);
-    //<ChipOptions props={'Continental Group'}/>
+    // if (!filterState) {
+    //   setStateClick(true);
+    // } else {
+    //  setStateClick(false);
+    // }
+    
+    // console.log(e.target);
   }
+  // console.log('FILTERSTATE: ', stateClick);
+  // console.log('FILTERSTATE_CLOSE_TO_EMPTY: ', filterState);
 
   return (
-    <div>
+    <div className='dropdownFilterMainBtnBack'>
         <div className="dropdownFilterMainBtn">
             <button onClick={filterClick} 
               className="dropBtnFilterMainBtn" 
               style={{"--widthBtn":width} as React.CSSProperties}
               > 
               {titleFilter} <i className='fa fa-caret-down'/>
+              <ChipOptions 
+                props={chipItem} 
+                />
             </button>
             {stateClick ?  
               <div id="myDropdown3" className="dropdownContentFilterMainBtn" 
@@ -39,7 +50,10 @@ const FilterMainBtn = (
                   {children}
                 </div>
                {contentInfo?
-                <ContentFilterInfo infoMarking={contentInfo} width={width}/>
+                <ContentFilterInfo 
+                  setActive={filterClick}
+                  infoMarking={contentInfo} 
+                  width={width}/>
                 : null}
               </div>
             : null}

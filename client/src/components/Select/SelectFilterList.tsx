@@ -2,8 +2,13 @@ import React from 'react';
 import '../../css/SelectCss/SelectFilterList.css';
 import { ISelectFilterList } from './interfaces/SelectFilterList.interface';
 
-const SelectFilterList = (
-        {items, value, checked, onChange, width}: ISelectFilterList
+const SelectFilterList = ({
+        items, 
+        value, 
+        checked, 
+        onChange,
+        nameFilter, 
+        width}: ISelectFilterList
     ) => {
 
     return (
@@ -11,6 +16,7 @@ const SelectFilterList = (
         style={{"--widthBtn":width} as React.CSSProperties}>   
         <input className='selectFilterListInput'
             id={value}
+            name={nameFilter}
             type="radio"
             value={value}
             checked={checked === value}
