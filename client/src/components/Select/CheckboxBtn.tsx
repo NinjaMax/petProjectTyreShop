@@ -13,7 +13,7 @@ const CheckboxBtn = (
     return (
         <div>
             <label className="containerCheckbox">
-                {imageSrc? <img className='imgThorn' 
+                {imageSrc ? <img className='imgThorn' 
                     src={imageSrc}
                     alt='imgThorn'/> 
                     : null

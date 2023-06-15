@@ -51,21 +51,21 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
             filter.height,
             tyreCatDiameter ?? filter.diameter,
             tyreCatSeason ?? filter.season,
-            filter.brand,
+            filter.brands,
             filter.price,
-            tyreCatType,
+            tyreCatType ?? filter.vehicle_type,
             filter.speed_index,
             filter.load_index,
             filter.studded,
             filter.run_flat,
             filter.homologation,
+            filter.reinforced
           );
-          page.loadMore > 0 ?
-          goodsTyre?.setTyres(
-            [...goodsTyre._tyres, ...tyreGoods]
-          ) :
-          goodsTyre?.setTyres(tyreGoods);
-          console.log('SET_TYRES_PAGE_1: ', tyreGoods);
+          
+          page.loadMore > 0 ? goodsTyre?.setTyres(
+            [...goodsTyre._tyres, ...tyreGoods] 
+          ) : goodsTyre?.setTyres(tyreGoods);
+          console.log('SET_TYRES: ', Array.from(new Set([...goodsTyre._tyres, ...tyreGoods])));
         }
         if(!isMounted && taskLoad[i] === getTyresCountAll) {
           let tyreTotalCount: any = await taskLoad[i]();
@@ -106,13 +106,15 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
     filter.height, 
     filter.diameter, 
     filter.season, 
-    filter.brand, 
+    filter.vehicle_type,
+    filter.brands, 
     filter.price, 
     filter.speed_index, 
     filter.load_index, 
     filter.studded, 
     filter.run_flat, 
-    filter.homologation
+    filter.homologation,  
+    filter.reinforced
   ]);
 
   const handleFilterTyreChange = (e: any) => {
@@ -126,6 +128,11 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
   console.log('PARAMS: ', params.category);
   console.log('LOCATION: ', location.pathname);
   console.log('CATALOG_CLOSE_FILTER: ', stateClick);
+  console.log('FILTER_WIDTH: ', filter.width);
+  console.log('FILTER_HEIGHT: ', filter.height);
+  console.log('FILTER_DIAMETER: ', filter.diameter,);
+  console.log('GET_TYRES:', goodsTyre._tyres);
+
     return (
       <div className='catalogTyres'
         onClick={() => setStateClick(!stateClick)}

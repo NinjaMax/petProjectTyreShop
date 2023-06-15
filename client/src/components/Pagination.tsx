@@ -11,31 +11,35 @@ const Pagination = observer(() => {
     const [lastIndexPage, setLastIndexPage] = useState<number>(5);
     const [firstIndexPage, setFirstIndexPage] = useState<number>(0);
     
-    const handlePage =(pageItem: any) => {
-        page.setOffset(pageItem * 9);
+    const handlePage =(pageItem: any, index: number)=> {
+        page.setLoadMore(0); 
+        page.setOffset(index * 9);
         page.setPageItem(pageItem);
     }
 
     const pageCount = Math.ceil(goodsTyre.totalCount / page.limit);
-    
     const pages = []
 
     for (let i = 0; i < pageCount; i++) {
         pages.push(i + 1)
     }
-    const firstPage = () => {
+    const firstPage = (e:any) => {
+        e.stopPropagation();
         setFirstIndexPage(0);
         setLastIndexPage(5);
     };
-    const lastPage = () => {
+    const lastPage = (e:any) => {
+        e.stopPropagation();
         setFirstIndexPage(pages.length - 6);
         setLastIndexPage(pages.length - 1);
     };
-    const nextPage = () => {
+    const nextPage = (e: any) => {
+        e.stopPropagation();
         setFirstIndexPage(prevFirst => prevFirst + 1);
         setLastIndexPage(prevLast => prevLast + 1);
     };
-    const previousPage = () => {
+    const previousPage = (e :any) => {
+        e.stopPropagation();
         setFirstIndexPage(prevFirst => prevFirst - 1);
         setLastIndexPage(prevLast => prevLast - 1);
     };
@@ -47,7 +51,9 @@ const Pagination = observer(() => {
     console.log('PAGE_PAGEITEM: ', page.pageItem);
 
     return (
-        <div className="pagination">
+        <div className="pagination"
+            onClick={(e: any) => e.stopPropagation()} 
+            >
             <span className='paginationItem' 
                 onClick={firstPage}
             >&#8810;</span>
@@ -61,7 +67,7 @@ const Pagination = observer(() => {
                         page.pageItem === pageItem ? 
                         'paginationItem active' : 'paginationItem'
                     }
-                    onClick={() => handlePage(pageItem)}
+                    onClick={() => handlePage(pageItem, index)}
                 >
                 <a onClick={(e: any) => e.preventDefault()}
                     href={location.pathname + `?page=${pageItem}`}

@@ -55,6 +55,7 @@ export class TyresController {
     @Query('studded') studded: string,
     @Query('run_flat') run_flat: string,
     @Query('homologation') homologation: string,
+    @Query('reinforce') reinforce: string,
   ) {
     return this.tyresService.findAllTyresWithOffset(
       offset,
@@ -71,6 +72,7 @@ export class TyresController {
       studded,
       run_flat,
       homologation,
+      reinforce,
     );
   }
 

@@ -19,6 +19,7 @@ import { TyreStudded } from '../properties/entities/tyres/tyre-studded.model';
 import { TyreRunFlat } from '../properties/entities/tyres/tyre-runFlat.model';
 import { TyreHomologation } from '../properties/entities/tyres/tyre-homologation.model';
 import { StockTyres } from '../stock/entities/stock-tyres.model';
+import { TyreReinforce } from '../properties/entities/tyres/tyre-reinforce.model';
 
 @Injectable()
 export class TyresService {
@@ -102,6 +103,7 @@ export class TyresService {
     studded: string,
     run_flat: string,
     homologation: string,
+    reinforce: string,
   ) {
     try {
       const tyresAllLimit = await this.tyresRepository.findAll({
@@ -115,9 +117,9 @@ export class TyresService {
               width:{[Op.in]: width.split(','),}
             }
           }
-           : {model: TyreHeight},
+           : {model: TyreWidth},
           height ? {
-            model: TyreWidth,
+            model: TyreHeight,
             where: {
               height:{[Op.in]: height.split(','),}
             }
@@ -194,7 +196,13 @@ export class TyresService {
             }
           }
            : {model: TyreHomologation},
-           
+           reinforce ? {
+            model: TyreReinforce,
+            where: {
+              reinforce:{[Op.in]: reinforce.split(',')}
+            }
+          }
+          : {model: TyreReinforce}
         ], 
         order: [['stock', 'stock', 'DESC']],
       });

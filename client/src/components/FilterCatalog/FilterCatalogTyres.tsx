@@ -44,7 +44,7 @@ interface IFilterCatTyres {
 
 const FilterCatalogTyres = observer((
     {filterState, setFilterAction}: IFilterCatTyres) => {
-    const {filter, goodsTyre} = useContext<any | null>(Context);
+    const {filter, goodsTyre, page} = useContext<any | null>(Context);
     const [handleItem, setHandleItem] = useState<string | null>(null);
 
     useEffect(() =>{
@@ -144,19 +144,27 @@ const FilterCatalogTyres = observer((
         console.log(e.currentTarget);
         console.log(e.target.name);
         if (e.target.name === 'Ширина') {
+            page.setLoadMore(0);
+            page.setOffset(0);
             filter.setWidth(e.target.value);
         }
         if (e.target.name === 'Профіль') {
+            page.setLoadMore(0);
+            page.setOffset(0);
             filter.setHeight(e.target.value);
         }
         if (e.target.name === 'Діаметр') {
+            page.setLoadMore(0);
+            page.setOffset(0);
             filter.setDiameter(e.target.value);
+            
         }
         if (e.target.name === 'Бренд') {
-            filter.setBrand(e.target.value);
+            page.setLoadMore(0);
+            page.setOffset(0);
+            filter.setBrands(e.target.value);
         }
-        
-      }  
+    }  
 
     // console.log('WIDTH_FILTER: ', goodsTyre._width);
 
@@ -180,7 +188,7 @@ const FilterCatalogTyres = observer((
                         nameFilter={'Ширина'}
                         value={widthItem.width} 
                         items={widthItem.width} 
-                        checked={handleItem} 
+                        checked={filter._width} 
                         onChange={handleChange} 
                         width={247.4}
                         /> 
@@ -202,7 +210,7 @@ const FilterCatalogTyres = observer((
                         nameFilter={'Профіль'}
                         value={heightItem.height}
                         items={heightItem.height}
-                        checked={handleItem}
+                        checked={filter._height}
                         onChange={handleChange}
                         width={247.4}
                      /> )) : null  
@@ -222,7 +230,7 @@ const FilterCatalogTyres = observer((
                         nameFilter={'Діаметр'}
                         value={diameterItem.diameter} 
                         items={diameterItem.diameter} 
-                        checked={handleItem} 
+                        checked={filter._diameter} 
                         onChange={handleChange} 
                         width={247.4}
                     />  )) : null

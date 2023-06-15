@@ -15,6 +15,7 @@ const getTyresOffset = async (
     studded: string,
     run_flat: string,
     homologation: string,
+    reinforced: string,
     ) => {
     const {data} = await $hostGet.get('tyres/offset', 
     {params: {
@@ -32,6 +33,7 @@ const getTyresOffset = async (
         studded: studded,
         run_flat: run_flat,
         homologation: homologation,
+        reinforce: reinforced
         }
     })
     //localStorage.setItem('token', data.token)
