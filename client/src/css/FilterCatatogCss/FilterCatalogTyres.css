@@ -8,9 +8,34 @@
 }
 
 .filterTyresOption {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items:center;
     justify-content: center;
     gap:2px;
+    font-family: var(--main-font-family);
+}
+
+.checkBoxBtnOn {
+    /* appearance: none; */
+    position: absolute;
+    cursor: pointer;
+    background-color: #71C2FF;
+    color: #444;
+    font-size: medium;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    margin: auto;
+    width: 100px;
+    height: auto;
+    top: 68%;
+    right:-105px;
+}
+.checkBoxBtnOn:hover {
+    background-color: #9C93D1;
+}
+.checkBoxBtnOn:active {
+    background-color: #9EB9D3;
 }

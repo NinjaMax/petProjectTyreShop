@@ -22,7 +22,6 @@ const FilterMainTyre = () => {
     return (
         <div className='filterMain'>
             <FilterMainBtn 
-                setFilterClick={filterClose}
                 width={130} 
                 titleFilter={'Ширина'}>
                 <SelectFilterList value={"155"} items={"155"} checked={handleItem} onChange={handleChange}/>
@@ -38,7 +37,6 @@ const FilterMainTyre = () => {
                 <SelectFilterList value={"265"} items={"265"} checked={handleItem} onChange={handleChange}/>
             </FilterMainBtn>
             <FilterMainBtn 
-                setFilterClick={filterClose}
                 width={130} 
                 titleFilter={'Профіль'}>
                 <SelectFilterList value={"40"} items={"40"} checked={handleItem} onChange={handleChange}/>
@@ -51,7 +49,6 @@ const FilterMainTyre = () => {
                 <SelectFilterList value={"80"} items={"80"} checked={handleItem} onChange={handleChange}/>
             </FilterMainBtn>
             <FilterMainBtn 
-                setFilterClick={filterClose}
                 width={130} 
                 titleFilter={'Діаметр'}>
                 <SelectFilterList value={"R13"} items={"R13"} checked={handleItem} onChange={handleChange}/>
@@ -64,7 +61,6 @@ const FilterMainTyre = () => {
                 <SelectFilterList value={"R20"} items={"R20"} checked={handleItem} onChange={handleChange}/>
             </FilterMainBtn> 
             <FilterMainBtn 
-                setFilterClick={filterClose}
                 width={130} 
                 titleFilter={'Сезон'}>
                 <SelectFilter value={'Zimnie'} children={'Зимові'}/>
@@ -72,23 +68,59 @@ const FilterMainTyre = () => {
                 <SelectFilter value={'Vsesezonni'} children={'Всесезонні'}/>
             </FilterMainBtn>
             <FilterMainBtn 
-                setFilterClick={filterClose}
                 width={130} 
                 titleFilter={'Бренд'}>
-                <CheckboxBtn value={"Continental"} titleCheckbox={"Continental"}/>
-                <CheckboxBtn value={"Michelin"} titleCheckbox={"Michelin"}/>
-                <CheckboxBtn value={"Yokohama"} titleCheckbox={"Yokohama"}/>
-                <CheckboxBtn value={"Bridgestone"} titleCheckbox={"Bridgestone"}/>
-                <CheckboxBtn value={"Hankook"} titleCheckbox={"Hankook"}/>
-                <CheckboxBtn value={"Nokian"} titleCheckbox={"Nokian"}/>
-                <CheckboxBtn value={"Goody-Yaer"} titleCheckbox={"Goody-Yaer"}/>
-                <CheckboxBtn value={"BfGoodrich"} titleCheckbox={"BfGoodrich"}/>
-                <CheckboxBtn value={"Dunlop"} titleCheckbox={"Dunlop"}/>
+                <CheckboxBtn 
+                    value={"Continental"} 
+                    checked={''} 
+                    onChange={handleChange} 
+                    titleCheckbox={"Continental"}/>
+                <CheckboxBtn 
+                    value={"Michelin"}
+                    checked={''} 
+                    onChange={handleChange}
+                    titleCheckbox={"Michelin"}/>
+                <CheckboxBtn 
+                    value={"Yokohama"} 
+                    checked={''} 
+                    onChange={handleChange}
+                    titleCheckbox={"Yokohama"}/>
+                <CheckboxBtn 
+                    value={"Bridgestone"}
+                    checked={''} 
+                    onChange={handleChange} 
+                    titleCheckbox={"Bridgestone"}/>
+                <CheckboxBtn 
+                    value={"Hankook"} 
+                    checked={''} 
+                    onChange={handleChange}
+                    titleCheckbox={"Hankook"}/>
+                <CheckboxBtn 
+                    value={"Nokian"} 
+                    checked={''} 
+                    onChange={handleChange}
+                    titleCheckbox={"Nokian"}/>
+                <CheckboxBtn 
+                    value={"Goody-Yaer"}
+                    onChange={handleChange}
+                    titleCheckbox={"Goody-Yaer"}/>
+                <CheckboxBtn 
+                    value={"BfGoodrich"} 
+                    onChange={handleChange}
+                    titleCheckbox={"BfGoodrich"}/>
+                <CheckboxBtn 
+                    value={"Dunlop"} 
+                    onChange={handleChange}
+                    titleCheckbox={"Dunlop"}/>
             </FilterMainBtn>
             <div className='btnSelect'>
                 <ButtonAction props={'ПІДІБРАТИ'} />
             </div>
-            <CheckboxBtn value={"ship"} titleCheckbox={"Шип"} imageSrc={imageThorn}/>
+            <CheckboxBtn 
+                value={"ship"} 
+                onChange={handleChange}
+                titleCheckbox={"Шип"} 
+                imageSrc={imageThorn}/>
         </div>
     );
 };

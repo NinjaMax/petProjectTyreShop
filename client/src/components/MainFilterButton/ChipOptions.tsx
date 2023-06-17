@@ -1,25 +1,29 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import '../../css/FilterMain/ChipOptions.css';
-import { observer } from 'mobx-react-lite';
+//import { observer } from 'mobx-react-lite';
 
 interface IChipOptions {
     props: any | null | undefined;
-    //setActive(arg0: any): void;
+    chipName?: string
+    clearFilter?(arg0: any): void;
 }
 
-const ChipOptions =({props}: IChipOptions) => {
+const ChipOptions =({props, chipName, clearFilter}: IChipOptions) => {
 
     return (
         <div className='chipOptions' 
             onClick={(e) => e.stopPropagation()}>
-            {props ?
-            <>
-                {props} 
+            {props ? props.split(',').map(
+                (item: string, index: number) =>
+            <Fragment key={item}>  
+                {item} 
                 <span 
+                    data-index={index}
+                    data-name={chipName}
                     className="closeChipBtn" 
-                    onClick={() => {console.log('close CHIP')}}>&times;
+                    onClick={clearFilter}>&times;
                 </span> 
-            </>
+            </Fragment>)
              : null  
             }
         </div>

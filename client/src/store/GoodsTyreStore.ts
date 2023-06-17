@@ -17,7 +17,7 @@ export default class GoodsTyreStore {
     _run_flat:string[];
     _reinforced:string[];
     _descriptions: {};
-    // _offset: number;
+    _tyres_filter: [];
     _product: {};
     _totalCount: number;
 
@@ -29,7 +29,7 @@ export default class GoodsTyreStore {
         this._descriptions = {};
         this._season = [];
         this._diameter = [];
-        // this._offset = 0;
+        this._tyres_filter = [];
         this._product = {};
         this._totalCount = 0;
         this._vehicle_type = [];
@@ -69,9 +69,9 @@ export default class GoodsTyreStore {
     setDiameter(diameters: string[]) {
         this._diameter = diameters;
     }
-    // setOffset(offset: number) {
-    //     this._offset = offset;
-    // }
+    setTyresFilter(tyres_filter: []) {
+        this._tyres_filter = tyres_filter;
+    }
     setProduct(product: {}) {
         this._product = product;
     }
@@ -122,9 +122,9 @@ export default class GoodsTyreStore {
     get diameter() {
         return this._diameter;
     }
-    // get offset() {
-    //     return this._offset;
-    // }
+    get tyres_filter() {
+        return this._tyres_filter;
+    }
     get vehicle_type() {
         return this._vehicle_type;
     }

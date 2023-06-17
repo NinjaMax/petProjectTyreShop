@@ -76,6 +76,43 @@ export class TyresController {
     );
   }
 
+  @Get('/no-offset')
+  findTyresWithoutLimit(
+    // @Query('offset') offset: number,
+    // @Query('limit') limit: number,
+    @Query('width') width: string,
+    @Query('height') height: string,
+    @Query('diameter') diameter: string,
+    @Query('season') season: string,
+    @Query('brand') brand: string,
+    @Query('price') price: string,
+    @Query('type') type: string,
+    @Query('speed_index') speed_index: string,
+    @Query('load_index') load_index: string,
+    @Query('studded') studded: string,
+    @Query('run_flat') run_flat: string,
+    @Query('homologation') homologation: string,
+    @Query('reinforce') reinforce: string,
+  ) {
+    return this.tyresService.findAllTyresWithoutOffset(
+      // offset,
+      // limit,
+      width,
+      height,
+      diameter,
+      season,
+      brand,
+      price,
+      type,
+      speed_index,
+      load_index,
+      studded,
+      run_flat,
+      homologation,
+      reinforce,
+    );
+  }
+
   @Get('/season/:season')
   findTyresSeason(@Param('season') season: string) {
     return this.tyresService.findAllTyresBySeason(season);

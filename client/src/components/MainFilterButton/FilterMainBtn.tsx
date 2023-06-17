@@ -10,7 +10,7 @@ const FilterMainBtn = ({
   width,
   contentInfo,
   filterState,
-  setFilterClick,
+  deleteChip,
   chipItem,
 }: IFilterMainBtn
 ) => {
@@ -27,6 +27,7 @@ const FilterMainBtn = ({
     
     // console.log(e.target);
   }
+ 
   // console.log('FILTERSTATE: ', stateClick);
   // console.log('FILTERSTATE_CLOSE_TO_EMPTY: ', filterState);
 
@@ -39,6 +40,8 @@ const FilterMainBtn = ({
               > 
               {titleFilter} <i className='fa fa-caret-down'/>
               <ChipOptions 
+                chipName={titleFilter}
+                clearFilter={deleteChip}
                 props={chipItem} 
                 />
             </button>

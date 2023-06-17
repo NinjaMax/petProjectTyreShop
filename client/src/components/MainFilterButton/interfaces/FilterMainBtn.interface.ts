@@ -4,6 +4,6 @@ export interface IFilterMainBtn {
     width: number; 
     contentInfo?: string | boolean; 
     filterState?: boolean;
-    setFilterClick(arg0: any): void;
+    deleteChip?(arg0: any): void;
     chipItem?: string | null;
 }

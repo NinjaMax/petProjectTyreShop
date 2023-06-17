@@ -41,6 +41,47 @@ const getTyresOffset = async (
     return data;
 }
 
+const getTyresWithoutOffset = async (
+    // offset: number,
+    // limit: number,
+    width: string,
+    height: string,
+    diameter: string,
+    season: string,
+    brand: string,
+    price: string,
+    type: string,
+    speed_index: string,
+    load_index: string,
+    studded: string,
+    run_flat: string,
+    homologation: string,
+    reinforced: string,
+    ) => {
+    const {data} = await $hostGet.get('tyres/no-offset', 
+    {params: {
+        // offset: offset ?? 0,
+        // limit: limit,
+        width: width,
+        height: height,
+        diameter: diameter,
+        season: season,
+        brand: brand,
+        price: price,
+        type: type,
+        speed_index: speed_index,
+        load_index: load_index,
+        studded: studded,
+        run_flat: run_flat,
+        homologation: homologation,
+        reinforce: reinforced
+        }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_OFFSET9: ', data )
+    return data;
+}
+
 // const getTyresSeason = async (season:string) => {
 //     const {data} = await $hostGet.get(`tyres/season/${season}`,
 //      {params: {season: season}})
@@ -188,6 +229,7 @@ const getTyresSeasonPropsAll = async () => {
 
 export {
     getTyresOffset,
+    getTyresWithoutOffset,
     //getTyresSeason,
     //getTyresType,
     //getTyresParams,

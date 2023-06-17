@@ -12,14 +12,12 @@
     -ms-user-select: none;
     user-select: none;
   }
-  
   /* Hide the browser's default checkbox */
   .inputCheckboxBtn {
     position: absolute;
     opacity: 0;
     cursor: pointer;
   }
-  
   /* Create a custom checkbox */
   .checkmark {
     position: absolute;
@@ -28,8 +26,7 @@
     height: 20px;
     width: 20px;
     background-color: #eee;
-  }
-  
+  }  
   /* On mouse-over, add a grey background color */
   /*.containerCheckbox:hover .inputCheckboxBtn {
     background-color: #ccc;
@@ -44,25 +41,21 @@
     background-color: #ccc;
     border-radius:3px;
   }
-  
   /* When the checkbox is checked, add a blue background */
   .inputCheckboxBtn:checked ~ .checkmark {
     background-color: #2196F3;
     border-radius:3px;
   }
-  
   /* Create the checkmark/indicator (hidden when not checked) */
   .checkmark:after {
     content: "";
     position: absolute;
     display: none;
   }
-  
   /* Show the checkmark when checked */
   .inputCheckboxBtn:checked ~ .checkmark:after {
     display: block;
   }
-
   /* Style the checkmark/indicator */
   .checkmark:after {
     left: 9px;
@@ -75,10 +68,10 @@
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
   }
-
   .imgThorn {
     vertical-align:sub;
     width: 28px;
     height: 28px;
     padding-left: 2px;
   }
+

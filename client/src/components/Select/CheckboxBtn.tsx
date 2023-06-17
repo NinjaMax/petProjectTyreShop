@@ -5,11 +5,20 @@ interface ICheckBoxBtn {
     value: string;
     titleCheckbox: string;
     imageSrc?: string;
+    onChange: (e: any) => void; 
+    checked?: any;
+    titleName?: string;
 }
 
-const CheckboxBtn = (
-    {value, titleCheckbox, imageSrc}: ICheckBoxBtn
-    ) => {
+const CheckboxBtn = ({
+    value, 
+    titleCheckbox, 
+    checked, 
+    imageSrc,
+    titleName,
+    onChange
+    }: ICheckBoxBtn) => {
+    
     return (
         <div>
             <label className="containerCheckbox">
@@ -21,8 +30,11 @@ const CheckboxBtn = (
                     {titleCheckbox}
                 <input className='inputCheckboxBtn' 
                     type="checkbox" 
-                    value={value} 
-                    name="selectCheckbox"/>
+                    value={value}
+                    //checked={checked === value}
+                    //onChange={chtckedHandler}
+                    onChange={onChange}
+                    name={titleName}/>
                 <span className="checkmark"></span>
             </label>
         </div>

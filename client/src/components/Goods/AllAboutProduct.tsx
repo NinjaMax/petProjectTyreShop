@@ -72,6 +72,7 @@ const AllAboutProduct = observer(({goods}:ITyreCard) => {
                 </div>
                 <div className='checkboxGoodsShield'>
                     <CheckboxBtn 
+                    onChange={(e) => console.log(e.checked)}
                     value={"garantia"} 
                     titleCheckbox={"Розширенна Гарантія"} 
                     imageSrc={shieldImg}/>   
