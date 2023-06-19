@@ -10,31 +10,22 @@ const FilterMainBtn = ({
   width,
   contentInfo,
   filterState,
+  filterAction,
   deleteChip,
   chipItem,
 }: IFilterMainBtn
 ) => {
-  const [stateClick, setStateClick]=useState(false);
+  // const [stateClick, setStateClick]=useState(false);
   // const [filterClose, setFilterClose]=useState(filterState);
 
   const filterClick = () => {
-    setStateClick(!stateClick);
-    // if (!filterState) {
-    //   setStateClick(true);
-    // } else {
-    //  setStateClick(false);
-    // }
-    
-    // console.log(e.target);
+    filterAction!(false)
   }
  
-  // console.log('FILTERSTATE: ', stateClick);
-  // console.log('FILTERSTATE_CLOSE_TO_EMPTY: ', filterState);
-
   return (
     <div className='dropdownFilterMainBtnBack'>
         <div className="dropdownFilterMainBtn">
-            <button onClick={filterClick} 
+            <button onClick={filterAction} 
               className="dropBtnFilterMainBtn" 
               style={{"--widthBtn":width} as React.CSSProperties}
               > 
@@ -45,7 +36,7 @@ const FilterMainBtn = ({
                 props={chipItem} 
                 />
             </button>
-            {stateClick ?  
+            {filterState ?  
               <div id="myDropdown3" className="dropdownContentFilterMainBtn" 
                 onClick={e=>e.stopPropagation()}>
                 <input type="text" placeholder=" Пошук.." id="myInput" />

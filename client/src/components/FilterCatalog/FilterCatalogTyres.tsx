@@ -19,22 +19,6 @@ import SelectFilterList from '../select/SelectFilterList';
 import PriceRange from './PriceRange';
 import { Context } from '../../context/Context';
 import { observer } from 'mobx-react-lite';
-import { yieldToMain } from '../../restAPI/postTaskAdmin';
-import { 
-    getTyresBrandPropsAll, 
-    getTyresDiameterPropsAll, 
-    getTyresHeightPropsAll, 
-    getTyresHomologationPropsAll, 
-    getTyresLoadIndexPropsAll, 
-    getTyresModelPropsAll, 
-    getTyresReinforcedPropsAll, 
-    getTyresRunFlatPropsAll, 
-    getTyresSpeedIndexPropsAll, 
-    getTyresStuddedPropsAll, 
-    getTyresVehicleTypePropsAll, 
-    getTyresWidthPropsAll, 
-    getTyresSeasonPropsAll 
-} from '../../restAPI/restGoodsApi';
 
 interface IFilterCatTyres {
     handleChange?(args0: any): void;
@@ -45,99 +29,21 @@ interface IFilterCatTyres {
 const FilterCatalogTyres = observer((
     {filterState, setFilterAction}: IFilterCatTyres) => {
     const {filter, goodsTyre, page} = useContext<any | null>(Context);
-    const [handleItem, setHandleItem] = useState<string[]>([]);
-
-    // useEffect(() =>{
-    //     let isMounted = false;
-    //     const loadMaintask = async() => {
-    //       const taskLoad: any[] = [
-    //         getTyresBrandPropsAll,
-    //         getTyresDiameterPropsAll,
-    //         getTyresHeightPropsAll,
-    //         getTyresHomologationPropsAll,
-    //         getTyresLoadIndexPropsAll,
-    //         getTyresModelPropsAll,
-    //         getTyresReinforcedPropsAll,
-    //         getTyresRunFlatPropsAll,
-    //         getTyresSpeedIndexPropsAll,
-    //         getTyresStuddedPropsAll,
-    //         getTyresVehicleTypePropsAll,
-    //         //getTyresWidthPropsAll,
-    //         getTyresSeasonPropsAll
-    //       ];
-    
-    //       let i:number = 0;
-    //       while(taskLoad.length > i) {
-    //         // if(!isMounted && taskLoad[i] === getTyresWidthPropsAll) {
-    //         //     let tyreWidthList: any = await taskLoad[i]();
-    //         //     //goodsTyre?.setWidth(tyreWidthList);
-    //         //     // console.log('SET_TYRES_WIDTH_LIST: ', tyreWidthList);
-    //         // }
-    //         if(!isMounted && taskLoad[i] === getTyresHeightPropsAll) {
-    //           let tyreHeightList: any = await taskLoad[i]();
-    //           goodsTyre?.setHeight(tyreHeightList);
-    //         //   console.log('SET_TYRES_HEIGHT_LIST: ', tyreHeightList);
-    //         }  
-    //         if(!isMounted && taskLoad[i] === getTyresBrandPropsAll) {
-    //           let tyreBrandList: any = await taskLoad[i]();
-    //           goodsTyre?.setBrands(tyreBrandList);
-    //         //   console.log('SET_TYRES_BRAND_LIST: ', tyreBrandList);
-    //         }
-    //         if(!isMounted && taskLoad[i] === getTyresDiameterPropsAll) {
-    //             let tyreDiameterList: any = await taskLoad[i]();
-    //             goodsTyre?.setDiameter(tyreDiameterList);
-    //             // console.log('SET_TYRES_DIAMETER_LIST: ', tyreDiameterList);
-    //         }
-    //         if(!isMounted && taskLoad[i] === getTyresSeasonPropsAll) {
-    //           let tyreSeasonList: any = await taskLoad[i]();
-    //           goodsTyre?.setSeason(tyreSeasonList);
-    //         //   console.log('SET_TYRES_SEASON_LIST: ', tyreSeasonList);
-    //         }
-    //         if(!isMounted && taskLoad[i] === getTyresVehicleTypePropsAll) {
-    //             let tyreVehicleList: any = await taskLoad[i]();
-    //             goodsTyre?.setVehicleType(tyreVehicleList);
-    //             // console.log('SET_TYRES_VEHICLE_LIST: ', tyreVehicleList);
-    //         }
-    //         if(!isMounted && taskLoad[i] === getTyresStuddedPropsAll) {
-    //             let tyreStuddedList: any = await taskLoad[i]();
-    //             goodsTyre?.setStudded(tyreStuddedList);
-    //             // console.log('SET_TYRES_STUDDED_LIST: ', tyreStuddedList);
-    //         }
-    //         if(!isMounted && taskLoad[i] === getTyresSpeedIndexPropsAll) {
-    //             let tyreSpeedIndexList: any = await taskLoad[i]();
-    //             goodsTyre?.setSpeedIndex(tyreSpeedIndexList);
-    //             // console.log('SET_TYRES_SPEEDINDEX_LIST: ', tyreSpeedIndexList);
-    //         }  
-    //         if(!isMounted && taskLoad[i] === getTyresLoadIndexPropsAll) {
-    //             let tyreLoadIndexList: any = await taskLoad[i]();
-    //             goodsTyre?.setLoadIndex(tyreLoadIndexList);
-    //             // console.log('SET_TYRES_LOADINDEX_LIST: ', tyreLoadIndexList);
-    //         }
-    //         if(!isMounted && taskLoad[i] === getTyresHomologationPropsAll) {
-    //             let tyreHomologationList: any = await taskLoad[i]();
-    //             goodsTyre?.setHomologation(tyreHomologationList);
-    //             // console.log('SET_TYRES_HOMOLOGATION_LIST: ', tyreHomologationList);
-    //         }
-    //         if(!isMounted && taskLoad[i] === getTyresReinforcedPropsAll) {
-    //             let tyreReinforcedList: any = await taskLoad[i]();
-    //             goodsTyre?.setReinforced(tyreReinforcedList);
-    //             // console.log('SET_TYRES_REINFORCED_LIST: ', tyreReinforcedList);
-    //         }
-    //         if(!isMounted && taskLoad[i] === getTyresRunFlatPropsAll) {
-    //             let tyreRunFlatList: any = await taskLoad[i]();
-    //             goodsTyre?.setRunFlat(tyreRunFlatList);
-    //             // console.log('SET_TYRES_RUNFLAT_LIST: ', tyreRunFlatList);
-    //         }      
-    //         const task = taskLoad.shift();
-    //         task();
-    //         await yieldToMain(); 
-    //     }
-    //     }
-    //     loadMaintask();
-    //     return () => {
-    //         isMounted = true;
-    //     };
-    // },[goodsTyre]);
+    const [chipBrand, setChipBrand] = useState<string[]>([]);
+    const [chipVehicleType, setChipVehicleBrand] = useState<string[]>([]);
+    const [chipSpeedIndex, setChipSpeedIndex] = useState<string[]>([]);
+    const [chipLoadIndex, setChipLoadIndex] = useState<string[]>([]);
+    const [chipHomologation, setChipHomologation] = useState<string[]>([]);
+    const [chipRunFlat, setChipRunFlat] = useState<string[]>([]);
+    const [chipReinforced, setChipReinforced] = useState<string[]>([]);
+    const [chipSeason, setChipSeason] = useState<string[]>([]);
+    const [stateWidth, setStateWidth]=useState(false);
+    const [stateHeight, setStateHeight]=useState(false);
+    const [stateDiameter, setStateDiameter]=useState(false);
+    const [stateBrand, setStateBrand]=useState(false);
+    const [stateSeason, setStateSeason]=useState(false);
+    const [stateVehicleType, setStateVehicleType]=useState(false);
+    const [stateSpeedIndex, setStateSpeedIndex]=useState(false);
 
     const handleChange  = (e: any) => {
         //setHandleItem(e.currentTarget.value);
@@ -163,14 +69,29 @@ const FilterCatalogTyres = observer((
         if (e.target.name === 'Бренд' && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
-            //brandList.push(e.target.value);
-            setHandleItem([...handleItem, e.target.value]);
-            // if (handleItem.length !== 0) {
-            //     console.log('ADD_FILTER_BRAND', handleItem.join(','));
-            // }
-            //filter.setBrands(addBrand.push(e.target.value + ','));
-            //handleItem
-            console.log(e.target.checked)
+            filter.setChipBrands(
+                Array.from(
+                    new Set([...filter.chipBrands, e.target.value]))
+            ); 
+            // setChipBrand(
+            //     Array.from(
+            //         new Set([...chipBrand, e.target.value]))
+            // ); 
+            //setStateBrand(true);      
+        } else {
+            const cancelBrand = filter.chipBrands.findIndex(
+                (item: string) => item === e.target.value);
+                
+                // setChipBrand(
+                //     //Array.from(
+                //     //new Set(
+                //         chipBrand.splice(cancelBrand, 1)
+                //         //))
+                //         );
+            filter.removeChipBrandsItem(cancelBrand);
+            filter.setChipBrands(Array.from(
+                new Set([...filter.chipBrands])));
+                //setStateBrand(true); 
         }
     } 
     
@@ -194,19 +115,36 @@ const FilterCatalogTyres = observer((
         if (e.target.getAttribute('data-name') === 'Бренд') {
             page.setLoadMore(0);
             page.setOffset(0);
-            
-            setHandleItem(handleItem.splice(e.target.getAttribute('data-index'), 1));
-            //filter.brands.split(',').splice(e.target.getAttribute('data-index'), 1);    
-            filter.setBrands(
-                handleItem.splice(e.target.getAttribute('data-index'), 1).join(',')
-            );
+            filter.removeChipBrandsItem(e.target.getAttribute('data-index'));
+            filter.setChipBrands(Array.from(
+                new Set([...filter.chipBrands])));
+            //chipBrand.splice(e.target.getAttribute('data-index'), 1);
+            // const deleteBrand = filter.chipBrands.findIndex(
+            //     (item: string) => item === e.target.getAttribute('data-index'));
+            //     setChipBrand(Array.from(
+            //         new Set(chipBrand.splice(deleteBrand, 1))));
+            // filter.setBrands(chipBrand.join(','));
+            filter.setBrands(filter.chipBrands.join(','));
         }
     }  
     const filterBrandAdd = () => {
-        filter.setBrands(handleItem.join(','));
+        filter.setBrands(filter.chipBrands.join(','));
+        //filter.setBrands(chipBrand.join(','));
+        setStateBrand(!stateBrand);
     }
-
-    console.log('BRAND_LIST: ', handleItem.join(','));
+    const filterWidthClick = () => {
+        setStateWidth(!stateWidth);
+    }
+    const filterHeightClick = () => {
+        setStateHeight(!stateHeight);
+    }
+    const filterDiameterClick = () => {
+        setStateDiameter(!stateDiameter);
+    }
+    const filterBrandClick = () => {
+        setStateBrand(!stateBrand);
+    }
+    console.log('BRAND_CHIPS_LIST: ', chipBrand);
     console.log('BRAND_FILTER: ', filter._brands);
 
     return (
@@ -216,7 +154,8 @@ const FilterCatalogTyres = observer((
             </div>
             <div className='filterTyresOption'>
                 <FilterMainBtn 
-                    filterState={filterState}
+                    filterAction={filterWidthClick}
+                    filterState={stateWidth}
                     chipItem={filter._width}
                     deleteChip={handleDeleteChange}
                     width={247.4} 
@@ -237,7 +176,8 @@ const FilterCatalogTyres = observer((
                     }
                 </FilterMainBtn>
                 <FilterMainBtn 
-                    filterState={filterState}
+                    filterAction={filterHeightClick}
+                    filterState={stateHeight}
                     chipItem={filter._height}
                     deleteChip={handleDeleteChange}
                     width={247.4} 
@@ -257,14 +197,16 @@ const FilterCatalogTyres = observer((
                     }
                 </FilterMainBtn>
                 <FilterMainBtn 
-                    filterState={filterState}
+                    filterAction={filterDiameterClick}
+                    filterState={stateDiameter}
                     chipItem={filter._diameter}
                     deleteChip={handleDeleteChange}
                     width={247.4} 
                     titleFilter={'Діаметр'} 
                     contentInfo={'C'}>
                     { goodsTyre._diameter ? 
-                        goodsTyre._diameter.map((diameterItem: any) => (
+                        goodsTyre._diameter.map(
+                            (diameterItem: any) => (
                     <SelectFilterList
                         key={diameterItem}
                         nameFilter={'Діаметр'}
@@ -323,8 +265,7 @@ const FilterCatalogTyres = observer((
                     }
                     <p/>
                 </Accordion>
-                { handleItem.length !== 0 && 
-                    handleItem.join(',') === filter.brands ?
+                { filter.chipBrands.length !== 0 && stateBrand ?
                   <button 
                     className='checkBoxBtnOn'
                     onClick={filterBrandAdd}
@@ -332,17 +273,19 @@ const FilterCatalogTyres = observer((
                   : null 
                 }
                 <FilterMainBtn 
-                    filterState={filterState}
+                    filterAction={filterBrandClick}
+                    filterState={stateBrand}
                     chipItem={filter.brands}
                     deleteChip={handleDeleteChange}
                     width={247.4} 
                     titleFilter={'Бренд'} 
                     contentInfo={false}>
                     {goodsTyre._brands ? 
-                        goodsTyre._brands.map((brandItem: any) => (
+                        goodsTyre._brands.map(
+                            (brandItem: any, index: number) => (
                      <CheckboxBtn
                         key={brandItem}
-                        checked={filter.brands} 
+                        checked={filter.chipBrands.includes(brandItem)} 
                         onChange={handleChange} 
                         value={brandItem} 
                         titleName={'Бренд'}
@@ -405,7 +348,8 @@ const FilterCatalogTyres = observer((
                 </Accordion>
                 <Accordion titleName={"Індекс швидкості"}>
                     {goodsTyre._speed_index ? 
-                        goodsTyre._speed_index.map((speedIndexItem: any) => (
+                        goodsTyre._speed_index.map(
+                            (speedIndexItem: any) => (
                     <CheckboxBtn 
                         key={speedIndexItem}
                         checked={filter.speed_index} 
@@ -420,7 +364,8 @@ const FilterCatalogTyres = observer((
                 </Accordion>    
                 <Accordion titleName={"Індекс навантаження"}>
                     {goodsTyre._load_index ? 
-                        goodsTyre._load_index.map((loadIndexItem: any) => (
+                        goodsTyre._load_index.map(
+                            (loadIndexItem: any) => (
                     <CheckboxBtn 
                         key={loadIndexItem}
                         checked={filter.load_index} 
@@ -437,7 +382,8 @@ const FilterCatalogTyres = observer((
                 </Accordion>
                 <Accordion titleName={"Омологація"}>
                     {goodsTyre._homologation ? 
-                        goodsTyre._homologation.map((homologationItem: any) => (
+                        goodsTyre._homologation.map(
+                            (homologationItem: any) => (
                     <CheckboxBtn 
                         key={homologationItem}
                         checked={filter.homologation} 
@@ -471,7 +417,8 @@ const FilterCatalogTyres = observer((
                 </Accordion>
                 <Accordion titleName={"Високонагруженість"}>
                     {goodsTyre._reinforced ? 
-                        goodsTyre._reinforced.map((reinforceItem: any) => (
+                        goodsTyre._reinforced.map(
+                            (reinforceItem: any) => (
                     <CheckboxBtn 
                         key={reinforceItem}
                         checked={filter.reinforced} 

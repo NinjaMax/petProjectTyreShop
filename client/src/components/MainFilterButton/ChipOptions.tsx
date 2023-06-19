@@ -13,7 +13,7 @@ const ChipOptions =({props, chipName, clearFilter}: IChipOptions) => {
     return (
         <div className='chipOptions' 
             onClick={(e) => e.stopPropagation()}>
-            {props ? props.split(',').map(
+            {props ? props?.split(',').map(
                 (item: string, index: number) =>
             <Fragment key={item}>  
                 {item} 

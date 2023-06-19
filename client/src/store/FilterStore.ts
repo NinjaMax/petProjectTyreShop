@@ -2,8 +2,10 @@ import {makeAutoObservable} from 'mobx';
 
 export default class FilterStore {
     _width:string | undefined;
+    _chipWidth: string[];
     _height:string;
     _brands: string;
+    _chipBrands: string[];
     _models: string;
     _diameter: string;
     _season: string;
@@ -16,8 +18,10 @@ export default class FilterStore {
     _reinforced:string;
     constructor() { 
         this._width = '';
+        this._chipWidth = [];
         this._height = '';
         this._brands = '';
+        this._chipBrands = [];
         this._models = '';
         this._diameter = '';
         this._season = '';
@@ -34,11 +38,17 @@ export default class FilterStore {
     setWidth(width: string) {
         this._width = width;
     }
+    setChipWidth(chipWidth: []) {
+        this._chipWidth = chipWidth;
+    }
     setHeight(height: string) {
         this._height = height;
     }
     setBrands(brands: string) {
         this._brands = brands;
+    }
+    setChipBrands(chipBrands: []) {
+        this._chipBrands = chipBrands;
     }
     setModels(models: string) {
         this._models = models;
@@ -74,11 +84,17 @@ export default class FilterStore {
     get width() {
         return this._width;
     }
+    get chipWidth() {
+        return this._chipWidth;
+    }
     get height() {
         return this._height;
     }
     get brands() {
         return this._brands;
+    }
+    get chipBrands() {
+        return this._chipBrands;
     }
     get diameter() {
         return this._diameter;
@@ -109,5 +125,9 @@ export default class FilterStore {
     }
     get reinforced() {
         return this._reinforced;
+    }
+
+    removeChipBrandsItem(indexNumber: number) {
+        this._chipBrands.splice(indexNumber, 1);
     }
 }

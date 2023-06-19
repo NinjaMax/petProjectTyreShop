@@ -9,7 +9,7 @@ import imgMarketE from '../../assets/icons/infoTyreMarking/tyreMarkerE.png';
 interface IContentInfo {
     infoMarking: string | boolean;
     width: number;
-    setActive(arg0: any):void;
+    setActive?(arg0: any):void;
 }
 
 const ContentFilterInfo = ({infoMarking, width, setActive}: IContentInfo) => {
@@ -18,7 +18,7 @@ const ContentFilterInfo = ({infoMarking, width, setActive}: IContentInfo) => {
             style={{"--widthBtn":width} as React.CSSProperties}>
              <span 
                 className="closeContentInfoBtn" 
-                onClick={() => {setActive(false)}}>&times;
+                onClick={() => {setActive!(false)}}>&times;
             </span>    
             <h6>Як дізнатися розмір шини?</h6>
             <h6>Маркування на боковині.</h6>

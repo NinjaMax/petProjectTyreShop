@@ -17,7 +17,7 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
   const {goodsTyre, filter} = useContext<any | null>(Context);
   const {page} = useContext<any | null>(Context);
   const [paramUrl, setParamUrl] = useState(0);
-  const [stateClick, setStateClick]=useState(false);
+  const [stateClick, setStateClick]=useState(true);
   const params = useParams<any>();
   const location = useLocation();
     
@@ -304,7 +304,7 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
   console.log('TYRES_FILTER_BRANDS: ', goodsTyre._brands);
     return (
       <div className='catalogTyres'
-        onClick={() => setStateClick(!stateClick)}
+        onClick={() => setStateClick(false)}
       >
         <div className='a'>
         {location.pathname.includes('tyres') ?

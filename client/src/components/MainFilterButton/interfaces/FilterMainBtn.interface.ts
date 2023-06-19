@@ -5,5 +5,6 @@ export interface IFilterMainBtn {
     contentInfo?: string | boolean; 
     filterState?: boolean;
     deleteChip?(arg0: any): void;
-    chipItem?: string | null;
+    chipItem?: string | string[] | null;
+    filterAction?(arg0: any): void;
 }
