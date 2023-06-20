@@ -7,7 +7,7 @@ export default class GoodsTyreStore {
     _types: string[];
     _brands: string[];
     _models: string[];
-    _season:string[];
+    _season: string[];
     _diameter: string[];
     _vehicle_type: string[];
     _studded:string[];
@@ -78,7 +78,6 @@ export default class GoodsTyreStore {
     setTotalCount(totalCount: number) {
         this._totalCount = totalCount;
     }
-
     setVehicleType(vehicle_type: string[]) {
         this._vehicle_type = vehicle_type;
     }
@@ -115,6 +114,9 @@ export default class GoodsTyreStore {
     }
     get tyres() {
         return this._tyres;
+    }
+    get season() {
+        return this._season;
     }
     get descriptions() {
         return this._descriptions;

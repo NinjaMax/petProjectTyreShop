@@ -30,7 +30,7 @@
     margin: auto;
     width: 100px;
     height: auto;
-    top: 68%;
+    /* top: 68%; */
     right:-105px;
 }
 .checkBoxBtnOn:hover {
@@ -38,4 +38,31 @@
 }
 .checkBoxBtnOn:active {
     background-color: #9EB9D3;
+}
+.season {
+    top: 31%;
+}
+.brands {
+    top: 70%;
+}
+.vehicleType {
+    top: 60%;
+}
+.studded {
+    top: 35%;
+}
+.speedIndex {
+    top: 65%;
+}
+.loadIndex {
+    top: 68%;
+}
+.homologation {
+    top: 75%;
+}
+.runFlat {
+    top: 70%;
+}
+.reinforced {
+    top: 76%;
 }

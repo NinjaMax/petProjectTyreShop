@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import '../../css/SelectCss/CheckboxBtn.css';
 
 interface ICheckBoxBtn {
@@ -18,18 +18,7 @@ const CheckboxBtn = ({
     titleName,
     onChange
     }: ICheckBoxBtn) => {
-    // const [checkedValue, setCheckedValue] = useState<boolean>(false);
-    // useEffect(() => {
-    //    //const checkedItem = (checked) => {
-    //     //if (checked) {
-    //     checked?.map((checkedItem: any) =>(
-    //         checkedItem === value ? setCheckedValue(true) 
-    //         : null
-    //     ))
-    //     //} 
-    // },[checked, value])
-    
-    // console.log('CHECKED_VALUE: ', value,'CHECKED: ', checkedValue)
+
     return (
         <div>
             <label className="containerCheckbox">
@@ -43,7 +32,6 @@ const CheckboxBtn = ({
                     type="checkbox" 
                     value={value}
                     checked={checked}
-                    //onClick={onChange}
                     onChange={onChange}
                     name={titleName}/>
                 <span className="checkmark"></span>

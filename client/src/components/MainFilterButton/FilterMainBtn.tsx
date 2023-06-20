@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import '../../css/FilterMain/FilterMainBtn.css';
 import ContentFilterInfo from './ContentFilterInfo';
 import ChipOptions from './ChipOptions';
@@ -15,9 +15,7 @@ const FilterMainBtn = ({
   chipItem,
 }: IFilterMainBtn
 ) => {
-  // const [stateClick, setStateClick]=useState(false);
-  // const [filterClose, setFilterClose]=useState(filterState);
-
+  
   const filterClick = () => {
     filterAction!(false)
   }
@@ -34,7 +32,7 @@ const FilterMainBtn = ({
                 chipName={titleFilter}
                 clearFilter={deleteChip}
                 props={chipItem} 
-                />
+              />
             </button>
             {filterState ?  
               <div id="myDropdown3" className="dropdownContentFilterMainBtn" 

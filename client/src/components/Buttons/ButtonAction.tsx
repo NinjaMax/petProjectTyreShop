@@ -4,7 +4,7 @@ import '../../css/ButtonsCss/ButtonAction.css';
 interface IButtonAction {
     props: string;
     widthBtn?: number;
-    eventItem?:() => void | undefined;
+    eventItem?:(arg0: any)=> void;
 }
 
 const ButtonAction = (

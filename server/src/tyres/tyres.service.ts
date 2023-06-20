@@ -164,14 +164,14 @@ export class TyresService {
            speed_index ? {
             model: TyreSpeedIndex,
             where: {
-              speed_index:{[Op.in]: speed_index.split(','),}
+              speed_index_with_desc:{[Op.in]: speed_index.split(','),}
             }
           }
            : {model: TyreSpeedIndex},
            load_index ? {
             model: TyreLoadIndex,
             where: {
-              load_index:{[Op.in]: load_index.split(','),}
+              load_index_with_desc:{[Op.in]: load_index.split(','),}
             }
           }
            : {model: TyreLoadIndex},
@@ -215,8 +215,6 @@ export class TyresService {
   }
 
   async findAllTyresWithoutOffset(
-    // offset: number,
-    // limit: number,
     width: string,
     height: string,
     diameter: string,
@@ -242,7 +240,6 @@ export class TyresService {
             where: {
               width:{
                 [Op.in]: width.split(','),
-                //[Op.notIn]: width.split(',')
             }
             }
           }
@@ -252,7 +249,6 @@ export class TyresService {
             where: {
               height:{
                 [Op.in]: height.split(','),
-                //[Op.notIn]: height.split(','),
               }
             }
           }
@@ -261,7 +257,6 @@ export class TyresService {
             model: TyreDiameter,
             where: {
               diameter:{
-                //[Op.in]: diameter.split(','),
                 [Op.in]: diameter.split(','),
               }
             }
@@ -272,7 +267,6 @@ export class TyresService {
             where: {
               season_ua: {
                 [Op.in]: season.split(','),
-                //[Op.notIn]: season.split(','),
               },
             }
           }
@@ -282,7 +276,6 @@ export class TyresService {
             where: {
               brand:{
                 [Op.in]: brand.split(','),
-                //[Op.notIn]: brand.split(','),
               }
             }
           }
@@ -299,7 +292,6 @@ export class TyresService {
              where: { 
                vehicle_type_ua: {
                 [Op.in]: type.split(','),
-                //[Op.notIn]: type.split(','),
               }, 
              }
            } : 
@@ -307,9 +299,8 @@ export class TyresService {
           speed_index ? {
             model: TyreSpeedIndex,
             where: {
-              speed_index:{
+              speed_index_with_desc:{
                 [Op.in]: speed_index.split(','),
-                //[Op.notIn]: speed_index.split(','),
               }
             }
           }
@@ -317,9 +308,8 @@ export class TyresService {
           load_index ? {
             model: TyreLoadIndex,
             where: {
-              load_index:{
+              load_index_with_desc:{
                 [Op.in]: load_index.split(','),
-                //[Op.notIn]: load_index.split(','),
               }
             }
           }
@@ -329,7 +319,6 @@ export class TyresService {
             where: {
               studded:{
                 [Op.in]: studded.split(','),
-                //[Op.notIn]: studded.split(','),
               }
             }
           }
@@ -339,7 +328,6 @@ export class TyresService {
             where: {
               run_flat:{
                 [Op.in]: run_flat.split(','),
-                //[Op.notIn]: run_flat.split(',')
               }
             }
           }
@@ -349,7 +337,6 @@ export class TyresService {
             where: {
               homologation:{
                 [Op.in]: homologation.split(','),
-                //[Op.notIn]: homologation.split(','),
               }
             }
           }
@@ -359,7 +346,6 @@ export class TyresService {
             where: {
               reinforce:{
                 [Op.in]: reinforce.split(','),
-                //[Op.notIn]: reinforce.split(','),
               }
             }
           }
