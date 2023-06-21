@@ -26,6 +26,11 @@ export default class FilterStore {
     _chipRunFlat:string[];
     _reinforced:string;
     _chipReinforced:string[];
+    _cheap: boolean;
+    _expensive:boolean;
+    _rating:boolean;
+    _oldPrice: boolean;
+    _titleName:boolean;
     constructor() { 
         this._width = '';
         this._chipWidth = [];
@@ -52,6 +57,11 @@ export default class FilterStore {
         this._chipRunFlat = [];
         this._reinforced = '';
         this._chipReinforced = [];
+        this._cheap = false;
+        this._expensive = false;
+        this._rating = false;
+        this._oldPrice = false;
+        this._titleName = false;
         makeAutoObservable(this);
     }
 
@@ -130,6 +140,21 @@ export default class FilterStore {
     setChipReinforced(chipreinforced: []) {
         this._chipReinforced = chipreinforced;
     }
+    setCheap(cheap: boolean) {
+        this._cheap = cheap;
+    }
+    setExpensive(expensive: boolean) {
+        this._expensive = expensive;
+    }
+    setRating(rating: boolean) {
+        this._rating = rating;
+    }
+    setOldPrice(oldPrice: boolean) {
+        this._oldPrice = oldPrice;
+    }
+    setTitleName(titleName: boolean) {
+        this._titleName = titleName;
+    }
 
     get width() {
         return this._width;
@@ -205,6 +230,21 @@ export default class FilterStore {
     }
     get chipReinforced() {
         return this._chipReinforced;
+    }
+    get cheap() {
+        return this._cheap;
+    }
+    get expensive() {
+        return this._expensive;
+    }
+    get rating() {
+        return this._rating;
+    }
+    get oldPrice() {
+        return this._oldPrice;
+    }
+    get titleName() {
+        return this._titleName;
     }
 
     removeChipBrandsItem(indexNumber: number) {

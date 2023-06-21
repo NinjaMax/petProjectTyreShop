@@ -56,6 +56,11 @@ export class TyresController {
     @Query('run_flat') run_flat: string,
     @Query('homologation') homologation: string,
     @Query('reinforce') reinforce: string,
+    // @Query('cheap') cheap: boolean,
+    // @Query('expensive') expensive: boolean,
+    // @Query('rating') rating: boolean,
+    // @Query('oldPrice') oldPrice: boolean,
+    // @Query('titleName') titleName: boolean,
   ) {
     return this.tyresService.findAllTyresWithOffset(
       offset,
@@ -73,6 +78,11 @@ export class TyresController {
       run_flat,
       homologation,
       reinforce,
+      // cheap,
+      // expensive,
+      // rating,
+      // oldPrice, 
+      // titleName,
     );
   }
 
@@ -93,6 +103,11 @@ export class TyresController {
     @Query('run_flat') run_flat: string,
     @Query('homologation') homologation: string,
     @Query('reinforce') reinforce: string,
+    @Query('cheap') cheap: boolean,
+    @Query('expensive') expensive: boolean,
+    //@Query('rating') rating: boolean,
+    @Query('oldPrice') oldPrice: boolean,
+    @Query('titleName') titleName: boolean,
   ) {
     return this.tyresService.findAllTyresWithoutOffset(
       // offset,
@@ -110,6 +125,11 @@ export class TyresController {
       run_flat,
       homologation,
       reinforce,
+      cheap,
+      expensive,
+      //rating,
+      oldPrice, 
+      titleName,
     );
   }
 

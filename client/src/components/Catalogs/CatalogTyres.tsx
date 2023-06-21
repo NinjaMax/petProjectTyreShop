@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import '../../css/Catalogs/CatalogTyres.css';
 import TyresCard from '../cards/TyresCard';
 import PopularSizeTyre from '../popularGoods/PopularSizeTyre';
@@ -14,12 +14,18 @@ import LoadMoreGoods from '../ux/LoadMoreGoods';
 const CatalogTyres = observer(() => {
     const [active, setActive] = useState(false);
     const [goodsCat, setGoodsCat] = useState([]);
-    const {goodsTyre, page} = useContext<any | null>(Context);
+    const {goodsTyre, page, filter} = useContext<any | null>(Context);
 
     // useEffect(() =>{
     //     let isMounted = false;
+    //     const tyreGoods = goodsTyre._tyres_filter.slice();
+       
     //     const loadMaintask = async() => {
-    //         getTyresOffset()
+    //     if (!isMounted && tyreGoods) {    
+    //         page.loadMore > 0 ? goodsTyre?.setTyres(
+    //         [...goodsTyre._tyres, ...tyreGoods] 
+    //         ) : goodsTyre?.setTyres(tyreGoods);
+    //     }
     //     }
     //     loadMaintask();
     //     return () => {
@@ -37,7 +43,49 @@ const CatalogTyres = observer(() => {
         page.setOffset(page.offset + 9);
     };
 
-    console.log('LOAD_MORE: ',page.loadMore)
+    const sortTyresGoods = (e: any) => {
+        //console.log(e.target.value);
+        if (e.target.value === 'vidDeshevih') {
+            filter.setCheap(true);
+            filter.setExpensive(false);
+            filter.setRating(false);
+            filter.setTitleName(false);
+            filter.setOldPrice(false);
+            console.log(e.target.value);
+        }
+        if (e.target.value === 'vidDorogih') {
+            filter.setExpensive(true);
+            filter.setCheap(false);
+            filter.setRating(false);
+            filter.setTitleName(false);
+            filter.setOldPrice(false);
+            console.log(e.target.value);
+        }
+        if (e.target.value === 'poRatingu') {
+            filter.setRating(true);
+            filter.setCheap(false);
+            filter.setExpensive(false);
+            filter.setTitleName(false);
+            filter.setOldPrice(false);
+            console.log(e.target.value);
+        }
+        if (e.target.value === 'poNazvi') {
+            filter.setTitleName(true);
+            filter.setCheap(false);
+            filter.setExpensive(false);
+            filter.setRating(false);
+            filter.setOldPrice(false);
+            console.log(e.target.value);
+        }
+        if (e.target.value === 'poAkcii') {
+            filter.setOldPrice(true);
+            filter.setCheap(false);
+            filter.setExpensive(false);
+            filter.setRating(false);
+            filter.setTitleName(false);
+            console.log(e.target.value);
+        }
+    };
 
     return (
         <div>
@@ -58,12 +106,26 @@ const CatalogTyres = observer(() => {
             </div> 
             <div className='sortBtnCatalog'>
                 <span>Сортування:</span>
-                <SelectRadio radioData={{ value: "deshevihDodorogih", radioName: "Від дешевих до дорогих" }}
-                direction={"row"} />
-                <SelectRadio radioData={{ value: "dorogihDeshevih", radioName: "Від дорогих до дешевих" }}
-                direction={"row"} />
-                <SelectRadio radioData={{ value: "poRatingu", radioName: "По рейтингу" }}
-                direction={"row"} />               
+                <SelectRadio
+                    activeOptions={sortTyresGoods} 
+                    radioData={{ value: "vidDeshevih", radioName: "Від дешевих до дорогих" }}
+                    direction={"row"} />
+                <SelectRadio 
+                    activeOptions={sortTyresGoods} 
+                    radioData={{ value: "vidDorogih", radioName: "Від дорогих до дешевих" }}
+                    direction={"row"} />
+                <SelectRadio 
+                    activeOptions={sortTyresGoods} 
+                    radioData={{ value: "poRatingu", radioName: "рейтингу" }}
+                    direction={"row"} />
+                <SelectRadio 
+                    activeOptions={sortTyresGoods} 
+                    radioData={{ value: "poNazvi", radioName: "назві" }}
+                    direction={"row"} />
+                <SelectRadio 
+                    activeOptions={sortTyresGoods} 
+                    radioData={{ value: "poAkcii", radioName: "акційній ціні" }}
+                    direction={"row"} />               
             </div>
             <div className="rowCatalogTyres">
                 {goodsTyre._tyres ? goodsTyre._tyres?.map(

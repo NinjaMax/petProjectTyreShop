@@ -66,19 +66,22 @@ const BasketOrder = () => {
                     <SelectRadio radioData={{value: "samoviviz", radioName: "Самовивіз"}} 
                         addOptions={""}
                         direction={"column"} 
-                        checked={checkedRadio}>
+                        //checked={checkedRadio}
+                        >
                     </SelectRadio>
                     <SelectRadio radioData={{value: "novaPoshta", radioName: "Нова Пошта"}} 
                         addOptions={delivery === "novaPoshta" ?? false}
                         direction={"column"} 
-                        checked={checkedRadio}>
+                        //checked={checkedRadio}
+                        >
                         { delivery === "novaPoshta" ?    
                         "Розрахунок НОВА ПОШТА" : null}    
                     </SelectRadio>
                     <SelectRadio radioData={{value: "urkPoshta", radioName: "Укр Пошта"}} 
                         addOptions={""}
                         direction={"column"} 
-                        checked={checkedRadio}>
+                        //checked={checkedRadio}
+                        >
                     </SelectRadio>
                 </div>
                 <div className='basketColmItemLeft'>
@@ -86,17 +89,20 @@ const BasketOrder = () => {
                     <SelectRadio radioData={{value: "gotivka", radioName: "Готівкою"}} 
                         addOptions={""}
                         direction={"column"} 
-                        checked={checkedRadio}>
+                        //checked={checkedRadio}
+                        >
                     </SelectRadio>
                     <SelectRadio radioData={{value: "cardVisaMaster", radioName: "Карткою (VISA / MASTERCARD)"}} 
                         addOptions={""}
                         direction={"column"} 
-                        checked={checkedRadio}>
+                        //checked={checkedRadio}
+                        >
                     </SelectRadio>
                     <SelectRadio radioData={{value: "bezgotivka", radioName: "Безготівковий розрахунок"}} 
                         addOptions={""}
                         direction={"column"} 
-                        checked={checkedRadio}>
+                        //checked={checkedRadio}
+                        >
                     </SelectRadio>
                 </div> 
             </div>

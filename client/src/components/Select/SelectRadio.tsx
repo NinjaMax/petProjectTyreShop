@@ -5,12 +5,12 @@ interface ISelectRadio {
     radioData:{value: string, radioName: string};
     direction: string;
     addOptions?: string | boolean;
-    checked?:(arg: any) => void; 
+    activeOptions?:(arg: any) => void; 
     children?: any;
 }
 
 const SelectRadio = (
-        {radioData, addOptions, direction, checked, children}: ISelectRadio
+        {radioData, addOptions, direction, activeOptions, children}: ISelectRadio
     ) => {
 
     return (
@@ -23,7 +23,7 @@ const SelectRadio = (
                         type="radio"
                         value={radioData.value}
                         name="selectRadio" 
-                        onChange={checked}
+                        onChange={activeOptions}
                     /> {radioData.radioName}            
                 </label>
             </div>

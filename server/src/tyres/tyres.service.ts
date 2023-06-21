@@ -104,11 +104,25 @@ export class TyresService {
     run_flat: string,
     homologation: string,
     reinforce: string,
+    // cheap: boolean,
+    // expensive: boolean,
+    // rating: boolean,
+    // oldPrice: boolean,
+    // titleName: boolean,
   ) {
     try {
       const tyresAllLimit = await this.tyresRepository.findAll({
-        offset: offset ?? 0,
-        limit: limit,
+        // order: [
+        //   expensive ? ['price', 'price', 'ASC'] : null,
+        //   cheap ? ['price', 'price', 'DESC'] : null,
+        //   oldPrice ? ['price', 'price', 'ASC'] : null,
+        //   //rating ? ['rating', 'rating', 'DESC'] : null,
+        //   titleName ? ['full_name', 'DESC'] : null,
+        //   ['stock', 'stock', 'DESC'],
+        // ],
+        //group: titleName ? 'full_name' : null,
+        // offset: offset ?? 0,
+        // limit: limit,
         include: [
           { all: true },
           width ? {
@@ -204,7 +218,18 @@ export class TyresService {
           }
           : {model: TyreReinforce}
         ], 
-        order: [['stock', 'stock', 'DESC']],
+        order: [
+          // expensive ? ['price', 'price', 'ASC'] : null,
+          // // cheap ? ['price', 'price', 'DESC'] : null,
+          // oldPrice ? ['price', 'old_price', 'ASC'] : null,
+          // //rating ? ['rating', 'rating', 'DESC'] : null,
+          // titleName ? ['full_name', 'DESC'] : null,
+          // ['price', 'price', 'DESC'],
+          ['stock', 'stock', 'DESC'],
+        ],
+        // //group: titleName ? 'full_name' : null,
+        offset: offset ?? 0,
+        limit: limit,
       });
       return tyresAllLimit;
     } catch {
@@ -228,13 +253,18 @@ export class TyresService {
     run_flat: string,
     homologation: string,
     reinforce: string,
+    cheap: boolean,
+    expensive: boolean,
+    //rating: boolean,
+    oldPrice: boolean,
+    titleName: boolean,
   ) {
     try {
       const tyresAllWithoutLimit = await this.tyresRepository.findAll({
         // offset: offset ?? 0,
         // limit: limit,
         include: [
-          // { all: true },
+          { all: true },
           width ? {
             model: TyreWidth,
             where: {
@@ -350,9 +380,18 @@ export class TyresService {
             }
           }
           : {model: TyreReinforce}
-        ], 
-        // order: [['stock', 'stock', 'DESC']],
+        ],
+        order: [
+          // expensive ? ['price', 'price', 'DESC'] : null,
+          ['price', 'price', 'ASC'],
+          // oldPrice ? ['price', 'old_price', 'ASC'] : null,
+          // //rating ? ['rating', 'rating', 'DESC'] : null,
+          // titleName ? ['full_name', 'DESC'] : null,
+          //expensive ? null : ['price', 'price', 'DESC'],
+          ['stock', 'stock', 'DESC'],
+        ],
       });
+      console.log(cheap);
       return tyresAllWithoutLimit;
     } catch {
       throw new HttpException(
