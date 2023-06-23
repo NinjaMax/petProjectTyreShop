@@ -29,12 +29,8 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
     let isMounted = false;
     const loadMaintask = async() => {
       const taskLoad: any[] = [
-        //getTyresOffset,
         getTyresWithoutOffset,
         getTyresCountAll,
-        // getTyresSeason,
-        // getTyresType,
-        // getTyresDiameter,
       ];
       const tyreCatType = tyreVehicleTypeCat(params.category);
       console.log('CAT_TYPE: ', tyreCatType);
@@ -44,35 +40,6 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
       console.log('CAT_DIAM: ', tyreCatDiameter);
       let i:number = 0;
       while(taskLoad.length > i) {
-        // if(!isMounted && taskLoad[i] === getTyresOffset) {
-        //   let tyreGoods: any = await taskLoad[i](
-        //     page.offset, 
-        //     page.limit, 
-        //     filter.width,
-        //     filter.height,
-        //     tyreCatDiameter ?? filter.diameter,
-        //     tyreCatSeason ?? filter.season,
-        //     filter.brands,
-        //     filter.price,
-        //     tyreCatType ?? filter.vehicle_type,
-        //     filter.speed_index,
-        //     filter.load_index,
-        //     filter.studded,
-        //     filter.run_flat,
-        //     filter.homologation,
-        //     filter.reinforced,
-        //     // filter.cheap,
-        //     // filter.expensive,
-        //     // filter.rating,
-        //     // filter.oldPrice,
-        //     // filter.titleName
-        //   );
-          
-        //   // page.loadMore > 0 ? goodsTyre?.setTyres(
-        //   //   [...goodsTyre._tyres, ...tyreGoods] 
-        //   // ) : goodsTyre?.setTyres(tyreGoods);
-        //   //console.log('SET_TYRES: ', Array.from(new Set([...goodsTyre._tyres, ...tyreGoods])));
-        // }
         if(!isMounted && taskLoad[i] === getTyresWithoutOffset) {
           let tyreFilterGoods: any = await taskLoad[i](
             filter.width,
@@ -88,11 +55,11 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
             filter.run_flat,
             filter.homologation,
             filter.reinforced,
-            filter.cheap,
-            filter.expensive,
-            //filter.rating,
-            filter.oldPrice,
-            filter.titleName
+            filter._cheap,
+            filter._expensive,
+            filter._rating,
+            filter._oldPrice,
+            filter._titleName
           );
           let setWidthFilter:any[] = [];
           let setHightFilter:any[] = [];
@@ -107,9 +74,13 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
           let setRunFlatFilter :any[] = [];
           let setStuddedFilter :any[] = [];
 
+          console.log('TYRE_FILTER_GET: ', tyreFilterGoods);
+
           page.loadMore > 0 ? goodsTyre?.setTyres(
-          [...goodsTyre._tyres, ...tyreFilterGoods.splice(page.offset, page.limit)] 
-          ) : goodsTyre?.setTyres(tyreFilterGoods.splice(page.offset, page.limit));
+          [...goodsTyre._tyres, 
+            ...tyreFilterGoods.splice(page.offset, page.limit)] 
+          ) : goodsTyre?.setTyres(
+            tyreFilterGoods.splice(page.offset, page.limit));
 
           goodsTyre?.setTyresFilter(tyreFilterGoods);
           goodsTyre._tyres_filter.map((item: any) => 
@@ -308,7 +279,7 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
     filter.reinforced,
     filter.cheap,
     filter.expensive,
-    //filter.rating,
+    filter.rating,
     filter.oldPrice,
     filter.titleName
   ]);

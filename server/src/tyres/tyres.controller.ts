@@ -88,8 +88,6 @@ export class TyresController {
 
   @Get('/no-offset')
   findTyresWithoutLimit(
-    // @Query('offset') offset: number,
-    // @Query('limit') limit: number,
     @Query('width') width: string,
     @Query('height') height: string,
     @Query('diameter') diameter: string,
@@ -105,13 +103,11 @@ export class TyresController {
     @Query('reinforce') reinforce: string,
     @Query('cheap') cheap: boolean,
     @Query('expensive') expensive: boolean,
-    //@Query('rating') rating: boolean,
+    @Query('rating') rating: boolean,
     @Query('oldPrice') oldPrice: boolean,
     @Query('titleName') titleName: boolean,
   ) {
     return this.tyresService.findAllTyresWithoutOffset(
-      // offset,
-      // limit,
       width,
       height,
       diameter,
@@ -127,7 +123,7 @@ export class TyresController {
       reinforce,
       cheap,
       expensive,
-      //rating,
+      rating,
       oldPrice, 
       titleName,
     );

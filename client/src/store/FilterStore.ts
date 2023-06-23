@@ -57,7 +57,7 @@ export default class FilterStore {
         this._chipRunFlat = [];
         this._reinforced = '';
         this._chipReinforced = [];
-        this._cheap = false;
+        this._cheap = true;
         this._expensive = false;
         this._rating = false;
         this._oldPrice = false;

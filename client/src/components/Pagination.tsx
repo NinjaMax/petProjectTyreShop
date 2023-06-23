@@ -11,10 +11,11 @@ const Pagination = observer(() => {
     const [lastIndexPage, setLastIndexPage] = useState<number>(5);
     const [firstIndexPage, setFirstIndexPage] = useState<number>(0);
     
-    const handlePage =(pageItem: any, index: number)=> {
+    const handlePage =(pageItem: any)=> {
         page.setLoadMore(0); 
-        page.setOffset(index * 9);
         page.setPageItem(pageItem);
+        page.setOffset((pageItem - 1) * 9);
+        console.log('OFFSET: ', page.offset);
     }
 
     const pageCount = Math.ceil(goodsTyre.totalCount / page.limit);
@@ -44,11 +45,10 @@ const Pagination = observer(() => {
         setLastIndexPage(prevLast => prevLast - 1);
     };
     
-    console.log('PAGES: ', pages);
-    console.log('TYRE_COUNT: ', goodsTyre.totalCount);
-    console.log('PAGE_LIMIT: ', page.limit);
-    console.log('OFFSET: ', page.offset);
-    console.log('PAGE_PAGEITEM: ', page.pageItem);
+    // console.log('PAGES: ', pages);
+    // console.log('TYRE_COUNT: ', goodsTyre.totalCount);
+    // console.log('PAGE_LIMIT: ', page.limit);
+    // console.log('PAGE_PAGEITEM: ', page.pageItem);
 
     return (
         <div className="pagination"
@@ -61,13 +61,13 @@ const Pagination = observer(() => {
                 onClick={previousPage}
             >&#706;</span>
             {pages.slice(firstIndexPage, lastIndexPage).map(
-                (pageItem, index) =>
+                (pageItem) =>
                 <span key={pageItem}
                     className={
                         page.pageItem === pageItem ? 
                         'paginationItem active' : 'paginationItem'
                     }
-                    onClick={() => handlePage(pageItem, index)}
+                    onClick={() => handlePage(pageItem)}
                 >
                 <a onClick={(e: any) => e.preventDefault()}
                     href={location.pathname + `?page=${pageItem}`}

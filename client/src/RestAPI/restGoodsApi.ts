@@ -52,8 +52,6 @@ const getTyresOffset = async (
 }
 
 const getTyresWithoutOffset = async (
-    // offset: number,
-    // limit: number,
     width: string,
     height: string,
     diameter: string,
@@ -69,7 +67,7 @@ const getTyresWithoutOffset = async (
     reinforced: string,
     cheap: boolean,
     expensive:boolean,
-    //rating: boolean,
+    rating: boolean,
     oldPrice: boolean,
     titleName:boolean,
     ) => {
@@ -88,11 +86,11 @@ const getTyresWithoutOffset = async (
         run_flat: run_flat,
         homologation: homologation,
         reinforce: reinforced,
-        cheap: cheap ?? false,
-        expensive: expensive ?? false,
-        //rating: rating,
-        oldPrice: oldPrice ?? false,
-        titleName: titleName ?? false,
+        cheap: cheap,
+        expensive: expensive,
+        rating: rating,
+        oldPrice: oldPrice,
+        titleName: titleName,
         }
     })
     //localStorage.setItem('token', data.token)

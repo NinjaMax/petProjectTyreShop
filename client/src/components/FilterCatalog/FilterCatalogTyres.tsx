@@ -526,10 +526,10 @@ const FilterCatalogTyres = observer((
                     {goodsTyre._height ? 
                         goodsTyre._height.map((heightItem: any) => (
                     <SelectFilterList
-                        key={heightItem}
+                        key={heightItem === '' || 'undefined' ? heightItem + 1 : heightItem}
                         nameFilter={'Профіль'}
-                        value={heightItem}
-                        items={heightItem}
+                        value={heightItem === '' || undefined ? '0' : heightItem}
+                        items={heightItem === '' || undefined ? '0' : heightItem}
                         checked={filter._height}
                         onChange={handleChange}
                         width={247.4}

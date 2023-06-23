@@ -73,9 +73,14 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
                 </div>
                 {goods?.price ? goods?.price.map((item: any) => (
                     <Fragment key={item.id}>
+                    {item.price ?
                     <div className="tyresCardPrice" >
                         {item.price} &#8372;
-                    </div>
+                    </div> :
+                    <div className="tyresCardPrice">
+                        немає в наявності
+                    </div>  
+                    }
                     {item.old_price ?
                     <div className="tyresCardOldPrice" >
                         {item.old_price} &#8372;
@@ -84,17 +89,23 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
                     } 
                     </Fragment>
                   ))
-                  :  <div className="tyresCardPrice">
+                  : <div className="tyresCardPrice">
                         немає в наявності
                     </div> 
                 }
-                { goods?.price ?
+                { goods?.price[0].price ?
                     <ButtonAction 
                         props={"КУПИТИ"} 
                         widthBtn={260} 
                         eventItem={checkOrders}
                     />
-                    : null
+                    : 
+                    <ButtonAction 
+                        props={"КУПИТИ"} 
+                        widthBtn={260} 
+                        eventItem={checkOrders}
+                        active={false}
+                    />
                 }
                 <p/>    
             </div>

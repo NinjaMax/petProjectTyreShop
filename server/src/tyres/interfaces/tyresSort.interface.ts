@@ -1,4 +1,4 @@
-export interface TyrePropsConfigAttr {
+export interface TyreSort {
   id_country: number;
   country_manufacturer: string;
   country_manufacturer_ua: string;
