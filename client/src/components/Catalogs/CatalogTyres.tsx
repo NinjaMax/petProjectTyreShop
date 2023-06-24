@@ -15,23 +15,6 @@ const CatalogTyres = observer(() => {
     const [active, setActive] = useState(false);
     const [goodsCat, setGoodsCat] = useState([]);
     const {goodsTyre, page, filter} = useContext<any | null>(Context);
-
-    // useEffect(() =>{
-    //     let isMounted = false;
-    //     const tyreGoods = goodsTyre._tyres_filter.slice();
-       
-    //     const loadMaintask = async() => {
-    //     if (!isMounted && tyreGoods) {    
-    //         page.loadMore > 0 ? goodsTyre?.setTyres(
-    //         [...goodsTyre._tyres, ...tyreGoods] 
-    //         ) : goodsTyre?.setTyres(tyreGoods);
-    //     }
-    //     }
-    //     loadMaintask();
-    //     return () => {
-    //         isMounted = true;
-    //     };
-    // },[]);
  
     const checkOrders = () => {
         setActive(!active);
@@ -44,46 +27,20 @@ const CatalogTyres = observer(() => {
     };
 
     const sortTyresGoods = (e: any) => {
-        //console.log(e.target.value);
         if (e.target.value === 'vidDeshevih') {
-            filter.setCheap(true);
-            filter.setExpensive(false);
-            filter.setRating(false);
-            filter.setTitleName(false);
-            filter.setOldPrice(false);
-            console.log(e.target.value);
+            filter.setSort('ASC');
         }
         if (e.target.value === 'vidDorogih') {
-            filter.setExpensive(true);
-            filter.setCheap(false);
-            filter.setRating(false);
-            filter.setTitleName(false);
-            filter.setOldPrice(false);
-            console.log(e.target.value);
+            filter.setSort('DESC');
         }
         if (e.target.value === 'poRatingu') {
-            filter.setRating(true);
-            filter.setCheap(false);
-            filter.setExpensive(false);
-            filter.setTitleName(false);
-            filter.setOldPrice(false);
-            console.log(e.target.value);
+            filter.setSort('rating');
         }
         if (e.target.value === 'poNazvi') {
-            filter.setTitleName(true);
-            filter.setCheap(false);
-            filter.setExpensive(false);
-            filter.setRating(false);
-            filter.setOldPrice(false);
-            console.log(e.target.value);
+            filter.setSort('title');
         }
         if (e.target.value === 'poAkcii') {
-            filter.setOldPrice(true);
-            filter.setCheap(false);
-            filter.setExpensive(false);
-            filter.setRating(false);
-            filter.setTitleName(false);
-            console.log(e.target.value);
+            filter.setSort('oldPrice');
         }
     };
 

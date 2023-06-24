@@ -26,11 +26,11 @@ export default class FilterStore {
     _chipRunFlat:string[];
     _reinforced:string;
     _chipReinforced:string[];
-    _cheap: boolean;
-    _expensive:boolean;
-    _rating:boolean;
-    _oldPrice: boolean;
-    _titleName:boolean;
+    _sort: string;
+    _widthSearch: string[]| null;
+    _heightSearch: string[]| null;
+    _diameterSearch: string[]| null;
+    _brandSearch: string[]| null;
     constructor() { 
         this._width = '';
         this._chipWidth = [];
@@ -57,11 +57,11 @@ export default class FilterStore {
         this._chipRunFlat = [];
         this._reinforced = '';
         this._chipReinforced = [];
-        this._cheap = true;
-        this._expensive = false;
-        this._rating = false;
-        this._oldPrice = false;
-        this._titleName = false;
+        this._sort = 'ASC';
+        this._widthSearch = [];
+        this._heightSearch = [];
+        this._diameterSearch = [];
+        this._brandSearch = [];
         makeAutoObservable(this);
     }
 
@@ -140,22 +140,21 @@ export default class FilterStore {
     setChipReinforced(chipreinforced: []) {
         this._chipReinforced = chipreinforced;
     }
-    setCheap(cheap: boolean) {
-        this._cheap = cheap;
+    setSort(sort: string) {
+        this._sort = sort;
     }
-    setExpensive(expensive: boolean) {
-        this._expensive = expensive;
+    setWidthSearch(widthSearch: []) {
+        this._widthSearch = widthSearch;
     }
-    setRating(rating: boolean) {
-        this._rating = rating;
+    setHeightSearch(heightSearch: []) {
+        this._heightSearch = heightSearch;
     }
-    setOldPrice(oldPrice: boolean) {
-        this._oldPrice = oldPrice;
+    setDiameterSearch(diameterSearch: []) {
+        this._diameterSearch = diameterSearch;
     }
-    setTitleName(titleName: boolean) {
-        this._titleName = titleName;
+    setBrandSearch(brandSearch: []) {
+        this._brandSearch = brandSearch;
     }
-
     get width() {
         return this._width;
     }
@@ -231,21 +230,22 @@ export default class FilterStore {
     get chipReinforced() {
         return this._chipReinforced;
     }
-    get cheap() {
-        return this._cheap;
+    get sort() {
+        return this._sort;
     }
-    get expensive() {
-        return this._expensive;
+    get widthSearch() {
+        return this._widthSearch;
     }
-    get rating() {
-        return this._rating;
+    get heightSearch() {
+        return this._heightSearch;
     }
-    get oldPrice() {
-        return this._oldPrice;
+    get diameterSearch() {
+        return this._diameterSearch;
     }
-    get titleName() {
-        return this._titleName;
+    get brandSearch() {
+        return this._brandSearch;
     }
+    
 
     removeChipBrandsItem(indexNumber: number) {
         this._chipBrands.splice(indexNumber, 1);

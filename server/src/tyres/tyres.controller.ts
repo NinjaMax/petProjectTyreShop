@@ -101,11 +101,7 @@ export class TyresController {
     @Query('run_flat') run_flat: string,
     @Query('homologation') homologation: string,
     @Query('reinforce') reinforce: string,
-    @Query('cheap') cheap: boolean,
-    @Query('expensive') expensive: boolean,
-    @Query('rating') rating: boolean,
-    @Query('oldPrice') oldPrice: boolean,
-    @Query('titleName') titleName: boolean,
+    @Query('sort') sort: string,
   ) {
     return this.tyresService.findAllTyresWithoutOffset(
       width,
@@ -121,11 +117,7 @@ export class TyresController {
       run_flat,
       homologation,
       reinforce,
-      cheap,
-      expensive,
-      rating,
-      oldPrice, 
-      titleName,
+      sort,
     );
   }
 
@@ -155,8 +147,36 @@ export class TyresController {
   }
 
   @Get('count/all')
-  findCountAllTyres() {
-    return this.tyresService.findAndCountAllTyres();
+  findCountAllTyres(
+    @Query('width') width: string,
+    @Query('height') height: string,
+    @Query('diameter') diameter: string,
+    @Query('season') season: string,
+    @Query('brand') brand: string,
+    @Query('price') price: string,
+    @Query('type') type: string,
+    @Query('speed_index') speed_index: string,
+    @Query('load_index') load_index: string,
+    @Query('studded') studded: string,
+    @Query('run_flat') run_flat: string,
+    @Query('homologation') homologation: string,
+    @Query('reinforce') reinforce: string,
+  ) {
+    return this.tyresService.findAndCountAllTyres(
+      width,
+      height,
+      diameter,
+      season,
+      brand,
+      price,
+      type,
+      speed_index,
+      load_index,
+      studded,
+      run_flat,
+      homologation,
+      reinforce,
+    );
   }
 
   @Patch('/update')

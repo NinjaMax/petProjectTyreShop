@@ -8,7 +8,7 @@ import BreadCrumbs from '../components/BreadCrumbs';
 import CyrillicToTranslit from 'cyrillic-to-translit-js';
 import { useLocation, useParams } from 'react-router-dom';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
-import { getTyresCountAll, getTyresOffset, getTyresWithoutOffset} from '../restAPI/restGoodsApi';
+import { getTyresCountAll, getTyresWithoutOffset} from '../restAPI/restGoodsApi';
 import { Context } from '../context/Context';
 import { observer } from 'mobx-react-lite';
 import { tyreDiameterCat, tyreSeasonCat, tyreVehicleTypeCat } from '../services/tyresCatService';
@@ -55,11 +55,7 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
             filter.run_flat,
             filter.homologation,
             filter.reinforced,
-            filter._cheap,
-            filter._expensive,
-            filter._rating,
-            filter._oldPrice,
-            filter._titleName
+            filter.sort,
           );
           let setWidthFilter:any[] = [];
           let setHightFilter:any[] = [];
@@ -105,12 +101,14 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
                 [...goodsTyre._width, ...setWidthFilter]
               )).sort(
                 (a: any, b: any) => a.localeCompare(b))
-            )
+            );
+            filter.setWidthSearch(goodsTyre._width);
           } else {
             goodsTyre?.setWidth(
               Array.from(new Set(setWidthFilter)).sort(
               (a: any, b: any) => a.localeCompare(b))
-            )
+            );
+            filter.setWidthSearch(goodsTyre._width);
           }
           if (filter.height) {
             goodsTyre?.setHeight(
@@ -118,12 +116,14 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
                 [...goodsTyre._height, ...setHightFilter]
               )).sort(
                 (a: any, b: any) => a.localeCompare(b))
-            )
+            );
+            filter.setHeightSearch(goodsTyre._height);
           } else {
             goodsTyre?.setHeight(
               Array.from(new Set(setHightFilter)).sort(
                 (a: any, b: any) => a.localeCompare(b))
-            )
+            );
+            filter.setHeightSearch(goodsTyre._height);
           }
           if (filter.diameter) {
             goodsTyre?.setDiameter(
@@ -131,12 +131,14 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
                 [...goodsTyre._diameter, ...setDiameterFilter]
               )).sort(
                 (a: any, b: any) => a.localeCompare(b))
-            )
+            );
+            filter.setDiameterSearch(goodsTyre._diameter);
           } else {
             goodsTyre?.setDiameter(
               Array.from(new Set(setDiameterFilter)).sort(
                 (a: any, b: any) => a.localeCompare(b))
-            )
+            );
+            filter.setDiameterSearch(goodsTyre._diameter);
           }
           if (filter.brands) {
             goodsTyre?.setBrands(
@@ -144,12 +146,14 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
                 [...goodsTyre._brands, ...setBrandFilter]
               )).sort(
                 (a: any, b: any) => a.localeCompare(b))
-            )
+            );
+            filter.setBrandSearch(goodsTyre._brands);
           } else {
             goodsTyre?.setBrands(
               Array.from(new Set(setBrandFilter)).sort(
                 (a, b) => a.localeCompare(b))
-            )
+            );
+            filter.setBrandSearch(goodsTyre._brands);   
           }
           if (filter.season) {
             goodsTyre?.setSeason(
@@ -245,7 +249,21 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
           }
         }
         if(!isMounted && taskLoad[i] === getTyresCountAll) {
-          let tyreTotalCount: any = await taskLoad[i]();
+          let tyreTotalCount: any = await taskLoad[i](
+            filter.width,
+            filter.height,
+            tyreCatDiameter ?? filter.diameter,
+            tyreCatSeason ?? filter.season,
+            filter.brands,
+            filter.price,
+            tyreCatType ?? filter.vehicle_type,
+            filter.speed_index,
+            filter.load_index,
+            filter.studded,
+            filter.run_flat,
+            filter.homologation,
+            filter.reinforced,
+          );
           goodsTyre?.setTotalCount(tyreTotalCount.count);
           console.log('SET_TYRES_TOTALCOUNT: ', tyreTotalCount.count);
         }
@@ -268,20 +286,17 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
     filter.height, 
     filter.diameter, 
     filter.season, 
-    filter.vehicle_type,
+    filter.vehicle_type, 
     filter.brands, 
     filter.price, 
     filter.speed_index, 
     filter.load_index, 
     filter.studded, 
     filter.run_flat, 
-    filter.homologation,  
-    filter.reinforced,
-    filter.cheap,
-    filter.expensive,
-    filter.rating,
-    filter.oldPrice,
-    filter.titleName
+    filter.homologation, 
+    filter.reinforced, 
+    filter.sort, 
+    filter
   ]);
 
   const handleFilterTyreChange = (e: any) => {
@@ -298,10 +313,6 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
   console.log('FILTER_WIDTH: ', filter.width);
   console.log('FILTER_HEIGHT: ', filter.height);
   console.log('FILTER_DIAMETER: ', filter.diameter,);
-  console.log('FILTER_SORT_CHEAP: ', filter.cheap);
-  console.log('FILTER_SORT_EXPENSIVE: ', filter.expensive);
-  console.log('FILTER_SORT_OLDPRICE: ', filter.oldPrice);
-  console.log('FILTER_SORT_TITLENAME: ', filter.titleName);
   console.log('GET_TYRES:', goodsTyre._tyres);
   console.log('TYRES_FILTER: ', goodsTyre._tyres_filter);
   console.log('TYRES_FILTER_WIDTH: ', goodsTyre._width);

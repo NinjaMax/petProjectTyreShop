@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import '../../css/FilterMain/FilterMainBtn.css';
 import ContentFilterInfo from './ContentFilterInfo';
 import ChipOptions from './ChipOptions';
 import { IFilterMainBtn } from './interfaces/FilterMainBtn.interface';
+import { observer } from 'mobx-react-lite';
+import { Context } from '../../context/Context';
 
-const FilterMainBtn = ({
+const FilterMainBtn = observer(({
   children, 
   titleFilter,
   width,
@@ -15,11 +17,55 @@ const FilterMainBtn = ({
   chipItem,
 }: IFilterMainBtn
 ) => {
-  
+  const {filter, goodsTyre} = useContext<any | null>(Context);
   const filterClick = () => {
     filterAction!(false)
   }
- 
+  const inputSearch = (e: any) => {
+    console.log(e.target.value.length);
+    console.log(e.target.name);
+    if (e.target.name === 'Ширина') {
+      if (e.target.value.length !==0) {
+        const newGoodsTyreWidth = goodsTyre._width.filter(
+          (itemSearch: any) => (
+          itemSearch.toLowerCase().includes(e.target.value)));
+        goodsTyre.setWidth(newGoodsTyreWidth);
+      } else {
+        goodsTyre.setWidth(filter.widthSearch);
+      }
+    }
+    if (e.target.name === 'Профіль') {
+      if (e.target.value.length !==0) {
+        const newGoodsTyreHeight = goodsTyre._height.filter(
+          (itemSearch: any) => (
+          itemSearch.toLowerCase().includes(e.target.value)));
+        goodsTyre.setHeight(newGoodsTyreHeight);
+      } else {
+        goodsTyre.setHeight(filter.heightSearch);
+      }
+    }
+    if (e.target.name === 'Діаметр') {
+      if (e.target.value.length !==0) {
+        const newGoodsTyreDiameter = goodsTyre._diameter.filter(
+          (itemSearch: any) => (
+          itemSearch.toLowerCase().includes(e.target.value)));
+        goodsTyre.setDiameter(newGoodsTyreDiameter);
+      } else {
+        goodsTyre.setDiameter(filter.diameterSearch);
+      }
+    }
+    if (e.target.name === 'Бренд') {
+      if (e.target.value.length !==0) {
+        const newGoodsTyreBrand = goodsTyre._brands.filter(
+          (itemSearch: any) => (
+          itemSearch.toLowerCase().includes(e.target.value)));
+        goodsTyre.setBrands(newGoodsTyreBrand);
+      } else {
+        goodsTyre.setBrands(filter.brandSearch);
+      }
+    }
+  }
+
   return (
     <div className='dropdownFilterMainBtnBack'>
         <div className="dropdownFilterMainBtn">
@@ -37,7 +83,11 @@ const FilterMainBtn = ({
             {filterState ?  
               <div id="myDropdown3" className="dropdownContentFilterMainBtn" 
                 onClick={e=>e.stopPropagation()}>
-                <input type="text" placeholder=" Пошук.." id="myInput" />
+                <input 
+                  id="myInput"
+                  name={titleFilter}
+                  onChange={inputSearch}
+                  type="text" placeholder=" Пошук.."  />
                 <div className='contentOptionsFilterMainBtn'>
                   {children}
                 </div>
@@ -52,6 +102,6 @@ const FilterMainBtn = ({
         </div>       
     </div>
   );
-};
+});
 
 export default FilterMainBtn;
