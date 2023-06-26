@@ -27,6 +27,10 @@ export default class FilterStore {
     _reinforced:string;
     _chipReinforced:string[];
     _sort: string;
+    _tyres:[];
+    _wheels:[];
+    _oils:[];
+    _batteries:[];
     _widthSearch: string[]| null;
     _heightSearch: string[]| null;
     _diameterSearch: string[]| null;
@@ -62,6 +66,10 @@ export default class FilterStore {
         this._heightSearch = [];
         this._diameterSearch = [];
         this._brandSearch = [];
+        this._tyres = [];
+        this._wheels = [];
+        this._oils = [];
+        this._batteries = [];
         makeAutoObservable(this);
     }
 
@@ -155,6 +163,18 @@ export default class FilterStore {
     setBrandSearch(brandSearch: []) {
         this._brandSearch = brandSearch;
     }
+    setTyres(tyres: []) {
+        this._tyres = tyres;
+    }
+    setWheels(wheels: []) {
+        this._wheels = wheels;
+    }
+    setOils(oils: []) {
+        this._oils = oils;
+    }
+    setBatteries(batteries: []) {
+        this._batteries = batteries;
+    }
     get width() {
         return this._width;
     }
@@ -244,6 +264,18 @@ export default class FilterStore {
     }
     get brandSearch() {
         return this._brandSearch;
+    }
+    get tyres() {
+        return this._tyres;
+    }
+    get wheels() {
+        return this._wheels;
+    }
+    get oils() {
+        return this._oils;
+    }
+    get batteries() {
+        return this._batteries;
     }
     
 

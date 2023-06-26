@@ -126,6 +126,7 @@ const NavBar = observer(() => {
 
   const clickSearchBtn = () => {
     setSearchBtn(!searchBtn);
+    console.log('CLOSE NAVBAR SEARCH');
   }
 
   const signActiveUp = () => {
