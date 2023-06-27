@@ -1,7 +1,7 @@
 .tyresCardList {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    /*width: 500px;*/
-    /*height: 140px;*/
+    width: 780px;
+    /* height: 140px; */
     margin: auto;
     /*text-align:left;*/
     display: grid;
@@ -19,9 +19,10 @@
 .tyresCardListBox {
     display: flex;
     flex-direction: row;
-    justify-content:space-evenly;
+    justify-content:space-between;
     align-items:center;
     flex-wrap: wrap;
+    /* margin: 0px 20px 0px 20px; */
     gap: 5px;
     grid-column: 2;
 }
@@ -80,6 +81,8 @@
 }
 
 .propsCardList {
+    display: inline;
+    width: 100px;
     text-align: center;
 }
 .ratingTyresList {
@@ -104,4 +107,7 @@
 #nameCardList {
     text-decoration: none;
     font-family: var(--main-font-family);
+}
+.priceAndBtnCard {
+    text-align: center;
 }

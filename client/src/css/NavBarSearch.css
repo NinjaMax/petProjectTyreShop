@@ -23,7 +23,7 @@
     position: relative;
     top: 4%;
     left:10%;
-    width: 100%;
+    width: 80%;
     text-align: center;
     margin-top: 30px;
     margin: auto;
@@ -58,16 +58,17 @@
     width: 80%;
     background-color: white;
     border-radius: 15px;
+    border-style:none;
   }
   
   .overlayActive input:hover {
     background-color: #ffff;
-
+    border: none;
   }
 
   .overlayActive input:focus {
     border: none;
-    /* border: 3px solid #ccc; */
+    border: 3px solid #ccc;
   }
 
   /* Style the submit button */
@@ -92,28 +93,41 @@
     position: absolute;
     background-color:#ffff;
     top: 12%;
-    right: 10%;
-    width: 80%;
-    height: 72%;
+    right: 16%;
+    width: 64%;
+    /* height: 72%; */
     /*border-radius: 0px 0px 10px 10px;*/
     border-radius: 15px;
     padding: 15px;
     display: block;
-    /* flex-direction: row;
-    justify-content:space-between;
-    gap: 25px; */
-    /* overflow:visible; */
+    overflow: hidden;
+
   }
 
+  .outputDataItemsTitle {
+    float: left;
+    /* display: inline-block; */
+    margin-right: 10px;
+    vertical-align: text-top;
+  }
   .outputDataItems {
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     justify-content: space-around;
     gap: 15px;
-    align-items: center;
+    align-items: center; */
     /* padding: 10px 10px 10px 10px; */
-    
+  }
+  .outputDataItemsLines {
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    gap: 5px; 
+    overflow:visible;
     /* border-bottom: 2px solid #ccc; */
+    /* display: block; */
+
+    /* width: 150px; */
   }
   .outputDataItems .titleSearch {
     padding: 10px 10px 10px 10px;
@@ -143,22 +157,25 @@
     cursor: pointer;
   }
   .outputDataItems .countSearch {
-    border-radius: 40%;
+    border-radius: 35px;
     color: #ffff;
     margin: 10px;
-    padding: 2px 2px 2px 2px;
+    padding: 0px 4px 0px 4px;
     background-color: crimson;
   }
   .outputDataItemsBox {
     height: 410px;
     overflow-y: scroll;
-  }
-  .outputDataItemsList {
     display: flex;
     flex-direction: row;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 5px;
+    background-color: #ffff;
   }
+  /* .outputDataItemsList {
+
+  } */
   .overlayLinkAll {
     float: right;
     margin-top: 15px;

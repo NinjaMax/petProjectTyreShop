@@ -1,6 +1,6 @@
 import { ADMIN_ROUTE, ADMIN_AUTH_ROUTE, BASKET_ROUTE, CATALOG_TYRES_ROUTE, 
   LOGIN_ROUTE, REGISTRATION_ROUTE, GOODS_ROUTE, 
-  MAIN_ROUTE, CONTACT_ROUTE} from './utils/consts';
+  MAIN_ROUTE, CONTACT_ROUTE, SEARCH_ROUTE} from './utils/consts';
 import Admin from './pages/Admin';
 import AdminAuth from './components/auth/AdminAuth';
 import Auth from './pages/Auth';
@@ -9,6 +9,7 @@ import CatalogTyresPage from './pages/CatalogTyresPage';
 import Contact from './pages/Contact';
 import GoodsPage from './pages/Goods';
 import Main from './pages/Main';
+import Search from './pages/Search';
 
 export const adminRoutes = [
   {
@@ -35,6 +36,11 @@ export const publicRoutes = [
     path: CATALOG_TYRES_ROUTE + '/:category',
     exact: true,
     Component: CatalogTyresPage
+  },
+  {
+    path: SEARCH_ROUTE + '/:',
+    exact: true,
+    Component: Search
   },
   {
     path: GOODS_ROUTE,

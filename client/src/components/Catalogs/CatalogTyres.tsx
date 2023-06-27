@@ -28,18 +28,28 @@ const CatalogTyres = observer(() => {
 
     const sortTyresGoods = (e: any) => {
         if (e.target.value === 'vidDeshevih') {
+            page.setOffset(0);
+            page.setLoadMore(0);
             filter.setSort('ASC');
         }
         if (e.target.value === 'vidDorogih') {
+            page.setOffset(0);
+            page.setLoadMore(0);
             filter.setSort('DESC');
         }
         if (e.target.value === 'poRatingu') {
+            page.setOffset(0);
+            page.setLoadMore(0);
             filter.setSort('rating');
         }
         if (e.target.value === 'poNazvi') {
+            page.setOffset(0);
+            page.setLoadMore(0);
             filter.setSort('title');
         }
         if (e.target.value === 'poAkcii') {
+            page.setOffset(0);
+            page.setLoadMore(0);
             filter.setSort('oldPrice');
         }
     };

@@ -68,10 +68,11 @@ const TyresCardList = ({goods, forOrder}: ITyreCard) => {
                     </div> 
                 }
                     </div>
-                    {!forOrder?
+                    {/* {!forOrder?
                      <ButtonAction props={"КУПИТИ"} widthBtn={160} eventItem={undefined}/>   
-                    : <CountBtnOrder countGoods={4}/>}         
-                </div>      
+                    : <CountBtnOrder countGoods={4}/>
+                    }          */}
+                    </div>      
             </div>
         </div>
        

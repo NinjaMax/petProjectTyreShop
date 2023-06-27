@@ -90,6 +90,13 @@ const getTyresWithoutOffset = async (
     return data;
 }
 
+const getTyresAll = async () => {
+    const {data} = await $hostGet.get('tyres')
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
 const getTyresById = async (id:string) => {
     const {data} = await $hostGet.get('tyres/id',
      {params: {id: id}})
@@ -243,6 +250,7 @@ export {
     //getTyresParams,
     //getTyresDiameter,
     getTyresById,
+    getTyresAll,
     //getTyresByFullName,
     getTyresByIdParam,
     getTyresCountAll,
