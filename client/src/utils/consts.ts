@@ -8,7 +8,8 @@ export const CATALOG_WHEELS_ROUTE = '/wheels';
 export const CATALOG_OILS_ROUTE = '/oils';
 export const CATALOG_BATTERY_ROUTE = '/battery';
 export const BASKET_ROUTE = '/basket';
-export const GOODS_ROUTE = '/:goodsItem';
+export const GOODS_ROUTE = ':goodsItem';
 export const MAIN_ROUTE = '/';
 export const CONTACT_ROUTE = '/contact';
+export const NOT_FOUND_ROUTE = '/404';
 

@@ -1,0 +1,28 @@
+.searchContainer {
+    font-family: var(--main-font-family);
+}
+.btnCatalogSearch {
+    border: none;
+    outline: none;
+    padding: 12px 16px;
+    background-color: white;
+    cursor: pointer;
+}
+.btnCatalogSearch:hover {
+    background-color: #ddd;
+}
+.btnCatalogSearch:active {
+    background-color: #666;
+    color: white;
+}
+.btnSearchTabContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items:baseline;
+    gap: 3px;
+}
+.rowCatalogSearch {
+    display: flex;
+    flex-direction:row;
+    flex-wrap: wrap;
+}

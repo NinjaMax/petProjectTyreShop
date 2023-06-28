@@ -1,6 +1,6 @@
 import { ADMIN_ROUTE, ADMIN_AUTH_ROUTE, BASKET_ROUTE, CATALOG_TYRES_ROUTE, 
   LOGIN_ROUTE, REGISTRATION_ROUTE, GOODS_ROUTE, 
-  MAIN_ROUTE, CONTACT_ROUTE, SEARCH_ROUTE} from './utils/consts';
+  MAIN_ROUTE, CONTACT_ROUTE, SEARCH_ROUTE, NOT_FOUND_ROUTE} from './utils/consts';
 import Admin from './pages/Admin';
 import AdminAuth from './components/auth/AdminAuth';
 import Auth from './pages/Auth';
@@ -10,6 +10,7 @@ import Contact from './pages/Contact';
 import GoodsPage from './pages/Goods';
 import Main from './pages/Main';
 import Search from './pages/Search';
+import NotFound from './pages/NotFound';
 
 export const adminRoutes = [
   {
@@ -28,25 +29,25 @@ export const publicRoutes = [
     Component: Basket
   },
   {
-    path: CATALOG_TYRES_ROUTE,
-    exact: true,
-    Component: CatalogTyresPage
-  },
-  {
     path: CATALOG_TYRES_ROUTE + '/:category',
     exact: true,
     Component: CatalogTyresPage
   },
   {
-    path: SEARCH_ROUTE + '/:',
+    path: CATALOG_TYRES_ROUTE,
+    exact: true,
+    Component: CatalogTyresPage
+  },
+  {
+    path: SEARCH_ROUTE,
     exact: true,
     Component: Search
   },
-  {
-    path: GOODS_ROUTE,
-    exact: false,
-    Component: GoodsPage
-  },
+  // {
+  //   path: GOODS_ROUTE,
+  //   exact: false,
+  //   Component: GoodsPage
+  // },
   {
     path: LOGIN_ROUTE,
     exact: true,
@@ -57,11 +58,7 @@ export const publicRoutes = [
     exact: true,
     Component: Auth
   },
-  {
-    path: MAIN_ROUTE,
-    exact: true,
-    Component: Main
-  }, 
+
   {
     path: CONTACT_ROUTE,
     exact: true,
@@ -71,5 +68,21 @@ export const publicRoutes = [
     path: ADMIN_AUTH_ROUTE,
     exact: true,
     Component: AdminAuth
-  }
+  },
+  {
+    path: NOT_FOUND_ROUTE,
+    exact: true,
+    Component: NotFound,
+  }, 
+  {
+    path: '/' + GOODS_ROUTE,
+    exact: true,
+    Component: GoodsPage
+  },
+
+  {
+    path: MAIN_ROUTE,
+    exact: true,
+    Component: Main,
+  }, 
 ];

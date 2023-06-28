@@ -30,7 +30,7 @@ h1 {
 /* Add a dark background color to the active button */
 .btnCatalog.active {
   background-color: #666;
-   color: white;
+  color: white;
 }
 
 .btnContainerCatalogTyres {

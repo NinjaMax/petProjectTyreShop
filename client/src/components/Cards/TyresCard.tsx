@@ -12,6 +12,7 @@ import { GOODS_ROUTE, MAIN_ROUTE } from '../../utils/consts';
 import { Link, NavLink, useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
 import { Context } from '../../context/Context';
 import { observer } from 'mobx-react-lite';
+import { createStringUrl } from '../../services/stringUrl';
 
 const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
     const {page} = useContext<any>(Context);
@@ -20,29 +21,13 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
     const location = useLocation();
     let match = useRouteMatch('/:goodsItem');
     
-   
     const addGoodsId = () => {
-        //page.setId(goods?.id);
+        const toStringUrl = createStringUrl(goods?.full_name);
         localStorage.setItem('goodsId', JSON.stringify(goods?.id));
-        history.push(MAIN_ROUTE + `${goods?.full_name.toLowerCase().replace(/ /g, "-")}`);
+        history.push(
+            MAIN_ROUTE + `${toStringUrl}`
+        );
     }
-    
-    const cyrillicToTranslit = new (CyrillicToTranslit as any)();
-    const goodItem = 'Michelin X Force ZL (ZL) MPT (ведущая) 335/80 R20 150K (шип)';
-    const createArray = goodItem.split('');
-    const indexBraketLeft = goodItem.split('').findIndex(item => item ==='(');
-    createArray.splice(indexBraketLeft, 1);
-    const indexBraketRight = createArray.findIndex(item => item ===')');
-    //console.log(indexBraketRight);
-    createArray.splice(indexBraketRight, 1);
-    const exampleParam = createArray.join('');
-    const exampleCyr = 
-    cyrillicToTranslit.transform(
-        exampleParam , '-'
-        ).toLowerCase().replace(/[/()]/g, "-");
-    console.log(exampleCyr);
-    // console.log(exampleParam);
-    // console.log(location);
 
     return (
         <div className="tyresCard">
@@ -50,12 +35,12 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
                 <img id='imgTyres' src={tyres} alt="imgCards" />
                 <p/>
                 <div className='tyresCardLinkName'>
-                <NavLink id='tyresName'
+                <a id='tyresName'
                     onClick={addGoodsId} 
-                    to={`${goods?.full_name?.toLowerCase().replace(/ /g, "-")}`}
+                    href={createStringUrl(goods?.full_name)}
                 >
                     {goods?.full_name}
-                </NavLink>
+                </a>
                 </div>
                 <div className='ratingTyres'><Rating numScore={4.8}/><a className='reviewCard' href='/#'>0 отзывов</a></div>
                 <div className="tyresCardCode">код товара: {goods?.id}</div>

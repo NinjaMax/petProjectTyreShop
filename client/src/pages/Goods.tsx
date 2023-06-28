@@ -15,11 +15,12 @@ import AllModelBrand from '../components/goods/AllModelBrand';
 import ProductPayDel from '../components/goods/ProductPayDel';
 import YouWatched from '../components/goods/YouWatched';
 import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
-import { GOODS_ROUTE } from '../utils/consts';
+import { GOODS_ROUTE, NOT_FOUND_ROUTE } from '../utils/consts';
 import { getTyresById, getTyresByIdParam } from '../restAPI/restGoodsApi';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../context/Context';
+import { createStringUrl } from '../services/stringUrl';
 
 const GoodsPage = observer(() => {
   //const [product, setProduct] = useState<any>();
@@ -28,17 +29,7 @@ const GoodsPage = observer(() => {
   const [changeTabGoods, setChangeTabGoods] = useState<string>("vseProTovar");
   const history =  useHistory();
   const param = useParams<any>();
-  let match = useRouteMatch('/:goodsItem');
-
-  // useEffect(() => {
-  //   const getTyreId: string = 
-  //     JSON.parse(localStorage.getItem('goodsId')!);
-  //     if (getTyreId) {
-  //       setProductId(getTyreId)
-  //     }
-  // },[]) ;
-  // const getTyreId: string = 
-  //     JSON.parse(localStorage.getItem('goodsId')!);
+  let match = useRouteMatch<any>('/:goodsItem');
   
   useEffect(() => {
     let isMounted = false;
@@ -72,7 +63,24 @@ const GoodsPage = observer(() => {
     };
   },[goodsTyre]);
 
-  console.log('PRODUCT: ', goodsTyre._product);
+  useEffect(() => {
+    if (goodsTyre._product.full_name) {
+      const getTyreUrl: string = 
+      createStringUrl(goodsTyre._product.full_name)
+      console.log('PRODUCT_STRING_URL:', getTyreUrl);
+      if (match?.params.goodsItem !== getTyreUrl) {
+        history.push(NOT_FOUND_ROUTE);
+        console.log("NOT_FOUND_PAGE");
+      }
+    }
+  },[
+    goodsTyre._product.full_name,
+    history, 
+    match?.params.goodsItem]) ;
+
+  console.log('MATCH_URL_PARAMS: ', match?.params.goodsItem);
+  console.log('MATCH_URL: ', match);
+  console.log('PRODUCT: ', goodsTyre._product.full_name);
   console.log('LOCALSORAGE_GOODS_ID: ',JSON.parse(localStorage.getItem('goodsId')!));
 
   const handleChangeTab = (e: any) => {
