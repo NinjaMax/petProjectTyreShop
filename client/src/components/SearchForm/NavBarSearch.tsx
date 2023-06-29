@@ -18,16 +18,16 @@ const NavBarSearch = observer((
     ) => {
     const location = useLocation();
     const history = useHistory();
-    const [inputSearch, setInputSearch] = useState('');
-    const [tyreSearch, setTyreSearch] = useState<[] | null>(null);
-    const [wheelSearch, setWheelSearch] = useState<[] | null>(null);
-    const [oilSearch, setOilSearch] = useState<[] | null>(null);
-    const [batterySearch, setBatterySearch] = useState<[] | null>(null);
-    const [tabSearch, setTabSearch] = useState<string>('');
-    const [tabSearchTyre, setTabSearchTyre] = useState<[] | null>(null);
-    const [tabSearchWheel, setTabSearchWheel] = useState<[] | null>(null);
-    const [tabSearchOil, setTabSearchOil] = useState<[] | null>(null);
-    const [tabSearchBattery, setTabSearchBattery] = useState<[] | null>(null);
+    const [inputSearchMod, setInputSearchMod] = useState('');
+    const [tyreSearchMod, setTyreSearchMod] = useState<[] | null>(null);
+    const [wheelSearchMod, setWheelSearchMod] = useState<[] | null>(null);
+    const [oilSearchMod, setOilSearchMod] = useState<[] | null>(null);
+    const [batterySearchMod, setBatterySearchMod] = useState<[] | null>(null);
+    const [tabSearchMod, setTabSearchMod] = useState<string>('');
+    const [tabSearchModTyre, setTabSearchModTyre] = useState<[]>([]);
+    const [tabSearchModWheel, setTabSearchModWheel] = useState<[]>([]);
+    const [tabSearchModOil, setTabSearchModOil] = useState<[]>([]);
+    const [tabSearchModBattery, setTabSearchModBattery] = useState<[]>([]);
     
     useEffect(() => {
         let isMounted = false;
@@ -40,7 +40,7 @@ const NavBarSearch = observer((
         while(taskLoad.length > i) {
         if(!isMounted && taskLoad[i] === getTyresAll) {
             let tyreFilterGoods: any = await taskLoad[i]();
-            setTyreSearch(tyreFilterGoods);
+            setTyreSearchMod(tyreFilterGoods);
         }
         const task = taskLoad.shift();
         task();
@@ -54,87 +54,91 @@ const NavBarSearch = observer((
     },[]);
     
     useEffect(() => {
-        if(inputSearch.length !== 0) {
-            const newTyresSearch: any = tyreSearch?.filter((itemGoods:any) =>
-            (itemGoods.id.toLowerCase().includes(inputSearch.toLowerCase()) ||    
-            itemGoods.full_name.toLowerCase().includes(inputSearch.toLowerCase()) ||
-            itemGoods.size_digits.size_only_digits.toLowerCase().includes(inputSearch.toLowerCase())
+        if(inputSearchMod.length !== 0) {
+            const newTyresSearch: any = tyreSearchMod?.filter((itemGoods:any) =>
+            (itemGoods.id.toLowerCase().includes(inputSearchMod.toLowerCase()) ||    
+            itemGoods.full_name.toLowerCase().includes(inputSearchMod.toLowerCase()) ||
+            itemGoods.size_digits.size_only_digits.toLowerCase().includes(inputSearchMod.toLowerCase())
             ));
             if (newTyresSearch) {
-                setTabSearchTyre(newTyresSearch);
+                setTabSearchModTyre(newTyresSearch);
             }  
-        } else {
-            setTabSearchTyre(null);
-            setTabSearchWheel(null);
-            setTabSearchOil(null);
-            setTabSearchBattery(null);
-        }
-    },[inputSearch, tyreSearch]);
+        } 
+        // else {
+        //     setTabSearchModTyre(null);
+        //     setTabSearchModWheel(null);
+        //     setTabSearchModOil(null);
+        //     setTabSearchModBattery(null);
+        // }
+    },[inputSearchMod, tyreSearchMod]);
 
-    const searchTabChange = (e: any) => {
+    const searchTabModChange = (e: any) => {
         if (e.target.title === 'Шини') {
-            setTabSearch('Шини');
+            setTabSearchMod('Шини');
         }
         if (e.target.title === 'Диски') {
-            setTabSearch('Диски');
+            setTabSearchMod('Диски');
         }
         if (e.target.title === 'Акб') {
-            setTabSearch('Акб');
+            setTabSearchMod('Акб');
         }
         if (e.target.title === 'Масло') {
-            setTabSearch('Масло');
+            setTabSearchMod('Масло');
         }
     }
 
-    const handleClick = () => {
-        history.push('/search?q=' + inputSearch);
+    const handleModClick = () => {
+        history.push('/search?q=' + inputSearchMod);
         clickSearchBtn();
     }
-    console.log(location.pathname)
+    
     return (
         <div id="myOverlay" className={searchBtn ? "overlayActive" : "overlay"}>
             <span className="closebtn" onClick={clickSearchBtn} title="Закрити пошук">&#10006;</span>
                 <div className="overlayForm">
                     <form action="">
                     <input 
-                        // onChange={searchGoods}
                         onChange={
-                            (e: any) => setInputSearch(e.target.value)}
+                            (e: any) => setInputSearchMod(e.target.value)}
                         type="text" 
                         placeholder="Пошук..." 
                         name="search"/>
                     </form>    
                 </div>
-                { tabSearchTyre || tabSearchWheel || tabSearchOil || tabSearchBattery ?
+                { 
+                    tabSearchModTyre?.length !== 0 || 
+                    tabSearchModWheel?.length !== 0 || 
+                    tabSearchModOil?.length !== 0 || 
+                    tabSearchModBattery?.length !== 0 ?
                 <div className='outputData'>
                     <div className='outputDataItemsTitle'>
                         <div>Результати пошуку:</div>
                     </div>
                     <div className='outputDataItemsLines'>
-                        {tabSearchTyre?.length !== 0 ? 
+                        {tabSearchModTyre?.length !== 0 ? 
                         <div className='outputDataItems'>
                         <span 
                             title='Шини'
-                            className={tabSearch === 'Шини' ? 
+                            className={tabSearchMod === 'Шини' ? 
                             'activatedTitle':
                             'titleSearch' }
-                            onClick={searchTabChange}
+                            onClick={searchTabModChange}
                         >Шини 
                             <span className='countSearch'>
-                                {tabSearchTyre?.length} 
+                                {tabSearchModTyre?.length}
                             </span>
                         </span>
                         </div>
                         : null
                         }
-                        {tabSearchWheel ?
+                        {tabSearchModWheel?.length !== 0 ?
                         <div className='outputDataItems'>
                         <span 
                             title='Диски'
-                            className={tabSearch === 'Диски' ? 
+                            className={tabSearchMod === 'Диски' ? 
                             'activatedTitle' :
                              'titleSearch' }
-                            onClick={searchTabChange}
+                            onClick={searchTabModChange}
                         >Диски 
                             <span className='countSearch'>
                             {10020}
@@ -143,14 +147,14 @@ const NavBarSearch = observer((
                         </div>
                         : null
                         }
-                        {tabSearchBattery ?
+                        {tabSearchModBattery?.length !== 0 ?
                         <div className='outputDataItems'>
                         <span 
                             title='Акб'
-                            className={tabSearch === 'Акб' ?  
+                            className={tabSearchMod === 'Акб' ?  
                             'activatedTitle' : 
                             'titleSearch' }
-                            onClick={searchTabChange}
+                            onClick={searchTabModChange}
                         >Акб 
                             <span className='countSearch'>
                                 {20}
@@ -159,14 +163,14 @@ const NavBarSearch = observer((
                         </div>
                         : null
                         }
-                        {tabSearchOil ?
+                        {tabSearchModOil?.length !== 0 ?
                         <div className='outputDataItems'>
                         <span 
                             title='Масло'
-                            className={tabSearch === 'Масло' ? 
+                            className={tabSearchMod === 'Масло' ? 
                             'activatedTitle':
                             'titleSearch' }
-                            onClick={searchTabChange}
+                            onClick={searchTabModChange}
                         >Масло 
                             <span className='countSearch'>
                                 {20}
@@ -178,8 +182,8 @@ const NavBarSearch = observer((
                     </div>
                     <p/>
                     <div className='outputDataItemsBox'>
-                        {tabSearchTyre && tabSearch === 'Шини' ? 
-                        tabSearchTyre.splice(0, 9).map((goods: any) => (                    
+                        {tabSearchModTyre && tabSearchMod === 'Шини' ? 
+                        tabSearchModTyre.splice(0, 9).map((goods: any) => (                    
                         <div className='outputDataItemsList' key={goods.id}>
                             <TyresCardList
                                 key={goods.id}
@@ -190,8 +194,8 @@ const NavBarSearch = observer((
                         ))
                         : null
                         }
-                        {tabSearchWheel && tabSearch === 'Диски' ? 
-                        tabSearchWheel.map((goods: any) => (                    
+                        {tabSearchModWheel && tabSearchMod === 'Диски' ? 
+                        tabSearchModWheel.map((goods: any) => (                    
                         <div className='outputDataItemsList'>
                             <TyresCardList
                                 key={goods.id}
@@ -202,8 +206,8 @@ const NavBarSearch = observer((
                         ))
                         : null
                         }
-                        {tabSearchBattery && tabSearch === 'Акб' ? 
-                        tabSearchBattery.map((goods: any) => (                    
+                        {tabSearchModBattery && tabSearchMod === 'Акб' ? 
+                        tabSearchModBattery.map((goods: any) => (                    
                         <div className='outputDataItemsList'>
                             <TyresCardList
                                 key={goods.id}
@@ -214,8 +218,8 @@ const NavBarSearch = observer((
                         ))
                         : null
                         }
-                        {tabSearchOil && tabSearch === 'Масло' ? 
-                        tabSearchOil.map((goods: any) => (                    
+                        {tabSearchModOil && tabSearchMod === 'Масло' ? 
+                        tabSearchModOil.map((goods: any) => (                    
                         <div className='outputDataItemsList'>
                             <TyresCardList
                                 key={goods.id}
@@ -229,18 +233,11 @@ const NavBarSearch = observer((
                     </div>
                     <NavLink 
                         className='overlayLinkAll' 
-                        to={`/search?q=${inputSearch}`} 
-                        onClick={handleClick}
+                        to={`/search?q=${inputSearchMod}`} 
+                        onClick={handleModClick}
                         > 
                         Показати всі результати
                     </NavLink> 
-                    {/* <Link
-                        className='overlayLinkAll' 
-                        to={location.pathname + `/search?q=${inputSearch}`}
-                        onClick={handleClick}
-                    >
-                    Показати всі результати
-                    </Link>  */}
                 </div>
             : null
             }

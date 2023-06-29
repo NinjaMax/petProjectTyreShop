@@ -59,7 +59,7 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
                 {goods?.price ? goods?.price.map((item: any) => (
                     <Fragment key={item.id}>
                     {item.price ?
-                    <div className="tyresCardPrice" >
+                    <div className="tyresCardPrice">
                         {item.price} &#8372;
                     </div> :
                     <div className="tyresCardPrice">
@@ -67,7 +67,7 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
                     </div>  
                     }
                     {item.old_price ?
-                    <div className="tyresCardOldPrice" >
+                    <div className="tyresCardOldPrice">
                         {item.old_price} &#8372;
                     </div> 
                     : null

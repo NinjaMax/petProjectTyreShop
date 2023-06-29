@@ -70,7 +70,6 @@ const GoodsPage = observer(() => {
       console.log('PRODUCT_STRING_URL:', getTyreUrl);
       if (match?.params.goodsItem !== getTyreUrl) {
         history.push(NOT_FOUND_ROUTE);
-        console.log("NOT_FOUND_PAGE");
       }
     }
   },[
