@@ -4,7 +4,7 @@
     justify-content: flex-start;
     /*max-width: 650px;*/
     height: 650px;
-    border:3px solid blue;
+    /* border:3px solid blue; */
     gap: 3px;
     padding: 3px;
     font-family: var(--main-font-family);
@@ -12,7 +12,7 @@
 .allProductImgBox {
     width: 450px;
     height: 450px;
-    border:3px solid greenyellow;
+    /* border:3px solid greenyellow; */
 }
 
 #productImgGoods {
@@ -26,7 +26,7 @@
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    border:3px solid red;
+    /* border:3px solid red; */
     padding: 25px;
     width: 575px;
     /*height: 50px;*/
@@ -43,7 +43,7 @@
 .productRightgBox {
     width: 380px;
     overflow: hidden;
-    border:3px solid goldenrod;
+    /* border:3px solid goldenrod; */
     padding: 10px;
 }
 

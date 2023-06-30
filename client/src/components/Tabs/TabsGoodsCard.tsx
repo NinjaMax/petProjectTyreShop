@@ -4,44 +4,50 @@ import '../../css/TabsCss/TabsGoodsCard.css';
 interface ITabGoodsCard {
     children: React.ReactNode;
     itemTab: [
-        ITabGoodsItem,
-        ITabGoodsItem, 
-        ITabGoodsItem, 
-        ITabGoodsItem 
-        // {
-        // id:number; 
-        // titleGoodsTab?: string; 
-        // value?: string;
-        // onChangeTab?: (arg: any) => void; 
-        // checked?: string;},
-    ] 
+        ITabItem, ...ITabItem[]
+    ];
+    onChangeTab?:(arg: any) => void;
 }
 
-type ITabGoodsItem = {
-    id:number,
-    titleGoodsTab?: string, 
+type ITabItem = {
+    id:string, 
+    titleGoodsTab?: string,
     value?: string,
-    onChangeTab?: (arg: any) => void,
     checked?: string,
+    reviewCount?: number   
 }
 
-const TabsGoodsCard = ({children, itemTab}: ITabGoodsCard) => {
+const TabsGoodsCard = ({
+    children, 
+    itemTab, 
+    onChangeTab
+}: ITabGoodsCard) => {
    
     return (
-
         <div>
-            <div className="tabsGoodsCard">
-                {  itemTab.map((item: ITabGoodsItem)=>  
-                <label key={item.value} htmlFor={item.value}>
-                    <input className="tabsGoodsCardLinks"
-                    value={item.value} 
-                    onChange={item.onChangeTab} 
-                    id={item?.id.toString()}
+            <div className="tabsGoodsCard"> 
+            {itemTab ? itemTab.map((item: ITabItem) =>
+                <label className={
+                    item.checked === item.value ? 
+                    ' tabsGoodsCardActive' : 'labelItem' 
+                }>
+                    <input 
+                    className="tabsGoodsCardLinks"
+                    id={item.id}
                     type="radio"
+                    value={item.value}
                     name="radioTab"
+                    onChange={onChangeTab}
                     />{item.titleGoodsTab}
+                    {item.reviewCount !== 0 ?
+                    <span className='tabCountReview'>
+                        {item.reviewCount}
+                    </span> 
+                    : null
+                    }
                 </label>
-                )}
+                ) : null
+            }
             </div>
             <div className="tabsContentGoodsLabel"> 
                 {children}

@@ -19,46 +19,45 @@
 }
 
 .goodsBreadCrumbs {
-  border: solid peru 3px;
   grid-area: 1 / 1 / 1 / 5;
   /*grid-area: goodsBreadCrumbs;*/
  
 }
 .tabGoods {
-  border: solid peru 3px;
+  /* border: solid peru 3px; */
   /*grid-area: tabGoods;*/
   grid-area: 2 / 1 / 4 / 5;
+  
 }
-
 .tabGoodsActive {
-  border: solid peru 3px;
+  /* border: solid peru 3px; */
   /*grid-area: tabGoods;*/
   grid-area: 2 / 1 / 4 / 4;
 }
 
 .productPayDelGoods {
-  border: solid peru 3px;
+  /* border: solid peru 3px; */
   /*grid-area: goodsBenefits;*/
   grid-area: 4 / 1 / 4 / 5;
   text-align: center;
 }
 
 .productPayDelGoodsNext {
-   border: solid peru 3px;
+  /* border: solid peru 3px; */
   /*grid-area: goodsBenefits;*/
   grid-area: 4 / 1 / 4 / 4;
   text-align: center;
 }
 
 .goodsBenefits {
-  border: solid peru 3px;
+  /* border: solid peru 3px; */
   /*grid-area: goodsBenefits;*/
   grid-area: 5 / 1 / 5 / 5;
   text-align: center;
 
 }
 .goodsBenefitsNext {
-  border: solid peru 3px;
+  /* border: solid peru 3px; */
   /*grid-area: goodsBenefits;*/
   grid-area: 5 / 1 / 5 / 4;
   text-align: center;
@@ -66,13 +65,13 @@
 }
 
 .similarGoods {
-  border: solid peru 3px;
+  /* border: solid peru 3px; */
   /*grid-area: similarGoods;*/
   grid-area: 6 / 1 / 6 / 4;
 }
 
 .allSizeModel {
-  border: solid peru 3px;
+  /* border: solid peru 3px; */
   /*grid-area: allSizeModel;*/
   grid-area: 7 / 1 / 7 / 4;
 }
@@ -85,7 +84,7 @@
 }
 
 .allModelBrand {
-  border: solid peru 3px;
+  /* border: solid peru 3px; */
   /*grid-area: allModelBrand;*/
   grid-area: 8 / 1 / 8 / 4;
 }
@@ -98,22 +97,29 @@
 }
 
 .youWatched {
-  border: solid peru 3px;
+  /* border: solid peru 3px; */
   /*grid-area: youWatched;*/
   grid-area: 9 / 1 / 9 / 4;
 }
 
 .smallCardNext {
-  border: solid peru 3px;
+  /* border: solid peru 3px; */
   /*grid-area: smallCard;*/
   grid-area: 2 / 4 / 10 / 5;
   /*position: sticky;
   top:20px;*/
   
 }
-
+.preReview {
+  display:flex;
+  flex-direction: row;
+  justify-content:center;
+  align-items: center;
+  gap: 20px;
+  font-family: var(--main-font-family);
+}
 .smallCardOne {
-  border: solid peru 3px;
+  /* border: solid peru 3px; */
   /*grid-area: smallCard;*/
   grid-area: 6 / 4 / 10 / 5;
   /*position: sticky;

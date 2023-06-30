@@ -1,4 +1,4 @@
-import React, { SetStateAction, useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState} from 'react';
 import '../css/Goods.css';
 import BreadCrumbs from '../components/BreadCrumbs';
 import TabsGoodsCard from '../components/tabs/TabsGoodsCard';
@@ -21,11 +21,15 @@ import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../context/Context';
 import { createStringUrl } from '../services/stringUrl';
+import ButtonAction from '../components/buttons/ButtonAction';
+import Modal from '../components/modal/Modal';
+import ReviewTyreCreate from '../components/reviews/ReviewTyreCreate';
 
 const GoodsPage = observer(() => {
   //const [product, setProduct] = useState<any>();
   const {goodsTyre} = useContext<any | null>(Context);
   const [productId, setProductId] = useState<string | null>();
+  const [createReview, setCreateReview] = useState<boolean>(false);
   const [changeTabGoods, setChangeTabGoods] = useState<string>("vseProTovar");
   const history =  useHistory();
   const param = useParams<any>();
@@ -67,7 +71,7 @@ const GoodsPage = observer(() => {
     if (goodsTyre._product.full_name) {
       const getTyreUrl: string = 
       createStringUrl(goodsTyre._product.full_name)
-      console.log('PRODUCT_STRING_URL:', getTyreUrl);
+      //console.log('PRODUCT_STRING_URL:', getTyreUrl);
       if (match?.params.goodsItem !== getTyreUrl) {
         history.push(NOT_FOUND_ROUTE);
       }
@@ -77,57 +81,96 @@ const GoodsPage = observer(() => {
     history, 
     match?.params.goodsItem]) ;
 
-  console.log('MATCH_URL_PARAMS: ', match?.params.goodsItem);
-  console.log('MATCH_URL: ', match);
-  console.log('PRODUCT: ', goodsTyre._product.full_name);
-  console.log('LOCALSORAGE_GOODS_ID: ',JSON.parse(localStorage.getItem('goodsId')!));
+  // console.log('MATCH_URL_PARAMS: ', match?.params.goodsItem);
+  // console.log('MATCH_URL: ', match);
+  // console.log('PRODUCT: ', goodsTyre._product);
+  // console.log('LOCALSORAGE_GOODS_ID: ',JSON.parse(localStorage.getItem('goodsId')!));
 
   const handleChangeTab = (e: any) => {
-    setChangeTabGoods(e.currentTarget.value);
+    setChangeTabGoods(e.target.value);
   }
-  //console.log('PARAMS_GOODS: ', param.goods); replace(/ /g, "-")
-    return (
-    
+  const openToCreateReview = () => {
+    setCreateReview(!createReview);
+  };
+  
+  return (
     <div className='goodsCard'>
       <div className='goodsBreadCrumbs'>
         <BreadCrumbs route={['/','/tyres']} hrefTitle={['Home','Tyres']}/>
       </div>
-      <div className={changeTabGoods==="vseProTovar" ? 'tabGoods':'tabGoodsActive'}>
+      <div className={changeTabGoods === "vseProTovar" ? 
+        'tabGoods' : 'tabGoodsActive'}
+      >
         <TabsGoodsCard
-            itemTab={[{id:1, titleGoodsTab:"ВСЕ ПРО ТОВАР", value:"vseProTovar", 
-            onChangeTab: handleChangeTab, checked: "vseProTovar"},
-            {id:2, titleGoodsTab:"ХАРАКТЕРИСТИКИ", value:"charakteristiki", 
-            onChangeTab: handleChangeTab, checked: changeTabGoods},
-            {id:3, titleGoodsTab:"ВІДГУКИ", value:"vidguki", 
-            onChangeTab: handleChangeTab, checked: changeTabGoods},
-            {id:4, titleGoodsTab:"ПИТАННЯ ТА ВІДПОВІДІ", value:"pitannja", 
-            onChangeTab: handleChangeTab, checked: changeTabGoods}]}>
-            {changeTabGoods==="vseProTovar" ?
+            onChangeTab={handleChangeTab}
+            itemTab={[{id:'1',
+            titleGoodsTab: "ВСЕ ПРО ТОВАР",
+            value:"vseProTovar", 
+            checked: changeTabGoods,
+            reviewCount:0,
+            },{id:'2',
+            titleGoodsTab:"ХАРАКТЕРИСТИКИ",
+            value:"charakteristiki", 
+            checked: changeTabGoods,
+            reviewCount:0,
+            }, {id:'3',
+            titleGoodsTab:"ВІДГУКИ", 
+            value:"vidguki",
+            checked: changeTabGoods,
+            reviewCount: goodsTyre._product.reviews.length,
+            }, {id:'4',
+            titleGoodsTab:"ПИТАННЯ ТА ВІДПОВІДІ",
+            value:"pitannja",
+            checked: changeTabGoods,
+            reviewCount:0,
+            }
+          ]}
+            >
+            {changeTabGoods === "vseProTovar" ?
                 <AllAboutProduct goods={goodsTyre._product}/>
             :null}
-            {changeTabGoods==="charakteristiki"?
-                <PropertiesGoods/> 
+            {changeTabGoods === "charakteristiki"?
+                <PropertiesGoods product={goodsTyre._product}/> 
             :null}
-            {changeTabGoods==="vidguki"?
-                <div className='tabReviewsActive'>
-                  <ReviewGoodsOverall/> 
-                  <ReviewBrandOverall/>
-                  <ReviewsGoods reviewExtend={false} btnLeft={undefined} btnRight={undefined}/>
-                  <ReviewsGoods reviewExtend={false} btnLeft={undefined} btnRight={undefined}/>
-                  <ReviewsGoods reviewExtend={false} btnLeft={undefined} btnRight={undefined}/>
-                  <ReviewsGoods reviewExtend={false} btnLeft={undefined} btnRight={undefined}/>
-                  <ReviewsGoods reviewExtend={false} btnLeft={undefined} btnRight={undefined}/>
-                </div>  
-            :null}
-            {changeTabGoods==="pitannja"?
-                <span>ПИТАННЯ ТА ВІДПОВІДІ </span>
+          {changeTabGoods === "vidguki"?
+            <div className='tabReviewsActive'>
+              <div className='preReview'>
+                <span>
+                  Відгуки про шини {
+                  goodsTyre._product.tyre_brand.brand + '' 
+                  + goodsTyre._product.tyre_model.model}
+                </span> 
+                <ButtonAction 
+                  props={'Написати відгук'}
+                  eventItem={openToCreateReview}
+                />
+              </div>
+              <ReviewGoodsOverall/> 
+              <ReviewBrandOverall/>
+              <ReviewsGoods 
+                reviewExtend={false} 
+                btnLeft={undefined} 
+                btnRight={undefined}
+              />
+              <ReviewsGoods reviewExtend={false} btnLeft={undefined} btnRight={undefined}/>
+              <ReviewsGoods reviewExtend={false} btnLeft={undefined} btnRight={undefined}/>
+              <ReviewsGoods reviewExtend={false} btnLeft={undefined} btnRight={undefined}/>
+              <ReviewsGoods reviewExtend={false} btnLeft={undefined} btnRight={undefined}/>
+            </div>  
+          :null}
+            {changeTabGoods === "pitannja" ?
+              <span>ПИТАННЯ ТА ВІДПОВІДІ </span>
             :null}
         </TabsGoodsCard>
       </div>
-      <div className={changeTabGoods==="vseProTovar" ?'productPayDelGoods' : 'productPayDelGoodsNext'}>
+      <div className={
+        changeTabGoods === "vseProTovar" ? 
+        'productPayDelGoods' : 'productPayDelGoodsNext'}>
         <ProductPayDel/>
       </div>
-      <div className={changeTabGoods==="vseProTovar" ?'goodsBenefits': 'goodsBenefitsNext'}>
+      <div className={
+        changeTabGoods === "vseProTovar" ? 
+        'goodsBenefits': 'goodsBenefitsNext'}>
         <Benefits/>
       </div>
       <div className='similarGoods'>
@@ -145,8 +188,15 @@ const GoodsPage = observer(() => {
         <YouWatched/>
       </div>
       <div className={changeTabGoods==="vseProTovar" ? "smallCardOne":"smallCardNext"}>
-        <TyreCardSmall/>
+        {goodsTyre._product ?
+         <TyreCardSmall product={goodsTyre._product}/>
+         : null 
+        }
+        
       </div>
+      <Modal active={createReview} setActive={openToCreateReview}>
+        <ReviewTyreCreate/>
+      </Modal>
     </div>
 
     );

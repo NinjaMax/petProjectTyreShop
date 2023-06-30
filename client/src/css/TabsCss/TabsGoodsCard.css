@@ -4,7 +4,7 @@
     border-width: 0px 0px 2px 0px;
     border-radius:5px 5px 0px 0px;
     background-color: #fff;
-    padding: 0px 0px 0px 50px;
+    padding: 5px 5px 0px 5px;
     display: flex;
     flex-direction: row;
     justify-content:flex-start;
@@ -24,36 +24,44 @@
     border-bottom: 4px #71C2FF solid;
 }
 
-
-.tabsGoodsCard label {
+.labelItem {
     border: solid #fff;
     border-width: 0px 0px 4px 0px;
     cursor: pointer;
     width: 250px;
     height: 40px;
-    padding: 5px;
+    padding: 5px 5px 0px 5px;
     text-align: center;
     vertical-align:baseline;
 }
-
-
-.tabsGoodsCard label:hover {
+.tabsGoodsCardActive {
+    border: solid #fff;
+    border-radius: 8px 8px 0px 0px;
+    border-width: 0px 0px 4px 0px;
+    cursor: pointer;
+    width: 250px;
+    height: 40px;
+    padding: 5px 5px 0px 5px;
+    text-align: center;
+    vertical-align:baseline;
     background-color: #ddd;
-    /*border-bottom: 4px #71C2FF solid;*/
 }
 
+.labelItem:hover {
+    background-color: #ddd;
+    border-radius: 8px 8px 0px 0px;
+    /* border-bottom: 4px #71C2FF solid; */
+}
 
-.tabsGoodsCard label:active {
+.labelItem:active {
     background-color: #ccc;
-    border-bottom: 4px #71C2FF solid;
+    /* border-bottom: 4px #71C2FF solid; */
 }
 
-.tabsGoodsCard label:focus {
-    /*background-color: #ccc;*/
-    border-bottom: 4px #71C2FF solid;
+.labelItem:focus {
+    background-color: #ccc;
+    /* border-bottom: 4px #71C2FF solid; */
 }
-
-
 /* Style the tab content */
 .tabsContentGoodsCard {
     display: '';
@@ -62,4 +70,12 @@
     border-top: none;
     border-radius: 0px 0px 5px 5px;
     margin: 0px;
+}
+.tabCountReview {
+    background-color: orange;
+    border-radius: 30px;
+    padding-left: 4px;
+    padding-right: 4px;
+    margin-left: 6px;
+
 }
