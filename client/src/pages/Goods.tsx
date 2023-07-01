@@ -83,7 +83,7 @@ const GoodsPage = observer(() => {
 
   // console.log('MATCH_URL_PARAMS: ', match?.params.goodsItem);
   // console.log('MATCH_URL: ', match);
-  // console.log('PRODUCT: ', goodsTyre._product);
+  //console.log('PRODUCT: ', goodsTyre._product);
   // console.log('LOCALSORAGE_GOODS_ID: ',JSON.parse(localStorage.getItem('goodsId')!));
 
   const handleChangeTab = (e: any) => {
@@ -117,7 +117,7 @@ const GoodsPage = observer(() => {
             titleGoodsTab:"ВІДГУКИ", 
             value:"vidguki",
             checked: changeTabGoods,
-            reviewCount: goodsTyre._product.reviews.length,
+            reviewCount: goodsTyre?._product?.reviews?.length ?? 0,
             }, {id:'4',
             titleGoodsTab:"ПИТАННЯ ТА ВІДПОВІДІ",
             value:"pitannja",
@@ -189,10 +189,9 @@ const GoodsPage = observer(() => {
       </div>
       <div className={changeTabGoods==="vseProTovar" ? "smallCardOne":"smallCardNext"}>
         {goodsTyre._product ?
-         <TyreCardSmall product={goodsTyre._product}/>
-         : null 
+          <TyreCardSmall product={goodsTyre._product}/>
+        : null 
         }
-        
       </div>
       <Modal active={createReview} setActive={openToCreateReview}>
         <ReviewTyreCreate/>

@@ -48,6 +48,24 @@ export class ReviewTyres extends Model<ReviewTyres, ReviewsTyresConfigAttr> {
   @Column({ type: DataType.STRING, unique: false, allowNull: false })
   description: string;
 
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  positive: string;
+
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  negative: string;
+
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  driver_experience: string;
+
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  car: string;
+
+  @Column({ type: DataType.STRING, unique: false, allowNull: false })
+  name: string;
+
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  email: string;
+
   @BelongsTo(() => Users, 'id_user')
   user: Users;
 

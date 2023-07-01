@@ -5,7 +5,8 @@ import { useForm } from "react-hook-form";
 const AuthForm = (
   {confirmActive, socialGoogle, socialFacebook, 
     socialTwitter, logIn, formError}: any) => {
-  const { register, handleSubmit, setError, formState: { errors } } = useForm({
+  const { register, handleSubmit, setError, 
+    formState: {errors}} = useForm({
     criteriaMode: 'all',
   });
 
@@ -19,7 +20,7 @@ const AuthForm = (
     return () => {isError = true}
   },[formError, setError]);
 
-    return (
+  return (
           <div className='authFormMain'>
             <div className="containerAuthForm">
               <form onSubmit={handleSubmit(data => logIn(data))}>

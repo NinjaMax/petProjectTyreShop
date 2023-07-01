@@ -1,7 +1,9 @@
 .reviewTyreCreate {
     margin: 10px;
-    width: 500px;
+    width: 570px;
+    height: 550px;
     font-family: var(--main-font-family);
+    overflow:hidden;
 }
 .reviewRatingList {
     display: flex;
@@ -11,9 +13,42 @@
     align-items:flex-start;
     gap: 15px;
 }
+.reviewInputRatingBox {
+    /* overflow: visible; */
+    overflow-y: scroll;
+    height: 150px;
+}
 .reviewInputRating {
+    background-color: #ffff;
     display: flex;
     flex-direction: column;
     align-items:center;
     gap: 10px;
+    /* overflow-y: scroll; */
+    /* height: 350px; */
+}
+.reviewInputRatingCar {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    gap: 10px;
+    
+}
+.reviewInputRatingCar input {
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: large;
+    padding: 2px;
+}
+.reviewInputRating input {
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: large;
+    padding: 2px;
+}
+.reviewInputRating textarea {
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: large;
+    padding: 2px;
 }

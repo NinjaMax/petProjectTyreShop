@@ -27,7 +27,8 @@ const TabsGoodsCard = ({
         <div>
             <div className="tabsGoodsCard"> 
             {itemTab ? itemTab.map((item: ITabItem) =>
-                <label className={
+                <label key={item.value}
+                    className={
                     item.checked === item.value ? 
                     ' tabsGoodsCardActive' : 'labelItem' 
                 }>

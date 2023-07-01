@@ -4,26 +4,25 @@ import ButtonAction from '../buttons/ButtonAction';
 import tyres from '../../assets/autotyrespilotspotps2.png';
 
 interface IProductSmall {
-    product: {
+    product?: {
         full_name: string;
         price: [{
+            price_wholesale: number;
             price: number;
-            old_price: number;
+            delivery_price: number;
+            price_plus_delivery: number;
         }];
     };
 }
 
 const TyreCardSmall = ({product}:IProductSmall) => {
-    console.log(product);
+
     return (
         <div className='tyreCardSmall'>
             <div>
                 <img id='imgTyresSmall' src={tyres} alt="tyreSmall" />
                 <p/>
-                <div className='tyresNameSmall'>{product.full_name}</div>
-                {/* <div className="tyresCardPriceSmall">
-                    {product.price}
-                </div> */}
+                <div className='tyresNameSmall'>{product?.full_name}</div>
                 {product?.price ? product?.price.map((item: any) => (
                     <Fragment key={item.id}>
                     {item.price ?
@@ -46,8 +45,7 @@ const TyreCardSmall = ({product}:IProductSmall) => {
                         немає в наявності
                     </div> 
                 }
-                <div>
-                    { product?.price[0]!.price ?
+                {product?.price ?
                     <ButtonAction 
                         props={"КУПИТИ"} 
                         widthBtn={180} 
@@ -58,9 +56,9 @@ const TyreCardSmall = ({product}:IProductSmall) => {
                         props={"КУПИТИ"} 
                         widthBtn={180} 
                         eventItem={undefined}
+                        active={false}
                     />
                 }
-                </div>
                 <p/>    
             </div>
             <p/> 
