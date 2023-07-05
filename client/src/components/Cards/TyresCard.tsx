@@ -42,7 +42,13 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
                     {goods?.full_name}
                 </a>
                 </div>
-                <div className='ratingTyres'><Rating numScore={4.8}/><a className='reviewCard' href='/#'>0 отзывов</a></div>
+                <div className='ratingTyres'>
+                    <Rating 
+                        numScore={4.8}
+                        disabled={true}
+                        nameRating='Карта товара'
+                    />
+                    <a className='reviewCard' href='/#'>0 отзывов</a></div>
                 <div className="tyresCardCode">код товара: {goods?.id}</div>
                 <div className='propsCard'>
                     <PropsCardIcons

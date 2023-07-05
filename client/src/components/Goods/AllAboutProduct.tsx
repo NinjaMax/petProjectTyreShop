@@ -34,7 +34,13 @@ const AllAboutProduct = observer(({goods}:ITyreCard) => {
             </div>
             <div className='allAboutProductInfo'>
                 <div className='productInfoName'>{goods?.full_name}</div>
-                <div className='productInfoRating'><Rating numScore={4.8}/><a className='productInfoRatingLink' href='/#'>0 отзывов</a></div>
+                <div className='productInfoRating'>
+                    <Rating 
+                        numScore={4.8}
+                        disabled={true}
+                        nameRating='О товаре'
+                    />
+                    <a className='productInfoRatingLink' href='/#'>0 отзывов</a></div>
                 <div className="productInfoCode">код товара: {goods?.id}</div>
                 <div className='productInfoProps'>
                 {goods?.vehicle_type || goods?.season ?

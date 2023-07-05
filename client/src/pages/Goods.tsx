@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState} from 'react';
+import React, { Fragment, useContext, useEffect, useState} from 'react';
 import '../css/Goods.css';
 import BreadCrumbs from '../components/BreadCrumbs';
 import TabsGoodsCard from '../components/tabs/TabsGoodsCard';
@@ -24,6 +24,7 @@ import { createStringUrl } from '../services/stringUrl';
 import ButtonAction from '../components/buttons/ButtonAction';
 import Modal from '../components/modal/Modal';
 import ReviewTyreCreate from '../components/reviews/ReviewTyreCreate';
+import { IReviewGoods } from '../components/reviews/interfaces/ReviewGoods.interface';
 
 const GoodsPage = observer(() => {
   //const [product, setProduct] = useState<any>();
@@ -83,7 +84,7 @@ const GoodsPage = observer(() => {
 
   // console.log('MATCH_URL_PARAMS: ', match?.params.goodsItem);
   // console.log('MATCH_URL: ', match);
-  //console.log('PRODUCT: ', goodsTyre._product);
+  console.log('PRODUCT: ', goodsTyre._product);
   // console.log('LOCALSORAGE_GOODS_ID: ',JSON.parse(localStorage.getItem('goodsId')!));
 
   const handleChangeTab = (e: any) => {
@@ -132,7 +133,7 @@ const GoodsPage = observer(() => {
             {changeTabGoods === "charakteristiki"?
                 <PropertiesGoods product={goodsTyre._product}/> 
             :null}
-          {changeTabGoods === "vidguki"?
+          {changeTabGoods === "vidguki" ?
             <div className='tabReviewsActive'>
               <div className='preReview'>
                 <span>
@@ -145,22 +146,28 @@ const GoodsPage = observer(() => {
                   eventItem={openToCreateReview}
                 />
               </div>
-              <ReviewGoodsOverall/> 
+              <ReviewGoodsOverall  /> 
               <ReviewBrandOverall/>
-              <ReviewsGoods 
-                reviewExtend={false} 
-                btnLeft={undefined} 
-                btnRight={undefined}
-              />
-              <ReviewsGoods reviewExtend={false} btnLeft={undefined} btnRight={undefined}/>
-              <ReviewsGoods reviewExtend={false} btnLeft={undefined} btnRight={undefined}/>
-              <ReviewsGoods reviewExtend={false} btnLeft={undefined} btnRight={undefined}/>
-              <ReviewsGoods reviewExtend={false} btnLeft={undefined} btnRight={undefined}/>
+              {goodsTyre._product.reviews.length !== 0 ?
+                goodsTyre._product.reviews.map((item: IReviewGoods) =>
+                <Fragment key={item.id_review}>
+                <ReviewsGoods 
+                  reviewEntity={item}
+                  reviewExtend={false} 
+                  btnLeft={undefined} 
+                  btnRight={undefined}
+                />
+                </Fragment>
+                )
+                : null
+              }
             </div>  
-          :null}
-            {changeTabGoods === "pitannja" ?
+            :null
+          }
+          {changeTabGoods === "pitannja" ?
               <span>ПИТАННЯ ТА ВІДПОВІДІ </span>
-            :null}
+            :null
+          }
         </TabsGoodsCard>
       </div>
       <div className={
@@ -193,9 +200,12 @@ const GoodsPage = observer(() => {
         : null 
         }
       </div>
-      <Modal active={createReview} setActive={openToCreateReview}>
-        <ReviewTyreCreate/>
-      </Modal>
+        <Modal active={createReview} setActive={openToCreateReview}>
+          <ReviewTyreCreate 
+            active={createReview}
+            setActive={openToCreateReview}
+          />
+        </Modal> 
     </div>
 
     );

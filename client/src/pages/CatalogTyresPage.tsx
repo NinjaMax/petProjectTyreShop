@@ -360,7 +360,7 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
         </div>
         <div className='d'>
           <ReviewsMain props={'Відгуки клієнтів'}>
-            <ReviewsGoods reviewExtend={true} btnLeft={undefined} btnRight={undefined}/>
+            {/* <ReviewsGoods reviewExtend={true} btnLeft={undefined} btnRight={undefined}/> */}
           </ReviewsMain>
         </div>
         <div className='e'>

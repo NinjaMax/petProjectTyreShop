@@ -5,31 +5,41 @@ import ButtonPrevNext from '../buttons/ButtonPrevNext';
 import Rating from '../ux/Rating';
 import Thumbs from '../ux/Thumbs';
 import ReviewsGoodsExtend from './ReviewsGoodsExtend';
+import { IReviewGoods } from './interfaces/ReviewGoods.interface';
 
 interface IReviewsGoods {
+    reviewEntity: IReviewGoods;
     reviewExtend: boolean; 
     btnLeft: any; 
     btnRight: any;
 }
 
 const ReviewsGoods = (
-        {reviewExtend, btnLeft, btnRight}: IReviewsGoods
+        {reviewEntity, reviewExtend, btnLeft, btnRight}: IReviewsGoods
     ) => {
     return (
        
             <div className='reviewGoods'>   
                 <div className="reviewsGoodsContainer">
                     <div className="mySlidesGoodsReview">
-                        <div className="authorGoodsReview"><img className='userImg' src={customerReview} alt='avatarUser'/> Кирилл Шемендюк</div>
-                        <div className='ratingGoodsReview'>Рейтинг товара:<Rating numScore={4.7}/></div>
-                        <div className='reviewUsesCars'>Ездит на: Mercedes benz Gelendwagen GLI 500 </div>
-                        <div className='reviewGoodsExpier'>Стаж: 5лет </div>
+                        <div className="authorGoodsReview">
+                            <img className='userImg' src={customerReview} alt='avatarUser'/> 
+                            {reviewEntity.name}
+                        </div>
+                        <div className='ratingGoodsReview'>
+                            Рейтинг товара:
+                            <Rating 
+                                numScore={4.7}
+                                disabled={true}
+                            />
+                        </div>
+                        <div className='reviewUsesCars'>Ездит на: {reviewEntity.car}</div>
+                        <div className='reviewGoodsExpier'>Стаж: {reviewEntity.driver_experience}</div>
                         <div className='AddedGoodsReview'>Отзыв о товаре: <a href='/#'>Continental ContiCrossContact All Seasons Verde 195/65 R15 105T XL</a></div>
                         <div className='contentGoodsReview'>
-                            I love you the more in that I believe you had liked me for my own sake and for nothing else
-                            I love you the more in that I believe you had liked me for my own sake and for nothing else
+                            {reviewEntity.description}
                         </div>
-                        <div className='dateGoodsReview'>12.07.2022</div>
+                        <div className='dateGoodsReview'>{reviewEntity.createdAt}</div>
                         <div className='thumbGoodsReview'>
                             <Thumbs/>
                         </div>

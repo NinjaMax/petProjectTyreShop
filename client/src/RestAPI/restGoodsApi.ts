@@ -1,4 +1,5 @@
-import { $hostGet } from './index';
+import { $hostGet, $hostPost } from './index';
+import { IReviewTyreRestCreate } from './interfaces/ReviewTyreRest.interface';
 
 const getTyresOffset = async (
     offset: number,
@@ -39,15 +40,8 @@ const getTyresOffset = async (
         run_flat: run_flat,
         homologation: homologation,
         reinforce: reinforced,
-        // cheap: cheap ?? false,
-        // expensive: expensive ?? false,
-        // rating: rating ?? false,
-        // oldPrice: oldPrice ?? false,
-        // titleName: titleName ?? false,
         }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_OFFSET9: ', data )
     return data;
 }
 
@@ -150,6 +144,49 @@ const getTyresCountAll = async (
     //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
+
+const createTyreReview = async (
+    data:IReviewTyreRestCreate, 
+    id: number,
+    id_brand: number,
+    id_model: number,
+    id_user?: number,
+    id_customer?: number,    
+    rating_overall?: number,
+    rating_dry_road?:number,
+    rating_wet_road?: number,
+    rating_snow_road?: number,
+    rating_ice_road?: number,
+    rating_cross_country?: number,
+    rating_treadwear?: number,
+    rating_price_quality?: number,
+
+    ) =>
+    await $hostPost.post('/reviews', {
+    id: id,
+    id_model: id_model,
+    id_brand: id_brand,
+    id_user: id_user,
+    id_customer: id_customer,
+    email: data.email,
+    description: data.description,
+    positive: data.positive,
+    negative: data.negative,
+    driver_experience: data.driver_experience,
+    car: data.car,
+    name: data.name,
+    rating_overall: rating_overall,
+    rating_dry_road: rating_dry_road,
+    rating_wet_road: rating_wet_road,
+    rating_snow_road: rating_snow_road,
+    rating_ice_road: rating_ice_road,
+    rating_cross_country: rating_cross_country,
+    rating_treadwear: rating_treadwear,
+    rating_price_quality: rating_price_quality
+})
+.catch(error => {
+        console.log(error)
+});  
 
 const getTyresBrandPropsAll = async () => {
     const {data} = await $hostGet.get('properties/allbrands')
@@ -266,5 +303,6 @@ export {
     getTyresStuddedPropsAll,
     getTyresVehicleTypePropsAll,
     getTyresWidthPropsAll,
-    getTyresSeasonPropsAll
+    getTyresSeasonPropsAll,
+    createTyreReview
 }

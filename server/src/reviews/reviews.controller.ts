@@ -27,7 +27,7 @@ export class ReviewsController {
   }
 
   @Get('/id')
-  findOne(@Param() @Body()getReviewDto: GetReviewDto) {
+  findOne(@Param() @Body() getReviewDto: GetReviewDto) {
     return this.reviewsService.findReviewById(getReviewDto);
   }
 

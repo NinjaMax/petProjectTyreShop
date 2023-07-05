@@ -2,45 +2,107 @@ import React from 'react';
 import '../../css/Reviews/ReviewGoodsOverall.css';
 import Rating from '../ux/Rating';
 import RatingOptions from '../ux/RatingOptions';
-
+import { IReviewGoods } from './interfaces/ReviewGoods.interface';
+//{reviewItem}: IReviewGoods
 const ReviewGoodsOverall = () => {
-    const overAllRating = 4.7;
-    const avarageReviews = 254;
-    const numberScore = 4.6;
 
     return (
         <div className='reviewGoodsOverall'>
             <div className="headingGoodsOverall">
                 <span className='headerGoodsOverall'>Рейтинг моделі</span>
-                <Rating numScore={overAllRating}/>
-                <p> середня оцінка основана на {avarageReviews} відгуках.</p>
+                <RatingOptions 
+                        nameRating={''}
+                >
+                    <Rating 
+                    numScore={5}
+                    disabled={true}
+                    />    
+                </RatingOptions>
+                
+                <p> середня оцінка основана на { ''} відгуках.</p>
             </div>
             <div className='ratingList'>
                 <div className='ratingListItems'>
-                    <RatingOptions nameRating={'Бренд'} numScore={numberScore}/>
+                    <RatingOptions 
+                        nameRating={'Бренд'}
+                    >
+                    <Rating 
+                    numScore={4}
+                    disabled={true}
+                />
+                </RatingOptions>
                 </div>
                 <div className='ratingListItems'>
-                    <RatingOptions nameRating={'Керованість на сухій дорозі'} numScore={numberScore}/>
+                    <RatingOptions 
+                        nameRating={'Керованість на сухій дорозі'}
+                    >
+                        <Rating 
+                        numScore={1}
+                        disabled={true}
+                    />
+                    </RatingOptions>
                 </div>
                 <div className='ratingListItems'>
-                    <RatingOptions nameRating={'Керованість на мокрій дорозі'} numScore={numberScore}/>
+                    <RatingOptions 
+                        nameRating={'Керованість на мокрій дорозі'} 
+                    >
+                    <Rating 
+                    numScore={1}
+                    disabled={true}
+                />
+                </RatingOptions>
                 </div>
                 <div className='ratingListItems'>
-                    <RatingOptions nameRating={'Керованість на снігу'} numScore={numberScore}/>
+                    <RatingOptions 
+                        nameRating={'Керованість на снігу'} 
+                    >
+                    <Rating 
+                    numScore={1}
+                    disabled={true}
+                />
+                </RatingOptions>
                 </div>
             </div>
             <div className='ratingList'>
                 <div className='ratingListItems'>
-                    <RatingOptions nameRating={'Керованість на льду'} numScore={numberScore}/>
+                    <RatingOptions 
+                        nameRating={'Керованість на льду'} 
+                    >
+                    <Rating 
+                    numScore={1}
+                    disabled={true}
+                />
+                </RatingOptions>
                 </div>
                 <div className='ratingListItems'>
-                    <RatingOptions nameRating={'Проходимість'} numScore={numberScore}/>
+                    <RatingOptions 
+                        nameRating={'Проходимість'} 
+                    >
+                    <Rating 
+                    numScore={1}
+                    disabled={true}
+                />
+                </RatingOptions>
                 </div>
                 <div className='ratingListItems'>
-                    <RatingOptions nameRating={'Зносостійкість'} numScore={numberScore}/>
+                    <RatingOptions 
+                        nameRating={'Зносостійкість'}
+                    >
+                    <Rating 
+                    numScore={1}
+                    disabled={true}
+                />
+                </RatingOptions>
                 </div>
                 <div className='ratingListItems'>
-                    <RatingOptions nameRating={'Ціна/Якість'} numScore={numberScore}/>
+                    <RatingOptions 
+                        nameRating={'Ціна/Якість'}
+                    >
+                    <Rating 
+                    numScore={1}
+                    disabled={true}
+                />
+                </RatingOptions>
                 </div>
             </div>
         </div>

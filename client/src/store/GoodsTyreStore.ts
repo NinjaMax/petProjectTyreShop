@@ -20,6 +20,7 @@ export default class GoodsTyreStore {
     _tyres_filter: [];
     _product: {};
     _totalCount: number;
+    _ratingList:{[key: string]: number};
 
     constructor() {  
         this._types = [];
@@ -41,6 +42,16 @@ export default class GoodsTyreStore {
         this._reinforced = [];
         this._width = [];
         this._height = [];
+        this._ratingList = {
+            rating_overall: 0,
+            rating_dry_road: 0,
+            rating_wet_road: 0,
+            rating_snow_road: 0,
+            rating_ice_road: 0,
+            rating_cross_country:0,
+            rating_treadwear:0,
+            rating_price_quality:0,
+        };
 
         makeAutoObservable(this);
     }
@@ -102,6 +113,9 @@ export default class GoodsTyreStore {
     setSeason(season: string[]) {
         this._season = season;
     }
+    setRatingList(ratingList:{}) {
+        this._ratingList = ratingList;
+    }
   
     get types() {
         return this._types;
@@ -153,5 +167,13 @@ export default class GoodsTyreStore {
     }
     get totalCount() {
         return this._totalCount;
+    }
+    get ratingList() {
+        return this._ratingList;
+    }
+    setNewRating(titleRating: string, newRating: string) {
+        if (titleRating in this._ratingList) {
+            this._ratingList[titleRating] = +newRating;
+        }
     }
 }

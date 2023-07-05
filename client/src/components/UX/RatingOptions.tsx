@@ -1,18 +1,20 @@
 import React from 'react';
 import '../../css/UXcss/RatingOptions.css';
-import Rating from './Rating';
+import { IRatingOptions } from '../reviews/interfaces/RatingOptions.interface';
 
-interface IRatingOptions {
-    nameRating: string; 
-    numScore: number;
-}
+const RatingOptions = ({nameRating, children}: IRatingOptions) => {
 
-const RatingOptions = ({nameRating, numScore}: IRatingOptions) => {
-    
     return (
         <div className='ratingOptions'>
-            <span className='nameRating'>{nameRating}</span>
-            <span className='ratingBoxStar'><Rating numScore={numScore}/></span>
+            {nameRating.length !== 0?
+            <span className='nameRating'>
+                {nameRating}
+            </span>
+            : null
+            }
+            <span className='ratingBoxStar'>
+                {children}
+            </span>
         </div>
     );
 };

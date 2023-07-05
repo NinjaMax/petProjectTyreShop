@@ -23,7 +23,13 @@ const TyresCardList = ({goods, forOrder}: ITyreCard) => {
                     to={`${goods?.full_name?.toLowerCase().replace(/ /g, "-")}`}>
                     {goods?.full_name}
                 </NavLink>
-                <div className='ratingTyresList'><Rating numScore={4.8}/><a className='reviewLink' href='/#'>0 отзывов</a></div>
+                <div className='ratingTyresList'>
+                    <Rating 
+                        numScore={4.8}
+                        disabled={true}
+                        nameRating='Список карт'
+                    />
+                    <a className='reviewLink' href='/#'>0 отзывов</a></div>
                 <div className="tyresCardCodeList">
                     код товара: {goods?.id}
                 </div>

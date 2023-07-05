@@ -8,32 +8,92 @@ const ReviewsGoodsExtend = () => {
     return (
         <div>
             <div className="heading">Рейтинг
-                <Rating numScore={4.8}/>
+                <Rating 
+                    numScore={4.8}
+                    nameRating={'Расширенние'}
+                    disabled={true}
+                />
             </div>
             <div className='ratingList'>
                 <div className='ratingListItems'>
-                    <RatingOptions nameRating={'Бренд'} numScore={4.5}/>
+                    <RatingOptions 
+                        nameRating={'Бренд'}
+                    >
+                    <Rating 
+                        numScore={4.8}
+                        disabled={true}
+                    /> 
+                    </RatingOptions> 
                 </div>
                 <div className='ratingListItems'>
-                    <RatingOptions nameRating={'Керованість на сухій дорозі'} numScore={4.5}/>
+                    <RatingOptions 
+                        nameRating={'Керованість на сухій дорозі'} 
+                    >
+                    <Rating 
+                        numScore={4.8}
+                        disabled={true}
+                    /> 
+                     </RatingOptions> 
                 </div>
                 <div className='ratingListItems'>
-                    <RatingOptions nameRating={'Керованість на мокрій дорозі'} numScore={4.5}/>
+                    <RatingOptions 
+                        nameRating={'Керованість на мокрій дорозі'} 
+                    >
+                    <Rating 
+                        numScore={4.8}
+                        disabled={true}
+                    /> 
+                    </RatingOptions> 
                 </div>
                 <div className='ratingListItems'>
-                    <RatingOptions nameRating={'Керованість на снігу'} numScore={4.5}/>
+                    <RatingOptions 
+                        nameRating={'Керованість на снігу'}
+                    >
+                    <Rating 
+                        numScore={4.8}
+                        disabled={true}
+                    /> 
+                    </RatingOptions> 
                 </div>
                 <div className='ratingListItems'>
-                    <RatingOptions nameRating={'Керованість на льду'} numScore={4.5}/>
+                    <RatingOptions 
+                        nameRating={'Керованість на льду'}
+                    >
+                    <Rating 
+                        numScore={4.8}
+                        disabled={true}
+                    /> 
+                    </RatingOptions> 
                 </div>
                 <div className='ratingListItems'>
-                    <RatingOptions nameRating={'Проходимість'} numScore={4.5}/>
+                    <RatingOptions 
+                        nameRating={'Проходимість'}
+                    >
+                    <Rating 
+                        numScore={4.8}
+                        disabled={true}
+                    /> 
+                    </RatingOptions> 
                 </div>
                 <div className='ratingListItems'>
-                    <RatingOptions nameRating={'Зносостійкість'} numScore={4.5}/>
+                    <RatingOptions 
+                        nameRating={'Зносостійкість'}
+                    >
+                    <Rating 
+                        numScore={4.8}
+                        disabled={true}
+                    /> 
+                    </RatingOptions> 
                 </div>
                 <div className='ratingListItems'>
-                    <RatingOptions nameRating={'Ціна/Якість'} numScore={4.5}/>
+                    <RatingOptions 
+                        nameRating={'Ціна/Якість'} 
+                    >
+                    <Rating 
+                        numScore={4.8}
+                        disabled={true}
+                    /> 
+                    </RatingOptions> 
                 </div>
             </div>
         </div>

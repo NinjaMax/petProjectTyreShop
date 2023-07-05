@@ -1,90 +1,140 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../../css/Reviews/ReviewCreateTyre.css';
 import RatingOptions from '../ux/RatingOptions';
 import ButtonAction from '../buttons/ButtonAction';
 import { useForm } from 'react-hook-form';
+import { observer } from 'mobx-react-lite';
+import { Context } from '../../context/Context';
+import Rating from '../ux/Rating';
+import { FormValues } from './types/ReviewTyreCreate.type';
+import { createTyreReview } from '../../restAPI/restGoodsApi';
 
-type FormValues = {
-    id: number;
-    id_model: number;
-    id_brand: number;
-    id_customer: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    description: string;
-    positive: string;
-    negative: string;
-    driver_experience: string;
-    car: string;
-    name: string;
-    id_review: number;
-    rating_overall: number;
-    rating_dry_road: number;
-    rating_wet_road: number;
-    rating_snow_road: number;
-    rating_ice_road: number;
-    rating_cross_country: number;
-    rating_treadwear: number;
-    rating_price_quality: number;
+interface IReviewTyreCreate {
+    active: boolean;
+    setActive(arg0: any): void;
 }
 
-const ReviewTyreCreate = () => {
+const ReviewTyreCreate = observer(({active, setActive}: IReviewTyreCreate) => {
+    const {goodsTyre} = useContext<any | null>(Context);
     const {register, handleSubmit, formState: {errors}
       } = useForm<FormValues>({
         criteriaMode: 'all',
-      });
+    });
+    useEffect(() => {
 
-    const onSubmitReviewTyre = (data:any) => {
+    },[]);
+    const onSubmitReviewTyre = async (data: FormValues) => {
+        await createTyreReview(
+            data, 
+            goodsTyre._product.id,
+            goodsTyre._product.tyre_brand.id_brand,
+            goodsTyre._product.tyre_model.id_model,
+            goodsTyre.ratingList.rating_overall,
+            goodsTyre.ratingList.rating_dry_road,
+            goodsTyre.ratingList.rating_wet_road,
+            goodsTyre.ratingList.rating_snow_road,
+            goodsTyre.ratingList.rating_ice_road,
+            goodsTyre.ratingList.rating_cross_country,
+            goodsTyre.ratingList.rating_treadwear,
+            goodsTyre.ratingList.rating_price_quality
+        );
         console.log(data);
+        console.log('CLICK_SUBMIT_REVIEW');
     };
 
     return (
     <div className='reviewTyreCreate'>
         <h4>Залишити відгук</h4>
         <span>Мої оцінки товару</span>
-        <p/>
         <form onSubmit={handleSubmit(onSubmitReviewTyre)}>
         <div className='reviewRatingList'>
             <div className='reviewRatingListItems'>
                 <RatingOptions 
                     nameRating={'Бренд'} 
-                    numScore={4.5}/>
+                >
+                <Rating 
+                    numScore={goodsTyre.ratingList.rating_overall}
+                    disabled={false}
+                    nameRating={'rating_overall'}
+                />
+                </RatingOptions>      
             </div>
             <div className='reviewRatingListItems'>
                 <RatingOptions 
-                    nameRating={'Керованість на сухій дорозі'} 
-                    numScore={4.5}/>
+                    nameRating={'Керованість на сухій дорозі'}
+                >
+                    <Rating 
+                        numScore={goodsTyre.ratingList.rating_dry_road}
+                        disabled={false}
+                        nameRating={'rating_dry_road'}
+                    />
+                </RatingOptions>    
             </div>
             <div className='reviewRatingListItems'>
                 <RatingOptions 
                     nameRating={'Керованість на мокрій дорозі'} 
-                    numScore={4.5}/>
+                >
+                    <Rating 
+                        numScore={goodsTyre.ratingList.rating_wet_road}
+                        disabled={false}
+                        nameRating={'rating_wet_road'}
+                    />
+                </RatingOptions>    
             </div>
             <div className='reviewRatingListItems'>
-                <RatingOptions 
+                <RatingOptions
                     nameRating={'Керованість на снігу'} 
-                    numScore={4.5}/>
+                >
+                    <Rating 
+                        numScore={goodsTyre.ratingList.rating_snow_road}
+                        disabled={false}
+                        nameRating={'rating_snow_road'}
+                    />
+                 </RatingOptions>    
             </div>
             <div className='reviewRatingListItems'>
                 <RatingOptions 
                     nameRating={'Керованість на льду'} 
-                    numScore={4.5}/>
+                >
+                    <Rating 
+                        numScore={goodsTyre.ratingList.rating_ice_road}
+                        disabled={false}
+                        nameRating={'rating_ice_road'}
+                    />
+                </RatingOptions>    
             </div>
             <div className='reviewRatingListItems'>
                 <RatingOptions 
                     nameRating={'Проходимість'} 
-                    numScore={4.5}/>
+                >
+                    <Rating 
+                        numScore={goodsTyre.ratingList.rating_cross_country}
+                        disabled={false}
+                        nameRating={'rating_cross_country'}
+                    />
+                </RatingOptions>    
             </div>
             <div className='reviewRatingListItems'>
                 <RatingOptions 
                     nameRating={'Зносостійкість'} 
-                    numScore={4.5}/>
+                >
+                    <Rating 
+                        numScore={goodsTyre.ratingList.rating_treadwear}
+                        disabled={false}
+                        nameRating={'rating_treadwear'}
+                    />
+                </RatingOptions>    
             </div>
             <div className='reviewRatingListItems'>
                 <RatingOptions 
                     nameRating={'Ціна/Якість'} 
-                    numScore={4.5}/>
+                >
+                    <Rating 
+                        numScore={goodsTyre.ratingList.rating_price_quality}
+                        disabled={false}
+                        nameRating={'rating_price_quality'}
+                    />
+                </RatingOptions>    
             </div>
         </div>
         <p/>
@@ -92,44 +142,48 @@ const ReviewTyreCreate = () => {
         <div className='reviewInputRating'>
             <label htmlFor='reviewTyre'>Відгук</label>
             <textarea 
-                id="review" 
+                id="review"
                 rows={5}
                 cols={30}
-                //name="reviewTyre" 
+                maxLength={200}
                 placeholder='Написати відгук'
                 {...register("description", 
-                    { required: true, maxLength: 1 })
+                    { required: true, maxLength: 200 })
                 }
             />
             <label htmlFor='negativeReview'>Недоліки</label>
             <textarea 
                 id="negativeReview" 
                 placeholder='Недоліки'
+                maxLength={120}
                 {...register("negative", 
-                { required: false, maxLength: 12 })
+                { required: false, maxLength: 120 })
             }
             />
             <label  htmlFor='positiveReview'>Переваги</label>
             <textarea 
                 id="positiveReview" 
                 placeholder='Переваги'
+                maxLength={120}
                 {...register("positive", 
-                { required: false, maxLength: 12 })
+                { required: false, maxLength: 120 })
             }
             />
             <div className='reviewInputRatingCar'>
                 <input 
                     type="text" 
                     placeholder='Марка авто'
+                    maxLength={120}
                     {...register("car", 
-                    { required: false, maxLength: 12 })
+                    { required: false, maxLength: 120 })
                 }
                 /> 
                 <input 
                     type="text" 
                     placeholder='Водійський стаж'
+                    maxLength={3}
                     {...register("driver_experience", 
-                    { required: false, maxLength: 12 })
+                    { required: false, maxLength: 3 })
                 }
                 />
             </div>
@@ -137,26 +191,26 @@ const ReviewTyreCreate = () => {
                 type="text" 
                 placeholder="Ваше ім'я"
                 {...register("name", 
-                    { required: true, maxLength: 1 })
+                    { required: true, maxLength: 50 })
                 }
             />
             <input 
                 type="text" 
                 placeholder='Електронная пошта' 
                 {...register("email", 
-                    { required: false, maxLength: 1 })
+                    { required: false, maxLength: 100 })
                 }
             />
         </div>
         </div>
-        </form>
         <p/>
         <ButtonAction 
+            type={"submit"}
             props={'Зберегти відгук'}
-            eventItem={onSubmitReviewTyre}
         />
+        </form>
     </div>
   )
-}
+});
 
 export default ReviewTyreCreate
