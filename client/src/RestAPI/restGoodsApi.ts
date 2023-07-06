@@ -150,7 +150,7 @@ const createTyreReview = async (
     id: number,
     id_brand: number,
     id_model: number,
-    id_user?: number,
+    id_season: number,
     id_customer?: number,    
     rating_overall?: number,
     rating_dry_road?:number,
@@ -163,18 +163,19 @@ const createTyreReview = async (
 
     ) =>
     await $hostPost.post('/reviews', {
-    id: id,
-    id_model: id_model,
-    id_brand: id_brand,
-    id_user: id_user,
-    id_customer: id_customer,
+
     email: data.email,
     description: data.description,
     positive: data.positive,
     negative: data.negative,
     driver_experience: data.driver_experience,
     car: data.car,
-    name: data.name,
+    name: data.name,    
+    id: id,
+    id_brand: id_brand,
+    id_model: id_model,
+    id_season: id_season,
+    id_customer: id_customer,
     rating_overall: rating_overall,
     rating_dry_road: rating_dry_road,
     rating_wet_road: rating_wet_road,
@@ -187,6 +188,67 @@ const createTyreReview = async (
 .catch(error => {
         console.log(error)
 });  
+
+const getTyresModelRatingAvg = async (id_model: number) => {
+    const {data} = await $hostGet.get(
+        `/ratings/tyres/bymodel/${id_model ?? 0}`,
+    )
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+const getTyresBrandRatingAvg = async (id_brand: number) => {
+    const {data} = await $hostGet.get(
+        `/ratings/tyres/bybrand/${id_brand ?? 0}`,
+    )
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+const getTyresBrandRatingAvgSeason = async (
+    id_brand: number,
+    id_season: number,
+    ) => {
+    const {data} = await $hostGet.get('/ratings/tyres/bybrand-season/',
+    {params: {
+        id_brand: id_brand ?? 0,
+        id_season: id_season ?? 0,
+    }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+const getTyresCountReviewByBrand = async (
+    id_brand: number,
+    ) => {
+    const {data} = await $hostGet.get('/reviews/count/brand/',
+    {params: {
+        id_brand: id_brand ?? 0,
+    }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+const getTyresCountReviewByModel = async (
+    id_model: number,
+    ) => {
+    const {data} = await $hostGet.get('/reviews/count/model/',
+    {params: {
+        id_model: id_model ?? 0,
+    }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+
 
 const getTyresBrandPropsAll = async () => {
     const {data} = await $hostGet.get('properties/allbrands')
@@ -304,5 +366,10 @@ export {
     getTyresVehicleTypePropsAll,
     getTyresWidthPropsAll,
     getTyresSeasonPropsAll,
-    createTyreReview
+    createTyreReview,
+    getTyresModelRatingAvg,
+    getTyresBrandRatingAvg,
+    getTyresBrandRatingAvgSeason,
+    getTyresCountReviewByBrand,
+    getTyresCountReviewByModel
 }

@@ -1,4 +1,6 @@
 export interface IPropsTyre {
+    countModelReview?: number;
+    avgRatingModel?: number;
     product?: { 
         width?: {width:string};
         height?: {height:string};

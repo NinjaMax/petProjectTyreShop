@@ -16,7 +16,7 @@ import ProductPayDel from '../components/goods/ProductPayDel';
 import YouWatched from '../components/goods/YouWatched';
 import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import { GOODS_ROUTE, NOT_FOUND_ROUTE } from '../utils/consts';
-import { getTyresById, getTyresByIdParam } from '../restAPI/restGoodsApi';
+import { getTyresBrandRatingAvg, getTyresBrandRatingAvgSeason, getTyresById, getTyresByIdParam, getTyresCountReviewByBrand, getTyresCountReviewByModel, getTyresModelRatingAvg } from '../restAPI/restGoodsApi';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../context/Context';
@@ -25,11 +25,20 @@ import ButtonAction from '../components/buttons/ButtonAction';
 import Modal from '../components/modal/Modal';
 import ReviewTyreCreate from '../components/reviews/ReviewTyreCreate';
 import { IReviewGoods } from '../components/reviews/interfaces/ReviewGoods.interface';
+import { IRatingAvg } from './types/RatingModelAvg.type';
+import { IRatingBrandAvg } from './types/RatingBrandAvg.type';
+import { IRatingSeasonAvg } from './types/RatingBrandSeason.type';
 
 const GoodsPage = observer(() => {
-  //const [product, setProduct] = useState<any>();
   const {goodsTyre} = useContext<any | null>(Context);
   const [productId, setProductId] = useState<string | null>();
+  const [ratingModelAvg, setRatingModelAvg] = useState<IRatingAvg>();
+  const [ratingBrandAvg, setRatingBrandAvg] = useState<IRatingBrandAvg>();
+  const [ratingSummerAvg, setRatingSummerAvg] = useState<IRatingSeasonAvg>();
+  const [ratingWinterAvg, setRatingWinterAvg] = useState<IRatingSeasonAvg>();
+  const [ratingAllSeasonAvg, setRatingAllSeasonAvg] = useState<IRatingSeasonAvg>();
+  const [reviewCountBrand, setReviewCountBrand] = useState<number>();
+  const [reviewCountModel, setReviewCountModel] = useState<number>();
   const [createReview, setCreateReview] = useState<boolean>(false);
   const [changeTabGoods, setChangeTabGoods] = useState<string>("vseProTovar");
   const history =  useHistory();
@@ -41,21 +50,54 @@ const GoodsPage = observer(() => {
     const getProduct = async () => {
       const taskProduct: any[] = [
         getTyresByIdParam,
+        getTyresModelRatingAvg,
+        getTyresBrandRatingAvg,
+        getTyresBrandRatingAvgSeason,
+        getTyresCountReviewByBrand,
+        getTyresCountReviewByModel
       ]
     const getTyreId: string = 
       JSON.parse(localStorage.getItem('goodsId')!);
     let i: number = 0; 
-    //console.log(getTyreId);
     while (taskProduct.length > i) {
-
-      //if (getTyreId && !isMounted) {
       if (!isMounted && taskProduct[i] === getTyresByIdParam && getTyreId) {
-        console.log(getTyreId);
         const getProduct: any = await taskProduct[i](getTyreId);
-        //const getProduct = await getTyresByIdParam(getTyreId);
-        //setProduct(getProduct)
         goodsTyre.setProduct(getProduct);
-        //localStorage.removeItem('goodsId');
+      }
+      if (!isMounted && taskProduct[i] === getTyresModelRatingAvg && goodsTyre._product.id_model) {
+        const getRatingModel: any = await taskProduct[i](
+          goodsTyre._product.id_model
+        );
+        setRatingModelAvg(getRatingModel[0]);
+      }
+      if (!isMounted && taskProduct[i] === getTyresBrandRatingAvg && goodsTyre._product.id_brand) {
+        const getRatingBrand: any = await taskProduct[i](
+          goodsTyre._product.id_brand
+        );
+        setRatingBrandAvg(getRatingBrand[0]);
+      }
+      if (!isMounted && taskProduct[i] === getTyresBrandRatingAvgSeason && goodsTyre._product.id_brand) {
+        const getRatingSummer: any = await taskProduct[i](
+          goodsTyre._product.id_brand, 1
+        );
+        const getRatingWinter: any = await taskProduct[i](
+          goodsTyre._product.id_brand, 2
+        );
+        const getRatingAllSeason: any = await taskProduct[i](
+          goodsTyre._product.id_brand, 3
+        );
+        setRatingSummerAvg(getRatingSummer[0]);
+        setRatingWinterAvg(getRatingWinter[0]);
+        setRatingAllSeasonAvg(getRatingAllSeason[0]);
+      }
+      if (!isMounted && taskProduct[i] === getTyresCountReviewByBrand && goodsTyre._product.id_brand) {
+        const getCountBrand: any = await taskProduct[i](goodsTyre._product.id_brand);
+        setReviewCountBrand(getCountBrand);
+      }
+      if (!isMounted && taskProduct[i] === getTyresCountReviewByModel && goodsTyre._product.id_model) {
+        console.log(getTyreId);
+        const getCountModel: any = await taskProduct[i](goodsTyre._product.id_model);
+        setReviewCountModel(getCountModel);
       }
       const task = taskProduct.shift();
       task();
@@ -128,7 +170,11 @@ const GoodsPage = observer(() => {
           ]}
             >
             {changeTabGoods === "vseProTovar" ?
-                <AllAboutProduct goods={goodsTyre._product}/>
+                <AllAboutProduct 
+                  goods={goodsTyre._product}
+                  countModelReview={reviewCountModel}
+                  avgRatingModel={ratingModelAvg?.avgRatingModel}
+                />
             :null}
             {changeTabGoods === "charakteristiki"?
                 <PropertiesGoods product={goodsTyre._product}/> 
@@ -146,8 +192,15 @@ const GoodsPage = observer(() => {
                   eventItem={openToCreateReview}
                 />
               </div>
-              <ReviewGoodsOverall  /> 
-              <ReviewBrandOverall/>
+              <ReviewGoodsOverall ratingsModel={ratingModelAvg}/> 
+              <ReviewBrandOverall 
+                brandName={goodsTyre._product.tyre_brand.brand}
+                avgBrand={ratingBrandAvg?.avgRatingBrand} 
+                countReviewBrand={reviewCountBrand}
+                ratingSummer={ratingSummerAvg?.avgRatingBrandBySeason}
+                ratingWinter={ratingWinterAvg?.avgRatingBrandBySeason}
+                ratingAllseason={ratingAllSeasonAvg?.avgRatingBrandBySeason}
+              />
               {goodsTyre._product.reviews.length !== 0 ?
                 goodsTyre._product.reviews.map((item: IReviewGoods) =>
                 <Fragment key={item.id_review}>

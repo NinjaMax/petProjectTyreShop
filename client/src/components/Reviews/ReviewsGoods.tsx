@@ -19,40 +19,40 @@ const ReviewsGoods = (
     ) => {
     return (
        
-            <div className='reviewGoods'>   
-                <div className="reviewsGoodsContainer">
-                    <div className="mySlidesGoodsReview">
-                        <div className="authorGoodsReview">
-                            <img className='userImg' src={customerReview} alt='avatarUser'/> 
-                            {reviewEntity.name}
-                        </div>
-                        <div className='ratingGoodsReview'>
-                            Рейтинг товара:
-                            <Rating 
-                                numScore={4.7}
-                                disabled={true}
-                            />
-                        </div>
-                        <div className='reviewUsesCars'>Ездит на: {reviewEntity.car}</div>
-                        <div className='reviewGoodsExpier'>Стаж: {reviewEntity.driver_experience}</div>
-                        <div className='AddedGoodsReview'>Отзыв о товаре: <a href='/#'>Continental ContiCrossContact All Seasons Verde 195/65 R15 105T XL</a></div>
-                        <div className='contentGoodsReview'>
-                            {reviewEntity.description}
-                        </div>
-                        <div className='dateGoodsReview'>{reviewEntity.createdAt}</div>
-                        <div className='thumbGoodsReview'>
-                            <Thumbs/>
-                        </div>
-                        { reviewExtend?
-                        <div className='reviewGoodsExtend'>
-                            <ReviewsGoodsExtend/>
-                        </div>: null}
+        <div className='reviewGoods'>   
+            <div className="reviewsGoodsContainer">
+                <div className="mySlidesGoodsReview">
+                    <div className="authorGoodsReview">
+                        <img className='userImg' src={customerReview} alt='avatarUser'/> 
+                        {reviewEntity.name}
                     </div>
-                    {btnLeft & btnRight ?
-                    <ButtonPrevNext prevBtnLeft={btnLeft} nextBtnRight={btnRight}/>
-                    :null} 
-                </div>   
-            </div>
+                    <div className='ratingGoodsReview'>
+                        Рейтинг товара:
+                         <Rating 
+                            numScore={4.7}
+                            disabled={true}
+                        />
+                    </div>
+                    <div className='reviewUsesCars'>Ездит на: {reviewEntity.car}</div>
+                    <div className='reviewGoodsExpier'>Стаж: {reviewEntity.driver_experience}</div>
+                    <div className='AddedGoodsReview'>Отзыв о товаре: <a href='/#'>Continental ContiCrossContact All Seasons Verde 195/65 R15 105T XL</a></div>
+                    <div className='contentGoodsReview'>
+                        {reviewEntity.description}
+                    </div>
+                    <div className='dateGoodsReview'>{reviewEntity.createdAt?.toString()}</div>
+                    <div className='thumbGoodsReview'>
+                        <Thumbs/>
+                    </div>
+                    { reviewExtend?
+                    <div className='reviewGoodsExtend'>
+                        <ReviewsGoodsExtend/>
+                    </div>: null}
+                </div>
+                {btnLeft & btnRight ?
+                <ButtonPrevNext prevBtnLeft={btnLeft} nextBtnRight={btnRight}/>
+                :null} 
+            </div>   
+        </div>
         
     );
 };

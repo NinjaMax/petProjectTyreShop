@@ -4,7 +4,7 @@ import Rating from '../ux/Rating';
 import RatingOptions from '../ux/RatingOptions';
 import { IReviewGoods } from './interfaces/ReviewGoods.interface';
 //{reviewItem}: IReviewGoods
-const ReviewGoodsOverall = () => {
+const ReviewGoodsOverall = ({ratingsModel}:IReviewGoods) => {
 
     return (
         <div className='reviewGoodsOverall'>
@@ -14,7 +14,16 @@ const ReviewGoodsOverall = () => {
                         nameRating={''}
                 >
                     <Rating 
-                    numScore={5}
+                    numScore={
+                        ratingsModel!.avgRatingModel +
+                        ratingsModel!.avgRatingDryRoad +
+                        ratingsModel!.avgRatingWetRoad +
+                        ratingsModel!.avgRatingSnowRoad +
+                        ratingsModel!.avgRatingIceRoad +
+                        ratingsModel!.avgRatingCrossCountry +
+                        ratingsModel!.avgRatingTreadwear +
+                        ratingsModel!.avgRatingPriceQuality / 8
+                        ?? 0}
                     disabled={true}
                     />    
                 </RatingOptions>
@@ -27,7 +36,7 @@ const ReviewGoodsOverall = () => {
                         nameRating={'Бренд'}
                     >
                     <Rating 
-                    numScore={4}
+                    numScore={ratingsModel?.avgRatingModel ?? 0}
                     disabled={true}
                 />
                 </RatingOptions>
@@ -37,7 +46,7 @@ const ReviewGoodsOverall = () => {
                         nameRating={'Керованість на сухій дорозі'}
                     >
                         <Rating 
-                        numScore={1}
+                        numScore={ratingsModel?.avgRatingDryRoad ?? 0}
                         disabled={true}
                     />
                     </RatingOptions>
@@ -47,7 +56,7 @@ const ReviewGoodsOverall = () => {
                         nameRating={'Керованість на мокрій дорозі'} 
                     >
                     <Rating 
-                    numScore={1}
+                    numScore={ratingsModel?.avgRatingWetRoad ?? 0}
                     disabled={true}
                 />
                 </RatingOptions>
@@ -57,7 +66,7 @@ const ReviewGoodsOverall = () => {
                         nameRating={'Керованість на снігу'} 
                     >
                     <Rating 
-                    numScore={1}
+                    numScore={ratingsModel?.avgRatingSnowRoad ?? 0}
                     disabled={true}
                 />
                 </RatingOptions>
@@ -69,7 +78,7 @@ const ReviewGoodsOverall = () => {
                         nameRating={'Керованість на льду'} 
                     >
                     <Rating 
-                    numScore={1}
+                    numScore={ratingsModel?.avgRatingIceRoad ?? 0}
                     disabled={true}
                 />
                 </RatingOptions>
@@ -79,7 +88,7 @@ const ReviewGoodsOverall = () => {
                         nameRating={'Проходимість'} 
                     >
                     <Rating 
-                    numScore={1}
+                    numScore={ratingsModel?.avgRatingCrossCountry ?? 0}
                     disabled={true}
                 />
                 </RatingOptions>
@@ -89,7 +98,7 @@ const ReviewGoodsOverall = () => {
                         nameRating={'Зносостійкість'}
                     >
                     <Rating 
-                    numScore={1}
+                    numScore={ratingsModel?.avgRatingTreadwear ?? 0}
                     disabled={true}
                 />
                 </RatingOptions>
@@ -99,7 +108,7 @@ const ReviewGoodsOverall = () => {
                         nameRating={'Ціна/Якість'}
                     >
                     <Rating 
-                    numScore={1}
+                    numScore={ratingsModel?.avgRatingPriceQuality ?? 0}
                     disabled={true}
                 />
                 </RatingOptions>

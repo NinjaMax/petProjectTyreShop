@@ -317,16 +317,16 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
   }
   console.log('PARAMS: ', params.category);
   console.log('LOCATION: ', location.pathname);
-  console.log('CATALOG_CLOSE_FILTER: ', stateClick);
-  console.log('FILTER_WIDTH: ', filter.width);
-  console.log('FILTER_HEIGHT: ', filter.height);
-  console.log('FILTER_DIAMETER: ', filter.diameter,);
+  // console.log('CATALOG_CLOSE_FILTER: ', stateClick);
+  // console.log('FILTER_WIDTH: ', filter.width);
+  // console.log('FILTER_HEIGHT: ', filter.height);
+  // console.log('FILTER_DIAMETER: ', filter.diameter,);
   console.log('GET_TYRES:', goodsTyre._tyres);
-  console.log('TYRES_FILTER: ', goodsTyre._tyres_filter);
-  console.log('TYRES_FILTER_WIDTH: ', goodsTyre._width);
-  console.log('TYRES_FILTER_HEIGHT: ', goodsTyre._height);
-  console.log('TYRES_FILTER_DIAMETER: ', goodsTyre._diameter);
-  console.log('TYRES_FILTER_BRANDS: ', goodsTyre._brands);
+  // console.log('TYRES_FILTER: ', goodsTyre._tyres_filter);
+  // console.log('TYRES_FILTER_WIDTH: ', goodsTyre._width);
+  // console.log('TYRES_FILTER_HEIGHT: ', goodsTyre._height);
+  // console.log('TYRES_FILTER_DIAMETER: ', goodsTyre._diameter);
+  // console.log('TYRES_FILTER_BRANDS: ', goodsTyre._brands);
     return (
       <div className='catalogTyres'
         onClick={() => setStateClick(false)}

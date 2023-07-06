@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { RatingsService } from './ratings.service';
 import { GetRatingDto } from './dto/get-rating.dto';
@@ -21,9 +22,30 @@ export class RatingsController {
     return this.ratingsService.createRating(createRatingDto);
   }
 
-  @Get()
+  @Get('/tyres')
   findAll() {
     return this.ratingsService.findAllRating();
+  }
+
+  @Get('/tyres/bybrand/:id_brand')
+  findAllRatingByBrand(@Param('id_brand') id_brand: number) {
+    return this.ratingsService.findCountRatingByIdBrand(id_brand);
+  }
+
+  @Get('/tyres/bybrand-season/')
+  findAllRatingByBrandAllSeason(
+    @Query('id_brand') id_brand: number,
+    @Query('id_season') id_season: number,
+  ) {
+    return this.ratingsService.findCountRatingAvgByIdBrandSeason(
+      id_brand,
+      id_season
+    );
+  }
+  
+  @Get('/tyres/bymodel/:id_model')
+  findAllRatingByModel(@Param('id_model') id_model: number) {
+    return this.ratingsService.findCountRatingByIdModel(id_model);
   }
 
   @Get('/id')

@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ReviewsService } from './reviews.service';
 import { CreateReviewDto } from './dto/create-review.dto';
@@ -24,6 +25,16 @@ export class ReviewsController {
   @Get()
   findAll() {
     return this.reviewsService.findAllReviews();
+  }
+
+  @Get('count/brand')
+  countReviewByBrand(@Query('id_brand') id_brand: number) {
+    return this.reviewsService.countReviewByIdBrand(id_brand);
+  }
+
+  @Get('count/model')
+  countReviewByModel(@Query('id_model') id_model: number) {
+    return this.reviewsService.countReviewByIdModel(id_model);
   }
 
   @Get('/id')

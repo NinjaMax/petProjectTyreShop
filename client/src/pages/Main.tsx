@@ -292,11 +292,11 @@ const Main = observer(() => {
       <Benefits/>
       <ReviewsMain props={'Відгуки'}>
         <ReviewStore/>
-        <ReviewsGoods 
-          reviewExtend={false} 
-          btnLeft={undefined} 
-          btnRight={undefined}
-        />
+        {/* <ReviewsGoods 
+          reviewExtend={false}
+          btnLeft={undefined}
+          btnRight={undefined} 
+          reviewEntity={undefined}/> */}
       </ReviewsMain>
       <NewsMainBox/>
     </div>   

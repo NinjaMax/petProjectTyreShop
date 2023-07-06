@@ -62,6 +62,9 @@ export class RatingTyres extends Model<RatingTyres, RatingTyresConfigAttr> {
   @Column({ type: DataType.INTEGER })
   id_brand: number;
 
+  @Column({ type: DataType.INTEGER })
+  id_season: number;
+
   @BelongsTo(() => Tyres, 'id')
   tyres: Tyres;
 

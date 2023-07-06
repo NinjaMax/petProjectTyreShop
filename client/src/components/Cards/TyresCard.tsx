@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import '../../css/CardsCss/TyresCard.css';
 import FlagsIcon from './FlagsIcon';
 import PropsCardIcons from './PropsCardIcons';
@@ -13,13 +13,40 @@ import { Link, NavLink, useHistory, useLocation, useParams, useRouteMatch } from
 import { Context } from '../../context/Context';
 import { observer } from 'mobx-react-lite';
 import { createStringUrl } from '../../services/stringUrl';
+import { getTyresModelRatingAvg } from '../../restAPI/restGoodsApi';
+import { yieldToMain } from '../../restAPI/postTaskAdmin';
+import { IRatingAvg } from '../../pages/types/RatingModelAvg.type';
 
 const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
     const {page} = useContext<any>(Context);
+    const [ratingModel, setRatingModel] = useState<IRatingAvg>()
     const history = useHistory();
     const goodsItem = useParams();
     const location = useLocation();
     let match = useRouteMatch('/:goodsItem');
+    
+    useEffect(() => {
+        let isMounted = false;
+        const getRatingModel = async () => {
+          const taskProduct: any[] = [
+            getTyresModelRatingAvg,
+          ]
+        let i: number = 0; 
+        while (taskProduct.length > i) {
+          if (!isMounted && taskProduct[i] === getTyresModelRatingAvg && goods) {
+            const getRating: any = await taskProduct[i](goods?.id_model);
+            setRatingModel(getRating[0]);
+          }
+          const task = taskProduct.shift();
+          task();
+          await yieldToMain();
+        }
+        };
+        getRatingModel();
+        return () => {
+          isMounted = true;
+        };
+      },[goods, goods?.id_model]);
     
     const addGoodsId = () => {
         const toStringUrl = createStringUrl(goods?.full_name);
@@ -44,7 +71,7 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
                 </div>
                 <div className='ratingTyres'>
                     <Rating 
-                        numScore={4.8}
+                        numScore={ratingModel?.avgRatingModel ?? 0}
                         disabled={true}
                         nameRating='Карта товара'
                     />

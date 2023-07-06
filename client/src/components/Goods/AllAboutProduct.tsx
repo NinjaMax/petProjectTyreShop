@@ -16,7 +16,11 @@ import { Context } from '../../context/Context';
 import { ITyreCard } from '../cards/interfaces/tyreCard.interface';
 import { observer } from 'mobx-react-lite';
 
-const AllAboutProduct = observer(({goods}:ITyreCard) => {
+const AllAboutProduct = observer(({
+    goods, 
+    countModelReview,
+    avgRatingModel
+}:ITyreCard) => {
     // const param = useParams<any>();
     // const {page} = useContext<any>(Context);
     // useEffect(() => {
@@ -36,11 +40,14 @@ const AllAboutProduct = observer(({goods}:ITyreCard) => {
                 <div className='productInfoName'>{goods?.full_name}</div>
                 <div className='productInfoRating'>
                     <Rating 
-                        numScore={4.8}
+                        numScore={avgRatingModel ?? 0}
                         disabled={true}
                         nameRating='О товаре'
                     />
-                    <a className='productInfoRatingLink' href='/#'>0 отзывов</a></div>
+                    <a className='productInfoRatingLink' href='/#'>
+                        {countModelReview ?? 0} отзывов
+                    </a>
+                </div>
                 <div className="productInfoCode">код товара: {goods?.id}</div>
                 <div className='productInfoProps'>
                 {goods?.vehicle_type || goods?.season ?

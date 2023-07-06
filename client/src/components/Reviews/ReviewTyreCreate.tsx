@@ -15,7 +15,8 @@ interface IReviewTyreCreate {
 }
 
 const ReviewTyreCreate = observer(({active, setActive}: IReviewTyreCreate) => {
-    const {goodsTyre} = useContext<any | null>(Context);
+    const {goodsTyre, customer} = useContext<any | null>(Context);
+    const [successReview, setSuccessReview] = useState();
     const {register, handleSubmit, formState: {errors}
       } = useForm<FormValues>({
         criteriaMode: 'all',
@@ -24,11 +25,13 @@ const ReviewTyreCreate = observer(({active, setActive}: IReviewTyreCreate) => {
 
     },[]);
     const onSubmitReviewTyre = async (data: FormValues) => {
-        await createTyreReview(
+        const newReview = await createTyreReview(
             data, 
             goodsTyre._product.id,
             goodsTyre._product.tyre_brand.id_brand,
             goodsTyre._product.tyre_model.id_model,
+            goodsTyre._product.tyre_model.id_season,
+            customer._customer.id_customer,
             goodsTyre.ratingList.rating_overall,
             goodsTyre.ratingList.rating_dry_road,
             goodsTyre.ratingList.rating_wet_road,
@@ -38,7 +41,11 @@ const ReviewTyreCreate = observer(({active, setActive}: IReviewTyreCreate) => {
             goodsTyre.ratingList.rating_treadwear,
             goodsTyre.ratingList.rating_price_quality
         );
+        if (newReview) {
+
+        }
         console.log(data);
+        console.log(newReview);
         console.log('CLICK_SUBMIT_REVIEW');
     };
 

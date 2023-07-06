@@ -38,12 +38,12 @@ export class ReviewTyres extends Model<ReviewTyres, ReviewsTyresConfigAttr> {
   id_brand: number;
 
   @ForeignKey(() => Customer)
-  @Column({ type: DataType.INTEGER, unique: true, allowNull: true })
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
   id_customer: number;
 
-  @ForeignKey(() => Users)
-  @Column({ type: DataType.INTEGER, unique: true, allowNull: true })
-  id_user: number;
+  // @ForeignKey(() => Users)
+  // @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+  // id_user: number;
 
   @Column({ type: DataType.STRING, unique: false, allowNull: false })
   description: string;
@@ -66,8 +66,8 @@ export class ReviewTyres extends Model<ReviewTyres, ReviewsTyresConfigAttr> {
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
   email: string;
 
-  @BelongsTo(() => Users, 'id_user')
-  user: Users;
+  // @BelongsTo(() => Users, 'id_user')
+  // user: Users;
 
   @BelongsTo(() => Customer, 'id_customer')
   customer: Customer;

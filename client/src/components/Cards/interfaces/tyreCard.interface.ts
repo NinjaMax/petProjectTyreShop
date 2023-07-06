@@ -1,14 +1,19 @@
 export interface ITyreCard {
+    countModelReview?: number;
+    avgRatingModel?: number;
     optionsBox?: boolean;
     forOrder?: boolean;
     goods?: { 
-        tyre_brand: {brand: string;};
+        tyre_brand: {id_brand:number; brand: string;};
+        tyre_model: {id_model:number; model: string;};
         country: {
             country_manufacturer_ua :string;
             country_manufacturer: string;
         };
         year: {manufacture_year: number};
         id: string; 
+        id_brand:number;
+        id_model:number;
         full_name: string; 
         manufacture_year: string;
         category: {category: string};

@@ -22,9 +22,6 @@ import { StockTyres } from '../stock/entities/stock-tyres.model';
 import { TyreReinforce } from '../properties/entities/tyres/tyre-reinforce.model';
 import sequelize from 'sequelize';
 import { TyreSort } from './interfaces/tyresSort.interface';
-//import TyreSort from './interfaces/tyresSort.interface';
-
-type ITyreSort = [object: TyreSort, ...object: TyreSort[]];
 
 @Injectable()
 export class TyresService {
@@ -109,25 +106,9 @@ export class TyresService {
     run_flat: string,
     homologation: string,
     reinforce: string,
-    // cheap: boolean,
-    // expensive: boolean,
-    // rating: boolean,
-    // oldPrice: boolean,
-    // titleName: boolean,
   ) {
     try {
       const tyresAllLimit = await this.tyresRepository.findAll({
-        // order: [
-        //   expensive ? ['price', 'price', 'ASC'] : null,
-        //   cheap ? ['price', 'price', 'DESC'] : null,
-        //   oldPrice ? ['price', 'price', 'ASC'] : null,
-        //   //rating ? ['rating', 'rating', 'DESC'] : null,
-        //   titleName ? ['full_name', 'DESC'] : null,
-        //   ['stock', 'stock', 'DESC'],
-        // ],
-        //group: titleName ? 'full_name' : null,
-        // offset: offset ?? 0,
-        // limit: limit,
         include: [
           { all: true },
           width ? {
@@ -253,7 +234,7 @@ export class TyresService {
     reinforce: string,
     sort: string,
   ) {
-    // try {
+  try {
     if (sort === 'ASC') {
       const tyresAllWithoutLimitC = await this.tyresRepository.findAll({
         include: [
@@ -914,11 +895,11 @@ export class TyresService {
         });
       return tyresAllWithoutLimitR;
     }
-    // } catch {
-    //   throw new HttpException(
-    //     'Data is incorrect or Not Found',
-    //     HttpStatus.NOT_FOUND,)
-    // }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,)
+    }
   }
 
   async findAllTyresBySeason(season: string) {

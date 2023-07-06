@@ -51,8 +51,8 @@ export class Users extends Model<Users, UsersConfigAttr> {
   })
   role: string;
 
-  @HasMany(() => ReviewTyres, 'id_user')
-  reviews: ReviewTyres[];
+  // @HasMany(() => ReviewTyres, 'id_user')
+  // reviews: ReviewTyres[];
 
   @HasOne(() => Basket, 'id_user')
   basket: Basket;
