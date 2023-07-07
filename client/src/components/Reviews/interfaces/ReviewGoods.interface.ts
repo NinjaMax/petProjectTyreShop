@@ -14,10 +14,10 @@ export interface IReviewGoods {
     positive?: string;
     negative?: string;
     driver_experience?: string;
-    createdAt?: Date,
+    createdAt: string;
     car?: string;
     name?: string;
     id_review?: number;
     ratingsModel?: IRatingAvg;
-    
+    reviewCount?: number;
 }

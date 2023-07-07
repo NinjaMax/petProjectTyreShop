@@ -36,7 +36,7 @@
 }
 .tabsGoodsCardActive {
     border: solid #fff;
-    border-radius: 8px 8px 0px 0px;
+    border-radius: 9px 9px 9px 9px;
     border-width: 0px 0px 4px 0px;
     cursor: pointer;
     width: 250px;
@@ -44,12 +44,12 @@
     padding: 5px 5px 0px 5px;
     text-align: center;
     vertical-align:baseline;
-    background-color: #ddd;
+    background-color: #dddd;
 }
 
 .labelItem:hover {
-    background-color: #ddd;
-    border-radius: 8px 8px 0px 0px;
+    background-color: #cccc;
+    border-radius: 9px 9px 9px 9px;
     /* border-bottom: 4px #71C2FF solid; */
 }
 
@@ -74,8 +74,8 @@
 .tabCountReview {
     background-color: orange;
     border-radius: 30px;
-    padding-left: 4px;
-    padding-right: 4px;
+    padding-left: 6px;
+    padding-right: 6px;
     margin-left: 6px;
 
 }

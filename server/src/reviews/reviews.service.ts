@@ -128,10 +128,10 @@ export class ReviewsService {
 
   async countReviewByIdBrand(id_brand: number) {
     try {
-      const reviewId = await this.reviewTyresRepository.count({
+      const reviewIdBrand = await this.reviewTyresRepository.count({
         where: { id_brand: id_brand },
       });
-      return reviewId;
+      return reviewIdBrand;
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',
@@ -140,12 +140,12 @@ export class ReviewsService {
     }
   }
 
-  async countReviewByIdModel(id_brand: number) {
+  async countReviewByIdModel(id_model: number) {
     try {
-      const reviewId = await this.reviewTyresRepository.count({
-        where: { id_brand: id_brand },
+      const reviewIdModel = await this.reviewTyresRepository.count({
+        where: { id_model: id_model },
       });
-      return reviewId;
+      return reviewIdModel;
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',

@@ -20,13 +20,14 @@ const ReviewsBrandOverall = ({
     ratingWinter,
     ratingAllseason,
     brandName
-
 }: IReviewBrand) => {
     return (
-        
         <div className="reviewsBrand">
             <div className='reviewBrandList'>
-                <h5>Рейтинг бренда</h5><h6>{brandName}</h6><img src={brandImg} alt='brandImg'/>
+                <span className='reviewBrandTitle'>Рейтинг бренда</span>
+                <p/>
+                <span className='reviewBrandName'>{brandName}</span>
+                <img src={brandImg} alt='brandImg'/>
                 <Rating 
                     numScore={avgBrand ?? 0}
                     disabled={true}
@@ -37,34 +38,31 @@ const ReviewsBrandOverall = ({
                 <RatingOptions 
                     nameRating={'середня оцінка Зимових моделей'}
                 >
-                <Rating 
-                    numScore={ratingWinter ?? 0}
-                    disabled={true}
-                /> 
+                    <Rating 
+                        numScore={ratingWinter ?? 0}
+                        disabled={true}
+                    /> 
                 </RatingOptions> 
-                <span>основана на {0} відгуках.</span>
             </div>
             <div className='reviewBrandList'>
                 <RatingOptions 
                     nameRating={'середня оцінка Літніх моделей'}
-                    >
+                >
                     <Rating 
                         numScore={ratingSummer ?? 0}
                         disabled={true}
                     /> 
-                    </RatingOptions> 
-                <span>основана на {0} відгуках.</span>
+                </RatingOptions> 
             </div>
             <div className='reviewBrandList'>
                 <RatingOptions 
                     nameRating={'середня оцінка Всесезонних моделей'}
-                    >
+                >
                     <Rating 
                         numScore={ratingAllseason ?? 0}
                         disabled={true}
                     /> 
-                    </RatingOptions> 
-                <span>основана на {0} відгуках.</span>
+                </RatingOptions>
             </div>
         </div>
         

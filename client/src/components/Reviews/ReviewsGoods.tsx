@@ -8,17 +8,32 @@ import ReviewsGoodsExtend from './ReviewsGoodsExtend';
 import { IReviewGoods } from './interfaces/ReviewGoods.interface';
 
 interface IReviewsGoods {
+    productFullName: string;
     reviewEntity: IReviewGoods;
     reviewExtend: boolean; 
     btnLeft: any; 
     btnRight: any;
+    rating?: [{id_review?: number, rating_overall?: number}];
 }
 
-const ReviewsGoods = (
-        {reviewEntity, reviewExtend, btnLeft, btnRight}: IReviewsGoods
+const ReviewsGoods = ({
+    productFullName,
+    rating,
+    reviewEntity,
+    reviewExtend,
+    btnLeft,
+    btnRight}: IReviewsGoods
     ) => {
+
+    const tumbUpAction = () => {
+        
+    };
+    
+    const tumbDownAction = () => {
+
+    };
+
     return (
-       
         <div className='reviewGoods'>   
             <div className="reviewsGoodsContainer">
                 <div className="mySlidesGoodsReview">
@@ -27,19 +42,40 @@ const ReviewsGoods = (
                         {reviewEntity.name}
                     </div>
                     <div className='ratingGoodsReview'>
-                        Рейтинг товара:
+                        <span>Рейтинг товара:</span>
                          <Rating 
-                            numScore={4.7}
+                            numScore={
+                                rating?.find(
+                                    rating => 
+                                    rating.id_review === reviewEntity.id_review)?.rating_overall
+                            }
                             disabled={true}
                         />
                     </div>
-                    <div className='reviewUsesCars'>Ездит на: {reviewEntity.car}</div>
-                    <div className='reviewGoodsExpier'>Стаж: {reviewEntity.driver_experience}</div>
-                    <div className='AddedGoodsReview'>Отзыв о товаре: <a href='/#'>Continental ContiCrossContact All Seasons Verde 195/65 R15 105T XL</a></div>
+                    <div className='reviewUsesCars'>
+                        <span>Їздить на: </span> {reviewEntity.car}</div>
+                    <div className='reviewGoodsExpier'>
+                        <span>Водійський досвід: </span> {reviewEntity.driver_experience}</div>
+                    <div className='addedGoodsReview'>
+                        <span>Відгук о товарі: </span> 
+                        <a href='/#'>
+                        {productFullName}
+                        </a>
+                    </div>
                     <div className='contentGoodsReview'>
                         {reviewEntity.description}
                     </div>
-                    <div className='dateGoodsReview'>{reviewEntity.createdAt?.toString()}</div>
+                    <div className='reviewPositive'>
+                        <span>Переваги: </span>
+                        {reviewEntity.positive}
+                    </div>
+                    <div className='reviewNegative'>
+                        <span>Недоліки: </span>
+                        {reviewEntity.negative}
+                    </div>
+                    <div className='dateGoodsReview'>
+                        {new Date(reviewEntity?.createdAt).toLocaleDateString()}
+                    </div>
                     <div className='thumbGoodsReview'>
                         <Thumbs/>
                     </div>
@@ -53,7 +89,6 @@ const ReviewsGoods = (
                 :null} 
             </div>   
         </div>
-        
     );
 };
 

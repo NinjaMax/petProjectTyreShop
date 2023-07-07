@@ -38,7 +38,13 @@ const Rating = observer((
                 onChange={inputRating} 
                 />
             <label 
-                className={5 <= chooseStar! ? "fa fa-star checked" :"fa fa-star"}
+                className={
+                    5 <= chooseStar! ? 
+                    "fa fa-star checked": 
+                    5 > chooseStar! && 4 < chooseStar! ? "fas fa-star-half-alt checked" :
+                    5 < chooseStar! ? 
+                    "fa fa-star checked" :
+                    "fa fa-star"}
                 htmlFor={nameRating + ' 5'} 
                 title="Оцінка «5»"
             ></label>
@@ -52,7 +58,13 @@ const Rating = observer((
                 onChange={inputRating}
             />
             <label 
-                className={4 <= chooseStar! ? "fa fa-star checked" :"fa fa-star"}
+                className={
+                4 <= chooseStar! ? 
+                "fa fa-star checked" :
+                4 > chooseStar! && 3 < chooseStar! ? "fas fa-star-half-alt checked" :
+                4 < chooseStar! ? 
+                "fa fa-star checked" :
+                "fa fa-star"}
                 htmlFor={nameRating + ' 4'} 
                 title="Оцінка «4»"
             ></label>
@@ -67,9 +79,15 @@ const Rating = observer((
             />
             <label 
                 className={
-                    3 <= chooseStar! ? 
-                    "fa fa-star checked" :"fa fa-star"
+                    3 === chooseStar! ? 
+                    "fa fa-star checked" :
+                    3 > chooseStar! && 2 < chooseStar! ? "fas fa-star-half-alt half-theme" :
+                    3 < chooseStar! ? 
+                    "fa fa-star checked" :
+                    "fa fa-star"
                 }
+                //style={{"--fa-primary-color: dodgerblue; --fa-secondary-color: gold;"}}
+                //style={{'--fa-secondary-color': "#5a5a58",}}
                 htmlFor={nameRating + ' 3'} 
                 title="Оцінка «3»"
             ></label>
@@ -83,7 +101,14 @@ const Rating = observer((
                 onChange={inputRating}
             />
             <label 
-                className={2 <= chooseStar! ? "fa fa-star checked" :"fa fa-star"}
+                className={
+                2 === chooseStar! ? 
+                "fa fa-star checked" :
+                2 > chooseStar! && 1 < chooseStar! ? "fas fa-star-half-alt checked" :
+                2 < chooseStar! ? 
+                "fa fa-star checked" :
+                "fa fa-star"
+            }
                 htmlFor={nameRating + ' 2'} 
                 title="Оцінка «2»"
             ></label>

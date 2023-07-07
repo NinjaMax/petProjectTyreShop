@@ -22,7 +22,7 @@ export class ReviewsController {
     return this.reviewsService.createReview(createReviewDto);
   }
 
-  @Get()
+  @Get('/tyres')
   findAll() {
     return this.reviewsService.findAllReviews();
   }

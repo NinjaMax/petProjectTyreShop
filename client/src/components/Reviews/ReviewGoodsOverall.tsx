@@ -2,10 +2,10 @@ import React from 'react';
 import '../../css/Reviews/ReviewGoodsOverall.css';
 import Rating from '../ux/Rating';
 import RatingOptions from '../ux/RatingOptions';
-import { IReviewGoods } from './interfaces/ReviewGoods.interface';
-//{reviewItem}: IReviewGoods
-const ReviewGoodsOverall = ({ratingsModel}:IReviewGoods) => {
+import { IReviewGoodsOverall } from './interfaces/ReviewGoodsOverall.interface';
 
+const ReviewGoodsOverall = (
+    {ratingsModel, reviewCount}:IReviewGoodsOverall) => {
     return (
         <div className='reviewGoodsOverall'>
             <div className="headingGoodsOverall">
@@ -14,33 +14,13 @@ const ReviewGoodsOverall = ({ratingsModel}:IReviewGoods) => {
                         nameRating={''}
                 >
                     <Rating 
-                    numScore={
-                        ratingsModel!.avgRatingModel +
-                        ratingsModel!.avgRatingDryRoad +
-                        ratingsModel!.avgRatingWetRoad +
-                        ratingsModel!.avgRatingSnowRoad +
-                        ratingsModel!.avgRatingIceRoad +
-                        ratingsModel!.avgRatingCrossCountry +
-                        ratingsModel!.avgRatingTreadwear +
-                        ratingsModel!.avgRatingPriceQuality / 8
-                        ?? 0}
+                    numScore={ratingsModel?.avgRatingModel ?? 0}
                     disabled={true}
                     />    
                 </RatingOptions>
-                
-                <p> середня оцінка основана на { ''} відгуках.</p>
+                <p> середня оцінка основана на { reviewCount ?? 0} відгуках.</p>
             </div>
             <div className='ratingList'>
-                <div className='ratingListItems'>
-                    <RatingOptions 
-                        nameRating={'Бренд'}
-                    >
-                    <Rating 
-                    numScore={ratingsModel?.avgRatingModel ?? 0}
-                    disabled={true}
-                />
-                </RatingOptions>
-                </div>
                 <div className='ratingListItems'>
                     <RatingOptions 
                         nameRating={'Керованість на сухій дорозі'}

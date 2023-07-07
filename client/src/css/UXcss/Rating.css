@@ -25,6 +25,9 @@
     width: 30px;
     height: 20px;
 } */
+:root {
+    --secondary: #666;
+}
 .ratingBox {
     display: inline;
 }
@@ -50,7 +53,7 @@
     line-height: 1;
     content:icon('fa fa-star');
 } */
-.ratingStar label {
+/* .ratingStar label {
     width: 20px;
     cursor: pointer;
     font-size: 20px;
@@ -58,6 +61,16 @@
     text-align: center;
     line-height: 1;
     content:icon('fa fa-star');
+} */
+
+.ratingStar label {
+    width: 20px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #666;
+    text-align: center;
+    line-height: 1;
+    content:icon('fas fa-star-half-alt');
 }
 
 
@@ -84,8 +97,13 @@
 } */
 .ratingStar .checked {
     color: orange;
+    
 }
 
+.half-theme {
+    --fa-primary-color: orange;;
+    --fa-secondary-color: #666;
+}
 /* .ratingStar>input:checked+label:hover,
 .ratingStar>input:checked+label:hover~label,
 .ratingStar>input:checked~label:hover,
@@ -96,7 +114,8 @@
 
 .ratingNumber {
     text-align: center;
-    vertical-align:baseline;
+    vertical-align:middle;
+    margin-top: 1px;
     margin-left: 2px;
     font-size: 15px;
     font-family: var(--main-font-family);

@@ -192,7 +192,10 @@ const GoodsPage = observer(() => {
                   eventItem={openToCreateReview}
                 />
               </div>
-              <ReviewGoodsOverall ratingsModel={ratingModelAvg}/> 
+              <ReviewGoodsOverall 
+                reviewCount={reviewCountModel}
+                ratingsModel={ratingModelAvg}
+              /> 
               <ReviewBrandOverall 
                 brandName={goodsTyre._product.tyre_brand.brand}
                 avgBrand={ratingBrandAvg?.avgRatingBrand} 
@@ -205,6 +208,8 @@ const GoodsPage = observer(() => {
                 goodsTyre._product.reviews.map((item: IReviewGoods) =>
                 <Fragment key={item.id_review}>
                 <ReviewsGoods 
+                  productFullName={goodsTyre._product.full_name}
+                  rating={goodsTyre._product.rating}
                   reviewEntity={item}
                   reviewExtend={false} 
                   btnLeft={undefined} 

@@ -1,13 +1,14 @@
 .reviewGoodsOverall {
     display: flex;
     flex-direction: row;
-    justify-content:space-evenly;
-    gap: 25px;
+    justify-content:flex-start;
+    gap: 60px;
     border-radius:10px;
     background-color:#CADBEA;
     width: 905px;
     padding: 10px;
-    font-family: var(--main-font-family);    
+    font-family: var(--main-font-family);   
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); 
 }
 
 /*.headingGoodsOverall span {

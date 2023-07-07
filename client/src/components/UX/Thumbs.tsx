@@ -10,8 +10,14 @@ const Thumbs = () => {
 
     return (
         <div className='thumbs'>
-            <img src={thumbUp} alt='thumbUp'/> {countUp} 
-            <img src={thumbDown} alt='thumbDown'/> {countDown}
+            <span>
+                <i className="fas fa-thumbs-up"></i> {countUp}
+                <i className="far fa-thumbs-up"></i> {countUp}
+            </span>
+            <span>
+                <i className="fas fa-thumbs-down"></i> {countDown}
+                <i className="far fa-thumbs-down"></i> {countDown} 
+            </span>
         </div>
     );
 };
