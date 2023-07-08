@@ -1,10 +1,59 @@
-.thumbs img{
-    width: 30px;
-    height: 30px;
+.thumbs .countThumb {
+    margin: 4px 4px 4px 4px;
+    padding:2px 8px 5px 8px;
+    border-radius: 15px;
+    background-color: #CADBEA;
+    vertical-align: middle;
 }
 
-.thumbs img:hover {
+.thumbs .noCountThumb {
+    display: none;
+}
+
+.thumbs .upThumb {
+    width: 30px;
+    height: 30px;
     cursor: pointer;
-    background-color:#fff;
-    border-radius:50%;
+    content: url('../../../public/iconThumbs/thumbs_up.png');
+    vertical-align:middle;
+}
+.thumbs .upThumb:hover {
+    cursor: pointer;
+    content: url('../../../public/iconThumbs/thumbs_up_hover.png');    
+}
+.thumbs .upThumb:active {
+    cursor: pointer;
+    content: url('../../../public/iconThumbs/thumbs_up_filled.png'); 
+}
+
+.thumbs .downThumb {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    content: url('../../../public/iconThumbs/thumbs_down.png');
+    vertical-align:middle;
+}
+.thumbs .downThumb:hover {
+    cursor: pointer;
+    content: url('../../../public/iconThumbs/thumbs_down_hover.png');    
+}
+.thumbs .downThumb:active {
+    cursor: pointer;
+    content: url('../../../public/iconThumbs/thumbs_down_filled.png'); 
+}
+
+.thumbs .downThumbsChecked {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    vertical-align:middle;
+    content: url('../../../public/iconThumbs/thumbs_down_checked.png');    
+}
+
+.thumbs .upThumbChecked {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    vertical-align:middle;
+    content: url('../../../public/iconThumbs/thumbs_up_checked.png');    
 }

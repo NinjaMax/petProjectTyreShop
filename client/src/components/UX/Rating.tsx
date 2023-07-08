@@ -21,7 +21,6 @@ const Rating = observer((
                 goodsTyre.setNewRating(e.target.title, e.target.value);
             } 
         }
-
     };
 
     return (
@@ -30,7 +29,7 @@ const Rating = observer((
                 {chooseStar}
             </div>
             <input 
-                id={nameRating + ' 5'}
+                id={nameRating ?? 0 +'5'}
                 type="radio"  
                 name="rating"
                 value="5"
@@ -45,12 +44,12 @@ const Rating = observer((
                     5 < chooseStar! ? 
                     "fa fa-star checked" :
                     "fa fa-star"}
-                htmlFor={nameRating + ' 5'} 
+                htmlFor={nameRating ?? 0 +'5'} 
                 title="Оцінка «5»"
             ></label>
 
             <input 
-                id={nameRating + ' 4'}
+                id={nameRating ?? 0 + '4'}
                 type="radio" 
                 name="rating" 
                 value="4"
@@ -65,12 +64,12 @@ const Rating = observer((
                 4 < chooseStar! ? 
                 "fa fa-star checked" :
                 "fa fa-star"}
-                htmlFor={nameRating + ' 4'} 
+                htmlFor={nameRating ?? 0 + '4'} 
                 title="Оцінка «4»"
             ></label>
 
             <input 
-                id={nameRating + ' 3'}
+                id={nameRating ?? 0 + '3'}
                 type="radio" 
                 title={nameRating}
                 name="rating" 
@@ -81,19 +80,17 @@ const Rating = observer((
                 className={
                     3 === chooseStar! ? 
                     "fa fa-star checked" :
-                    3 > chooseStar! && 2 < chooseStar! ? "fas fa-star-half-alt half-theme" :
+                    3 > chooseStar! && 2 < chooseStar! ? "fa fa-star-half-alt checked" :
                     3 < chooseStar! ? 
                     "fa fa-star checked" :
                     "fa fa-star"
                 }
-                //style={{"--fa-primary-color: dodgerblue; --fa-secondary-color: gold;"}}
-                //style={{'--fa-secondary-color': "#5a5a58",}}
-                htmlFor={nameRating + ' 3'} 
+                htmlFor={nameRating ?? 0 + '3'} 
                 title="Оцінка «3»"
             ></label>
 
             <input 
-                id={nameRating + ' 2'}
+                id={nameRating ?? 0 + '2'}
                 type="radio" 
                 title={nameRating} 
                 name="rating" 
@@ -109,12 +106,12 @@ const Rating = observer((
                 "fa fa-star checked" :
                 "fa fa-star"
             }
-                htmlFor={nameRating + ' 2'} 
+                htmlFor={nameRating ?? 0 + '2'} 
                 title="Оцінка «2»"
             ></label>
 
             <input 
-                id={nameRating + ' 1'}
+                id={nameRating ?? 0 + '1'}
                 type="radio" 
                 title={nameRating} 
                 name="rating" 
@@ -123,7 +120,7 @@ const Rating = observer((
             />
             <label 
                 className={1 <= chooseStar! ? "fa fa-star checked" :"fa fa-star"}
-                htmlFor={nameRating + ' 1'} 
+                htmlFor={nameRating ?? 0 + '1'} 
                 title="Оцінка «1»"
             ></label>
         </div>

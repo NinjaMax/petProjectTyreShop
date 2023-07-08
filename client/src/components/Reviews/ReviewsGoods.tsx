@@ -77,7 +77,10 @@ const ReviewsGoods = ({
                         {new Date(reviewEntity?.createdAt).toLocaleDateString()}
                     </div>
                     <div className='thumbGoodsReview'>
-                        <Thumbs/>
+                        <Thumbs
+                            countPositive={5}
+                            countNegative={1}
+                        />
                     </div>
                     { reviewExtend?
                     <div className='reviewGoodsExtend'>

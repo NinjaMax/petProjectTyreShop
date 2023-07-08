@@ -1,33 +1,3 @@
-/* .ratingStar {
-    display: flex;
-    flex-direction: row;
-    align-items:baseline;
-    width:fit-content;
-    font-size: 1rem;
-    font-family: var(--main-font-family);
-    margin: 0px;
-}
-
-.checked {
-    color: orange;
-}
-
-.ratingNumber {
-    text-align: center;
-    vertical-align:baseline;
-    margin-left: 2px;
-    font-size: 15px;
-    font-family: var(--main-font-family);
-    font-weight: bold;
-    color:#444B54;
-    background-color:orange;
-    border-radius:25px;
-    width: 30px;
-    height: 20px;
-} */
-:root {
-    --secondary: #666;
-}
 .ratingBox {
     display: inline;
 }
@@ -44,24 +14,6 @@
 .ratingStar:not(:checked)>input {
     display: none;
 }
-/* .ratingStar:not(:checked)>label {
-    width: 20px;
-    cursor: pointer;
-    font-size: 20px;
-    color: #666;
-    text-align: center;
-    line-height: 1;
-    content:icon('fa fa-star');
-} */
-/* .ratingStar label {
-    width: 20px;
-    cursor: pointer;
-    font-size: 20px;
-    color: #666;
-    text-align: center;
-    line-height: 1;
-    content:icon('fa fa-star');
-} */
 
 .ratingStar label {
     width: 20px;
@@ -70,47 +22,16 @@
     color: #666;
     text-align: center;
     line-height: 1;
-    content:icon('fas fa-star-half-alt');
+    content:icon('fas fa-star', 'fas fa-star-half-alt');
 }
 
-
-
-
-
-
-/* .ratingStar:not(:checked)>label:before {
-    content:icon('fa fa-star'); 
-} */
-/* .ratingStar>input:checked~label {
-    color: orange;
-} */
-
-/* .ratingStar:not(:checked)>label:hover,
-.ratingStar:not(:checked)>label:hover~label {
-  color: orange;
-} */
 .ratingStar label:hover, .ratingStar label:hover ~ label{
     color: orange;
 }
-/* .ratingStar span:checked~span {
-    color: orange;
-} */
+
 .ratingStar .checked {
     color: orange;
-    
 }
-
-.half-theme {
-    --fa-primary-color: orange;;
-    --fa-secondary-color: #666;
-}
-/* .ratingStar>input:checked+label:hover,
-.ratingStar>input:checked+label:hover~label,
-.ratingStar>input:checked~label:hover,
-.ratingStar>input:checked~label:hover~label,
-.ratingStar>label:hover~input:checked~label {
-  color: orange;
-} */
 
 .ratingNumber {
     text-align: center;

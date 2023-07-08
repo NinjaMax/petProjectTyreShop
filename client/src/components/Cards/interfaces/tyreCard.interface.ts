@@ -31,6 +31,7 @@ export interface ITyreCard {
             season: string,
             season_ua: string
         };
+        reviews:[];
     };
     checkOrders?:()=> void | undefined;
 }
