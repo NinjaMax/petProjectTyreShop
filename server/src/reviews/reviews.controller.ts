@@ -42,6 +42,17 @@ export class ReviewsController {
     return this.reviewsService.findReviewById(getReviewDto);
   }
 
+  @Patch('/likes')
+  updateLikes(
+    @Body() updateReviewDto: UpdateReviewDto
+    // id_review: number, 
+    // likeCount: number,
+    // dislikeCount: number,
+    ) {
+    return this.reviewsService.countLikeByIdReview(updateReviewDto);
+  }
+
+  
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {
     return this.reviewsService.update(+id, updateReviewDto);

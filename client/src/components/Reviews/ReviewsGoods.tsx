@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../css/Reviews/ReviewsGoods.css';
 import customerReview from '../../assets/icons/customer64.png';
 import ButtonPrevNext from '../buttons/ButtonPrevNext';
@@ -6,6 +6,7 @@ import Rating from '../ux/Rating';
 import Thumbs from '../ux/Thumbs';
 import ReviewsGoodsExtend from './ReviewsGoodsExtend';
 import { IReviewGoods } from './interfaces/ReviewGoods.interface';
+import { yieldToMain } from '../../restAPI/postTaskAdmin';
 
 interface IReviewsGoods {
     productFullName: string;
@@ -14,6 +15,8 @@ interface IReviewsGoods {
     btnLeft: any; 
     btnRight: any;
     rating?: [{id_review?: number, rating_overall?: number}];
+    setLikeReview(arg0:any): void;
+    setThumbDown?(arg0:any): void;
 }
 
 const ReviewsGoods = ({
@@ -21,18 +24,84 @@ const ReviewsGoods = ({
     rating,
     reviewEntity,
     reviewExtend,
+    setLikeReview,
+    // setThumbDown,
     btnLeft,
     btnRight}: IReviewsGoods
     ) => {
+    // const [likeReview, setLikeReview] = useState<number>(0);
+    // const [dislikeReview, setDislikeReview] = useState<number>(0);
+    const [thumbUp, setThumbUp] = useState<boolean | null>(null);
+    const [thumbDown, setThumbDown] = useState<boolean | null>(null);
+    
+    // useEffect(() => {
+    //     let isMounted = false;
+    //     const setThumbs = async () => {
+    //       const taskThumbs: any[] = [
+    //         likesTyreReview,
+    //       ]
+    //     let i: number = 0; 
+    //     while  taskThumbs.length > i) {
+    //       if (!isMounted && taskThumbs[i] === likesTyreReview && getTyreId) {
+    //         const getProduct: any = await taskThumbs[i](
+    //             reviewEntity.id_review,
+    //             likeReview,
+    //             dislikeReview
+    //         );
+    //       }
+    //       const task = taskThumbs.shift();
+    //       task();
+    //       await yieldToMain();
+    //     }
+    //     };
+    //     setThumbs();
+    //     return () => {
+    //       isMounted = true;
+    //     };
+    //   },[]);
 
     const tumbUpAction = () => {
-        
+        setThumbUp(!thumbUp);
+        if (!thumbUp) {
+            setLikeReview({
+            id_review: reviewEntity.id_review,
+            likeCount: 1,
+            dislikeCount: 0,
+            });
+            console.log('thumbUp: 1');
+        }
+        if (thumbUp) {
+            setLikeReview({
+                id_review: reviewEntity.id_review,
+                likeCount: -1,
+                dislikeCount: 0,
+            });
+            console.log('thumbUp: -1');
+        }
     };
     
     const tumbDownAction = () => {
-
+        setThumbDown(!thumbDown);
+        if (!thumbDown) {
+            setLikeReview({
+                id_review: reviewEntity.id_review,
+                likeCount: 0,
+                dislikeCount: 1,
+            });
+            console.log('thumbDown: 1');
+        }
+        if (thumbDown) {
+            setLikeReview({
+                id_review: reviewEntity.id_review,
+                likeCount: 0,
+                dislikeCount: -1,
+            });
+            console.log('thumbDown: -1');
+        }
     };
 
+    console.log('THUMB_UP: ', thumbUp);
+    console.log('THUMB_DOWN: ', thumbDown);
     return (
         <div className='reviewGoods'>   
             <div className="reviewsGoodsContainer">
@@ -78,9 +147,14 @@ const ReviewsGoods = ({
                     </div>
                     <div className='thumbGoodsReview'>
                         <Thumbs
-                            countPositive={5}
-                            countNegative={1}
-                        />
+                            //reviewId={reviewEntity.id_review}
+                            countPositive={reviewEntity.like_count}
+                            countNegative={reviewEntity.dislike_count} 
+                            likeState={thumbUp} 
+                            dislikeState={thumbDown}
+                            likeAction={tumbUpAction}
+                            disLikeAction={tumbDownAction} 
+                            />
                     </div>
                     { reviewExtend?
                     <div className='reviewGoodsExtend'>

@@ -21,4 +21,5 @@ export type FormValues = {
     rating_cross_country: number;
     rating_treadwear: number;
     rating_price_quality: number;
+    formState: any;
 }

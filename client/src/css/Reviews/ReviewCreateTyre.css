@@ -61,3 +61,11 @@
     font-size: large;
     padding: 2px;
 }
+.reviewTyreErrors {
+    color: red;
+    margin-top: 1px;
+    margin-bottom: 2px;
+    margin-left: 10px;
+    margin-right: 2px;
+    font-size: small;
+}

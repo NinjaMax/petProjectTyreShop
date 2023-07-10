@@ -145,6 +145,20 @@ const getTyresCountAll = async (
     return data;
 }
 
+const likesTyreReview = async (
+    id_review?: number, 
+    likeCount?: number,
+    dislikeCount?: number,
+    ) =>
+    await $hostPost.patch('/reviews/likes', {
+    id_review: id_review, 
+    likeCount: likeCount ?? 0,
+    dislikeCount: dislikeCount ?? 0,   
+})
+.catch(error => {
+    console.log(error)
+}); 
+
 const createTyreReview = async (
     data:IReviewTyreRestCreate, 
     id: number,
@@ -152,7 +166,7 @@ const createTyreReview = async (
     id_model: number,
     id_season: number,
     id_customer?: number,    
-    rating_overall?: number,
+    //rating_overall?: number,
     rating_dry_road?:number,
     rating_wet_road?: number,
     rating_snow_road?: number,
@@ -164,19 +178,19 @@ const createTyreReview = async (
     ) =>
     await $hostPost.post('/reviews', {
 
-    email: data.email,
-    description: data.description,
-    positive: data.positive,
-    negative: data.negative,
-    driver_experience: data.driver_experience,
-    car: data.car,
-    name: data.name,    
+    email: data?.email,
+    description: data?.description,
+    positive: data?.positive,
+    negative: data?.negative,
+    driver_experience: data?.driver_experience,
+    car: data?.car,
+    name: data?.name,    
     id: id,
     id_brand: id_brand,
     id_model: id_model,
     id_season: id_season,
     id_customer: id_customer,
-    rating_overall: rating_overall,
+    rating_overall: data?.rating_overall,
     rating_dry_road: rating_dry_road,
     rating_wet_road: rating_wet_road,
     rating_snow_road: rating_snow_road,
@@ -371,5 +385,6 @@ export {
     getTyresBrandRatingAvg,
     getTyresBrandRatingAvgSeason,
     getTyresCountReviewByBrand,
-    getTyresCountReviewByModel
+    getTyresCountReviewByModel,
+    likesTyreReview
 }

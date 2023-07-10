@@ -20,4 +20,7 @@ export interface IReviewGoods {
     id_review?: number;
     ratingsModel?: IRatingAvg;
     reviewCount?: number;
+    like_count:number;
+    dislike_count:number;
+
 }

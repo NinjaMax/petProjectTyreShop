@@ -7,7 +7,11 @@
 }
 
 .thumbs .noCountThumb {
-    display: none;
+    margin: 4px 4px 4px 4px;
+    padding:2px 8px 5px 8px;
+    border-radius: 15px;
+    /* background-color: #CADBEA; */
+    vertical-align: middle;
 }
 
 .thumbs .upThumb {

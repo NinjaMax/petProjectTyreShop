@@ -7,47 +7,32 @@ import { observer } from 'mobx-react-lite';
 import { Context } from '../../context/Context';
 import Rating from '../ux/Rating';
 import { FormValues } from './types/ReviewTyreCreate.type';
-import { createTyreReview } from '../../restAPI/restGoodsApi';
 
 interface IReviewTyreCreate {
-    active: boolean;
-    setActive(arg0: any): void;
+    onSubmitReviewTyre(arg0: any): void;
 }
 
-const ReviewTyreCreate = observer(({active, setActive}: IReviewTyreCreate) => {
-    const {goodsTyre, customer} = useContext<any | null>(Context);
-    const [successReview, setSuccessReview] = useState();
-    const {register, handleSubmit, formState: {errors}
+const ReviewTyreCreate = observer(({
+    onSubmitReviewTyre,
+}: IReviewTyreCreate) => {
+    const {goodsTyre} = useContext<any | null>(Context);
+    const {
+        register, 
+        handleSubmit,
+        setValue,  
+        formState: {errors}
       } = useForm<FormValues>({
         criteriaMode: 'all',
     });
+    
     useEffect(() => {
-
-    },[]);
-    const onSubmitReviewTyre = async (data: FormValues) => {
-        const newReview = await createTyreReview(
-            data, 
-            goodsTyre._product.id,
-            goodsTyre._product.tyre_brand.id_brand,
-            goodsTyre._product.tyre_model.id_model,
-            goodsTyre._product.tyre_model.id_season,
-            customer._customer.id_customer,
-            goodsTyre.ratingList.rating_overall,
-            goodsTyre.ratingList.rating_dry_road,
-            goodsTyre.ratingList.rating_wet_road,
-            goodsTyre.ratingList.rating_snow_road,
-            goodsTyre.ratingList.rating_ice_road,
-            goodsTyre.ratingList.rating_cross_country,
-            goodsTyre.ratingList.rating_treadwear,
-            goodsTyre.ratingList.rating_price_quality
-        );
-        if (newReview) {
-
+        register("rating_overall", { required: "Обов'язково вкажіть рейтинг",
+            valueAsNumber: true,
+        });
+        if (goodsTyre.ratingList.rating_overall) {
+            setValue('rating_overall', goodsTyre.ratingList.rating_overall)  
         }
-        console.log(data);
-        console.log(newReview);
-        console.log('CLICK_SUBMIT_REVIEW');
-    };
+    },[goodsTyre.ratingList.rating_overall, register, setValue]);
 
     return (
     <div className='reviewTyreCreate'>
@@ -57,7 +42,7 @@ const ReviewTyreCreate = observer(({active, setActive}: IReviewTyreCreate) => {
         <div className='reviewRatingList'>
             <div className='reviewRatingListItems'>
                 <RatingOptions 
-                    nameRating={'Бренд'} 
+                    nameRating={'Загальна оцінка'} 
                 >
                 <Rating 
                     numScore={goodsTyre.ratingList.rating_overall}
@@ -155,7 +140,8 @@ const ReviewTyreCreate = observer(({active, setActive}: IReviewTyreCreate) => {
                 maxLength={200}
                 placeholder='Написати відгук'
                 {...register("description", 
-                    { required: true, maxLength: 200 })
+                    { required: "Напишіть відгук", 
+                    maxLength: 200 })
                 }
             />
             <label htmlFor='negativeReview'>Недоліки</label>
@@ -198,7 +184,7 @@ const ReviewTyreCreate = observer(({active, setActive}: IReviewTyreCreate) => {
                 type="text" 
                 placeholder="Ваше ім'я"
                 {...register("name", 
-                    { required: true, maxLength: 50 })
+                    { required: "Треба заповнити ім'я", maxLength: 50 })
                 }
             />
             <input 
@@ -214,7 +200,22 @@ const ReviewTyreCreate = observer(({active, setActive}: IReviewTyreCreate) => {
         <ButtonAction 
             type={"submit"}
             props={'Зберегти відгук'}
-        />
+        /> 
+        {errors?.name && 
+            <span className='reviewTyreErrors'>
+                {errors.name?.message}
+            </span>
+        }
+        {errors?.description && 
+            <span className='reviewTyreErrors'>
+                {errors.description?.message}
+            </span>
+        }
+        {errors?.rating_overall && 
+            <span className='reviewTyreErrors'>
+                {errors.rating_overall?.message}
+            </span>
+        }
         </form>
     </div>
   )

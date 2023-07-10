@@ -12,18 +12,16 @@ import { TyresService } from '../tyres/tyres.service';
 
 @Injectable()
 export class ReviewsService {
-
   constructor(
     @InjectModel(ReviewTyres) private reviewTyresRepository: typeof ReviewTyres,
-    private ratingsService: RatingsService, 
+    private ratingsService: RatingsService,
     private tyresService: TyresService,
     private tyreBrandService: PropsBrandService,
     private tyreModelService: PropsModelService,
-    private customersService: CustomersService
+    private customersService: CustomersService,
   ) {}
 
   async createReview(createReviewDto: CreateReviewDto) {
-
     try {
       const tyre = await this.tyresService.findTyresById(createReviewDto);
       const tyreModel = await this.tyreModelService.findModelById(
@@ -49,17 +47,17 @@ export class ReviewsService {
         );
 
         await tyre.$add('reviews', [reviewCreate.id_review]);
-        await tyre.$add('rating', [ratingCreate.id_rating])
+        await tyre.$add('rating', [ratingCreate.id_rating]);
         await tyreModel.$add('reviews', [reviewCreate.id_review]);
         await tyreModel.$add('ratings', [ratingCreate.id_rating]);
         await tyreBrand.$add('reviews', [reviewCreate.id_review]);
         await tyreBrand.$add('ratings', [ratingCreate.id_rating]);
         await newReview.$set('rating', ratingCreate.id_rating);
         if (customer) {
-           await reviewCreate.$add('customer', customer.id_customer);
+          await reviewCreate.$add('customer', customer.id_customer);
         }
         newReview.rating = ratingCreate;
-        
+
         tyre.reviews.push(reviewCreate);
         tyre.rating.push(ratingCreate);
 
@@ -75,14 +73,13 @@ export class ReviewsService {
 
         //return getNewReview;
         return reviewCreate;
-      }  
+      }
 
       return new HttpException(
         'Data id: tyres or model or brand not found',
         HttpStatus.NOT_FOUND,
       );
     } catch {
-
       throw new HttpException(
         'Data is incorrect and must be uniq',
         HttpStatus.NOT_FOUND,
@@ -91,15 +88,13 @@ export class ReviewsService {
   }
 
   async findAllReviews() {
-
     try {
-
-      const reviewTyresAll = await this.reviewTyresRepository.findAll({include: {all: true}});
+      const reviewTyresAll = await this.reviewTyresRepository.findAll({
+        include: { all: true },
+      });
 
       return reviewTyresAll;
-
     } catch {
-
       throw new HttpException(
         'Data is incorrect or Not Found',
         HttpStatus.NOT_FOUND,
@@ -108,16 +103,13 @@ export class ReviewsService {
   }
 
   async findReviewById(getReviewDto: GetReviewDto) {
-
     try {
-
       const reviewId = await this.reviewTyresRepository.findByPk(
         getReviewDto.id_review,
         { include: { all: true } },
       );
 
       return reviewId;
-
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',
@@ -154,24 +146,53 @@ export class ReviewsService {
     }
   }
 
+  async countLikeByIdReview(
+    updateReviewDto: UpdateReviewDto
+    // id_review: number,
+    // likeCount: number,
+    // dislikeCount: number,
+  ) {
+    try {
+      const reviewIdReview = await this.reviewTyresRepository.findByPk(
+        updateReviewDto.id_review,
+      );
+      if (updateReviewDto.likeCount === 1) {
+        reviewIdReview.increment('like_count');
+      } else if (updateReviewDto.likeCount === -1) {
+        reviewIdReview.decrement('like_count');
+      }
+
+      if (updateReviewDto.dislikeCount === 1) {
+        reviewIdReview.decrement('dislike_count');
+      } else if (updateReviewDto.dislikeCount === -1) {
+        reviewIdReview.increment('dislike_count');
+      }
+      reviewIdReview.reload();
+      return reviewIdReview;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
   update(id: number, updateReviewDto: UpdateReviewDto) {
     return `This action updates a #${id} review`;
   }
 
   async removeReview(getReviewDto: GetReviewDto) {
+    try {
+      const removeReview = await this.reviewTyresRepository.destroy({
+        where: { id_review: getReviewDto.id_review },
+      });
 
-      try {
-  
-        const removeReview = await this.reviewTyresRepository.destroy({where: {id_review : getReviewDto.id_review}});
-  
-        return removeReview;
-  
-      } catch {
-  
-        throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
-        
-      }
-      
+      return removeReview;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
-  
 }

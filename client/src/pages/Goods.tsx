@@ -16,7 +16,7 @@ import ProductPayDel from '../components/goods/ProductPayDel';
 import YouWatched from '../components/goods/YouWatched';
 import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import { GOODS_ROUTE, NOT_FOUND_ROUTE } from '../utils/consts';
-import { getTyresBrandRatingAvg, getTyresBrandRatingAvgSeason, getTyresById, getTyresByIdParam, getTyresCountReviewByBrand, getTyresCountReviewByModel, getTyresModelRatingAvg } from '../restAPI/restGoodsApi';
+import { createTyreReview, getTyresBrandRatingAvg, getTyresBrandRatingAvgSeason, getTyresById, getTyresByIdParam, getTyresCountReviewByBrand, getTyresCountReviewByModel, getTyresModelRatingAvg, likesTyreReview } from '../restAPI/restGoodsApi';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../context/Context';
@@ -28,10 +28,17 @@ import { IReviewGoods } from '../components/reviews/interfaces/ReviewGoods.inter
 import { IRatingAvg } from './types/RatingModelAvg.type';
 import { IRatingBrandAvg } from './types/RatingBrandAvg.type';
 import { IRatingSeasonAvg } from './types/RatingBrandSeason.type';
+import { FormValues } from '../components/reviews/types/ReviewTyreCreate.type';
+
+type ILikeTyreType = {
+  id_review: number;
+  likeCount: number;
+  dislikeCount: number;
+};
+
 
 const GoodsPage = observer(() => {
-  const {goodsTyre} = useContext<any | null>(Context);
-  const [productId, setProductId] = useState<string | null>();
+  const {goodsTyre, customer} = useContext<any | null>(Context);
   const [ratingModelAvg, setRatingModelAvg] = useState<IRatingAvg>();
   const [ratingBrandAvg, setRatingBrandAvg] = useState<IRatingBrandAvg>();
   const [ratingSummerAvg, setRatingSummerAvg] = useState<IRatingSeasonAvg>();
@@ -40,6 +47,11 @@ const GoodsPage = observer(() => {
   const [reviewCountBrand, setReviewCountBrand] = useState<number>();
   const [reviewCountModel, setReviewCountModel] = useState<number>();
   const [createReview, setCreateReview] = useState<boolean>(false);
+  const [dataReview, setDataReview] = useState<{} | null>(null);
+  const [likeReview, setLikeReview] = useState<ILikeTyreType | null>(null);
+  const [dislikeReview, setDislikeReview] = useState<number>(0);
+  // const [thumbUp, setThumbUp] = useState<boolean | null>(null);
+  // const [thumbDown, setThumbDown] = useState<boolean | null>(null);
   const [changeTabGoods, setChangeTabGoods] = useState<string>("vseProTovar");
   const history =  useHistory();
   const param = useParams<any>();
@@ -54,7 +66,9 @@ const GoodsPage = observer(() => {
         getTyresBrandRatingAvg,
         getTyresBrandRatingAvgSeason,
         getTyresCountReviewByBrand,
-        getTyresCountReviewByModel
+        getTyresCountReviewByModel,
+        createTyreReview,
+        likesTyreReview,
       ]
     const getTyreId: string = 
       JSON.parse(localStorage.getItem('goodsId')!);
@@ -95,9 +109,50 @@ const GoodsPage = observer(() => {
         setReviewCountBrand(getCountBrand);
       }
       if (!isMounted && taskProduct[i] === getTyresCountReviewByModel && goodsTyre._product.id_model) {
-        console.log(getTyreId);
         const getCountModel: any = await taskProduct[i](goodsTyre._product.id_model);
         setReviewCountModel(getCountModel);
+      }
+      if (!isMounted && taskProduct[i] === createTyreReview && dataReview) {
+        if (dataReview) {
+          const createReviewTyre: any = await taskProduct[i](
+          dataReview,
+          goodsTyre._product.id,
+          goodsTyre._product.tyre_brand.id_brand,
+          goodsTyre._product.tyre_model.id_model,
+          goodsTyre._product.tyre_model.id_season,
+          customer._customer.id_customer,
+          goodsTyre.ratingList.rating_dry_road,
+          goodsTyre.ratingList.rating_wet_road,
+          goodsTyre.ratingList.rating_snow_road,
+          goodsTyre.ratingList.rating_ice_road,
+          goodsTyre.ratingList.rating_cross_country,
+          goodsTyre.ratingList.rating_treadwear,
+          goodsTyre.ratingList.rating_price_quality
+          );
+          if (createReviewTyre?.status === 201) {
+            setDataReview(null);
+            goodsTyre.setNewRating('rating_overall', 0);
+            goodsTyre.setNewRating('rating_dry_road', 0);
+            goodsTyre.setNewRating('rating_wet_road', 0);
+            goodsTyre.setNewRating('rating_snow_road', 0);
+            goodsTyre.setNewRating('rating_ice_road', 0);
+            goodsTyre.setNewRating('rating_cross_country', 0);
+            goodsTyre.setNewRating('rating_treadwear', 0);
+            goodsTyre.setNewRating('rating_price_quality', 0);
+            setCreateReview(!createReview);
+          }
+        }
+        
+      }
+      if (!isMounted && taskProduct[i] === likesTyreReview && likeReview?.id_review) {
+        if (likeReview.id_review) {
+          await taskProduct[i](
+            likeReview?.id_review,
+            likeReview?.likeCount,
+            likeReview?.dislikeCount
+          );
+          setLikeReview(null);
+        }
       }
       const task = taskProduct.shift();
       task();
@@ -108,7 +163,14 @@ const GoodsPage = observer(() => {
     return () => {
       isMounted = true;
     };
-  },[goodsTyre]);
+  },[
+    createReview,
+    customer._customer.id_customer,
+    dataReview, goodsTyre, 
+    likeReview?.dislikeCount, 
+    likeReview?.id_review, 
+    likeReview?.likeCount
+  ]);
 
   useEffect(() => {
     if (goodsTyre._product.full_name) {
@@ -122,20 +184,35 @@ const GoodsPage = observer(() => {
   },[
     goodsTyre._product.full_name,
     history, 
-    match?.params.goodsItem]) ;
+    match?.params.goodsItem
+  ]) ;
 
-  // console.log('MATCH_URL_PARAMS: ', match?.params.goodsItem);
-  // console.log('MATCH_URL: ', match);
-  console.log('PRODUCT: ', goodsTyre._product);
-  // console.log('LOCALSORAGE_GOODS_ID: ',JSON.parse(localStorage.getItem('goodsId')!));
+  // const tumbUpAction = () => {
+  //   setThumbUp(!thumbUp);
+  // };
 
+  // const tumbDownAction = () => {
+  //   setThumbDown(!thumbDown);
+  // };  
   const handleChangeTab = (e: any) => {
     setChangeTabGoods(e.target.value);
   }
   const openToCreateReview = () => {
     setCreateReview(!createReview);
   };
-  
+
+  const submitDataReview = (data: FormValues) => {
+    setDataReview(data);
+  };
+  console.log('LIKE_REVIEW: ', likeReview);
+  //console.log("DATA_REVIEW: ", dataReview);
+  // console.log('MATCH_URL_PARAMS: ', match?.params.goodsItem);
+  // console.log('MATCH_URL: ', match);
+  console.log('PRODUCT: ', goodsTyre._product);
+  // console.log('LOCALSORAGE_GOODS_ID: ',JSON.parse(localStorage.getItem('goodsId')!));
+  // console.log('THUMB_UP:', thumbUp);
+  // console.log('THUMB_DOWN:', thumbDown);
+
   return (
     <div className='goodsCard'>
       <div className='goodsBreadCrumbs'>
@@ -211,9 +288,11 @@ const GoodsPage = observer(() => {
                   productFullName={goodsTyre._product.full_name}
                   rating={goodsTyre._product.rating}
                   reviewEntity={item}
-                  reviewExtend={false} 
-                  btnLeft={undefined} 
-                  btnRight={undefined}
+                  reviewExtend={false}
+                  btnLeft={undefined}
+                  btnRight={undefined} 
+                  setLikeReview={setLikeReview} 
+                  //setThumbDown={setDislikeReview}
                 />
                 </Fragment>
                 )
@@ -260,8 +339,9 @@ const GoodsPage = observer(() => {
       </div>
         <Modal active={createReview} setActive={openToCreateReview}>
           <ReviewTyreCreate 
-            active={createReview}
-            setActive={openToCreateReview}
+            onSubmitReviewTyre={submitDataReview}
+            // active={createReview}
+            // setActive={openToCreateReview}
           />
         </Modal> 
     </div>

@@ -22,14 +22,19 @@ const Rating = observer((
             } 
         }
     };
-
+    
     return (
         <div className='ratingStar'>
             <div className='ratingNumber'> 
-                {chooseStar}
+                { chooseStar?.toString().match(/\.(\d+)/)?.[1].length ? 
+                    chooseStar?.toFixed(1) : 
+                    chooseStar?.toFixed()
+                }
             </div>
             <input 
-                id={nameRating ?? 0 +'5'}
+                id={nameRating ? 
+                    nameRating + '_star_5': 
+                    5 + 'star_5'}
                 type="radio"  
                 name="rating"
                 value="5"
@@ -44,12 +49,16 @@ const Rating = observer((
                     5 < chooseStar! ? 
                     "fa fa-star checked" :
                     "fa fa-star"}
-                htmlFor={nameRating ?? 0 +'5'} 
+                htmlFor={nameRating ? 
+                    nameRating + '_star_5': 
+                    5 + 'star_5'} 
                 title="Оцінка «5»"
             ></label>
 
             <input 
-                id={nameRating ?? 0 + '4'}
+                id={nameRating ? 
+                    nameRating + '_star_4': 
+                    4 + 'star_4'}
                 type="radio" 
                 name="rating" 
                 value="4"
@@ -64,12 +73,16 @@ const Rating = observer((
                 4 < chooseStar! ? 
                 "fa fa-star checked" :
                 "fa fa-star"}
-                htmlFor={nameRating ?? 0 + '4'} 
+                htmlFor={nameRating ? 
+                    nameRating + '_star_4': 
+                    4 + 'star_4'} 
                 title="Оцінка «4»"
             ></label>
 
             <input 
-                id={nameRating ?? 0 + '3'}
+                id={nameRating ? 
+                    nameRating + '_star_3': 
+                    3 + 'star_3'}
                 type="radio" 
                 title={nameRating}
                 name="rating" 
@@ -80,17 +93,21 @@ const Rating = observer((
                 className={
                     3 === chooseStar! ? 
                     "fa fa-star checked" :
-                    3 > chooseStar! && 2 < chooseStar! ? "fa fa-star-half-alt checked" :
+                    3 > chooseStar! && 2 < chooseStar! ? "fas fa-star-half-alt checked" :
                     3 < chooseStar! ? 
                     "fa fa-star checked" :
                     "fa fa-star"
                 }
-                htmlFor={nameRating ?? 0 + '3'} 
+                htmlFor={nameRating ? 
+                    nameRating + '_star_3': 
+                    3 + 'star_3'} 
                 title="Оцінка «3»"
             ></label>
 
             <input 
-                id={nameRating ?? 0 + '2'}
+                id={nameRating ?
+                    nameRating + '_star_2': 
+                    2 + 'star_2'}
                 type="radio" 
                 title={nameRating} 
                 name="rating" 
@@ -106,12 +123,16 @@ const Rating = observer((
                 "fa fa-star checked" :
                 "fa fa-star"
             }
-                htmlFor={nameRating ?? 0 + '2'} 
+                htmlFor={nameRating ? 
+                    nameRating + '_star_2': 
+                    2 + 'star_2'} 
                 title="Оцінка «2»"
             ></label>
 
             <input 
-                id={nameRating ?? 0 + '1'}
+                id={nameRating ? 
+                    nameRating + '_star_1': 
+                    1 + 'star_1'}
                 type="radio" 
                 title={nameRating} 
                 name="rating" 
@@ -120,7 +141,9 @@ const Rating = observer((
             />
             <label 
                 className={1 <= chooseStar! ? "fa fa-star checked" :"fa fa-star"}
-                htmlFor={nameRating ?? 0 + '1'} 
+                htmlFor={nameRating ? 
+                    nameRating + '_star_1': 
+                    1 + 'star_1'} 
                 title="Оцінка «1»"
             ></label>
         </div>
