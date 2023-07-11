@@ -1,9 +1,5 @@
-export interface ITyreCard {
-    countModelReview?: number;
-    avgRatingModel?: number;
-    optionsBox?: boolean;
-    forOrder?: boolean;
-    goods?: { 
+export type ICheckTyreModal = {
+    orderItem?: { 
         tyre_brand: {id_brand:number; brand: string;};
         tyre_model: {id_model:number; model: string;};
         country: {
@@ -33,5 +29,4 @@ export interface ITyreCard {
         };
         reviews:[];
     };
-    checkOrders?(arg0: any): void | undefined;
 }

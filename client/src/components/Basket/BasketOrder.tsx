@@ -8,6 +8,7 @@ import InputDataTel from '../ux/InputDataTel';
 
 const BasketOrder = () => {
     const [delivery, setDelivery] = useState("");
+    
 
    
     const acceptInput = (value: string, mask: {
@@ -27,7 +28,7 @@ const BasketOrder = () => {
 
     return (
         <div className='basketOrder'>
-            <div>Оформлення замовлення</div>
+            <div> Оформлення замовлення</div>
             <div className='basketColmLeft'>
                 данні замовлення
                 <div className='basketColmItemLeft'>
@@ -69,7 +70,8 @@ const BasketOrder = () => {
                         //checked={checkedRadio}
                         >
                     </SelectRadio>
-                    <SelectRadio radioData={{value: "novaPoshta", radioName: "Нова Пошта"}} 
+                    <SelectRadio 
+                        radioData={{value: "novaPoshta", radioName: "Нова Пошта"}} 
                         addOptions={delivery === "novaPoshta" ?? false}
                         direction={"column"} 
                         //checked={checkedRadio}
@@ -77,7 +79,8 @@ const BasketOrder = () => {
                         { delivery === "novaPoshta" ?    
                         "Розрахунок НОВА ПОШТА" : null}    
                     </SelectRadio>
-                    <SelectRadio radioData={{value: "urkPoshta", radioName: "Укр Пошта"}} 
+                    <SelectRadio 
+                        radioData={{value: "urkPoshta", radioName: "Укр Пошта"}} 
                         addOptions={""}
                         direction={"column"} 
                         //checked={checkedRadio}
@@ -86,7 +89,8 @@ const BasketOrder = () => {
                 </div>
                 <div className='basketColmItemLeft'>
                     <span>Оплата:</span>
-                    <SelectRadio radioData={{value: "gotivka", radioName: "Готівкою"}} 
+                    <SelectRadio 
+                        radioData={{value: "gotivka", radioName: "Готівкою"}} 
                         addOptions={""}
                         direction={"column"} 
                         //checked={checkedRadio}
@@ -109,8 +113,16 @@ const BasketOrder = () => {
             <div className='basketColmRight'>
                 Товар і ціна 
                 остаточна сумма замовлення
-                <div>
-                    <TyresCardList forOrder={true}/>       
+                <div className='basketColmRightListGoods'>
+                    <div className='itemGoodsBasket'>
+                        <TyresCardList forOrder={true}/><span>X</span>  
+                    </div>
+                    <div className='itemGoodsBasket'>
+                        <TyresCardList forOrder={true}/><span>X</span>
+                    </div>
+                    <div className='itemGoodsBasket'>
+                        <TyresCardList forOrder={true}/><span>X</span>  
+                    </div>  
                 </div>
                 <div className='totalCount'>
                     <span>сумма за товар у кількості 4од: 8020 </span>

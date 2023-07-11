@@ -147,7 +147,7 @@ export class ReviewsService {
   }
 
   async countLikeByIdReview(
-    updateReviewDto: UpdateReviewDto
+    updateReviewDto: UpdateReviewDto,
     // id_review: number,
     // likeCount: number,
     // dislikeCount: number,
@@ -156,19 +156,23 @@ export class ReviewsService {
       const reviewIdReview = await this.reviewTyresRepository.findByPk(
         updateReviewDto.id_review,
       );
-      if (updateReviewDto.likeCount === 1) {
-        reviewIdReview.increment('like_count');
-      } else if (updateReviewDto.likeCount === -1) {
-        reviewIdReview.decrement('like_count');
+      if (reviewIdReview) {
+        if (updateReviewDto.likeCount === 1) {
+          await reviewIdReview.increment('like_count');
+        } else if (updateReviewDto.likeCount === -1) {
+          await reviewIdReview.decrement('like_count');
+        }
+        reviewIdReview.reload();
+        if (updateReviewDto.dislikeCount === 1) {
+          await reviewIdReview.increment('dislike_count');
+        } else if (updateReviewDto.dislikeCount === -1) {
+          await reviewIdReview.decrement('dislike_count');
+        }
+        await reviewIdReview.reload();
+        return reviewIdReview;
+      } else {
+        return null;
       }
-
-      if (updateReviewDto.dislikeCount === 1) {
-        reviewIdReview.decrement('dislike_count');
-      } else if (updateReviewDto.dislikeCount === -1) {
-        reviewIdReview.increment('dislike_count');
-      }
-      reviewIdReview.reload();
-      return reviewIdReview;
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',

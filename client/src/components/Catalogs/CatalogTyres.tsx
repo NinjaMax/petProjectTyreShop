@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import '../../css/Catalogs/CatalogTyres.css';
 import TyresCard from '../cards/TyresCard';
 import PopularSizeTyre from '../popularGoods/PopularSizeTyre';
@@ -10,14 +10,23 @@ import Modal from '../modal/Modal';
 import { Context } from '../../context/Context';
 import { observer } from 'mobx-react-lite';
 import LoadMoreGoods from '../ux/LoadMoreGoods';
+import { ICheckOrderItem } from './types/CheckOrder.type';
 
 const CatalogTyres = observer(() => {
     const [active, setActive] = useState(false);
+    const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem | null>(null);
     const [goodsCat, setGoodsCat] = useState([]);
     const {goodsTyre, page, filter} = useContext<any | null>(Context);
- 
-    const checkOrders = () => {
+
+    const checkOrders = (item : ICheckOrderItem, ) => {
         setActive(!active);
+        if (!active) {
+            setCheckOrderItem(item);
+        } else {
+            setCheckOrderItem(null);
+        }
+        localStorage.setItem('goodsId', JSON.stringify([item.id, '000001', '0002','00003']));
+        
     }
 
     const loadMoreGoods = (e: any) => {
@@ -25,7 +34,7 @@ const CatalogTyres = observer(() => {
         page.setLoadMore(page.loadMore + 1);
         page.setOffset(page.offset + 9);
     };
-
+    console.log('CHECK_ORDERS: ', checkOrderItem);
     const sortTyresGoods = (e: any) => {
         if (e.target.value === 'vidDeshevih') {
             page.setOffset(0);
@@ -102,16 +111,14 @@ const CatalogTyres = observer(() => {
                     goods={goods}
                     optionsBox={true} 
                     checkOrders={checkOrders} 
-                    forOrder={false}/> 
+                    forOrder={false}/>
                 ))   
                 : null
                 }
-            </div>
-            {active?
                 <Modal active={active} setActive={setActive}>
-                    <CheckOrder/> 
-                </Modal>   
-            :null}
+                    <CheckOrder orderItem={checkOrderItem}/> 
+                </Modal> 
+            </div> 
             <LoadMoreGoods loadMore={loadMoreGoods}/>
             <Pagination/>
         </div>

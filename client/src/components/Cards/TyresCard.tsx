@@ -7,7 +7,6 @@ import OptionsTyreBox from './OptionsTyreBox';
 import tyres from '../../assets/autotyrespilotspotps2.png';
 import ButtonAction from '../buttons/ButtonAction';
 import { ITyreCard } from './interfaces/tyreCard.interface';
-import CyrillicToTranslit from 'cyrillic-to-translit-js';
 import { GOODS_ROUTE, MAIN_ROUTE } from '../../utils/consts';
 import { Link, NavLink, useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
 import { Context } from '../../context/Context';
@@ -30,7 +29,7 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
         const getRatingModel = async () => {
           const taskProduct: any[] = [
             getTyresModelRatingAvg,
-          ]
+          ];
         let i: number = 0; 
         while (taskProduct.length > i) {
           if (!isMounted && taskProduct[i] === getTyresModelRatingAvg && goods) {
@@ -118,7 +117,7 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
                     <ButtonAction 
                         props={"КУПИТИ"} 
                         widthBtn={260} 
-                        eventItem={checkOrders}
+                        eventItem={() =>{checkOrders!(goods)}}
                     />
                     : 
                     <ButtonAction 

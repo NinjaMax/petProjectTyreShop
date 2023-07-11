@@ -48,8 +48,8 @@ const GoodsPage = observer(() => {
   const [reviewCountModel, setReviewCountModel] = useState<number>();
   const [createReview, setCreateReview] = useState<boolean>(false);
   const [dataReview, setDataReview] = useState<{} | null>(null);
-  const [likeReview, setLikeReview] = useState<ILikeTyreType | null>(null);
-  const [dislikeReview, setDislikeReview] = useState<number>(0);
+  //const [likeReview, setLikeReview] = useState<ILikeTyreType | null>(null);
+  //const [dislikeReview, setDislikeReview] = useState<number>(0);
   // const [thumbUp, setThumbUp] = useState<boolean | null>(null);
   // const [thumbDown, setThumbDown] = useState<boolean | null>(null);
   const [changeTabGoods, setChangeTabGoods] = useState<string>("vseProTovar");
@@ -141,18 +141,7 @@ const GoodsPage = observer(() => {
             goodsTyre.setNewRating('rating_price_quality', 0);
             setCreateReview(!createReview);
           }
-        }
-        
-      }
-      if (!isMounted && taskProduct[i] === likesTyreReview && likeReview?.id_review) {
-        if (likeReview.id_review) {
-          await taskProduct[i](
-            likeReview?.id_review,
-            likeReview?.likeCount,
-            likeReview?.dislikeCount
-          );
-          setLikeReview(null);
-        }
+        } 
       }
       const task = taskProduct.shift();
       task();
@@ -167,9 +156,6 @@ const GoodsPage = observer(() => {
     createReview,
     customer._customer.id_customer,
     dataReview, goodsTyre, 
-    likeReview?.dislikeCount, 
-    likeReview?.id_review, 
-    likeReview?.likeCount
   ]);
 
   useEffect(() => {
@@ -204,10 +190,11 @@ const GoodsPage = observer(() => {
   const submitDataReview = (data: FormValues) => {
     setDataReview(data);
   };
-  console.log('LIKE_REVIEW: ', likeReview);
+  // console.log('LIKE_REVIEW: ', likeReview);
   //console.log("DATA_REVIEW: ", dataReview);
   // console.log('MATCH_URL_PARAMS: ', match?.params.goodsItem);
   // console.log('MATCH_URL: ', match);
+  console.log('RATING_SUMMER: ', ratingSummerAvg);
   console.log('PRODUCT: ', goodsTyre._product);
   // console.log('LOCALSORAGE_GOODS_ID: ',JSON.parse(localStorage.getItem('goodsId')!));
   // console.log('THUMB_UP:', thumbUp);
@@ -291,7 +278,7 @@ const GoodsPage = observer(() => {
                   reviewExtend={false}
                   btnLeft={undefined}
                   btnRight={undefined} 
-                  setLikeReview={setLikeReview} 
+                  //setLikeReview={setLikeReview} 
                   //setThumbDown={setDislikeReview}
                 />
                 </Fragment>

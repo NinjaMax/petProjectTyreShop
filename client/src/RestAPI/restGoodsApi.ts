@@ -146,14 +146,14 @@ const getTyresCountAll = async (
 }
 
 const likesTyreReview = async (
-    id_review?: number, 
-    likeCount?: number,
-    dislikeCount?: number,
+    id_review: number, 
+    likeCount: number,
+    dislikeCount: number,
     ) =>
     await $hostPost.patch('/reviews/likes', {
     id_review: id_review, 
-    likeCount: likeCount ?? 0,
-    dislikeCount: dislikeCount ?? 0,   
+    likeCount: likeCount,
+    dislikeCount: dislikeCount,   
 })
 .catch(error => {
     console.log(error)

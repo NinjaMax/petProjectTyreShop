@@ -1,39 +1,78 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import '../../css/CardsCss/TyresCardList.css';
 import FlagsIcon from './FlagsIcon';
 import PropsCardIcons from './PropsCardIcons';
 import Rating from '../ux/Rating';
 import tyres from '../../assets/autotyrespilotspotps2.png';
-import ButtonAction from '../buttons/ButtonAction';
+// import ButtonAction from '../buttons/ButtonAction';
 import CountBtnOrder from '../ux/CountBtnOrder';
 import { ITyreCard } from './interfaces/tyreCard.interface';
-import { NavLink } from 'react-router-dom';
-
-// interface ITyreCardList {
-//     forOrder?: boolean;
-// }
+import { NavLink, useHistory } from 'react-router-dom';
+import { IRatingAvg } from '../../pages/types/RatingModelAvg.type';
+import { MAIN_ROUTE } from '../../utils/consts';
+import { getTyresModelRatingAvg } from '../../restAPI/restGoodsApi';
+import { yieldToMain } from '../../restAPI/postTaskAdmin';
+import { createStringUrl } from '../../services/stringUrl';
+import { AsyncLocalStorage } from 'async_hooks';
 
 const TyresCardList = ({goods, forOrder}: ITyreCard) => {
+    const [ratingModel, setRatingModel] = useState<IRatingAvg>()
+    const history = useHistory();
+
+    useEffect(() => {
+        let isMounted = false;
+        const getRatingModel = async () => {
+          const taskProduct: any[] = [
+            getTyresModelRatingAvg,
+          ];
+        let i: number = 0; 
+        while (taskProduct.length > i) {
+          if (!isMounted && taskProduct[i] === getTyresModelRatingAvg && goods) {
+            const getRating: any = await taskProduct[i](goods?.id_model);
+            setRatingModel(getRating[0]);
+          }
+          const task = taskProduct.shift();
+          task();
+          await yieldToMain();
+        }
+        };
+        getRatingModel();
+        return () => {
+          isMounted = true;
+        };
+      },[goods, goods?.id_model]);
+    
+    const addGoodsId = () => {
+        const toStringUrl = createStringUrl(goods?.full_name);
+        localStorage.setItem('goodsId', JSON.stringify(goods?.id));
+        history.push(
+            MAIN_ROUTE + `${toStringUrl}`
+        );
+    }
+
     return (
         <div className="tyresCardList">
-            <img id='imgTyresList' src={tyres} alt="John" />
+            <img id='imgTyresList' src={tyres} alt="tyres" />
             <div className='tyresCardListBox'>    
-                <NavLink 
-                    id='nameCardList' 
-                    to={`${goods?.full_name?.toLowerCase().replace(/ /g, "-")}`}>
+                <a  id='nameCardList' 
+                    onClick={addGoodsId} 
+                    href={createStringUrl(goods?.full_name)}>
                     {goods?.full_name}
-                </NavLink>
+                </a>
                 <div className='ratingTyresList'>
                     <Rating 
-                        numScore={4.8}
+                        numScore={ratingModel?.avgRatingModel ?? 0}
                         disabled={true}
                         nameRating='Список карт'
                     />
-                    <a className='reviewLink' href='/#'>0 отзывов</a></div>
+                    <a className='reviewLink' href='/#'>
+                        {goods?.reviews.length} відгуків
+                    </a>
+                </div>
                 <div className="tyresCardCodeList">
                     код товара: {goods?.id}
                 </div>
-                {!forOrder?
+                {!forOrder ?
                     <div className='propsCardList'>
                         <PropsCardIcons
                             type={goods?.vehicle_type}
@@ -41,7 +80,7 @@ const TyresCardList = ({goods, forOrder}: ITyreCard) => {
                         />
                     </div>
                 :null}
-                {!forOrder?  
+                {!forOrder ?  
                     <div className="tyresCardCountryList">
                         <FlagsIcon
                             country={goods?.country} 
@@ -74,10 +113,10 @@ const TyresCardList = ({goods, forOrder}: ITyreCard) => {
                     </div> 
                 }
                     </div>
-                    {/* {!forOrder?
-                     <ButtonAction props={"КУПИТИ"} widthBtn={160} eventItem={undefined}/>   
-                    : <CountBtnOrder countGoods={4}/>
-                    }          */}
+                    { forOrder ?
+                        <CountBtnOrder countGoods={4}/>
+                    : null
+                    }         
                     </div>      
             </div>
         </div>

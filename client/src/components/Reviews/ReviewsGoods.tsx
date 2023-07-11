@@ -7,6 +7,7 @@ import Thumbs from '../ux/Thumbs';
 import ReviewsGoodsExtend from './ReviewsGoodsExtend';
 import { IReviewGoods } from './interfaces/ReviewGoods.interface';
 import { yieldToMain } from '../../restAPI/postTaskAdmin';
+import { likesTyreReview } from '../../restAPI/restGoodsApi';
 
 interface IReviewsGoods {
     productFullName: string;
@@ -15,7 +16,7 @@ interface IReviewsGoods {
     btnLeft: any; 
     btnRight: any;
     rating?: [{id_review?: number, rating_overall?: number}];
-    setLikeReview(arg0:any): void;
+    setLikeReview?(arg0:any): void;
     setThumbDown?(arg0:any): void;
 }
 
@@ -24,80 +25,81 @@ const ReviewsGoods = ({
     rating,
     reviewEntity,
     reviewExtend,
-    setLikeReview,
+    //setLikeReview,
     // setThumbDown,
     btnLeft,
     btnRight}: IReviewsGoods
     ) => {
-    // const [likeReview, setLikeReview] = useState<number>(0);
-    // const [dislikeReview, setDislikeReview] = useState<number>(0);
+    const [likeReview, setLikeReview] = useState<number>(reviewEntity.like_count);
+    const [dislikeReview, setDislikeReview] = useState<number>(reviewEntity.dislike_count);
+    const [likeChoose, setLikeChoose] = useState<number>(0);
+    const [dislikeChoose, setDislikeChoose] = useState<number>(0);
     const [thumbUp, setThumbUp] = useState<boolean | null>(null);
     const [thumbDown, setThumbDown] = useState<boolean | null>(null);
     
-    // useEffect(() => {
-    //     let isMounted = false;
-    //     const setThumbs = async () => {
-    //       const taskThumbs: any[] = [
-    //         likesTyreReview,
-    //       ]
-    //     let i: number = 0; 
-    //     while  taskThumbs.length > i) {
-    //       if (!isMounted && taskThumbs[i] === likesTyreReview && getTyreId) {
-    //         const getProduct: any = await taskThumbs[i](
-    //             reviewEntity.id_review,
-    //             likeReview,
-    //             dislikeReview
-    //         );
-    //       }
-    //       const task = taskThumbs.shift();
-    //       task();
-    //       await yieldToMain();
-    //     }
-    //     };
-    //     setThumbs();
-    //     return () => {
-    //       isMounted = true;
-    //     };
-    //   },[]);
+    useEffect(() => {
+        let isMounted = false;
+        const setThumbs = async () => {
+          const taskThumbs: any[] = [
+            likesTyreReview,
+          ]
+        let i: number = 0; 
+        while (taskThumbs.length > i) {
+          if (!isMounted && taskThumbs[i] === likesTyreReview) {
+            if (likeChoose !== 0 || dislikeChoose !== 0) {
+                const getLIkes: any = await taskThumbs[i](
+                    reviewEntity.id_review,
+                    likeChoose,
+                    dislikeChoose
+                ); 
+                console.log('REVIEW: ', getLIkes.data);
+                setLikeReview(getLIkes.data.like_count);
+                setDislikeReview(getLIkes.data.dislike_count);
+            }
+            
+          }
+          const task = taskThumbs.shift();
+          task();
+          await yieldToMain();
+        }
+        };
+        setThumbs();
+        return () => {
+          isMounted = true;
+        };
+      },[dislikeChoose, likeChoose, reviewEntity.id_review]);
 
     const tumbUpAction = () => {
         setThumbUp(!thumbUp);
+        setTimeout(() => {
         if (!thumbUp) {
-            setLikeReview({
-            id_review: reviewEntity.id_review,
-            likeCount: 1,
-            dislikeCount: 0,
-            });
+            setLikeChoose(1);
+            setDislikeChoose(0);
+
             console.log('thumbUp: 1');
         }
         if (thumbUp) {
-            setLikeReview({
-                id_review: reviewEntity.id_review,
-                likeCount: -1,
-                dislikeCount: 0,
-            });
+            setLikeChoose(-1);
+            setDislikeChoose(0);
             console.log('thumbUp: -1');
         }
+        }, 1500);
     };
     
     const tumbDownAction = () => {
         setThumbDown(!thumbDown);
+        setTimeout(() => {
         if (!thumbDown) {
-            setLikeReview({
-                id_review: reviewEntity.id_review,
-                likeCount: 0,
-                dislikeCount: 1,
-            });
+            setDislikeChoose(1);
+            setLikeChoose(0);
             console.log('thumbDown: 1');
         }
         if (thumbDown) {
-            setLikeReview({
-                id_review: reviewEntity.id_review,
-                likeCount: 0,
-                dislikeCount: -1,
-            });
+            setDislikeChoose(-1);
+            setLikeChoose(0);
             console.log('thumbDown: -1');
         }
+        }, 1500);
     };
 
     console.log('THUMB_UP: ', thumbUp);
@@ -122,9 +124,14 @@ const ReviewsGoods = ({
                         />
                     </div>
                     <div className='reviewUsesCars'>
-                        <span>Їздить на: </span> {reviewEntity.car}</div>
+                        { reviewEntity.car ?
+                            <div>{reviewEntity.car}</div> 
+                        : null 
+                        }
+                    </div>
                     <div className='reviewGoodsExpier'>
-                        <span>Водійський досвід: </span> {reviewEntity.driver_experience}</div>
+                        <span>Водійський досвід {reviewEntity.driver_experience} років</span>
+                    </div>
                     <div className='addedGoodsReview'>
                         <span>Відгук о товарі: </span> 
                         <a href='/#'>
@@ -147,9 +154,8 @@ const ReviewsGoods = ({
                     </div>
                     <div className='thumbGoodsReview'>
                         <Thumbs
-                            //reviewId={reviewEntity.id_review}
-                            countPositive={reviewEntity.like_count}
-                            countNegative={reviewEntity.dislike_count} 
+                            countPositive={likeReview}
+                            countNegative={dislikeReview} 
                             likeState={thumbUp} 
                             dislikeState={thumbDown}
                             likeAction={tumbUpAction}

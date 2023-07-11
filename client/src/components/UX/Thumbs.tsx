@@ -21,33 +21,6 @@ const Thumbs = ({
     // reviewId
 }: IThumbs) => {
 
-    // const [countUp, setCountUp] = useState<number>();
-    // const [countDown, setCountDown] = useState<number>();
-    // const [checkedUp, setCheckedUp] = useState<boolean>(false);
-    // const [checkedDown, setCheckedDown] = useState<boolean>(false);
-    
-    // useEffect(() => {
-    //     if (countUp && likeState) {
-    //         setCountUp(countPositive);
-    //     } else {
-    //         setCountUp(countPositive);
-    //         setCheckedUp(!checkedUp);
-    //     }
-    //     if (countDown && dislikeState) {
-    //         setCountDown(countNegative);
-    //     } else {
-    //         setCountDown(countNegative);
-    //         setCheckedDown(!checkedDown);
-    //     }
-    // },[
-    //     checkedDown,
-    //     checkedUp,
-    //     countDown,
-    //     countUp,
-    //     countNegative,
-    //     countPositive,
-    // ]);
-
     return (
         <div className='thumbs'>
             <span className={countPositive ? 
@@ -58,7 +31,12 @@ const Thumbs = ({
                     'thumbs upThumbChecked' : 
                     'thumbs upThumb'}>
                 </i>
-                {countPositive ? countPositive : null}
+                {countPositive ?
+                    <span className='thumbsNumber'>
+                        {countPositive} 
+                    </span>
+                : null
+                } 
             </span>
             <span className={countNegative ? 
                 'thumbs countThumb' :'thumbs noCountThumb'}
@@ -68,7 +46,12 @@ const Thumbs = ({
                     'thumbs downThumbsChecked' :
                     'thumbs downThumb'}>
                 </i>
-                {countNegative ? countNegative : null}
+                {countNegative ?
+                    <span className='thumbsNumber'>
+                        {countNegative}    
+                    </span>
+                : null
+                }
             </span>
         </div>
     );

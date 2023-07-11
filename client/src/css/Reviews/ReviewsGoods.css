@@ -14,7 +14,7 @@
   
 .reviewsGoodsContainer span {
   font-family: var(--main-font-family);
-  font-weight:bolder;
+  font-weight:normal;
 }
   /* Slides */
 .mySlidesGoodsReview {

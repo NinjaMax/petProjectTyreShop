@@ -66,10 +66,20 @@ export class ReviewTyres extends Model<ReviewTyres, ReviewsTyresConfigAttr> {
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
   email: string;
 
-  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+  @Column({
+    type: DataType.INTEGER,
+    unique: false,
+    defaultValue: 0,
+    allowNull: true,
+  })
   like_count: number;
 
-  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+  @Column({
+    type: DataType.INTEGER,
+    unique: false,
+    defaultValue: 0,
+    allowNull: true,
+  })
   dislike_count: number;
   // @BelongsTo(() => Users, 'id_user')
   // user: Users;

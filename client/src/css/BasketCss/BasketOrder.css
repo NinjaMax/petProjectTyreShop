@@ -1,13 +1,16 @@
 .basketOrder {
     display: grid;
-    grid-template-columns: repeat(2, 48%);
-    border:2px solid yellow;
+    grid-template-columns: 38% 58%;
+    /* grid-template-columns: repeat(2, 48%); */
+    /* border:2px solid yellow; */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
     gap: 20px;
     font-family: var(--main-font-family);
     overflow: hidden;
-    margin-left: 40px;
-    margin-right: 40px;
-    
+    margin-left: 45px;
+    margin-right: 45px;
+    padding: 15px;
 }
 
 .basketColmLeft {
@@ -28,6 +31,22 @@
     flex-direction: column;
     align-items:flex-start;
     gap: 5px;
+}
+
+.basketColmRightListGoods {
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    gap: 3px;
+    
+}
+.basketColmRightListGoods .itemGoodsBasket {
+    display:inline-flex;
+    
+}
+
+.itemGoodsBasket span {
+    vertical-align:middle;
 }
 
 .basketColmItemLeft {
