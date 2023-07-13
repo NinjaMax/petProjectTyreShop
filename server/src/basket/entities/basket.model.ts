@@ -54,6 +54,9 @@ export class Basket extends Model<Basket, BasketConfigAttr> {
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
   notes: string;
 
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  session_id: string;
+  
   @ForeignKey(() => Users)
   @Column({ type: DataType.INTEGER })
   id_user: number;

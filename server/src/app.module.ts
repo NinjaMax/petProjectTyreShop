@@ -1,4 +1,10 @@
-import { Module } from '@nestjs/common';
+import { CacheStore, Module } from '@nestjs/common';
+import { RedisClientOptions, createClient } from 'redis';
+import connect from 'connect-redis';
+import RedisStore from 'connect-redis'
+import * as redisStore from 'cache-manager-redis-store';
+import { CacheModule } from '@nestjs/cache-manager';
+import { SequelizeModule } from '@nestjs/sequelize';
 import { TyresModule } from './tyres/tyres.module';
 import { SuppliersModule } from './suppliers/suppliers.module';
 import { PricesModule } from './prices/prices.module';
@@ -6,7 +12,6 @@ import { PriceTyres } from './prices/entities/price-tyres.model';
 import { Tyres } from './tyres/entities/tyres.model';
 import { Supplier } from './suppliers/entities/supplier.model';
 import { StockTyres } from './stock/entities/stock-tyres.model';
-import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
 import { StockModule } from './stock/stock.module';
@@ -99,6 +104,8 @@ import { PaytypesModule } from './paytypes/paytypes.module';
 import { Paytype } from './paytypes/entities/paytype.entity';
 import { DescriptionModule } from './description/description.module';
 import { Description } from './description/entities/description.entity';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -186,7 +193,29 @@ import { Description } from './description/entities/description.entity';
       }),
       inject: [ConfigService],
     }),
+    CacheModule.registerAsync<RedisClientOptions>({
+      imports: [ConfigModule.register({ folder: './config' })],
+      useFactory: async (configService: ConfigService) => {
 
+        const store = createClient({
+          //ttl: configService.get('CACHE_TTL'),
+          //isGlobal: true,
+          //store: redisStore as unknown as CacheStore,
+          socket: {
+            host: configService.get('REDIS_HOST'),
+            port: +configService.get('REDIS_PORT'),
+          },
+          // username: configService.get('REDIS_USERNAME'),
+          // password: configService.get('REDIS_PASSWORD'),
+          
+        });
+        //isGlobal: true;
+        await store.connect();
+        return { store: store as unknown as CacheStore };
+      },
+      isGlobal: true,
+      inject: [ConfigService],
+    }),
     TyresModule,
     WheelsModule,
     BatteriesModule,
@@ -217,7 +246,8 @@ import { Description } from './description/entities/description.entity';
     PaytypesModule,
     DescriptionModule,
   ],
-  controllers: [],
-  providers: [],
+  controllers: [AppController],
+  providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {};
+
