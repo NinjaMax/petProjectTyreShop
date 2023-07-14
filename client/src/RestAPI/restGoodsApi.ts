@@ -1,49 +1,49 @@
 import { $hostGet, $hostPost } from './index';
 import { IReviewTyreRestCreate } from './interfaces/ReviewTyreRest.interface';
 
-const getTyresOffset = async (
-    offset: number,
-    limit: number,
-    width: string,
-    height: string,
-    diameter: string,
-    season: string,
-    brand: string,
-    price: string,
-    type: string,
-    speed_index: string,
-    load_index: string,
-    studded: string,
-    run_flat: string,
-    homologation: string,
-    reinforced: string,
-    // cheap: boolean,
-    // expensive:boolean,
-    // rating: boolean,
-    // oldPrice: boolean,
-    // titleName:boolean,
-    ) => {
-    const {data} = await $hostGet.get('tyres/offset', 
-    {params: {
-        offset: offset ?? 0,
-        limit: limit,
-        width: width,
-        height: height,
-        diameter: diameter,
-        season: season,
-        brand: brand,
-        price: price,
-        type: type,
-        speed_index: speed_index,
-        load_index: load_index,
-        studded: studded,
-        run_flat: run_flat,
-        homologation: homologation,
-        reinforce: reinforced,
-        }
-    })
-    return data;
-}
+// const getTyresOffset = async (
+//     offset: number,
+//     limit: number,
+//     width: string,
+//     height: string,
+//     diameter: string,
+//     season: string,
+//     brand: string,
+//     price: string,
+//     type: string,
+//     speed_index: string,
+//     load_index: string,
+//     studded: string,
+//     run_flat: string,
+//     homologation: string,
+//     reinforced: string,
+//     // cheap: boolean,
+//     // expensive:boolean,
+//     // rating: boolean,
+//     // oldPrice: boolean,
+//     // titleName:boolean,
+//     ) => {
+//     const {data} = await $hostGet.get('tyres/offset', 
+//     {params: {
+//         offset: offset ?? 0,
+//         limit: limit,
+//         width: width,
+//         height: height,
+//         diameter: diameter,
+//         season: season,
+//         brand: brand,
+//         price: price,
+//         type: type,
+//         speed_index: speed_index,
+//         load_index: load_index,
+//         studded: studded,
+//         run_flat: run_flat,
+//         homologation: homologation,
+//         reinforce: reinforced,
+//         }
+//     })
+//     return data;
+// }
 
 const getTyresWithoutOffset = async (
     width: string,
@@ -81,6 +81,13 @@ const getTyresWithoutOffset = async (
     })
     //localStorage.setItem('token', data.token)
     //console.log('GET_TYRES_OFFSET9: ', data )
+    return data;
+}
+
+const getSession = async () => {
+    const {data} = await $hostGet.get('/session')
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -145,6 +152,29 @@ const getTyresCountAll = async (
     return data;
 }
 
+const addGoodsToBasket = async (
+    id: string,
+    id_cat: number,
+    id_customer?: number,
+    goods?: string, 
+    //id_user?: number,
+    quantity?:number,
+    price?: number,
+
+    ) =>
+    await $hostPost.post('/basket', {
+    id_cat: id_cat,    
+    id_goods: id, 
+    goods: goods,
+    quantity: quantity ?? 4,
+    price: price,
+    id_customer: id_customer,
+    //id_user: id_user,
+})
+.catch(error => {
+        console.log(error)
+});  
+
 const likesTyreReview = async (
     id_review: number, 
     likeCount: number,
@@ -201,7 +231,7 @@ const createTyreReview = async (
 })
 .catch(error => {
         console.log(error)
-});  
+}); 
 
 const getTyresModelRatingAvg = async (id_model: number) => {
     const {data} = await $hostGet.get(
@@ -356,7 +386,7 @@ const getTyresSeasonPropsAll = async () => {
 }
 
 export {
-    getTyresOffset,
+    //getTyresOffset,
     getTyresWithoutOffset,
     //getTyresSeason,
     //getTyresType,
@@ -386,5 +416,7 @@ export {
     getTyresBrandRatingAvgSeason,
     getTyresCountReviewByBrand,
     getTyresCountReviewByModel,
-    likesTyreReview
+    likesTyreReview,
+    addGoodsToBasket,
+    getSession
 }

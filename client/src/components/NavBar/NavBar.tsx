@@ -29,6 +29,7 @@ import {
 import AuthSignUp from '../auth/AuthSignUp';
 import { yieldToMain } from '../../restAPI/yieldMain';
 import NavBarDropWheels from './NavBarDropWheels';
+import { getSession } from '../../restAPI/restGoodsApi';
 
 const NavBar = observer(() => {
   const {customer, goodsTyre} = useContext<any | null>(Context);
@@ -88,6 +89,7 @@ const NavBar = observer(() => {
         getFacebookCurUser,
         getCurCustomer,
         getTwitterCurUser,
+        getSession,
       ];
       let i:number = 0;
       while(taskCustm.length > i) {

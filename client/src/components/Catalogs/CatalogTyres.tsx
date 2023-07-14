@@ -11,21 +11,39 @@ import { Context } from '../../context/Context';
 import { observer } from 'mobx-react-lite';
 import LoadMoreGoods from '../ux/LoadMoreGoods';
 import { ICheckOrderItem } from './types/CheckOrder.type';
+import { addGoodsToBasket } from '../../restAPI/restGoodsApi';
 
 const CatalogTyres = observer(() => {
     const [active, setActive] = useState(false);
     const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem | null>(null);
     const [goodsCat, setGoodsCat] = useState([]);
-    const {goodsTyre, page, filter} = useContext<any | null>(Context);
+    const {goodsTyre, page, filter, customer} = useContext<any | null>(Context);
 
-    const checkOrders = (item : ICheckOrderItem, ) => {
-        setActive(!active);
-        if (!active) {
-            setCheckOrderItem(item);
-        } else {
-            setCheckOrderItem(null);
+    const checkOrders = async (item : ICheckOrderItem, ) => {
+        try {
+            setActive(!active);
+            if (!active) {
+                
+                const addTobasket: any = await addGoodsToBasket(
+                    item.id,
+                    item.category.id_cat,
+                    customer.customer.id,
+                    item.full_name,
+                    4,
+                    item.price[0].price
+                ); 
+                if (addTobasket?.status === 201) {
+                    setCheckOrderItem(item);
+                    console.log('ADD_TO_BASKET: ', addTobasket); 
+                }
+                
+            } else {
+                setCheckOrderItem(null);
+            }
+            //localStorage.setItem('goodsId', JSON.stringify([item.id, '000001', '0002','00003']));
+        } catch (error) {
+            console.log('BASKET_ERROR: ',error);
         }
-        localStorage.setItem('goodsId', JSON.stringify([item.id, '000001', '0002','00003']));
         
     }
 

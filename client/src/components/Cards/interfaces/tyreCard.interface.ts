@@ -16,7 +16,7 @@ export interface ITyreCard {
         id_model:number;
         full_name: string; 
         manufacture_year: string;
-        category: {category: string};
+        category: {category: string, id_cat: number};
         price: [{
             price_wholesale: number;
             price: number;
@@ -33,5 +33,5 @@ export interface ITyreCard {
         };
         reviews:[];
     };
-    checkOrders?(arg0: any): void | undefined;
+    checkOrders?(arg0: any): Promise<void | undefined>;
 }

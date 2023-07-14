@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Session,
 } from '@nestjs/common';
 import { BasketService } from './basket.service';
 import { CreateBasketDto } from './dto/create-basket.dto';
@@ -17,8 +18,12 @@ export class BasketController {
   constructor(private readonly basketService: BasketService) {}
 
   @Post()
-  create(@Body() createBasketDto: CreateBasketDto) {
-    return this.basketService.createBasket(createBasketDto);
+  create(
+    @Session() session: Record<string, any>,
+    @Body() createBasketDto: CreateBasketDto,
+  ) {
+    console.log('SESSION_ID: ', session.id);
+    return this.basketService.createBasket(createBasketDto, session.id);
   }
 
   @Get()

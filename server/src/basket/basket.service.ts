@@ -13,18 +13,45 @@ export class BasketService {
    //private orderssService: OrdersService,
   ){}
 
-  async createBasket(createBasketDto: CreateBasketDto) {
-    try {
+  async createBasket(createBasketDto: CreateBasketDto, session: string) {
+    //try {
+      const basketBySessionId = await this.basketRepository.findOne({
+      where: { session_id: session ?? ''}
+      });
+      if (basketBySessionId) {
+        await this.basketRepository.create({
+          id_basket: basketBySessionId.id_basket,
+          id_cat: createBasketDto.id_cat,
+          id_goods: createBasketDto.id_goods,
+          goods: createBasketDto.goods,
+          quantity: createBasketDto.quantity,
+          price: createBasketDto.price,
+          session_id: session,
+        });
+        const getExistBasket = await this.basketRepository.findAll({
+          where: {id_basket: basketBySessionId.id_basket}
+        });
+          return getExistBasket;
+      } else {
+        const basket = await this.basketRepository.create(
+          {
+            id_cat: createBasketDto.id_cat,
+            id_goods: createBasketDto.id_goods,
+            goods: createBasketDto.goods,
+            quantity: createBasketDto.quantity,
+            price: createBasketDto.price,
+            session_id: session,
+          }
+        );
+        return basket;
+      }
       
-      const basket = await this.basketRepository.create(createBasketDto);
-
-      return basket;
-    } catch {
+    //} catch {
       throw new HttpException(
         'Data is incorrect and must be uniq',
         HttpStatus.NOT_FOUND,
       );
-    }
+    //}
   }
 
   async findAllbasket() {

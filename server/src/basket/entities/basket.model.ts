@@ -21,6 +21,16 @@ export class Basket extends Model<Basket, BasketConfigAttr> {
     primaryKey: true,
     autoIncrement: true,
   })
+  id: number;
+
+  @Column({
+    type: DataType.BIGINT,
+    unique: false,
+    allowNull: false,
+    set() {
+      this.setDataValue('id_basket', this.getDataValue('id') + 1);
+    },
+  })
   id_basket: number;
 
   @Column({ type: DataType.INTEGER, unique: false, allowNull: false })
@@ -41,11 +51,11 @@ export class Basket extends Model<Basket, BasketConfigAttr> {
   @Column({
     type: DataType.BIGINT,
     unique: false,
-    allowNull: false,
+    allowNull: true,
     set() {
       this.setDataValue(
         'total',
-        this.getDataValue('price') * this.getDataValue('quantity'),
+        this.getDataValue('quantity') * this.getDataValue('price'),
       );
     },
   })

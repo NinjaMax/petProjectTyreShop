@@ -1,10 +1,13 @@
 import { NestFactory } from '@nestjs/core';
+//import { Logger } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { ConfigService } from './config/config.service';
 import * as fs from 'fs';
 import cookieParser from 'cookie-parser';
 import { join } from 'path';
 import session from 'express-session';
+import RedisStore from 'connect-redis';
+import { createClient } from 'redis';
 
 async function bootstrap() {
   try {
@@ -14,17 +17,31 @@ async function bootstrap() {
     };
     const app = await NestFactory.create(AppModule, { httpsOptions });
     const configService = app.get(ConfigService);
+
+    const redisClient = createClient({
+      socket: {
+        host: configService.get('REDIS_HOST'),
+        port: +configService.get('REDIS_PORT'),
+      },
+    });
+    redisClient.connect().catch(console.error);
+    const redisStore = new RedisStore({
+      client: redisClient,
+      prefix: 'skyApp_session: ', 
+    });
     app.use(cookieParser());
     app.use(
       session({
+        store: redisStore,
         secret: 'secret-sky$123456',
         resave: false,
         saveUninitialized: false,
-        //cookie: {
-        //secure: true,
-        //httpOnly: true,
-        //maxAge: 60000,
-        //},
+        cookie: {
+          secure: true,
+          httpOnly: true,
+          //maxAge: 60000,
+        },
+        name: 'sessionId',
       }),
     );
     app.enableCors({

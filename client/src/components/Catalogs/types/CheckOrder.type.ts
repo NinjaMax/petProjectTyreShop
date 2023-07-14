@@ -12,7 +12,7 @@ export type ICheckOrderItem = {
         id_model:number;
         full_name: string; 
         manufacture_year: string;
-        category: {category: string};
+        category: {category: string; id_cat: number;};
         price: [{
             price_wholesale: number;
             price: number;
