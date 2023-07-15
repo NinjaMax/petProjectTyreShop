@@ -1,8 +1,5 @@
 import { CacheStore, Module } from '@nestjs/common';
 import { RedisClientOptions, createClient } from 'redis';
-import connect from 'connect-redis';
-import RedisStore from 'connect-redis'
-import * as redisStore from 'cache-manager-redis-store';
 import { CacheModule } from '@nestjs/cache-manager';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { TyresModule } from './tyres/tyres.module';
@@ -106,6 +103,7 @@ import { DescriptionModule } from './description/description.module';
 import { Description } from './description/entities/description.entity';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { Basket_Storage } from './basket/entities/basket-storage.model';
 
 @Module({
   imports: [
@@ -187,6 +185,7 @@ import { AppService } from './app.service';
           Contract,
           Customer,
           Description,
+          Basket_Storage,
         ],
         autoLoadModels: true,
         synchronize: true,

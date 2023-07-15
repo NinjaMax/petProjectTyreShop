@@ -6,14 +6,13 @@ import {
   ForeignKey,
   BelongsTo,
 } from 'sequelize-typescript';
-import { Storage } from '../../storage/entities/storage.model';
-import { Orders } from './order.model';
-import { OrdersStorageConfigAttr } from '../interfaces/orders-storage.interface';
+import { BasketStorageConfigAttr } from '../interfaces/basket-storage.interface';
+import { Basket } from './basket.model';
 
-@Table({ tableName: 'order_storage', createdAt: false, updatedAt: false })
-export class Order_Storage extends Model<
-  Order_Storage,
-  OrdersStorageConfigAttr
+@Table({ tableName: 'basket_storage', createdAt: true, updatedAt: true })
+export class Basket_Storage extends Model<
+  Basket_Storage,
+  BasketStorageConfigAttr
 > {
   @Column({
     type: DataType.INTEGER,
@@ -22,7 +21,7 @@ export class Order_Storage extends Model<
     primaryKey: true,
     autoIncrement: true,
   })
-  id_order_storage: number;
+  id_basket_storage: number;
 
   @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
   id: number;
@@ -30,28 +29,32 @@ export class Order_Storage extends Model<
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
   full_name: string;
 
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+  id_cat: number;
+  
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
   category: string;
 
-  @ForeignKey(() => Orders)
-  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
-  id_order: number;
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  season: string;
 
-  @ForeignKey(() => Storage)
+  @ForeignKey(() => Basket)
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+  id_basket: number;
+
   @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
   id_storage: number;
 
+  @Column({
+    type: DataType.FLOAT,
+    unique: false,
+    allowNull: true,
+    defaultValue: 0,
+  })
+  ratingCount: number;
+
   @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
   id_supplier: number;
-
-  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
-  order_index: number;
-
-  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
-  storage_index: number;
-
-  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
-  quantity: number;
 
   @Column({
     type: DataType.INTEGER,
@@ -59,7 +62,10 @@ export class Order_Storage extends Model<
     allowNull: true,
     defaultValue: 0,
   })
-  reserve: number;
+  reviewCount: number;
+
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+  quantity: number;
 
   @Column({
     type: DataType.INTEGER,
@@ -85,9 +91,12 @@ export class Order_Storage extends Model<
   })
   total: number;
 
-  @BelongsTo(() => Orders, 'id_order')
-  order: Orders;
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  city_ua: string;
 
-  @BelongsTo(() => Storage, 'id_storage')
-  storage: Storage;
+  // @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  // delivery: string;
+
+  @BelongsTo(() => Basket, 'id_basket')
+  basket: Basket;
 }

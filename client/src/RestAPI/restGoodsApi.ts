@@ -152,24 +152,66 @@ const getTyresCountAll = async (
     return data;
 }
 
-const addGoodsToBasket = async (
-    id: string,
-    id_cat: number,
+const createBasket = async (
+    name?: string,
+    phone?: bigint,
+    email?: string,
+    address?: string,
+    notes?: string,
+    storage?: string,
+    delivery?: string,
+    pay_view?: string,
+    dop_garanty?: string,
+    checkedIn?: boolean,
     id_customer?: number,
-    goods?: string, 
-    //id_user?: number,
+) =>
+await $hostPost.post('/basket', {
+    name: name,
+    phone: phone,
+    email: email,
+    address: address,
+    notes: notes,
+    storage: storage,
+    delivery: delivery,
+    pay_view: pay_view,
+    dop_garanty: dop_garanty,
+    checkedIn: checkedIn,
+    id_customer: id_customer ?? null,
+})
+.catch(error => {
+    console.log(error)
+});  
+
+const addGoodsToBasket = async (
+    id: number,
+    id_cat: number,
     quantity?:number,
     price?: number,
+    id_supplier?: number,
+    id_storage?: number,
+    category?: string,
+    id_basket?: number,
+    full_name?: string,
+    season?: string,
+    ratingCount?: number,
+    reviewCount?: number,
+    city_ua?: string,
 
     ) =>
-    await $hostPost.post('/basket', {
-    id_cat: id_cat,    
-    id_goods: id, 
-    goods: goods,
+    await $hostPost.post('/basket/add-goods', {
+    id: id,     
+    id_cat: id_cat,
     quantity: quantity ?? 4,
     price: price,
-    id_customer: id_customer,
-    //id_user: id_user,
+    id_supplier: id_supplier,
+    id_storage: id_storage,
+    category: category,
+    id_basket: id_basket,
+    full_name: full_name,
+    season: season,
+    ratingCount: ratingCount,
+    reviewCount: reviewCount,
+    city_ua: city_ua,
 })
 .catch(error => {
         console.log(error)
@@ -418,5 +460,6 @@ export {
     getTyresCountReviewByModel,
     likesTyreReview,
     addGoodsToBasket,
-    getSession
+    createBasket,
+    getSession,
 }

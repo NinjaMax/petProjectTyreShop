@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 //import { Op } from 'sequelize';

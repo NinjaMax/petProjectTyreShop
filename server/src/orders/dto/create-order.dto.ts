@@ -43,4 +43,24 @@ export class CreateOrderDto {
   readonly pay_view: string;
   readonly status_pay: string;
   readonly category: string;
+
+  readonly id_goods: number;
+  readonly id_cat: number;
+  readonly goods: string;
+
+  readonly session_id: string;
+
+  readonly id_basket_storage: number;
+
+  readonly city_ua: string;
+  readonly phone: bigint;
+  readonly email: string;
+  readonly ratingCount: number;
+  readonly reviewCount: number;
+
+  readonly season: string;
+
+  readonly address: string;
+
+  readonly checkedIn: boolean;
 }

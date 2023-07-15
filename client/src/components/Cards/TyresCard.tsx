@@ -117,7 +117,9 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
                     <ButtonAction 
                         props={"КУПИТИ"} 
                         widthBtn={260} 
-                        eventItem={() =>{checkOrders!(goods)}}
+                        eventItem={() =>{
+                            checkOrders!(goods, ratingModel)
+                        }}
                     />
                     : 
                     <ButtonAction 

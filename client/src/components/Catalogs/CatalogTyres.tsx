@@ -11,7 +11,7 @@ import { Context } from '../../context/Context';
 import { observer } from 'mobx-react-lite';
 import LoadMoreGoods from '../ux/LoadMoreGoods';
 import { ICheckOrderItem } from './types/CheckOrder.type';
-import { addGoodsToBasket } from '../../restAPI/restGoodsApi';
+import { addGoodsToBasket, createBasket } from '../../restAPI/restGoodsApi';
 
 const CatalogTyres = observer(() => {
     const [active, setActive] = useState(false);
@@ -19,24 +19,39 @@ const CatalogTyres = observer(() => {
     const [goodsCat, setGoodsCat] = useState([]);
     const {goodsTyre, page, filter, customer} = useContext<any | null>(Context);
 
-    const checkOrders = async (item : ICheckOrderItem, ) => {
+    const checkOrders = async (
+        item : ICheckOrderItem, 
+        ratingModel: {avgRatingModel: number }
+        ) => {
         try {
             setActive(!active);
             if (!active) {
-                
-                const addTobasket: any = await addGoodsToBasket(
-                    item.id,
-                    item.category.id_cat,
-                    customer.customer.id,
-                    item.full_name,
+                const basket: any = await createBasket(
+                    customer.customer?.id,
+                );
+                console.log('CREATE_BASKET: ', basket); 
+                console.log('CREATE_BASKET_ID_BASKET: ', basket.data.id_basket);
+                if(basket?.status === 201) {
+                  const addTobasket: any = await addGoodsToBasket(
+                    +item.id,
+                    item.id_cat,
                     4,
-                    item.price[0].price
-                ); 
-                if (addTobasket?.status === 201) {
-                    setCheckOrderItem(item);
+                    item.price[0].price,
+                    item.stock[0].id_supplier,
+                    item.stock[0].id_storage,
+                    item.category.category,
+                    basket.data.id_basket,
+                    item.full_name,
+                    item.season.season_ua,
+                    ratingModel?.avgRatingModel,
+                    item.reviews.length,
+
+                    ); 
+                    if (addTobasket?.status === 201) {
+                        setCheckOrderItem(item);
                     console.log('ADD_TO_BASKET: ', addTobasket); 
+                    }  
                 }
-                
             } else {
                 setCheckOrderItem(null);
             }

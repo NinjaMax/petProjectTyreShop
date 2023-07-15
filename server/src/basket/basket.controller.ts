@@ -26,6 +26,11 @@ export class BasketController {
     return this.basketService.createBasket(createBasketDto, session.id);
   }
 
+  @Post('/add-goods')
+  addToBasket(@Body() createBasketDto: CreateBasketDto) {
+    return this.basketService.addGoodsToBasket(createBasketDto);
+  }
+
   @Get()
   findAll() {
     return this.basketService.findAllbasket();
@@ -37,8 +42,12 @@ export class BasketController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBasketDto: UpdateBasketDto) {
-    return this.basketService.update(+id, updateBasketDto);
+  update(
+    @Param('id') id: string, 
+    @Body() updateBasketDto: UpdateBasketDto,
+
+  ) {
+    return this.basketService.updateBasket(updateBasketDto);
   }
 
   @Delete('remove')

@@ -18,9 +18,14 @@ import { UsersModule } from '../users/users.module';
   providers: [OrdersService, OrdersStorageService],
   imports: [
     SequelizeModule.forFeature([Orders, Order_Storage]),
-    BasketModule, StockModule, UsersModule, TyresModule,
-    PricesModule, StorageModule, AuthModule
+    BasketModule,
+    StockModule,
+    UsersModule,
+    TyresModule,
+    PricesModule,
+    StorageModule,
+    AuthModule,
   ],
-  exports:[OrdersService, OrdersStorageService],
+  exports: [OrdersService, OrdersStorageService],
 })
 export class OrdersModule {}

@@ -1,8 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { MESSAGES } from '@nestjs/core/constants';
 import { InjectModel } from '@nestjs/sequelize';
-import { scheduler } from 'timers/promises';
-import { yieldToMain } from './createOrder.service';
 //import { TyresService } from 'src/tyres/tyres.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { GetOrdersDto } from './dto/get-order.dto';

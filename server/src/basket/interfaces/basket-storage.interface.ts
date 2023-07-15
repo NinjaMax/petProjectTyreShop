@@ -1,6 +1,7 @@
-export interface OrdersStorageConfigAttr {
+export interface BasketStorageConfigAttr {
   id_order: number;
   id: number;
+  id_cat: number;
   id_storage: number;
   id_supplier: number;
   id_order_storage: number;
@@ -8,6 +9,6 @@ export interface OrdersStorageConfigAttr {
   reserve: number;
   quantity: number;
   total: number;
-  storage_index: number;
-  order_index: number;
+  rating: number;
+  season: string;
 }

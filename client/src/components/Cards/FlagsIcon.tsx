@@ -145,7 +145,7 @@ type Iflag = {
         country_manufacturer: string;
     };
     year?: {
-        manufacture_year: number;
+        manufacture_year: string;
     };
 }
 
