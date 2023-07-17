@@ -15,7 +15,7 @@ import { yieldToMain } from '../../restAPI/postTaskAdmin';
 import { createStringUrl } from '../../services/stringUrl';
 import { AsyncLocalStorage } from 'async_hooks';
 
-const TyresCardList = ({goods, forOrder}: ITyreCard) => {
+const TyresCardList = ({goods, forOrder, priceItem}: ITyreCard) => {
     const [ratingModel, setRatingModel] = useState<IRatingAvg>()
     const history = useHistory();
 
@@ -61,36 +61,37 @@ const TyresCardList = ({goods, forOrder}: ITyreCard) => {
                 </a>
                 <div className='ratingTyresList'>
                     <Rating 
-                        numScore={ratingModel?.avgRatingModel ?? 0}
+                        numScore={goods?.ratingCount ??
+                            ratingModel?.avgRatingModel ?? 0}
                         disabled={true}
                         nameRating='Список карт'
                     />
                     <a className='reviewLink' href='/#'>
-                        {goods?.reviews.length} відгуків
+                        {goods?.reviewCount ?? goods?.reviews.length} відгуків
                     </a>
                 </div>
                 <div className="tyresCardCodeList">
                     код товара: {goods?.id}
                 </div>
-                {!forOrder ?
+                {/* {!forOrder ? */}
                     <div className='propsCardList'>
                         <PropsCardIcons
                             type={goods?.vehicle_type}
                             season={goods?.season}
                         />
                     </div>
-                :null}
-                {!forOrder ?  
+                {/* :null} */}
+                {/* {!forOrder ?   */}
                     <div className="tyresCardCountryList">
                         <FlagsIcon
                             country={goods?.country} 
                             year={goods?.year}
                         />
                     </div>
-                :null}
-                <div className='priceAndBtnCard'>
+                {/* :null} */}
+                <div className='priceAndBtnCard'>      
                     <div className="tyresCardPriceList">
-                    {goods?.price ? goods?.price.map((item: any) => (
+                    {goods?.price && !priceItem ? goods?.price.map((item: any) => (
                     <Fragment key={item.id}>
                     {item.price ?
                     <div className="tyresCardPriceItem" >
@@ -107,17 +108,21 @@ const TyresCardList = ({goods, forOrder}: ITyreCard) => {
                     : null
                     } 
                     </Fragment>
-                  ))
+                    ))
                   : <div className="tyresCardPriceItem">
-                        немає в наявності
+                       {priceItem ?? 'немає в наявності'}
                     </div> 
-                }
+                    }
                     </div>
-                    { forOrder ?
-                        <CountBtnOrder countGoods={4}/>
+                </div>
+                { forOrder ?
+                        <div>
+                            <CountBtnOrder 
+                                countGoods={goods?.quantity ?? 4}
+                            />   
+                        </div>
                     : null
-                    }         
-                    </div>      
+                    }               
             </div>
         </div>
        

@@ -29,7 +29,7 @@ const typeCar = (type: string | undefined) => {
     }
 }
 
-const seasonCar = (season_vehicle: string | undefined) => {
+const seasonCar = (season_vehicle: string | undefined | any) => {
     switch (season_vehicle) {
         case 'летняя':
         case 'літня':

@@ -12,7 +12,7 @@ const PropsCardIcons = ({type, season}:ITyreProps) => {
     useEffect(() => {
         let isSetFlag = false;
         const setFlag = async () => {
-        const seasonTyre = seasonCar(season?.season);
+        const seasonTyre = seasonCar(season?.season ?? season);
         const typeTyre = typeCar(type?.vehicle_type);
             if (!isSetFlag && seasonTyre) {
                 setShowSeason(seasonTyre);
@@ -25,7 +25,7 @@ const PropsCardIcons = ({type, season}:ITyreProps) => {
         return () => {
             isSetFlag = true;
         }
-    },[type?.vehicle_type, season?.season]);
+    },[type?.vehicle_type, season?.season, season]);
 
     return (
         <div className='propsCarIconBox'>

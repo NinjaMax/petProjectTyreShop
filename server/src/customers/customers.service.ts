@@ -64,15 +64,45 @@ export class CustomersService {
       const contractCustomer = await this.contractService.createContract(
         createCustomerDto,
       );
-
       await customer.$add('contract', contractCustomer);
-
       await customer.reload();
 
       return customer;
     } catch {
       throw new HttpException(
         'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async findOrCreateCustmer(getCustomerDto: GetCustomerDto) {
+    try {
+      const [customerFindCreate, created] =
+        await this.customersRepository.findOrCreate({
+        where: {
+          [Op.or]: [
+            { email: getCustomerDto.email ?? 'mail@example.com' },
+            { name: getCustomerDto.name },
+            { phone: getCustomerDto.phone},
+          ],
+        },
+        defaults: {
+          password: String(getCustomerDto.phone),
+          email: getCustomerDto.email,
+          id_contract: getCustomerDto.id_contract,
+          balance: getCustomerDto.balance,
+          name: getCustomerDto.name,
+          phone: getCustomerDto.phone,
+          full_name: getCustomerDto.full_name,
+        }
+      });
+      if (created || !created) {
+        return customerFindCreate;
+      }
+    } catch {
+      throw new HttpException(
+        'Data Customer Email is incorrect or Not Found',
         HttpStatus.NOT_FOUND,
       );
     }
@@ -149,7 +179,6 @@ export class CustomersService {
           ],
         },
       });
-
       return customerByEmail;
     } catch {
       throw new HttpException(

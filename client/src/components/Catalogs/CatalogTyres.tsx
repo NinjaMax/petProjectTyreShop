@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import '../../css/Catalogs/CatalogTyres.css';
 import TyresCard from '../cards/TyresCard';
 import PopularSizeTyre from '../popularGoods/PopularSizeTyre';
@@ -15,9 +15,16 @@ import { addGoodsToBasket, createBasket } from '../../restAPI/restGoodsApi';
 
 const CatalogTyres = observer(() => {
     const [active, setActive] = useState(false);
-    const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem | null>(null);
+    const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem [] | null>([]);
     const [goodsCat, setGoodsCat] = useState([]);
     const {goodsTyre, page, filter, customer} = useContext<any | null>(Context);
+
+    useEffect(() => {
+        if (!active) {
+            setCheckOrderItem(null);
+        }
+    },[active]);
+
 
     const checkOrders = async (
         item : ICheckOrderItem, 
@@ -29,7 +36,7 @@ const CatalogTyres = observer(() => {
                 const basket: any = await createBasket(
                     customer.customer?.id,
                 );
-                console.log('CREATE_BASKET: ', basket); 
+                console.log('CREATE_BASKET: ', basket.data); 
                 console.log('CREATE_BASKET_ID_BASKET: ', basket.data.id_basket);
                 if(basket?.status === 201) {
                   const addTobasket: any = await addGoodsToBasket(
@@ -39,7 +46,7 @@ const CatalogTyres = observer(() => {
                     item.price[0].price,
                     item.stock[0].id_supplier,
                     item.stock[0].id_storage,
-                    item.category.category,
+                    item.category.category_ua,
                     basket.data.id_basket,
                     item.full_name,
                     item.season.season_ua,
@@ -48,18 +55,17 @@ const CatalogTyres = observer(() => {
 
                     ); 
                     if (addTobasket?.status === 201) {
-                        setCheckOrderItem(item);
-                    console.log('ADD_TO_BASKET: ', addTobasket); 
+                        setCheckOrderItem(
+                            [...basket?.data.basket_storage]
+                        );
+                    console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
+                    console.log('ADD_TO_BASKET: ', addTobasket?.data); 
                     }  
                 }
-            } else {
-                setCheckOrderItem(null);
             }
-            //localStorage.setItem('goodsId', JSON.stringify([item.id, '000001', '0002','00003']));
         } catch (error) {
             console.log('BASKET_ERROR: ',error);
         }
-        
     }
 
     const loadMoreGoods = (e: any) => {
@@ -117,23 +123,43 @@ const CatalogTyres = observer(() => {
                 <span>Сортування:</span>
                 <SelectRadio
                     activeOptions={sortTyresGoods} 
-                    radioData={{ value: "vidDeshevih", radioName: "Від дешевих до дорогих" }}
+                    radioData={{ 
+                        value: "vidDeshevih", 
+                        radioName: "Від дешевих до дорогих",
+                        name: "sortTyreCatalog",
+                    }}
                     direction={"row"} />
                 <SelectRadio 
                     activeOptions={sortTyresGoods} 
-                    radioData={{ value: "vidDorogih", radioName: "Від дорогих до дешевих" }}
+                    radioData={{ 
+                        value: "vidDorogih", 
+                        radioName: "Від дорогих до дешевих",
+                        name: "sortTyreCatalog",
+                    }}
                     direction={"row"} />
                 <SelectRadio 
                     activeOptions={sortTyresGoods} 
-                    radioData={{ value: "poRatingu", radioName: "рейтингу" }}
+                    radioData={{ 
+                        value: "poRatingu", 
+                        radioName: "рейтингу", 
+                        name: "sortTyreCatalog",
+                    }}
                     direction={"row"} />
                 <SelectRadio 
                     activeOptions={sortTyresGoods} 
-                    radioData={{ value: "poNazvi", radioName: "назві" }}
+                    radioData={{ 
+                        value: "poNazvi", 
+                        radioName: "назві", 
+                        name: "sortTyreCatalog",
+                    }}
                     direction={"row"} />
                 <SelectRadio 
                     activeOptions={sortTyresGoods} 
-                    radioData={{ value: "poAkcii", radioName: "акційній ціні" }}
+                    radioData={{ 
+                        value: "poAkcii",
+                        radioName: "акційній ціні",
+                        name: "sortTyreCatalog",
+                    }}
                     direction={"row"} />               
             </div>
             <div className="rowCatalogTyres">

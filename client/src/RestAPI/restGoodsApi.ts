@@ -217,6 +217,13 @@ const addGoodsToBasket = async (
         console.log(error)
 });  
 
+const getBasketOrder = async () => {
+    const {data} = await $hostGet.get('/basket/by-session')
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
 const likesTyreReview = async (
     id_review: number, 
     likeCount: number,
@@ -462,4 +469,5 @@ export {
     addGoodsToBasket,
     createBasket,
     getSession,
+    getBasketOrder,
 }

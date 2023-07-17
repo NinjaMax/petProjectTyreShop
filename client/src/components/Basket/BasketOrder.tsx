@@ -1,16 +1,41 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../../css/BasketCss/BasketOrder.css';
 import ButtonAction from '../buttons/ButtonAction';
 import TyresCardList from '../cards/TyresCardList';
 import SelectRadio from '../select/SelectRadio';
 import InputDataText from '../ux/InputDataText';
 import InputDataTel from '../ux/InputDataTel';
+import { yieldToMain } from '../../restAPI/postTaskAdmin';
+import { getBasketOrder } from '../../restAPI/restGoodsApi';
 
 const BasketOrder = () => {
     const [delivery, setDelivery] = useState("");
-    
+    const [goodsOrder, setGoodsOrder] = useState<any[]>();
+    useEffect(() => {
+        let isMounted = false;
+        const basketOrder = async () => {
+          const taskProduct: any[] = [
+            getBasketOrder,
+          ];
+        let i: number = 0; 
+        while (taskProduct.length > i) {
+          if (!isMounted && taskProduct[i] === getBasketOrder) {
+            const getBasket: any = await taskProduct[i]();
+            if (getBasket) {
+               setGoodsOrder([...getBasket?.basket_storage]); 
+            }
+          }
+          const task = taskProduct.shift();
+          task();
+          await yieldToMain();
+        }
+        };
+        basketOrder();
+        return () => {
+          isMounted = true;
+        };
+      },[]);
 
-   
     const acceptInput = (value: string, mask: {
         masked: any; arg: any
         }) => {
@@ -21,8 +46,7 @@ const BasketOrder = () => {
         console.log(value + " :VALUE")
     };
        
-
-    const checkedRadio = (e: { currentTarget: { value: React.SetStateAction<string>; }; }) => {
+    const checkedRadio = (e: any) => {
         setDelivery(e.currentTarget.value);
     }
 
@@ -64,45 +88,72 @@ const BasketOrder = () => {
                 </div>
                 <div className='basketColmItemLeft'>
                     <span>Доставка:</span>
-                    <SelectRadio radioData={{value: "samoviviz", radioName: "Самовивіз"}} 
+                    <SelectRadio 
+                        radioData={{
+                            value: "samoviviz",
+                            radioName: "Самовивіз",
+                            name: "delivery",    
+                        }} 
                         addOptions={""}
                         direction={"column"} 
-                        //checked={checkedRadio}
+                        activeOptions={checkedRadio}
                         >
                     </SelectRadio>
                     <SelectRadio 
-                        radioData={{value: "novaPoshta", radioName: "Нова Пошта"}} 
+                        radioData={{
+                            value: "novaPoshta", 
+                            radioName: "Нова Пошта",
+                            name: "delivery",
+                        }} 
                         addOptions={delivery === "novaPoshta" ?? false}
                         direction={"column"} 
-                        //checked={checkedRadio}
+                        activeOptions={checkedRadio}
                         >
                         { delivery === "novaPoshta" ?    
                         "Розрахунок НОВА ПОШТА" : null}    
                     </SelectRadio>
                     <SelectRadio 
-                        radioData={{value: "urkPoshta", radioName: "Укр Пошта"}} 
+                        radioData={{
+                            value: "urkPoshta", 
+                            radioName: "Укр Пошта",
+                            name: "delivery",
+                        }} 
                         addOptions={""}
                         direction={"column"} 
-                        //checked={checkedRadio}
+                        activeOptions={checkedRadio}
                         >
                     </SelectRadio>
                 </div>
                 <div className='basketColmItemLeft'>
                     <span>Оплата:</span>
                     <SelectRadio 
-                        radioData={{value: "gotivka", radioName: "Готівкою"}} 
+                        radioData={{
+                            value: "gotivka", 
+                            radioName: "Готівкою",
+                            name: "pay",
+                        }} 
                         addOptions={""}
                         direction={"column"} 
                         //checked={checkedRadio}
                         >
                     </SelectRadio>
-                    <SelectRadio radioData={{value: "cardVisaMaster", radioName: "Карткою (VISA / MASTERCARD)"}} 
+                    <SelectRadio 
+                        radioData={{
+                            value: "cardVisaMaster", 
+                            radioName: "Карткою (VISA / MASTERCARD)",
+                            name: "pay",
+                        }} 
                         addOptions={""}
                         direction={"column"} 
                         //checked={checkedRadio}
                         >
                     </SelectRadio>
-                    <SelectRadio radioData={{value: "bezgotivka", radioName: "Безготівковий розрахунок"}} 
+                    <SelectRadio 
+                        radioData={{
+                            value: "bezgotivka", 
+                            radioName: "Безготівковий розрахунок",
+                            name: "pay",
+                        }} 
                         addOptions={""}
                         direction={"column"} 
                         //checked={checkedRadio}
@@ -114,23 +165,27 @@ const BasketOrder = () => {
                 Товар і ціна 
                 остаточна сумма замовлення
                 <div className='basketColmRightListGoods'>
-                    <div className='itemGoodsBasket'>
-                        <TyresCardList forOrder={true}/><span>X</span>  
-                    </div>
-                    <div className='itemGoodsBasket'>
-                        <TyresCardList forOrder={true}/><span>X</span>
-                    </div>
-                    <div className='itemGoodsBasket'>
-                        <TyresCardList forOrder={true}/><span>X</span>  
-                    </div>  
+                    {goodsOrder?.length !== 0 ? goodsOrder?.map((item: any) =>
+                       <div key={item.id + 'cart'}
+                        className='itemGoodsBasket'>
+                            <TyresCardList 
+                            goods={item}
+                            forOrder={true}
+                            priceItem={item.price}
+                            /><span>X</span>  
+                        </div> 
+                        ) : null
+                    }
                 </div>
                 <div className='totalCount'>
-                    <span>сумма за товар у кількості 4од: 8020 </span>
+                    <span>{`Сумма за товари у кількості
+                    ${goodsOrder?.reduce((sum, current) => ( sum + current.quantity), 0)} од: 
+                    ${goodsOrder?.reduce((sum, current) => ( sum + current.price), 0) * 
+                        goodsOrder?.reduce((sum, current) => ( sum + current.quantity), 0)}  грн`}</span>
                     <span>Додаткова Гарантія: 350грн</span>
                     <span>Доставка (Нова Пошта): 150грн </span>
                     <span>Комісія платіжної системи: 35грн</span>
-                    
-                    <span>Всього: 8185грн</span>   
+                    <span>Всього: 8185грн</span> 
                 </div>
                 <div className='basketColmItemRight'>
                     <label htmlFor="commentsOrder">Додати коментар до замовлення:</label>

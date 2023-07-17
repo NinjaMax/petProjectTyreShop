@@ -28,6 +28,7 @@ async function bootstrap() {
     const redisStore = new RedisStore({
       client: redisClient,
       prefix: 'skyApp_session: ', 
+      ttl: 1296000000,
     });
     app.use(cookieParser());
     app.use(
@@ -39,7 +40,7 @@ async function bootstrap() {
         cookie: {
           secure: true,
           httpOnly: true,
-          //maxAge: 60000,
+          maxAge: 1296000000,
         },
         name: 'sessionId',
       }),

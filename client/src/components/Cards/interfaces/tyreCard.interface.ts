@@ -152,6 +152,10 @@ export interface ITyreCard {
             id_year: number,
             manufacture_year: string,
         };
+        reviewCount?: number;
+        ratingCount?: number;
+        quantity?: number;
     };
+    priceItem?: number;
     checkOrders?(arg0: any, ...arg:any[]): Promise<void | undefined>;
 }

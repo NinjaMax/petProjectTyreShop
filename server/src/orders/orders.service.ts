@@ -14,6 +14,7 @@ import { StockOilsService } from '../stock/stock-oils.service';
 import { StockTyresService } from '../stock/stock-tyres.service';
 import { StockWheelsService } from '../stock/stock-wheels.service';
 import { StorageService } from '../storage/storage.service';
+import { CustomersService } from '../customers/customers.service';
 
 @Injectable()
 export class OrdersService {
@@ -25,6 +26,7 @@ export class OrdersService {
     private stockBatteriesService: StockBatteriesService,
     private stockOilsService: StockOilsService,
     //private priceTyreService: PriceTyresService,
+    private customerService: CustomersService,
     private storageService: StorageService,
     private ordersStorageService: OrdersStorageService,
   ) {}
@@ -33,7 +35,9 @@ export class OrdersService {
     try {
       const basket = await this.basketService.findBasketById(createOrderDto);
       const order = await this.ordersRepository.create(createOrderDto);
-
+      const customer = await this.customerService.findOrCreateCustmer(
+        createOrderDto,
+      );
       if (basket) {
         const orderId: Orders = await this.ordersRepository.findByPk(
           order.id_order,
@@ -42,9 +46,13 @@ export class OrdersService {
         basket.order = orderId;
 
         return orderId;
+      } else if (customer) {
+        order.$add('customer', customer.id_customer);
+        order.reload();
+        return order;
+      } else {
+        return order;
       }
-
-      return order;
     } catch {
       throw new HttpException(
         'Data is incorrect and must be uniq',

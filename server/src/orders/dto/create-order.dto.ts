@@ -59,7 +59,7 @@ export class CreateOrderDto {
   readonly reviewCount: number;
 
   readonly season: string;
-
+  readonly balance: number;
   readonly address: string;
 
   readonly checkedIn: boolean;

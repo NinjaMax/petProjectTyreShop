@@ -77,7 +77,9 @@ export class BasketStorageService {
   async findBasketStorageOne(getBasketDto: GetBasketDto) {
     // try {
       const basketStorageOne = await this.basketStorageRepository.findOne({
-        where: { id_basket_storage: getBasketDto.id_basket_storage ?? 0 },
+        where: { id: getBasketDto.id, 
+          id_basket: getBasketDto.id_basket
+        },
       });
       if (basketStorageOne) {
         return basketStorageOne;
@@ -107,7 +109,10 @@ export class BasketStorageService {
     }
   }
 
-  async updateBasketStorage(updateBasketDto: UpdateBasketDto) {
+  async updateBasketStorage(
+    updateBasketDto: UpdateBasketDto,
+    basketStorageId: number,
+  ) {
     // try {
       const basketStorageUpdate = await this.basketStorageRepository.update(
         {
@@ -124,7 +129,7 @@ export class BasketStorageService {
           ratingCount: updateBasketDto.ratingCount,
           reviewCount: updateBasketDto.reviewCount,
         },
-        { where: { id_basket_storage: updateBasketDto.id_basket_storage } },
+        { where: { id_basket_storage: basketStorageId } },
       );
 
       return basketStorageUpdate;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import '../../css/Modal/CheckOrder.css';
 import ButtonAction from '../buttons/ButtonAction';
 import TyresCardList from '../cards/TyresCardList';
@@ -13,15 +13,29 @@ const CheckOrder = ({orderItem}: any) => {
     };
 
     return (
-        <div className='checkOrder'>
+        <div className='checkOrderContainer'>
                 <div>Кошик</div>
-                    <TyresCardList goods={orderItem}/>
+                <div className='checkOrder'>
+                {orderItem ?
+                    orderItem.map((item: any) =>
+                    <div 
+                        className='checkOrderItem' 
+                        key={item.id + 'b'}
+                    >
+                        <TyresCardList 
+                            goods={item}
+                            priceItem={item.price}
+                            forOrder={true}
+                        />   
+                    </div>
+                   ) : null
+                }    
+                </div>
                 <ButtonAction 
                     eventItem={goToBasket}
                     props={'Оформити замовлення'}
                 />    
         </div>       
-        
     );
 };
 

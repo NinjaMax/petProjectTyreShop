@@ -6,6 +6,7 @@ import { GetBasketDto } from './dto/get-basket.dto';
 import { UpdateBasketDto } from './dto/update-basket.dto';
 import { Basket } from './entities/basket.model';
 import { BasketStorageService } from './basket-storage.service';
+import { Basket_Storage } from './entities/basket-storage.model';
 
 @Injectable()
 export class BasketService {
@@ -18,6 +19,7 @@ export class BasketService {
     //try {
       const basketBySessionId = await this.basketRepository.findOne({
         where: { session_id: session ?? '', checkedIn: false },
+        include: [Basket_Storage],
       });
       if (basketBySessionId) {
         await this.basketRepository.update(
@@ -79,6 +81,21 @@ export class BasketService {
     }
   }
 
+  async findBasketBySession(session: string) {
+    try {
+      const basketOneBySessionId = await this.basketRepository.findOne({
+        where: { session_id: session ?? '', checkedIn: false },
+        include: [Basket_Storage],
+      });
+      return basketOneBySessionId;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
   async findBasketById(getBasketDto: GetBasketDto) {
     try {
       const basketId = await this.basketRepository.findByPk(
@@ -102,7 +119,10 @@ export class BasketService {
 
       if (findGoodsToBasket) {
         const updateBasketStor =
-          await this.basketStorageService.updateBasketStorage(createBasketDto);
+          await this.basketStorageService.updateBasketStorage(
+            createBasketDto,
+            findGoodsToBasket.id_basket_storage
+          );
 
         return updateBasketStor;
       } else {

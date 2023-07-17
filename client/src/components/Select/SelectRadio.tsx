@@ -2,7 +2,7 @@ import React from 'react';
 import '../../css/SelectCss/SelectRadio.css';
 
 interface ISelectRadio {
-    radioData:{value: string, radioName: string};
+    radioData:{value: string, radioName: string, name: string};
     direction: string;
     addOptions?: string | boolean;
     activeOptions?:(arg: any) => void; 
@@ -17,12 +17,15 @@ const SelectRadio = (
         <div className={addOptions ? 'selectRadioActive':'selectRadio'} 
                 data-style={{"--direction": direction}}>   
             <div key={radioData.value}>
-                <label className='selectRadioItem'>
+                <label 
+                    className='selectRadioItem'  
+                    htmlFor={radioData.value}
+                >
                     <input className='inputSelectRadioItem'
                         id={radioData.value}
                         type="radio"
                         value={radioData.value}
-                        name="selectRadio" 
+                        name={radioData.name} 
                         onChange={activeOptions}
                     /> {radioData.radioName}            
                 </label>

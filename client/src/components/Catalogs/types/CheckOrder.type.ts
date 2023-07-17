@@ -4,6 +4,7 @@ export type ICheckOrderItem = {
     category:{
         id_cat: string,
         category: string,
+        category_ua: string,
         id_description: number,
     };
     country: {

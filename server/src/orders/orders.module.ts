@@ -12,6 +12,7 @@ import { StockModule } from '../stock/stock.module';
 import { StorageModule } from '../storage/storage.module';
 import { TyresModule } from '../tyres/tyres.module';
 import { UsersModule } from '../users/users.module';
+import { CustomersModule } from '../customers/customers.module';
 
 @Module({
   controllers: [OrdersController],
@@ -25,6 +26,7 @@ import { UsersModule } from '../users/users.module';
     PricesModule,
     StorageModule,
     AuthModule,
+    CustomersModule,
   ],
   exports: [OrdersService, OrdersStorageService],
 })

@@ -22,7 +22,7 @@ export class BasketController {
     @Session() session: Record<string, any>,
     @Body() createBasketDto: CreateBasketDto,
   ) {
-    console.log('SESSION_ID: ', session.id);
+    //console.log('SESSION_ID: ', session.id);
     return this.basketService.createBasket(createBasketDto, session.id);
   }
 
@@ -31,22 +31,23 @@ export class BasketController {
     return this.basketService.addGoodsToBasket(createBasketDto);
   }
 
-  @Get()
+  @Get('/all')
   findAll() {
     return this.basketService.findAllbasket();
   }
 
-  @Get()
+  @Get('/by-id')
   findOne(@Param() @Body() getBasketDto: GetBasketDto) {
     return this.basketService.findBasketById(getBasketDto);
   }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string, 
-    @Body() updateBasketDto: UpdateBasketDto,
+  @Get('/by-session')
+  findBasketOne(@Session() session: Record<string, any>) {
+    return this.basketService.findBasketBySession(session.id);
+  }
 
-  ) {
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateBasketDto: UpdateBasketDto) {
     return this.basketService.updateBasket(updateBasketDto);
   }
 
