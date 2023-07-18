@@ -28,7 +28,7 @@ const sendSmsPass = async (data: any) =>
     )
     .then((response) => response.data)
     .catch((error: any) => {
-      console.log('Не вистачає залишків, або не вірно вказані дані', error);
+      console.log('Не вірно вказані дані', error);
     });
 
 export { sendSmsPass };

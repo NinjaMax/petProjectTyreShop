@@ -73,22 +73,22 @@ const TyresCardList = ({goods, forOrder, priceItem}: ITyreCard) => {
                 <div className="tyresCardCodeList">
                     код товара: {goods?.id}
                 </div>
-                {/* {!forOrder ? */}
+                {!forOrder ?
                     <div className='propsCardList'>
                         <PropsCardIcons
                             type={goods?.vehicle_type}
                             season={goods?.season}
                         />
                     </div>
-                {/* :null} */}
-                {/* {!forOrder ?   */}
+                :null}
+                {!forOrder ?
                     <div className="tyresCardCountryList">
                         <FlagsIcon
                             country={goods?.country} 
                             year={goods?.year}
                         />
                     </div>
-                {/* :null} */}
+                :null}
                 <div className='priceAndBtnCard'>      
                     <div className="tyresCardPriceList">
                     {goods?.price && !priceItem ? goods?.price.map((item: any) => (

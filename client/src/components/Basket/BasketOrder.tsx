@@ -7,10 +7,37 @@ import InputDataText from '../ux/InputDataText';
 import InputDataTel from '../ux/InputDataTel';
 import { yieldToMain } from '../../restAPI/postTaskAdmin';
 import { getBasketOrder } from '../../restAPI/restGoodsApi';
+import { getCityNovaPoshta } from '../../restAPI/restNovaPoshtaAPI';
+
+type ICity = {
+        TotalCount: number,
+        Addresses: [
+            {
+                Present: string,
+                Warehouses: number,
+                MainDescription: string,
+                Area: string,
+                Region: string,
+                SettlementTypeCode: string,
+                Ref: string,
+                DeliveryCity: string,
+                AddressDeliveryAllowed: boolean,
+                StreetsAvailability: boolean,
+                ParentRegionTypes: string,
+                ParentRegionCode: string,
+                RegionTypes: string,
+                RegionTypesCode: string,
+            },
+            ...{}[],
+        ]
+};
 
 const BasketOrder = () => {
     const [delivery, setDelivery] = useState("");
     const [goodsOrder, setGoodsOrder] = useState<any[]>();
+    const [cityList, setCityList] = useState<ICity[]>();
+    const [chooseCity, setChooseCity] = useState<string>('');
+
     useEffect(() => {
         let isMounted = false;
         const basketOrder = async () => {
@@ -36,6 +63,33 @@ const BasketOrder = () => {
         };
       },[]);
 
+    useEffect(() => {
+        let isMounted = false;
+        const basketOrder = async () => {
+          const taskNovaPoshta: any[] = [
+            getCityNovaPoshta,
+          ];
+        let i: number = 0; 
+        while (taskNovaPoshta.length > i) {
+          if (!isMounted && 
+            taskNovaPoshta[i] === getCityNovaPoshta && chooseCity) {
+            const getCity: any = await taskNovaPoshta[i](chooseCity);
+            if (getCity.success) {
+                // setCityList([...getCity?.data]); 
+                console.log('CITY_LIST: ', getCity.data);
+            }
+          }
+          const task = taskNovaPoshta.shift();
+          task();
+          await yieldToMain();
+        }
+        };
+        basketOrder();
+        return () => {
+          isMounted = true;
+        };
+    },[chooseCity]);
+
     const acceptInput = (value: string, mask: {
         masked: any; arg: any
         }) => {
@@ -48,7 +102,14 @@ const BasketOrder = () => {
        
     const checkedRadio = (e: any) => {
         setDelivery(e.currentTarget.value);
-    }
+    };
+
+    const cityChooseActive = (e: any) => {
+        console.log('CITY_CHOOSE: ', e.currentTarget.value);
+        setChooseCity(e.currentTarget.value);
+    };
+
+    console.log('CITY_LIST: ', cityList);
 
     return (
         <div className='basketOrder'>
@@ -76,15 +137,25 @@ const BasketOrder = () => {
                 </div>
                 <div className='basketColmItemLeft'>
                     <label>місто *</label>
-                    <select name='chooseCity' id='citySelect'>
-                    <option value="">--виберіть місто--</option>
-                    <option value="kharkiv">Харків</option>
-                    <option value="kiyv">Київ</option>
-                    <option value="dneps">Дніпро</option>
-                    <option value="lvov">Львів</option>
-                    <option value="poltava">Полтава</option>
-                    <option value="odesa">Одеса</option>
-                    </select>
+                   
+                    <input 
+                        id="city-search"
+                        type="search"  
+                        name="q"
+                        onChange={cityChooseActive}
+                    />
+                    {
+                        <select name='chooseCity' id='citySelect'>
+                        <option value="">--виберіть місто--</option>
+                        <option value="kharkiv">Харків</option>
+                        <option value="kiyv">Київ</option>
+                        <option value="dneps">Дніпро</option>
+                        <option value="lvov">Львів</option>
+                        <option value="poltava">Полтава</option>
+                        <option value="odesa">Одеса</option>
+                        </select> 
+                    }
+                    
                 </div>
                 <div className='basketColmItemLeft'>
                     <span>Доставка:</span>
