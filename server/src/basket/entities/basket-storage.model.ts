@@ -91,8 +91,8 @@ export class Basket_Storage extends Model<
   })
   total: number;
 
-  @Column({ type: DataType.STRING, unique: false, allowNull: true })
-  city_ua: string;
+  // @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  // city_ua: string;
 
   // @Column({ type: DataType.STRING, unique: false, allowNull: true })
   // delivery: string;

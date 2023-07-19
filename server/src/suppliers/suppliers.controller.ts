@@ -26,9 +26,11 @@ export class SuppliersController {
     return this.suppliersService.findAllSupplier();
   }
 
-  @Get('/id')
-  findOne(@Body() getSupplierDto: GetSupplierDto) {
-    return this.suppliersService.findSupplierById(getSupplierDto);
+  @Get('/byid/:id')
+  findOneById(
+    @Param('id') id: number
+  ) {
+    return this.suppliersService.findSupplierByIdParam(id);
   }
 
   @Patch('/update')

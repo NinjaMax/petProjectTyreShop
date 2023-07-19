@@ -58,6 +58,48 @@
     gap: 3px;
 }
 
+.basketCityList {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    position: absolute;
+    top: 96%;
+    overflow-y: auto;
+    max-height: 150px;
+    border-radius: 6px;
+    background-color: #ffff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.basketCityList .basketCityListItem {
+    cursor: pointer;
+    /* background-color: blueviolet; */
+    width: 550px;
+    border-radius: 6px;
+    padding: 2px;
+}
+.basketCityList .basketCityListItem:hover {
+    /* cursor: pointer; */
+    background-color: #ccc;
+    animation: cubic-bezier(0.075, 0.82, 0.165, 1);
+    /* width: 550px;
+    border-radius: 6px;
+    padding: 2px; */
+}
+
+.basketCityList label {
+    cursor: pointer;
+    /* background-color: red; */
+    border-radius: 6px;
+    padding: 2px;
+}
+
+
+.basketCityList input {
+    appearance: none;
+}
+
 .basketColmItemRight {
     display: flex;
     flex-direction: column;

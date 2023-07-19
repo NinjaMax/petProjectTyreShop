@@ -110,10 +110,26 @@ export class SuppliersService {
     try {
       const supplierById = await this.suppliersRepository.findByPk(
         getSupplierDto.id_supplier,{
-          include: { all: true },
+          include: { model: Contract },
         },
       );
       return supplierById;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found', 
+        HttpStatus.NOT_FOUND
+      );
+    }
+  }
+
+  async findSupplierByIdParam(id: number) {
+    try {
+      const supplierByIdParam = await this.suppliersRepository.findByPk(
+        id,{
+          include: { model: Contract },
+        },
+      );
+      return supplierByIdParam;
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found', 

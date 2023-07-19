@@ -341,7 +341,14 @@ const getTyresCountReviewByModel = async (
     return data;
 }
 
-
+const getSupplierById = async (id_supplier: number) => {
+    const {data} = await $hostGet.get(
+        `/suppliers/byid/${id_supplier ?? 0}`,
+    )
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
 
 const getTyresBrandPropsAll = async () => {
     const {data} = await $hostGet.get('properties/allbrands')
@@ -470,4 +477,5 @@ export {
     createBasket,
     getSession,
     getBasketOrder,
+    getSupplierById,
 }

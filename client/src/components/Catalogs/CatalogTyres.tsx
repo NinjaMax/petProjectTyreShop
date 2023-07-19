@@ -25,7 +25,6 @@ const CatalogTyres = observer(() => {
         }
     },[active]);
 
-
     const checkOrders = async (
         item : ICheckOrderItem, 
         ratingModel: {avgRatingModel: number }
