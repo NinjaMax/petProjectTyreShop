@@ -1,0 +1,55 @@
+export enum WheelsTypeNovaPoshta {
+    REF_17_5 = "d7c456ca-aa8b-11e3-9fa0-0050568002cf",
+    DESCRIPTION_17_5 = "Диск вантажний R 17,5 ",
+    DESCRIPTION_RU_17_5 = "Диск грузовой R 17,5",
+    WEIGHT_17_5 = "28.00",
+    DESCRIPTION_TYPE_17_5 = "Wheels",
+
+    REF_19_5 = "d7c456cb-aa8b-11e3-9fa0-0050568002cf",
+    DESCRIPTION_19_5 = "Диск вантажний R 19,5",
+    DESCRIPTION_RU_19_5 = "Диск грузовой R 19,5",
+    WEIGHT_19_5 = "45.00",
+    DESCRIPTION_TYPE_19_5 = "Wheels",
+
+    REF_20 = "d7c456cc-aa8b-11e3-9fa0-0050568002cf",
+    DESCRIPTION_20 = "Диск вантажний R 20",
+    DESCRIPTION_RU_20 = "Диск грузовой R 20",
+    WEIGHT_20 = "80.00",
+    DESCRIPTION_TYPE_20 = "Wheels",
+
+    REF_22_5 = "d7c456cd-aa8b-11e3-9fa0-0050568002cf",
+    DESCRIPTION_22_5 = "Диск вантажний R 22,5",
+    DESCRIPTION_RU_22_5 = "Диск грузовой R 22,5",
+    WEIGHT_22_5 = "70.00",
+    DESCRIPTION_TYPE_22_5 = "Wheels",
+
+    REF_13_14 = "d7c456cf-aa8b-11e3-9fa0-0050568002cf",
+    DESCRIPTION_13_14 = "Диск легковий R 13-14",
+    DESCRIPTION_RU_13_14 = "Диск легковой R 13-14",
+    WEIGHT_13_14 = "8.75",
+    DESCRIPTION_TYPE_13_14 = "Wheels",
+
+    REF_15_17 = "d7c456d0-aa8b-11e3-9fa0-0050568002cf",
+    DESCRIPTION_15_17 = "Диск легковий R 15-17",
+    DESCRIPTION_RU_15_17 = "Диск легковой R 15-17",
+    WEIGHT_15_17 = "15.42",
+    DESCRIPTION_TYPE_15_17 = "Wheels",
+
+    REF_18_19 = "d7c456d1-aa8b-11e3-9fa0-0050568002cf",
+    DESCRIPTION_18_19 = "Диск легковий R 18-19",
+    DESCRIPTION_RU_18_19 = "Диск легковой R 18-19",
+    WEIGHT_18_19 = "23.75",
+    DESCRIPTION_TYPE_18_19 = "Wheels",
+
+    REF_20_21 = "d7c456d2-aa8b-11e3-9fa0-0050568002cf",
+    DESCRIPTION_20_21 = "Диск легковий R 20-21",
+    DESCRIPTION_RU_20_21 = "Диск легковой R 20-21",
+    WEIGHT_20_21 = "40.00",
+    DESCRIPTION_TYPE_20_21 = "Wheels",
+
+    REF_23 = "d7c456d3-aa8b-11e3-9fa0-0050568002cf",
+    DESCRIPTION_23 = "Диск легковий R 23",
+    DESCRIPTION_RU_23 = "Диск легковой R 23",
+    WEIGHT_23 = "52.50",
+    DESCRIPTION_TYPE_23 = "Wheels",
+};

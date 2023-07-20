@@ -1,0 +1,55 @@
+export enum TyreTypeNovaPoshta {
+    REF_22_5 = "20f7b625-9add-11e3-b441-0050568002cf",
+    DESCRIPTION_22_5 = "Шина вантажна R 22,5",
+    DESCRIPTION_RU_22_5 = "Шина грузовая R 22,5",
+    WEIGHT_22_5 = "94.00",
+    DESCRIPTION_TYPE_22_5 = "Tires",
+
+    REF_17_5 = "20f7b626-9add-11e3-b441-0050568002cf",
+    DESCRIPTION_17_5 = "Шина вантажна R 17,5 ",
+    DESCRIPTION_RU_17_5 =  "Шина грузовая R 17,5",
+    WEIGHT_17_5 = "35.00",
+    DESCRIPTION_TYPE_17_5 =  "Tires",
+
+    REF_19_5 = "20f7b627-9add-11e3-b441-0050568002cf",
+    DESCRIPTION_19_5 = "Шина вантажна R 19,5",
+    DESCRIPTION_RU_19_5 =  "Шина грузовая R 19,5",
+    WEIGHT_19_5 = "61.00",
+    DESCRIPTION_TYPE_19_5 =  "Tires",
+
+    REF_20 = "20f7b628-9add-11e3-b441-0050568002cf",
+    DESCRIPTION_20 = "Шина вантажна R 20",
+    DESCRIPTION_RU_20 =  "Шина грузовая R 20",
+    WEIGHT_20 = "105.00",
+    DESCRIPTION_TYPE_20 =  "Tires",
+
+    REF_13_14 = "d7c456c5-aa8b-11e3-9fa0-0050568002cf",
+    DESCRIPTION_13_14 = "Шина легкова R 13-14",
+    DESCRIPTION_RU_13_14 =  "Шина легковая R 13-14",
+    WEIGHT_13_14 = "14.90",
+    DESCRIPTION_TYPE_13_14 =  "Tires",
+
+    REF_15_17 = "d7c456c6-aa8b-11e3-9fa0-0050568002cf",
+    DESCRIPTION_15_17 = "Шина легкова R 15-17",
+    DESCRIPTION_RU_15_17 =  "Шина легковая R 15-17",
+    WEIGHT_15_17 = "23.09",
+    DESCRIPTION_TYPE_15_17 = "Tires",
+
+    REF_18_19 = "d7c456c7-aa8b-11e3-9fa0-0050568002cf",
+    DESCRIPTION_18_19 = "Шина легкова R 18-19",
+    DESCRIPTION_RU_18_19 =  "Шина легковая R 18-19",
+    WEIGHT_18_19 = "29.48",
+    DESCRIPTION_TYPE_18_19 =  "Tires",
+
+    REF_20_21 = "d7c456c8-aa8b-11e3-9fa0-0050568002cf",
+    DESCRIPTION_20_21 = "Шина легкова R 20-21",
+    DESCRIPTION_RU_20_21 =  "Шина легковая R 20-21",
+    WEIGHT_20_21 = "34.77",
+    DESCRIPTION_TYPE_20_21 =  "Tires",
+
+    REF_23 = "d7c456c9-aa8b-11e3-9fa0-0050568002cf",
+    DESCRIPTION_23 = "Шина легкова R 23",
+    DESCRIPTION_RU_23 = "Шина легковая R 23",
+    WEIGHT_23 = "43.32",
+    DESCRIPTION_TYPE_23 = "Tires",
+};

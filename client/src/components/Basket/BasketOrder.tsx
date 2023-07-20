@@ -7,15 +7,18 @@ import InputDataText from '../ux/InputDataText';
 import InputDataTel from '../ux/InputDataTel';
 import { yieldToMain } from '../../restAPI/postTaskAdmin';
 import { getBasketOrder, getSupplierById } from '../../restAPI/restGoodsApi';
-import { getCityNovaPoshta } from '../../restAPI/restNovaPoshtaAPI';
+import { getCityNovaPoshta, getWareHousesNovaPoshta } from '../../restAPI/restNovaPoshtaAPI';
 import { IDapertmentNP } from './types/DepartmentType.type';
 import { ICity } from './types/CityNP.type';
+import { IDepart } from './types/DaprtNP.type';
 
 const BasketOrder = () => {
     const [delivery, setDelivery] = useState("");
     const [goodsOrder, setGoodsOrder] = useState<any[]>();
     const [cityList, setCityList] = useState<ICity[]>();
-    const [cityListActive, setCityListActive] = useState<boolean>(false)
+    const [dapartList, setDepartList] = useState<IDepart[]>();
+    const [cityListActive, setCityListActive] = useState<boolean>(false);
+    const [chooseDepartmentNP, setChooseDepartmentNP] = useState<IDepart>()
     const [inputCity, setInputCity] = useState<string>('');
     const [chooseCity, setChooseCity] = useState<string>('');
     const [dataDepartmentNP, setDataDepartmentNP] = useState<IDapertmentNP>();
@@ -51,15 +54,24 @@ const BasketOrder = () => {
         const basketOrder = async () => {
           const taskNovaPoshta: any[] = [
             getCityNovaPoshta,
+            getWareHousesNovaPoshta,
           ];
         let i: number = 0; 
         while (taskNovaPoshta.length > i) {
           if (!isMounted && 
             taskNovaPoshta[i] === getCityNovaPoshta && inputCity) {
             const getCity: any = await taskNovaPoshta[i](inputCity);
-            if (getCity.success) {
+            if (getCity?.success) {
                 setCityList([...getCity?.data[0].Addresses]); 
                 console.log('CITY_LIST: ', getCity.data[0].Addresses);
+            }
+          }
+          if (!isMounted && 
+            taskNovaPoshta[i] === getWareHousesNovaPoshta && dataDepartmentNP) {
+            const getDapartNP: any = await taskNovaPoshta[i](dataDepartmentNP);
+            if (getDapartNP?.success) {
+                setDepartList([...getDapartNP?.data]); 
+                console.log('DAPART_LIST: ', getDapartNP.data);
             }
           }
           const task = taskNovaPoshta.shift();
@@ -71,7 +83,7 @@ const BasketOrder = () => {
         return () => {
           isMounted = true;
         };
-    },[inputCity]);
+    },[dataDepartmentNP, inputCity]);
 
     const basketSupplierGoods = async (city: string) => {
         if (goodsOrder) {
@@ -83,6 +95,7 @@ const BasketOrder = () => {
                 let getCitySup: any = await getSupplierById(
                     taskGetSupplier[i].id_supplier
                 );
+                console.log(`CITY_SUP_${i}: `,  getCitySup.city_ua);
                 if (getCitySup.city_ua === 'Київ' && city.includes('м. Київ')) {
                     setTakeOut(true); 
                     console.log('CITY_KIYV: ', true);
@@ -133,14 +146,19 @@ const BasketOrder = () => {
         //setChooseCity('');
         setInputCity('');
         setCityListActive(false); 
+
         console.log('CANCEL_INPUT');
     };
-    // DeliveryCity
-    // : 
-    //     "8d5a980d-391c-11dd-90d9-001a92567626"
-    // MainDescription
-    // : 
-    // "Київ"
+
+    const chooseDepartEvent = (e: any) => {
+        console.log('DEPART_CHOOSE: ', e.target.value);
+        setChooseDepartmentNP({
+            Ref: e.currentTarget.getAttribute('data-depref'),
+            Description: e.target.value,
+            CityRef: e.currentTarget.getAttribute('data-cityref'),
+        });
+    };
+
     //console.log('CITY_CHOOSE: ', chooseCity);
     // console.log('CITY_LIST_ARR: ', cityList);
     // console.log('GOODS_LIST: ', goodsOrder);
@@ -225,7 +243,6 @@ const BasketOrder = () => {
                     </SelectRadio> 
                     : null 
                     }
-                    
                     <SelectRadio 
                         radioData={{
                             value: "novaPoshta", 
@@ -235,10 +252,42 @@ const BasketOrder = () => {
                         addOptions={delivery === "novaPoshta" ?? false}
                         direction={"column"} 
                         activeOptions={checkedRadio}
-                        >
-                        { delivery === "novaPoshta" ?    
-                        "Розрахунок НОВА ПОШТА" : null}    
+                    > 
                     </SelectRadio>
+                    { delivery === "novaPoshta" ?    
+                        <div 
+                            className='basketDepartList' 
+                            onClick={(e:any) => e.stopPropagation()}       
+                        > 
+                            <select 
+                            //htmlFor={depart.SiteKey}
+
+                                onChange={chooseDepartEvent}
+                                id='select-depart'
+                            >
+                                <option value=''>
+                                    --віберіть відділення--
+                                </option>
+                        {dapartList?.map((depart: IDepart) =>
+                                <option 
+                                    //id={depart.SiteKey}
+                                    value={depart.Description}
+                                    data-depref={depart.Ref}
+                                    data-cityref={depart.CityRef}
+                                    //type='radio'
+                                    //name='city_list'
+                                    
+                                    key={depart.SiteKey}
+                                    
+                                >
+                                {depart.Description}
+                                </option>
+                            )
+                        }
+                        </select>    
+                        </div>
+                        // </div>      
+                    : null}
                     <SelectRadio 
                         radioData={{
                             value: "urkPoshta", 
