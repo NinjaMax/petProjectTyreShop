@@ -1,6 +1,7 @@
 import { IDapertmentNP } from '../components/basket/types/DepartmentType.type';
 import { WareHouseNPType } from './enum/typeWareHouseNP.enum';
 import { $novaPoshtaPost } from './index';
+import { CalcNovaPoshta } from './types/CalcNovaPoshta.type';
 
 const getCityNovaPoshta = async (dataCity: string) =>
   await $novaPoshtaPost.post('/v2.0/json/',
@@ -42,13 +43,13 @@ const getWareHousesNovaPoshta = async (dataCity: IDapertmentNP) =>
       console.log(`Не вірно вказані дані, або інша помилка.`, error);
     });
   
-  const getCalcPriceNovaPoshta = async (
-    citySender, 
-    cityReceiver,
-    goodsCost,
-    goodsType,
-    goodsQuantity,
-    redeliveryCost
+  const getCalcPriceNovaPoshta = async (dataCalc: CalcNovaPoshta
+    // citySender: string, 
+    // cityReceiver: string,
+    // goodsCost: string,
+    // goodsType: string,
+    // goodsQuantity: string,
+    // redeliveryCost: string,
   ) =>
   await $novaPoshtaPost.post('/v2.0/json/',
   {
@@ -56,24 +57,24 @@ const getWareHousesNovaPoshta = async (dataCity: IDapertmentNP) =>
     "modelName": "InternetDocument",
     "calledMethod": "getDocumentPrice",
     "methodProperties": {
-      "CitySender" : citySender,
-      "CityRecipient" : cityReceiver,
+      "CitySender" : dataCalc.citySender,
+      "CityRecipient" : dataCalc.cityReceiver,
       "Weight" : "0.1",
       "ServiceType" : "WarehouseWarehouse",
-      "Cost" : goodsCost,
-      "CargoType" : goodsType,
-      "SeatsAmount" : goodsQuantity,
+      "Cost" : dataCalc.goodsCost,
+      "CargoType" : dataCalc.goodsType,
+      "SeatsAmount" : dataCalc.goodsQuantity,
       "RedeliveryCalculate" : {
         "CargoType":"Money",
-        "Amount":redeliveryCost
+        "Amount": dataCalc.redeliveryCost ?? "1",
       },
       "PackCount" : "1",
-      "PackRef" : "00000000-0000-0000-0000-000000000000",
-      "Amount" : "100",
+      "PackRef" : "",
+      "Amount" : "1",
       "CargoDetails" : [
         {
-        "CargoDescription":"00000000-0000-0000-0000-000000000000",
-        "Amount":"2"
+        "CargoDescription": dataCalc.goodsDescription,
+        "Amount": dataCalc.goodsQuantity
         },
       ],
       "CargoDescription" : "00000000-0000-0000-0000-000000000000"
@@ -87,5 +88,6 @@ const getWareHousesNovaPoshta = async (dataCity: IDapertmentNP) =>
 
 export { 
     getCityNovaPoshta,
-    getWareHousesNovaPoshta
+    getWareHousesNovaPoshta,
+    getCalcPriceNovaPoshta
 };

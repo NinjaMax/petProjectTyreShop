@@ -45,13 +45,13 @@ const CatalogTyres = observer(() => {
                     item.price[0].price,
                     item.stock[0].id_supplier,
                     item.stock[0].id_storage,
-                    item.category.category_ua,
+                    item.category.category,
                     basket.data.id_basket,
                     item.full_name,
                     item.season.season_ua,
                     ratingModel?.avgRatingModel,
                     item.reviews.length,
-
+                    item.diameter.diameter,
                     ); 
                     if (addTobasket?.status === 201) {
                         setCheckOrderItem(

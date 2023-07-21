@@ -41,7 +41,7 @@ const BasketNavBar = ({setActive}: IBasketNav) => {
       <a href='/basket'>
         <img id='imgBasketNav' src={shoppingCart}  alt='basketNav'/>     
       </a>
-    {goodsOrder?.length !== 0 ?
+    {goodsOrder && goodsOrder?.length !== 0 ?
       <div className='basketNavCount'>
         <div className='basketNavCountNum'>
           {goodsOrder?.reduce((sum, current) => ( sum + current.quantity), 0)}

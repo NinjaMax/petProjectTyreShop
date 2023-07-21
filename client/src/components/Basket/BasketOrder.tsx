@@ -7,10 +7,14 @@ import InputDataText from '../ux/InputDataText';
 import InputDataTel from '../ux/InputDataTel';
 import { yieldToMain } from '../../restAPI/postTaskAdmin';
 import { getBasketOrder, getSupplierById } from '../../restAPI/restGoodsApi';
-import { getCityNovaPoshta, getWareHousesNovaPoshta } from '../../restAPI/restNovaPoshtaAPI';
+import { getCalcPriceNovaPoshta, getCityNovaPoshta, getWareHousesNovaPoshta } from '../../restAPI/restNovaPoshtaAPI';
 import { IDapertmentNP } from './types/DepartmentType.type';
 import { ICity } from './types/CityNP.type';
 import { IDepart } from './types/DaprtNP.type';
+import { CalcNovaPoshta } from '../../restAPI/types/CalcNovaPoshta.type';
+import { cargoTypesNovaPoshta } from '../../services/cargoTypesNovaPoshta';
+import { tyresDiameter } from '../../services/tyresDiameterNovaPoshta';
+import { wheelsDiameter } from '../../services/wheelsDiameterNovaPoshta';
 
 const BasketOrder = () => {
     const [delivery, setDelivery] = useState("");
@@ -23,6 +27,7 @@ const BasketOrder = () => {
     const [chooseCity, setChooseCity] = useState<string>('');
     const [dataDepartmentNP, setDataDepartmentNP] = useState<IDapertmentNP>();
     const [takeOut, setTakeOut] = useState<boolean>(false);
+    const [costNovaPoshta, setCostNovaPoshta] = useState<any[]| null>([]);
 
     useEffect(() => {
         let isMounted = false;
@@ -86,7 +91,9 @@ const BasketOrder = () => {
     },[dataDepartmentNP, inputCity]);
 
     const basketSupplierGoods = async (city: string) => {
+        
         if (goodsOrder) {
+            let dataSupplier: CalcNovaPoshta = {};
             let taskGetSupplier: any[] | null = [
                 ...goodsOrder
             ];
@@ -95,6 +102,39 @@ const BasketOrder = () => {
                 let getCitySup: any = await getSupplierById(
                     taskGetSupplier[i].id_supplier
                 );
+                let cityNovaPoshta = await getCityNovaPoshta(getCitySup.city_ua);
+                let dataSupByCity = cityNovaPoshta?.data[0]?.Addresses.find(
+                    (item: any) => item.MainDescription === getCitySup.city_ua);
+                
+                let goodsTypeRef = cargoTypesNovaPoshta(taskGetSupplier[i].category);
+                if (goodsTypeRef === "Cargo") {
+                   console.log('CARGO_TYPE');
+                }
+                if (goodsTypeRef === "TiresWheels") {
+                    let tyreDiameterRef = tyresDiameter(taskGetSupplier[i].diameter);
+                    dataSupplier.goodsDescription = tyreDiameterRef;
+                }
+                if (goodsTypeRef === "TiresWheels" && taskGetSupplier[i].category === "диски") {
+                    let wheelsDiameterRef = wheelsDiameter(taskGetSupplier[i].diameter);
+                    dataSupplier.goodsDescription = wheelsDiameterRef;
+                }
+                dataSupplier.goodsType = goodsTypeRef;
+                dataSupplier.citySender = dataSupByCity.DeliveryCity;
+                dataSupplier.cityReceiver = dataDepartmentNP?.DeliveryCity;
+                dataSupplier.goodsQuantity = taskGetSupplier[i].quantity;
+                dataSupplier.goodsCost = String(taskGetSupplier[i].price * taskGetSupplier[i].quantity);
+                dataSupplier.redeliveryCost = String(taskGetSupplier[i].price * taskGetSupplier[i].quantity);
+
+                console.log("dataSupplier", dataSupplier);
+                let getCalcDelivery = await getCalcPriceNovaPoshta(dataSupplier);
+                console.log(`CALC_DELIVERY ${i}: `, getCalcDelivery.data[0]);
+                if (getCalcDelivery.success === true) {
+                    setCostNovaPoshta(oldCost => [
+                        ...oldCost!,
+                        getCalcDelivery.data[0].Cost,
+                        getCalcDelivery.data[0].CostRedelivery,
+                    ]);
+                } 
                 console.log(`CITY_SUP_${i}: `,  getCitySup.city_ua);
                 if (getCitySup.city_ua === 'Київ' && city.includes('м. Київ')) {
                     setTakeOut(true); 
@@ -132,6 +172,7 @@ const BasketOrder = () => {
     const cityChooseActive = (e: any) => {
         console.log('CITY_CHOOSE: ', e.target.textContent);
         console.log('CITY_INPUT: ', e.target.textContent);
+        setCostNovaPoshta([]);
         setChooseCity(e.target.textContent);
         setDataDepartmentNP({
             MainDescription: e.currentTarget.getAttribute('data-city'),
@@ -152,6 +193,7 @@ const BasketOrder = () => {
 
     const chooseDepartEvent = (e: any) => {
         console.log('DEPART_CHOOSE: ', e.target.value);
+        //console.log('DEPART_CHOOSE_REF: ', e.target.id);
         setChooseDepartmentNP({
             Ref: e.currentTarget.getAttribute('data-depref'),
             Description: e.target.value,
@@ -161,8 +203,11 @@ const BasketOrder = () => {
 
     //console.log('CITY_CHOOSE: ', chooseCity);
     // console.log('CITY_LIST_ARR: ', cityList);
-    // console.log('GOODS_LIST: ', goodsOrder);
+    console.log('COST_NOVA_POSHTA: ', costNovaPoshta);
+    console.log('GOODS_LIST: ', goodsOrder);
     console.log('DELIVERY_DATA: ', dataDepartmentNP);
+    console.log('DELIVERY_CHOOSE: ', chooseDepartmentNP);
+
     return (
         <div className='basketOrder'
             onClick={cancelCityList}
@@ -262,15 +307,16 @@ const BasketOrder = () => {
                             <select 
                             //htmlFor={depart.SiteKey}
 
-                                onChange={chooseDepartEvent}
+                                
                                 id='select-depart'
+                                onChange={chooseDepartEvent}
                             >
                                 <option value=''>
                                     --віберіть відділення--
                                 </option>
                         {dapartList?.map((depart: IDepart) =>
                                 <option 
-                                    //id={depart.SiteKey}
+                                    //id={depart.Ref}
                                     value={depart.Description}
                                     data-depref={depart.Ref}
                                     data-cityref={depart.CityRef}

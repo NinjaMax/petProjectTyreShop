@@ -160,6 +160,8 @@ const createBasket = async (
     notes?: string,
     storage?: string,
     delivery?: string,
+    city_delivery?: string,
+    ref_city_delivery?: string,
     pay_view?: string,
     dop_garanty?: string,
     checkedIn?: boolean,
@@ -173,6 +175,8 @@ await $hostPost.post('/basket', {
     notes: notes,
     storage: storage,
     delivery: delivery,
+    city_delivery: city_delivery,
+    ref_city_delivery: ref_city_delivery,
     pay_view: pay_view,
     dop_garanty: dop_garanty,
     checkedIn: checkedIn,
@@ -195,8 +199,10 @@ const addGoodsToBasket = async (
     season?: string,
     ratingCount?: number,
     reviewCount?: number,
-    city_ua?: string,
-
+    diameter?: string,
+    ref_diameter?: string,
+    weight?: string,
+    ref_weight?: string,
     ) =>
     await $hostPost.post('/basket/add-goods', {
     id: id,     
@@ -211,7 +217,10 @@ const addGoodsToBasket = async (
     season: season,
     ratingCount: ratingCount,
     reviewCount: reviewCount,
-    city_ua: city_ua,
+    diameter: diameter,
+    ref_diameter: ref_diameter,
+    weight: weight,
+    ref_weight: ref_weight,
 })
 .catch(error => {
         console.log(error)

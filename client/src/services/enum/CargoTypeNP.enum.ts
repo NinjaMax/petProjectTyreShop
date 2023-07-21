@@ -11,6 +11,9 @@ export enum CargoTypeNovaPoshta {
     DESCRIPTION_SHINY_DISKY = "Шини-диски",
     REF_SHINY_DISKY = "TiresWheels",
 
+    DESCRIPTION_DISKY = "Шини-диски",
+    REF_DISKY = "TiresWheels",
+
     DESCRIPTION_PALETY = "Палети",
     REF_PALETY = "Pallet"
 };
