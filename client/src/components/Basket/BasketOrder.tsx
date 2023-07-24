@@ -28,6 +28,15 @@ const BasketOrder = () => {
     const [dataDepartmentNP, setDataDepartmentNP] = useState<IDapertmentNP>();
     const [takeOut, setTakeOut] = useState<boolean>(false);
     const [costNovaPoshta, setCostNovaPoshta] = useState<any[]| null>([]);
+    const [sumGoods, setSumGoods]= useState<number|null>(null);
+    const [dopGarantySum, setDopGarantySum] = useState<number|null>(0);
+    const [commisionPay, setCommitionPay] = useState<number|null>(0);
+    const [newSumGoods, setNewSumGoods] = useState<number|null>(null);
+    const [bonusUser, setBonusUser] = useState();
+    const [sumOverall, setSumOverall] = useState<any[]>();
+    const [deliverySum, setDeliverySum] = useState<number|null>(0);
+    const [payMethod, setPayMethod] = useState("");
+
 
     useEffect(() => {
         let isMounted = false;
@@ -60,29 +69,29 @@ const BasketOrder = () => {
           const taskNovaPoshta: any[] = [
             getCityNovaPoshta,
             getWareHousesNovaPoshta,
-          ];
-        let i: number = 0; 
-        while (taskNovaPoshta.length > i) {
-          if (!isMounted && 
-            taskNovaPoshta[i] === getCityNovaPoshta && inputCity) {
-            const getCity: any = await taskNovaPoshta[i](inputCity);
-            if (getCity?.success) {
+            ];
+            let i: number = 0; 
+            while (taskNovaPoshta.length > i) {
+            if (!isMounted && 
+                taskNovaPoshta[i] === getCityNovaPoshta && inputCity) {
+                const getCity: any = await taskNovaPoshta[i](inputCity);
+                if (getCity?.success) {
                 setCityList([...getCity?.data[0].Addresses]); 
                 console.log('CITY_LIST: ', getCity.data[0].Addresses);
+                }
             }
-          }
-          if (!isMounted && 
-            taskNovaPoshta[i] === getWareHousesNovaPoshta && dataDepartmentNP) {
-            const getDapartNP: any = await taskNovaPoshta[i](dataDepartmentNP);
-            if (getDapartNP?.success) {
+            if (!isMounted && 
+                taskNovaPoshta[i] === getWareHousesNovaPoshta && dataDepartmentNP) {
+                const getDapartNP: any = await taskNovaPoshta[i](dataDepartmentNP);
+                if (getDapartNP?.success) {
                 setDepartList([...getDapartNP?.data]); 
                 console.log('DAPART_LIST: ', getDapartNP.data);
+                }
             }
-          }
-          const task = taskNovaPoshta.shift();
-          task();
-          await yieldToMain();
-        }
+            const task = taskNovaPoshta.shift();
+            task();
+            await yieldToMain();
+            }
         };
         basketOrder();
         return () => {
@@ -90,12 +99,52 @@ const BasketOrder = () => {
         };
     },[dataDepartmentNP, inputCity]);
 
-    const basketSupplierGoods = async (city: string) => {
-        
-        if (goodsOrder) {
+    useEffect(() => {
+        let isMounted = false;
+        if (!isMounted) {
+            setSumGoods(Number(
+              goodsOrder?.reduce((sum, current) => ( sum + current.price), 0) * 
+                        goodsOrder?.reduce((sum, current) => ( sum + current.quantity), 0) 
+                        ) 
+            ); 
+        }
+        if (!isMounted && costNovaPoshta?.length !== 0) {
+            setDeliverySum(Number(
+                (25 + ( goodsOrder?.reduce((sum, current) => ( sum + current.price), 0) * 
+                                goodsOrder?.reduce((sum, current) => ( sum + current.quantity), 0)
+                ) * 0.01 +
+               costNovaPoshta?.reduce((sum: number, current: number) => ( sum + current), 0)
+                ).toFixed())
+            );
+        }
+        if (!isMounted && delivery === "novaPoshta") {
+            setSumOverall(
+                [Number(sumGoods), Number(deliverySum)]
+            );
+        }
+        if (!isMounted && !delivery) {
+            setSumOverall(
+                [Number(sumGoods)]
+            );
+        }
+        return () => {
+            isMounted = true;
+          };
+    },[
+        commisionPay, 
+        costNovaPoshta, 
+        delivery, 
+        deliverySum, 
+        dopGarantySum, 
+        goodsOrder, 
+        sumGoods
+    ]);
+
+
+        const basketSupplierGoods = async (city: string, depart:IDapertmentNP) => {
             let dataSupplier: CalcNovaPoshta = {};
             let taskGetSupplier: any[] | null = [
-                ...goodsOrder
+                ...goodsOrder!
             ];
             let i: number = 0; 
             while (taskGetSupplier.length > i) {
@@ -106,7 +155,15 @@ const BasketOrder = () => {
                 let dataSupByCity = cityNovaPoshta?.data[0]?.Addresses.find(
                     (item: any) => item.MainDescription === getCitySup.city_ua);
                 
+                dataSupplier.citySender = dataSupByCity.DeliveryCity;
+                dataSupplier.goodsQuantity = taskGetSupplier[i].quantity;
+                dataSupplier.cityReceiver = depart.DeliveryCity;
+                dataSupplier.goodsCost = String(taskGetSupplier[i].price * taskGetSupplier[i].quantity);
+                dataSupplier.redeliveryCost = String(taskGetSupplier[i].price * taskGetSupplier[i].quantity);
+
                 let goodsTypeRef = cargoTypesNovaPoshta(taskGetSupplier[i].category);
+                dataSupplier.goodsType = goodsTypeRef;
+
                 if (goodsTypeRef === "Cargo") {
                    console.log('CARGO_TYPE');
                 }
@@ -118,23 +175,22 @@ const BasketOrder = () => {
                     let wheelsDiameterRef = wheelsDiameter(taskGetSupplier[i].diameter);
                     dataSupplier.goodsDescription = wheelsDiameterRef;
                 }
-                dataSupplier.goodsType = goodsTypeRef;
-                dataSupplier.citySender = dataSupByCity.DeliveryCity;
-                dataSupplier.cityReceiver = dataDepartmentNP?.DeliveryCity;
-                dataSupplier.goodsQuantity = taskGetSupplier[i].quantity;
-                dataSupplier.goodsCost = String(taskGetSupplier[i].price * taskGetSupplier[i].quantity);
-                dataSupplier.redeliveryCost = String(taskGetSupplier[i].price * taskGetSupplier[i].quantity);
 
                 console.log("dataSupplier", dataSupplier);
-                let getCalcDelivery = await getCalcPriceNovaPoshta(dataSupplier);
-                console.log(`CALC_DELIVERY ${i}: `, getCalcDelivery.data[0]);
-                if (getCalcDelivery.success === true) {
-                    setCostNovaPoshta(oldCost => [
-                        ...oldCost!,
-                        getCalcDelivery.data[0].Cost,
-                        getCalcDelivery.data[0].CostRedelivery,
-                    ]);
-                } 
+                if (taskGetSupplier[i] && dataSupplier) {
+                    let getCalcDelivery = await getCalcPriceNovaPoshta(dataSupplier);
+                    console.log(`CALC_DELIVERY ${i}: `, getCalcDelivery.data[0]);
+                    if (getCalcDelivery.success === true) {
+                        setCostNovaPoshta(oldCalc =>
+                            [...oldCalc!,
+                                getCalcDelivery.data[0].Cost,
+                                getCalcDelivery.data[0].CostRedelivery,
+                            ]
+                        );
+                        console.log('COST_SET_NOVA_POSHTA: ', costNovaPoshta);
+                    } 
+                
+                }
                 console.log(`CITY_SUP_${i}: `,  getCitySup.city_ua);
                 if (getCitySup.city_ua === 'Київ' && city.includes('м. Київ')) {
                     setTakeOut(true); 
@@ -146,7 +202,6 @@ const BasketOrder = () => {
             };
             //taskGetSupplier = null;
         }
-    };
 
     const acceptInput = (value: string, mask: {
         masked: any; arg: any
@@ -170,9 +225,10 @@ const BasketOrder = () => {
     };
 
     const cityChooseActive = (e: any) => {
-        console.log('CITY_CHOOSE: ', e.target.textContent);
-        console.log('CITY_INPUT: ', e.target.textContent);
+        //console.log('CITY_CHOOSE: ', e.target.textContent);
         setCostNovaPoshta([]);
+        console.log('CITY_INPUT: ', e.target.textContent);
+        //setCostNovaPoshta([]);
         setChooseCity(e.target.textContent);
         setDataDepartmentNP({
             MainDescription: e.currentTarget.getAttribute('data-city'),
@@ -180,7 +236,18 @@ const BasketOrder = () => {
         });
         setCityListActive(false);
         console.log('CITY_CHOOSE_SET: ', e.target.textContent);
-        basketSupplierGoods(e.target.textContent);
+        console.log('CITY_CHOOSE: ', chooseCity);
+        // if (e.target.textContent !== chooseCity) {
+        //     setCostNovaPoshta(null);
+        // }
+        console.log('SET_DEPART_DATA: ', dataDepartmentNP);
+        basketSupplierGoods(
+            e.target.textContent, 
+            {
+                MainDescription: e.currentTarget.getAttribute('data-city'),
+                DeliveryCity: e.currentTarget.getAttribute('data-delivery'),
+            } 
+        );
     };
 
     const cancelCityList = () => {
@@ -336,8 +403,8 @@ const BasketOrder = () => {
                     : null}
                     <SelectRadio 
                         radioData={{
-                            value: "urkPoshta", 
-                            radioName: "Укр Пошта",
+                            value: "delivery", 
+                            radioName: "Делівері",
                             name: "delivery",
                         }} 
                         addOptions={""}
@@ -400,14 +467,32 @@ const BasketOrder = () => {
                     }
                 </div>
                 <div className='totalCount'>
-                    <span>{`Сумма за товари у кількості
-                    ${goodsOrder?.reduce((sum, current) => ( sum + current.quantity), 0)} од: 
-                    ${goodsOrder?.reduce((sum, current) => ( sum + current.price), 0) * 
-                        goodsOrder?.reduce((sum, current) => ( sum + current.quantity), 0)}  грн`}</span>
-                    <span>Додаткова Гарантія: 350грн</span>
-                    <span>Доставка (Нова Пошта): 150грн </span>
-                    <span>Комісія платіжної системи: 35грн</span>
-                    <span>Всього: 8185грн</span> 
+                    { sumGoods && goodsOrder ?
+                       <span>{`Сумма за товари у кількості
+                        ${goodsOrder?.reduce((sum, current) => ( sum + current.quantity), 0)} од: 
+                        ${sumGoods}  грн`
+                        }
+                        </span> 
+                        : null
+                    }
+                    {dopGarantySum ?
+                        <span>Додаткова Гарантія: {dopGarantySum}грн</span>
+                        : null
+                    }
+                    {delivery === "novaPoshta" && chooseCity ?
+                        <span>Доставка (Нова Пошта): {}
+                        {deliverySum}
+                        грн </span>
+                        : null
+                    }
+                    {commisionPay ?
+                        <span>Комісія платіжної системи: {commisionPay}грн</span>
+                        : null
+                    }
+                    <span>Всього: {
+                        sumOverall?.reduce((sum: number, current: number) => ( sum + current), 0)
+                    }грн
+                    </span> 
                 </div>
                 <div className='basketColmItemRight'>
                     <label htmlFor="commentsOrder">Додати коментар до замовлення:</label>
