@@ -16,7 +16,8 @@ import { StockWheelsService } from '../stock/stock-wheels.service';
 @Injectable()
 export class SalesService {
 
-  constructor(@InjectModel(Sales) private salesRepository: typeof Sales,
+  constructor(
+    @InjectModel(Sales) private salesRepository: typeof Sales,
     private ordersService: OrdersService,
     private ordersStorageService: OrdersStorageService,
     private salesStorageService: SalesStorageService,
@@ -41,10 +42,12 @@ export class SalesService {
         //const idSuppliers = Array.from(new Set(ordersGoodsIdSup));
         
         const newSale = await this.salesRepository.create(
-           { id_order: order.id_order,
+          {
+            id_order: order.id_order,
             delivery: order.delivery,
             id_user: order.id_user,
             notes: order.notes,
+            bonus_decrease: order.bonus_decrease,
             },
            { fields: ["id_order", "delivery", "id_user", 
             "notes"] }
@@ -105,46 +108,40 @@ export class SalesService {
 
           findSalesStorage[i].id_storage = findSalesStorage[i].storage_index;
           await findSale.$add('sales_storage', findSalesStorage[i]);
+          
           await contractCustomer.decrement('balance', {by: findSalesStorage[i].total });
+          await contractCustomer.increment('bonus', {
+            by: findSalesStorage[i].total > 20000 ? findSalesStorage[i].total * 0.01 : 
+            findSalesStorage[i].total * 0.02
+          });
           await contractCustomer.reload();
       
           if(tyreStock) {
-
             await tyreStock.decrement(['stock','reserve'], {by: createSaleDto.quantity});
-            
             await tyreStock.reload();  
-
           }
-
           if(wheelStock) {
-
             await wheelStock.decrement(['stock','reserve'], {by: createSaleDto.quantity});
-            
             await wheelStock.reload();
-
           }
-
           if(batteryStock) {
-
             await batteryStock.decrement(['stock', 'reserve'], {by: createSaleDto.quantity});
-            
             await batteryStock.reload();
-
           }
-
           if(oilStock) {
-
             await oilStock.decrement(['stock', 'reserve'], {by: createSaleDto.quantity});
-            
             await oilStock.reload(); 
-
           }
+        }
+        if (findSale.bonus_decrease) {
+          await contractCustomer.increment('balance', {by: findSale.bonus_decrease });
+          await contractCustomer.decrement('bonus', {by: findSale.bonus_decrease });
         }
         
         return findSale;
+      } else {
+        return "ORDER DOESN'T EXIST";
       }
-
-      return "ORDER DOESN'T EXIST";
 
     } catch {
 

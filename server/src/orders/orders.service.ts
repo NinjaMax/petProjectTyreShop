@@ -435,6 +435,7 @@ export class OrdersService {
             dop_garanty: updateOrderDto.dop_garanty,
             id_customer: updateOrderDto.id_customer,
             id_contract: updateOrderDto.id_contract,
+            bonus_decrease: updateOrderDto.bonus_decrease,
           },
           { where: { id_order: updateOrderDto.id_order } },
         );

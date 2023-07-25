@@ -47,6 +47,9 @@ export class Sales extends Model<Sales, SalesConfigAttr> {
   @Column({ type: DataType.INTEGER })
   id_user: number;
 
+  @Column({ type: DataType.INTEGER })
+  bonus_decrease: number;
+
   @BelongsTo(() => Users, 'id_user')
   user: Users;
 

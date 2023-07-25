@@ -12,10 +12,14 @@ import { BasketService } from './basket.service';
 import { CreateBasketDto } from './dto/create-basket.dto';
 import { GetBasketDto } from './dto/get-basket.dto';
 import { UpdateBasketDto } from './dto/update-basket.dto';
+import { BasketStorageService } from './basket-storage.service';
 
 @Controller('basket')
 export class BasketController {
-  constructor(private readonly basketService: BasketService) {}
+  constructor(
+    private readonly basketService: BasketService,
+    private readonly basketStorageService: BasketStorageService
+    ) {}
 
   @Post()
   create(
@@ -49,6 +53,16 @@ export class BasketController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateBasketDto: UpdateBasketDto) {
     return this.basketService.updateBasket(updateBasketDto);
+  }
+
+  @Patch('/update/basketstorage')
+  updateBasketStorage(
+    @Body() updateBasketDto: UpdateBasketDto, 
+    basketStorageId: number){
+    return this.basketStorageService.updateBasketStorage(
+      updateBasketDto,
+      basketStorageId
+    );
   }
 
   @Delete('remove')

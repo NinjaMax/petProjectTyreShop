@@ -44,4 +44,6 @@ export class CreatePaynmentDto {
   readonly pay_view: string;
   readonly status_pay: string;
   readonly category: string;
+  readonly bonus: number;
+  readonly bonus_decrease: number;
 }

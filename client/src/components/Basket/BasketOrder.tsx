@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useContext, useEffect, useState} from 'react';
 import '../../css/BasketCss/BasketOrder.css';
 import ButtonAction from '../buttons/ButtonAction';
 import TyresCardList from '../cards/TyresCardList';
@@ -15,8 +15,12 @@ import { CalcNovaPoshta } from '../../restAPI/types/CalcNovaPoshta.type';
 import { cargoTypesNovaPoshta } from '../../services/cargoTypesNovaPoshta';
 import { tyresDiameter } from '../../services/tyresDiameterNovaPoshta';
 import { wheelsDiameter } from '../../services/wheelsDiameterNovaPoshta';
+import { Context } from '../../context/Context';
+import { observer } from 'mobx-react-lite';
+import CheckboxBtn from '../select/CheckboxBtn';
 
-const BasketOrder = () => {
+const BasketOrder = observer(() => {
+    const {customer} = useContext<any | null>(Context);
     const [delivery, setDelivery] = useState("");
     const [goodsOrder, setGoodsOrder] = useState<any[]>();
     const [cityList, setCityList] = useState<ICity[]>();
@@ -29,10 +33,10 @@ const BasketOrder = () => {
     const [takeOut, setTakeOut] = useState<boolean>(false);
     const [costNovaPoshta, setCostNovaPoshta] = useState<any[]| null>([]);
     const [sumGoods, setSumGoods]= useState<number|null>(null);
-    const [dopGarantySum, setDopGarantySum] = useState<number|null>(0);
+    const [dopGarantySum, setDopGarantySum] = useState<number|null>(null);
     const [commisionPay, setCommitionPay] = useState<number|null>(0);
     const [newSumGoods, setNewSumGoods] = useState<number|null>(null);
-    const [bonusUser, setBonusUser] = useState();
+    const [bonusUser, setBonusUser] = useState<number|null>(null);
     const [sumOverall, setSumOverall] = useState<any[]>();
     const [deliverySum, setDeliverySum] = useState<number|null>(0);
     const [payMethod, setPayMethod] = useState("");
@@ -102,10 +106,12 @@ const BasketOrder = () => {
     useEffect(() => {
         let isMounted = false;
         if (!isMounted) {
+            let sumGoodsArr: any = [];
+            goodsOrder?.map((item) => 
+                sumGoodsArr.push(item.price * item.quantity)
+            );
             setSumGoods(Number(
-              goodsOrder?.reduce((sum, current) => ( sum + current.price), 0) * 
-                        goodsOrder?.reduce((sum, current) => ( sum + current.quantity), 0) 
-                        ) 
+                sumGoodsArr?.reduce((sum: any, current: any) => ( sum + current), 0).toFixed()) 
             ); 
         }
         if (!isMounted && costNovaPoshta?.length !== 0) {
@@ -268,6 +274,22 @@ const BasketOrder = () => {
         });
     };
 
+    const useBonusActive = () => {
+        if (bonusUser) {
+            setBonusUser(null); 
+        } else {
+           setBonusUser(350); 
+        }
+    };
+
+    const dopGarantyActive = () => {
+        if (dopGarantySum) {
+            setDopGarantySum(null);
+        } else {
+            setDopGarantySum(Number((sumGoods! * 0.07).toFixed()));
+        }
+    };
+
     //console.log('CITY_CHOOSE: ', chooseCity);
     // console.log('CITY_LIST_ARR: ', cityList);
     console.log('COST_NOVA_POSHTA: ', costNovaPoshta);
@@ -337,7 +359,7 @@ const BasketOrder = () => {
                     }
                 </div>     
                 <div className='basketColmItemLeft'>
-                    <span>Доставка:</span>
+                    <span>Спосіб одержання (доставка):</span>
                     { takeOut ?
                     <SelectRadio 
                         radioData={{
@@ -414,7 +436,7 @@ const BasketOrder = () => {
                     </SelectRadio>
                 </div>
                 <div className='basketColmItemLeft'>
-                    <span>Оплата:</span>
+                    <span>Спосіб оплати:</span>
                     <SelectRadio 
                         radioData={{
                             value: "gotivka", 
@@ -461,11 +483,41 @@ const BasketOrder = () => {
                             goods={item}
                             forOrder={true}
                             priceItem={item.price}
-                            /><span>X</span>  
-                        </div> 
+                            />
+                             <div 
+                                id={item.id} 
+                                className='basketColmRightClose'
+                                
+                            >
+                            </div> 
+                        </div>
                         ) : null
                     }
                 </div>
+                <div className='basketColmRightCheckbox'>
+                    <CheckboxBtn 
+                        value={'Використати SKY BONUS'} 
+                        titleCheckbox={'Використати SKY BONUS'} 
+                        imageSrc={ bonusUser ?
+                            'iconBonus/referral_bonus_edit_b.png' :
+                            'iconBonus/referral_bonus_edit.png'
+                        }
+                        onChange={useBonusActive}
+                    />
+                    <CheckboxBtn 
+                        value={'Додаткова гарантія SKY SAFE'}
+                        imageSrc={ dopGarantySum ? 
+                            'iconGuard/guard_64_b.png' :
+                            'iconGuard/guard_64_g.png' 
+                        } 
+                        titleCheckbox={'Додаткова гарантія SKY SAFE'} 
+                        onChange={dopGarantyActive}
+                    />
+                    {dopGarantySum ?
+                    <span>{dopGarantySum} &#8372;</span>
+                    : null}
+                </div>
+                
                 <div className='totalCount'>
                     { sumGoods && goodsOrder ?
                        <span>{`Сумма за товари у кількості
@@ -475,6 +527,15 @@ const BasketOrder = () => {
                         </span> 
                         : null
                     }
+                    <span>Нараховано SKY BONUS 
+                        {sumGoods! > 20000 ? (sumGoods! * 0.01).toFixed() : (sumGoods! * 0.02).toFixed()} 
+                        <img 
+                            src='iconBonus/referral_bonus_edit_b.png'
+                            width={35}
+                            height={35}
+                            alt='skyBonus'
+                        />
+                    </span>
                     {dopGarantySum ?
                         <span>Додаткова Гарантія: {dopGarantySum}грн</span>
                         : null
@@ -489,10 +550,25 @@ const BasketOrder = () => {
                         <span>Комісія платіжної системи: {commisionPay}грн</span>
                         : null
                     }
-                    <span>Всього: {
-                        sumOverall?.reduce((sum: number, current: number) => ( sum + current), 0)
-                    }грн
-                    </span> 
+                    { !bonusUser ?
+                        <span>Всього: {
+                            sumOverall?.reduce((sum: number, current: number) => ( sum + current), 0)
+                            }грн
+                        </span> :
+                        <>
+                        <span>Всього:
+                        <span className='basketOrderOldPrice'> {
+                            sumOverall?.reduce((sum: number, current: number) => ( sum + current), 0)
+                            }
+                        </span>
+                            грн
+                        </span>
+                        <span>
+                            {sumOverall?.reduce((sum: number, current: number) => ( sum + current), 0) - bonusUser}
+                            грн
+                        </span>
+                        </>
+                    }
                 </div>
                 <div className='basketColmItemRight'>
                     <label htmlFor="commentsOrder">Додати коментар до замовлення:</label>
@@ -505,6 +581,6 @@ const BasketOrder = () => {
             </div>
         </div>
     );
-};
+});
 
 export default BasketOrder;

@@ -19,6 +19,8 @@ export class GetOrdersDto {
   readonly storage_index: number;
   readonly order_index: number;
   readonly id_customer: number;
+  readonly bonus: number;
+  readonly bonus_decrease: number;
   //readonly id_cat: number;
   //readonly delivery_price: number;
   //readonly price_plus_delivery: number;

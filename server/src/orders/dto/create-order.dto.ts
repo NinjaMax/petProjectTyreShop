@@ -57,9 +57,10 @@ export class CreateOrderDto {
   readonly email: string;
   readonly ratingCount: number;
   readonly reviewCount: number;
-
+  readonly bonus_decrease: number;
   readonly season: string;
   readonly balance: number;
+  readonly bonus: number;
   readonly address: string;
 
   readonly checkedIn: boolean;

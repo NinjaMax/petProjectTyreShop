@@ -233,6 +233,15 @@ const getBasketOrder = async () => {
     return data;
 }
 
+const updateOrderStorageGoods = async (
+    data: any, 
+    basketStorageId: number
+) => 
+await $hostPost.patch('/basket/update/basketstorage', data)
+.catch(error => {
+    console.log(error);
+});
+
 const likesTyreReview = async (
     id_review: number, 
     likeCount: number,

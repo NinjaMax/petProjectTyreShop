@@ -26,6 +26,7 @@
     height: 20px;
     width: 20px;
     background-color: #eee;
+    border-radius:8px;
   }  
   /* On mouse-over, add a grey background color */
   /*.containerCheckbox:hover .inputCheckboxBtn {
@@ -39,12 +40,12 @@
   /* On mouse-over, add a grey background color */
   .containerCheckbox:hover .inputCheckboxBtn ~ .checkmark {
     background-color: #ccc;
-    border-radius:3px;
+    border-radius:8px;
   }
   /* When the checkbox is checked, add a blue background */
   .inputCheckboxBtn:checked ~ .checkmark {
     background-color: #2196F3;
-    border-radius:3px;
+    border-radius:8px;
   }
   /* Create the checkmark/indicator (hidden when not checked) */
   .checkmark:after {
@@ -58,8 +59,8 @@
   }
   /* Style the checkmark/indicator */
   .checkmark:after {
-    left: 9px;
-    top: 5px;
+    left: 6px;
+    top: 3px;
     width: 5px;
     height: 10px;
     border: solid white;
@@ -69,9 +70,10 @@
     transform: rotate(45deg);
   }
   .imgThorn {
-    vertical-align:sub;
-    width: 28px;
-    height: 28px;
-    padding-left: 2px;
+    vertical-align:middle;
+    width: 30px;
+    height: 30px;
+    padding-left: 1px;
+    margin-right: 3px;
   }
 

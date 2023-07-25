@@ -11,10 +11,14 @@ import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { GetOrdersDto } from './dto/get-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import { OrdersStorageService } from './orders-storage.service';
 
 @Controller('orders')
 export class OrdersController {
-  constructor(private readonly ordersService: OrdersService) {}
+  constructor(
+    private readonly ordersService: OrdersService,
+    private readonly ordersStorageService: OrdersStorageService
+  ) {}
 
   @Post()
   createOrder(@Body() createOrderDto: CreateOrderDto) {
@@ -44,6 +48,11 @@ export class OrdersController {
   @Patch('/update')
   async updateOrder(@Body() updateOrderDto: UpdateOrderDto) {
     return await this.ordersService.updateOrder(updateOrderDto);
+  }
+
+  @Post('/update/orderstorage-goods')
+  async updateOrderStorageGoods(@Body() createOrderDto: CreateOrderDto) {
+    return await this.ordersStorageService.updateOrderStorage(createOrderDto);
   }
 
   @Post('/update/orderstorage')

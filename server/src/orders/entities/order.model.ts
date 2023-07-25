@@ -71,6 +71,9 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
   @Column({ type: DataType.INTEGER, allowNull: false })
   id_contract: number;
 
+  @Column({ type: DataType.INTEGER, allowNull: true })
+  bonus_decrease: number;
+
   @ForeignKey(() => Users)
   @Column({ type: DataType.INTEGER, allowNull: true })
   id_user: number;

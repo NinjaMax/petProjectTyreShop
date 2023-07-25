@@ -35,6 +35,8 @@ export class CreateCommentDto {
   readonly id_contract: number;
   readonly password: string;
   readonly balance: number;
+  readonly bonus: number;
+  readonly bonus_decrease: number;
 
   readonly organisation: string;
   readonly order_view: string;

@@ -32,4 +32,6 @@ export class CreateOrdersSupplierDto {
   readonly status_pay: string;
   readonly category: string;
   readonly storage: string;
+  readonly bonus: number;
+  readonly bonus_decrease: number;
 }

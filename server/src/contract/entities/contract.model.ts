@@ -34,6 +34,14 @@ export class Contract extends Model<Contract, ContractConfigAttr> {
   })
   balance: number;
 
+  @Column({
+    type: DataType.INTEGER,
+    unique: false,
+    allowNull: true,
+    defaultValue: 0,
+  })
+  bonus: number;
+
   @ForeignKey(() => Users)
   @Column({ type: DataType.INTEGER })
   id_user: number;
