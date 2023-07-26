@@ -6,10 +6,11 @@ interface IinputDataTex {
         discr:string,
         max:string,
         size: string  
-    }
+    };
+    inputText(arg0:any):void;
 }
 
-const InputDataText = ({inputItem}: IinputDataTex) => {
+const InputDataText = ({inputItem, inputText}: IinputDataTex) => {
     return (
         <div>
             <input className='inputDataText' 
@@ -21,7 +22,9 @@ const InputDataText = ({inputItem}: IinputDataTex) => {
                 maxLength={+inputItem.max} 
                 data-size={inputItem.size} 
                 required
-                autoComplete='true'/> 
+                autoComplete='true'
+                onChange={inputText}
+                /> 
         </div>
     );
 };

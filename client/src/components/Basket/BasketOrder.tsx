@@ -6,7 +6,7 @@ import SelectRadio from '../select/SelectRadio';
 import InputDataText from '../ux/InputDataText';
 import InputDataTel from '../ux/InputDataTel';
 import { yieldToMain } from '../../restAPI/postTaskAdmin';
-import { getBasketOrder, getSupplierById } from '../../restAPI/restGoodsApi';
+import { getBasketOrder, getSupplierById, removeBasketStorageGoods, updateBasket, updateBasketStorageGoods } from '../../restAPI/restGoodsApi';
 import { getCalcPriceNovaPoshta, getCityNovaPoshta, getWareHousesNovaPoshta } from '../../restAPI/restNovaPoshtaAPI';
 import { IDapertmentNP } from './types/DepartmentType.type';
 import { ICity } from './types/CityNP.type';
@@ -19,8 +19,41 @@ import { Context } from '../../context/Context';
 import { observer } from 'mobx-react-lite';
 import CheckboxBtn from '../select/CheckboxBtn';
 
+type IQuantity = {
+    quantity: number;
+    id_basket_storage: number; 
+};
+
+type IRemoveGoods = {
+    id_basket_storage: number; 
+};
+type IbasketData = {
+    name?: string,
+    phone?: number,
+    email?: string,
+    address?: string,
+    notes?: string,
+    storage?: string,
+    delivery?: string,
+    city_delivery?: string,
+    ref_city_delivery?: string,
+    pay_view?: string,
+    dop_garanty?: number,
+    session_id?: string,
+    checkedIn?: boolean,
+    id_customer?:number,
+    id_basket?: number,
+};
+
 const BasketOrder = observer(() => {
     const {customer} = useContext<any | null>(Context);
+    const [basketData, setBasketData] = useState<IbasketData>(
+        {
+        name: 'Michael',
+        phone: 380788390123,
+        email: 'chiat@example.com',
+        }
+    );
     const [delivery, setDelivery] = useState("");
     const [goodsOrder, setGoodsOrder] = useState<any[]>();
     const [cityList, setCityList] = useState<ICity[]>();
@@ -35,7 +68,8 @@ const BasketOrder = observer(() => {
     const [sumGoods, setSumGoods]= useState<number|null>(null);
     const [dopGarantySum, setDopGarantySum] = useState<number|null>(null);
     const [commisionPay, setCommitionPay] = useState<number|null>(0);
-    const [newSumGoods, setNewSumGoods] = useState<number|null>(null);
+    const [newQuantity, setNewQuantity] = useState<IQuantity|null>(null);
+    const [removeGoods, setRemoveGoods] = useState<IRemoveGoods | null>(null);
     const [bonusUser, setBonusUser] = useState<number|null>(null);
     const [sumOverall, setSumOverall] = useState<any[]>();
     const [deliverySum, setDeliverySum] = useState<number|null>(0);
@@ -47,15 +81,43 @@ const BasketOrder = observer(() => {
         const basketOrder = async () => {
           const taskProduct: any[] = [
             getBasketOrder,
+            updateBasketStorageGoods,
+            removeBasketStorageGoods,
+            updateBasket
           ];
         let i: number = 0; 
         while (taskProduct.length > i) {
           if (!isMounted && taskProduct[i] === getBasketOrder) {
             const getBasket: any = await taskProduct[i]();
             if (getBasket) {
-               setGoodsOrder([...getBasket?.basket_storage]);
+                setBasketData(getBasket);
+                setGoodsOrder([...getBasket?.basket_storage]);
             }
           }
+          if (!isMounted && taskProduct[i] === 
+            updateBasketStorageGoods && newQuantity?.quantity) {
+            const updateQuantity = await taskProduct[i](newQuantity);
+            if (updateQuantity) {
+                const getUpdateBasket: any = await getBasketOrder();
+                setGoodsOrder([...getUpdateBasket?.basket_storage]);
+            }
+          }
+          if (!isMounted && taskProduct[i] === 
+            removeBasketStorageGoods && removeGoods) {
+            if (removeGoods) {
+                await taskProduct[i]({id_basket_storage :removeGoods ?? 0});
+            }
+          }
+        //   if (!isMounted && taskProduct[i] === updateBasket) {
+        //         // const getUpdateBasket: any = await taskProduct[i]({
+        //         //     ...basketData,
+        //         //     id_basket: basketData?.id_basket
+        //         // });
+        //         if (getUpdateBasket) {
+        //             setBasketData(getUpdateBasket);
+        //             setGoodsOrder([...getUpdateBasket?.basket_storage]);
+        //         } 
+        //   }
           const task = taskProduct.shift();
           task();
           await yieldToMain();
@@ -65,11 +127,16 @@ const BasketOrder = observer(() => {
         return () => {
           isMounted = true;
         };
-      },[]);
+    },[
+        basketData, 
+        basketData?.id_basket, 
+        newQuantity, 
+        removeGoods
+    ]);
 
     useEffect(() => {
         let isMounted = false;
-        const basketOrder = async () => {
+        const delivery = async () => {
           const taskNovaPoshta: any[] = [
             getCityNovaPoshta,
             getWareHousesNovaPoshta,
@@ -97,7 +164,7 @@ const BasketOrder = observer(() => {
             await yieldToMain();
             }
         };
-        basketOrder();
+        delivery();
         return () => {
           isMounted = true;
         };
@@ -215,6 +282,7 @@ const BasketOrder = observer(() => {
 
         console.log(mask.masked.rawInputValue + ":rawInput");
         console.log(mask.masked.rawInputValue.length + ":rawInputLength");
+        setBasketData({...basketData, phone:mask.masked.unmaskedValue})
         console.log(mask.masked.unmaskedValue + ":unmaskValue"); // Need it
         console.log(value + " :VALUE")
     };
@@ -289,9 +357,46 @@ const BasketOrder = observer(() => {
             setDopGarantySum(Number((sumGoods! * 0.07).toFixed()));
         }
     };
+    const removeGoodsAction = async (e: any) => {
+        console.log('REMOVE_GOODS', e.target.getAttribute('data-id'))
+        setRemoveGoods({ id_basket_storage: e.target.getAttribute('data-id')});
+        //await removeBasketStorageGoods();
+    };
+
+    const countQuantytiAction = (e: any) => {
+        setNewQuantity(null);
+        console.log('QUANTYTI:', e.target.getAttribute('data-count'));
+        console.log('QUANTYTI_EVENT:', e.target.value);
+        console.log('ID_BASKET_STORAGE:', e.target.getAttribute('data-id'));
+        if (e.target.value === 'plus') {
+            setNewQuantity({
+                quantity: Number(e.target.getAttribute('data-count')) + 1,
+                id_basket_storage: e.target.getAttribute('data-id') 
+            });
+        }
+        if (e.target.value === 'minus') {
+            setNewQuantity({
+                quantity: Number(e.target.getAttribute('data-count')) - 1,
+                id_basket_storage: e.target.getAttribute('data-id') 
+            });
+        }
+        // await updateBasketStorageGoods({
+        //     quantity: e.target.getAttribute('data-count') + 1,
+        //id_basket_storage: e.target.getAttribute('data-id') 
+        // });
+    };
+    const inputNameAction =(e:any) => {
+        setBasketData({...basketData, name: e.target.value})
+        console.log('INPUT_NAME: ', e.target.value);
+    };
+    const inputEmailAction = (e:any) => {
+        setBasketData({...basketData, email: e.target.value})
+        console.log('INPUT_EMAIL: ', e.target.value);
+    };
 
     //console.log('CITY_CHOOSE: ', chooseCity);
     // console.log('CITY_LIST_ARR: ', cityList);
+    console.log('BASKET_DATA_TEL:', basketData.phone);
     console.log('COST_NOVA_POSHTA: ', costNovaPoshta);
     console.log('GOODS_LIST: ', goodsOrder);
     console.log('DELIVERY_DATA: ', dataDepartmentNP);
@@ -301,27 +406,40 @@ const BasketOrder = observer(() => {
         <div className='basketOrder'
             onClick={cancelCityList}
         >
+            {/* {goodsOrder?.length !== 0 ?
+            <div> */}
             <div> Оформлення замовлення</div>
             <div className='basketColmLeft'>
                 данні замовлення
                 <div className='basketColmItemLeft'>
                     <span>Прізвище ім'я та по батькові *</span>
-                    <InputDataText inputItem={{name:'basketOrderName',
-                    discr:"введіть прізвище ім'я по батькові",
-                    max:"40", size:"30"}}/>   
+                    <InputDataText 
+                        inputText={inputNameAction}
+                        inputItem={{
+                        name:'basketOrderName',
+                        discr:"введіть прізвище ім'я по батькові",
+                        max:"40", size:"30"
+                        }}
+                    />   
                 </div>
                 <div className='basketColmItemLeft'>
                     <span>Номер телефону *</span>
                     <InputDataTel 
+                        dataTel={basketData.phone}
                         onAccept={acceptInput} 
                         //ref={refComp}
                     />  
                 </div>
                 <div className='basketColmItemLeft'>
                     <span>Ваш email адрес</span>
-                    <InputDataText inputItem={{name:'basketOrderEmail',
-                    discr:"введіть ваш email адрес ---@---",
-                    max:"40", size:"30"}}/>     
+                    <InputDataText 
+                        inputText={inputEmailAction}
+                        inputItem={{
+                            name:'basketOrderEmail',
+                            discr:"введіть ваш email адрес ---@---",
+                            max:"40", size:"30"
+                            }}
+                        />     
                 </div>
                 <div className='basketColmItemLeft'
                     onClick={(e:any) => e.stopPropagation()}
@@ -483,11 +601,12 @@ const BasketOrder = observer(() => {
                             goods={item}
                             forOrder={true}
                             priceItem={item.price}
+                            countEvent={countQuantytiAction}
                             />
                              <div 
-                                id={item.id} 
+                                data-id={item.id_basket_storage} 
+                                onClick={removeGoodsAction}
                                 className='basketColmRightClose'
-                                
                             >
                             </div> 
                         </div>
@@ -579,6 +698,11 @@ const BasketOrder = observer(() => {
                 </div>
                 <ButtonAction props={"Оформити замовлення"} widthBtn={250} eventItem={undefined}/>
             </div>
+            {/* </div> 
+             : <div>
+                 НАЖАЛЬ КОРЗИНА ПОРОЖНЯ
+             </div> */}
+            
         </div>
     );
 });

@@ -233,11 +233,56 @@ const getBasketOrder = async () => {
     return data;
 }
 
-const updateOrderStorageGoods = async (
+const updateBasket = async (
+    name?: string,
+    phone?: number,
+    email?: string,
+    address?: string,
+    notes?: string,
+    storage?: string,
+    delivery?: string,
+    city_delivery?: string,
+    ref_city_delivery?: string,
+    pay_view?: string,
+    dop_garanty?: number,
+    session_id?: string,
+    checkedIn?: boolean,
+    id_customer?:number,
+    id_basket?: number,
+) => 
+await $hostPost.patch('/basket/update', 
+{
+    name: name,
+    phone: phone,
+    email: email,
+    address: address,
+    notes: notes,
+    storage: storage,
+    delivery: delivery,
+    pay_view: pay_view,
+    dop_garanty: dop_garanty,
+    session_id: session_id,
+    checkedIn: checkedIn,
+    id_basket: id_basket,
+}
+)
+.catch(error => {
+    console.log(error);
+});
+
+const updateBasketStorageGoods = async (
     data: any, 
-    basketStorageId: number
+    //basketStorageId: number
 ) => 
 await $hostPost.patch('/basket/update/basketstorage', data)
+.catch(error => {
+    console.log(error);
+});
+
+const removeBasketStorageGoods = async (
+    data: any, 
+) => 
+await $hostPost.delete('/basket/remove/basketstorage',  data)
 .catch(error => {
     console.log(error);
 });
@@ -496,4 +541,7 @@ export {
     getSession,
     getBasketOrder,
     getSupplierById,
+    updateBasketStorageGoods,
+    removeBasketStorageGoods,
+    updateBasket
 }

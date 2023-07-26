@@ -50,19 +50,25 @@ export class BasketController {
     return this.basketService.findBasketBySession(session.id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBasketDto: UpdateBasketDto) {
+  @Patch('/update')
+  update(@Body() updateBasketDto: UpdateBasketDto) {
     return this.basketService.updateBasket(updateBasketDto);
   }
 
   @Patch('/update/basketstorage')
   updateBasketStorage(
     @Body() updateBasketDto: UpdateBasketDto, 
-    basketStorageId: number){
+    //basketStorageId: number
+    ){
     return this.basketStorageService.updateBasketStorage(
       updateBasketDto,
-      basketStorageId
+      updateBasketDto.id_basket_storage
     );
+  }
+
+  @Delete('remove/basketstorage')
+  removeBasketStorage(@Param() @Body() getBasketDto: GetBasketDto) {
+    return this.basketStorageService.removeBasketStorageById(getBasketDto);
   }
 
   @Delete('remove')

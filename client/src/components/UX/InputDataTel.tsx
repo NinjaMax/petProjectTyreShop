@@ -6,6 +6,7 @@ interface IinputDataTel {
     current?: any;
     onAccept?: (arg: any, arg1: any) => void;
     refLabel?: {current:{className: string;}};
+    dataTel?: any;
     
     // mask: {
     //     masked: any; arg: any
@@ -14,7 +15,7 @@ interface IinputDataTel {
 
 //type IOnAccept =  {refLabel?: {current:{className: string;}};}
 
-const InputDataTel = ({onAccept}: IinputDataTel) => {
+const InputDataTel = ({onAccept, dataTel}: IinputDataTel) => {
 
     const refLabel: IinputDataTel = useRef();
 
@@ -25,18 +26,17 @@ const InputDataTel = ({onAccept}: IinputDataTel) => {
             refLabel.current.className = 'inputDataTelLabel';
         }
 
-
-      console.log(e.currentTarget.value.length);
-      console.log(refLabel);
+      console.log('TEL_LENGTH_VALUE: ',e.currentTarget.value.length);
+      console.log('REF_LABEL: ', refLabel);
     }
        
     return (
-
         <div>
             <IMaskInput data-classname='inputDataTel'
                 mask='+{38}(000)000-00-00'
                 radix="."
-                value="_"
+                defaultValue={String(dataTel)}
+                value={String(dataTel) ?? "_" }
                 unmask={false}
                 lazy={false} 
                 onAccept={onAccept}

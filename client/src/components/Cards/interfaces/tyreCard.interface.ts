@@ -155,7 +155,10 @@ export interface ITyreCard {
         reviewCount?: number;
         ratingCount?: number;
         quantity?: number;
+        id_basket_storage?: number;  
     };
     priceItem?: number;
+    
+    countEvent?(arg0: any): void;
     checkOrders?(arg0: any, ...arg:any[]): Promise<void | undefined>;
 }

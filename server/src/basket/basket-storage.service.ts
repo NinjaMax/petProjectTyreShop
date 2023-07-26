@@ -143,11 +143,14 @@ export class BasketStorageService {
 
   async removeBasketStorageById(getBasketDto: GetBasketDto) {
     try {
-      const basketSup = await this.basketStorageRepository.destroy({
-        where: { id_basket_storage: getBasketDto.id_basket_storage },
-      });
-
-      return basketSup;
+      if (getBasketDto.id_basket_storage) {
+        const basketSup = await this.basketStorageRepository.destroy({
+          where: { id_basket_storage: getBasketDto.id_basket_storage },
+        });
+        return basketSup;
+      } else {
+        return null;
+      }
     } catch {
       throw new HttpException(
         'Data is incorrect and must be uniq',

@@ -15,7 +15,7 @@ import { yieldToMain } from '../../restAPI/postTaskAdmin';
 import { createStringUrl } from '../../services/stringUrl';
 import { AsyncLocalStorage } from 'async_hooks';
 
-const TyresCardList = ({goods, forOrder, priceItem}: ITyreCard) => {
+const TyresCardList = ({goods, forOrder, priceItem, countEvent}: ITyreCard) => {
     const [ratingModel, setRatingModel] = useState<IRatingAvg>()
     const history = useHistory();
 
@@ -117,7 +117,9 @@ const TyresCardList = ({goods, forOrder, priceItem}: ITyreCard) => {
                 </div>
                 { forOrder ?
                         <div>
-                            <CountBtnOrder 
+                            <CountBtnOrder
+                                dataId= {goods?.id_basket_storage}
+                                countAction={countEvent} 
                                 countGoods={goods?.quantity ?? 4}
                             />   
                         </div>
