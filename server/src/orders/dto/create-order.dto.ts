@@ -64,4 +64,6 @@ export class CreateOrderDto {
   readonly address: string;
 
   readonly checkedIn: boolean;
+  readonly city_delivery: string;
+  readonly ref_city_delivery: string;
 }

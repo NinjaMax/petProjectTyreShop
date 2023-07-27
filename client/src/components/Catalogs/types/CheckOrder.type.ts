@@ -150,4 +150,5 @@ export type ICheckOrderItem = {
         id_year: number,
         manufacture_year: string,
     };
+    quantity?: number;
 };

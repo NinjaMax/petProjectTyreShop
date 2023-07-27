@@ -31,9 +31,12 @@ export class BasketService {
             notes: createBasketDto.notes,
             storage: createBasketDto.storage,
             delivery: createBasketDto.delivery,
+            city_delivery: createBasketDto.city_delivery,
+            ref_city_delivery: createBasketDto.ref_city_delivery,
             pay_view: createBasketDto.pay_view,
             dop_garanty: createBasketDto.dop_garanty,
             session_id: session,
+            id_customer: createBasketDto.id_customer,
             checkedIn: createBasketDto.checkedIn,
             //id_basket_storage: updateBasketDto.id_basket_storage,
           },
@@ -54,6 +57,7 @@ export class BasketService {
           dop_garanty: createBasketDto.dop_garanty,
           session_id: session,
           checkedIn: createBasketDto.checkedIn,
+          id_customer: createBasketDto.id_customer,
           });
         return basketNew;
       }
@@ -141,26 +145,35 @@ export class BasketService {
 
   async updateBasket(updateBasketDto: UpdateBasketDto) {
     //try {
-      const basketStorageUpdate = await this.basketRepository.update(
-        {
-          //id: updateBasketDto.id,
-          name: updateBasketDto.name,
-          phone: updateBasketDto.phone,
-          email: updateBasketDto.email,
-          address: updateBasketDto.address,
-          notes: updateBasketDto.notes,
-          storage: updateBasketDto.storage,
-          delivery: updateBasketDto.delivery,
-          pay_view: updateBasketDto.pay_view,
-          dop_garanty: updateBasketDto.dop_garanty,
-          session_id: updateBasketDto.session_id,
-          checkedIn: updateBasketDto.checkedIn,
-          //id_basket_storage: updateBasketDto.id_basket_storage,
-        },
-        { where: { id_basket: updateBasketDto.id_basket } },
-      );
+      if (updateBasketDto.id_basket) {
+        const basketUpdate = await this.basketRepository.update(
+          {
+            //id: updateBasketDto.id,
+            name: updateBasketDto.name,
+            phone: updateBasketDto.phone,
+            email: updateBasketDto.email,
+            address: updateBasketDto.address,
+            notes: updateBasketDto.notes,
+            storage: updateBasketDto.storage,
+            delivery: updateBasketDto.delivery,
+            city_delivery: updateBasketDto.city_delivery,
+            ref_city_delivery: updateBasketDto.ref_city_delivery,
+            pay_view: updateBasketDto.pay_view,
+            dop_garanty: updateBasketDto.dop_garanty,
+            checkedIn: updateBasketDto.checkedIn,
+            id_customer: updateBasketDto.id_customer,
+          },
+            { where: { id_basket: updateBasketDto.id_basket } },
+        );
+        const basketAfterUpdate = await this.basketRepository.findByPk(
+        updateBasketDto.id_basket,
+        { include: [Basket_Storage] },
+        ); 
 
-      return basketStorageUpdate;
+        return basketAfterUpdate;
+      } else {
+          return null;
+      }
     // } catch {
     //   throw new HttpException(
     //     'Data is incorrect and must be uniq',

@@ -28,40 +28,54 @@ type IRemoveGoods = {
     id_basket_storage: number; 
 };
 type IbasketData = {
-    name?: string,
-    phone?: number,
-    email?: string,
-    address?: string,
-    notes?: string,
-    storage?: string,
-    delivery?: string,
-    city_delivery?: string,
-    ref_city_delivery?: string,
-    pay_view?: string,
-    dop_garanty?: number,
-    session_id?: string,
+    name?: string | null,
+    phone?: number | null,
+    email?: string | null,
+    address?: string | null,
+    notes?: string | null,
+    storage?: string | null,
+    delivery?: string | null,
+    city_delivery?: string | null,
+    ref_city_delivery?: string | null,
+    pay_view?: string | null,
+    dop_garanty?: number | null,
+    session_id?: string | null,
     checkedIn?: boolean,
-    id_customer?:number,
-    id_basket?: number,
+    id_customer?:number | null,
+    id_basket: number | null,
+    basket_storage?: [],
+    createdAt?: string | null,
+    updatedAt?: string | null,
 };
 
 const BasketOrder = observer(() => {
     const {customer} = useContext<any | null>(Context);
     const [basketData, setBasketData] = useState<IbasketData>(
-        {
-        name: 'Michael',
-        phone: 380788390123,
-        email: 'chiat@example.com',
-        }
+        // {
+        //     name: null,
+        //     phone: null,
+        //     email: null,
+        //     address: null,
+        //     notes: null,
+        //     storage: null,
+        //     delivery: null,
+        //     city_delivery: null,
+        //     ref_city_delivery: null,
+        //     pay_view: null,
+        //     dop_garanty: null,
+        //     checkedIn: false,
+        //     id_customer: null,
+        //     id_basket: null
+        // }
     );
-    const [delivery, setDelivery] = useState("");
-    const [goodsOrder, setGoodsOrder] = useState<any[]>();
+    const [delivery, setDelivery] = useState<string>();
+    const [goodsBasket, setGoodsBasket] = useState<any[]>();
     const [cityList, setCityList] = useState<ICity[]>();
     const [dapartList, setDepartList] = useState<IDepart[]>();
     const [cityListActive, setCityListActive] = useState<boolean>(false);
     const [chooseDepartmentNP, setChooseDepartmentNP] = useState<IDepart>()
-    const [inputCity, setInputCity] = useState<string>('');
-    const [chooseCity, setChooseCity] = useState<string>('');
+    const [inputCity, setInputCity] = useState<string>();
+    const [chooseCity, setChooseCity] = useState<string>();
     const [dataDepartmentNP, setDataDepartmentNP] = useState<IDapertmentNP>();
     const [takeOut, setTakeOut] = useState<boolean>(false);
     const [costNovaPoshta, setCostNovaPoshta] = useState<any[]| null>([]);
@@ -73,52 +87,32 @@ const BasketOrder = observer(() => {
     const [bonusUser, setBonusUser] = useState<number|null>(null);
     const [sumOverall, setSumOverall] = useState<any[]>();
     const [deliverySum, setDeliverySum] = useState<number|null>(0);
-    const [payMethod, setPayMethod] = useState("");
+    const [payMethod, setPayMethod] = useState<string>();
 
 
     useEffect(() => {
         let isMounted = false;
         const basketOrder = async () => {
-          const taskProduct: any[] = [
+          const taskBasketSession: any[] = [
             getBasketOrder,
-            updateBasketStorageGoods,
-            removeBasketStorageGoods,
-            updateBasket
+            // updateBasketStorageGoods,
+            // removeBasketStorageGoods,
+            // updateBasket
           ];
         let i: number = 0; 
-        while (taskProduct.length > i) {
-          if (!isMounted && taskProduct[i] === getBasketOrder) {
-            const getBasket: any = await taskProduct[i]();
-            if (getBasket) {
-                setBasketData(getBasket);
-                setGoodsOrder([...getBasket?.basket_storage]);
+        while (taskBasketSession.length > i) {
+            if (!isMounted && taskBasketSession[i] === getBasketOrder) {
+            const getBasket: any = await taskBasketSession[i]();
+                if (getBasket) {
+                    console.log('GET_BASKET_SESSION: ', getBasket)
+                    setBasketData({
+                        ...getBasket,
+                        id_customer: customer.id_customer,
+                    });
+                    setGoodsBasket([...getBasket?.basket_storage]);
+                }
             }
-          }
-          if (!isMounted && taskProduct[i] === 
-            updateBasketStorageGoods && newQuantity?.quantity) {
-            const updateQuantity = await taskProduct[i](newQuantity);
-            if (updateQuantity) {
-                const getUpdateBasket: any = await getBasketOrder();
-                setGoodsOrder([...getUpdateBasket?.basket_storage]);
-            }
-          }
-          if (!isMounted && taskProduct[i] === 
-            removeBasketStorageGoods && removeGoods) {
-            if (removeGoods) {
-                await taskProduct[i]({id_basket_storage :removeGoods ?? 0});
-            }
-          }
-        //   if (!isMounted && taskProduct[i] === updateBasket) {
-        //         // const getUpdateBasket: any = await taskProduct[i]({
-        //         //     ...basketData,
-        //         //     id_basket: basketData?.id_basket
-        //         // });
-        //         if (getUpdateBasket) {
-        //             setBasketData(getUpdateBasket);
-        //             setGoodsOrder([...getUpdateBasket?.basket_storage]);
-        //         } 
-        //   }
-          const task = taskProduct.shift();
+          const task = taskBasketSession.shift();
           task();
           await yieldToMain();
         }
@@ -127,39 +121,88 @@ const BasketOrder = observer(() => {
         return () => {
           isMounted = true;
         };
-    },[
-        basketData, 
-        basketData?.id_basket, 
-        newQuantity, 
-        removeGoods
-    ]);
+    },[customer.id_customer]);
 
     useEffect(() => {
         let isMounted = false;
         const delivery = async () => {
-          const taskNovaPoshta: any[] = [
-            getCityNovaPoshta,
-            getWareHousesNovaPoshta,
+          const taskUpdateBasket: any[] = [
+                getCityNovaPoshta,
+                getWareHousesNovaPoshta,
+                updateBasketStorageGoods,
+                removeBasketStorageGoods,
+                updateBasket
             ];
             let i: number = 0; 
-            while (taskNovaPoshta.length > i) {
+            while (taskUpdateBasket.length > i) {
             if (!isMounted && 
-                taskNovaPoshta[i] === getCityNovaPoshta && inputCity) {
-                const getCity: any = await taskNovaPoshta[i](inputCity);
+                taskUpdateBasket[i] === getCityNovaPoshta && inputCity) {
+                const getCity: any = await taskUpdateBasket[i](inputCity);
                 if (getCity?.success) {
                 setCityList([...getCity?.data[0].Addresses]); 
                 console.log('CITY_LIST: ', getCity.data[0].Addresses);
                 }
             }
             if (!isMounted && 
-                taskNovaPoshta[i] === getWareHousesNovaPoshta && dataDepartmentNP) {
-                const getDapartNP: any = await taskNovaPoshta[i](dataDepartmentNP);
+                taskUpdateBasket[i] === getWareHousesNovaPoshta && dataDepartmentNP) {
+                const getDapartNP: any = await taskUpdateBasket[i](dataDepartmentNP);
                 if (getDapartNP?.success) {
                 setDepartList([...getDapartNP?.data]); 
                 console.log('DAPART_LIST: ', getDapartNP.data);
                 }
             }
-            const task = taskNovaPoshta.shift();
+               if (!isMounted && taskUpdateBasket[i] === 
+            updateBasketStorageGoods && newQuantity?.quantity) {
+            const updateQuantity = await taskUpdateBasket[i](newQuantity);
+            if (updateQuantity) {
+                const getUpdateBasket: any = await getBasketOrder();
+                setGoodsBasket([...getUpdateBasket?.basket_storage]);
+            }
+          }
+        //   if (!isMounted && taskUpdateBasket[i] === 
+        //     removeBasketStorageGoods && removeGoods) {
+        //     if (removeGoods) {
+        //         await taskUpdateBasket[i]({id_basket_storage :removeGoods ?? 0});
+        //         const updateBasket: any = await getBasketOrder();
+        //         if (updateBasket) {
+        //             setGoodsBasket([...updateBasket?.basket_storage]);
+        //         } else {
+        //             setGoodsBasket([]);
+        //         }
+        //     }
+        //   }
+          if (!isMounted && taskUpdateBasket[i] === updateBasket && 
+            (basketData?.name || basketData?.phone || basketData?.email || 
+                delivery || chooseCity
+            )) {
+                console.log('UPDATE_ID_BASKET: ', basketData?.id_basket);
+                const getUpdateBasket: any = await taskUpdateBasket[i]({
+                    name: basketData?.name,
+                    phone: basketData?.phone,
+                    email: basketData?.email,
+                    address: chooseCity,
+                    notes: basketData?.notes,
+                    storage: basketData?.storage,
+                    delivery: delivery,
+                    city_delivery: dataDepartmentNP?.MainDescription,
+                    ref_city_delivery: dataDepartmentNP?.DeliveryCity,
+                    pay_view: payMethod,
+                    dop_garanty: dopGarantySum,
+                    checkedIn: false,
+                    id_customer: customer.id_customer,
+                    id_basket: basketData?.id_basket,
+                });
+                
+                console.log('UPDATE_BASKET: ', getUpdateBasket.data);
+                // if (getUpdateBasket.status === 200) {
+                //     // const newGetBasket = await getBasketOrder();
+                //     setBasketData(getUpdateBasket.data);
+                //     // if (newGetBasket?.basket_storage) {
+                //     setGoodsBasket([...getUpdateBasket?.data?.basket_storage]);  
+                //     // }
+                // } 
+            }
+            const task = taskUpdateBasket.shift();
             task();
             await yieldToMain();
             }
@@ -168,24 +211,27 @@ const BasketOrder = observer(() => {
         return () => {
           isMounted = true;
         };
-    },[dataDepartmentNP, inputCity]);
+    },[
+        basketData,
+        chooseCity,
+        customer.id_customer,
+        dataDepartmentNP,
+        dopGarantySum,
+        inputCity,
+        newQuantity,
+        payMethod,
+        removeGoods
+    ]);
 
     useEffect(() => {
         let isMounted = false;
         if (!isMounted) {
-            let sumGoodsArr: any = [];
-            goodsOrder?.map((item) => 
-                sumGoodsArr.push(item.price * item.quantity)
-            );
             setSumGoods(Number(
-                sumGoodsArr?.reduce((sum: any, current: any) => ( sum + current), 0).toFixed()) 
-            ); 
+            goodsBasket?.reduce((sum, current) => ( sum + current.total), 0).toFixed()));
         }
         if (!isMounted && costNovaPoshta?.length !== 0) {
             setDeliverySum(Number(
-                (25 + ( goodsOrder?.reduce((sum, current) => ( sum + current.price), 0) * 
-                                goodsOrder?.reduce((sum, current) => ( sum + current.quantity), 0)
-                ) * 0.01 +
+                (25 + ( goodsBasket?.reduce((sum, current) => ( sum + current.total), 0)) * 0.01 +
                costNovaPoshta?.reduce((sum: number, current: number) => ( sum + current), 0)
                 ).toFixed())
             );
@@ -209,86 +255,103 @@ const BasketOrder = observer(() => {
         delivery, 
         deliverySum, 
         dopGarantySum, 
-        goodsOrder, 
+        goodsBasket, 
         sumGoods
     ]);
 
+    const basketSupplierGoods = async (city: string, depart:IDapertmentNP) => {
+        let dataSupplier: CalcNovaPoshta = {};
+        let taskGetSupplier: any[] | null = [
+            ...goodsBasket!
+        ];
+        let i: number = 0; 
+        while (taskGetSupplier.length > i) {
+            console.log(`SUPPLIER_${i}: `, taskGetSupplier[i]?.id_supplier);
+            let getCitySup: any = await getSupplierById(
+                taskGetSupplier[i]?.id_supplier
+            );
+            
+            let cityNovaPoshta = await getCityNovaPoshta(getCitySup.city_ua);
+            let dataSupByCity = cityNovaPoshta?.data[0]?.Addresses.find(
+                (item: any) => item.MainDescription === getCitySup.city_ua);
+            
+            dataSupplier.citySender = dataSupByCity.DeliveryCity;
+            dataSupplier.goodsQuantity = taskGetSupplier[i].quantity;
+            dataSupplier.cityReceiver = depart.DeliveryCity;
+            dataSupplier.goodsCost = String(taskGetSupplier[i].price * taskGetSupplier[i].quantity);
+            dataSupplier.redeliveryCost = String(taskGetSupplier[i].price * taskGetSupplier[i].quantity);
 
-        const basketSupplierGoods = async (city: string, depart:IDapertmentNP) => {
-            let dataSupplier: CalcNovaPoshta = {};
-            let taskGetSupplier: any[] | null = [
-                ...goodsOrder!
-            ];
-            let i: number = 0; 
-            while (taskGetSupplier.length > i) {
-                let getCitySup: any = await getSupplierById(
-                    taskGetSupplier[i].id_supplier
-                );
-                let cityNovaPoshta = await getCityNovaPoshta(getCitySup.city_ua);
-                let dataSupByCity = cityNovaPoshta?.data[0]?.Addresses.find(
-                    (item: any) => item.MainDescription === getCitySup.city_ua);
-                
-                dataSupplier.citySender = dataSupByCity.DeliveryCity;
-                dataSupplier.goodsQuantity = taskGetSupplier[i].quantity;
-                dataSupplier.cityReceiver = depart.DeliveryCity;
-                dataSupplier.goodsCost = String(taskGetSupplier[i].price * taskGetSupplier[i].quantity);
-                dataSupplier.redeliveryCost = String(taskGetSupplier[i].price * taskGetSupplier[i].quantity);
+            let goodsTypeRef = cargoTypesNovaPoshta(taskGetSupplier[i].category);
+            dataSupplier.goodsType = goodsTypeRef;
 
-                let goodsTypeRef = cargoTypesNovaPoshta(taskGetSupplier[i].category);
-                dataSupplier.goodsType = goodsTypeRef;
+            if (goodsTypeRef === "Cargo") {
+               console.log('CARGO_TYPE');
+            }
+            if (goodsTypeRef === "TiresWheels") {
+                let tyreDiameterRef = tyresDiameter(taskGetSupplier[i].diameter);
+                dataSupplier.goodsDescription = tyreDiameterRef;
+            }
+            if (goodsTypeRef === "TiresWheels" && taskGetSupplier[i].category === "диски") {
+                let wheelsDiameterRef = wheelsDiameter(taskGetSupplier[i].diameter);
+                dataSupplier.goodsDescription = wheelsDiameterRef;
+            }
+            console.log("dataSupplier", dataSupplier);
+            if (taskGetSupplier[i] && dataSupplier) {
+                let getCalcDelivery = await getCalcPriceNovaPoshta(dataSupplier);
+                console.log(`CALC_DELIVERY ${i}: `, getCalcDelivery.data[0]);
+                if (getCalcDelivery.success === true) {
+                    setCostNovaPoshta(oldCalc =>
+                        [...oldCalc!,
+                            getCalcDelivery.data[0].Cost,
+                            getCalcDelivery.data[0].CostRedelivery,
+                        ]
+                    );
+                    console.log('COST_SET_NOVA_POSHTA: ', costNovaPoshta);
+                }             
+            }
+            console.log(`CITY_SUP_${i}: `,  getCitySup.city_ua);
+            if (getCitySup.city_ua === 'Київ' && city.includes('м. Київ')) {
+                setTakeOut(true); 
+                console.log('CITY_KIYV: ', true);
+            } else {
+                setTakeOut(false); 
+            }
+            taskGetSupplier.shift();
+        };
+        //taskGetSupplier = null;
+    }
 
-                if (goodsTypeRef === "Cargo") {
-                   console.log('CARGO_TYPE');
-                }
-                if (goodsTypeRef === "TiresWheels") {
-                    let tyreDiameterRef = tyresDiameter(taskGetSupplier[i].diameter);
-                    dataSupplier.goodsDescription = tyreDiameterRef;
-                }
-                if (goodsTypeRef === "TiresWheels" && taskGetSupplier[i].category === "диски") {
-                    let wheelsDiameterRef = wheelsDiameter(taskGetSupplier[i].diameter);
-                    dataSupplier.goodsDescription = wheelsDiameterRef;
-                }
-
-                console.log("dataSupplier", dataSupplier);
-                if (taskGetSupplier[i] && dataSupplier) {
-                    let getCalcDelivery = await getCalcPriceNovaPoshta(dataSupplier);
-                    console.log(`CALC_DELIVERY ${i}: `, getCalcDelivery.data[0]);
-                    if (getCalcDelivery.success === true) {
-                        setCostNovaPoshta(oldCalc =>
-                            [...oldCalc!,
-                                getCalcDelivery.data[0].Cost,
-                                getCalcDelivery.data[0].CostRedelivery,
-                            ]
-                        );
-                        console.log('COST_SET_NOVA_POSHTA: ', costNovaPoshta);
-                    } 
-                
-                }
-                console.log(`CITY_SUP_${i}: `,  getCitySup.city_ua);
-                if (getCitySup.city_ua === 'Київ' && city.includes('м. Київ')) {
-                    setTakeOut(true); 
-                    console.log('CITY_KIYV: ', true);
-                } else {
-                    setTakeOut(false); 
-                }
-                taskGetSupplier.shift();
-            };
-            //taskGetSupplier = null;
-        }
-
-    const acceptInput = (value: string, mask: {
+    const acceptInput = async (value: string, mask: {
         masked: any; arg: any
         }) => {
-
-        console.log(mask.masked.rawInputValue + ":rawInput");
-        console.log(mask.masked.rawInputValue.length + ":rawInputLength");
-        setBasketData({...basketData, phone:mask.masked.unmaskedValue})
-        console.log(mask.masked.unmaskedValue + ":unmaskValue"); // Need it
-        console.log(value + " :VALUE")
+        const updateBasketPhone = await updateBasket(
+            {...basketData,
+                phone: mask.masked.unmaskedValue,
+                id_basket: basketData?.id_basket, 
+            }
+        );
+        console.log('UPDATE_BASKET_PHONE: ', updateBasketPhone);
+        // console.log(mask.masked.rawInputValue + ":rawInput");
+        // console.log(mask.masked.rawInputValue.length + ":rawInputLength");
+        if (updateBasketPhone?.status === 200) {
+          setBasketData({...updateBasketPhone?.data})  
+        }
+        
+        // console.log(mask.masked.unmaskedValue + ":unmaskValue"); // Need it
+        // console.log(value + " :VALUE")
     };
        
-    const checkedRadio = (e: any) => {
+    const checkedRadio = async (e: any) => {
         setDelivery(e.currentTarget.value);
+        const updateBasketDelivery = await updateBasket(
+            {...basketData,
+                delivery: e.target.textContent,
+                id_basket: basketData?.id_basket, 
+            }
+        );
+        if (updateBasketDelivery?.status === 200) {
+            setBasketData({...updateBasketDelivery?.data})  
+        }
     };
 
     const cityInputActive = (e: any) => {
@@ -298,7 +361,7 @@ const BasketOrder = observer(() => {
         setCityListActive(true);
     };
 
-    const cityChooseActive = (e: any) => {
+    const cityChooseActive = async (e: any) => {
         //console.log('CITY_CHOOSE: ', e.target.textContent);
         setCostNovaPoshta([]);
         console.log('CITY_INPUT: ', e.target.textContent);
@@ -322,6 +385,17 @@ const BasketOrder = observer(() => {
                 DeliveryCity: e.currentTarget.getAttribute('data-delivery'),
             } 
         );
+        const updateBasketCityDelivery = await updateBasket(
+            {...basketData,
+                address: e.target.textContent,
+                city_delivery: e.currentTarget.getAttribute('data-city'),
+                ref_city_delivery: e.currentTarget.getAttribute('data-delivery'),
+                id_basket: basketData?.id_basket, 
+            }
+        );
+        if (updateBasketCityDelivery?.status === 200) {
+            setBasketData({...updateBasketCityDelivery?.data})  
+        }
     };
 
     const cancelCityList = () => {
@@ -350,20 +424,39 @@ const BasketOrder = observer(() => {
         }
     };
 
-    const dopGarantyActive = () => {
+    const dopGarantyActive = async () => {
         if (dopGarantySum) {
             setDopGarantySum(null);
         } else {
             setDopGarantySum(Number((sumGoods! * 0.07).toFixed()));
+            const updateBasketDopGaranty = await updateBasket(
+                {...basketData,
+                    dop_garanty: Number((sumGoods! * 0.07).toFixed()),
+                    id_basket: basketData?.id_basket, 
+                }
+            );
+            if (updateBasketDopGaranty?.status === 200) {
+                setBasketData({...updateBasketDopGaranty?.data})  
+            }
         }
     };
     const removeGoodsAction = async (e: any) => {
         console.log('REMOVE_GOODS', e.target.getAttribute('data-id'))
-        setRemoveGoods({ id_basket_storage: e.target.getAttribute('data-id')});
-        //await removeBasketStorageGoods();
+        //setRemoveGoods({ id_basket_storage: e.target.getAttribute('data-id')});
+       
+            const removeItem = await removeBasketStorageGoods(e.target.getAttribute('data-id'));
+        
+            console.log('REMOVE_ITEM: ', removeItem);
+            const removeBasketGoods: any = await getBasketOrder();
+            console.log('REMOVE_GOODS_UPDATE: ', removeBasketGoods)
+            if (removeBasketGoods?.basket_storage) {
+                setGoodsBasket([...removeBasketGoods?.basket_storage]);
+            } else {
+                setGoodsBasket([]);
+            }
     };
 
-    const countQuantytiAction = (e: any) => {
+    const countQuantytiAction = async (e: any) => {
         setNewQuantity(null);
         console.log('QUANTYTI:', e.target.getAttribute('data-count'));
         console.log('QUANTYTI_EVENT:', e.target.value);
@@ -385,29 +478,44 @@ const BasketOrder = observer(() => {
         //id_basket_storage: e.target.getAttribute('data-id') 
         // });
     };
-    const inputNameAction =(e:any) => {
-        setBasketData({...basketData, name: e.target.value})
-        console.log('INPUT_NAME: ', e.target.value);
+    const inputNameAction = async (e:any) => {
+        const updateBasketName = await updateBasket(
+            {...basketData,
+                name: e.target.value,
+                id_basket: basketData?.id_basket, 
+            }
+        );
+        if (updateBasketName?.status === 200) {
+          setBasketData({...updateBasketName?.data})  
+        }
     };
-    const inputEmailAction = (e:any) => {
-        setBasketData({...basketData, email: e.target.value})
-        console.log('INPUT_EMAIL: ', e.target.value);
+
+    const inputEmailAction = async (e:any) => {
+        const updateBasketEmail = await updateBasket(
+            {...basketData,
+                email: e.target.value,
+                id_basket: basketData?.id_basket, 
+            }
+        );
+        if (updateBasketEmail?.status === 200) {
+          setBasketData({...updateBasketEmail?.data})  
+        }
     };
 
     //console.log('CITY_CHOOSE: ', chooseCity);
-    // console.log('CITY_LIST_ARR: ', cityList);
-    console.log('BASKET_DATA_TEL:', basketData.phone);
+    console.log('DELIVERY_SUM: ', deliverySum);
+    console.log('BASKET_DATA:', basketData);
     console.log('COST_NOVA_POSHTA: ', costNovaPoshta);
-    console.log('GOODS_LIST: ', goodsOrder);
+    console.log('GOODS_BASKET_ARRAY: ', goodsBasket);
     console.log('DELIVERY_DATA: ', dataDepartmentNP);
     console.log('DELIVERY_CHOOSE: ', chooseDepartmentNP);
 
     return (
+        <div>
+        {goodsBasket?.length !== 0 ?   
         <div className='basketOrder'
             onClick={cancelCityList}
         >
-            {/* {goodsOrder?.length !== 0 ?
-            <div> */}
             <div> Оформлення замовлення</div>
             <div className='basketColmLeft'>
                 данні замовлення
@@ -425,7 +533,7 @@ const BasketOrder = observer(() => {
                 <div className='basketColmItemLeft'>
                     <span>Номер телефону *</span>
                     <InputDataTel 
-                        dataTel={basketData.phone}
+                        dataTel={basketData?.phone}
                         onAccept={acceptInput} 
                         //ref={refComp}
                     />  
@@ -594,7 +702,7 @@ const BasketOrder = observer(() => {
                 Товар і ціна 
                 остаточна сумма замовлення
                 <div className='basketColmRightListGoods'>
-                    {goodsOrder?.length !== 0 ? goodsOrder?.map((item: any) =>
+                    {goodsBasket?.length !== 0 ? goodsBasket?.map((item: any) =>
                        <div key={item.id + 'cart'}
                         className='itemGoodsBasket'>
                             <TyresCardList 
@@ -638,9 +746,9 @@ const BasketOrder = observer(() => {
                 </div>
                 
                 <div className='totalCount'>
-                    { sumGoods && goodsOrder ?
+                    { sumGoods && goodsBasket ?
                        <span>{`Сумма за товари у кількості
-                        ${goodsOrder?.reduce((sum, current) => ( sum + current.quantity), 0)} од: 
+                        ${goodsBasket?.reduce((sum, current) => ( sum + current.quantity), 0)} од: 
                         ${sumGoods}  грн`
                         }
                         </span> 
@@ -698,11 +806,13 @@ const BasketOrder = observer(() => {
                 </div>
                 <ButtonAction props={"Оформити замовлення"} widthBtn={250} eventItem={undefined}/>
             </div>
-            {/* </div> 
-             : <div>
-                 НАЖАЛЬ КОРЗИНА ПОРОЖНЯ
-             </div> */}
-            
+            </div>
+             : 
+                <div className='noBasketGoods'> 
+                    НАЖАЛЬ КОРЗИНА ПОРОЖНЯ =\ 
+                </div>
+            }    
+        
         </div>
     );
 });

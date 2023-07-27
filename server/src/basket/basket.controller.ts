@@ -66,9 +66,9 @@ export class BasketController {
     );
   }
 
-  @Delete('remove/basketstorage')
-  removeBasketStorage(@Param() @Body() getBasketDto: GetBasketDto) {
-    return this.basketStorageService.removeBasketStorageById(getBasketDto);
+  @Delete('remove/basketstorage/:id')
+  removeBasketStorage(@Param('id') id: string) {
+    return this.basketStorageService.removeBasketStorageById(+id);
   }
 
   @Delete('remove')

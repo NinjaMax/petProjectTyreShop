@@ -141,11 +141,11 @@ export class BasketStorageService {
     // }
   }
 
-  async removeBasketStorageById(getBasketDto: GetBasketDto) {
+  async removeBasketStorageById(id: number) {
     try {
-      if (getBasketDto.id_basket_storage) {
+      if (id) {
         const basketSup = await this.basketStorageRepository.destroy({
-          where: { id_basket_storage: getBasketDto.id_basket_storage },
+          where: { id_basket_storage: id },
         });
         return basketSup;
       } else {

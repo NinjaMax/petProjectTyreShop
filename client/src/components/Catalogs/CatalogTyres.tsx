@@ -19,12 +19,6 @@ const CatalogTyres = observer(() => {
     const [goodsCat, setGoodsCat] = useState([]);
     const {goodsTyre, page, filter, customer} = useContext<any | null>(Context);
 
-    useEffect(() => {
-        if (!active) {
-            setCheckOrderItem(null);
-        }
-    },[active]);
-
     const checkOrders = async (
         item : ICheckOrderItem, 
         ratingModel: {avgRatingModel: number }
@@ -35,13 +29,13 @@ const CatalogTyres = observer(() => {
                 const basket: any = await createBasket(
                     customer.customer?.id,
                 );
-                console.log('CREATE_BASKET: ', basket.data); 
                 console.log('CREATE_BASKET_ID_BASKET: ', basket.data.id_basket);
                 if(basket?.status === 201) {
-                  const addTobasket: any = await addGoodsToBasket(
+                    const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
+                    const addTobasket: any = await addGoodsToBasket(
                     +item.id,
                     item.id_cat,
-                    4,
+                    checkItem?.quantity ? checkItem?.quantity + 4 : 4,
                     item.price[0].price,
                     item.stock[0].id_supplier,
                     item.stock[0].id_storage,
@@ -53,10 +47,17 @@ const CatalogTyres = observer(() => {
                     item.reviews.length,
                     item.diameter.diameter,
                     ); 
+                    console.log('ADD_BASK: ', addTobasket);
                     if (addTobasket?.status === 201) {
+                        //if (checkOrderItem?.length !== 0) {
                         setCheckOrderItem(
                             [...basket?.data.basket_storage]
                         );
+                        // } else {
+                        //     setCheckOrderItem(
+                        //         [...basket?.data.basket_storage]
+                        //     );
+                        // }
                     console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
                     console.log('ADD_TO_BASKET: ', addTobasket?.data); 
                     }  
@@ -73,6 +74,7 @@ const CatalogTyres = observer(() => {
         page.setOffset(page.offset + 9);
     };
     console.log('CHECK_ORDERS: ', checkOrderItem);
+
     const sortTyresGoods = (e: any) => {
         if (e.target.value === 'vidDeshevih') {
             page.setOffset(0);

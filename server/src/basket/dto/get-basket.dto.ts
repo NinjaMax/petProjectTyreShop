@@ -27,4 +27,6 @@ export class GetBasketDto {
   readonly dop_garanty: string;
   readonly session_id: string;
   readonly checkedIn: boolean;
+  readonly city_delivery: string;
+  readonly ref_city_delivery: string;
 }

@@ -233,37 +233,23 @@ const getBasketOrder = async () => {
     return data;
 }
 
-const updateBasket = async (
-    name?: string,
-    phone?: number,
-    email?: string,
-    address?: string,
-    notes?: string,
-    storage?: string,
-    delivery?: string,
-    city_delivery?: string,
-    ref_city_delivery?: string,
-    pay_view?: string,
-    dop_garanty?: number,
-    session_id?: string,
-    checkedIn?: boolean,
-    id_customer?:number,
-    id_basket?: number,
-) => 
+const updateBasket = async (data: any) => 
 await $hostPost.patch('/basket/update', 
-{
-    name: name,
-    phone: phone,
-    email: email,
-    address: address,
-    notes: notes,
-    storage: storage,
-    delivery: delivery,
-    pay_view: pay_view,
-    dop_garanty: dop_garanty,
-    session_id: session_id,
-    checkedIn: checkedIn,
-    id_basket: id_basket,
+ {
+    name: String(data?.name),
+    phone: data?.phone,
+    email: data?.email,
+    address: data?.address,
+    notes: data?.notes,
+    storage: data?.storage,
+    delivery: data?.delivery,
+    city_delivery: data?.city_delivery,
+    ref_city_delivery: data?.ref_city_delivery,
+    pay_view: data?.pay_view,
+    dop_garanty: data?.dop_garanty,
+    checkedIn: data?.checkedIn,
+    id_customer: data?.id_customer,
+    id_basket: +data?.id_basket,
 }
 )
 .catch(error => {
@@ -280,9 +266,10 @@ await $hostPost.patch('/basket/update/basketstorage', data)
 });
 
 const removeBasketStorageGoods = async (
-    data: any, 
+    id_basket_storage: number, 
 ) => 
-await $hostPost.delete('/basket/remove/basketstorage',  data)
+await $hostPost.delete(`/basket/remove/basketstorage/${id_basket_storage}`,  
+)
 .catch(error => {
     console.log(error);
 });

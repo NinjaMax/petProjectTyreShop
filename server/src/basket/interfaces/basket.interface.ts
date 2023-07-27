@@ -12,4 +12,5 @@ export interface BasketConfigAttr {
   dop_garanty: string;
   session_id: string;
   checkedIn: boolean;
+  id_customer: number;
 }

@@ -13,6 +13,25 @@
     padding: 15px;
 }
 
+
+/* .noBasketGoods {
+    display: none;
+} */
+.noBasketGoods {
+    display: inline-block;
+    font-family: var(--main-font-family);
+    left: 45%;
+    margin-left: 70px;
+    margin-right: 55px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    background-color: #ffff;
+    padding: 40px;
+}
+
+
 .basketColmLeft {
     grid-column: 1/1;
     /* border: 2px solid red; */

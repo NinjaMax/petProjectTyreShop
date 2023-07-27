@@ -29,4 +29,6 @@ export class CreateBasketDto {
   readonly storage: string;
   readonly pay_view: string;
   readonly checkedIn: boolean;
+  readonly city_delivery: string;
+  readonly ref_city_delivery: string;
 }
