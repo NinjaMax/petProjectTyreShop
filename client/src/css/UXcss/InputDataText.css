@@ -1,0 +1,18 @@
+.inputDataText {
+    border: solid 2px #9999;
+    border-radius: 10px;
+    padding: 3px;
+    width: 315px;
+    /* font-weight:bolder; */
+    font-size: 16px;
+    font-family: var(--main-font-family);
+}
+.inputDataText:focus {
+    border: solid 2px #cccc; 
+}
+
+.inputDataText:hover {
+    border: solid 2px #999; 
+}
+
+

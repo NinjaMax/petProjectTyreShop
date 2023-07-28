@@ -116,6 +116,21 @@ export class BasketService {
     }
   }
 
+  async findBasketByIdParam(id: number) {
+    try {
+      const basketId = await this.basketRepository.findByPk(id,
+        {include: [Basket_Storage]}
+      );
+      return basketId;
+
+    } catch {
+      throw new HttpException(
+        `Data ${id} is incorrect and must be uniq`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
   async addGoodsToBasket(createBasketDto: CreateBasketDto) {
     //try {
       const findGoodsToBasket =

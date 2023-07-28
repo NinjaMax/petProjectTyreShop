@@ -6,6 +6,7 @@ export default class PageStore {
     _pageItem: number;
     _id: string;
     _loadMore:number;
+    _basket_count:number;
 
     constructor() { 
         this._offset = 0;
@@ -13,6 +14,7 @@ export default class PageStore {
         this._pageItem = 0;
         this._id = '0';
         this._loadMore = 0;
+        this._basket_count = 0;
         makeAutoObservable(this);
     }
 
@@ -31,6 +33,9 @@ export default class PageStore {
     setLoadMore(loadMore: number) {
         this._loadMore = loadMore;
     }
+    setBasketCount(basket_count: number) {
+        this._basket_count = basket_count;
+    }
 
 
     get offset() {
@@ -47,5 +52,8 @@ export default class PageStore {
     }
     get loadMore() {
         return this._loadMore;
+    }
+    get basketCount() {
+        return this._basket_count;
     }
 }

@@ -11,13 +11,23 @@ import { Context } from '../../context/Context';
 import { observer } from 'mobx-react-lite';
 import LoadMoreGoods from '../ux/LoadMoreGoods';
 import { ICheckOrderItem } from './types/CheckOrder.type';
-import { addGoodsToBasket, createBasket } from '../../restAPI/restGoodsApi';
+import { addGoodsToBasket, createBasket, getBasketById } from '../../restAPI/restGoodsApi';
 
 const CatalogTyres = observer(() => {
     const [active, setActive] = useState(false);
-    const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem [] | null>([]);
+    const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem[] | null>([]);
     const [goodsCat, setGoodsCat] = useState([]);
     const {goodsTyre, page, filter, customer} = useContext<any | null>(Context);
+
+    // useEffect(() => {
+    //     let isMounted = false;
+    //     if (!isMounted) {
+
+    //     }
+    //     return () => {
+    //         isMounted = true;
+    //       };
+    // },[]);
 
     const checkOrders = async (
         item : ICheckOrderItem, 
@@ -49,15 +59,14 @@ const CatalogTyres = observer(() => {
                     ); 
                     console.log('ADD_BASK: ', addTobasket);
                     if (addTobasket?.status === 201) {
-                        //if (checkOrderItem?.length !== 0) {
+                        const updateBasketStorage = await getBasketById(basket.data.id_basket);
                         setCheckOrderItem(
-                            [...basket?.data.basket_storage]
+                            [...updateBasketStorage?.basket_storage]
                         );
-                        // } else {
-                        //     setCheckOrderItem(
-                        //         [...basket?.data.basket_storage]
-                        //     );
-                        // }
+                        page.setBasketCount(
+                            updateBasketStorage?.basket_storage.reduce(
+                                (sum: any, current: any) => (sum + current.quantity),0)
+                        );
                     console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
                     console.log('ADD_TO_BASKET: ', addTobasket?.data); 
                     }  

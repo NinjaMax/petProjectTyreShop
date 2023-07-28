@@ -115,12 +115,13 @@
     align-items: flex-start;
     gap: 5px;
     position: absolute;
-    top: 96%;
+    top: 102%;
     overflow-y: auto;
     max-height: 150px;
-    border-radius: 6px;
+    border-radius: 8px;
     background-color: #ffff;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    z-index: 999;
 }
 
 .basketCityList .basketCityListItem {
@@ -161,9 +162,9 @@
     /* top: 110%; */
     overflow-y: auto;
     max-height: 150px;
-    border-radius: 6px;
+    border-radius: solid #cccc 6px;
     background-color: #ffff;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
     appearance: none;
 }
 .basketDepartList::after {
@@ -172,6 +173,7 @@
     top: 0.5px;
     right: 5px;
     position: absolute;
+    z-index: 9999;
     /* cursor: pointer; */
   }
 
@@ -186,10 +188,11 @@
 .basketDepartList select {
     appearance: none;
     cursor: pointer;
-    width: 530px;
+    width: 490px;
     /* background-color: red; */
     border-radius: 6px;
-    padding: 2px;
+    padding: 3px;
+    z-index: 998;
 }
 
 .basketDepartList option {
@@ -208,6 +211,7 @@
     cursor: pointer;
     background-color: #ccc;
     animation: cubic-bezier(0.075, 0.82, 0.165, 1);
+    
     /* width: 550px;
     border-radius: 6px;
     padding: 2px; */
@@ -242,3 +246,20 @@
     text-decoration-color: red;
 }
 
+.basketInputSearchCity {
+    border: solid 2px #9999;
+    border-radius: 10px;
+    padding: 3px;
+    width: 315px;
+    z-index: 999;
+    /* font-weight:bolder; */
+    font-size: 16px;
+    font-family: var(--main-font-family);
+}
+.basketInputSearchCity:focus {
+    border: solid 2px #cccc; 
+}
+
+.basketInputSearchCity:hover {
+    border: solid 2px #999; 
+}

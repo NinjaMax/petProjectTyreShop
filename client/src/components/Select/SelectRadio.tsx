@@ -7,18 +7,26 @@ interface ISelectRadio {
     addOptions?: string | boolean;
     activeOptions?:(arg: any) => void; 
     children?: any;
+    disabled?: boolean;
 }
 
-const SelectRadio = (
-        {radioData, addOptions, direction, activeOptions, children}: ISelectRadio
-    ) => {
+const SelectRadio = ({
+        radioData,
+        addOptions, 
+        direction, 
+        activeOptions,
+        disabled, 
+        children
+    }: ISelectRadio) => {
 
     return (
         <div className={addOptions ? 'selectRadioActive':'selectRadio'} 
                 data-style={{"--direction": direction}}>   
             <div key={radioData.value}>
                 <label 
-                    className='selectRadioItem'  
+                    className={disabled ? 
+                        'selectRadioItemActive' : 
+                        'selectRadioItem'}  
                     htmlFor={radioData.value}
                 >
                     <input className='inputSelectRadioItem'
@@ -27,6 +35,7 @@ const SelectRadio = (
                         value={radioData.value}
                         name={radioData.name} 
                         onChange={activeOptions}
+                        disabled={disabled}
                     /> {radioData.radioName}            
                 </label>
             </div>

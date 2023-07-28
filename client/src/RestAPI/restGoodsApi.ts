@@ -233,6 +233,13 @@ const getBasketOrder = async () => {
     return data;
 }
 
+const getBasketById = async (id: number) => {
+    const {data} = await $hostGet.get(`/basket/by-id/${id ?? ''}`)
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
 const updateBasket = async (data: any) => 
 await $hostPost.patch('/basket/update', 
  {
@@ -530,5 +537,6 @@ export {
     getSupplierById,
     updateBasketStorageGoods,
     removeBasketStorageGoods,
-    updateBasket
+    updateBasket,
+    getBasketById
 }

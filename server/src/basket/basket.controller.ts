@@ -40,9 +40,9 @@ export class BasketController {
     return this.basketService.findAllbasket();
   }
 
-  @Get('/by-id')
-  findOne(@Param() @Body() getBasketDto: GetBasketDto) {
-    return this.basketService.findBasketById(getBasketDto);
+  @Get('/by-id/:id')
+  findOne(@Param('id') id: string) {
+    return this.basketService.findBasketByIdParam(+id);
   }
 
   @Get('/by-session')

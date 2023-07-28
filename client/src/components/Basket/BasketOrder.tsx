@@ -19,14 +19,14 @@ import { Context } from '../../context/Context';
 import { observer } from 'mobx-react-lite';
 import CheckboxBtn from '../select/CheckboxBtn';
 
-type IQuantity = {
-    quantity: number;
-    id_basket_storage: number; 
-};
+// type IQuantity = {
+//     quantity: number;
+//     id_basket_storage: number; 
+// };
 
-type IRemoveGoods = {
-    id_basket_storage: number; 
-};
+// type IRemoveGoods = {
+//     id_basket_storage: number; 
+// };
 type IbasketData = {
     name?: string | null,
     phone?: number | null,
@@ -49,7 +49,7 @@ type IbasketData = {
 };
 
 const BasketOrder = observer(() => {
-    const {customer} = useContext<any | null>(Context);
+    const {customer, page} = useContext<any | null>(Context);
     const [basketData, setBasketData] = useState<IbasketData>(
         // {
         //     name: null,
@@ -82,8 +82,8 @@ const BasketOrder = observer(() => {
     const [sumGoods, setSumGoods]= useState<number|null>(null);
     const [dopGarantySum, setDopGarantySum] = useState<number|null>(null);
     const [commisionPay, setCommitionPay] = useState<number|null>(0);
-    const [newQuantity, setNewQuantity] = useState<IQuantity|null>(null);
-    const [removeGoods, setRemoveGoods] = useState<IRemoveGoods | null>(null);
+    //const [newQuantity, setNewQuantity] = useState<IQuantity|null>(null);
+    //const [removeGoods, setRemoveGoods] = useState<IRemoveGoods | null>(null);
     const [bonusUser, setBonusUser] = useState<number|null>(null);
     const [sumOverall, setSumOverall] = useState<any[]>();
     const [deliverySum, setDeliverySum] = useState<number|null>(0);
@@ -95,9 +95,6 @@ const BasketOrder = observer(() => {
         const basketOrder = async () => {
           const taskBasketSession: any[] = [
             getBasketOrder,
-            // updateBasketStorageGoods,
-            // removeBasketStorageGoods,
-            // updateBasket
           ];
         let i: number = 0; 
         while (taskBasketSession.length > i) {
@@ -109,7 +106,9 @@ const BasketOrder = observer(() => {
                         ...getBasket,
                         id_customer: customer.id_customer,
                     });
-                    setGoodsBasket([...getBasket?.basket_storage]);
+                    setGoodsBasket([...getBasket?.basket_storage.sort(
+                        (a: any, b: any) => (+b.id_basket_storage) - (+a.id_basket_storage)
+                    )]);
                 }
             }
           const task = taskBasketSession.shift();
@@ -129,8 +128,6 @@ const BasketOrder = observer(() => {
           const taskUpdateBasket: any[] = [
                 getCityNovaPoshta,
                 getWareHousesNovaPoshta,
-                updateBasketStorageGoods,
-                removeBasketStorageGoods,
                 updateBasket
             ];
             let i: number = 0; 
@@ -151,27 +148,8 @@ const BasketOrder = observer(() => {
                 console.log('DAPART_LIST: ', getDapartNP.data);
                 }
             }
-               if (!isMounted && taskUpdateBasket[i] === 
-            updateBasketStorageGoods && newQuantity?.quantity) {
-            const updateQuantity = await taskUpdateBasket[i](newQuantity);
-            if (updateQuantity) {
-                const getUpdateBasket: any = await getBasketOrder();
-                setGoodsBasket([...getUpdateBasket?.basket_storage]);
-            }
-          }
-        //   if (!isMounted && taskUpdateBasket[i] === 
-        //     removeBasketStorageGoods && removeGoods) {
-        //     if (removeGoods) {
-        //         await taskUpdateBasket[i]({id_basket_storage :removeGoods ?? 0});
-        //         const updateBasket: any = await getBasketOrder();
-        //         if (updateBasket) {
-        //             setGoodsBasket([...updateBasket?.basket_storage]);
-        //         } else {
-        //             setGoodsBasket([]);
-        //         }
-        //     }
-        //   }
-          if (!isMounted && taskUpdateBasket[i] === updateBasket && 
+            
+            if (!isMounted && taskUpdateBasket[i] === updateBasket && 
             (basketData?.name || basketData?.phone || basketData?.email || 
                 delivery || chooseCity
             )) {
@@ -194,13 +172,6 @@ const BasketOrder = observer(() => {
                 });
                 
                 console.log('UPDATE_BASKET: ', getUpdateBasket.data);
-                // if (getUpdateBasket.status === 200) {
-                //     // const newGetBasket = await getBasketOrder();
-                //     setBasketData(getUpdateBasket.data);
-                //     // if (newGetBasket?.basket_storage) {
-                //     setGoodsBasket([...getUpdateBasket?.data?.basket_storage]);  
-                //     // }
-                // } 
             }
             const task = taskUpdateBasket.shift();
             task();
@@ -218,9 +189,7 @@ const BasketOrder = observer(() => {
         dataDepartmentNP,
         dopGarantySum,
         inputCity,
-        newQuantity,
         payMethod,
-        removeGoods
     ]);
 
     useEffect(() => {
@@ -279,7 +248,8 @@ const BasketOrder = observer(() => {
             dataSupplier.goodsQuantity = taskGetSupplier[i].quantity;
             dataSupplier.cityReceiver = depart.DeliveryCity;
             dataSupplier.goodsCost = String(taskGetSupplier[i].price * taskGetSupplier[i].quantity);
-            dataSupplier.redeliveryCost = String(taskGetSupplier[i].price * taskGetSupplier[i].quantity);
+            dataSupplier.redeliveryCost = payMethod === "nalogka" ?
+            String(taskGetSupplier[i].price * taskGetSupplier[i].quantity) : "1";
 
             let goodsTypeRef = cargoTypesNovaPoshta(taskGetSupplier[i].category);
             dataSupplier.goodsType = goodsTypeRef;
@@ -341,7 +311,7 @@ const BasketOrder = observer(() => {
         // console.log(value + " :VALUE")
     };
        
-    const checkedRadio = async (e: any) => {
+    const checkedRadioDelivery = async (e: any) => {
         setDelivery(e.currentTarget.value);
         const updateBasketDelivery = await updateBasket(
             {...basketData,
@@ -351,6 +321,19 @@ const BasketOrder = observer(() => {
         );
         if (updateBasketDelivery?.status === 200) {
             setBasketData({...updateBasketDelivery?.data})  
+        }
+    };
+
+    const checkedRadioPayment = async (e: any) => {
+        setPayMethod(e.currentTarget.value);
+        const updateBasketPay = await updateBasket(
+            {...basketData,
+                pay_view: e.target.textContent,
+                id_basket: basketData?.id_basket, 
+            }
+        );
+        if (updateBasketPay?.status === 200) {
+            setBasketData({...updateBasketPay?.data})  
         }
     };
 
@@ -364,7 +347,7 @@ const BasketOrder = observer(() => {
     const cityChooseActive = async (e: any) => {
         //console.log('CITY_CHOOSE: ', e.target.textContent);
         setCostNovaPoshta([]);
-        console.log('CITY_INPUT: ', e.target.textContent);
+        //console.log('CITY_INPUT: ', e.target.textContent);
         //setCostNovaPoshta([]);
         setChooseCity(e.target.textContent);
         setDataDepartmentNP({
@@ -372,12 +355,6 @@ const BasketOrder = observer(() => {
             DeliveryCity: e.currentTarget.getAttribute('data-delivery'),
         });
         setCityListActive(false);
-        console.log('CITY_CHOOSE_SET: ', e.target.textContent);
-        console.log('CITY_CHOOSE: ', chooseCity);
-        // if (e.target.textContent !== chooseCity) {
-        //     setCostNovaPoshta(null);
-        // }
-        console.log('SET_DEPART_DATA: ', dataDepartmentNP);
         basketSupplierGoods(
             e.target.textContent, 
             {
@@ -407,8 +384,7 @@ const BasketOrder = observer(() => {
     };
 
     const chooseDepartEvent = (e: any) => {
-        console.log('DEPART_CHOOSE: ', e.target.value);
-        //console.log('DEPART_CHOOSE_REF: ', e.target.id);
+        //console.log('DEPART_CHOOSE: ', e.target.value);
         setChooseDepartmentNP({
             Ref: e.currentTarget.getAttribute('data-depref'),
             Description: e.target.value,
@@ -441,42 +417,66 @@ const BasketOrder = observer(() => {
         }
     };
     const removeGoodsAction = async (e: any) => {
-        console.log('REMOVE_GOODS', e.target.getAttribute('data-id'))
-        //setRemoveGoods({ id_basket_storage: e.target.getAttribute('data-id')});
-       
-            const removeItem = await removeBasketStorageGoods(e.target.getAttribute('data-id'));
+        try {
+            await removeBasketStorageGoods(e.target.getAttribute('data-id'));
         
-            console.log('REMOVE_ITEM: ', removeItem);
+            //console.log('REMOVE_ITEM: ', removeItem);
             const removeBasketGoods: any = await getBasketOrder();
-            console.log('REMOVE_GOODS_UPDATE: ', removeBasketGoods)
+            //console.log('REMOVE_GOODS_UPDATE: ', removeBasketGoods)
             if (removeBasketGoods?.basket_storage) {
-                setGoodsBasket([...removeBasketGoods?.basket_storage]);
+                setGoodsBasket([...removeBasketGoods?.basket_storage.sort(
+                    (a: any, b: any) => (+b.id_basket_storage) - (+a.id_basket_storage)
+                )]);
+                page.setBasketCount(
+                    removeBasketGoods?.basket_storage.reduce(
+                        (sum: any, current: any) => (sum + current.quantity),0)
+                    );
             } else {
                 setGoodsBasket([]);
-            }
+                page.setBasketCount(0);
+            }    
+        } catch (error) {
+            console.log('REMOVE_ITEM_FROM_BASKER_ERROR: ', error);
+        }
     };
 
     const countQuantytiAction = async (e: any) => {
-        setNewQuantity(null);
-        console.log('QUANTYTI:', e.target.getAttribute('data-count'));
-        console.log('QUANTYTI_EVENT:', e.target.value);
-        console.log('ID_BASKET_STORAGE:', e.target.getAttribute('data-id'));
-        if (e.target.value === 'plus') {
-            setNewQuantity({
+        try {
+            if (e.target.value === 'plus') {
+            const updateQuantityPlus = await updateBasketStorageGoods({
                 quantity: Number(e.target.getAttribute('data-count')) + 1,
                 id_basket_storage: e.target.getAttribute('data-id') 
-            });
+            })
+                if (updateQuantityPlus) {
+                    const getUpdateBasketPlus: any = await getBasketOrder();
+                    setGoodsBasket([...getUpdateBasketPlus?.basket_storage.sort(
+                        (a: any, b: any) => (+b.id_basket_storage) - (+a.id_basket_storage)
+                    )]);
+                    page.setBasketCount(
+                        getUpdateBasketPlus?.basket_storage.reduce(
+                            (sum: any, current: any) => (sum + current.quantity),0)
+                    );
+                }
+            }
+            if (e.target.value === 'minus') {
+                const updateQuantityMinus = await updateBasketStorageGoods({
+                    quantity: Number(e.target.getAttribute('data-count')) - 1,
+                    id_basket_storage: e.target.getAttribute('data-id') 
+                })
+                if (updateQuantityMinus) {
+                    const getUpdateBasketMinus: any = await getBasketOrder();
+                    setGoodsBasket([...getUpdateBasketMinus?.basket_storage.sort(
+                        (a: any, b: any) => (+b.id_basket_storage) - (+a.id_basket_storage)
+                    )]);
+                    page.setBasketCount(
+                        getUpdateBasketMinus?.basket_storage.reduce(
+                        (sum: any, current: any) => (sum + current.quantity),0)
+                    );
+                }
+            }
+        } catch (error) {
+            console.log('BASKET_QUANTITY_ITEM_ERROR: ',error);
         }
-        if (e.target.value === 'minus') {
-            setNewQuantity({
-                quantity: Number(e.target.getAttribute('data-count')) - 1,
-                id_basket_storage: e.target.getAttribute('data-id') 
-            });
-        }
-        // await updateBasketStorageGoods({
-        //     quantity: e.target.getAttribute('data-count') + 1,
-        //id_basket_storage: e.target.getAttribute('data-id') 
-        // });
     };
     const inputNameAction = async (e:any) => {
         const updateBasketName = await updateBasket(
@@ -512,7 +512,7 @@ const BasketOrder = observer(() => {
 
     return (
         <div>
-        {goodsBasket?.length !== 0 ?   
+        {page.basketCount !== 0 ?   
         <div className='basketOrder'
             onClick={cancelCityList}
         >
@@ -555,8 +555,10 @@ const BasketOrder = observer(() => {
                     <label>місто *</label>
                     <input 
                         id="city-search"
+                        className='basketInputSearchCity'
                         type="search"  
                         name="q"
+                        placeholder='Введіть місто'
                         value={chooseCity}
                         onChange={cityInputActive}
                     />
@@ -595,7 +597,8 @@ const BasketOrder = observer(() => {
                         }} 
                         addOptions={delivery === "samoviviz" ?? false}
                         direction={"column"} 
-                        activeOptions={checkedRadio}
+                        activeOptions={checkedRadioDelivery}
+                        disabled={chooseCity ? false : true}
                         >
                         { delivery === "samoviviz" ?    
                         "Доступно для самовивізу в м. Харків. Деталі повідомить менеджер" 
@@ -611,10 +614,11 @@ const BasketOrder = observer(() => {
                         }} 
                         addOptions={delivery === "novaPoshta" ?? false}
                         direction={"column"} 
-                        activeOptions={checkedRadio}
+                        activeOptions={checkedRadioDelivery}
+                        disabled={chooseCity ? false : true}
                     > 
                     </SelectRadio>
-                    { delivery === "novaPoshta" ?    
+                    { delivery === "novaPoshta" && chooseCity ?    
                         <div 
                             className='basketDepartList' 
                             onClick={(e:any) => e.stopPropagation()}       
@@ -629,17 +633,15 @@ const BasketOrder = observer(() => {
                                 <option value=''>
                                     --віберіть відділення--
                                 </option>
-                        {dapartList?.map((depart: IDepart) =>
+                        {chooseCity && dapartList?.map((depart: IDepart) =>
                                 <option 
                                     //id={depart.Ref}
+                                    key={depart.SiteKey}
                                     value={depart.Description}
                                     data-depref={depart.Ref}
                                     data-cityref={depart.CityRef}
                                     //type='radio'
                                     //name='city_list'
-                                    
-                                    key={depart.SiteKey}
-                                    
                                 >
                                 {depart.Description}
                                 </option>
@@ -657,7 +659,8 @@ const BasketOrder = observer(() => {
                         }} 
                         addOptions={""}
                         direction={"column"} 
-                        activeOptions={checkedRadio}
+                        activeOptions={checkedRadioDelivery}
+                        disabled={chooseCity ? false :true}
                         >
                     </SelectRadio>
                 </div>
@@ -671,7 +674,11 @@ const BasketOrder = observer(() => {
                         }} 
                         addOptions={""}
                         direction={"column"} 
-                        //checked={checkedRadio}
+                        disabled={delivery === "samoviviz" &&
+                            chooseCity ? false :true
+                        }
+                        activeOptions={checkedRadioPayment}
+                        //checked={checkedRadioDelivery}
                         >
                     </SelectRadio>
                     <SelectRadio 
@@ -682,7 +689,12 @@ const BasketOrder = observer(() => {
                         }} 
                         addOptions={""}
                         direction={"column"} 
-                        //checked={checkedRadio}
+                        disabled={
+                            delivery &&
+                            chooseCity ? false :true
+                        }
+                        activeOptions={checkedRadioPayment}
+                        //checked={checkedRadioDelivery}
                         >
                     </SelectRadio>
                     <SelectRadio 
@@ -693,7 +705,28 @@ const BasketOrder = observer(() => {
                         }} 
                         addOptions={""}
                         direction={"column"} 
-                        //checked={checkedRadio}
+                        disabled={
+                            delivery &&
+                            chooseCity ? false :true
+                        }
+                        activeOptions={checkedRadioPayment}
+                        //checked={checkedRadioDelivery}
+                        >
+                    </SelectRadio>
+                    <SelectRadio 
+                        radioData={{
+                            value: "nalogka", 
+                            radioName: "Зворотній платіж (Післяплата)",
+                            name: "pay",
+                        }} 
+                        addOptions={""}
+                        direction={"column"} 
+                        disabled={
+                            delivery === "novaPoshta" &&
+                            chooseCity ? false :true
+                        }
+                        activeOptions={checkedRadioPayment}
+                        //checked={checkedRadioDelivery}
                         >
                     </SelectRadio>
                 </div> 

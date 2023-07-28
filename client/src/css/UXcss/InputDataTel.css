@@ -2,66 +2,78 @@
     appearance: none;
     font-size: 16px;
     font-family: var(--main-font-family);
-    border:solid 3px #ccc;
-    border-radius:5px;
+    border:solid 2px #9999;
+    border-radius: 10px;
     padding: 3px;
+    width: 315px;
 }
 
 .inputDataTel:hover, .inputDataTel:focus {
  
-    border: solid 3px #71C2FF;
+    border: solid 2px #999;
 
 }
 
 .inputDataTel:hover + .inputDataTelLabel {
   
-    top: 326px;
-    left: 105px;
+    top: 341px;
+    left: 240px;
     padding: 1px;
-    font-size: 10px;
+    font-size: 8px;
+    width: 150px;
 } 
 
 .inputDataTel:focus + .inputDataTelLabel {
   
-   top: 326px;
-   left: 105px;
-   padding: 1px;
-   font-size: 10px;
+    top: 341px;
+    left: 240px;
+    padding: 1px;
+    font-size: 8px;
+    width: 150px;
 } 
 /*-------------------------------------------------*/
 .inputDataTelLabel {
     position: absolute;
-    top: 332px;
-    left: 75px;
+    top: 352px;
+    left: 90px;
     color:#9999;
     transition: top 0.2s;
     background-color:#ffff;
-    font-size: 14px;
-    border-radius:5px;
-    padding: 3px;
-    
-}
-
-.inputDataTelLabelActive {
-    position: absolute;
-    top: 326px;
-    left: 105px;
-    color:#9999;
-    transition: top 0.2s;
-    background-color:#ffff;
+    font-size: 16px;
+    border: solid 1px #ffff;
+    border-radius:10px;
     padding: 1px;
-    font-size: 10px;
-   
+    width: 310px;
+    height: 27px;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .inputDataTelLabel:hover {
-  
-    top: 326px;
-    left: 105px;
+    top: 341px;
+    left: 240px;
     padding: 1px;
-    font-size: 10px;
-
+    font-size: 8px;
+    width: 150px;
 } 
+
+.inputDataTelLabelActive {
+    position: absolute;
+    top: 341px;
+    left: 240px;
+    padding: 1px;
+    font-size: 8px;
+    width: 150px;
+
+    color:#9999;
+    transition: top 0.2s;
+    background-color:#ffff;
+    /* border: solid 2px #9999; */
+    border-radius:10px;
+    padding: 1px;
+    text-align: center;
+    vertical-align: middle;
+}
 
 .inputDataTelSpan {
     color:red;

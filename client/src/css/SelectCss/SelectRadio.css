@@ -23,10 +23,9 @@
     overflow: hidden;
     transition: 0.2s all linear;
 }
-/*.selectRadioItem {
-    border-bottom: solid #ffff 3px;
-    
-}*/
+.selectRadioItemActive {
+   color: #999;
+}
 
 .selectRadioItem:hover, .inputSelectRadioItem:hover {
     /*text-decoration: solid underline #71C2FF 3px;*/
