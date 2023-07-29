@@ -66,7 +66,7 @@ const getWareHousesNovaPoshta = async (dataCity: IDapertmentNP) =>
       "SeatsAmount" : dataCalc.goodsQuantity,
       "RedeliveryCalculate" : {
         "CargoType":"Money",
-        "Amount": dataCalc.redeliveryCost ?? "1",
+        "Amount": dataCalc.redeliveryCost,
       },
       "PackCount" : "1",
       "PackRef" : "",

@@ -14,5 +14,9 @@
 .inputDataText:hover {
     border: solid 2px #999; 
 }
+.inputDataText::placeholder {
+    color: #999;
+    text-align: center;
+}
 
 

@@ -1,6 +1,6 @@
 export type CalcNovaPoshta = {
     citySender?: string, 
-    cityReceiver?: string,
+    cityReceiver?: string | null,
     goodsCost?: string,
     goodsType?: string,
     goodsQuantity?: string,

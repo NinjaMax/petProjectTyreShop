@@ -1,4 +1,4 @@
-import React, {Fragment, useContext, useEffect, useState} from 'react';
+import React, {Fragment, useCallback, useContext, useEffect, useState} from 'react';
 import '../../css/BasketCss/BasketOrder.css';
 import ButtonAction from '../buttons/ButtonAction';
 import TyresCardList from '../cards/TyresCardList';
@@ -36,7 +36,7 @@ type IbasketData = {
     storage?: string | null,
     delivery?: string | null,
     city_delivery?: string | null,
-    ref_city_delivery?: string | null,
+    ref_city_delivery?: string,
     pay_view?: string | null,
     dop_garanty?: number | null,
     session_id?: string | null,
@@ -46,6 +46,8 @@ type IbasketData = {
     basket_storage?: [],
     createdAt?: string | null,
     updatedAt?: string | null,
+    DeliveryCity?: string | null,
+    MainDescription: string | null,
 };
 
 const BasketOrder = observer(() => {
@@ -87,7 +89,7 @@ const BasketOrder = observer(() => {
     const [bonusUser, setBonusUser] = useState<number|null>(null);
     const [sumOverall, setSumOverall] = useState<any[]>();
     const [deliverySum, setDeliverySum] = useState<number|null>(0);
-    const [payMethod, setPayMethod] = useState<string>();
+    const [payMethod, setPayMethod] = useState<string | null>();
 
 
     useEffect(() => {
@@ -128,7 +130,7 @@ const BasketOrder = observer(() => {
           const taskUpdateBasket: any[] = [
                 getCityNovaPoshta,
                 getWareHousesNovaPoshta,
-                updateBasket
+                //updateBasket
             ];
             let i: number = 0; 
             while (taskUpdateBasket.length > i) {
@@ -149,30 +151,30 @@ const BasketOrder = observer(() => {
                 }
             }
             
-            if (!isMounted && taskUpdateBasket[i] === updateBasket && 
-            (basketData?.name || basketData?.phone || basketData?.email || 
-                delivery || chooseCity
-            )) {
-                console.log('UPDATE_ID_BASKET: ', basketData?.id_basket);
-                const getUpdateBasket: any = await taskUpdateBasket[i]({
-                    name: basketData?.name,
-                    phone: basketData?.phone,
-                    email: basketData?.email,
-                    address: chooseCity,
-                    notes: basketData?.notes,
-                    storage: basketData?.storage,
-                    delivery: delivery,
-                    city_delivery: dataDepartmentNP?.MainDescription,
-                    ref_city_delivery: dataDepartmentNP?.DeliveryCity,
-                    pay_view: payMethod,
-                    dop_garanty: dopGarantySum,
-                    checkedIn: false,
-                    id_customer: customer.id_customer,
-                    id_basket: basketData?.id_basket,
-                });
+            // if (!isMounted && taskUpdateBasket[i] === updateBasket && 
+            // (basketData?.name || basketData?.phone || basketData?.email || 
+            //     delivery || chooseCity
+            // )) {
+            //     console.log('UPDATE_ID_BASKET: ', basketData?.id_basket);
+            //     const getUpdateBasket: any = await taskUpdateBasket[i]({
+            //         name: basketData?.name,
+            //         phone: basketData?.phone,
+            //         email: basketData?.email,
+            //         address: chooseCity,
+            //         notes: basketData?.notes,
+            //         storage: basketData?.storage,
+            //         delivery: delivery,
+            //         city_delivery: dataDepartmentNP?.MainDescription,
+            //         ref_city_delivery: dataDepartmentNP?.DeliveryCity,
+            //         pay_view: payMethod,
+            //         dop_garanty: dopGarantySum,
+            //         checkedIn: false,
+            //         id_customer: customer.id_customer,
+            //         id_basket: basketData?.id_basket,
+            //     });
                 
-                console.log('UPDATE_BASKET: ', getUpdateBasket.data);
-            }
+            //     console.log('UPDATE_BASKET: ', getUpdateBasket.data);
+            // }
             const task = taskUpdateBasket.shift();
             task();
             await yieldToMain();
@@ -183,13 +185,12 @@ const BasketOrder = observer(() => {
           isMounted = true;
         };
     },[
-        basketData,
+        //basketData,
         chooseCity,
         customer.id_customer,
         dataDepartmentNP,
         dopGarantySum,
         inputCity,
-        payMethod,
     ]);
 
     useEffect(() => {
@@ -215,24 +216,33 @@ const BasketOrder = observer(() => {
                 [Number(sumGoods)]
             );
         }
+        // if (!isMounted && payMethod === "nalogka") {
+        //     basketSupplierGoods(basketData?.city_delivery, basketData);
+        // }
         return () => {
             isMounted = true;
           };
     },[
-        commisionPay, 
+        //basketData,
+        //basketSupplierGoods, 
+        commisionPay,
         costNovaPoshta, 
-        delivery, 
+        delivery,
         deliverySum, 
         dopGarantySum, 
         goodsBasket, 
+        payMethod, 
         sumGoods
     ]);
 
-    const basketSupplierGoods = async (city: string, depart:IDapertmentNP) => {
-        let dataSupplier: CalcNovaPoshta = {};
+    const basketSupplierGoods = async (city?: string | null, depart?: IDapertmentNP | IbasketData)  => {
+        let dataSupplier: CalcNovaPoshta | null = {};
         let taskGetSupplier: any[] | null = [
             ...goodsBasket!
         ];
+        // if (costNovaPoshta?.length !== 0) { 
+        //     setCostNovaPoshta([]); 
+        // }  
         let i: number = 0; 
         while (taskGetSupplier.length > i) {
             console.log(`SUPPLIER_${i}: `, taskGetSupplier[i]?.id_supplier);
@@ -246,11 +256,14 @@ const BasketOrder = observer(() => {
             
             dataSupplier.citySender = dataSupByCity.DeliveryCity;
             dataSupplier.goodsQuantity = taskGetSupplier[i].quantity;
-            dataSupplier.cityReceiver = depart.DeliveryCity;
+            dataSupplier.cityReceiver = depart?.DeliveryCity ?? depart?.ref_city_delivery;
             dataSupplier.goodsCost = String(taskGetSupplier[i].price * taskGetSupplier[i].quantity);
-            dataSupplier.redeliveryCost = payMethod === "nalogka" ?
-            String(taskGetSupplier[i].price * taskGetSupplier[i].quantity) : "1";
-
+            if (basketData?.pay_view === "nalogka") {
+                dataSupplier.redeliveryCost = 
+                String(taskGetSupplier[i].price * taskGetSupplier[i].quantity);  
+            } else {
+                dataSupplier.redeliveryCost = String(1);
+            }
             let goodsTypeRef = cargoTypesNovaPoshta(taskGetSupplier[i].category);
             dataSupplier.goodsType = goodsTypeRef;
 
@@ -280,7 +293,7 @@ const BasketOrder = observer(() => {
                 }             
             }
             console.log(`CITY_SUP_${i}: `,  getCitySup.city_ua);
-            if (getCitySup.city_ua === 'Київ' && city.includes('м. Київ')) {
+            if (getCitySup.city_ua === 'Київ' && city?.includes('м. Київ')) {
                 setTakeOut(true); 
                 console.log('CITY_KIYV: ', true);
             } else {
@@ -288,6 +301,7 @@ const BasketOrder = observer(() => {
             }
             taskGetSupplier.shift();
         };
+        dataSupplier = null;
         //taskGetSupplier = null;
     }
 
@@ -325,6 +339,8 @@ const BasketOrder = observer(() => {
     };
 
     const checkedRadioPayment = async (e: any) => {
+
+        setCostNovaPoshta([]);
         setPayMethod(e.currentTarget.value);
         const updateBasketPay = await updateBasket(
             {...basketData,
@@ -333,8 +349,14 @@ const BasketOrder = observer(() => {
             }
         );
         if (updateBasketPay?.status === 200) {
-            setBasketData({...updateBasketPay?.data})  
+            setBasketData({
+                ...updateBasketPay?.data
+            })  
         }
+        // if (costNovaPoshta?.length !== 0) { 
+        //     setCostNovaPoshta(null); 
+        // } 
+        basketSupplierGoods(basketData?.city_delivery, basketData);
     };
 
     const cityInputActive = (e: any) => {
@@ -501,7 +523,7 @@ const BasketOrder = observer(() => {
           setBasketData({...updateBasketEmail?.data})  
         }
     };
-
+    console.log('PAY_METOD: ', payMethod);
     //console.log('CITY_CHOOSE: ', chooseCity);
     console.log('DELIVERY_SUM: ', deliverySum);
     console.log('BASKET_DATA:', basketData);
@@ -516,9 +538,9 @@ const BasketOrder = observer(() => {
         <div className='basketOrder'
             onClick={cancelCityList}
         >
-            <div> Оформлення замовлення</div>
+            <span> Оформлення замовлення</span>
             <div className='basketColmLeft'>
-                данні замовлення
+                <span>Данні замовлення</span>
                 <div className='basketColmItemLeft'>
                     <span>Прізвище ім'я та по батькові *</span>
                     <InputDataText 
@@ -552,7 +574,9 @@ const BasketOrder = observer(() => {
                 <div className='basketColmItemLeft'
                     onClick={(e:any) => e.stopPropagation()}
                 >
-                    <label>місто *</label>
+                    <label className='basketInputSearchCityLabel'>
+                        місто *
+                    </label>
                     <input 
                         id="city-search"
                         className='basketInputSearchCity'
@@ -636,14 +660,14 @@ const BasketOrder = observer(() => {
                         {chooseCity && dapartList?.map((depart: IDepart) =>
                                 <option 
                                     //id={depart.Ref}
-                                    key={depart.SiteKey}
-                                    value={depart.Description}
-                                    data-depref={depart.Ref}
-                                    data-cityref={depart.CityRef}
+                                    key={depart?.SiteKey}
+                                    value={depart?.Description}
+                                    data-depref={depart?.Ref}
+                                    data-cityref={depart?.CityRef}
                                     //type='radio'
                                     //name='city_list'
                                 >
-                                {depart.Description}
+                                {depart?.Description}
                                 </option>
                             )
                         }
@@ -732,8 +756,9 @@ const BasketOrder = observer(() => {
                 </div> 
             </div>
             <div className='basketColmRight'>
-                Товар і ціна 
+                <span>Товар і ціна 
                 остаточна сумма замовлення
+                </span>
                 <div className='basketColmRightListGoods'>
                     {goodsBasket?.length !== 0 ? goodsBasket?.map((item: any) =>
                        <div key={item.id + 'cart'}
@@ -774,21 +799,21 @@ const BasketOrder = observer(() => {
                         onChange={dopGarantyActive}
                     />
                     {dopGarantySum ?
-                    <span>{dopGarantySum} &#8372;</span>
+                    <span className='basketOrderDopGar'>{dopGarantySum} &#8372;</span>
                     : null}
                 </div>
                 
                 <div className='totalCount'>
                     { sumGoods && goodsBasket ?
-                       <span>{`Сумма за товари у кількості
-                        ${goodsBasket?.reduce((sum, current) => ( sum + current.quantity), 0)} од: 
-                        ${sumGoods}  грн`
-                        }
-                        </span> 
+                        <span>
+                        <span>Сумма за товари у кількості</span>
+                        <span> { goodsBasket?.reduce((sum, current) => ( sum + current.quantity), 0)} од: </span> 
+                        <span className='basketOrderSumGoods'> {sumGoods}&#8372;</span> 
+                        </span>
                         : null
                     }
                     <span>Нараховано SKY BONUS 
-                        {sumGoods! > 20000 ? (sumGoods! * 0.01).toFixed() : (sumGoods! * 0.02).toFixed()} 
+                         {sumGoods! > 20000 ? (sumGoods! * 0.01).toFixed() : (sumGoods! * 0.02).toFixed()} 
                         <img 
                             src='iconBonus/referral_bonus_edit_b.png'
                             width={35}
@@ -797,13 +822,13 @@ const BasketOrder = observer(() => {
                         />
                     </span>
                     {dopGarantySum ?
-                        <span>Додаткова Гарантія: {dopGarantySum}грн</span>
+                        <span>Додаткова Гарантія: <span className='basketOrderDopGar'>{dopGarantySum}&#8372;</span></span>
                         : null
                     }
                     {delivery === "novaPoshta" && chooseCity ?
                         <span>Доставка (Нова Пошта): {}
-                        {deliverySum}
-                        грн </span>
+                            <span className='basketOrderDelPrice'>{deliverySum} &#8372;</span>
+                        </span>
                         : null
                     }
                     {commisionPay ?
@@ -813,19 +838,19 @@ const BasketOrder = observer(() => {
                     { !bonusUser ?
                         <span>Всього: {
                             sumOverall?.reduce((sum: number, current: number) => ( sum + current), 0)
-                            }грн
+                            }&#8372;
                         </span> :
                         <>
                         <span>Всього:
                         <span className='basketOrderOldPrice'> {
                             sumOverall?.reduce((sum: number, current: number) => ( sum + current), 0)
-                            }
+                            }&#8372;
                         </span>
-                            грн
+                            
                         </span>
-                        <span>
+                        <span className='basketOrderNewPrice'>
                             {sumOverall?.reduce((sum: number, current: number) => ( sum + current), 0) - bonusUser}
-                            грн
+                            &#8372;
                         </span>
                         </>
                     }

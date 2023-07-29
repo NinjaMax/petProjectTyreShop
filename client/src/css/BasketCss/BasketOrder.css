@@ -242,8 +242,30 @@
 
 .basketOrderOldPrice {
     text-decoration:line-through;
-    color: black;
+    color: #444B54;
+    font-size: larger;
     text-decoration-color: red;
+    text-decoration-thickness: 2.5px;
+}
+.basketOrderNewPrice {
+    color: #444B54;
+    font-size:larger;
+    margin-left: 65px;
+}
+.basketOrderDopGar {
+    display: inline-block;
+    color: #444B54;
+    font-size:large;
+}
+.basketOrderSumGoods {
+    display: inline-block;
+    color: #444B54;
+    font-size:larger;
+}
+.basketOrderDelPrice {
+    display: inline-block;
+    color: #444B54;
+    font-size:large;
 }
 
 .basketInputSearchCity {
@@ -262,4 +284,16 @@
 
 .basketInputSearchCity:hover {
     border: solid 2px #999; 
+}
+.basketInputSearchCity::placeholder {
+    color: #999;
+    text-align: center;
+}
+.basketInputSearchCityLabel {
+    font-weight:bolder;
+    color: #444B54;
+}
+.basketOrder span {
+    font-weight:bolder;
+    color: #444B54;
 }
