@@ -104,19 +104,22 @@ export class TwitterAuthService {
           throw new Error(error.message);
         });
 
-      const token = this.jwtService.sign(twitterUser);
+      
       console.log('TWITTER_USER: ', twitterUser.data);
       const custmByTwitter = await this.customersService.findCustmByEmailOrName(
         twitterUser.data,
       );
       if (!custmByTwitter) {
         const phone: any = randomInt(380000000000, 990000000000);
-        await this.customersService.createCustomerByEmail(
+        const newCustomer = await this.customersService.createCustomerByEmail(
           twitterUser.data,
           twitterUser.data.email ?? twitterUser.data.id,
           phone,
         );
+        twitterUser.data.contract = newCustomer.contract;
       }
+      twitterUser.data.contract = custmByTwitter.contract;
+      const token = this.jwtService.sign(twitterUser);
       res.cookie('auth_twitter', token, {
         maxAge: 900000,
         httpOnly: true,

@@ -43,6 +43,18 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
   @Column({ type: DataType.STRING, unique: false, allowNull: false })
   delivery: string;
 
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  delivery_city: string;
+
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  delivery_city_ref: string;
+
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  delivery_city_depart: string;
+
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  delivery_city_depart_ref: string;
+
   @Column({ type: DataType.STRING, unique: false, allowNull: false })
   status_delivery: string;
 

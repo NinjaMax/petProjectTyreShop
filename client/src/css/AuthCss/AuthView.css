@@ -2,7 +2,9 @@
     display:block;
     overflow:hidden;
 }
-
+.authView span{
+    margin-right: 2px;
+} 
 #imgCustomerAuth {
     width: 35px;
     height: 35px;
@@ -11,6 +13,16 @@
     margin: 0px;
     vertical-align: middle;
 }
+
+#imgCustomerBonus {
+    width: 35px;
+    height: 35px;
+    /* border-radius:50%; */
+    /* background-color:#9EB9D3; */
+    margin: 0px;
+    vertical-align: middle;
+}
+
 
 .btnAuthView {
     

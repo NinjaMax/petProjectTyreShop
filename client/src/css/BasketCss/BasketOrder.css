@@ -31,6 +31,16 @@
     padding: 40px;
 }
 
+.basketOrderInputBonus {
+    border: solid 2px #9999;
+    border-radius: 10px;
+    padding: 5px;
+    text-align: center;
+    font-size:small;
+    font-family: var(--main-font-family);
+    margin: 3px;
+}
+
 
 .basketColmLeft {
     grid-column: 1/1;
@@ -115,13 +125,13 @@
     align-items: flex-start;
     gap: 5px;
     position: absolute;
-    top: 102%;
+    top: 105%;
     overflow-y: auto;
     max-height: 150px;
     border-radius: 8px;
     background-color: #ffff;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    z-index: 999;
+    z-index: 99;
 }
 
 .basketCityList .basketCityListItem {
@@ -173,7 +183,8 @@
     top: 0.5px;
     right: 5px;
     position: absolute;
-    z-index: 9999;
+    z-index: 9;
+    /* appearance: none; */
     /* cursor: pointer; */
   }
 
@@ -188,11 +199,11 @@
 .basketDepartList select {
     appearance: none;
     cursor: pointer;
-    width: 490px;
+    width: 480px;
     /* background-color: red; */
     border-radius: 6px;
     padding: 3px;
-    z-index: 998;
+    z-index: 9;
 }
 
 .basketDepartList option {
@@ -239,7 +250,11 @@
     margin: 10px;
     gap: 5px;
 }
-
+.basketOrderPriceOver {
+    display: inline-block;
+    color: #444B54;
+    font-size:larger;
+}
 .basketOrderOldPrice {
     text-decoration:line-through;
     color: #444B54;
@@ -252,20 +267,33 @@
     font-size:larger;
     margin-left: 65px;
 }
+
 .basketOrderDopGar {
     display: inline-block;
     color: #444B54;
     font-size:large;
 }
+
 .basketOrderSumGoods {
     display: inline-block;
     color: #444B54;
     font-size:larger;
 }
+
 .basketOrderDelPrice {
     display: inline-block;
     color: #444B54;
     font-size:large;
+}
+
+.basketOrderSkyBonus img{
+    vertical-align:middle;
+}
+
+.basketOrderGetBonusText {
+    display: inline-block;
+    color: #444B54;
+    font-size:large;    
 }
 
 .basketInputSearchCity {
@@ -273,11 +301,12 @@
     border-radius: 10px;
     padding: 3px;
     width: 315px;
-    z-index: 999;
+    z-index: 9;
     /* font-weight:bolder; */
     font-size: 16px;
     font-family: var(--main-font-family);
 }
+
 .basketInputSearchCity:focus {
     border: solid 2px #cccc; 
 }
@@ -285,14 +314,17 @@
 .basketInputSearchCity:hover {
     border: solid 2px #999; 
 }
+
 .basketInputSearchCity::placeholder {
     color: #999;
     text-align: center;
 }
+
 .basketInputSearchCityLabel {
     font-weight:bolder;
     color: #444B54;
 }
+
 .basketOrder span {
     font-weight:bolder;
     color: #444B54;

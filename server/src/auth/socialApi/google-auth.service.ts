@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Response, Request } from 'express';
 import axios from 'axios';
+import * as argon2 from 'argon2';
 import { ConfigService } from '../../config/config.service';
 import queryString from 'querystring';
 import { CustomersService } from '../../customers/customers.service';
@@ -99,22 +100,27 @@ export class GoogleAuthService {
           console.error(`Failed to fetch user`);
           throw new Error(error.message);
         });
-
-      const token = this.jwtService.sign(googleUser);
+      //let token: any = {};
       console.log('GOOGLE_USER: ', googleUser);
       const custmByGoogle = await this.customersService.findCustomerByEmail(
         googleUser,
       );
       if (!custmByGoogle) {
         const phone: any = randomInt(380000000000, 990000000000);
-        await this.customersService.createCustomerByEmail(
+        const createPass = {
+          password: await argon2.hash(googleUser.email),
+        };
+        const newCustomer = await this.customersService.createCustomerByEmail(
           googleUser,
-          googleUser.email,
+          createPass.password,
           phone,
         );
+        googleUser.contract = newCustomer.contract;
       }
+      googleUser.contract = custmByGoogle.contract;
+      const token = this.jwtService.sign(googleUser);
       res.cookie(this.configService.get('COOKIE_NAME'), token, {
-        maxAge: 900000,
+        maxAge: 3600000,
         httpOnly: true,
         secure: true,
       });
@@ -131,6 +137,9 @@ export class GoogleAuthService {
       console.log('GET_COOCKIES_GOOGLE: ', cookies);
       if (cookies) {
         const decoded = this.jwtService.verify(cookies);
+        // const getCustomerData = await this.customersService.findCustomerByEmail(
+        //   decoded.email
+        // );
         console.log('decoded_GOOGLE', decoded);
         return decoded;
       } else {
@@ -138,7 +147,7 @@ export class GoogleAuthService {
       }
     } catch (err) {
       console.log(err);
-      res.send('No Data');
+      res.send('NO DATA');
     }
   }
 }

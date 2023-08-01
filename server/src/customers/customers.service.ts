@@ -6,6 +6,7 @@ import { GetCustomerDto } from './dto/get-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { Customer } from './entities/customer.model';
 import { Op } from 'sequelize';
+import { Contract } from '../contract/entities/contract.model';
 
 @Injectable()
 export class CustomersService {
@@ -87,6 +88,7 @@ export class CustomersService {
             { phone: getCustomerDto.phone},
           ],
         },
+        include: [Contract],
         defaults: {
           password: String(getCustomerDto.phone),
           email: getCustomerDto.email,
@@ -142,7 +144,8 @@ export class CustomersService {
   async findCustomerByPhone(getCustomerDto: GetCustomerDto) {
     try {
       const customerByPhone = await this.customersRepository.findOne({
-        where: { phone: getCustomerDto.phone },
+        where: { phone: getCustomerDto.phone}, 
+        include: [Contract]
       });
 
       return customerByPhone;
@@ -158,6 +161,7 @@ export class CustomersService {
     try {
       const customerByEmail = await this.customersRepository.findOne({
         where: { email: getCustomerDto.email },
+        include: [Contract]
       });
 
       return customerByEmail;
@@ -178,6 +182,7 @@ export class CustomersService {
             { name: getCustomerDto.name },
           ],
         },
+        include: [Contract]
       });
       return customerByEmail;
     } catch {

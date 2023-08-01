@@ -32,6 +32,7 @@ const SelectRadio = ({
                     <input className='inputSelectRadioItem'
                         id={radioData.value}
                         type="radio"
+                        data-select={radioData.radioName}
                         value={radioData.value}
                         name={radioData.name} 
                         onChange={activeOptions}

@@ -95,20 +95,22 @@ export class FacebookAuthService {
         throw new Error(error.message);
       });
 
-    const token = this.jwtService.sign(facebookUser);
+    
     console.log('FACEBOOK_USER: ', facebookUser);
     const custmByFacebook = await this.customersService.findCustmByEmailOrName(
       facebookUser,
     );
     if (!custmByFacebook) {
       const phone: any = randomInt(380000000000, 990000000000);
-      await this.customersService.createCustomerByEmail(
+      const newCustomer = await this.customersService.createCustomerByEmail(
         facebookUser,
         facebookUser.email,
         phone,
       );
+      facebookUser.contract = newCustomer.contract;
     }
-
+    facebookUser.contract = custmByFacebook.contract;
+    const token = this.jwtService.sign(facebookUser);
     res.cookie('auth_custm', token, {
       maxAge: 900000,
       httpOnly: true,

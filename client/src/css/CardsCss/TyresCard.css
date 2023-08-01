@@ -77,6 +77,19 @@
     text-align: center;
 }
 
+.tyresCardBonus {
+    font-family: var(--main-font-family);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.tyresCardBonusText {
+    color: #444B54;
+    font-family: var(--main-font-family);
+    font-weight: bold;
+    vertical-align: middle;
+}
 .propsCard {
     text-align: center;
 }

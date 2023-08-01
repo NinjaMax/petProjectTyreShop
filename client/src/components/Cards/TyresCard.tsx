@@ -91,6 +91,15 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
                         year={goods?.year}
                     />
                 </div>
+                <div className='tyresCardBonus'>
+                   <img src='./iconBonus/skyBonus_48_b.png' 
+                    width={30}
+                    height={30}
+                    alt='merchant'
+                    />
+                <span className='tyresCardBonusText'>{`+${(goods?.price[0]?.price! * 0.015).toFixed()} бонусів`}</span> 
+                </div>
+                
                 {goods?.price ? goods?.price.map((item: any) => (
                     <Fragment key={item.id}>
                     {item.price ?

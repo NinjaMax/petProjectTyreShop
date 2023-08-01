@@ -181,6 +181,8 @@ export class AuthService {
         const decodedCustm: any = this.jwtService.verify(
           cookie_custm.accessToken,
         );
+        // const existingCustomer =
+        //   await this.customersService.findCustomerByPhone(decodedCustm.phone);
         console.log('decoded_COOKIE: ', decodedCustm);
         return decodedCustm;
       } else {

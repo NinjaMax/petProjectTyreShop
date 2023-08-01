@@ -15,6 +15,19 @@ const AuthView = observer(({logOutUser}:IAuthView) => {
 
     return (
         <div className='authView'>
+            {customer.isAuth ? 
+            <>
+                <img 
+                    id='imgCustomerBonus'
+                    src='./iconBonus/skyBonus_48_b.png' 
+                    width={35}
+                    height={35}
+                    alt='imgCusomerBonus'
+                /> 
+                <span>{customer._customer.contract[0].bonus}</span>
+            </>
+            : null
+            }
             <label htmlFor='btnAuth'>
                 <img id='imgCustomerAuth' 
                     src={customer._customer.picture ?? 
