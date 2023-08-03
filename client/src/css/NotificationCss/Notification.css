@@ -62,6 +62,10 @@
   margin: 20px;
 }
 
+.notificationBox.active i {
+  margin: 15px;
+}
+
 .check {
   border-radius: 8px;
   width: 220px;

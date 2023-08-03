@@ -1,19 +1,23 @@
 .productPayDelBox {
     /*width: 380px;*/
     overflow: hidden;
-    border:3px solid goldenrod;
+
     display: flex;
     flex-direction: row;
     font-family: var(--main-font-family);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    background-color: #ffff;
     
 }
 .productPayDelBlock {
     display: flex;
     flex-direction:row;
     flex-wrap: wrap;
+    justify-content: center;
     /*background-color: #CADBEA;
     border-radius:8px;*/
-    border:3px solid red;
+
     padding: 6px;
     gap:5px;
 }
@@ -23,5 +27,7 @@
     border-radius:10px;
     padding: 10px;
     cursor:pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    vertical-align: middle;
     /*box-shadow: 3px 3px 3px #444B54;*/
 }

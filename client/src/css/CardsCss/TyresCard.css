@@ -1,7 +1,7 @@
 .tyresCard {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     width: 300px;
-    height: 540px;
+    height: 555px;
     margin: auto;
     text-align: center;
     overflow:hidden;
@@ -20,12 +20,12 @@
 .tyresCardLinkName {
     height: 80px;
 }
-.optionsTyreBox {
+/* .optionsTyreBox {
     display:none;
-}
+} */
 
 .tyresCard:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.2);
     
 }
 

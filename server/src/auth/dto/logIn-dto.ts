@@ -10,4 +10,5 @@ export class LoginDto {
   readonly address: string;
   readonly id_contract: number;
   readonly balance: number;
+  readonly delivery: string;
 }

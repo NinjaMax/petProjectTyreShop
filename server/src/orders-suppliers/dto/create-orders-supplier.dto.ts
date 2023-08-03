@@ -33,5 +33,9 @@ export class CreateOrdersSupplierDto {
   readonly category: string;
   readonly storage: string;
   readonly bonus: number;
+  readonly delivery_cost: number;
+  readonly dop_garanty: number;
+  readonly commission_cost: number;
   readonly bonus_decrease: number;
+  readonly total_cost: number;
 }

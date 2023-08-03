@@ -31,13 +31,22 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
   })
   id_order: number;
 
-  @Column({ type: DataType.STRING, unique: false, allowNull: false })
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: false,
+    defaultValue: 'ФОП Шемендюк К.В.',
+  })
   organisation: string;
 
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
   storage: string;
 
-  @Column({ type: DataType.STRING, unique: false, allowNull: false })
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: false,
+    defaultValue: 'Сайт'})
   order_view: string;
 
   @Column({ type: DataType.STRING, unique: false, allowNull: false })
@@ -55,26 +64,54 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
   delivery_city_depart_ref: string;
 
-  @Column({ type: DataType.STRING, unique: false, allowNull: false })
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+  delivery_cost: number;
+
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+  dop_garanty: number;
+
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+  commission_cost: number;
+
+  @Column({ type: DataType.INTEGER, allowNull: true })
+  bonus_decrease: number;
+
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+  total_cost: number;
+
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: false,
+    defaultValue: 'Новий'})
   status_delivery: string;
 
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
   delivery_ttn: string;
 
-  @Column({ type: DataType.STRING, unique: false, allowNull: false })
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: false,
+    defaultValue: 'Новий' })
   status: string;
 
-  @Column({ type: DataType.STRING, unique: false, allowNull: false })
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: false,
+    defaultValue: 'Новий' })
   pay_view: string;
 
-  @Column({ type: DataType.STRING, unique: false, allowNull: false })
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: false,
+    defaultValue: 'Новий' })
   status_pay: string;
 
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
   notes: string;
-
-  @Column({ type: DataType.STRING, unique: false, allowNull: true })
-  dop_garanty: string;
 
   @ForeignKey(() => Customer)
   @Column({ type: DataType.INTEGER, allowNull: true })
@@ -82,9 +119,6 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
 
   @Column({ type: DataType.INTEGER, allowNull: false })
   id_contract: number;
-
-  @Column({ type: DataType.INTEGER, allowNull: true })
-  bonus_decrease: number;
 
   @ForeignKey(() => Users)
   @Column({ type: DataType.INTEGER, allowNull: true })

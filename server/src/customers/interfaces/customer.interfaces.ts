@@ -7,4 +7,6 @@ export interface CustomerConfigAttr {
   email: string;
   id_contract: number;
   balance: number;
+  address: string;
+  delivery: string;
 }

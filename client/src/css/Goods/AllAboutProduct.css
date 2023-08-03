@@ -8,6 +8,9 @@
     gap: 3px;
     padding: 3px;
     font-family: var(--main-font-family);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    background-color: #ffff;
 }
 .allProductImgBox {
     width: 450px;
@@ -38,7 +41,24 @@
     font-family: var(--main-font-family);
     font-weight: bold;
 }
-
+.productInfoProps {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.productBonus {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.productInfoCountry {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
 
 .productRightgBox {
     width: 380px;

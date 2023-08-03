@@ -7,4 +7,6 @@ export class GetCustomerDto {
   readonly email: string;
   readonly id_contract: number;
   readonly balance: number;
+  readonly address: string;
+  readonly delivery: string;
 }

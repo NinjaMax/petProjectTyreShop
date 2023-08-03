@@ -32,33 +32,62 @@ export class OrdersService {
   ) {}
 
   async createOrder(createOrderDto: CreateOrderDto) {
-    try {
+    //try {
       const basket = await this.basketService.findBasketById(createOrderDto);
-      const order = await this.ordersRepository.create(createOrderDto);
-      const customer = await this.customerService.findOrCreateCustmer(
-        createOrderDto,
-      );
-      if (basket) {
-        const orderId: Orders = await this.ordersRepository.findByPk(
+      
+      
+      if (createOrderDto.id_contract && createOrderDto.id_customer) {
+        const order = await this.ordersRepository.create(createOrderDto);
+        if (basket) {
+          const orderId: Orders = await this.ordersRepository.findByPk(
+            order.id_order,
+          );
+          await basket.$set('order', orderId.id_order);
+          basket.order = orderId;
+  
+          return orderId;
+        }
+      } else {
+        const customer = await this.customerService.findOrCreateCustomer(
+          createOrderDto
+        );
+        //if(customer) {
+          const order = await this.ordersRepository.create({
+            ...createOrderDto,
+            delivery_city: createOrderDto.city_delivery,
+            delivery_city_ref: createOrderDto.ref_city_delivery,
+            delivery_city_depart: createOrderDto.delivery_city_depart,
+            delivery_city_depart_ref: createOrderDto.delivery_city_depart_ref,
+            // delivery_cost: number,
+            // dop_garanty: number,
+            // commission_cost: number,
+            // bonus_decrease: number,
+            // total_cost: number,
+            id_customer: customer.id_customer,
+            id_contract: customer.contract[0].id_contract,
+          });
+          order.reload();
+        //} 
+        
+        if (basket) {
+          const orderNewId: Orders = await this.ordersRepository.findByPk(
           order.id_order,
         );
-        await basket.$set('order', orderId.id_order);
-        basket.order = orderId;
+          await basket.$set('order', orderNewId.id_order);
+          basket.order = orderNewId;
 
-        return orderId;
-      } else if (customer) {
-        order.$add('customer', customer.id_customer);
-        order.reload();
-        return order;
-      } else {
-        return order;
+          return orderNewId;
+        } else {
+          return order;
+        }
       }
-    } catch {
-      throw new HttpException(
-        'Data is incorrect and must be uniq',
-        HttpStatus.NOT_FOUND,
-      );
-    }
+      
+    // } catch {
+    //   throw new HttpException(
+    //     'Data is incorrect and must be uniq',
+    //     HttpStatus.NOT_FOUND,
+    //   );
+    // }
   }
 
   async findAllOrders() {

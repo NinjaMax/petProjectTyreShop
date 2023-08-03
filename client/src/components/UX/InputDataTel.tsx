@@ -36,11 +36,12 @@ const InputDataTel = ({onAccept, dataTel}: IinputDataTel) => {
                 className='inputDataTel'
                 mask='+{38}(000)000-00-00'
                 radix="."
-                defaultValue={String(dataTel)}
+                // defaultValue={String(dataTel)}
                 value={String(dataTel) ?? "_" }
                 unmask={false}
-                lazy={false} 
-                onAccept={onAccept}
+                lazy={false}
+                onAccept={onAccept} 
+                onChange={onAccept}
                 // data-oninput={ (e: any) =>
                 //     e.currentTarget.value.length > 4 && e.currentTarget.value.length <= 10 ?
                 //         refLabel.current.className = 'inputDataTelLabelActive' :

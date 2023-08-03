@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../../css/Goods/AllAboutProduct.css';
 import productImage from '../../assets/autotyrespilotspotps2.png';
 import heartImg from '../../assets/icons/heart_64BlueClear.png';
 import scaleImg from '../../assets/icons/scales50.png';
-import shieldImg from '../../assets/icons/shield64.png';
 import ButtonAction from '../buttons/ButtonAction';
 import Rating from '../ux/Rating';
 import PropsCardIcons from '../cards/PropsCardIcons';
@@ -21,6 +20,7 @@ const AllAboutProduct = observer(({
     countModelReview,
     avgRatingModel
 }:ITyreCard) => {
+    const[guardChecked, setGuardChecked] = useState<boolean>(false);
     // const param = useParams<any>();
     // const {page} = useContext<any>(Context);
     // useEffect(() => {
@@ -28,8 +28,11 @@ const AllAboutProduct = observer(({
 
     //     }
     // },[])
-    console.log('PRODUCT_COUNTRY: ', goods?.country);
-    console.log('PRODUCT_YEAR: ', goods?.year);
+    // console.log('PRODUCT_COUNTRY: ', goods?.country);
+    // console.log('PRODUCT_YEAR: ', goods?.year);
+    const checkedGuards = (e: any) => {
+        setGuardChecked(true);
+    };
 
     return (
         <div className='allAboutProduct'>
@@ -50,21 +53,29 @@ const AllAboutProduct = observer(({
                 </div>
                 <div className="productInfoCode">код товара: {goods?.id}</div>
                 <div className='productInfoProps'>
-                {goods?.vehicle_type || goods?.season ?
+                    {goods?.vehicle_type || goods?.season ?
                     <PropsCardIcons 
                         type={goods?.vehicle_type}
                         season={goods?.season}
                     />
                     :
                     <img src='iconsSeasons/noSeason.png' alt='noProd'/>
-                }
-                    
+                    }
                 </div>
                 <div className="productInfoCountry">
                     <FlagsIcon 
                         country={goods?.country} 
                         year={goods?.year}
                     />
+                </div>
+                <div className='productBonus'>
+                   <img src='./iconBonus/skyBonus_48_b.png' 
+                    width={30}
+                    height={30}
+                    alt='bonus'
+                    title='Бонуси'
+                    />
+                <span className='tyresCardBonusText'>{`+${(goods?.price[0]?.price! * 0.015).toFixed()} бонусів`}</span> 
                 </div>
                 {goods?.price ? goods?.price.map((item: any) =>(
                     <div className="productInfoPrice" key={item.id}>
@@ -85,10 +96,10 @@ const AllAboutProduct = observer(({
                 </div>
                 <div className='checkboxGoodsShield'>
                     <CheckboxBtn 
-                    onChange={(e) => console.log(e.checked)}
+                    onChange={checkedGuards}
                     value={"garantia"} 
                     titleCheckbox={"Розширенна Гарантія"} 
-                    imageSrc={shieldImg}/>   
+                    imageSrc={guardChecked ? './iconGuard/guard_64_b.png' : './iconGuard/guard_64_g.png'}/>   
                 </div>        
                 <div className='additionalTools'>
                     <label className='additionalToolsLabel'>
@@ -105,7 +116,10 @@ const AllAboutProduct = observer(({
                 <SocialMediaLinks/>   
             </div>
             <div className='productRightgBox'>
-                <TyreMarking/>
+                <TyreMarking
+                    brand={goods?.tyre_brand?.brand}
+                    param={goods?.params?.params}
+                />
                 <div className='attentionGoods'>
                     ЗВЕРНІТЬ УВАГУ
                     При покупці менше 4-х одиниць товару вартість може бути вище зазначеної. Бувають випадки, коли у нас немає можливості продати менше 4-х одиниць товару.

@@ -30,4 +30,8 @@ export class CreateSaleDto {
   readonly balance: number;
   readonly bonus: number;
   readonly bonus_decrease: number;
+  readonly delivery_cost: number;
+  readonly dop_garanty: number;
+  readonly commission_cost: number;
+  readonly total_cost: number;
 }

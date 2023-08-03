@@ -19,9 +19,23 @@ const ProductPayDel = () => {
                 <div className='productPayDelBlock'>    
                     <span>Готівка</span>
                     <span>Безготівковий розрахунок</span>
-                    <span>VISA</span>
+                    <span>
+                        <img src='./iconPayment/cardVisaMaster.png' 
+                            width={85}
+                            height={30}
+                            alt='card'
+                            title='Можливість оплати картками VISA MASTERCARD'
+                        />
+                    </span>
                     <span>Mastercard</span>
-                    <span>24 Pay</span>
+                    <span>
+                        <img src='./iconPayment/pay24.png' 
+                            width={80}
+                            height={30}
+                            alt='cardPrivat'
+                            title='Можливість оплати картками Приватбанку'
+                        />
+                    </span>
                     <span>Mono</span>
                     <span>Apple Pay</span>
                     <span>Google Pay</span>

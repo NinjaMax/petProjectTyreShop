@@ -13,7 +13,6 @@ export class UpdateOrderDto extends PartialType(CreateOrderDto) {
   readonly reserve: number;
   readonly status: string;
   readonly bonus: number;
-  readonly bonus_decrease: number;
   //readonly price_wholesale: number;
   readonly id_basket: number;
   readonly id_order_storage: number;
@@ -31,13 +30,13 @@ export class UpdateOrderDto extends PartialType(CreateOrderDto) {
   readonly delivery_ttn: string;
   readonly pay_view: string;
   readonly status_pay: string;
-  readonly dop_garanty: string;
   readonly id_customer: number;
   readonly id_contract: number;
   readonly category: string;
   //readonly full_name: string;
-  //readonly name: string;
-  //readonly city: string;
-  //readonly phone: bigint;
-  //readonly email: string;
+  readonly delivery_cost: number;
+  readonly dop_garanty: number;
+  readonly commission_cost: number;
+  readonly bonus_decrease: number;
+  readonly total_cost: number;
 }

@@ -5,6 +5,7 @@ import { CreateCustomerDto } from './dto/create-customer.dto';
 import { GetCustomerDto } from './dto/get-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { Customer } from './entities/customer.model';
+import * as argon2 from 'argon2';
 import { Op } from 'sequelize';
 import { Contract } from '../contract/entities/contract.model';
 
@@ -77,8 +78,11 @@ export class CustomersService {
     }
   }
 
-  async findOrCreateCustmer(getCustomerDto: GetCustomerDto) {
-    try {
+  async findOrCreateCustomer(getCustomerDto: GetCustomerDto) {
+    // try {
+      const createPass = {
+        password: await argon2.hash(String(getCustomerDto.phone)),
+      };
       const [customerFindCreate, created] =
         await this.customersRepository.findOrCreate({
         where: {
@@ -90,24 +94,33 @@ export class CustomersService {
         },
         include: [Contract],
         defaults: {
-          password: String(getCustomerDto.phone),
+          password: createPass.password,
           email: getCustomerDto.email,
-          id_contract: getCustomerDto.id_contract,
-          balance: getCustomerDto.balance,
+          address: getCustomerDto.address,
+          delivery: getCustomerDto.delivery,
           name: getCustomerDto.name,
           phone: getCustomerDto.phone,
           full_name: getCustomerDto.full_name,
         }
       });
-      if (created || !created) {
+      if (created) {
+        const contractNewCustomer = await this.contractService.createContract(
+          getCustomerDto,
+        );
+        await customerFindCreate.$add('contract', contractNewCustomer);
+        await customerFindCreate.reload();
+
+        return customerFindCreate;
+
+      } else {
         return customerFindCreate;
       }
-    } catch {
-      throw new HttpException(
-        'Data Customer Email is incorrect or Not Found',
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    // } catch {
+    //   throw new HttpException(
+    //     'Data Customer Email is incorrect or Not Found',
+    //     HttpStatus.NOT_FOUND,
+    //   );
+    // }
   }
 
   async findAllCustomer() {

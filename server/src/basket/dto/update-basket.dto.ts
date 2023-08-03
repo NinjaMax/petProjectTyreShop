@@ -27,9 +27,13 @@ export class UpdateBasketDto extends PartialType(CreateBasketDto) {
   readonly pay_view: string;
   readonly id_user: number;
   readonly id_customer: number;
-  readonly dop_garanty: string;
   readonly session_id: string;
   readonly checkedIn: boolean;
   readonly city_delivery: string;
   readonly ref_city_delivery: string;
+  readonly delivery_cost: number;
+  readonly dop_garanty: number;
+  readonly commission_cost: number;
+  readonly bonus_decrease: number;
+  readonly total_cost: number;
 }

@@ -55,8 +55,20 @@ export class Basket extends Model<Basket, BasketConfigAttr> {
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
   pay_view: string;
 
-  @Column({ type: DataType.STRING, unique: false, allowNull: true })
-  dop_garanty: string;
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+  delivery_cost: number;
+
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+  dop_garanty: number;
+
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+  commission_cost: number;
+
+  @Column({ type: DataType.INTEGER, allowNull: true })
+  bonus_decrease: number;
+
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+  total_cost: number;
 
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
   session_id: string;

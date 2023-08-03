@@ -95,7 +95,8 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
                    <img src='./iconBonus/skyBonus_48_b.png' 
                     width={30}
                     height={30}
-                    alt='merchant'
+                    alt='bonus'
+                    title='Бонуси'
                     />
                 <span className='tyresCardBonusText'>{`+${(goods?.price[0]?.price! * 0.015).toFixed()} бонусів`}</span> 
                 </div>

@@ -91,4 +91,6 @@ export class CreateReviewDto {
   readonly email: string;
   readonly id_contract: number;
   readonly balance: number;
+  readonly address: string;
+  readonly delivery: string;
 }

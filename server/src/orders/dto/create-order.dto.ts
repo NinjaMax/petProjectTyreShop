@@ -33,7 +33,6 @@ export class CreateOrderDto {
   readonly n: number;
   readonly id_user: number;
   readonly id_customer: number;
-  readonly dop_garanty: string;
   readonly id_contract: number;
   readonly organisation: string;
   readonly order_view: string;
@@ -57,7 +56,6 @@ export class CreateOrderDto {
   readonly email: string;
   readonly ratingCount: number;
   readonly reviewCount: number;
-  readonly bonus_decrease: number;
   readonly season: string;
   readonly balance: number;
   readonly bonus: number;
@@ -66,4 +64,14 @@ export class CreateOrderDto {
   readonly checkedIn: boolean;
   readonly city_delivery: string;
   readonly ref_city_delivery: string;
+
+  readonly delivery_cost: number;
+  readonly dop_garanty: number;
+  readonly commission_cost: number;
+  readonly bonus_decrease: number;
+  readonly total_cost: number;
+  readonly delivery_city: string;
+  readonly delivery_city_ref: string;
+  readonly delivery_city_depart: string;
+  readonly delivery_city_depart_ref: string;
 }

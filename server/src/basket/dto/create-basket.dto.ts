@@ -24,11 +24,15 @@ export class CreateBasketDto {
   readonly delivery: string;
   readonly season: string;
   readonly category: string;
-  readonly dop_garanty: string;
   readonly address: string;
   readonly storage: string;
   readonly pay_view: string;
   readonly checkedIn: boolean;
   readonly city_delivery: string;
   readonly ref_city_delivery: string;
+  readonly delivery_cost: number;
+  readonly dop_garanty: number;
+  readonly commission_cost: number;
+  readonly bonus_decrease: number;
+  readonly total_cost: number;
 }

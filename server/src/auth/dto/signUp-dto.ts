@@ -10,4 +10,5 @@ export class SignupDto {
   readonly id_contract: number;
   readonly balance: number;
   readonly address: string;
+  readonly delivery: string;
 }

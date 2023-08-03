@@ -9,9 +9,11 @@ interface IinputDataTex {
         size: string  
     };
     inputText(arg0:any):void;
+    dataEmail?: string | null;
+    dataText?: string | null;
 }
 
-const InputDataText = ({inputItem, inputText}: IinputDataTex) => {
+const InputDataText = ({dataEmail, dataText, inputItem, inputText}: IinputDataTex) => {
     return (
         <div>
             <input className='inputDataText' 
@@ -22,6 +24,7 @@ const InputDataText = ({inputItem, inputText}: IinputDataTex) => {
                 minLength={4} 
                 maxLength={+inputItem.max} 
                 data-size={inputItem.size} 
+                value={dataEmail ?? dataText ?? ''}
                 required
                 autoComplete='true'
                 onChange={inputText}

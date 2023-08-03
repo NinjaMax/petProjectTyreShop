@@ -177,7 +177,7 @@ const CheckOrder = ({orderItem}:any) => {
     const history = useHistory<any>();
 
     const goToBasket = () => {
-        history.push('/basket/');
+        history.push('/basket');
     };
 
     return (

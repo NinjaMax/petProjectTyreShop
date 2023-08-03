@@ -9,8 +9,12 @@ export interface BasketConfigAttr {
   storage: string;
   delivery: string;
   pay_view: string;
-  dop_garanty: string;
   session_id: string;
   checkedIn: boolean;
   id_customer: number;
+  delivery_cost: number;
+  dop_garanty: number;
+  commission_cost: number;
+  bonus_decrease: number;
+  total_cost: number;
 }

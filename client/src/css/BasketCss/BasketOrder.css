@@ -29,6 +29,7 @@
     border-radius: 8px;
     background-color: #ffff;
     padding: 40px;
+    color: #444B54;
 }
 
 .basketOrderInputBonus {
@@ -125,7 +126,7 @@
     align-items: flex-start;
     gap: 5px;
     position: absolute;
-    top: 105%;
+    top: 108%;
     overflow-y: auto;
     max-height: 150px;
     border-radius: 8px;
@@ -255,6 +256,12 @@
     color: #444B54;
     font-size:larger;
 }
+.basketOrderIsOver {
+    font-family: var(--main-font-family);
+    color: #444B54;
+    font-size:larger;
+    font-weight: bold;
+}
 .basketOrderOldPrice {
     text-decoration:line-through;
     color: #444B54;
@@ -264,7 +271,7 @@
 }
 .basketOrderNewPrice {
     color: #444B54;
-    font-size:larger;
+    font-size:larger;   
     margin-left: 65px;
 }
 
@@ -278,6 +285,12 @@
     display: inline-block;
     color: #444B54;
     font-size:larger;
+}
+
+.basketOrderComissionPrice {
+    display: inline-block;
+    color: #444B54;
+    font-size:large;
 }
 
 .basketOrderDelPrice {
