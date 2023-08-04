@@ -51,13 +51,19 @@ const AllAboutProduct = observer(({
                         {countModelReview ?? 0} отзывов
                     </a>
                 </div>
-                <div className="productInfoCode">код товара: {goods?.id}</div>
+                <div className="productInfoCode">
+                    <div>код товара: {goods?.id}</div>
+                    <div className='productInfoCodeStock'>в наявності</div>
+                </div>
                 <div className='productInfoProps'>
                     {goods?.vehicle_type || goods?.season ?
+                    <>
                     <PropsCardIcons 
                         type={goods?.vehicle_type}
                         season={goods?.season}
                     />
+                    <a href='/'>Літні</a> <a href='/'>Позашляховик</a>
+                    </>
                     :
                     <img src='iconsSeasons/noSeason.png' alt='noProd'/>
                     }
@@ -69,13 +75,30 @@ const AllAboutProduct = observer(({
                     />
                 </div>
                 <div className='productBonus'>
-                   <img src='./iconBonus/skyBonus_48_b.png' 
-                    width={30}
-                    height={30}
-                    alt='bonus'
-                    title='Бонуси'
+                    <>
+                    <img src='./iconBonus/skyBonus_48_b.png' 
+                        width={30}
+                        height={30}
+                        alt='bonus'
+                        title='Бонуси'
                     />
-                <span className='tyresCardBonusText'>{`+${(goods?.price[0]?.price! * 0.015).toFixed()} бонусів`}</span> 
+                    {goods?.price ?
+                        <span className='tyresCardBonusText'>{`+${(goods?.price[0]?.price! * 0.015).toFixed()} бонусів`}</span> 
+                        : null
+                    }
+                    <a href='/'>SKYBONUS</a>
+                    <img src='./iconBonus/skyBonus_48_b.png' 
+                        width={30}
+                        height={30}
+                        alt='bonus'
+                        title='Бонуси'
+                    />
+                    {goods?.price ?
+                        <span className='tyresCardBonusText'>{`+${(goods?.price[0]?.price! * 0.015).toFixed()} бонусів`}</span> 
+                        : null
+                    }
+                    <a href='/'>Бонусна за відгук</a>
+                    </>
                 </div>
                 {goods?.price ? goods?.price.map((item: any) =>(
                     <div className="productInfoPrice" key={item.id}>
@@ -98,20 +121,24 @@ const AllAboutProduct = observer(({
                     <CheckboxBtn 
                     onChange={checkedGuards}
                     value={"garantia"} 
-                    titleCheckbox={"Розширенна Гарантія"} 
+                    titleCheckbox={"Гарантія SKYSAFE"} 
                     imageSrc={guardChecked ? './iconGuard/guard_64_b.png' : './iconGuard/guard_64_g.png'}/>   
                 </div>        
                 <div className='additionalTools'>
-                    <label className='additionalToolsLabel'>
-                        <img alt={"obraneImg"}
+                    <span className='additionalToolsLabel'>
+                        <img 
+                        id='obrane'
+                        alt={"obraneImg"}
                         src={heartImg}
                         /> Додати в обране   
-                    </label>
-                    <label className='additionalToolsLabel'>
-                        <img alt={"porivnianjaImg"}
+                    </span>
+                    <span className='additionalToolsLabel'>
+                        <img 
+                        id='porivnianya'
+                        alt={"porivnianjaImg"}
                         src={scaleImg}
                         /> Додати в порівняння   
-                    </label>    
+                    </span>    
                 </div>
                 <SocialMediaLinks/>   
             </div>

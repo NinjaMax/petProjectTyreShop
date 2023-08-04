@@ -58,6 +58,7 @@ import { PropertiesSpeedIndexController } from './props-tyres-controllers/props-
 import { PropertiesStuddedController } from './props-tyres-controllers/props-tyre-studded.controller';
 import { PropertiesVehicleTypeController } from './props-tyres-controllers/props-tyre-vehicleType.controller';
 import { PropertiesWidthController } from './props-tyres-controllers/props-tyre-width.controller';
+import { PropertiesParamsController } from './props-tyres-controllers/props-tyre-params.controller';
 
 @Module({
   controllers: [
@@ -74,6 +75,7 @@ import { PropertiesWidthController } from './props-tyres-controllers/props-tyre-
     PropertiesStuddedController,
     PropertiesVehicleTypeController,
     PropertiesWidthController,
+    PropertiesParamsController
   ],
   providers: [
     PropsBrandService,

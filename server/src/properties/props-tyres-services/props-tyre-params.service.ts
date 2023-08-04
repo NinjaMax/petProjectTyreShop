@@ -5,6 +5,7 @@ import { CreatePropertyDto } from '../dto/create-property.dto';
 import { GetPropertyDto } from '../dto/get-property.dto';
 import { UpdatePropertyDto } from '../dto/update-property.dto';
 import { TyreParams } from '../entities/tyres/tyre-params.model';
+import { Tyres } from '../../tyres/entities/tyres.model';
 
 @Injectable()
 export class PropsTyreParamsService {
@@ -43,7 +44,7 @@ export class PropsTyreParamsService {
 
     }
 
-  }
+  };
 
   async createParamsFromPrice(id: number, params: string) {
 
@@ -66,7 +67,7 @@ export class PropsTyreParamsService {
 
     }
 
-  }
+  };
 
   async findAllTyreParams() {
 
@@ -82,7 +83,7 @@ export class PropsTyreParamsService {
 
     }
     
-  }
+  };
 
   async findTyreParamsById(getPropertyDto: GetPropertyDto) {
 
@@ -98,7 +99,37 @@ export class PropsTyreParamsService {
 
     }
 
-  }
+  };
+
+  async findAllTyresParamsByBrand(
+    brand: number
+    ) {
+    try {
+      const tyresAllParamsByBrand = await this.tyreParamsRepository.findAll({
+        include: [{ model: Tyres, where: { id_brand: brand } }],
+      });
+      return tyresAllParamsByBrand;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,)
+    }
+  };
+
+  async findAllTyresParamsByModel(model: number) {
+    try {
+      const tyresAllParamsByModel = await this.tyreParamsRepository.findAll({
+        include: [
+          { model: Tyres, where: { id_model: model} }
+        ],
+      });
+      return tyresAllParamsByModel;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,)
+    }
+  };
 
   async updateTyreParams( updatePropertyDto: UpdatePropertyDto) {
 
@@ -122,7 +153,7 @@ export class PropsTyreParamsService {
       throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
 
     }
-  }
+  };
 
   async removeTyreParams(getPropertyDto: GetPropertyDto) { 
 
@@ -138,6 +169,5 @@ export class PropsTyreParamsService {
 
     }
     
-  }
-
+  };
 }

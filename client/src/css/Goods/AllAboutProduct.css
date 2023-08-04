@@ -46,12 +46,31 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    gap: 35px;
+}
+
+.productInfoCode {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 55px;
+    
+}
+
+.productInfoCodeStock {
+    background-color: orange;
+    border-radius: 20px;
+    padding: 8px;
+    font-family: var(--main-font-family);
+    font-weight: bold;
 }
 .productBonus {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    gap: 10px;
 }
 .productInfoCountry {
     display: flex;

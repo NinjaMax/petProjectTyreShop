@@ -152,6 +152,77 @@ const getTyresCountAll = async (
     return data;
 }
 
+// const getTyresBrand = async (
+//     brand: string,
+// ) => {
+//     const {data} = await $hostGet.get('tyres/brand',
+//     {params: {
+//         brand: brand,
+//     }
+//     })
+//     //localStorage.setItem('token', data.token)
+//     //console.log('GET_TYRES_BY_ID: ', data )
+//     return data;
+// }
+
+const getTyresParamsByBrandAndSeason = async (
+    params: string,
+    brand: string,
+    season: string,
+) => {
+    const {data} = await $hostGet.get('/tyres/params-brand-season',
+    {params: {
+        params: params,
+        brand: brand,
+        season: season,
+    }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+const getTyresParamsBySeason = async (
+    params: string,
+    season: string,
+) => {
+    const {data} = await $hostGet.get('/tyres/params-season',
+    {params: {
+        params: params,
+        season: season,
+    }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+const getAllTyresModelByBrand = async (
+    id_brand: string,
+) => {
+    const {data} = await $hostGet.get('/properties/tyres/model-by-brand',
+    {params: {
+        brand: id_brand,
+    }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+const getAllTyresParamsByModel = async (
+    id_model: string,
+) => {
+    const {data} = await $hostGet.get('/properties/tyres/params/by-model',
+    {params: {
+        model: id_model,
+    }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
 const createBasket = async (
     name?: string,
     phone?: bigint,

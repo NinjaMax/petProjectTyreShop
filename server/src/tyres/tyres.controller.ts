@@ -116,10 +116,10 @@ export class TyresController {
     return this.tyresService.findAllTyresBySeason(season);
   }
 
-  @Get('/type/:type')
-  findTyresType(@Param('type') type: string) {
-    return this.tyresService.findAllTyresByType(type);
-  }
+  // @Get('/type/:type')
+  // findTyresType(@Param('type') type: string) {
+  //   return this.tyresService.findAllTyresByType(type);
+  // }
 
   @Get('/diameter/:diameter')
   findTyresDiameter(@Param('diameter') diameter: string) {
@@ -136,7 +136,7 @@ export class TyresController {
     return this.tyresService.findAllTyresByFullName(fullname);
   }
 
-  @Get('count/all')
+  @Get('/count/all')
   findCountAllTyres(
     @Query('width') width: string,
     @Query('height') height: string,
@@ -167,7 +167,41 @@ export class TyresController {
       homologation,
       reinforce,
     );
-  }
+  };
+
+  // @Get('/brand')
+  // findAllTyresByBrand(@Query('brand') brand: string) {
+  //   return this.tyresService.findAllTyresByBrand(brand);
+  // };
+
+  // @Get('/brand-model')
+  // findAllTyresByBrandAndModel(
+  //   @Query('brand') brand: string,
+  //   @Query('model') model: string,
+  // ) {
+  //   return this.tyresService.findAllTyresByBrandModel(brand, model);
+  // };
+
+  @Get('/params-brand-season')
+  findAllTyresByBrandAndParamsAndSeason(
+    @Query('params') params: string,
+    @Query('brand') brand: string,
+    @Query('season') season_ua: string,
+  ) {
+    return this.tyresService.findAllTyresByBrandParamsSeason(
+      params,
+      brand,
+      season_ua,
+    );
+  };
+
+  @Get('/params-season')
+  findAllTyresByParamsAndSeason(
+    @Query('params') params: string,
+    @Query('season') season_ua: string,
+  ) {
+    return this.tyresService.findAllTyresByParamsSeason(params, season_ua);
+  };
 
   @Patch('/update')
   updateTyres(@Body() updateTyreDto: UpdateTyreDto) {

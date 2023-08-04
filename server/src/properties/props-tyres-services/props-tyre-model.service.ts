@@ -5,6 +5,8 @@ import { GetPropertyDto } from '../dto/get-property.dto';
 import { UpdatePropertyDto } from '../dto/update-property.dto';
 import { TyreModel } from '../entities/tyres/tyre-model.model';
 import { TyresService } from '../../tyres/tyres.service';
+import { TyreBrand } from '../entities/tyres/tyre-brand.model';
+import { Tyres } from '../../tyres/entities/tyres.model';
 
 @Injectable()
 export class PropsModelService {
@@ -67,7 +69,9 @@ export class PropsModelService {
 
   async findAllTyreModel() {
     try {
-      const tyreAllModel = await this.tyreModelRepository.findAll();
+      const tyreAllModel = await this.tyreModelRepository.findAll({
+        include: { all: true },
+      });
       return tyreAllModel;
     } catch {
       throw new HttpException(
@@ -92,6 +96,21 @@ export class PropsModelService {
       );
     }
   }
+
+  async findAllTyresModelByBrand(
+    brand: number
+    ) {
+    try {
+      const tyresAllModelsByBrand = await this.tyreModelRepository.findAll({
+        include: [{ model: Tyres, where: { id_brand: brand } }],
+      });
+      return tyresAllModelsByBrand;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,)
+    }
+  };
 
   async updateTyreModel(updatePropertyDto: UpdatePropertyDto) {
     try {

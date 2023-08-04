@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { PropsModelService } from '../props-tyres-services/props-tyre-model.service';
 import { CreatePropertyDto } from '../dto/create-property.dto';
@@ -16,28 +17,33 @@ import { UpdatePropertyDto } from '../dto/update-property.dto';
 export class PropertiesModelController {
   constructor(private readonly propertiesModelService: PropsModelService) {}
 
-  @Post('/model')
+  @Post('/tyres/model')
   create(@Body() createPropertyDto: CreatePropertyDto) {
     return this.propertiesModelService.createTyreModel(createPropertyDto);
-  }
+  };
 
-  @Get('/allmodels')
+  @Get('/tyres/allmodels')
   findAll() {
     return this.propertiesModelService.findAllTyreModel();
-  }
+  };
 
-  @Get('/model/id')
+  @Get('/tyres/model/id')
   findOne(@Param() getPropertyDto: GetPropertyDto) {
     return this.propertiesModelService.findModelById(getPropertyDto);
-  }
+  };
 
-  @Patch('/model/update')
+  @Get('/tyres/model-by-brand')
+  findAllModelsByBrand(@Query('brand') brand: string) {
+    return this.propertiesModelService.findAllTyresModelByBrand(+brand);
+  };
+
+  @Patch('/tyres/model/update')
   update(@Body() updatePropertyDto: UpdatePropertyDto) {
     return this.propertiesModelService.updateTyreModel(updatePropertyDto);
-  }
+  };
 
-  @Delete('/remove')
+  @Delete('/tyres/remove')
   remove(@Param() @Body() getPropertyDto: GetPropertyDto) {
     return this.propertiesModelService.removeTyreModel(getPropertyDto);
-  }
+  };
 }

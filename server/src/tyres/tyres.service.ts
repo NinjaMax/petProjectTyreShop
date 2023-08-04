@@ -22,6 +22,7 @@ import { StockTyres } from '../stock/entities/stock-tyres.model';
 import { TyreReinforce } from '../properties/entities/tyres/tyre-reinforce.model';
 import sequelize from 'sequelize';
 import { TyreSort } from './interfaces/tyresSort.interface';
+import { TyreModel } from '../properties/entities/tyres/tyre-model.model';
 
 @Injectable()
 export class TyresService {
@@ -918,21 +919,41 @@ export class TyresService {
     }
   }
 
-  async findAllTyresByType(type: string) {
+  async findAllTyresByBrand(
+    brand: string,
+    ) {
     try {
-      const tyresAllByType = await this.tyresRepository.findAll({
+      const tyresAllByBrand = await this.tyresRepository.findAll({
         include: [
-          { all: true },
-          { model: TyreVehicleType, where: { vehicle_type_ua: type } },
+          { model: TyreModel},
+          // { all: true },
+          { model: TyreBrand, where: { brand: brand } },
         ],
+        //group:['tyre_model.model', 'ASC']
       });
-      return tyresAllByType;
+      return tyresAllByBrand;
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',
         HttpStatus.NOT_FOUND,)
     }
   }
+
+  // async findAllTyresByType(type: string) {
+  //   try {
+  //     const tyresAllByType = await this.tyresRepository.findAll({
+  //       include: [
+  //         { all: true },
+  //         { model: TyreVehicleType, where: { vehicle_type_ua: type } },
+  //       ],
+  //     });
+  //     return tyresAllByType;
+  //   } catch {
+  //     throw new HttpException(
+  //       'Data is incorrect or Not Found',
+  //       HttpStatus.NOT_FOUND,)
+  //   }
+  // }
 
   async findAllTyresByDiameter(diameter: string) {
     try {
@@ -943,6 +964,68 @@ export class TyresService {
         ],
       });
       return tyresAllByDiameter;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,)
+    }
+  }
+
+  async findAllTyresByParamsSeason(
+    params: string,
+    season_ua: string,
+    ) {
+    try {
+      const tyresAllByParamsSeason = await this.tyresRepository.findAll({
+        include: [
+          { all: true },
+          { model: TyreParams, where: { params: params }},
+          { model: TyreSeason, where: { season_ua: season_ua }},
+        ],
+      });
+      return tyresAllByParamsSeason;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,)
+    }
+  }
+
+  async findAllTyresByBrandParamsSeason(
+    params: string,
+    brand: string,
+    season_ua: string,
+    ) {
+    try {
+      const tyresAllByBrandParamsSeason = await this.tyresRepository.findAll({
+        include: [
+          { all: true },
+          { model: TyreParams, where: { params: params }},
+          { model: TyreBrand, where: { brand: brand } },
+          { model: TyreSeason, where: { season_ua: season_ua }},
+        ],
+      });
+      return tyresAllByBrandParamsSeason;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,)
+    }
+  }
+
+  async findAllTyresByBrandModel(
+    brand: string,
+    model: string,
+    ) {
+    try {
+      const tyresAllByBrandModel = await this.tyresRepository.findAll({
+        include: [
+          { all: true },
+          { model: TyreBrand, where: { brand: brand }},
+          { model: TyreModel, where: { model: model }},
+        ],
+      });
+      return tyresAllByBrandModel;
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',

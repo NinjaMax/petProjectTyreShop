@@ -15,9 +15,9 @@
     flex-direction:row;
     flex-wrap: wrap;
     justify-content: center;
+    align-items:center;
     /*background-color: #CADBEA;
     border-radius:8px;*/
-
     padding: 6px;
     gap:5px;
 }
@@ -26,8 +26,13 @@
     background-color: #CADBEA;
     border-radius:10px;
     padding: 10px;
+    height: 60px;
     cursor:pointer;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    vertical-align: middle;
+    /* vertical-align:sub; */
     /*box-shadow: 3px 3px 3px #444B54;*/
+}
+
+.productPayDelBlock img {
+    vertical-align:middle;
 }

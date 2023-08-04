@@ -134,7 +134,7 @@ const ReviewTyreCreate = observer(({
         <div className='reviewInputRating'>
             <label htmlFor='reviewTyre'>Відгук</label>
             <textarea 
-                id="review"
+                id="reviewTyre"
                 rows={5}
                 cols={30}
                 maxLength={200}

@@ -17,8 +17,23 @@ const ProductPayDel = () => {
             <div>
                 <h5>Приймаємо</h5>
                 <div className='productPayDelBlock'>    
-                    <span>Готівка</span>
-                    <span>Безготівковий розрахунок</span>
+                    <span>
+                        <img src='./iconPayment/cash_48_b.png' 
+                            width={48}
+                            height={48}
+                            alt='cash'
+                            title='Можливість оплати готівкою'
+                        />
+                    </span>
+                    <span>
+                        <img src='./iconPayment/merchant_48_b.png' 
+                            width={48}
+                            height={48}
+                            alt='merchant'
+                            title='Можливість оплати по Безготівковому розрахунку'
+                        />
+                        
+                    </span>
                     <span>
                         <img src='./iconPayment/cardVisaMaster.png' 
                             width={85}
@@ -27,16 +42,22 @@ const ProductPayDel = () => {
                             title='Можливість оплати картками VISA MASTERCARD'
                         />
                     </span>
-                    <span>Mastercard</span>
                     <span>
                         <img src='./iconPayment/pay24.png' 
-                            width={80}
+                            width={75}
                             height={30}
                             alt='cardPrivat'
                             title='Можливість оплати картками Приватбанку'
                         />
                     </span>
-                    <span>Mono</span>
+                    <span>
+                        <img src='./iconPayment/monobank_logo_100.png' 
+                            width={40}
+                            height={40}
+                            alt='monobank'
+                            title='Можливість оплати картками Monobank'
+                        />
+                    </span>
                     <span>Apple Pay</span>
                     <span>Google Pay</span>
                 </div>   
