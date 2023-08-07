@@ -60,6 +60,7 @@ export class CreateOrderDto {
   readonly balance: number;
   readonly bonus: number;
   readonly address: string;
+  readonly picture: string;
 
   readonly checkedIn: boolean;
   readonly city_delivery: string;

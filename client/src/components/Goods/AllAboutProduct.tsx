@@ -14,6 +14,7 @@ import { useParams } from 'react-router-dom';
 import { Context } from '../../context/Context';
 import { ITyreCard } from '../cards/interfaces/tyreCard.interface';
 import { observer } from 'mobx-react-lite';
+import { getCompareGoods } from '../../restAPI/restGoodsApi';
 
 const AllAboutProduct = observer(({
     goods, 
@@ -32,6 +33,27 @@ const AllAboutProduct = observer(({
     // console.log('PRODUCT_YEAR: ', goods?.year);
     const checkedGuards = (e: any) => {
         setGuardChecked(true);
+        if (guardChecked) {
+            setGuardChecked(false); 
+        }
+    };
+
+    const addToFavorites = () => {
+        sessionStorage.setItem('favoritesId', JSON.stringify(goods?.id));
+        
+    };
+
+    const addToComparison = async () => {
+        try {
+            const comparisonArray: any[] = [];
+            comparisonArray.push(...Array.from(new Set([goods?.id])));
+            const getCompare = await getCompareGoods(comparisonArray);
+            console.log('GET_COMPARE: ', getCompare);
+            console.log('COMPARE_GOODS_LIST:' , comparisonArray);
+            //sessionStorage.setItem('comparisonId', JSON.stringify(comparisonArray));
+        } catch (error) {
+            console.log('COMPARE_ERROR: ',error);
+        }
     };
 
     return (
@@ -42,7 +64,8 @@ const AllAboutProduct = observer(({
             <div className='allAboutProductInfo'>
                 <div className='productInfoName'>{goods?.full_name}</div>
                 <div className='productInfoRating'>
-                    <Rating 
+                    <Rating
+                        id={goods?.id} 
                         numScore={avgRatingModel ?? 0}
                         disabled={true}
                         nameRating='О товаре'
@@ -53,7 +76,23 @@ const AllAboutProduct = observer(({
                 </div>
                 <div className="productInfoCode">
                     <div>код товара: {goods?.id}</div>
-                    <div className='productInfoCodeStock'>в наявності</div>
+                    { goods?.stock?.reduce((sum: any, current: any) => (sum.stock + current), 0) > 4 ?
+                    <div className='productInfoCodeStock'>
+                        <i className="fas fa-check"></i>
+                        в наявності
+                    </div>
+                    :
+                    <div className='productInfoCodeStockExclam'>
+                        <i className="fas fa-exclamation"></i>
+                        закінчується
+                    </div>
+                    //     goods?.stock?.reduce((sum: any, current: any) => (sum.stock + current), 0) <= 4 ?
+                    // <div className='productInfoCodeStockNotAval'>
+                    // <i className="fas fa-times-circle"></i>
+                    //     немає в наявності
+                    // </div>
+                    }
+                    
                 </div>
                 <div className='productInfoProps'>
                     {goods?.vehicle_type || goods?.season ?
@@ -62,7 +101,8 @@ const AllAboutProduct = observer(({
                         type={goods?.vehicle_type}
                         season={goods?.season}
                     />
-                    <a href='/'>Літні</a> <a href='/'>Позашляховик</a>
+                    <a href='/'>{goods?.vehicle_type?.vehicle_type_ua}</a>
+                    <a href='/'>{goods?.season?.season_ua}</a>
                     </>
                     :
                     <img src='iconsSeasons/noSeason.png' alt='noProd'/>
@@ -97,7 +137,7 @@ const AllAboutProduct = observer(({
                         <span className='tyresCardBonusText'>{`+${(goods?.price[0]?.price! * 0.015).toFixed()} бонусів`}</span> 
                         : null
                     }
-                    <a href='/'>Бонусна за відгук</a>
+                    <a href='/'> за відгук</a>
                     </>
                 </div>
                 {goods?.price ? goods?.price.map((item: any) =>(
@@ -111,11 +151,19 @@ const AllAboutProduct = observer(({
                 }
                 
                 <div className='btnGoodsBox'>
-                    <ButtonAction props={"КУПИТИ"} widthBtn={280} eventItem={undefined}/>      
+                    <ButtonAction 
+                        props={"КУПИТИ"} 
+                        widthBtn={280} 
+                        eventItem={undefined}
+                    />      
                 </div>
                 <div className='btnGoodsBoxTwo'>
-                    <input type="number" placeholder='+38(номер телефона)'/>
-                    <ButtonAction props={"Швидке замовлення"} widthBtn={230} eventItem={undefined}/>
+                    <input type="tel" placeholder='+38(номер телефона)'/>
+                    <ButtonAction 
+                        props={"Швидке замовлення"} 
+                        widthBtn={230} 
+                        eventItem={undefined}
+                    />
                 </div>
                 <div className='checkboxGoodsShield'>
                     <CheckboxBtn 
@@ -125,14 +173,18 @@ const AllAboutProduct = observer(({
                     imageSrc={guardChecked ? './iconGuard/guard_64_b.png' : './iconGuard/guard_64_g.png'}/>   
                 </div>        
                 <div className='additionalTools'>
-                    <span className='additionalToolsLabel'>
+                    <span className='additionalToolsLabel'
+                        onClick={addToFavorites}
+                    >
                         <img 
                         id='obrane'
                         alt={"obraneImg"}
                         src={heartImg}
                         /> Додати в обране   
                     </span>
-                    <span className='additionalToolsLabel'>
+                    <span className='additionalToolsLabel'
+                        onClick={addToComparison}
+                    >
                         <img 
                         id='porivnianya'
                         alt={"porivnianjaImg"}

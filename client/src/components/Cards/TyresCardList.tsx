@@ -61,6 +61,7 @@ const TyresCardList = ({goods, forOrder, priceItem, countEvent}: ITyreCard) => {
                 </a>
                 <div className='ratingTyresList'>
                     <Rating 
+                        id={goods?.id}
                         numScore={goods?.ratingCount ??
                             ratingModel?.avgRatingModel ?? 0}
                         disabled={true}

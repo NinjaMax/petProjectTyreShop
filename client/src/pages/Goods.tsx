@@ -16,7 +16,7 @@ import ProductPayDel from '../components/goods/ProductPayDel';
 import YouWatched from '../components/goods/YouWatched';
 import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import { GOODS_ROUTE, NOT_FOUND_ROUTE } from '../utils/consts';
-import { createTyreReview, getTyresBrandRatingAvg, getTyresBrandRatingAvgSeason, getTyresById, getTyresByIdParam, getTyresCountReviewByBrand, getTyresCountReviewByModel, getTyresModelRatingAvg, likesTyreReview } from '../restAPI/restGoodsApi';
+import { createTyreReview, getAllTyresModelByBrand, getAllTyresParamsByModel, getTyresBrandRatingAvg, getTyresBrandRatingAvgSeason, getTyresById, getTyresByIdParam, getTyresCountReviewByBrand, getTyresCountReviewByModel, getTyresModelRatingAvg, getTyresParamsByBrandAndSeason, getTyresParamsBySeason, likesTyreReview } from '../restAPI/restGoodsApi';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../context/Context';
@@ -52,6 +52,10 @@ const GoodsPage = observer(() => {
   //const [dislikeReview, setDislikeReview] = useState<number>(0);
   // const [thumbUp, setThumbUp] = useState<boolean | null>(null);
   // const [thumbDown, setThumbDown] = useState<boolean | null>(null);
+  const [similarGoods, setSimilarGoods] = useState<any[] | null>();
+  const [similarBrandGoods, setSimilarBrandGoods] = useState<any[] | null>();
+  const [allModelsBrand, setAllModelsBrand] = useState<any[] | null>();
+  const [allParamsModel, setAllParamsModel] = useState<any[] | null>();
   const [changeTabGoods, setChangeTabGoods] = useState<string>("vseProTovar");
   const history =  useHistory();
   const param = useParams<any>();
@@ -69,6 +73,10 @@ const GoodsPage = observer(() => {
         getTyresCountReviewByModel,
         createTyreReview,
         likesTyreReview,
+        getTyresParamsByBrandAndSeason,
+        getTyresParamsBySeason,
+        getAllTyresModelByBrand,
+        getAllTyresParamsByModel
       ]
     const getTyreId: string = 
       JSON.parse(localStorage.getItem('goodsId')!);
@@ -142,6 +150,41 @@ const GoodsPage = observer(() => {
             setCreateReview(!createReview);
           }
         } 
+      }
+      if (!isMounted && taskProduct[i] === getTyresParamsByBrandAndSeason 
+        && goodsTyre._product.id_brand && goodsTyre._product.id_season) {
+        const getTyresParamsByBrandSeason: any = await taskProduct[i](
+          goodsTyre._product.params.params,
+          goodsTyre._product.tyre_brand.brand,
+          goodsTyre._product.season.season_ua,
+        );
+        console.log('SIMILAR: ', getTyresParamsByBrandSeason);
+        setSimilarBrandGoods(getTyresParamsByBrandSeason);
+      }
+      if (!isMounted && taskProduct[i] === getTyresParamsBySeason 
+        && goodsTyre._product.id_brand && goodsTyre._product.id_season) {
+        const getTyresParamsBySeason: any = await taskProduct[i](
+          goodsTyre._product.params.params,
+          goodsTyre._product.season.season_ua,
+        );
+        console.log('SIMILAR_GOODS: ', getTyresParamsBySeason);
+        setSimilarGoods(getTyresParamsBySeason);
+      }
+      if (!isMounted && taskProduct[i] === getAllTyresModelByBrand 
+        && goodsTyre._product.id_brand && goodsTyre._product.id_season) {
+        const getTyresModelByBrand: any = await taskProduct[i](
+          goodsTyre._product.id_brand,
+        );
+        console.log('ALL_TYRES_MODEL: ', getTyresModelByBrand);
+        setAllModelsBrand(getTyresModelByBrand);
+      }
+      if (!isMounted && taskProduct[i] === getAllTyresParamsByModel 
+        && goodsTyre._product.id_brand && goodsTyre._product.id_season) {
+        const getTyresParamsByModel: any = await taskProduct[i](
+          goodsTyre._product.id_model,
+        );
+        console.log('ALL_TYRES_MODEL_PARAMS: ', getTyresParamsByModel);
+        setAllParamsModel(getTyresParamsByModel);
       }
       const task = taskProduct.shift();
       task();
@@ -305,7 +348,7 @@ const GoodsPage = observer(() => {
         <Benefits/>
       </div>
       <div className='similarGoods'>
-        <SimilarGoods/>
+        <SimilarGoods similarGoods={similarGoods}/>
       </div>
       <div className='allSizeModel'>
         <span>Усі розміри моделі {goodsTyre?.model}</span>

@@ -3,4 +3,5 @@ export interface  IRating {
     nameRating?: string;
     forType?: string;
     disabled?: boolean;
+    id?: string | number;
 }

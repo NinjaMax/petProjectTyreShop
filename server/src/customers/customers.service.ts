@@ -27,6 +27,7 @@ export class CustomersService {
         name: createCustomerDto.name,
         phone: createCustomerDto.phone,
         full_name: createCustomerDto.full_name,
+        picture: createCustomerDto.picture,
       });
 
       const contractCustomer = await this.contractService.createContract(
@@ -61,6 +62,7 @@ export class CustomersService {
         name: createCustomerDto.name,
         phone: phone,
         full_name: createCustomerDto.full_name,
+        picture: createCustomerDto.picture,
       });
 
       const contractCustomer = await this.contractService.createContract(
@@ -79,7 +81,7 @@ export class CustomersService {
   }
 
   async findOrCreateCustomer(getCustomerDto: GetCustomerDto) {
-    // try {
+    try {
       const createPass = {
         password: await argon2.hash(String(getCustomerDto.phone)),
       };
@@ -101,6 +103,7 @@ export class CustomersService {
           name: getCustomerDto.name,
           phone: getCustomerDto.phone,
           full_name: getCustomerDto.full_name,
+          picture:  getCustomerDto.picture,
         }
       });
       if (created) {
@@ -115,12 +118,12 @@ export class CustomersService {
       } else {
         return customerFindCreate;
       }
-    // } catch {
-    //   throw new HttpException(
-    //     'Data Customer Email is incorrect or Not Found',
-    //     HttpStatus.NOT_FOUND,
-    //   );
-    // }
+    } catch {
+      throw new HttpException(
+        'Data Customer Email is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async findAllCustomer() {
@@ -223,6 +226,7 @@ export class CustomersService {
             delivery: updateCustomerDto.delivery,
             phone: updateCustomerDto.phone,
             password: updateCustomerDto.password,
+            picture: updateCustomerDto.picture,
             //update_date : updateTyreDto.update_date
           },
           { where: { id_customer: customerId.id_customer } },

@@ -7,6 +7,8 @@ export default class PageStore {
     _id: string;
     _loadMore:number;
     _basket_count:number;
+    _favorites_count:number;
+    _comparison_count:number;
 
     constructor() { 
         this._offset = 0;
@@ -15,6 +17,8 @@ export default class PageStore {
         this._id = '0';
         this._loadMore = 0;
         this._basket_count = 0;
+        this._favorites_count = 0;
+        this._comparison_count = 0;
         makeAutoObservable(this);
     }
 
@@ -37,6 +41,13 @@ export default class PageStore {
         this._basket_count = basket_count;
     }
 
+    setFavoritesCount(favorites_count: number) {
+        this._favorites_count = favorites_count;
+    }
+
+    setComparisonCount(comparison_count: number) {
+        this._comparison_count = comparison_count;
+    }
 
     get offset() {
         return this._offset;
@@ -55,5 +66,13 @@ export default class PageStore {
     }
     get basketCount() {
         return this._basket_count;
+    }
+
+    get favoritesCount() {
+        return this._favorites_count;
+    }
+
+    get comparisonCount() {
+        return this._comparison_count;
     }
 }

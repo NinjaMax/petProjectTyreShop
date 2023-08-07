@@ -16,7 +16,7 @@ export class BasketService {
   ){}
 
   async createBasket(createBasketDto: CreateBasketDto, session: string) {
-    //try {
+    try {
       const basketBySessionId = await this.basketRepository.findOne({
         where: { session_id: session ?? '', checkedIn: false },
         include: [Basket_Storage],
@@ -45,9 +45,9 @@ export class BasketService {
             //id_basket_storage: updateBasketDto.id_basket_storage,
           },
           { where: { id_basket: basketBySessionId.id_basket } },
-          );
-          basketBySessionId.reload();
-          return basketBySessionId;
+        );
+        basketBySessionId.reload();
+        return basketBySessionId;
       } else {
         const basketNew = await this.basketRepository.create({
           name: createBasketDto.name,
@@ -66,16 +66,15 @@ export class BasketService {
           bonus_decrease: createBasketDto.bonus_decrease,
           total_cost: createBasketDto.total_cost,
           id_customer: createBasketDto.id_customer,
-          });
+        });
         return basketNew;
       }
-      
-    //} catch {
-      // throw new HttpException(
-      //   'Data is incorrect and must be uniq',
-      //   HttpStatus.NOT_FOUND,
-      // );
-    //}
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async findAllbasket() {

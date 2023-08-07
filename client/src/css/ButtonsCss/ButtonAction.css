@@ -6,10 +6,10 @@
     background-color: #9C93D1;
     text-align: center;
     cursor: pointer;
-    width: calc(var(--widthBtn) *1px);
+    width: calc(var(--widthBtn) * 1px);
     font-size: 18px;
     font-family: var(--main-font-family);
-    border-radius:5px;
+    border-radius:8px;
 }
 
 #buttonAction:hover {

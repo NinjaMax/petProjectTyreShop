@@ -93,4 +93,5 @@ export class CreateReviewDto {
   readonly balance: number;
   readonly address: string;
   readonly delivery: string;
+  readonly picture: string;
 }

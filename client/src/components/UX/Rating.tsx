@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { IRating } from '../reviews/interfaces/Rating.interface';
 
 const Rating = observer((
-    {numScore, nameRating, forType, disabled}:IRating) => {
+    {id, numScore, nameRating, forType, disabled}:IRating) => {
     const {goodsTyre} = useContext<any | null>(Context);
     const [chooseStar, setChooseStar] = useState<number | undefined>(numScore);
 
@@ -33,8 +33,8 @@ const Rating = observer((
             </div>
             <input 
                 id={nameRating ? 
-                    nameRating + '_star_5': 
-                    5 + 'star_5'}
+                    nameRating + '_'+ id + '_' + 5: 
+                    5 +'_' + id}
                 type="radio"  
                 name="rating"
                 value="5"
@@ -50,15 +50,15 @@ const Rating = observer((
                     "fa fa-star checked" :
                     "fa fa-star"}
                 htmlFor={nameRating ? 
-                    nameRating + '_star_5': 
-                    5 + 'star_5'} 
+                    nameRating + '_'+ id + '_' + 5: 
+                    5 +'_' + id} 
                 title="Оцінка «5»"
             ></label>
 
             <input 
                 id={nameRating ? 
-                    nameRating + '_star_4': 
-                    4 + 'star_4'}
+                    nameRating + '_'+ id + '_' + 4: 
+                    4 +'_' + id}
                 type="radio" 
                 name="rating" 
                 value="4"
@@ -74,15 +74,15 @@ const Rating = observer((
                 "fa fa-star checked" :
                 "fa fa-star"}
                 htmlFor={nameRating ? 
-                    nameRating + '_star_4': 
-                    4 + 'star_4'} 
+                    nameRating + '_'+ id + '_' + 4: 
+                    4 +'_' + id} 
                 title="Оцінка «4»"
             ></label>
 
             <input 
                 id={nameRating ? 
-                    nameRating + '_star_3': 
-                    3 + 'star_3'}
+                    nameRating + '_'+ id + '_' + 3: 
+                    3 +'_' + id}
                 type="radio" 
                 title={nameRating}
                 name="rating" 
@@ -99,15 +99,15 @@ const Rating = observer((
                     "fa fa-star"
                 }
                 htmlFor={nameRating ? 
-                    nameRating + '_star_3': 
-                    3 + 'star_3'} 
+                    nameRating + '_'+ id + '_' + 3: 
+                    3 +'_' + id} 
                 title="Оцінка «3»"
             ></label>
 
             <input 
                 id={nameRating ?
-                    nameRating + '_star_2': 
-                    2 + 'star_2'}
+                    nameRating + '_'+ id + '_' + 2: 
+                    2 +'_' + id}
                 type="radio" 
                 title={nameRating} 
                 name="rating" 
@@ -124,15 +124,15 @@ const Rating = observer((
                 "fa fa-star"
             }
                 htmlFor={nameRating ? 
-                    nameRating + '_star_2': 
-                    2 + 'star_2'} 
+                    nameRating + '_'+ id + '_' + 2: 
+                    2 +'_' + id} 
                 title="Оцінка «2»"
             ></label>
 
             <input 
                 id={nameRating ? 
-                    nameRating + '_star_1': 
-                    1 + 'star_1'}
+                    nameRating + '_'+ id + '_' + 1: 
+                    1 +'_' + id}
                 type="radio" 
                 title={nameRating} 
                 name="rating" 
@@ -142,8 +142,8 @@ const Rating = observer((
             <label 
                 className={1 <= chooseStar! ? "fa fa-star checked" :"fa fa-star"}
                 htmlFor={nameRating ? 
-                    nameRating + '_star_1': 
-                    1 + 'star_1'} 
+                    nameRating + '_'+ id + '_' + 1: 
+                    1 +'_' + id} 
                 title="Оцінка «1»"
             ></label>
         </div>

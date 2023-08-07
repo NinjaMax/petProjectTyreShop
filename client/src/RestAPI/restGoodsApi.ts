@@ -91,6 +91,30 @@ const getSession = async () => {
     return data;
 }
 
+const getCompareGoods = async (compareArr: any) => 
+     await $hostGet.post('/customers/add-comparison',
+    {
+        comparison: compareArr
+    }).catch(error => {
+        console.log(error)
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    //return data;
+});  
+
+const getFavoritesGoods = async (favoriteArr: any) => 
+     await $hostGet.post('/customers/add-favorites',
+    {
+        favorite: favoriteArr
+    }).catch(error => {
+        console.log(error)
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    //return data;
+});  
+    
+
+
 const getTyresAll = async () => {
     const {data} = await $hostGet.get('tyres')
     //localStorage.setItem('token', data.token)
@@ -613,5 +637,10 @@ export {
     updateBasketStorageGoods,
     removeBasketStorageGoods,
     updateBasket,
-    getBasketById
+    getBasketById,
+    getCompareGoods,
+    getTyresParamsByBrandAndSeason,
+    getTyresParamsBySeason,
+    getAllTyresModelByBrand,
+    getAllTyresParamsByModel
 }

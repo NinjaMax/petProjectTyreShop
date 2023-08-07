@@ -17,7 +17,7 @@ const ButtonAction = (
             <button 
             id='buttonAction' 
             type={type}
-            data-style={{"--widthBtn":widthBtn}}
+            style={{["--widthBtn" as any]: widthBtn}}
             disabled={active}
             onClick={eventItem}>{props}</button>
         </div>

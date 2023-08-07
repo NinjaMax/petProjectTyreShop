@@ -7,4 +7,5 @@ export class CreateCustomerDto {
   readonly email: string;
   readonly id_contract: number;
   readonly balance: number;
+  readonly picture: string;
 }

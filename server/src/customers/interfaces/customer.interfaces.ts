@@ -9,4 +9,5 @@ export interface CustomerConfigAttr {
   balance: number;
   address: string;
   delivery: string;
+  picture: string;
 }

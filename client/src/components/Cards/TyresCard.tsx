@@ -70,6 +70,7 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
                 </div>
                 <div className='ratingTyres'>
                     <Rating 
+                        id={goods?.id}
                         numScore={ratingModel?.avgRatingModel ?? 0}
                         disabled={true}
                         nameRating='Карта товара'
