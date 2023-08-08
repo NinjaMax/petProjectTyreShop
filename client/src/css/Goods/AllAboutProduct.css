@@ -194,3 +194,49 @@
     justify-content: center;
     margin-top: -10px;
 }
+
+.iconFavoriteProduct::before {
+    font-family: 'Font Awesome 5 Free';
+    content:"\f004";
+    font-style: normal;
+    font-size:xx-large;
+    color: #666;
+    /* font-weight: 500; */
+    /* font: var(--fa-font-regular); */
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+}
+
+.iconFavoriteProduct:hover {
+    /* font-family: 'Font Awesome 5 Free'; */
+    content:"\f004";
+    font-weight: 900;
+    font-style: normal;
+    font-size:xx-large;
+    color: #71C2FF;
+    cursor: pointer;
+}
+
+.iconCompareProduct::before {
+    font-family: 'Font Awesome 5 Free';
+    content:"\f24e";
+    font-style: normal;
+    font-size:xx-large;
+    color: #666;
+    font-weight: 600;
+    /* font: var(--fa-font-regular); */
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+}
+
+.iconCompareProduct:hover {
+    /* font-family: 'Font Awesome 5 Free'; */
+    content:"\f24e";
+    font-weight: 900;
+    font-style: normal;
+    font-size:xx-large;
+    color: #71C2FF;
+    cursor: pointer;
+}

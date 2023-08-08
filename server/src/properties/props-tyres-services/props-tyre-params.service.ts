@@ -6,6 +6,7 @@ import { GetPropertyDto } from '../dto/get-property.dto';
 import { UpdatePropertyDto } from '../dto/update-property.dto';
 import { TyreParams } from '../entities/tyres/tyre-params.model';
 import { Tyres } from '../../tyres/entities/tyres.model';
+import { PriceTyres } from '../../prices/entities/price-tyres.model';
 
 @Injectable()
 export class PropsTyreParamsService {
@@ -106,7 +107,11 @@ export class PropsTyreParamsService {
     ) {
     try {
       const tyresAllParamsByBrand = await this.tyreParamsRepository.findAll({
-        include: [{ model: Tyres, where: { id_brand: brand } }],
+        include: [
+          { model: Tyres, 
+            where: { id_brand: brand },
+          },
+        ],
       });
       return tyresAllParamsByBrand;
     } catch {
@@ -120,7 +125,9 @@ export class PropsTyreParamsService {
     try {
       const tyresAllParamsByModel = await this.tyreParamsRepository.findAll({
         include: [
-          { model: Tyres, where: { id_model: model} }
+          { model: Tyres, where: { id_model: model},
+            include:[PriceTyres]
+          }
         ],
       });
       return tyresAllParamsByModel;

@@ -1,3 +1,7 @@
+.similarGoodsContainer {
+    display: block;
+}
+
 .similarGoods {
     display: flex;
     flex-direction: column;

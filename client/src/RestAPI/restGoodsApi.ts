@@ -112,6 +112,20 @@ const getFavoritesGoods = async (favoriteArr: any) =>
     //console.log('GET_TYRES_BY_ID: ', data )
     //return data;
 });  
+
+const getFavorites = async () => {
+    const {data} = await $hostGet.get('/customers/get-favorites')
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+const getCompare = async () => {
+    const {data} = await $hostGet.get('/customers/get-comparison')
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
     
 
 
@@ -196,9 +210,9 @@ const getTyresParamsByBrandAndSeason = async (
 ) => {
     const {data} = await $hostGet.get('/tyres/params-brand-season',
     {params: {
-        params: params,
-        brand: brand,
-        season: season,
+        params: params ?? '',
+        brand: brand ?? '',
+        season: season ?? '',
     }
     })
     //localStorage.setItem('token', data.token)
@@ -212,8 +226,8 @@ const getTyresParamsBySeason = async (
 ) => {
     const {data} = await $hostGet.get('/tyres/params-season',
     {params: {
-        params: params,
-        season: season,
+        params: params ?? '',
+        season: season ?? '',
     }
     })
     //localStorage.setItem('token', data.token)
@@ -226,7 +240,7 @@ const getAllTyresModelByBrand = async (
 ) => {
     const {data} = await $hostGet.get('/properties/tyres/model-by-brand',
     {params: {
-        brand: id_brand,
+        brand: id_brand ?? 0,
     }
     })
     //localStorage.setItem('token', data.token)
@@ -239,7 +253,7 @@ const getAllTyresParamsByModel = async (
 ) => {
     const {data} = await $hostGet.get('/properties/tyres/params/by-model',
     {params: {
-        model: id_model,
+        model: id_model ?? 0,
     }
     })
     //localStorage.setItem('token', data.token)
@@ -639,6 +653,7 @@ export {
     updateBasket,
     getBasketById,
     getCompareGoods,
+    getFavoritesGoods,
     getTyresParamsByBrandAndSeason,
     getTyresParamsBySeason,
     getAllTyresModelByBrand,

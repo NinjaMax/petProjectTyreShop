@@ -48,14 +48,10 @@ export class CustomersController {
 
   @Post('/add-comparison')
   addToComparison(
-    //@Cookies('comparison_goods') cookies: string,
-    //@Session() session: Record<string, any>,
     @Body() comparison: any,
     @Req() req: Request,
     @Res() res: Response,
   ) {
-    console.log('COMPARE_COOKIE_BODY: ', comparison.comparison);
-    console.log('COMPARE_COOKIE_GET: ', req.cookies.comparison_goods);
     if (Array.isArray(req.cookies.comparison_goods)) {
       req.cookies.comparison_goods.push(...comparison.comparison);
       res.cookie(
@@ -79,14 +75,10 @@ export class CustomersController {
 
   @Post('/add-favorites')
   addToFavorites(
-    //@Cookies('comparison_goods') cookies: string,
-    //@Session() session: Record<string, any>,
     @Body() favorite: any,
     @Req() req: Request,
     @Res() res: Response,
   ) {
-    console.log('COMPARE_COOKIE_BODY: ', favorite.favorite);
-    console.log('COMPARE_COOKIE_GET: ', req.cookies.favorites_goods);
     if (Array.isArray(req.cookies.favorites_goods)) {
       req.cookies.favorites_goods.push(...favorite.favorite);
       res.cookie(
@@ -105,6 +97,24 @@ export class CustomersController {
         secure: true,
       });
       return res.send(favorite.favorite);
+    };
+  };
+
+  @Get('/get-comparison')
+  getComparison(@Req() req: Request, @Res() res: Response) {
+    if (Array.isArray(req.cookies.comparison_goods)) {
+      return res.send(req.cookies.comparison_goods);
+    } else {
+      return res.send(null);
+    };
+  };
+
+  @Get('/get-favorites')
+  getFavorites(@Req() req: Request, @Res() res: Response) {
+    if (Array.isArray(req.cookies.favorites_goods)) {
+      return res.send(req.cookies.favorites_goods);
+    } else {
+      return res.send(null);
     };
   };
 

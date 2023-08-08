@@ -1,6 +1,6 @@
 import React, {useContext, useState, useEffect} from 'react';
 import '../../css/NavBarCss/NavBar.css';
-import logoShop from '../../assets/logoShop/logoSample_1_302_100.png';
+import logoShop from '../../../public/logoSky300.png';
 import { observer } from 'mobx-react-lite';
 import ButtonSearch from '../buttons/ButtonSearch';
 import BasketNavBar from '../basket/BasketNavBar';
@@ -30,9 +30,10 @@ import AuthSignUp from '../auth/AuthSignUp';
 import { yieldToMain } from '../../restAPI/yieldMain';
 import NavBarDropWheels from './NavBarDropWheels';
 import { getSession } from '../../restAPI/restGoodsApi';
+import CompareGoods from '../ux/CompareGoods';
 
 const NavBar = observer(() => {
-  const {customer, goodsTyre} = useContext<any | null>(Context);
+  const {customer, page, goodsTyre} = useContext<any | null>(Context);
   const [signUp, setSignUp] = useState(false);
   const [activeAuth, setActiveAuth] = useState(false);
   const [googleIsAuth, setGoogleIsAuth] = useState('');
@@ -201,7 +202,7 @@ const NavBar = observer(() => {
   return (
   <div className="navbar">
     <a href='/'>
-      <img data-href='/' src={logoShop} alt='logoShop'/>
+      <img data-href='/' src='logoSky180.png' alt='logoShop'/>
     </a>
     <NavBarDropTyres/>
     <NavBarDropWheels/>
@@ -214,7 +215,8 @@ const NavBar = observer(() => {
     {searchBtn? 
       <NavBarSearch searchBtn={searchBtn} clickSearchBtn={clickSearchBtn}/>
     :null}
-    <FavoriteGoods/>
+    <FavoriteGoods countFavorite={page.favoritesCount ?? 0}/>
+    <CompareGoods countCompare={page.comparisonCount ?? 0} />
     {customer._isAuth ?
       <AuthView logOutUser={logOutUser}/>
       : <span className='enterAuthNavBar' onClick={authActive}>

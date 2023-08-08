@@ -1,16 +1,23 @@
 import React from 'react';
 import '../../css/Goods/AllTyreModelSize.css';
 
-const AllTyreModelSize = () => {
+type IAllTyreSize = {
+    sizeTyresList?: any[] | null;
+};
+
+const AllTyreModelSize = ({sizeTyresList}:IAllTyreSize) => {
     return (
-        <div className='allTyreModelSize'>
-            <a className='allTyreModelSizeAnch' href="/#">CONTINENTAL CONTICROSSPREMIUMCONTACT 6 UHPD 5P 175/70 R13 <span>1200грн</span></a>
-            <a className='allTyreModelSizeAnch' href="/#">CONTINENTAL CONTICROSSPREMIUMCONTACT 6 UHPD 5P 195/70 R13 <span>1250грн</span></a>
-            <a className='allTyreModelSizeAnch' href="/#">CONTINENTAL CONTICROSSPREMIUMCONTACT 6 UHPD 5P 205/60 R16 <span>1260грн</span></a>
-            <a className='allTyreModelSizeAnch' href="/#">CONTINENTAL CONTICROSSPREMIUMCONTACT 6 UHPD 5P 215/70 R16 <span>1270грн</span></a>
-            <a className='allTyreModelSizeAnch' href="/#">CONTINENTAL CONTICROSSPREMIUMCONTACT 6 UHPD 5P 225/50 R17 <span>1280грн</span></a>
-            <a className='allTyreModelSizeAnch' href="/#">CONTINENTAL CONTICROSSPREMIUMCONTACT 6 UHPD 5P 265/60 R18 <span>1290грн</span></a>
-            <a className='allTyreModelSizeAnch' href="/#">CONTINENTAL CONTICROSSPREMIUMCONTACT 6 UHPD 5P 225/55 R19 <span>1299грн</span></a>
+        <div className='allTyreModelSizeBox'>
+            <div className='allTyreModelSize'>
+            {sizeTyresList?.length !== 0 ?
+                sizeTyresList?.map((size: any) =>
+                <div key={size.id_params}>
+                    <a className='allTyreModelSizeAnch' href="/#">{size?.tyres[0]?.full_name} <span>{size.tyres[0]?.price[0]?.price ?? 0}</span></a>   
+                </div> 
+                )  
+            : null
+            }
+            </div>
         </div>
     );
 };

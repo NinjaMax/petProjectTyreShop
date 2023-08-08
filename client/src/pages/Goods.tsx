@@ -158,7 +158,7 @@ const GoodsPage = observer(() => {
           goodsTyre._product.tyre_brand.brand,
           goodsTyre._product.season.season_ua,
         );
-        console.log('SIMILAR: ', getTyresParamsByBrandSeason);
+        console.log('SIMILAR_BRAND_GOODS_PARAMS: ', getTyresParamsByBrandSeason);
         setSimilarBrandGoods(getTyresParamsByBrandSeason);
       }
       if (!isMounted && taskProduct[i] === getTyresParamsBySeason 
@@ -167,7 +167,7 @@ const GoodsPage = observer(() => {
           goodsTyre._product.params.params,
           goodsTyre._product.season.season_ua,
         );
-        console.log('SIMILAR_GOODS: ', getTyresParamsBySeason);
+        console.log('SIMILAR_GOODS_PARAMS: ', getTyresParamsBySeason);
         setSimilarGoods(getTyresParamsBySeason);
       }
       if (!isMounted && taskProduct[i] === getAllTyresModelByBrand 
@@ -175,7 +175,7 @@ const GoodsPage = observer(() => {
         const getTyresModelByBrand: any = await taskProduct[i](
           goodsTyre._product.id_brand,
         );
-        console.log('ALL_TYRES_MODEL: ', getTyresModelByBrand);
+        console.log('ALL_TYRES_MODEL_BY_BRAND: ', getTyresModelByBrand);
         setAllModelsBrand(getTyresModelByBrand);
       }
       if (!isMounted && taskProduct[i] === getAllTyresParamsByModel 
@@ -348,15 +348,15 @@ const GoodsPage = observer(() => {
         <Benefits/>
       </div>
       <div className='similarGoods'>
-        <SimilarGoods similarGoods={similarGoods}/>
+        <SimilarGoods similarGoodsList={similarGoods}/>
       </div>
       <div className='allSizeModel'>
         <span>Усі розміри моделі {goodsTyre?.model}</span>
-        <AllTyreModelSize/>
+        <AllTyreModelSize sizeTyresList={allParamsModel}/>
       </div>
       <div className='allModelBrand'>
         <span>Усі моделі бренда {goodsTyre?.brand}</span>
-        <AllModelBrand/>
+        <AllModelBrand modelBrandList={allModelsBrand}/>
       </div>
       <div className='youWatched'>
         <YouWatched/>

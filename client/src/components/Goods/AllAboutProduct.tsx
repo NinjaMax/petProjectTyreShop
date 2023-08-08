@@ -14,7 +14,7 @@ import { useParams } from 'react-router-dom';
 import { Context } from '../../context/Context';
 import { ITyreCard } from '../cards/interfaces/tyreCard.interface';
 import { observer } from 'mobx-react-lite';
-import { getCompareGoods } from '../../restAPI/restGoodsApi';
+import { getCompareGoods, getFavoritesGoods } from '../../restAPI/restGoodsApi';
 
 const AllAboutProduct = observer(({
     goods, 
@@ -23,7 +23,7 @@ const AllAboutProduct = observer(({
 }:ITyreCard) => {
     const[guardChecked, setGuardChecked] = useState<boolean>(false);
     // const param = useParams<any>();
-    // const {page} = useContext<any>(Context);
+    const {page} = useContext<any>(Context);
     // useEffect(() => {
     //     if (0) {
 
@@ -38,9 +38,15 @@ const AllAboutProduct = observer(({
         }
     };
 
-    const addToFavorites = () => {
-        sessionStorage.setItem('favoritesId', JSON.stringify(goods?.id));
-        
+    const addToFavorites = async () => {
+        try {
+            const favoritesArray: any[] = [];
+            favoritesArray.push(...Array.from(new Set([goods?.id])));
+            const getFavorite = await getFavoritesGoods(favoritesArray);
+            page.setFavoritesCount(getFavorite?.data?.length);
+        } catch (error) {
+            console.log('COMPARE_ERROR: ',error);
+        }
     };
 
     const addToComparison = async () => {
@@ -48,9 +54,7 @@ const AllAboutProduct = observer(({
             const comparisonArray: any[] = [];
             comparisonArray.push(...Array.from(new Set([goods?.id])));
             const getCompare = await getCompareGoods(comparisonArray);
-            console.log('GET_COMPARE: ', getCompare);
-            console.log('COMPARE_GOODS_LIST:' , comparisonArray);
-            //sessionStorage.setItem('comparisonId', JSON.stringify(comparisonArray));
+            page.setComparisonCount(getCompare?.data?.length);
         } catch (error) {
             console.log('COMPARE_ERROR: ',error);
         }
@@ -176,20 +180,26 @@ const AllAboutProduct = observer(({
                     <span className='additionalToolsLabel'
                         onClick={addToFavorites}
                     >
-                        <img 
+                    <i className='iconFavoriteProduct'>  
+                    </i>
+                        {/* <img 
                         id='obrane'
                         alt={"obraneImg"}
                         src={heartImg}
-                        /> Додати в обране   
+                        />  */}
+                        Додати в обране   
                     </span>
                     <span className='additionalToolsLabel'
                         onClick={addToComparison}
                     >
-                        <img 
+                    <i className='iconCompareProduct'>  
+                    </i>
+                        {/* <img 
                         id='porivnianya'
                         alt={"porivnianjaImg"}
                         src={scaleImg}
-                        /> Додати в порівняння   
+                        />  */}
+                        Додати в порівняння   
                     </span>    
                 </div>
                 <SocialMediaLinks/>   
