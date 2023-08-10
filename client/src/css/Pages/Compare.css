@@ -1,0 +1,198 @@
+/* The overlay effect with black background */
+  
+  .overlayCompareActive {
+      height: 80%;
+      width: 92%;
+      margin-left: 50px;
+      margin-right: 50px;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      font-family: var(--main-font-family);
+    }
+    
+    .overlayCompareActive .outputCompareData {
+      background-color:#ffff;
+      border-radius: 15px;
+      padding: 15px;
+      display: block;
+      overflow: hidden;
+  
+    }
+  
+    .outputDataCompareItemsTitle {
+      float: left;
+      margin-top: 10px;
+      margin-right: 10px;
+    }
+    .outputDataCompareItemsLines {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .titleCompareClear {
+        margin-left: 3px;
+        padding: 10px 10px 10px 10px;
+        border-radius: 20px;
+        background-color: #ddd;
+    }
+
+    .titleCompareClear:hover {
+        background-color: #ccc;
+        cursor: pointer;
+        padding: 10px 10px 10px 10px;
+    }
+
+    .titleCompareClear:active {
+        background-color: #ddd;
+        cursor: pointer;
+    }
+
+    .outputDataCompareItems .titleCompareSearch {
+      padding: 10px 10px 10px 10px;
+      border-radius: 20px;
+    }
+    .outputDataCompareItems .activatedCompareTitle {
+      background-color: #ddd;
+      padding: 10px 10px 10px 10px;
+      border-radius: 20px;
+    }
+    .outputDataCompareItems .activatedCompareTitle:hover {
+      background-color: #ccc;
+      cursor: pointer;
+      padding: 10px 10px 10px 10px;
+    }
+    .outputDataCompareItems .activatedCompareTitle:active {
+      background-color: #ddd;
+      cursor: pointer;
+    }
+    .outputDataCompareItems .titleCompareSearch:hover {
+      background-color: #ccc;
+      cursor: pointer;
+      padding: 10px 10px 10px 10px;
+    }
+    .outputDataCompareItems .titleCompareSearch:active {
+      background-color: #ddd;
+      cursor: pointer;
+    }
+    .outputDataCompareItems .countCompareSearch {
+      border-radius: 35px;
+      color: #ffff;
+      margin: 10px;
+      padding: 1px 8px 1px 8px;
+      background-color: crimson;
+    }
+    
+    .outputDataCompareItemsList {
+        margin: 3px;
+    } 
+    .dataCompareItemsPropsTyre {
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1em;
+        gap: 10px;
+        
+    }
+
+    .dataCompareItemsPropsTyre span {
+        border-bottom: 1px dotted black;
+        height: 23.10px;
+    }
+
+    .outputDataCompareContainer {
+        display: grid;
+        grid-template-areas: 
+        "title title title"
+        "list goods goods"
+        "compare goods goods";
+     
+    }
+    .outputDataCompareContainerText {
+        grid-area: title;
+        padding-bottom: 10px;
+    }
+    .outputDataCompareContainerList {
+        grid-area: list;
+        padding-top: 45%;
+    }
+    .propertiesGoodsCompare {
+        grid-area: compare;
+    }
+    .outputDataCompareItemsBox {
+        grid-area: goods;
+        width: 900px;
+        height: 855px;
+        overflow-x: scroll;
+        display: flex;
+        flex-direction:row;
+        justify-content: center;
+        gap: 25px;
+        background-color: #ffff;
+        margin: 15px;
+    }
+      
+    .outputDataCompareTable {
+        display: block;
+        width: 240px;
+        height: 250px;
+    }
+    .propertiesTyresCompare {
+        display:flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1em;
+        width: 400px;
+        gap: 10px;
+        /*margin-left: -16px;*/
+        border-radius:0px 0px 8px 8px;
+        /*position:absolute;*/
+        background-color:#fff;
+        /*box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);*/
+        font-family: var(--main-font-family);
+    
+    }
+    
+    .tooltiComparePropertiesTyres {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+        font-size: 16px;
+    
+    }
+    .tooltiComparePropertiesTyres .tooltiTextCompareTyres {
+        visibility: hidden;
+        width: 120px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        font-size: 13px;
+        padding: 5px 0;
+        border-radius: 6px;
+    
+        /* Position the tooltip text */
+        position: absolute;
+        z-index: 1;
+        top: -70%;
+        left: 115%;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    /* Tooltip arrow */
+    .tooltiComparePropertiesTyres .tooltiTextCompareTyres::after {
+        content: " ";
+        position: absolute;
+        top: 50%;
+        right: 100%; /* To the right of the tooltip */
+        margin-top: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent #555 transparent transparent;
+    }
+    /* Show the tooltip text when you mouse over the tooltip container */
+    .tooltiComparePropertiesTyres:hover .tooltiTextCompareTyres {
+        visibility: visible;
+        opacity: 1;
+    }

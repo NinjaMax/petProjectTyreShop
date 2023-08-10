@@ -68,7 +68,7 @@ const TyresCardList = ({goods, forOrder, priceItem, countEvent}: ITyreCard) => {
                         nameRating='Список карт'
                     />
                     <a className='reviewLink' href='/#'>
-                        {goods?.reviewCount ?? goods?.reviews.length} відгуків
+                        {goods?.reviewCount ?? goods?.reviews?.length} відгуків
                     </a>
                 </div>
                 <div className="tyresCardCodeList">

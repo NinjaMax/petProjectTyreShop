@@ -29,8 +29,9 @@ import {
 import AuthSignUp from '../auth/AuthSignUp';
 import { yieldToMain } from '../../restAPI/yieldMain';
 import NavBarDropWheels from './NavBarDropWheels';
-import { getSession } from '../../restAPI/restGoodsApi';
+import { getCompare, getFavorites, getSession } from '../../restAPI/restGoodsApi';
 import CompareGoods from '../ux/CompareGoods';
+import { COMPARISON_ROUTE, FAVORITES_ROUTE } from '../../utils/consts';
 
 const NavBar = observer(() => {
   const {customer, page, goodsTyre} = useContext<any | null>(Context);
@@ -47,6 +48,8 @@ const NavBar = observer(() => {
   const [facebookIsAuth, setFacebookIsAuth] = useState('');
   const [twitterIsAuth, setTwitterIsAuth] = useState('');
   const [formError, setFormError] = useState('');
+  const [favoritesCount, setFavoritesCount] = useState<number | null>();
+  const [comparisonCount, setComparisonCount] = useState<number | null>();
 
   useEffect(() => {
     let isUser = false;
@@ -108,6 +111,37 @@ const NavBar = observer(() => {
     getCurUser();
     return () => {isCurUser = true}
   },[customer])
+
+  useEffect(() => {
+    let isMounted = false;
+    const getFavoriteCompare = async () => {
+      const taskFavorite: any[] = [
+        getCompare,
+        getFavorites,
+      ];
+      let i:number = 0;
+      while(taskFavorite.length > i) {
+        if (!isMounted && taskFavorite[i] === getCompare) {
+          let curComparison: any = await taskFavorite[i]();
+          console.log('CURRENT_COMPARISON: ', curComparison)
+          //setComparisonCount(curComparison.length);
+          page.setComparisonCount(curComparison);
+          
+        }
+        if (!isMounted && taskFavorite[i] === getFavorites) {
+          let curFavorites: any = await taskFavorite[i]();
+          console.log('CURRENT_FAVORITES: ', curFavorites)
+          page.setFavoritesCount(curFavorites);
+          //setFavoritesCount(curFavorites.length);
+        }
+        const task = taskFavorite.shift();
+        task();
+        await yieldToMain();
+      }
+    }
+    getFavoriteCompare();
+    return () => {isMounted = true}
+  },[page])
 
   useEffect(() => {
     if(isPassSend) {
@@ -215,8 +249,13 @@ const NavBar = observer(() => {
     {searchBtn? 
       <NavBarSearch searchBtn={searchBtn} clickSearchBtn={clickSearchBtn}/>
     :null}
-    <FavoriteGoods countFavorite={page.favoritesCount ?? 0}/>
-    <CompareGoods countCompare={page.comparisonCount ?? 0} />
+    <a href={FAVORITES_ROUTE}>
+      <FavoriteGoods countFavorite={page.favoritesCount.length ?? 0}/>
+    </a>
+    <a href={COMPARISON_ROUTE}>
+     <CompareGoods countCompare={page.comparisonCount.length ?? 0} /> 
+    </a>
+    
     {customer._isAuth ?
       <AuthView logOutUser={logOutUser}/>
       : <span className='enterAuthNavBar' onClick={authActive}>

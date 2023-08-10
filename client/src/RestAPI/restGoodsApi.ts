@@ -126,6 +126,20 @@ const getCompare = async () => {
     //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
+
+const clearCompare = async () => {
+    const {data} = await $hostGet.delete('/customers/clear-comparison')
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+const clearFavorites = async () => {
+    const {data} = await $hostGet.delete('/customers/clear-favorites')
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
     
 
 
@@ -140,7 +154,7 @@ const getTyresById = async (id:string) => {
     const {data} = await $hostGet.get('tyres/id',
      {params: {id: id}})
     //localStorage.setItem('token', data.token)
-    console.log('GET_TYRES_BY_ID: ', data )
+    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -657,5 +671,9 @@ export {
     getTyresParamsByBrandAndSeason,
     getTyresParamsBySeason,
     getAllTyresModelByBrand,
-    getAllTyresParamsByModel
+    getAllTyresParamsByModel,
+    getCompare,
+    getFavorites,
+    clearFavorites,
+    clearCompare
 }

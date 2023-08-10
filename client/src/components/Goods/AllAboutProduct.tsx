@@ -43,7 +43,7 @@ const AllAboutProduct = observer(({
             const favoritesArray: any[] = [];
             favoritesArray.push(...Array.from(new Set([goods?.id])));
             const getFavorite = await getFavoritesGoods(favoritesArray);
-            page.setFavoritesCount(getFavorite?.data?.length);
+            page.setFavoritesCount(getFavorite?.data);
         } catch (error) {
             console.log('COMPARE_ERROR: ',error);
         }
@@ -54,7 +54,7 @@ const AllAboutProduct = observer(({
             const comparisonArray: any[] = [];
             comparisonArray.push(...Array.from(new Set([goods?.id])));
             const getCompare = await getCompareGoods(comparisonArray);
-            page.setComparisonCount(getCompare?.data?.length);
+            page.setComparisonCount(getCompare?.data);
         } catch (error) {
             console.log('COMPARE_ERROR: ',error);
         }
@@ -180,26 +180,32 @@ const AllAboutProduct = observer(({
                     <span className='additionalToolsLabel'
                         onClick={addToFavorites}
                     >
-                    <i className='iconFavoriteProduct'>  
+                    <i className={page.favoritesCount?.length !== 0 &&
+                        page.favoritesCount?.find((item: string) => item === goods?.id) ? 
+                        'iconFavoriteProductActive' : 'iconFavoriteProduct' }
+                    >  
                     </i>
-                        {/* <img 
-                        id='obrane'
-                        alt={"obraneImg"}
-                        src={heartImg}
-                        />  */}
-                        Додати в обране   
+                        <span className='additionalToolsLabelText'>
+                        {page.favoritesCount?.length !== 0 &&
+                            page.favoritesCount?.find((item: string) => item === goods?.id) ?
+                            'Додано в обране': 'Додати в обране'
+                        }
+                        </span> 
                     </span>
                     <span className='additionalToolsLabel'
                         onClick={addToComparison}
                     >
-                    <i className='iconCompareProduct'>  
+                    <i className={page.comparisonCount?.length !== 0 &&
+                        page.comparisonCount?.find((item: string) => item === goods?.id)
+                        ? 'iconCompareProductActive' : 'iconCompareProduct'}
+                    >  
                     </i>
-                        {/* <img 
-                        id='porivnianya'
-                        alt={"porivnianjaImg"}
-                        src={scaleImg}
-                        />  */}
-                        Додати в порівняння   
+                        <span className='additionalToolsLabelText'>
+                        { page.comparisonCount?.length !== 0 &&
+                            page.comparisonCount?.find((item: string) => item === goods?.id) ?
+                           'Додано в порівняння' : 'Додати в порівняння'
+                        }
+                        </span>  
                     </span>    
                 </div>
                 <SocialMediaLinks/>   

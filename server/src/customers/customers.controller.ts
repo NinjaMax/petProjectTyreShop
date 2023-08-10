@@ -118,6 +118,36 @@ export class CustomersController {
     };
   };
 
+  @Delete('/clear-comparison')
+  clearComparison(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    if (Array.isArray(req.cookies.favorites_goods)) {
+      res.clearCookie('comparison_goods', {
+        httpOnly: true,
+        secure: true,
+      });
+    } else {
+      return res.send(null);
+    };
+  };
+
+  @Delete('/clear-favorites')
+  clearFavorites(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    if (Array.isArray(req.cookies.favorites_goods)) {
+      res.clearCookie('favorites_goods', {
+        httpOnly: true,
+        secure: true,
+      });
+    } else {
+      return res.send(null);
+    };
+  };
+
   @Patch(':id')
   update(
     @Param('id') id: string,

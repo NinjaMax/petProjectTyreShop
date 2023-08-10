@@ -975,7 +975,7 @@ export class TyresService {
     params: string,
     season_ua: string,
     ) {
-    // try {
+    try {
       const tyresAllByParamsSeason = await this.tyresRepository.findAll({
         include: [
           { all: true },
@@ -984,11 +984,11 @@ export class TyresService {
         ],
       });
       return tyresAllByParamsSeason;
-    // } catch {
-    //   throw new HttpException(
-    //     'Data is incorrect or Not Found',
-    //     HttpStatus.NOT_FOUND,)
-    // }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,)
+    }
   }
 
   async findAllTyresByBrandParamsSeason(
@@ -1070,6 +1070,21 @@ export class TyresService {
       });
 
       return tyresId;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found', 
+        HttpStatus.NOT_FOUND
+      );
+    }
+  }
+
+  async findTyresByIdQuery(id: string) {
+    try {
+      const tyresIdQuery = await this.tyresRepository.findByPk(id, {
+        include: { all: true }
+      });
+
+      return tyresIdQuery;
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found', 

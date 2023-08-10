@@ -30,8 +30,11 @@ export class TyresController {
   }
 
   @Get('/id')
-  findTyresById(@Body() getTyreDto: GetTyreDto) {
-    return this.tyresService.findTyresById(getTyreDto);
+  findTyresById(
+    //@Body() getTyreDto: GetTyreDto,
+    @Query('id') id: string,
+  ) {
+    return this.tyresService.findTyresByIdQuery(id);
   }
 
   @Get('/paramid/:id')

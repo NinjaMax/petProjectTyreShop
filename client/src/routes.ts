@@ -1,6 +1,8 @@
 import { ADMIN_ROUTE, ADMIN_AUTH_ROUTE, BASKET_ROUTE, CATALOG_TYRES_ROUTE, 
   LOGIN_ROUTE, REGISTRATION_ROUTE, GOODS_ROUTE, 
-  MAIN_ROUTE, CONTACT_ROUTE, SEARCH_ROUTE, NOT_FOUND_ROUTE} from './utils/consts';
+  MAIN_ROUTE, CONTACT_ROUTE, SEARCH_ROUTE, NOT_FOUND_ROUTE, 
+  COMPARISON_ROUTE, FAVORITES_ROUTE
+} from './utils/consts';
 import Admin from './pages/Admin';
 import AdminAuth from './components/auth/AdminAuth';
 import Auth from './pages/Auth';
@@ -11,6 +13,8 @@ import GoodsPage from './pages/Goods';
 import Main from './pages/Main';
 import Search from './pages/Search';
 import NotFound from './pages/NotFound';
+import Compare from './pages/Compare';
+import Favorite from './pages/Favorite';
 
 export const adminRoutes = [
   {
@@ -43,11 +47,16 @@ export const publicRoutes = [
     exact: true,
     Component: Search
   },
-  // {
-  //   path: GOODS_ROUTE,
-  //   exact: false,
-  //   Component: GoodsPage
-  // },
+  {
+    path: COMPARISON_ROUTE,
+    exact: true,
+    Component: Compare
+  },
+  {
+    path: FAVORITES_ROUTE,
+    exact: true,
+    Component: Favorite
+  },
   {
     path: LOGIN_ROUTE,
     exact: true,
