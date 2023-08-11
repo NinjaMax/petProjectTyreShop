@@ -15,7 +15,7 @@ interface IReviewTyreCreate {
 const ReviewTyreCreate = observer(({
     onSubmitReviewTyre,
 }: IReviewTyreCreate) => {
-    const {goodsTyre} = useContext<any | null>(Context);
+    const {goodsTyre, customer} = useContext<any | null>(Context);
     const {
         register, 
         handleSubmit,
@@ -183,8 +183,11 @@ const ReviewTyreCreate = observer(({
             <input 
                 type="text" 
                 placeholder="Ваше ім'я"
+                defaultValue={customer._customer?.name ?? customer._customer?.sub?.name ?? ''}
                 {...register("name", 
-                    { required: "Треба заповнити ім'я", maxLength: 50 })
+                    { required: "Треба заповнити ім'я", maxLength: 50,
+                    minLength: 2
+                })
                 }
             />
             <input 

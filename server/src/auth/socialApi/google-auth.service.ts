@@ -114,10 +114,14 @@ export class GoogleAuthService {
           googleUser,
           createPass.password,
           phone,
+          googleUser.picture
         );
+        console.log('NEW_GOOGLE_USER: ', newCustomer); 
         googleUser.contract = newCustomer.contract;
       }
-      googleUser.contract = custmByGoogle.contract;
+      if (custmByGoogle) {
+        googleUser.contract = custmByGoogle.contract;
+      }
       const token = this.jwtService.sign(googleUser);
       res.cookie(this.configService.get('COOKIE_NAME'), token, {
         maxAge: 3600000,

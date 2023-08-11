@@ -275,6 +275,19 @@ const getAllTyresParamsByModel = async (
     return data;
 }
 
+const getAllTyresDiametersByModel = async (
+    id_model: string,
+) => {
+    const {data} = await $hostGet.get('/properties/tyres/diameter/by-model',
+    {params: {
+        model: id_model ?? 0,
+    }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
 const createBasket = async (
     name?: string,
     phone?: bigint,
@@ -428,7 +441,8 @@ const createTyreReview = async (
     id_brand: number,
     id_model: number,
     id_season: number,
-    id_customer?: number,    
+    id_customer?: number, 
+    customer_pictures?: string,   
     //rating_overall?: number,
     rating_dry_road?:number,
     rating_wet_road?: number,
@@ -453,6 +467,7 @@ const createTyreReview = async (
     id_model: id_model,
     id_season: id_season,
     id_customer: id_customer,
+    customer_pictures: customer_pictures,
     rating_overall: data?.rating_overall,
     rating_dry_road: rating_dry_road,
     rating_wet_road: rating_wet_road,
@@ -672,8 +687,9 @@ export {
     getTyresParamsBySeason,
     getAllTyresModelByBrand,
     getAllTyresParamsByModel,
+    getAllTyresDiametersByModel,
     getCompare,
     getFavorites,
     clearFavorites,
-    clearCompare
+    clearCompare,
 }

@@ -22,5 +22,5 @@ export interface IReviewGoods {
     reviewCount?: number;
     like_count:number;
     dislike_count:number;
-
+    customer_pictures: string;
 }

@@ -16,7 +16,7 @@ import ProductPayDel from '../components/goods/ProductPayDel';
 import YouWatched from '../components/goods/YouWatched';
 import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import { GOODS_ROUTE, NOT_FOUND_ROUTE } from '../utils/consts';
-import { createTyreReview, getAllTyresModelByBrand, getAllTyresParamsByModel, getTyresBrandRatingAvg, getTyresBrandRatingAvgSeason, getTyresById, getTyresByIdParam, getTyresCountReviewByBrand, getTyresCountReviewByModel, getTyresModelRatingAvg, getTyresParamsByBrandAndSeason, getTyresParamsBySeason, likesTyreReview } from '../restAPI/restGoodsApi';
+import { createTyreReview, getAllTyresDiametersByModel, getAllTyresModelByBrand, getAllTyresParamsByModel, getTyresBrandRatingAvg, getTyresBrandRatingAvgSeason, getTyresById, getTyresByIdParam, getTyresCountReviewByBrand, getTyresCountReviewByModel, getTyresModelRatingAvg, getTyresParamsByBrandAndSeason, getTyresParamsBySeason, likesTyreReview } from '../restAPI/restGoodsApi';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../context/Context';
@@ -29,6 +29,7 @@ import { IRatingAvg } from './types/RatingModelAvg.type';
 import { IRatingBrandAvg } from './types/RatingBrandAvg.type';
 import { IRatingSeasonAvg } from './types/RatingBrandSeason.type';
 import { FormValues } from '../components/reviews/types/ReviewTyreCreate.type';
+import ModelSection from '../components/goods/ModelSection';
 
 type ILikeTyreType = {
   id_review: number;
@@ -57,6 +58,8 @@ const GoodsPage = observer(() => {
   const [allModelsBrand, setAllModelsBrand] = useState<any[] | null>();
   const [allParamsModel, setAllParamsModel] = useState<any[] | null>();
   const [changeTabGoods, setChangeTabGoods] = useState<string>("vseProTovar");
+  const [allDiametersModel, setAllDiametersModel] = useState<any[] | null>();
+  const [paramsModel, setParamsModel] = useState<boolean>(true);
   const history =  useHistory();
   const param = useParams<any>();
   let match = useRouteMatch<any>('/:goodsItem');
@@ -76,7 +79,8 @@ const GoodsPage = observer(() => {
         getTyresParamsByBrandAndSeason,
         getTyresParamsBySeason,
         getAllTyresModelByBrand,
-        getAllTyresParamsByModel
+        getAllTyresParamsByModel,
+        getAllTyresDiametersByModel,
       ]
     const getTyreId: string = 
       JSON.parse(localStorage.getItem('goodsId')!);
@@ -127,8 +131,9 @@ const GoodsPage = observer(() => {
           goodsTyre._product.id,
           goodsTyre._product.tyre_brand.id_brand,
           goodsTyre._product.tyre_model.id_model,
-          goodsTyre._product.tyre_model.id_season,
+          goodsTyre._product.id_season,
           customer._customer.id_customer,
+          customer._customer.picture ?? customer._customer.profile_image_url,
           goodsTyre.ratingList.rating_dry_road,
           goodsTyre.ratingList.rating_wet_road,
           goodsTyre.ratingList.rating_snow_road,
@@ -186,6 +191,14 @@ const GoodsPage = observer(() => {
         console.log('ALL_TYRES_MODEL_PARAMS: ', getTyresParamsByModel);
         setAllParamsModel(getTyresParamsByModel);
       }
+      if (!isMounted && taskProduct[i] === getAllTyresDiametersByModel 
+        && goodsTyre._product.id_brand && goodsTyre._product.id_season) {
+        const getTyresDiametersByModel: any = await taskProduct[i](
+          goodsTyre._product.id_model,
+        );
+        console.log('ALL_TYRES_MODEL_PARAMS: ', getTyresDiametersByModel);
+        setAllDiametersModel(getTyresDiametersByModel);
+      }
       const task = taskProduct.shift();
       task();
       await yieldToMain();
@@ -196,9 +209,12 @@ const GoodsPage = observer(() => {
       isMounted = true;
     };
   },[
-    createReview,
+    createReview, 
     customer._customer.id_customer,
-    dataReview, goodsTyre, 
+    customer._customer.picture,
+    customer._customer.profile_image_url,
+    dataReview,
+    goodsTyre
   ]);
 
   useEffect(() => {
@@ -228,6 +244,19 @@ const GoodsPage = observer(() => {
   }
   const openToCreateReview = () => {
     setCreateReview(!createReview);
+    //if(dataReview) {
+      setDataReview(null);
+      goodsTyre.setRatingList({
+        rating_overall: 0,
+        rating_dry_road: 0,
+        rating_wet_road: 0,
+        rating_snow_road: 0,
+        rating_ice_road: 0,
+        rating_cross_country:0,
+        rating_treadwear:0,
+        rating_price_quality:0,
+      });
+    //}
   };
 
   const submitDataReview = (data: FormValues) => {
@@ -239,6 +268,7 @@ const GoodsPage = observer(() => {
   // console.log('MATCH_URL: ', match);
   console.log('RATING_SUMMER: ', ratingSummerAvg);
   console.log('PRODUCT: ', goodsTyre._product);
+
   // console.log('LOCALSORAGE_GOODS_ID: ',JSON.parse(localStorage.getItem('goodsId')!));
   // console.log('THUMB_UP:', thumbUp);
   // console.log('THUMB_DOWN:', thumbDown);
@@ -347,22 +377,32 @@ const GoodsPage = observer(() => {
         'goodsBenefits': 'goodsBenefitsNext'}>
         <Benefits/>
       </div>
-      <div className='similarGoods'>
+      <div className={paramsModel ? 'modelSectionGoodsActive' : 
+        'modelSectionGoods'
+      }>
+        <ModelSection modelGoods={allDiametersModel}/> 
+      </div>
+
+      <div className={paramsModel ? 'similarGoodsModelNone' : 'similarGoodsModel'}>
+        <SimilarGoods similarGoodsList={similarBrandGoods}/>
+      </div>
+      <div className={paramsModel ? 'similarGoodsNone' : 'similarGoods'}>
         <SimilarGoods similarGoodsList={similarGoods}/>
       </div>
-      <div className='allSizeModel'>
+      <div className={paramsModel ? 'allSizeModelNone' : 'allSizeModel'}>
         <span>Усі розміри моделі {goodsTyre?.model}</span>
         <AllTyreModelSize sizeTyresList={allParamsModel}/>
       </div>
-      <div className='allModelBrand'>
+      <div className={paramsModel ? 'allModelBrandNone' : 'allModelBrand'}>
         <span>Усі моделі бренда {goodsTyre?.brand}</span>
         <AllModelBrand modelBrandList={allModelsBrand}/>
       </div>
+
       <div className='youWatched'>
         <YouWatched/>
       </div>
       <div className={changeTabGoods==="vseProTovar" ? "smallCardOne":"smallCardNext"}>
-        {goodsTyre._product ?
+        {goodsTyre._product && !paramsModel ?
           <TyreCardSmall product={goodsTyre._product}/>
         : null 
         }

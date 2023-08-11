@@ -75,7 +75,7 @@ const Favorite = () => {
     }
 
   return (
-    <div id="myOverlay" className="overlayFavoriteActive">
+    <div className="overlayFavoriteActive">
             {    
                 favoriteTyres?.length !== 0 || 
                 tabSearchModWheel?.length !== 0 || 

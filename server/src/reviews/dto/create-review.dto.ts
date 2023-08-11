@@ -83,6 +83,7 @@ export class CreateReviewDto {
   readonly rating_cross_country: number;
   readonly rating_treadwear: number;
   readonly rating_price_quality: number;
+  readonly customer_pictures: string;
 
   readonly id_user: number;
   readonly id_customer: number;

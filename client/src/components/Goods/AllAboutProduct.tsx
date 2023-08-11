@@ -75,7 +75,8 @@ const AllAboutProduct = observer(({
                         nameRating='О товаре'
                     />
                     <a className='productInfoRatingLink' href='/#'>
-                        {countModelReview ?? 0} отзывов
+                        {countModelReview ?? 0} 
+                        {countModelReview === 1 ? ' відгук' : ' відгуків'}
                     </a>
                 </div>
                 <div className="productInfoCode">

@@ -109,7 +109,12 @@ const ReviewsGoods = ({
             <div className="reviewsGoodsContainer">
                 <div className="mySlidesGoodsReview">
                     <div className="authorGoodsReview">
-                        <img className='userImg' src={customerReview} alt='avatarUser'/> 
+                        <img className='userImg' src={
+                            reviewEntity?.customer_pictures ??
+                            customerReview
+                            } 
+                            alt='avatarUser'
+                        /> 
                         {reviewEntity.name}
                     </div>
                     <div className='ratingGoodsReview'>
@@ -162,7 +167,7 @@ const ReviewsGoods = ({
                             disLikeAction={tumbDownAction} 
                             />
                     </div>
-                    { reviewExtend?
+                    { reviewExtend ?
                     <div className='reviewGoodsExtend'>
                         <ReviewsGoodsExtend/>
                     </div>: null}

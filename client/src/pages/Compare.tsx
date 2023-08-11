@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import '../css/Pages/Compare.css';
-import { clearCompare, getCompare, getTyresById } from '../restAPI/restGoodsApi';
+import { clearCompare, getCompare, getTyresById, getTyresModelRatingAvg } from '../restAPI/restGoodsApi';
 import TyresCardList from '../components/cards/TyresCardList';
 import { Context } from '../context/Context';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import TyreCardSmall from '../components/cards/TyreCardSmall';
+import ReviewsGoodsExtend from '../components/reviews/ReviewsGoodsExtend';
+import { IRatingAvg } from './types/RatingModelAvg.type';
 
 const Compare = () => {
     const {page} = useContext<any | null>(Context);
@@ -18,36 +20,38 @@ const Compare = () => {
     const [tabSearchModWheel, setTabSearchModWheel] = useState<[]>([]);
     const [tabSearchModOil, setTabSearchModOil] = useState<[]>([]);
     const [tabSearchModBattery, setTabSearchModBattery] = useState<[]>([]);
+    const [ratingModelAvg, setRatingModelAvg] = useState<IRatingAvg[] | null>([]);
 
     useEffect(() => {
         let isMounted = false;
         const getFavoriteCompare = async () => {
-            const taskFavorite: any[] = [
+            const taskCompare: any[] = [
                 getCompare,
             ];
           let i:number = 0;
-          while(taskFavorite.length > i) {
-            if (!isMounted && taskFavorite[i] === getCompare) {
-              let curFavorites: any = await taskFavorite[i]();
+          while(taskCompare.length > i) {
+            if (!isMounted && taskCompare[i] === getCompare) {
+              let curFavorites: any = await taskCompare[i]();
               page.setFavoritesCount(curFavorites);
-
                 if(Array.isArray(curFavorites)){
                     curFavorites.forEach(async (element: string) => {      
                     let newTyresFavorite: any = await getTyresById(element);
-                   
+                    let compareRatingModel = await getTyresModelRatingAvg(newTyresFavorite.id_model);
+                    newTyresFavorite.ratingAvg = compareRatingModel[0];
                     setCompareTyres(oldCompare => [...oldCompare!, newTyresFavorite]);
                     
+                    //setRatingModelAvg(oldCompareRating => [...oldCompareRating!, compareRatingModel]);
                     });
                 }
             }
-            const task = taskFavorite.shift();
+            const task = taskCompare.shift();
             task();
             await yieldToMain();
           }
         }
         getFavoriteCompare();
         return () => {isMounted = true}
-      },[page])
+    },[page])
 
     const searchTabModChange = (e: any) => {
         if (e.target.title === 'Шини') {
@@ -72,6 +76,8 @@ const Compare = () => {
             console.log(error);
         }
     }
+
+    console.log('COMPARE_TYRES: ', compareTyres);
 
   return (
     <div id="myOverlay" className="overlayCompareActive">
@@ -159,6 +165,7 @@ const Compare = () => {
                     <div className='outputDataCompareContainer'>
                         <span className='outputDataCompareContainerText'>Характеристики для порівняння</span>
                         <span className='outputDataCompareContainerList'>Список товарів для порівняння</span>
+                        <span className='outputDataCompareContainerRating'>Рейтинг товарів для порівняння</span>
                         <div className='outputDataCompareTable'>
                         {compareTyres && tabSearchMod === 'Шини' ?
                             <div className='propertiesTyresCompare'>
@@ -241,8 +248,13 @@ const Compare = () => {
                                     key={goods.id}
                                     product={goods}
                                 />
+                                <p/>
+                                <div className='outputDataCompareItemsBoxRating'>
+                                    <ReviewsGoodsExtend ratingItem={goods.ratingAvg}/>
+                                    <a href='/'>{goods.reviews?.length + 
+                                    `${goods.reviews?.length === 1 ? ' відгук': ' відгуків'}`}</a>    
+                                </div>
                                 <div className='dataCompareItemsPropsTyre'>
-                                   
                                     <span>{goods.width.width ?? ''}</span>
                                     <span>{goods.height.height ?? ''}</span>
                                     <span>{goods.diameter.diameter ?? ''}</span>

@@ -8,6 +8,7 @@ import { Customer } from './entities/customer.model';
 import * as argon2 from 'argon2';
 import { Op } from 'sequelize';
 import { Contract } from '../contract/entities/contract.model';
+import path from 'path';
 
 @Injectable()
 export class CustomersService {
@@ -51,6 +52,7 @@ export class CustomersService {
     createCustomerDto: CreateCustomerDto,
     password: string,
     phone: bigint,
+    picture: string,
   ) {
     try {
       const customer = await this.customersRepository.create({
@@ -62,7 +64,7 @@ export class CustomersService {
         name: createCustomerDto.name,
         phone: phone,
         full_name: createCustomerDto.full_name,
-        picture: createCustomerDto.picture,
+        picture: picture,
       });
 
       const contractCustomer = await this.contractService.createContract(
@@ -70,8 +72,11 @@ export class CustomersService {
       );
       await customer.$add('contract', contractCustomer);
       await customer.reload();
-
-      return customer;
+      const newCustomerByEmail = await this.customersRepository.findByPk(
+        customer.id_customer,
+        { include: [Contract] },
+      );
+      return newCustomerByEmail;
     } catch {
       throw new HttpException(
         'Data is incorrect and must be uniq',

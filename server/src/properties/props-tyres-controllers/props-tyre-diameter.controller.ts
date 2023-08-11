@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { PropsTyrDiametrService } from '../props-tyres-services/props-tyre-diameter.service';
 import { CreatePropertyDto } from '../dto/create-property.dto';
@@ -32,6 +33,11 @@ export class PropertiesDiameterController {
   findOne(@Param() getPropertyDto: GetPropertyDto) {
     return this.propertiesDiameterService.findTyreDiameterById(getPropertyDto);
   }
+
+  @Get('/tyres/diameter/by-model')
+  findAllParamsByModel(@Query('model') model: string) {
+    return this.propertiesDiameterService.findAllTyresDiametersByModel(+model);
+  };
 
   @Patch('/diameter/update')
   update(@Body() updatePropertyDto: UpdatePropertyDto) {

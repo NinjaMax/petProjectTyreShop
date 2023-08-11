@@ -6,6 +6,7 @@ import { ConfigService } from '../../config/config.service';
 import queryString from 'querystring';
 import { CustomersService } from '../../customers/customers.service';
 import { randomInt } from 'crypto';
+import * as argon2 from 'argon2';
 
 @Injectable()
 export class FacebookAuthService {
@@ -102,14 +103,20 @@ export class FacebookAuthService {
     );
     if (!custmByFacebook) {
       const phone: any = randomInt(380000000000, 990000000000);
+      const createPass = {
+        password: await argon2.hash(facebookUser.email ?? facebookUser.name),
+      };
       const newCustomer = await this.customersService.createCustomerByEmail(
         facebookUser,
-        facebookUser.email,
+        createPass.password,
         phone,
+        facebookUser.profile_image_url
       );
       facebookUser.contract = newCustomer.contract;
     }
-    facebookUser.contract = custmByFacebook.contract;
+    if (custmByFacebook) {
+      facebookUser.contract = custmByFacebook.contract;
+    }
     const token = this.jwtService.sign(facebookUser);
     res.cookie('auth_custm', token, {
       maxAge: 900000,

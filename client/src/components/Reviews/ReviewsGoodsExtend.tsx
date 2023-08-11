@@ -2,14 +2,19 @@ import React from 'react';
 import '../../css/Reviews/ReviewGoodsExtend.css';
 import Rating from '../ux/Rating';
 import RatingOptions from '../ux/RatingOptions';
+import { IRatingAvg } from '../../pages/types/RatingModelAvg.type';
 
-const ReviewsGoodsExtend = () => {
+type IRatingExtend = {
+    ratingItem?: IRatingAvg
+};
+
+const ReviewsGoodsExtend = ({ratingItem}:IRatingExtend) => {
     
     return (
         <div>
             <div className="heading">Рейтинг
                 <Rating 
-                    numScore={4.8}
+                    numScore={ratingItem?.avgRatingModel ?? 0}
                     nameRating={'Расширенние'}
                     disabled={true}
                 />
@@ -17,20 +22,10 @@ const ReviewsGoodsExtend = () => {
             <div className='ratingList'>
                 <div className='ratingListItems'>
                     <RatingOptions 
-                        nameRating={'Бренд'}
-                    >
-                    <Rating 
-                        numScore={4.8}
-                        disabled={true}
-                    /> 
-                    </RatingOptions> 
-                </div>
-                <div className='ratingListItems'>
-                    <RatingOptions 
                         nameRating={'Керованість на сухій дорозі'} 
                     >
                     <Rating 
-                        numScore={4.8}
+                        numScore={ratingItem?.avgRatingDryRoad ?? 0}
                         disabled={true}
                     /> 
                      </RatingOptions> 
@@ -40,7 +35,7 @@ const ReviewsGoodsExtend = () => {
                         nameRating={'Керованість на мокрій дорозі'} 
                     >
                     <Rating 
-                        numScore={4.8}
+                        numScore={ratingItem?.avgRatingWetRoad ?? 0}
                         disabled={true}
                     /> 
                     </RatingOptions> 
@@ -50,7 +45,7 @@ const ReviewsGoodsExtend = () => {
                         nameRating={'Керованість на снігу'}
                     >
                     <Rating 
-                        numScore={4.8}
+                        numScore={ratingItem?.avgRatingSnowRoad ?? 0}
                         disabled={true}
                     /> 
                     </RatingOptions> 
@@ -60,7 +55,7 @@ const ReviewsGoodsExtend = () => {
                         nameRating={'Керованість на льду'}
                     >
                     <Rating 
-                        numScore={4.8}
+                        numScore={ratingItem?.avgRatingIceRoad ?? 0}
                         disabled={true}
                     /> 
                     </RatingOptions> 
@@ -70,7 +65,7 @@ const ReviewsGoodsExtend = () => {
                         nameRating={'Проходимість'}
                     >
                     <Rating 
-                        numScore={4.8}
+                        numScore={ratingItem?.avgRatingCrossCountry ?? 0}
                         disabled={true}
                     /> 
                     </RatingOptions> 
@@ -80,7 +75,7 @@ const ReviewsGoodsExtend = () => {
                         nameRating={'Зносостійкість'}
                     >
                     <Rating 
-                        numScore={4.8}
+                        numScore={ratingItem?.avgRatingTreadwear ?? 0}
                         disabled={true}
                     /> 
                     </RatingOptions> 
@@ -90,7 +85,7 @@ const ReviewsGoodsExtend = () => {
                         nameRating={'Ціна/Якість'} 
                     >
                     <Rating 
-                        numScore={4.8}
+                        numScore={ratingItem?.avgRatingPriceQuality ?? 0}
                         disabled={true}
                     /> 
                     </RatingOptions> 

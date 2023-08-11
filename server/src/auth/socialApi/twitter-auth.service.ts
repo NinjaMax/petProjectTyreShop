@@ -6,6 +6,7 @@ import queryString from 'querystring';
 import axios from 'axios';
 import { Request, Response } from 'express';
 import { randomInt } from 'crypto';
+import * as argon2 from 'argon2';
 
 @Injectable()
 export class TwitterAuthService {
@@ -111,14 +112,23 @@ export class TwitterAuthService {
       );
       if (!custmByTwitter) {
         const phone: any = randomInt(380000000000, 990000000000);
+        const createPass = {
+          password: await argon2.hash(
+            twitterUser.data.email ?? twitterUser.data.name,
+          ),
+        };
         const newCustomer = await this.customersService.createCustomerByEmail(
           twitterUser.data,
-          twitterUser.data.email ?? twitterUser.data.id,
-          phone,
+          createPass.password,
+          twitterUser.data.phone ?? phone,
+          twitterUser.data.profile_image_url
         );
+        console.log('NEW_TWITTER_USER: ', newCustomer); 
         twitterUser.data.contract = newCustomer.contract;
       }
-      twitterUser.data.contract = custmByTwitter.contract;
+      if (custmByTwitter) {
+        twitterUser.data.contract = custmByTwitter.contract;
+      }
       const token = this.jwtService.sign(twitterUser);
       res.cookie('auth_twitter', token, {
         maxAge: 900000,

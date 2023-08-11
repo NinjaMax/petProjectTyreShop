@@ -7,6 +7,13 @@ import { UpdatePropertyDto } from '../dto/update-property.dto';
 import { TyreParams } from '../entities/tyres/tyre-params.model';
 import { Tyres } from '../../tyres/entities/tyres.model';
 import { PriceTyres } from '../../prices/entities/price-tyres.model';
+import { ReviewTyres } from 'src/reviews/entities/review-tyres.model';
+import { RatingTyres } from 'src/ratings/entities/rating-tyres.model';
+import { TyreSeason } from '../entities/tyres/tyre-season.model';
+import { TyreDiameter } from '../entities/tyres/tyre-diameter.model';
+import { TyreVehicleType } from '../entities/tyres/tyre-vehicleType.model';
+import { TyreCountry } from '../entities/tyres/tyre-country.model';
+import { TyreYear } from '../entities/tyres/tyre-year.model';
 
 @Injectable()
 export class PropsTyreParamsService {
@@ -126,7 +133,16 @@ export class PropsTyreParamsService {
       const tyresAllParamsByModel = await this.tyreParamsRepository.findAll({
         include: [
           { model: Tyres, where: { id_model: model},
-            include:[PriceTyres]
+            include:[
+              PriceTyres, 
+              ReviewTyres, 
+              RatingTyres,
+              TyreSeason,
+              TyreDiameter,
+              TyreVehicleType,
+              TyreCountry,
+              TyreYear
+            ]
           }
         ],
       });

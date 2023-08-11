@@ -1,0 +1,102 @@
+/* The overlay effect with black background */
+  
+.modelSectionActive {
+    height: 80%;
+    width: 92%;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-family: var(--main-font-family);
+  }
+  
+  .overlayActive .modelSectionData {
+    background-color:#ffff;
+    border-radius: 15px;
+    padding: 15px;
+    display: block;
+    overflow: hidden;
+
+  }
+
+  /* .noFavoritesGoods {
+
+  } */
+
+  .modelSectionItemsTitle {
+    float: left;
+    margin-top: 10px;
+    margin-right: 10px;
+  }
+  .modelSectionItemsLines {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+  }
+  
+  .titleModelSectionSelect {
+      padding: 10px 10px 10px 10px;
+      margin-left: 3px;
+      border-radius: 20px;
+      background-color: #ddd;
+  }
+
+  .titleModelSectionSelect:hover {
+      background-color: #ccc;
+      cursor: pointer;
+      padding: 10px 10px 10px 10px;
+  }
+
+  .titleModelSectionSelect:active {
+      background-color: #ddd;
+      cursor: pointer;
+  }
+
+  .modeSectionItems .titleModelSectionChoose {
+    padding: 10px 10px 10px 10px;
+    border-radius: 20px;
+  }
+  .modeSectionItems .activatedModelSectionTitle {
+    background-color: #ddd;
+    padding: 10px 10px 10px 10px;
+    border-radius: 20px;
+  }
+  .modeSectionItems .activatedModelSectionTitle:hover {
+    background-color: #ccc;
+    cursor: pointer;
+    padding: 10px 10px 10px 10px;
+  }
+  .modeSectionItems .activatedModelSectionTitle:active {
+    background-color: #ddd;
+    cursor: pointer;
+  }
+  .modeSectionItems .titleModelSectionChoose:hover {
+    background-color: #ccc;
+    cursor: pointer;
+    padding: 10px 10px 10px 10px;
+  }
+  .modeSectionItems .titleModelSectionChoose:active {
+    background-color: #ddd;
+    cursor: pointer;
+  }
+  .modeSectionItems .countModelSectionDiam {
+    border-radius: 35px;
+    color: #ffff;
+    margin: 10px;
+    padding: 1px 8px 1px 8px;
+    background-color: crimson;
+  }
+  .modelSectionItemsBox {
+    overflow-y: scroll;
+    max-height: 300px;
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    gap: 5px;
+    background-color: #ffff;
+    margin: 15px;
+  }
+
+  .modelSectionItemsList {
+      margin: 3px;
+  }

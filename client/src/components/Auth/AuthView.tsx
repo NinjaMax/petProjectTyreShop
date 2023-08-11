@@ -10,8 +10,9 @@ interface IAuthView {
 
 const AuthView = observer(({logOutUser}:IAuthView) => {
     const {customer} = useContext<any | null>(Context);
-    console.log('USER_PHONE_NAME', customer._customer?.sub?.name);
-    console.log('USER_SOCIAL_NAME', customer._customer?.name);
+    console.log('USER_PHONE_NAME: ', customer._customer?.sub?.name);
+    console.log('USER_SOCIAL_NAME: ', customer._customer?.name);
+    console.log('USER_TWITTER_DATA: ', customer._customer);
 
     return (
         <div className='authView'>
@@ -24,7 +25,7 @@ const AuthView = observer(({logOutUser}:IAuthView) => {
                     height={35}
                     alt='imgCusomerBonus'
                 /> 
-                <span>{customer._customer.contract[0].bonus}</span>
+                <span>{String(customer._customer?.contract[0]?.bonus)}</span>
             </>
             : null
             }
