@@ -10,7 +10,7 @@
     font-family: var(--main-font-family);
   }
   
-  .overlayActive .modelSectionData {
+  .modelSectionData {
     background-color:#ffff;
     border-radius: 15px;
     padding: 15px;
@@ -32,6 +32,7 @@
       display: flex;
       flex-direction: row;
       align-items: center;
+      gap: 5px;
   }
   
   .titleModelSectionSelect {
@@ -52,34 +53,35 @@
       cursor: pointer;
   }
 
-  .modeSectionItems .titleModelSectionChoose {
+  .modelSectionItems .titleModelSectionChoose {
     padding: 10px 10px 10px 10px;
     border-radius: 20px;
-  }
-  .modeSectionItems .activatedModelSectionTitle {
     background-color: #ddd;
+  }
+  .modelSectionItems .activatedModelSectionTitle {
+    background-color: #999;
     padding: 10px 10px 10px 10px;
     border-radius: 20px;
   }
-  .modeSectionItems .activatedModelSectionTitle:hover {
+  .modelSectionItems .activatedModelSectionTitle:hover {
     background-color: #ccc;
     cursor: pointer;
     padding: 10px 10px 10px 10px;
   }
-  .modeSectionItems .activatedModelSectionTitle:active {
+  .modelSectionItems .activatedModelSectionTitle:active {
     background-color: #ddd;
     cursor: pointer;
   }
-  .modeSectionItems .titleModelSectionChoose:hover {
+  .modelSectionItems .titleModelSectionChoose:hover {
     background-color: #ccc;
     cursor: pointer;
     padding: 10px 10px 10px 10px;
   }
-  .modeSectionItems .titleModelSectionChoose:active {
+  .modelSectionItems .titleModelSectionChoose:active {
     background-color: #ddd;
     cursor: pointer;
   }
-  .modeSectionItems .countModelSectionDiam {
+  .modelSectionItems .countModelSectionDiam {
     border-radius: 35px;
     color: #ffff;
     margin: 10px;
