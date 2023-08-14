@@ -90,10 +90,11 @@
   }
   .modelSectionItemsBox {
     overflow-y: scroll;
-    max-height: 300px;
+    max-height: 500px;
     display: flex;
     flex-direction:column;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: center;
     gap: 5px;
     background-color: #ffff;
     margin: 15px;

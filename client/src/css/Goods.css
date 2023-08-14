@@ -28,13 +28,13 @@
 .tabGoodsActive {
   grid-area: 2 / 1 / 4 / 4;
 }
-.modelSectionGoods {
+/* .modelSectionGoods {
   display: none;
 }
 
 .modelSectionGoodsActive {
   grid-area: 6 / 1 / 8 / 5;
-}
+} */
 
 .productPayDelGoods {
   grid-area: 4 / 1 / 4 / 5;

@@ -18,6 +18,8 @@ import { getCompareGoods, getFavoritesGoods } from '../../restAPI/restGoodsApi';
 
 const AllAboutProduct = observer(({
     goods, 
+    paramsModel,
+    paramsModelPrice,
     countModelReview,
     avgRatingModel
 }:ITyreCard) => {
@@ -66,7 +68,11 @@ const AllAboutProduct = observer(({
                 <img id='productImgGoods' src={productImage} alt='productImg'/>   
             </div>
             <div className='allAboutProductInfo'>
-                <div className='productInfoName'>{goods?.full_name}</div>
+                <div className='productInfoName'>{
+                    paramsModel ? 'Шини ' + goods?.tyre_brand?.brand + ' ' + goods?.tyre_model?.model 
+                    : goods?.full_name
+                    }
+                </div>
                 <div className='productInfoRating'>
                     <Rating
                         id={goods?.id} 
@@ -79,6 +85,7 @@ const AllAboutProduct = observer(({
                         {countModelReview === 1 ? ' відгук' : ' відгуків'}
                     </a>
                 </div>
+                {!paramsModel ? 
                 <div className="productInfoCode">
                     <div>код товара: {goods?.id}</div>
                     { goods?.stock?.reduce((sum: any, current: any) => (sum.stock + current), 0) > 4 ?
@@ -91,14 +98,10 @@ const AllAboutProduct = observer(({
                         <i className="fas fa-exclamation"></i>
                         закінчується
                     </div>
-                    //     goods?.stock?.reduce((sum: any, current: any) => (sum.stock + current), 0) <= 4 ?
-                    // <div className='productInfoCodeStockNotAval'>
-                    // <i className="fas fa-times-circle"></i>
-                    //     немає в наявності
-                    // </div>
                     }
-                    
                 </div>
+                : null
+                }
                 <div className='productInfoProps'>
                     {goods?.vehicle_type || goods?.season ?
                     <>
@@ -113,6 +116,8 @@ const AllAboutProduct = observer(({
                     <img src='iconsSeasons/noSeason.png' alt='noProd'/>
                     }
                 </div>
+                { !paramsModel ?
+                <>
                 <div className="productInfoCountry">
                     <FlagsIcon 
                         country={goods?.country} 
@@ -145,16 +150,30 @@ const AllAboutProduct = observer(({
                     <a href='/'> за відгук</a>
                     </>
                 </div>
-                {goods?.price ? goods?.price.map((item: any) =>(
+                </>
+                : 
+                <>
+                <a href='/'>
+                    Всі шини { goods?.tyre_brand?.brand}
+                </a>
+                <a href='/'>
+                    Вся {goods?.season?.season_ua} шина { goods?.tyre_brand?.brand}
+                </a>
+                </>
+                }
+                {!paramsModel && goods?.price ? goods?.price.map((item: any) =>(
                     <div className="productInfoPrice" key={item.id}>
                         {item.price} &#8372;
                     </div> 
                     )) : 
                 <div className="productInfoPrice">
-                    немає в наявності
+                    {paramsModelPrice ? <span>{'від ' + paramsModelPrice[0].tyres[0].price[0].price} 
+                     &#8372;</span>
+                    : 'немає в наявності'}
                 </div> 
                 }
-                
+                { !paramsModel ?
+                <>
                 <div className='btnGoodsBox'>
                     <ButtonAction 
                         props={"КУПИТИ"} 
@@ -176,7 +195,11 @@ const AllAboutProduct = observer(({
                     value={"garantia"} 
                     titleCheckbox={"Гарантія SKYSAFE"} 
                     imageSrc={guardChecked ? './iconGuard/guard_64_b.png' : './iconGuard/guard_64_g.png'}/>   
-                </div>        
+                </div>
+                </>
+                : null
+                }
+                {!paramsModel ?     
                 <div className='additionalTools'>
                     <span className='additionalToolsLabel'
                         onClick={addToFavorites}
@@ -209,6 +232,8 @@ const AllAboutProduct = observer(({
                         </span>  
                     </span>    
                 </div>
+                : null
+                }
                 <SocialMediaLinks/>   
             </div>
             <div className='productRightgBox'>

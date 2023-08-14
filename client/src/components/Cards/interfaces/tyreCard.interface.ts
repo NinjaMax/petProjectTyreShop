@@ -3,6 +3,8 @@ export interface ITyreCard {
     avgRatingModel?: number;
     optionsBox?: boolean;
     forOrder?: boolean;
+    paramsModel?:boolean;
+    paramsModelPrice?: any[] | null;
     goods?: { 
         category:{
             id_cat: string,

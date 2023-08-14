@@ -1,0 +1,21 @@
+.footerContainer {
+    width: 100%;
+    background-color: #71C2FF;
+    font-family: var(--main-font-family);
+    color: #ffff;
+    
+}
+
+.footerBox {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+    align-items:flex-start;
+}
+
+.footerSocialSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}

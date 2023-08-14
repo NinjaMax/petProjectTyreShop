@@ -93,7 +93,7 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
                     />
                 </div>
                 <div className='tyresCardBonus'>
-                   <img src='./iconBonus/skyBonus_48_b.png' 
+                   <img src='/iconBonus/skyBonus_48_b.png' 
                     width={30}
                     height={30}
                     alt='bonus'

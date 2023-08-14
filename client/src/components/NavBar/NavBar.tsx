@@ -236,7 +236,7 @@ const NavBar = observer(() => {
   return (
   <div className="navbar">
     <a href='/'>
-      <img data-href='/' src='logoSky180.png' alt='logoShop'/>
+      <img data-href='/' src='/logoSky180.png' alt='logoShop'/>
     </a>
     <NavBarDropTyres/>
     <NavBarDropWheels/>

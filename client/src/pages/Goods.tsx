@@ -59,7 +59,7 @@ const GoodsPage = observer(() => {
   const [allParamsModel, setAllParamsModel] = useState<any[] | null>();
   const [changeTabGoods, setChangeTabGoods] = useState<string>("vseProTovar");
   const [allDiametersModel, setAllDiametersModel] = useState<any[] | null>();
-  const [paramsModel, setParamsModel] = useState<boolean>(true);
+  const [paramsModel, setParamsModel] = useState<boolean>(false);
   const history =  useHistory();
   const param = useParams<any>();
   let match = useRouteMatch<any>('/:goodsItem');
@@ -308,6 +308,8 @@ const GoodsPage = observer(() => {
             >
             {changeTabGoods === "vseProTovar" ?
                 <AllAboutProduct 
+                  paramsModel={paramsModel}
+                  paramsModelPrice={allDiametersModel}
                   goods={goodsTyre._product}
                   countModelReview={reviewCountModel}
                   avgRatingModel={ratingModelAvg?.avgRatingModel}
@@ -380,9 +382,14 @@ const GoodsPage = observer(() => {
       <div className={paramsModel ? 'modelSectionGoodsActive' : 
         'modelSectionGoods'
       }>
-        <ModelSection modelGoods={allDiametersModel}/> 
+      {paramsModel ?
+        <ModelSection 
+          modelGoods={allDiametersModel}
+          modelName={goodsTyre?._product?.tyre_model?.model}
+        /> 
+        : null
+      }
       </div>
-
       <div className={paramsModel ? 'similarGoodsModelNone' : 'similarGoodsModel'}>
         <SimilarGoods similarGoodsList={similarBrandGoods}/>
       </div>
