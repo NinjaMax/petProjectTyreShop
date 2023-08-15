@@ -40,4 +40,7 @@ export interface TyrePropsConfigAttr {
   width: string;
   id_year: number;
   manufacture_year: string;
+  fuel_efficiency: string;
+  wet_traction: string;
+  loud_level: number;
 }

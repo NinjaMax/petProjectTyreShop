@@ -94,4 +94,6 @@ export class UpdateReviewDto extends PartialType(CreateReviewDto) {
 
   readonly likeCount: number;
   readonly dislikeCount: number;
+  readonly id_review_store: number;
+  readonly description: string;
 }

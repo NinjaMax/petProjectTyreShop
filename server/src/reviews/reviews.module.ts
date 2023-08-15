@@ -14,13 +14,17 @@ import { Tyres } from '../tyres/entities/tyres.model';
 import { TyresModule } from '../tyres/tyres.module';
 import { Users } from '../users/entities/users.model';
 import { UsersModule } from '../users/users.module';
+import { ReviewStore } from './entities/review-store.model';
+import { ReviewsStoreService } from './reviews-store.service';
+import { ReviewsStoreController } from './reviews-store.controller';
 
 @Module({
-  controllers: [ReviewsController],
-  providers: [ReviewsService],
+  controllers: [ReviewsController, ReviewsStoreController],
+  providers: [ReviewsService, ReviewsStoreService],
   imports: [ 
     SequelizeModule.forFeature([
       ReviewTyres,
+      ReviewStore,
       Tyres,
       RatingTyres,
       TyreModel,

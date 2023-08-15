@@ -13,6 +13,7 @@ import { Basket } from '../../basket/entities/basket.model';
 import { Comments } from '../../comments/entities/comment.model';
 import { OrdersSupplier } from '../../orders-suppliers/entities/orders-supplier.model';
 import { Contract } from '../../contract/entities/contract.model';
+import { Question } from '../../questions/entities/question.entity';
 
 @Table({ tableName: 'user', createdAt: false, updatedAt: false })
 export class Users extends Model<Users, UsersConfigAttr> {
@@ -68,4 +69,7 @@ export class Users extends Model<Users, UsersConfigAttr> {
 
   @HasMany(() => Contract, 'id_user')
   contract: Contract[];
+
+  @HasMany(() => Question, 'id_user')
+  question: Question[];
 }

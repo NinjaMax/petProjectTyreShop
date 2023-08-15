@@ -35,6 +35,8 @@ import { TyreYear } from '../../properties/entities/tyres/tyre-year.model';
 import { RatingTyres } from '../../ratings/entities/rating-tyres.model';
 import { ReviewTyres } from '../../reviews/entities/review-tyres.model';
 import { Description } from '../../description/entities/description.entity';
+import { TyreEuromark } from '../../properties/entities/tyres/tyre-euromark.model';
+import { Question } from '../../questions/entities/question.entity';
 
 @Table({ tableName: 'tyres', updatedAt: false })
 export class Tyres extends Model<Tyres, TyresConfigAttr> {
@@ -159,6 +161,9 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
   @HasMany(() => RatingTyres, 'id')
   rating: RatingTyres[];
 
+  @HasMany(() => Question, 'id')
+  question: Question[];
+
   @BelongsTo(() => Category, 'id_cat')
   category: Category;
 
@@ -224,4 +229,7 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
 
   @BelongsTo(() => Description, 'id_description')
   description: Description;
+
+  @BelongsTo(() => TyreEuromark, 'id_euromark')
+  euromark: TyreEuromark;
 }

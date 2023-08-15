@@ -12,6 +12,7 @@ import { RatingTyres } from '../../../ratings/entities/rating-tyres.model';
 import { Tyres } from '../../../tyres/entities/tyres.model';
 import { ReviewTyres } from '../../../reviews/entities/review-tyres.model';
 import { Description } from '../../../description/entities/description.entity';
+import { Question } from '../../../questions/entities/question.entity';
 
 @Table({ tableName: 'tyre_model', updatedAt: false, createdAt: false })
 export class TyreModel extends Model<TyreModel, TyreModelConfigAttr> {
@@ -42,4 +43,7 @@ export class TyreModel extends Model<TyreModel, TyreModelConfigAttr> {
 
   @HasMany(() => ReviewTyres, 'id_model')
   reviews: ReviewTyres[];
+
+  @HasMany(() => Question, 'id_model')
+  question: Question[];
 }

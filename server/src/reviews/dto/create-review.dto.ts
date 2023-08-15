@@ -95,4 +95,11 @@ export class CreateReviewDto {
   readonly address: string;
   readonly delivery: string;
   readonly picture: string;
+
+  readonly id_euromark: number;
+  readonly fuel_efficiency: string;
+  readonly wet_traction: string;
+  readonly loud_level: number;
+  readonly id_review_store: number;
+  readonly description: string;
 }

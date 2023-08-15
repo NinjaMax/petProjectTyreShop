@@ -1,7 +1,24 @@
-export class GetPropertyDto {
-  readonly id: number;
+export class CreateQuestionDto {
+  readonly id_question: number;
+  readonly id_user: number;
+  readonly id_customer: number;
   readonly id_model: number;
   readonly id_brand: number;
+  readonly description: string;
+  readonly name: string;
+  readonly customer_pictures: string;
+
+  readonly full_name: string;
+  readonly phone: bigint;
+  readonly email: string;
+  readonly password: string;
+  readonly picture: string;
+  readonly id_contract: number;
+  readonly balance: number;
+  readonly id: number; 
+  readonly update_date: Date; 
+  readonly id_supplier: number;
+
   readonly id_width: number;
   readonly width: string;
   readonly id_height: number;
@@ -66,11 +83,10 @@ export class GetPropertyDto {
   readonly id_wheel: number;
   readonly id_oil: number;
   readonly id_battery: number;
-  readonly id_supplier: number;
-  readonly update_date: Date;
-  readonly full_name: string;
   readonly id_euromark: number;
   readonly fuel_efficiency: string;
   readonly wet_traction: string;
   readonly loud_level: number;
+  readonly address: string; 
+  readonly delivery: string;
 }

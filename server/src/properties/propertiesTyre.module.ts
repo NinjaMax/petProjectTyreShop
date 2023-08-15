@@ -59,6 +59,9 @@ import { PropertiesStuddedController } from './props-tyres-controllers/props-tyr
 import { PropertiesVehicleTypeController } from './props-tyres-controllers/props-tyre-vehicleType.controller';
 import { PropertiesWidthController } from './props-tyres-controllers/props-tyre-width.controller';
 import { PropertiesParamsController } from './props-tyres-controllers/props-tyre-params.controller';
+import { TyreEuromark } from './entities/tyres/tyre-euromark.model';
+import { PropertiesEuromarkController } from './props-tyres-controllers/props-tyre-euromark.controller';
+import { PropsTyreEuromarkService } from './props-tyres-services/props-tyre-euromark.service';
 
 @Module({
   controllers: [
@@ -75,7 +78,8 @@ import { PropertiesParamsController } from './props-tyres-controllers/props-tyre
     PropertiesStuddedController,
     PropertiesVehicleTypeController,
     PropertiesWidthController,
-    PropertiesParamsController
+    PropertiesParamsController,
+    PropertiesEuromarkController
   ],
   providers: [
     PropsBrandService,
@@ -98,6 +102,7 @@ import { PropertiesParamsController } from './props-tyres-controllers/props-tyre
     PropsTyreVehicleTypeService,
     PropsTyreWidthService,
     PropsTyreYearService,
+    PropsTyreEuromarkService
   ],
   imports: [ 
     SequelizeModule.forFeature([
@@ -124,6 +129,7 @@ import { PropertiesParamsController } from './props-tyres-controllers/props-tyre
       TyreVehicleType,
       TyreWidth,
       TyreYear,
+      TyreEuromark,
     ]),
     forwardRef(() => TyresModule),
     RatingsModule,
@@ -149,6 +155,7 @@ import { PropertiesParamsController } from './props-tyres-controllers/props-tyre
     PropsTyreVehicleTypeService,
     PropsTyreWidthService,
     PropsTyreYearService,
+    PropsTyreEuromarkService,
   ],
 })
 export class PropertiesTyreModule {}

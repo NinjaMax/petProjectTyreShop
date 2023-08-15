@@ -104,6 +104,10 @@ import { Description } from './description/entities/description.entity';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Basket_Storage } from './basket/entities/basket-storage.model';
+import { TyreEuromark } from './properties/entities/tyres/tyre-euromark.model';
+import { ReviewStore } from './reviews/entities/review-store.model';
+import { QuestionsModule } from './questions/questions.module';
+import { AnswersModule } from './answers/answers.module';
 
 @Module({
   imports: [
@@ -159,6 +163,7 @@ import { Basket_Storage } from './basket/entities/basket-storage.model';
           TyreVehicleType,
           TyreWidth,
           TyreYear,
+          TyreEuromark,
           WheelBrand,
           WheelModel,
           WheelBoltCount,
@@ -186,6 +191,7 @@ import { Basket_Storage } from './basket/entities/basket-storage.model';
           Customer,
           Description,
           Basket_Storage,
+          ReviewStore,
         ],
         autoLoadModels: true,
         synchronize: true,
@@ -244,6 +250,8 @@ import { Basket_Storage } from './basket/entities/basket-storage.model';
     AuthModule,
     PaytypesModule,
     DescriptionModule,
+    QuestionsModule,
+    AnswersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

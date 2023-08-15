@@ -9,6 +9,7 @@ export const CATALOG_TYRES_ROUTE = '/tyres';
 export const CATALOG_WHEELS_ROUTE = '/wheels';
 export const CATALOG_OILS_ROUTE = '/oils';
 export const CATALOG_BATTERY_ROUTE = '/battery';
+export const REVIEW_STORE_ROUTE = '/review';
 export const BASKET_ROUTE = '/basket';
 export const GOODS_ROUTE = ':goodsItem';
 export const MAIN_ROUTE = '/';

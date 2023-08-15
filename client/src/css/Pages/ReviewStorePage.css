@@ -1,0 +1,36 @@
+.reviewStorePage {
+   background-color: #ffffff;
+   font-family: var(--main-font-family);
+   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+   color: #444B54;
+   border-radius: 8px;  */
+}
+
+.reviewStorePageContainer {
+    margin:10px 50px 10px 50px;
+    padding: 10px;
+}
+
+.reviewStorePageTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.reviewStorePageTitle span {
+    font-weight: bold;
+    color: #000000;
+}
+
+.reviewStorePageBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 10px;
+    padding: 10px;
+    
+}
+
