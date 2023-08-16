@@ -40,7 +40,7 @@ const Footer = () => {
       <section className="">
         <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
           <h6 className="text-uppercase fw-bold mb-4">
-            <i className="fas fa-gem me-3"></i>Company name
+            <i className="fas fa-gem me-3"></i>Компанія
           </h6>
           <p>
             <a href="/#" className="text-reset">О компании</a>
@@ -99,7 +99,7 @@ const Footer = () => {
             <a href="/#" className="text-reset">Гарантія</a>
           </p>
           <p>
-            <a href="/#" className="text-reset">Розширенна гарантія</a>
+            <a href="/#" className="text-reset">Гарантія SKYSAFE</a>
           </p>
           <p>
             <a href="/#" className="text-reset">Контакти</a>
@@ -113,23 +113,23 @@ const Footer = () => {
         </div>
       </section>
       <section>
-        <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-          <h6 className="text-uppercase fw-bold mb-4">
+        <div className="contactSection">
+          <h4 className="text-uppercase fw-bold mb-4">
             Контакти
-          </h6>
-          <p><i className="fas fa-home me-3"></i> New York, NY 10012, US</p>
+          </h4>
+          <p><i className="fas fa-home me-3"></i> Україна, м Харків 10012</p>
           <p>
             <i className="fas fa-envelope me-3"></i>
-            info@example.com
+             info@example.com
           </p>
-          <p><i className="fas fa-phone me-3"></i> + 01 234 567 88</p>
-          <p><i className="fas fa-print me-3"></i> + 01 234 567 89</p>
+          <p><i className="fas fa-phone me-3"></i> + 38 099 999 88 55</p>
+          <p><i className="fas fa-print me-3"></i> + 38 050 500 50 50</p>
         </div>
       </section>
     </div>
     <div className="text-center p-4">
       © 2023 Copyright:
-      <a className="text-reset fw-bold" href="/#">skyparts.com.ua</a>
+      <a className="text-reset fw-bold" href="/#"> skyparts.com.ua</a>
     </div>
   </div>
 )};

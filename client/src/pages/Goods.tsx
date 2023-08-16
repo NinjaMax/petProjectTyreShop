@@ -30,6 +30,7 @@ import { IRatingBrandAvg } from './types/RatingBrandAvg.type';
 import { IRatingSeasonAvg } from './types/RatingBrandSeason.type';
 import { FormValues } from '../components/reviews/types/ReviewTyreCreate.type';
 import ModelSection from '../components/goods/ModelSection';
+import Question from '../components/question/Questions';
 
 type ILikeTyreType = {
   id_review: number;
@@ -364,7 +365,7 @@ const GoodsPage = observer(() => {
             :null
           }
           {changeTabGoods === "pitannja" ?
-              <span>ПИТАННЯ ТА ВІДПОВІДІ </span>
+              <Question/>
             :null
           }
         </TabsGoodsCard>

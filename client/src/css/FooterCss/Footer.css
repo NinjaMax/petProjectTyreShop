@@ -19,3 +19,14 @@
     justify-content: flex-start;
     align-items: flex-start;
 }
+
+.footerContainer a {
+    color: #444B54;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.contactSection {
+    color: #444B54;
+    font-weight: bold;
+}

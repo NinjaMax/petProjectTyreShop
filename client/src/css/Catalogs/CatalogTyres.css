@@ -1,4 +1,8 @@
 
+.catalogTyres {
+  font-family: var(--main-font-family);
+}
+
 h1 {
     font-size: 50px;
     font-family: var(--main-font-family);

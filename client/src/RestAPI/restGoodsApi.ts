@@ -540,10 +540,61 @@ const getTyresCountReviewByModel = async (
     return data;
 }
 
+const createStoreReview = async (
+    data?: any, 
+    id_customer?: number, 
+    customer_pictures?: string,   
+    rating?:number,
+    ) =>
+    await $hostPost.post('/reviews-store', {
+    email: data?.email,
+    description: data?.description,
+    positive: data?.positive,
+    negative: data?.negative,
+    name: data?.name,    
+    id_customer: id_customer,
+    customer_pictures: customer_pictures,
+    rating: rating,
+})
+.catch(error => {
+        console.log(error)
+}); 
+
+const createQuestion = async (
+    data:any, 
+    id: number,
+    id_brand: number,
+    id_model: number,
+    id_customer?: number,
+    id_user?: number, 
+    customer_pictures?: string,   
+    ) =>
+    await $hostPost.post('/questions', {
+    email: data?.email,
+    description: data?.description,
+    name: data?.name,    
+    id: id,
+    id_brand: id_brand,
+    id_model: id_model,
+    id_customer: id_customer,
+    id_user: id_user,
+    customer_pictures: customer_pictures,
+})
+.catch(error => {
+        console.log(error)
+}); 
+
 const getSupplierById = async (id_supplier: number) => {
     const {data} = await $hostGet.get(
         `/suppliers/byid/${id_supplier ?? 0}`,
     )
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+const getAllStoreReview = async () => {
+    const {data} = await $hostGet.get('/reviews-store/allstores')
     //localStorage.setItem('token', data.token)
     //console.log('GET_TYRES_BY_ID: ', data )
     return data;
@@ -692,4 +743,7 @@ export {
     getFavorites,
     clearFavorites,
     clearCompare,
+    createQuestion,
+    createStoreReview,
+    getAllStoreReview
 }

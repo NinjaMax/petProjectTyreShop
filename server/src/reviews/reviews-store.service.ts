@@ -15,22 +15,20 @@ export class ReviewsStoreService {
 
   async createReviewStore(createReviewDto: CreateReviewDto) {
     try {
-      const customer = await this.customersService.findCustomerById(
-        createReviewDto,
-      );
-      const reviewStoreCreate = await this.reviewStoreRepository.create(
-        createReviewDto,
-      );
-      // const newReview = await this.reviewStoreRepository.findByPk(
-      //   reviewStoreCreate.id_review_store,
-      //   { include: { all: true } },
-      // );
+      if (createReviewDto.name || createReviewDto.description) {
+        const customer = await this.customersService.findCustomerById(
+          createReviewDto,
+        );
+        const reviewStoreCreate = await this.reviewStoreRepository.create(
+          createReviewDto,
+        );
 
-      if (customer) {
-        await reviewStoreCreate.$add('customer', customer.id_customer);
+        if (customer) {
+          await reviewStoreCreate.$add('customer', customer.id_customer);
+        }
+        reviewStoreCreate.reload();
+        return reviewStoreCreate;
       }
-      reviewStoreCreate.reload();
-      return reviewStoreCreate;
     } catch {
       throw new HttpException(
         'Data is incorrect and must be uniq',
@@ -70,7 +68,7 @@ export class ReviewsStoreService {
     }
   }
 
-  update(id: number, updateReviewDto: UpdateReviewDto) {
+  async update(id: number, updateReviewDto: UpdateReviewDto) {
     return `This action updates a #${id} review`;
   }
 

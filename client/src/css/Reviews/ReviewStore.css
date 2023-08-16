@@ -2,14 +2,15 @@
 .reviewStore {
   display: block;
   width: 655px;
-  height: 355px;
+  max-height: 355px;
+  font-family: var(--main-font-family);
 }
 
 .reviewsStoreContainer{
     position: relative;
     background: #ddd;
-    border-radius:10px 10px 0 0;
-    height: 290.4px;
+    border-radius:10px;
+    max-height: 290.4px;
     
 }
   
@@ -18,6 +19,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, 1fr);
   padding: 15px;
+  max-height: 200px;
   /*text-align: center;*/
 } 
   /* Add a blue color to the author */
@@ -29,13 +31,13 @@
   color: #444B54;
 }
 
-.authorStoreReview .avatarImg {
+.authorStoreReview .avatarImgStore {
   width: 35px;
   height: 35px;
   border-radius:50%;
   background-color:#9EB9D3;
   vertical-align: middle;
-
+  margin-right: 3px;
 }
 
   .ratingStoreReview {
@@ -63,12 +65,12 @@
     font-family: var(--main-font-family);
   }
 
-  .answerStoreReview {
+  /* .answerStoreReview {
    
 
     grid-column: 1/3;
     grid-row: 4/7;
-  }
+  } */
 
   /* Next & previous buttons */
   .prevReview, .nextReview {
@@ -125,7 +127,7 @@
     font-family: var(--main-font-family);
     
   }
-  
+
   
  
   

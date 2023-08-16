@@ -88,9 +88,11 @@ export class QuestionsService {
     return `This action updates a #${id} question`;
   }
 
-  async removeQuestion(id: number) {
+  async removeQuestion(id_question: number) {
     try {
-      const removeQuestion = await this.questionsRepository.destroy(id);
+      const removeQuestion = await this.questionsRepository.destroy({
+        where: { id_question: id_question },
+    });
       return removeQuestion;
     } catch (error) {
       throw new HttpException(

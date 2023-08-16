@@ -115,19 +115,9 @@ const CatalogTyres = observer(() => {
     return (
         <div>
             <h2>Шини</h2>
-            {/* <div className="btnContainerCatalogTyres">
-                <button className="btnCatalog active" > Show all</button>
-                <button className="btnCatalog" > Nature</button>
-                <button className="btnCatalog" > Cars</button>
-                <button className="btnCatalog" > People</button>
-                <button className="btnCatalog" > Cars</button>
-                <button className="btnCatalog" > People</button>
-                <span>Допомогти у підборі? </span>
-                <span>Як підібрати?</span>
-            </div> */}
             <div className='popularCatalogTyre'>
                 <div>Популярні розміри:<PopularSizeTyre/></div>
-                <div>Популярні діаметри:<PopularDiametrTyre/></div>
+                <div>Популярні запити:<PopularDiametrTyre/></div>
             </div> 
             <div className='sortBtnCatalog'>
                 <span>Сортування:</span>

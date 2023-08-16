@@ -9,17 +9,17 @@ export class AnswersController {
 
   @Post()
   create(@Body() createAnswerDto: CreateAnswerDto) {
-    return this.answersService.create(createAnswerDto);
+    return this.answersService.createAnswer(createAnswerDto);
   }
 
   @Get()
   findAll() {
-    return this.answersService.findAll();
+    return this.answersService.findAllAnswer();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.answersService.findOne(+id);
+    return this.answersService.findOneAnswer(+id);
   }
 
   @Patch(':id')
@@ -29,6 +29,6 @@ export class AnswersController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.answersService.remove(+id);
+    return this.answersService.removeAnswer(+id);
   }
 }

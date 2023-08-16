@@ -13,7 +13,7 @@ import { Users } from '../../users/entities/users.model';
 import { Question } from '../../questions/entities/question.entity';
 import { AnswerConfigAttr } from '../interfaces/answer.interface';
 
-@Table({ tableName: 'question', createdAt: true, updatedAt: false })
+@Table({ tableName: 'answer', createdAt: true, updatedAt: false })
 export class Answer extends Model<Answer, AnswerConfigAttr> {
   @Column({
     type: DataType.INTEGER,

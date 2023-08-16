@@ -6,38 +6,53 @@ import ReviewAnswer from './ReviewAnswer';
 import DotSite from '../ux/DotSite';
 import ButtonPrevNext from '../buttons/ButtonPrevNext';
 
+type IReviewStoreData = {
+    storeData?:{
+        description?:string,
+        name?:string,
+        email?: string,
+        rating?: number,
+        createdAt?: any,
+        //createdAt?: string | number | Date,
+        customer_pictures?: string
+    }
+};
 
-const ReviewStore = () => {
+const ReviewStore = ({storeData}: IReviewStoreData) => {
     return (
-
     <div className='reviewStore'>  
         <div className="reviewsStoreContainer">
             <div className="mySlidesStoreReview">
-                <div className="authorStoreReview"><img className='avatarImg' src={customerReview} alt='avatarUser'/> Кирилл Шемендюк</div>
+                <div className="authorStoreReview">
+                    <img className='avatarImgStore' 
+                        src={storeData?.customer_pictures ?? customerReview} 
+                        alt='avatarUser'
+                    /> 
+                    {storeData?.name}
+                </div>
                 <div className='ratingStoreReview'>
-                    Оценка:
+                    Оцінка:
                     <Rating 
-                        numScore={4.5}
+                        numScore={storeData?.rating}
                         disabled={true}
                     /> 
                 </div>
                 <div className='contentStoreReview'>
-                     I love you the more in that I believe you had liked me for my own sake and for nothing else.
-                     I love you the more in that I believe you had liked me for my own sake and for nothing else
+                    {storeData?.description}
                 </div>
-                <div className='dateStoreReview'>14.07.2022</div>
+                <div className='dateStoreReview'>{new Date(storeData?.createdAt).toLocaleDateString()}</div>
                 <div className='answerStoreReview'>
-                    <ReviewAnswer/>
+                    {/* <ReviewAnswer/> */}
                 </div>
             </div>
-            <ButtonPrevNext prevBtnLeft={-30} nextBtnRight={-30}/>
+            {/* <ButtonPrevNext prevBtnLeft={-30} nextBtnRight={-30}/> */}
         </div>
 
-        <div className="dotReviewContainerStore">
+        {/* <div className="dotReviewContainerStore">
             <a className='reviewsAllLink' href='/#'>Подивитись всі відгуки</a>
             <DotSite/>
             <button className='btnStoreReview'>Залишити відгук про магазин</button>     
-        </div>
+        </div> */}
                
     </div>
 

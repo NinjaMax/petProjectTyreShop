@@ -4,13 +4,12 @@ import '../../css/PopularGoodsCss/PopularDiametrTyre.css';
 const PopularDiametrTyre = () => {
     return (
         <div className='popularDiametrTyre'>    
-            <span>R13</span>
-            <span>R15</span>
-            <span>R16</span>
-            <span>R16</span>
-            <span>R17</span>
-            <span>R18</span>
-            <span>R19</span>
+            <span>195/65 R15 літо</span>
+            <span>шини для мікроавтобуса</span>
+            <span>зимние шини 205/55 R16</span>
+            <span>Hankook літо 215/65 R16</span>
+            <span>195/65 R15 зима</span>
+            <span>Michelin 215/55 R17 зима</span>
         </div>   
     );
 };

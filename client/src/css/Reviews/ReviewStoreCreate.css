@@ -1,0 +1,57 @@
+.reviewStoreCreate {
+    margin: 10px;
+    width: 570px;
+    height: 450px;
+    font-family: var(--main-font-family);
+    overflow:hidden;
+}
+.reviewStoreCreate h4 {
+    margin-top: 18px;
+    margin-bottom: 18px;
+}
+.reviewStoreRatingList {
+    display: flex;
+    flex-direction:row;
+    justify-content:space-evenly;
+    flex-wrap: wrap;
+    align-items:flex-start;
+    gap: 10px;
+}
+.reviewStoreInputRatingBox {
+    /* overflow: visible; */
+    /* overflow-y: scroll; */
+    height: 250px;
+}
+.reviewStoreInputRating {
+    background-color: #ffff;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    gap: 10px;
+    /* overflow-y: scroll; */
+    /* height: 350px; */
+}
+.reviewStoreInputRating textarea {
+    width: 550px;
+}
+
+.reviewStoreInputRating input {
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: large;
+    padding: 2px;
+}
+.reviewStoreInputRating textarea {
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: large;
+    padding: 2px;
+}
+.reviewStoreErrors {
+    color: red;
+    margin-top: 1px;
+    margin-bottom: 2px;
+    margin-left: 10px;
+    margin-right: 2px;
+    font-size: small;
+}

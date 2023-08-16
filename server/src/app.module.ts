@@ -108,6 +108,8 @@ import { TyreEuromark } from './properties/entities/tyres/tyre-euromark.model';
 import { ReviewStore } from './reviews/entities/review-store.model';
 import { QuestionsModule } from './questions/questions.module';
 import { AnswersModule } from './answers/answers.module';
+import { Answer } from './answers/entities/answer.entity';
+import { Question } from './questions/entities/question.entity';
 
 @Module({
   imports: [
@@ -192,6 +194,8 @@ import { AnswersModule } from './answers/answers.module';
           Description,
           Basket_Storage,
           ReviewStore,
+          Answer,
+          Question,
         ],
         autoLoadModels: true,
         synchronize: true,
