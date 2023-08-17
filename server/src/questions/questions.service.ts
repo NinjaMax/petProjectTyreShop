@@ -32,9 +32,8 @@ export class QuestionsService {
       const customer = await this.customersService.findCustomerById(
         createQuestionDto,
       );
-      const user = await this.usersService.findUserById(createQuestionDto);
 
-      if (tyreById && tyreModel && tyreBrand && user) {
+      if (tyreById && tyreModel && tyreBrand) {
         const questionCreate = await this.questionsRepository.create(
           createQuestionDto,
         );
@@ -62,7 +61,9 @@ export class QuestionsService {
 
   async findAllQuestion() {
     try {
-      const allQuestions = await this.questionsRepository.findAll();
+      const allQuestions = await this.questionsRepository.findAll({
+        include: { all: true },
+      });
       return allQuestions;
     } catch (error) {
       throw new HttpException(

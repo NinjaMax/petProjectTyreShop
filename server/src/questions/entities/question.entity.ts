@@ -53,7 +53,7 @@ export class Question extends Model<Question, QuestionConfigAttr> {
   @Column({ type: DataType.STRING, unique: false, allowNull: false })
   name: string;
 
-  @Column({ type: DataType.STRING, unique: false, allowNull: false })
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
   email: string;
 
   @Column({ type: DataType.STRING, unique: false, allowNull: true })

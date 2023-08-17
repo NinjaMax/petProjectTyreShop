@@ -29,14 +29,11 @@ export class Answer extends Model<Answer, AnswerConfigAttr> {
   @Column({ type: DataType.STRING, unique: false, allowNull: false })
   name: string;
 
-  @Column({ type: DataType.STRING, unique: false, allowNull: false })
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
   email: string;
 
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
   profile_pictures: string;
-
-  @BelongsTo(() => Customer, 'id_customer')
-  customer: Customer;
 
   @BelongsTo(() => Users, 'id_user')
   user: Users;

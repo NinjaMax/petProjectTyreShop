@@ -560,6 +560,13 @@ const createStoreReview = async (
         console.log(error)
 }); 
 
+const getAllStoreReview = async () => {
+    const {data} = await $hostGet.get('/reviews-store/allstores')
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
 const createQuestion = async (
     data:any, 
     id: number,
@@ -584,17 +591,17 @@ const createQuestion = async (
         console.log(error)
 }); 
 
-const getSupplierById = async (id_supplier: number) => {
-    const {data} = await $hostGet.get(
-        `/suppliers/byid/${id_supplier ?? 0}`,
-    )
+const getAllQuestions = async () => {
+    const {data} = await $hostGet.get('/questions/allquestions')
     //localStorage.setItem('token', data.token)
     //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
-const getAllStoreReview = async () => {
-    const {data} = await $hostGet.get('/reviews-store/allstores')
+const getSupplierById = async (id_supplier: number) => {
+    const {data} = await $hostGet.get(
+        `/suppliers/byid/${id_supplier ?? 0}`,
+    )
     //localStorage.setItem('token', data.token)
     //console.log('GET_TYRES_BY_ID: ', data )
     return data;
@@ -745,5 +752,6 @@ export {
     clearCompare,
     createQuestion,
     createStoreReview,
-    getAllStoreReview
+    getAllStoreReview,
+    getAllQuestions
 }

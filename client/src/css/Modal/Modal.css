@@ -1,6 +1,7 @@
 .modalWindow {
     opacity: 0;
     transition: 0.3s all linear;
+    
 }
 
 .modalWindowActive {

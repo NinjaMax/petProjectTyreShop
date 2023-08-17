@@ -7,6 +7,7 @@ export default class PageStore {
     _id: string;
     _loadMore:number;
     _basket_count:number;
+    _questions_count:number;
     _favorites_count:string[];
     _comparison_count:string[];
 
@@ -17,6 +18,7 @@ export default class PageStore {
         this._id = '0';
         this._loadMore = 0;
         this._basket_count = 0;
+        this._questions_count = 0;
         this._favorites_count = [];
         this._comparison_count = [];
         makeAutoObservable(this);
@@ -40,7 +42,9 @@ export default class PageStore {
     setBasketCount(basket_count: number) {
         this._basket_count = basket_count;
     }
-
+    setQuestionsCount(question_count: number) {
+        this._questions_count = question_count;
+    }
     setFavoritesCount(favorites_count: string[]) {
         this._favorites_count = favorites_count;
     }
@@ -67,11 +71,12 @@ export default class PageStore {
     get basketCount() {
         return this._basket_count;
     }
-
+    get questionsCount() {
+        return this._questions_count;
+    }
     get favoritesCount() {
         return this._favorites_count;
     }
-
     get comparisonCount() {
         return this._comparison_count;
     }

@@ -1,0 +1,64 @@
+.contactPageContainer {
+    display: block;
+    font-family: var(--main-font-family);
+    margin: 50px;
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
+}
+
+.contactPageBox {
+    display: flex;
+    flex-direction: row;
+    align-items:flex-start;
+    justify-content:space-around;
+    gap: 20px;
+    
+
+.contactPageTitle {
+    font-weight: bold;
+}
+
+.contactPageAddress {
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    gap: 8px;
+    padding: 8px;
+    /* border-radius: 8px;
+    background-color: #9e9e9e;
+    height: 185px;
+    vertical-align: top; */
+}
+}
+
+.contactPagePhone {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 8px;
+    /* border-radius: 8px;
+    background-color: #9e9e9e;
+    height: 185px; */
+}
+
+.contactPageSocial {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 8px;
+    /* border-radius: 8px;
+    background-color: #9e9e9e;
+    height: 185px; */
+}
+
+.contactPageSchedule {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 8px;
+    /* border-radius: 8px;
+    background-color: #9e9e9e;
+    height: 185px; */
+}

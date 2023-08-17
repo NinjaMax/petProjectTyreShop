@@ -5,10 +5,11 @@
     grid-template-columns: repeat(auto-fill, 1fr);
     /*grid-column: 1/3;
     grid-row: 4/7;*/
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
   }
 
-  #answerStoreLogo{
-    width: 151px;
+  #answerLogo{
+    width: 100px;
     height: 50px;
     padding: 5px;
     vertical-align:middle;
@@ -37,5 +38,6 @@
     grid-row: 2;
     font-size: 15px;
     font-family: var(--main-font-family);
+    padding: 5px;
   }
 

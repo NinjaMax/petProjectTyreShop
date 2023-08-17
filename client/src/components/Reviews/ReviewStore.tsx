@@ -2,9 +2,9 @@ import React from 'react';
 import '../../css/Reviews/ReviewStore.css';
 import Rating from '../ux/Rating';
 import customerReview from '../../assets/icons/customer64.png';
-import ReviewAnswer from './ReviewAnswer';
-import DotSite from '../ux/DotSite';
-import ButtonPrevNext from '../buttons/ButtonPrevNext';
+//import ReviewAnswer from '../question/ReviewAnswer';
+//import DotSite from '../ux/DotSite';
+//import ButtonPrevNext from '../buttons/ButtonPrevNext';
 
 type IReviewStoreData = {
     storeData?:{

@@ -4,19 +4,22 @@ import { UpdateAnswerDto } from './dto/update-answer.dto';
 import { Answer } from './entities/answer.entity';
 import { QuestionsService } from 'src/questions/questions.service';
 import { InjectModel } from '@nestjs/sequelize';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class AnswersService {
   constructor(
     @InjectModel(Answer) private answerRepository: typeof Answer,
     private questionService: QuestionsService,
+    private usersService: UsersService,
   ) {}
   async createAnswer(createAnswerDto: CreateAnswerDto) {
     try {
       const questionId = await this.questionService.findOneQuestion(
         createAnswerDto.id_question,
       );
-      if (questionId) {
+      const user = await this.usersService.findUserById(createAnswerDto);
+      if (questionId && user) {
         const answer = await this.answerRepository.create(createAnswerDto);
         questionId.$add('answer', answer);
         answer.reload();

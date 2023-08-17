@@ -40,7 +40,7 @@ type ILikeTyreType = {
 
 
 const GoodsPage = observer(() => {
-  const {goodsTyre, customer} = useContext<any | null>(Context);
+  const {goodsTyre, page, customer} = useContext<any | null>(Context);
   const [ratingModelAvg, setRatingModelAvg] = useState<IRatingAvg>();
   const [ratingBrandAvg, setRatingBrandAvg] = useState<IRatingBrandAvg>();
   const [ratingSummerAvg, setRatingSummerAvg] = useState<IRatingSeasonAvg>();
@@ -303,7 +303,7 @@ const GoodsPage = observer(() => {
             titleGoodsTab:"ПИТАННЯ ТА ВІДПОВІДІ",
             value:"pitannja",
             checked: changeTabGoods,
-            reviewCount:0,
+            reviewCount: page.questionsCount,
             }
           ]}
             >
