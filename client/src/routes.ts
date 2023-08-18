@@ -1,7 +1,8 @@
 import { ADMIN_ROUTE, ADMIN_AUTH_ROUTE, BASKET_ROUTE, CATALOG_TYRES_ROUTE, 
   LOGIN_ROUTE, REGISTRATION_ROUTE, GOODS_ROUTE, 
   MAIN_ROUTE, CONTACT_ROUTE, SEARCH_ROUTE, NOT_FOUND_ROUTE, 
-  COMPARISON_ROUTE, FAVORITES_ROUTE, REVIEW_STORE_ROUTE,
+  COMPARISON_ROUTE, FAVORITES_ROUTE, REVIEW_STORE_ROUTE, 
+  CATALOG_WHEELS_ROUTE,
 } from './utils/consts';
 import Admin from './pages/Admin';
 import AdminAuth from './components/auth/AdminAuth';
@@ -40,6 +41,11 @@ export const publicRoutes = [
   },
   {
     path: CATALOG_TYRES_ROUTE,
+    exact: true,
+    Component: CatalogTyresPage
+  },
+  {
+    path: CATALOG_WHEELS_ROUTE,
     exact: true,
     Component: CatalogTyresPage
   },

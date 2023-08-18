@@ -1,49 +1,40 @@
 import { $hostGet, $hostPost } from './index';
 import { IReviewTyreRestCreate } from './interfaces/ReviewTyreRest.interface';
 
-// const getTyresOffset = async (
-//     offset: number,
-//     limit: number,
-//     width: string,
-//     height: string,
-//     diameter: string,
-//     season: string,
-//     brand: string,
-//     price: string,
-//     type: string,
-//     speed_index: string,
-//     load_index: string,
-//     studded: string,
-//     run_flat: string,
-//     homologation: string,
-//     reinforced: string,
-//     // cheap: boolean,
-//     // expensive:boolean,
-//     // rating: boolean,
-//     // oldPrice: boolean,
-//     // titleName:boolean,
-//     ) => {
-//     const {data} = await $hostGet.get('tyres/offset', 
-//     {params: {
-//         offset: offset ?? 0,
-//         limit: limit,
-//         width: width,
-//         height: height,
-//         diameter: diameter,
-//         season: season,
-//         brand: brand,
-//         price: price,
-//         type: type,
-//         speed_index: speed_index,
-//         load_index: load_index,
-//         studded: studded,
-//         run_flat: run_flat,
-//         homologation: homologation,
-//         reinforce: reinforced,
-//         }
-//     })
-//     return data;
-// }
+const getWheelsWithoutOffset = async (
+    width: string,
+    diameter: string,
+    bolt_count: string,
+    bolt_count_pcd: string,
+    brand: string,
+    price: string,
+    type: string,
+    color: string,
+    dia: string,
+    et: string,
+    pcd: string,
+    pcd2: string,
+    sort: string,
+    ) => {
+    const {data} = await $hostGet.get('wheels/no-offset', 
+    {params: {
+        width: width,
+        diameter: diameter,
+        bolt_count: bolt_count,
+        bolt_count_pcd: bolt_count_pcd,
+        brand: brand,
+        price: price,
+        type: type,
+        color: color,
+        dia: dia,
+        et: et,
+        pcd: pcd,
+        pcd2: pcd2,
+        sort: sort,
+        }
+    })
+    return data;
+}
 
 const getTyresWithoutOffset = async (
     width: string,
@@ -753,5 +744,6 @@ export {
     createQuestion,
     createStoreReview,
     getAllStoreReview,
-    getAllQuestions
+    getAllQuestions,
+    getWheelsWithoutOffset
 }

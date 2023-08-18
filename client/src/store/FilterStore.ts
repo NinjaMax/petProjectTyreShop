@@ -26,6 +26,22 @@ export default class FilterStore {
     _chipRunFlat:string[];
     _reinforced:string;
     _chipReinforced:string[];
+    _bolt_count: string;
+    _chipBoltCount:string[];
+    _type: string;
+    _chipType: string[];
+    _bolt_count_pcd:string;
+    _chipBoltCountPcd: string[];
+    _color:string;
+    _chipColor: string[];
+    _dia:string;
+    _chipDia: string[];
+    _et: string;
+    _chipEt: string[];
+    _pcd: string;
+    _chipPcd: string[];
+    _pcd2: string;
+    _chipPcd2: string[];
     _sort: string;
     _tyres:[];
     _wheels:[];
@@ -61,6 +77,22 @@ export default class FilterStore {
         this._chipRunFlat = [];
         this._reinforced = '';
         this._chipReinforced = [];
+        this._bolt_count = '';
+        this._chipBoltCount = [];
+        this._type = '';
+        this._chipType = [];
+        this._bolt_count_pcd = '';
+        this._chipBoltCountPcd = [];
+        this._color = '';
+        this._chipColor = [];
+        this._dia = '';
+        this._chipDia = [];
+        this._et = '';
+        this._chipEt = [];
+        this._pcd = '';
+        this._chipPcd = [];
+        this._pcd2 = '';
+        this._chipPcd2 = [];
         this._sort = 'ASC';
         this._widthSearch = [];
         this._heightSearch = [];
@@ -148,6 +180,54 @@ export default class FilterStore {
     setChipReinforced(chipreinforced: []) {
         this._chipReinforced = chipreinforced;
     }
+    setBoltCount(boltCount: string) {
+        this._bolt_count = boltCount;
+    };
+    setChipBoltCount(chipBoltCount:[]) {
+        this._chipBoltCount = chipBoltCount;
+    };
+    setType(type: string) {
+        this._type = type;
+    };
+    setChipType(chipType: []) {
+        this._chipType = chipType;
+    };
+    setBoltCountPcd(boltCountPcd: string) {
+        this._bolt_count_pcd = boltCountPcd;
+    };
+    setChipBoltCountPcd (chipBoltCountPcd: []) {
+        this._chipBoltCountPcd = chipBoltCountPcd;
+    };
+    setColor (color: string) {
+        this._color = color;
+    };
+    setChipColor (chipColor: []) {
+        this._chipColor = chipColor;
+    };
+    setDia (dia: string) {
+        this._dia = dia;
+    };
+    setChipDia (chipDia: []) {
+        this._chipDia = chipDia;
+    };
+    setEt (et: string) {
+        this._et = et;
+    };
+    setChipEt (chipEt: []) {
+        this._chipEt = chipEt;
+    };
+    setPcd (pcd: string) {
+        this._pcd = pcd;
+    };
+    setChipPcd (chipPcd: []) {
+        this._chipPcd = chipPcd;
+    };
+    setPcd2 (pcd2: string) {
+        this._pcd2 = pcd2;
+    };
+    setChipPcd2 (chipPcd2: []) {
+        this._chipPcd2 = chipPcd2;
+    };
     setSort(sort: string) {
         this._sort = sort;
     }
@@ -250,6 +330,54 @@ export default class FilterStore {
     get chipReinforced() {
         return this._chipReinforced;
     }
+    get bolt_count() {
+        return this._bolt_count;
+    };
+    get chipBoltCount() {
+        return this._chipBoltCount;
+    };
+    get type() {
+        return this._type;
+    };
+    get chipType() {
+        return this._chipType;
+    };
+    get bolt_count_pcd() {
+        return this._bolt_count_pcd;
+    };
+    get chipBoltCountPcd() {
+        return this._chipBoltCountPcd;
+    };
+    get color() {
+        return this._color;
+    };
+    get chipColor() {
+        return this._chipColor;
+    };
+    get dia() {
+        return this._dia;
+    };
+    get chipDia() {
+        return this._chipDia;
+    };
+    get et() {
+        return this._et;
+    };
+    get chipEt() {
+        return this._chipEt;
+    };
+    get pcd() {
+        return this._pcd;
+    };
+    get chipPcd() {
+        return this._chipPcd;
+    };
+    get pcd2() {
+        return this._pcd2;
+    };
+    get chipPcd2() {
+        return this._chipPcd2;
+    };
     get sort() {
         return this._sort;
     }
@@ -302,6 +430,30 @@ export default class FilterStore {
     }
     removeChipRunFlatItem(indexNumber: number) {
         this._chipRunFlat.splice(indexNumber, 1);
+    }
+    removeChipBoltCountdItem(indexNumber: number) {
+        this._chipBoltCount.splice(indexNumber, 1);
+    }
+    removeChipBoltCountPcdItem(indexNumber: number) {
+        this._chipBoltCountPcd.splice(indexNumber, 1);
+    }
+    removeChipTypeItem(indexNumber: number) {
+        this._chipType.splice(indexNumber, 1);
+    }
+    removeChipColorItem(indexNumber: number) {
+        this._chipColor.splice(indexNumber, 1);
+    }
+    removeChipDiaItem(indexNumber: number) {
+        this._chipDia.splice(indexNumber, 1);
+    }
+    removeEtItem(indexNumber: number) {
+        this._chipEt.splice(indexNumber, 1);
+    }
+    removeChipPcdItem(indexNumber: number) {
+        this._chipPcd.splice(indexNumber, 1);
+    }
+    removeChipPcd2Item(indexNumber: number) {
+        this._chipPcd2.splice(indexNumber, 1);
     }
     removeChipReinforcedItem(indexNumber: number) {
         this._chipReinforced.splice(indexNumber, 1);

@@ -23,56 +23,59 @@ import { TyreReinforce } from '../properties/entities/tyres/tyre-reinforce.model
 import sequelize from 'sequelize';
 import { TyreSort } from './interfaces/tyresSort.interface';
 import { TyreModel } from '../properties/entities/tyres/tyre-model.model';
+import { RatingTyres } from '../ratings/entities/rating-tyres.model';
+import { ReviewTyres } from '../reviews/entities/review-tyres.model';
+import { TyreCountry } from '../properties/entities/tyres/tyre-country.model';
+import { TyreYear } from '../properties/entities/tyres/tyre-year.model';
 
 @Injectable()
 export class TyresService {
-  constructor(@InjectModel(Tyres) private tyresRepository: typeof Tyres,
-  ) {}
+  constructor(@InjectModel(Tyres) private tyresRepository: typeof Tyres) {}
 
   async createTyres(createTyreDto: CreateTyreDto) {
     try {
       const tyres = await this.tyresRepository.create(createTyreDto);
       return tyres;
-
     } catch {
       throw new HttpException(
-        'Data is incorrect and must be uniq', 
-        HttpStatus.NOT_FOUND
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
       );
     }
   }
 
   async createTyresFromPrice(
-    id: number, 
+    id: number,
     full_name: string,
-    photo_url: string, 
-    update_date: Date, 
+    photo_url: string,
+    update_date: Date,
   ) {
     try {
-      const [tyresIdFromPrice, created] = 
-      await this.tyresRepository.findOrCreate({
-        where: { id: id }, 
+      const [tyresIdFromPrice, created] =
+        await this.tyresRepository.findOrCreate({
+          where: { id: id },
           defaults: {
             id: id,
-            full_name: full_name, 
+            full_name: full_name,
             photo_url: photo_url,
             update_date: update_date,
-          }
+          },
         });
       if (!created) {
         await tyresIdFromPrice.update(
           {
-          //full_name: full_name, 
-          //photo_url: photo_url,
-          update_date: update_date},
-          {where: {id: tyresIdFromPrice.id}}
+            //full_name: full_name,
+            //photo_url: photo_url,
+            update_date: update_date,
+          },
+          { where: { id: tyresIdFromPrice.id } },
         );
         return tyresIdFromPrice;
       }
     } catch {
       throw new HttpException(
-        'Data is incorrect and must be uniq', 
-        HttpStatus.NOT_FOUND
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
       );
     }
   }
@@ -80,14 +83,14 @@ export class TyresService {
   async findAllTyres() {
     try {
       const tyresAll = await this.tyresRepository.findAll({
-        include: { all: true }
+        include: { all: true },
       });
       return tyresAll;
-
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',
-        HttpStatus.NOT_FOUND,)
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
@@ -112,102 +115,112 @@ export class TyresService {
       const tyresAllLimit = await this.tyresRepository.findAll({
         include: [
           { all: true },
-          width ? {
-            model: TyreWidth,
-            where: {
-              width:{[Op.in]: width.split(','),}
-            }
-          }
-           : {model: TyreWidth},
-          height ? {
-            model: TyreHeight,
-            where: {
-              height:{[Op.in]: height.split(','),}
-            }
-          }
-           : {model: TyreHeight},
-           diameter ? {
-            model: TyreDiameter,
-            where: {
-              diameter:{[Op.in]: diameter.split(','),}
-            }
-          }
-           : {model: TyreDiameter},
-           season ? {
-            model: TyreSeason,
-            where: {
-              season_ua: {[Op.in]: season.split(','),
-              },
-            }
-          }
-          : { model: TyreSeason },
-          brand ? {
-            model: TyreBrand,
-            where: {
-              brand:{[Op.in]: brand.split(','),}
-            }
-          }
-           : {model: TyreBrand},
-           price ? {
-            model: PriceTyres,
-            where: {
-              price:{[Op.between]: price.split(','),}
-            }
-          }
-           : {model: PriceTyres}, 
-           type ?
-           { model: TyreVehicleType, 
-             where: { 
-               vehicle_type_ua: {[Op.in]: type.split(','),}, 
-             }
-           } : 
-           { model: TyreVehicleType },
-           speed_index ? {
-            model: TyreSpeedIndex,
-            where: {
-              speed_index_with_desc:{[Op.in]: speed_index.split(','),}
-            }
-          }
-           : {model: TyreSpeedIndex},
-           load_index ? {
-            model: TyreLoadIndex,
-            where: {
-              load_index_with_desc:{[Op.in]: load_index.split(','),}
-            }
-          }
-           : {model: TyreLoadIndex},
-           studded ? {
-            model: TyreStudded,
-            where: {
-              studded:{[Op.in]: studded.split(','),}
-            }
-          }
-           : {model: TyreStudded},
-           run_flat ? {
-            model: TyreRunFlat,
-            where: {
-              run_flat:{[Op.in]: run_flat.split(',')}
-            }
-          }
-           : {model: TyreRunFlat},
-           homologation ? {
-            model: TyreHomologation,
-            where: {
-              homologation:{[Op.in]: homologation.split(',')}
-            }
-          }
-           : {model: TyreHomologation},
-           reinforce ? {
-            model: TyreReinforce,
-            where: {
-              reinforce:{[Op.in]: reinforce.split(',')}
-            }
-          }
-          : {model: TyreReinforce}
-        ], 
-        order: [
-          ['price', 'price', 'asc nulls last'],
+          width
+            ? {
+                model: TyreWidth,
+                where: {
+                  width: { [Op.in]: width.split(',') },
+                },
+              }
+            : { model: TyreWidth },
+          height
+            ? {
+                model: TyreHeight,
+                where: {
+                  height: { [Op.in]: height.split(',') },
+                },
+              }
+            : { model: TyreHeight },
+          diameter
+            ? {
+                model: TyreDiameter,
+                where: {
+                  diameter: { [Op.in]: diameter.split(',') },
+                },
+              }
+            : { model: TyreDiameter },
+          season
+            ? {
+                model: TyreSeason,
+                where: {
+                  season_ua: { [Op.in]: season.split(',') },
+                },
+              }
+            : { model: TyreSeason },
+          brand
+            ? {
+                model: TyreBrand,
+                where: {
+                  brand: { [Op.in]: brand.split(',') },
+                },
+              }
+            : { model: TyreBrand },
+          price
+            ? {
+                model: PriceTyres,
+                where: {
+                  price: { [Op.between]: price.split(',') },
+                },
+              }
+            : { model: PriceTyres },
+          type
+            ? {
+                model: TyreVehicleType,
+                where: {
+                  vehicle_type_ua: { [Op.in]: type.split(',') },
+                },
+              }
+            : { model: TyreVehicleType },
+          speed_index
+            ? {
+                model: TyreSpeedIndex,
+                where: {
+                  speed_index_with_desc: { [Op.in]: speed_index.split(',') },
+                },
+              }
+            : { model: TyreSpeedIndex },
+          load_index
+            ? {
+                model: TyreLoadIndex,
+                where: {
+                  load_index_with_desc: { [Op.in]: load_index.split(',') },
+                },
+              }
+            : { model: TyreLoadIndex },
+          studded
+            ? {
+                model: TyreStudded,
+                where: {
+                  studded: { [Op.in]: studded.split(',') },
+                },
+              }
+            : { model: TyreStudded },
+          run_flat
+            ? {
+                model: TyreRunFlat,
+                where: {
+                  run_flat: { [Op.in]: run_flat.split(',') },
+                },
+              }
+            : { model: TyreRunFlat },
+          homologation
+            ? {
+                model: TyreHomologation,
+                where: {
+                  homologation: { [Op.in]: homologation.split(',') },
+                },
+              }
+            : { model: TyreHomologation },
+          reinforce
+            ? {
+                model: TyreReinforce,
+                where: {
+                  reinforce: { [Op.in]: reinforce.split(',') },
+                },
+              }
+            : { model: TyreReinforce },
         ],
+        order: [['price', 'price', 'asc nulls last']],
         offset: offset ?? 0,
         limit: limit,
       });
@@ -215,7 +228,8 @@ export class TyresService {
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',
-        HttpStatus.NOT_FOUND,)
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
@@ -235,671 +249,742 @@ export class TyresService {
     reinforce: string,
     sort: string,
   ) {
-  try {
-    if (sort === 'ASC') {
-      const tyresAllWithoutLimitC = await this.tyresRepository.findAll({
-        include: [
-          { all: true },
-          width ? {
-            model: TyreWidth,
-            where: {
-              width:{
-                [Op.in]: width.split(','),
-            }
-            }
-          }
-           : {model: TyreWidth},
-          height ? {
-            model: TyreHeight,
-            where: {
-              height:{
-                [Op.in]: height.split(','),
-              }
-            }
-          }
-           : {model: TyreHeight},
-          diameter ? {
-            model: TyreDiameter,
-            where: {
-              diameter:{
-                [Op.in]: diameter.split(','),
-              }
-            }
-          }
-           : {model: TyreDiameter},
-          season ? {
-            model: TyreSeason,
-            where: {
-              season_ua: {
-                [Op.in]: season.split(','),
-              },
-            }
-          }
-          : { model: TyreSeason },
-          brand ? {
-            model: TyreBrand,
-            where: {
-              brand:{
-                [Op.in]: brand.split(','),
-              }
-            }
-          }
-           : {model: TyreBrand},
-          price ? {
-            model: PriceTyres,
-            where: {
-              price:{[Op.between]: price.split(','),},
-            }
-          }
-           : {model: PriceTyres}, 
-          type ?
-           { model: TyreVehicleType, 
-             where: { 
-               vehicle_type_ua: {
-                [Op.in]: type.split(','),
-              }, 
-             }
-           } : 
-           { model: TyreVehicleType },
-          speed_index ? {
-            model: TyreSpeedIndex,
-            where: {
-              speed_index_with_desc:{
-                [Op.in]: speed_index.split(','),
-              }
-            }
-          }
-           : {model: TyreSpeedIndex},
-          load_index ? {
-            model: TyreLoadIndex,
-            where: {
-              load_index_with_desc:{
-                [Op.in]: load_index.split(','),
-              }
-            }
-          }
-           : {model: TyreLoadIndex},
-          studded ? {
-            model: TyreStudded,
-            where: {
-              studded:{
-                [Op.in]: studded.split(','),
-              }
-            }
-          }
-           : {model: TyreStudded},
-          run_flat ? {
-            model: TyreRunFlat,
-            where: {
-              run_flat:{
-                [Op.in]: run_flat.split(','),
-              }
-            }
-          }
-           : {model: TyreRunFlat},
-          homologation ? {
-            model: TyreHomologation,
-            where: {
-              homologation:{
-                [Op.in]: homologation.split(','),
-              }
-            }
-          }
-           : {model: TyreHomologation},
-          reinforce ? {
-            model: TyreReinforce,
-            where: {
-              reinforce:{
-                [Op.in]: reinforce.split(','),
-              }
-            }
-          }
-          : {model: TyreReinforce},
-        ],
-        order: [
-        [
-          sequelize.literal(
-            `CASE WHEN price.price = null OR price.price = 0 THEN NULL ELSE 0 END`,
-          ),
-          'ASC',
-        ],
-        ['price', 'price', 'ASC NULLS LAST'],
-        ],
+    try {
+      if (sort === 'ASC') {
+        const tyresAllWithoutLimitC = await this.tyresRepository.findAll({
+          include: [
+            { model: RatingTyres },
+            { model: ReviewTyres },
+            { model: StockTyres },
+            { model: TyreCountry},
+            { model: TyreYear },
+            //{ all: true },
+            width
+              ? {
+                  model: TyreWidth,
+                  where: {
+                    width: {
+                      [Op.in]: width.split(','),
+                    },
+                  },
+                }
+              : { model: TyreWidth },
+            height
+              ? {
+                  model: TyreHeight,
+                  where: {
+                    height: {
+                      [Op.in]: height.split(','),
+                    },
+                  },
+                }
+              : { model: TyreHeight },
+            diameter
+              ? {
+                  model: TyreDiameter,
+                  where: {
+                    diameter: {
+                      [Op.in]: diameter.split(','),
+                    },
+                  },
+                }
+              : { model: TyreDiameter },
+            season
+              ? {
+                  model: TyreSeason,
+                  where: {
+                    season_ua: {
+                      [Op.in]: season.split(','),
+                    },
+                  },
+                }
+              : { model: TyreSeason },
+            brand
+              ? {
+                  model: TyreBrand,
+                  where: {
+                    brand: {
+                      [Op.in]: brand.split(','),
+                    },
+                  },
+                }
+              : { model: TyreBrand },
+            price
+              ? {
+                  model: PriceTyres,
+                  where: {
+                    price: { [Op.between]: price.split(',') },
+                  },
+                }
+              : { model: PriceTyres },
+            type
+              ? {
+                  model: TyreVehicleType,
+                  where: {
+                    vehicle_type_ua: {
+                      [Op.in]: type.split(','),
+                    },
+                  },
+                }
+              : { model: TyreVehicleType },
+            speed_index
+              ? {
+                  model: TyreSpeedIndex,
+                  where: {
+                    speed_index_with_desc: {
+                      [Op.in]: speed_index.split(','),
+                    },
+                  },
+                }
+              : { model: TyreSpeedIndex },
+            load_index
+              ? {
+                  model: TyreLoadIndex,
+                  where: {
+                    load_index_with_desc: {
+                      [Op.in]: load_index.split(','),
+                    },
+                  },
+                }
+              : { model: TyreLoadIndex },
+            studded
+              ? {
+                  model: TyreStudded,
+                  where: {
+                    studded: {
+                      [Op.in]: studded.split(','),
+                    },
+                  },
+                }
+              : { model: TyreStudded },
+            run_flat
+              ? {
+                  model: TyreRunFlat,
+                  where: {
+                    run_flat: {
+                      [Op.in]: run_flat.split(','),
+                    },
+                  },
+                }
+              : { model: TyreRunFlat },
+            homologation
+              ? {
+                  model: TyreHomologation,
+                  where: {
+                    homologation: {
+                      [Op.in]: homologation.split(','),
+                    },
+                  },
+                }
+              : { model: TyreHomologation },
+            reinforce
+              ? {
+                  model: TyreReinforce,
+                  where: {
+                    reinforce: {
+                      [Op.in]: reinforce.split(','),
+                    },
+                  },
+                }
+              : { model: TyreReinforce },
+          ],
+          order: [
+            [
+              sequelize.literal(
+                `CASE WHEN price.price = null OR price.price = 0 THEN NULL ELSE 0 END`,
+              ),
+              'ASC',
+            ],
+            ['price', 'price', 'ASC NULLS LAST'],
+          ],
         });
-      return tyresAllWithoutLimitC;
-    }
-    if (sort === 'DESC') {
-      const tyresAllWithoutLimitE = await this.tyresRepository.findAll({
-        include: [
-          { all: true },
-          width ? {
-            model: TyreWidth,
-            where: {
-              width:{
-                [Op.in]: width.split(','),
-            }
-            }
-          }
-           : {model: TyreWidth},
-          height ? {
-            model: TyreHeight,
-            where: {
-              height:{
-                [Op.in]: height.split(','),
-              }
-            }
-          }
-           : {model: TyreHeight},
-          diameter ? {
-            model: TyreDiameter,
-            where: {
-              diameter:{
-                [Op.in]: diameter.split(','),
-              }
-            }
-          }
-           : {model: TyreDiameter},
-          season ? {
-            model: TyreSeason,
-            where: {
-              season_ua: {
-                [Op.in]: season.split(','),
-              },
-            }
-          }
-          : { model: TyreSeason },
-          brand ? {
-            model: TyreBrand,
-            where: {
-              brand:{
-                [Op.in]: brand.split(','),
-              }
-            }
-          }
-           : {model: TyreBrand},
-          price ? {
-            model: PriceTyres,
-            where: {
-              price:{[Op.between]: price.split(','),},
-            }
-          }
-           : {model: PriceTyres}, 
-          type ?
-           { model: TyreVehicleType, 
-             where: { 
-               vehicle_type_ua: {
-                [Op.in]: type.split(','),
-              }, 
-             }
-           } : 
-           { model: TyreVehicleType },
-          speed_index ? {
-            model: TyreSpeedIndex,
-            where: {
-              speed_index_with_desc:{
-                [Op.in]: speed_index.split(','),
-              }
-            }
-          }
-           : {model: TyreSpeedIndex},
-          load_index ? {
-            model: TyreLoadIndex,
-            where: {
-              load_index_with_desc:{
-                [Op.in]: load_index.split(','),
-              }
-            }
-          }
-           : {model: TyreLoadIndex},
-          studded ? {
-            model: TyreStudded,
-            where: {
-              studded:{
-                [Op.in]: studded.split(','),
-              }
-            }
-          }
-           : {model: TyreStudded},
-          run_flat ? {
-            model: TyreRunFlat,
-            where: {
-              run_flat:{
-                [Op.in]: run_flat.split(','),
-              }
-            }
-          }
-           : {model: TyreRunFlat},
-          homologation ? {
-            model: TyreHomologation,
-            where: {
-              homologation:{
-                [Op.in]: homologation.split(','),
-              }
-            }
-          }
-           : {model: TyreHomologation},
-          reinforce ? {
-            model: TyreReinforce,
-            where: {
-              reinforce:{
-                [Op.in]: reinforce.split(','),
-              }
-            }
-          }
-          : {model: TyreReinforce},
-        ],
-        order: [
-        [
-            sequelize.literal(
-            `CASE WHEN price.price = null OR price.price = 0 THEN NULL ELSE 0 END`,
-          ),
-          'ASC',
-        ],
-        ['price', 'price', 'DESC'],
-        ],
+        return tyresAllWithoutLimitC;
+      }
+      if (sort === 'DESC') {
+        const tyresAllWithoutLimitE = await this.tyresRepository.findAll({
+          include: [
+            { all: true },
+            width
+              ? {
+                  model: TyreWidth,
+                  where: {
+                    width: {
+                      [Op.in]: width.split(','),
+                    },
+                  },
+                }
+              : { model: TyreWidth },
+            height
+              ? {
+                  model: TyreHeight,
+                  where: {
+                    height: {
+                      [Op.in]: height.split(','),
+                    },
+                  },
+                }
+              : { model: TyreHeight },
+            diameter
+              ? {
+                  model: TyreDiameter,
+                  where: {
+                    diameter: {
+                      [Op.in]: diameter.split(','),
+                    },
+                  },
+                }
+              : { model: TyreDiameter },
+            season
+              ? {
+                  model: TyreSeason,
+                  where: {
+                    season_ua: {
+                      [Op.in]: season.split(','),
+                    },
+                  },
+                }
+              : { model: TyreSeason },
+            brand
+              ? {
+                  model: TyreBrand,
+                  where: {
+                    brand: {
+                      [Op.in]: brand.split(','),
+                    },
+                  },
+                }
+              : { model: TyreBrand },
+            price
+              ? {
+                  model: PriceTyres,
+                  where: {
+                    price: { [Op.between]: price.split(',') },
+                  },
+                }
+              : { model: PriceTyres },
+            type
+              ? {
+                  model: TyreVehicleType,
+                  where: {
+                    vehicle_type_ua: {
+                      [Op.in]: type.split(','),
+                    },
+                  },
+                }
+              : { model: TyreVehicleType },
+            speed_index
+              ? {
+                  model: TyreSpeedIndex,
+                  where: {
+                    speed_index_with_desc: {
+                      [Op.in]: speed_index.split(','),
+                    },
+                  },
+                }
+              : { model: TyreSpeedIndex },
+            load_index
+              ? {
+                  model: TyreLoadIndex,
+                  where: {
+                    load_index_with_desc: {
+                      [Op.in]: load_index.split(','),
+                    },
+                  },
+                }
+              : { model: TyreLoadIndex },
+            studded
+              ? {
+                  model: TyreStudded,
+                  where: {
+                    studded: {
+                      [Op.in]: studded.split(','),
+                    },
+                  },
+                }
+              : { model: TyreStudded },
+            run_flat
+              ? {
+                  model: TyreRunFlat,
+                  where: {
+                    run_flat: {
+                      [Op.in]: run_flat.split(','),
+                    },
+                  },
+                }
+              : { model: TyreRunFlat },
+            homologation
+              ? {
+                  model: TyreHomologation,
+                  where: {
+                    homologation: {
+                      [Op.in]: homologation.split(','),
+                    },
+                  },
+                }
+              : { model: TyreHomologation },
+            reinforce
+              ? {
+                  model: TyreReinforce,
+                  where: {
+                    reinforce: {
+                      [Op.in]: reinforce.split(','),
+                    },
+                  },
+                }
+              : { model: TyreReinforce },
+          ],
+          order: [
+            [
+              sequelize.literal(
+                `CASE WHEN price.price = null OR price.price = 0 THEN NULL ELSE 0 END`,
+              ),
+              'ASC',
+            ],
+            ['price', 'price', 'DESC'],
+          ],
         });
-      return tyresAllWithoutLimitE;
-    }
-    if (sort === 'oldPrice' ) {
-      const tyresAllWithoutLimitO = await this.tyresRepository.findAll({
-        include: [
-          { all: true },
-          width ? {
-            model: TyreWidth,
-            where: {
-              width:{
-                [Op.in]: width.split(','),
-            }
-            }
-          }
-           : {model: TyreWidth},
-          height ? {
-            model: TyreHeight,
-            where: {
-              height:{
-                [Op.in]: height.split(','),
-              }
-            }
-          }
-           : {model: TyreHeight},
-          diameter ? {
-            model: TyreDiameter,
-            where: {
-              diameter:{
-                [Op.in]: diameter.split(','),
-              }
-            }
-          }
-           : {model: TyreDiameter},
-          season ? {
-            model: TyreSeason,
-            where: {
-              season_ua: {
-                [Op.in]: season.split(','),
-              },
-            }
-          }
-          : { model: TyreSeason },
-          brand ? {
-            model: TyreBrand,
-            where: {
-              brand:{
-                [Op.in]: brand.split(','),
-              }
-            }
-          }
-           : {model: TyreBrand},
-          price ? {
-            model: PriceTyres,
-            where: {
-              price:{[Op.between]: price.split(','),},
-            }
-          }
-           : {model: PriceTyres}, 
-          type ?
-           { model: TyreVehicleType, 
-             where: { 
-               vehicle_type_ua: {
-                [Op.in]: type.split(','),
-              }, 
-             }
-           } : 
-           { model: TyreVehicleType },
-          speed_index ? {
-            model: TyreSpeedIndex,
-            where: {
-              speed_index_with_desc:{
-                [Op.in]: speed_index.split(','),
-              }
-            }
-          }
-           : {model: TyreSpeedIndex},
-          load_index ? {
-            model: TyreLoadIndex,
-            where: {
-              load_index_with_desc:{
-                [Op.in]: load_index.split(','),
-              }
-            }
-          }
-           : {model: TyreLoadIndex},
-          studded ? {
-            model: TyreStudded,
-            where: {
-              studded:{
-                [Op.in]: studded.split(','),
-              }
-            }
-          }
-           : {model: TyreStudded},
-          run_flat ? {
-            model: TyreRunFlat,
-            where: {
-              run_flat:{
-                [Op.in]: run_flat.split(','),
-              }
-            }
-          }
-           : {model: TyreRunFlat},
-          homologation ? {
-            model: TyreHomologation,
-            where: {
-              homologation:{
-                [Op.in]: homologation.split(','),
-              }
-            }
-          }
-           : {model: TyreHomologation},
-          reinforce ? {
-            model: TyreReinforce,
-            where: {
-              reinforce:{
-                [Op.in]: reinforce.split(','),
-              }
-            }
-          }
-          : {model: TyreReinforce},
-        ],
-        order: [
-        [
-          sequelize.literal(
-            `CASE WHEN price.price = null OR price.price = 0 THEN NULL ELSE 0 END`,
-          ),
-          'ASC',
-        ],
-        ['price', 'old_price', 'ASC'],
-        ],
+        return tyresAllWithoutLimitE;
+      }
+      if (sort === 'oldPrice') {
+        const tyresAllWithoutLimitO = await this.tyresRepository.findAll({
+          include: [
+            { all: true },
+            width
+              ? {
+                  model: TyreWidth,
+                  where: {
+                    width: {
+                      [Op.in]: width.split(','),
+                    },
+                  },
+                }
+              : { model: TyreWidth },
+            height
+              ? {
+                  model: TyreHeight,
+                  where: {
+                    height: {
+                      [Op.in]: height.split(','),
+                    },
+                  },
+                }
+              : { model: TyreHeight },
+            diameter
+              ? {
+                  model: TyreDiameter,
+                  where: {
+                    diameter: {
+                      [Op.in]: diameter.split(','),
+                    },
+                  },
+                }
+              : { model: TyreDiameter },
+            season
+              ? {
+                  model: TyreSeason,
+                  where: {
+                    season_ua: {
+                      [Op.in]: season.split(','),
+                    },
+                  },
+                }
+              : { model: TyreSeason },
+            brand
+              ? {
+                  model: TyreBrand,
+                  where: {
+                    brand: {
+                      [Op.in]: brand.split(','),
+                    },
+                  },
+                }
+              : { model: TyreBrand },
+            price
+              ? {
+                  model: PriceTyres,
+                  where: {
+                    price: { [Op.between]: price.split(',') },
+                  },
+                }
+              : { model: PriceTyres },
+            type
+              ? {
+                  model: TyreVehicleType,
+                  where: {
+                    vehicle_type_ua: {
+                      [Op.in]: type.split(','),
+                    },
+                  },
+                }
+              : { model: TyreVehicleType },
+            speed_index
+              ? {
+                  model: TyreSpeedIndex,
+                  where: {
+                    speed_index_with_desc: {
+                      [Op.in]: speed_index.split(','),
+                    },
+                  },
+                }
+              : { model: TyreSpeedIndex },
+            load_index
+              ? {
+                  model: TyreLoadIndex,
+                  where: {
+                    load_index_with_desc: {
+                      [Op.in]: load_index.split(','),
+                    },
+                  },
+                }
+              : { model: TyreLoadIndex },
+            studded
+              ? {
+                  model: TyreStudded,
+                  where: {
+                    studded: {
+                      [Op.in]: studded.split(','),
+                    },
+                  },
+                }
+              : { model: TyreStudded },
+            run_flat
+              ? {
+                  model: TyreRunFlat,
+                  where: {
+                    run_flat: {
+                      [Op.in]: run_flat.split(','),
+                    },
+                  },
+                }
+              : { model: TyreRunFlat },
+            homologation
+              ? {
+                  model: TyreHomologation,
+                  where: {
+                    homologation: {
+                      [Op.in]: homologation.split(','),
+                    },
+                  },
+                }
+              : { model: TyreHomologation },
+            reinforce
+              ? {
+                  model: TyreReinforce,
+                  where: {
+                    reinforce: {
+                      [Op.in]: reinforce.split(','),
+                    },
+                  },
+                }
+              : { model: TyreReinforce },
+          ],
+          order: [
+            [
+              sequelize.literal(
+                `CASE WHEN price.price = null OR price.price = 0 THEN NULL ELSE 0 END`,
+              ),
+              'ASC',
+            ],
+            ['price', 'old_price', 'ASC'],
+          ],
         });
-      return tyresAllWithoutLimitO;
-    }
-    if (sort === 'title') {
-      const tyresAllWithoutLimitT = await this.tyresRepository.findAll({
-        include: [
-          { all: true },
-          width ? {
-            model: TyreWidth,
-            where: {
-              width:{
-                [Op.in]: width.split(','),
-            }
-            }
-          }
-           : {model: TyreWidth},
-          height ? {
-            model: TyreHeight,
-            where: {
-              height:{
-                [Op.in]: height.split(','),
-              }
-            }
-          }
-           : {model: TyreHeight},
-          diameter ? {
-            model: TyreDiameter,
-            where: {
-              diameter:{
-                [Op.in]: diameter.split(','),
-              }
-            }
-          }
-           : {model: TyreDiameter},
-          season ? {
-            model: TyreSeason,
-            where: {
-              season_ua: {
-                [Op.in]: season.split(','),
-              },
-            }
-          }
-          : { model: TyreSeason },
-          brand ? {
-            model: TyreBrand,
-            where: {
-              brand:{
-                [Op.in]: brand.split(','),
-              }
-            }
-          }
-           : {model: TyreBrand},
-          price ? {
-            model: PriceTyres,
-            where: {
-              price:{[Op.between]: price.split(','),},
-            }
-          }
-           : {model: PriceTyres}, 
-          type ?
-           { model: TyreVehicleType, 
-             where: { 
-               vehicle_type_ua: {
-                [Op.in]: type.split(','),
-              }, 
-             }
-           } : 
-           { model: TyreVehicleType },
-          speed_index ? {
-            model: TyreSpeedIndex,
-            where: {
-              speed_index_with_desc:{
-                [Op.in]: speed_index.split(','),
-              }
-            }
-          }
-           : {model: TyreSpeedIndex},
-          load_index ? {
-            model: TyreLoadIndex,
-            where: {
-              load_index_with_desc:{
-                [Op.in]: load_index.split(','),
-              }
-            }
-          }
-           : {model: TyreLoadIndex},
-          studded ? {
-            model: TyreStudded,
-            where: {
-              studded:{
-                [Op.in]: studded.split(','),
-              }
-            }
-          }
-           : {model: TyreStudded},
-          run_flat ? {
-            model: TyreRunFlat,
-            where: {
-              run_flat:{
-                [Op.in]: run_flat.split(','),
-              }
-            }
-          }
-           : {model: TyreRunFlat},
-          homologation ? {
-            model: TyreHomologation,
-            where: {
-              homologation:{
-                [Op.in]: homologation.split(','),
-              }
-            }
-          }
-           : {model: TyreHomologation},
-          reinforce ? {
-            model: TyreReinforce,
-            where: {
-              reinforce:{
-                [Op.in]: reinforce.split(','),
-              }
-            }
-          }
-          : {model: TyreReinforce},
-        ],
-        order: [
-        [
-          sequelize.literal(
-            `CASE WHEN price.price = null OR price.price = 0 THEN NULL ELSE 0 END`,
-          ),
-          'ASC',
-        ],
-        ['full_name', 'ASC'],
-        ],
+        return tyresAllWithoutLimitO;
+      }
+      if (sort === 'title') {
+        const tyresAllWithoutLimitT = await this.tyresRepository.findAll({
+          include: [
+            { all: true },
+            width
+              ? {
+                  model: TyreWidth,
+                  where: {
+                    width: {
+                      [Op.in]: width.split(','),
+                    },
+                  },
+                }
+              : { model: TyreWidth },
+            height
+              ? {
+                  model: TyreHeight,
+                  where: {
+                    height: {
+                      [Op.in]: height.split(','),
+                    },
+                  },
+                }
+              : { model: TyreHeight },
+            diameter
+              ? {
+                  model: TyreDiameter,
+                  where: {
+                    diameter: {
+                      [Op.in]: diameter.split(','),
+                    },
+                  },
+                }
+              : { model: TyreDiameter },
+            season
+              ? {
+                  model: TyreSeason,
+                  where: {
+                    season_ua: {
+                      [Op.in]: season.split(','),
+                    },
+                  },
+                }
+              : { model: TyreSeason },
+            brand
+              ? {
+                  model: TyreBrand,
+                  where: {
+                    brand: {
+                      [Op.in]: brand.split(','),
+                    },
+                  },
+                }
+              : { model: TyreBrand },
+            price
+              ? {
+                  model: PriceTyres,
+                  where: {
+                    price: { [Op.between]: price.split(',') },
+                  },
+                }
+              : { model: PriceTyres },
+            type
+              ? {
+                  model: TyreVehicleType,
+                  where: {
+                    vehicle_type_ua: {
+                      [Op.in]: type.split(','),
+                    },
+                  },
+                }
+              : { model: TyreVehicleType },
+            speed_index
+              ? {
+                  model: TyreSpeedIndex,
+                  where: {
+                    speed_index_with_desc: {
+                      [Op.in]: speed_index.split(','),
+                    },
+                  },
+                }
+              : { model: TyreSpeedIndex },
+            load_index
+              ? {
+                  model: TyreLoadIndex,
+                  where: {
+                    load_index_with_desc: {
+                      [Op.in]: load_index.split(','),
+                    },
+                  },
+                }
+              : { model: TyreLoadIndex },
+            studded
+              ? {
+                  model: TyreStudded,
+                  where: {
+                    studded: {
+                      [Op.in]: studded.split(','),
+                    },
+                  },
+                }
+              : { model: TyreStudded },
+            run_flat
+              ? {
+                  model: TyreRunFlat,
+                  where: {
+                    run_flat: {
+                      [Op.in]: run_flat.split(','),
+                    },
+                  },
+                }
+              : { model: TyreRunFlat },
+            homologation
+              ? {
+                  model: TyreHomologation,
+                  where: {
+                    homologation: {
+                      [Op.in]: homologation.split(','),
+                    },
+                  },
+                }
+              : { model: TyreHomologation },
+            reinforce
+              ? {
+                  model: TyreReinforce,
+                  where: {
+                    reinforce: {
+                      [Op.in]: reinforce.split(','),
+                    },
+                  },
+                }
+              : { model: TyreReinforce },
+          ],
+          order: [
+            [
+              sequelize.literal(
+                `CASE WHEN price.price = null OR price.price = 0 THEN NULL ELSE 0 END`,
+              ),
+              'ASC',
+            ],
+            ['full_name', 'ASC'],
+          ],
         });
-      return tyresAllWithoutLimitT;
-    }
-    if (sort === 'rating') {
-      const tyresAllWithoutLimitR = await this.tyresRepository.findAll({
-        include: [
-          { all: true },
-          width ? {
-            model: TyreWidth,
-            where: {
-              width:{
-                [Op.in]: width.split(','),
-            }
-            }
-          }
-           : {model: TyreWidth},
-          height ? {
-            model: TyreHeight,
-            where: {
-              height:{
-                [Op.in]: height.split(','),
-              }
-            }
-          }
-           : {model: TyreHeight},
-          diameter ? {
-            model: TyreDiameter,
-            where: {
-              diameter:{
-                [Op.in]: diameter.split(','),
-              }
-            }
-          }
-           : {model: TyreDiameter},
-          season ? {
-            model: TyreSeason,
-            where: {
-              season_ua: {
-                [Op.in]: season.split(','),
-              },
-            }
-          }
-          : { model: TyreSeason },
-          brand ? {
-            model: TyreBrand,
-            where: {
-              brand:{
-                [Op.in]: brand.split(','),
-              }
-            }
-          }
-           : {model: TyreBrand},
-          price ? {
-            model: PriceTyres,
-            where: {
-              price:{[Op.between]: price.split(','),},
-            }
-          }
-           : {model: PriceTyres}, 
-          type ?
-           { model: TyreVehicleType, 
-             where: { 
-               vehicle_type_ua: {
-                [Op.in]: type.split(','),
-              }, 
-             }
-           } : 
-           { model: TyreVehicleType },
-          speed_index ? {
-            model: TyreSpeedIndex,
-            where: {
-              speed_index_with_desc:{
-                [Op.in]: speed_index.split(','),
-              }
-            }
-          }
-           : {model: TyreSpeedIndex},
-          load_index ? {
-            model: TyreLoadIndex,
-            where: {
-              load_index_with_desc:{
-                [Op.in]: load_index.split(','),
-              }
-            }
-          }
-           : {model: TyreLoadIndex},
-          studded ? {
-            model: TyreStudded,
-            where: {
-              studded:{
-                [Op.in]: studded.split(','),
-              }
-            }
-          }
-           : {model: TyreStudded},
-          run_flat ? {
-            model: TyreRunFlat,
-            where: {
-              run_flat:{
-                [Op.in]: run_flat.split(','),
-              }
-            }
-          }
-           : {model: TyreRunFlat},
-          homologation ? {
-            model: TyreHomologation,
-            where: {
-              homologation:{
-                [Op.in]: homologation.split(','),
-              }
-            }
-          }
-           : {model: TyreHomologation},
-          reinforce ? {
-            model: TyreReinforce,
-            where: {
-              reinforce:{
-                [Op.in]: reinforce.split(','),
-              }
-            }
-          }
-          : {model: TyreReinforce},
-        ],
-        order: [
-        [
-          sequelize.literal(
-            `CASE WHEN price.price = null OR price.price = 0 THEN NULL ELSE 0 END`,
-          ),
-          'ASC',
-        ],
-        ['rating', 'rating', 'DESC'],
-        ],
+        return tyresAllWithoutLimitT;
+      }
+      if (sort === 'rating') {
+        const tyresAllWithoutLimitR = await this.tyresRepository.findAll({
+          include: [
+            { all: true },
+            width
+              ? {
+                  model: TyreWidth,
+                  where: {
+                    width: {
+                      [Op.in]: width.split(','),
+                    },
+                  },
+                }
+              : { model: TyreWidth },
+            height
+              ? {
+                  model: TyreHeight,
+                  where: {
+                    height: {
+                      [Op.in]: height.split(','),
+                    },
+                  },
+                }
+              : { model: TyreHeight },
+            diameter
+              ? {
+                  model: TyreDiameter,
+                  where: {
+                    diameter: {
+                      [Op.in]: diameter.split(','),
+                    },
+                  },
+                }
+              : { model: TyreDiameter },
+            season
+              ? {
+                  model: TyreSeason,
+                  where: {
+                    season_ua: {
+                      [Op.in]: season.split(','),
+                    },
+                  },
+                }
+              : { model: TyreSeason },
+            brand
+              ? {
+                  model: TyreBrand,
+                  where: {
+                    brand: {
+                      [Op.in]: brand.split(','),
+                    },
+                  },
+                }
+              : { model: TyreBrand },
+            price
+              ? {
+                  model: PriceTyres,
+                  where: {
+                    price: { [Op.between]: price.split(',') },
+                  },
+                }
+              : { model: PriceTyres },
+            type
+              ? {
+                  model: TyreVehicleType,
+                  where: {
+                    vehicle_type_ua: {
+                      [Op.in]: type.split(','),
+                    },
+                  },
+                }
+              : { model: TyreVehicleType },
+            speed_index
+              ? {
+                  model: TyreSpeedIndex,
+                  where: {
+                    speed_index_with_desc: {
+                      [Op.in]: speed_index.split(','),
+                    },
+                  },
+                }
+              : { model: TyreSpeedIndex },
+            load_index
+              ? {
+                  model: TyreLoadIndex,
+                  where: {
+                    load_index_with_desc: {
+                      [Op.in]: load_index.split(','),
+                    },
+                  },
+                }
+              : { model: TyreLoadIndex },
+            studded
+              ? {
+                  model: TyreStudded,
+                  where: {
+                    studded: {
+                      [Op.in]: studded.split(','),
+                    },
+                  },
+                }
+              : { model: TyreStudded },
+            run_flat
+              ? {
+                  model: TyreRunFlat,
+                  where: {
+                    run_flat: {
+                      [Op.in]: run_flat.split(','),
+                    },
+                  },
+                }
+              : { model: TyreRunFlat },
+            homologation
+              ? {
+                  model: TyreHomologation,
+                  where: {
+                    homologation: {
+                      [Op.in]: homologation.split(','),
+                    },
+                  },
+                }
+              : { model: TyreHomologation },
+            reinforce
+              ? {
+                  model: TyreReinforce,
+                  where: {
+                    reinforce: {
+                      [Op.in]: reinforce.split(','),
+                    },
+                  },
+                }
+              : { model: TyreReinforce },
+          ],
+          order: [
+            [
+              sequelize.literal(
+                `CASE WHEN price.price = null OR price.price = 0 THEN NULL ELSE 0 END`,
+              ),
+              'ASC',
+            ],
+            ['rating', 'rating', 'DESC'],
+          ],
         });
-      return tyresAllWithoutLimitR;
-    }
+        return tyresAllWithoutLimitR;
+      }
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',
-        HttpStatus.NOT_FOUND,)
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
@@ -915,17 +1000,16 @@ export class TyresService {
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',
-        HttpStatus.NOT_FOUND,)
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
-  async findAllTyresByBrand(
-    brand: string,
-    ) {
+  async findAllTyresByBrand(brand: string) {
     try {
       const tyresAllByBrand = await this.tyresRepository.findAll({
         include: [
-          { model: TyreModel},
+          { model: TyreModel },
           // { all: true },
           { model: TyreBrand, where: { brand: brand } },
         ],
@@ -935,25 +1019,10 @@ export class TyresService {
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',
-        HttpStatus.NOT_FOUND,)
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
-
-  // async findAllTyresByType(type: string) {
-  //   try {
-  //     const tyresAllByType = await this.tyresRepository.findAll({
-  //       include: [
-  //         { all: true },
-  //         { model: TyreVehicleType, where: { vehicle_type_ua: type } },
-  //       ],
-  //     });
-  //     return tyresAllByType;
-  //   } catch {
-  //     throw new HttpException(
-  //       'Data is incorrect or Not Found',
-  //       HttpStatus.NOT_FOUND,)
-  //   }
-  // }
 
   async findAllTyresByDiameter(diameter: string) {
     try {
@@ -967,27 +1036,26 @@ export class TyresService {
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',
-        HttpStatus.NOT_FOUND,)
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
-  async findAllTyresByParamsSeason(
-    params: string,
-    season_ua: string,
-    ) {
+  async findAllTyresByParamsSeason(params: string, season_ua: string) {
     try {
       const tyresAllByParamsSeason = await this.tyresRepository.findAll({
         include: [
           { all: true },
-          { model: TyreParams, where: { params: params }},
-          { model: TyreSeason, where: { season_ua: season_ua }},
+          { model: TyreParams, where: { params: params } },
+          { model: TyreSeason, where: { season_ua: season_ua } },
         ],
       });
       return tyresAllByParamsSeason;
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',
-        HttpStatus.NOT_FOUND,)
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
@@ -995,41 +1063,40 @@ export class TyresService {
     params: string,
     brand: string,
     season_ua: string,
-    ) {
+  ) {
     try {
       const tyresAllByBrandParamsSeason = await this.tyresRepository.findAll({
         include: [
           { all: true },
-          { model: TyreParams, where: { params: params }},
+          { model: TyreParams, where: { params: params } },
           { model: TyreBrand, where: { brand: brand } },
-          { model: TyreSeason, where: { season_ua: season_ua }},
+          { model: TyreSeason, where: { season_ua: season_ua } },
         ],
       });
       return tyresAllByBrandParamsSeason;
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',
-        HttpStatus.NOT_FOUND,)
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
-  async findAllTyresByBrandModel(
-    brand: string,
-    model: string,
-    ) {
+  async findAllTyresByBrandModel(brand: string, model: string) {
     try {
       const tyresAllByBrandModel = await this.tyresRepository.findAll({
         include: [
           { all: true },
-          { model: TyreBrand, where: { brand: brand }},
-          { model: TyreModel, where: { model: model }},
+          { model: TyreBrand, where: { brand: brand } },
+          { model: TyreModel, where: { model: model } },
         ],
       });
       return tyresAllByBrandModel;
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',
-        HttpStatus.NOT_FOUND,)
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
@@ -1045,35 +1112,37 @@ export class TyresService {
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',
-        HttpStatus.NOT_FOUND,)
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
   async findAllTyresByFullName(fullname: string) {
     try {
       const tyresOneByFullname = await this.tyresRepository.findOne({
-        where: { full_name: fullname }, 
+        where: { full_name: fullname },
         include: { all: true },
       });
       return tyresOneByFullname;
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',
-        HttpStatus.NOT_FOUND,)
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
   async findTyresById(getTyreDto: GetTyreDto) {
     try {
       const tyresId = await this.tyresRepository.findByPk(getTyreDto.id, {
-        include: { all: true }
+        include: { all: true },
       });
 
       return tyresId;
     } catch {
       throw new HttpException(
-        'Data is incorrect or Not Found', 
-        HttpStatus.NOT_FOUND
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
       );
     }
   }
@@ -1081,14 +1150,14 @@ export class TyresService {
   async findTyresByIdQuery(id: string) {
     try {
       const tyresIdQuery = await this.tyresRepository.findByPk(id, {
-        include: { all: true }
+        include: { all: true },
       });
 
       return tyresIdQuery;
     } catch {
       throw new HttpException(
-        'Data is incorrect or Not Found', 
-        HttpStatus.NOT_FOUND
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
       );
     }
   }
@@ -1096,13 +1165,13 @@ export class TyresService {
   async findTyresByIdParam(id: string) {
     try {
       const tyresIdParam = await this.tyresRepository.findByPk(id, {
-        include: { all: true }
+        include: { all: true },
       });
       return tyresIdParam;
     } catch {
       throw new HttpException(
-        'Data is incorrect or Not Found', 
-        HttpStatus.NOT_FOUND
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
       );
     }
   }
@@ -1110,14 +1179,14 @@ export class TyresService {
   async findTyresByIdPrice(id: number) {
     try {
       const tyresId = await this.tyresRepository.findByPk(id, {
-        include: { all: true }
+        include: { all: true },
       });
 
       return tyresId;
     } catch {
       throw new HttpException(
-        'Data is incorrect or Not Found', 
-        HttpStatus.NOT_FOUND
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
       );
     }
   }
@@ -1140,170 +1209,185 @@ export class TyresService {
     try {
       const tyresCountAll = await this.tyresRepository.findAndCountAll({
         include: [
-        { all: true },
-        width ? {
-          model: TyreWidth,
-          where: {
-            width:{
-              [Op.in]: width.split(','),
-          }
-          }
-        }
-         : {model: TyreWidth},
-        height ? {
-          model: TyreHeight,
-          where: {
-            height:{
-              [Op.in]: height.split(','),
-            }
-          }
-        }
-         : {model: TyreHeight},
-        diameter ? {
-          model: TyreDiameter,
-          where: {
-            diameter:{
-              [Op.in]: diameter.split(','),
-            }
-          }
-        }
-         : {model: TyreDiameter},
-        season ? {
-          model: TyreSeason,
-          where: {
-            season_ua: {
-              [Op.in]: season.split(','),
-            },
-          }
-        }
-        : { model: TyreSeason },
-        brand ? {
-          model: TyreBrand,
-          where: {
-            brand:{
-              [Op.in]: brand.split(','),
-            }
-          }
-        }
-         : {model: TyreBrand},
-        price ? {
-          model: PriceTyres,
-          where: {
-            price:{[Op.between]: price.split(','),},
-          }
-        }
-         : {model: PriceTyres}, 
-        type ?
-         { model: TyreVehicleType, 
-           where: { 
-             vehicle_type_ua: {
-              [Op.in]: type.split(','),
-            }, 
-           }
-         } : 
-         { model: TyreVehicleType },
-        speed_index ? {
-          model: TyreSpeedIndex,
-          where: {
-            speed_index_with_desc:{
-              [Op.in]: speed_index.split(','),
-            }
-          }
-        }
-         : {model: TyreSpeedIndex},
-        load_index ? {
-          model: TyreLoadIndex,
-          where: {
-            load_index_with_desc:{
-              [Op.in]: load_index.split(','),
-            }
-          }
-        }
-         : {model: TyreLoadIndex},
-        studded ? {
-          model: TyreStudded,
-          where: {
-            studded:{
-              [Op.in]: studded.split(','),
-            }
-          }
-        }
-         : {model: TyreStudded},
-        run_flat ? {
-          model: TyreRunFlat,
-          where: {
-            run_flat:{
-              [Op.in]: run_flat.split(','),
-            }
-          }
-        }
-         : {model: TyreRunFlat},
-        homologation ? {
-          model: TyreHomologation,
-          where: {
-            homologation:{
-              [Op.in]: homologation.split(','),
-            }
-          }
-        }
-         : {model: TyreHomologation},
-        reinforce ? {
-          model: TyreReinforce,
-          where: {
-            reinforce:{
-              [Op.in]: reinforce.split(','),
-            }
-          }
-        }
-        : {model: TyreReinforce},
-      ]});
+          //{ all: true },
+          width
+            ? {
+                model: TyreWidth,
+                where: {
+                  width: {
+                    [Op.in]: width.split(','),
+                  },
+                },
+              }
+            : { model: TyreWidth },
+          height
+            ? {
+                model: TyreHeight,
+                where: {
+                  height: {
+                    [Op.in]: height.split(','),
+                  },
+                },
+              }
+            : { model: TyreHeight },
+          diameter
+            ? {
+                model: TyreDiameter,
+                where: {
+                  diameter: {
+                    [Op.in]: diameter.split(','),
+                  },
+                },
+              }
+            : { model: TyreDiameter },
+          season
+            ? {
+                model: TyreSeason,
+                where: {
+                  season_ua: {
+                    [Op.in]: season.split(','),
+                  },
+                },
+              }
+            : { model: TyreSeason },
+          brand
+            ? {
+                model: TyreBrand,
+                where: {
+                  brand: {
+                    [Op.in]: brand.split(','),
+                  },
+                },
+              }
+            : { model: TyreBrand },
+          price
+            ? {
+                model: PriceTyres,
+                where: {
+                  price: { [Op.between]: price.split(',') },
+                },
+              }
+            : { model: PriceTyres },
+          type
+            ? {
+                model: TyreVehicleType,
+                where: {
+                  vehicle_type_ua: {
+                    [Op.in]: type.split(','),
+                  },
+                },
+              }
+            : { model: TyreVehicleType },
+          speed_index
+            ? {
+                model: TyreSpeedIndex,
+                where: {
+                  speed_index_with_desc: {
+                    [Op.in]: speed_index.split(','),
+                  },
+                },
+              }
+            : { model: TyreSpeedIndex },
+          load_index
+            ? {
+                model: TyreLoadIndex,
+                where: {
+                  load_index_with_desc: {
+                    [Op.in]: load_index.split(','),
+                  },
+                },
+              }
+            : { model: TyreLoadIndex },
+          studded
+            ? {
+                model: TyreStudded,
+                where: {
+                  studded: {
+                    [Op.in]: studded.split(','),
+                  },
+                },
+              }
+            : { model: TyreStudded },
+          run_flat
+            ? {
+                model: TyreRunFlat,
+                where: {
+                  run_flat: {
+                    [Op.in]: run_flat.split(','),
+                  },
+                },
+              }
+            : { model: TyreRunFlat },
+          homologation
+            ? {
+                model: TyreHomologation,
+                where: {
+                  homologation: {
+                    [Op.in]: homologation.split(','),
+                  },
+                },
+              }
+            : { model: TyreHomologation },
+          reinforce
+            ? {
+                model: TyreReinforce,
+                where: {
+                  reinforce: {
+                    [Op.in]: reinforce.split(','),
+                  },
+                },
+              }
+            : { model: TyreReinforce },
+        ],
+      });
 
-      return tyresCountAll;
+      return tyresCountAll.rows.length;
     } catch {
       throw new HttpException(
-        'Data is incorrect or Not Found', 
-        HttpStatus.NOT_FOUND
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
       );
     }
   }
 
   async updateTyres(updateTyreDto: UpdateTyreDto) {
     try {
-      const tyresId = await this.tyresRepository.findByPk(updateTyreDto.id, { 
-        include: { all: true }
+      const tyresId = await this.tyresRepository.findByPk(updateTyreDto.id, {
+        include: { all: true },
       });
       if (tyresId) {
         await this.tyresRepository.update(
-        {  
-          full_name : updateTyreDto.full_name,
-          photo_url: updateTyreDto.photo_url,
-          //update_date : updateTyreDto.update_date
-        }, {where: {id : updateTyreDto.id}});
+          {
+            full_name: updateTyreDto.full_name,
+            photo_url: updateTyreDto.photo_url,
+            //update_date : updateTyreDto.update_date
+          },
+          { where: { id: updateTyreDto.id } },
+        );
 
         tyresId.save();
         //const updateTyres = await this.tyresRepository.findByPk(updateTyreDto.id, {include: {all: true}});
 
-        return tyresId; 
+        return tyresId;
       }
     } catch {
       throw new HttpException(
-        'Data is incorrect or Not Found', 
-        HttpStatus.NOT_FOUND
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
       );
     }
   }
 
-  async remove(getTyreDto: GetTyreDto) { 
+  async remove(getTyreDto: GetTyreDto) {
     try {
       const removeTyres = await this.tyresRepository.destroy({
-        where: { id: getTyreDto.id }
+        where: { id: getTyreDto.id },
       });
       return removeTyres;
-
     } catch {
       throw new HttpException(
-        'Data is incorrect or Not Found', 
-        HttpStatus.NOT_FOUND
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
       );
     }
   }

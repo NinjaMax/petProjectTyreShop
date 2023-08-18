@@ -8,13 +8,14 @@ import BreadCrumbs from '../components/BreadCrumbs';
 import CyrillicToTranslit from 'cyrillic-to-translit-js';
 import { useLocation, useParams } from 'react-router-dom';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
-import { getTyresCountAll, getTyresWithoutOffset} from '../restAPI/restGoodsApi';
+import { getTyresCountAll, getTyresWithoutOffset, getWheelsWithoutOffset} from '../restAPI/restGoodsApi';
 import { Context } from '../context/Context';
 import { observer } from 'mobx-react-lite';
 import { tyreDiameterCat, tyreSeasonCat, tyreVehicleTypeCat } from '../services/tyresCatService';
+import CatalogWheels from '../components/catalogs/CatalogWheels';
 
 const CatalogTyresPage = observer(({crumbsItem}: any) => {
-  const {goodsTyre, filter} = useContext<any | null>(Context);
+  const {goodsTyre, goodsWheel, filter} = useContext<any | null>(Context);
   const {page} = useContext<any | null>(Context);
   const [paramUrl, setParamUrl] = useState(0);
   const [stateClick, setStateClick]=useState(true);
@@ -31,6 +32,7 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
       const taskLoad: any[] = [
         getTyresWithoutOffset,
         getTyresCountAll,
+        getWheelsWithoutOffset,
       ];
       const tyreCatType = tyreVehicleTypeCat(params.category);
       console.log('CAT_TYPE: ', tyreCatType);
@@ -79,7 +81,7 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
           let setRunFlatFilter :any[] = [];
           let setStuddedFilter :any[] = [];
 
-          console.log('TYRE_FILTER_GET: ', tyreFilterGoods);
+          //console.log('TYRE_FILTER_GET: ', tyreFilterGoods);
           page.loadMore > 0 ? goodsTyre?.setTyres(
           [...goodsTyre._tyres, 
             ...tyreFilterGoods.splice(page.offset, page.limit)] 
@@ -272,8 +274,199 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
             filter.homologation,
             filter.reinforced,
           );
-          goodsTyre?.setTotalCount(tyreTotalCount.count);
-          console.log('SET_TYRES_TOTALCOUNT: ', tyreTotalCount.count);
+          goodsTyre?.setTotalCount(tyreTotalCount);
+          //console.log('SET_TYRES_TOTALCOUNT: ', tyreTotalCount);
+        }
+        if(!isMounted && taskLoad[i] === getWheelsWithoutOffset) {
+          let wheelFilterGoods: any = await taskLoad[i](
+            filter.width,
+            filter.diameter,
+            filter.type,
+            filter.brands,
+            filter.price,
+            filter.bolt_count,
+            filter.bolt_count_pcd,
+            filter.color,
+            filter.dia,
+            filter.et,
+            filter.pcd,
+            filter.pcd2,
+            filter.sort,
+          );
+          let setWidthFilter:any[] = [];
+          //let setHightFilter:any[] = [];
+          let setDiameterFilter:any[] = [];
+          let setBrandFilter:any[] = [];
+          let setBoltCountFilter :any[] = [];
+          let setBoltCountPcdFilter :any[] = [];
+          let setColorFilter :any[] = [];
+          let setDiaFilter: any[] = [];
+          let setEtFilter :any[] = [];
+          let setPcdFilter :any[] = [];
+          let setPcd2Filter :any[] = [];
+          let setTypeFilter :any[] = [];
+
+          //console.log('TYRE_FILTER_GET: ', tyreFilterGoods);
+          page.loadMore > 0 ? goodsWheel?.setWheels(
+          [...goodsWheel._tyres, 
+            ...wheelFilterGoods.splice(page.offset, page.limit)] 
+          ) : goodsWheel?.setWheels(
+            wheelFilterGoods.splice(page.offset, page.limit));
+
+            goodsWheel?.setWheelsFilter(wheelFilterGoods);
+            goodsWheel._wheels_filter.map((item: any) => 
+          { return (
+            setWidthFilter.push(item.width.width),
+            //setHightFilter.push(item.height.height),
+            setDiameterFilter.push(item.diameter.diameter),
+            setBrandFilter.push(item.wheel_brand.brand),
+            setBoltCountFilter.push(item.bolt_count.bolt_count),
+            setBoltCountPcdFilter.push(item.bolt_count_pcd.bolt_count_pcd),
+            setColorFilter.push(item.color.color),
+            setDiaFilter.push(item.dia.dia),
+            setEtFilter.push(item.et.et),
+            setPcdFilter.push(item.pcd.pcd),
+            setPcd2Filter.push(item.pcd2.pcd2),
+            setTypeFilter.push(item.type.type)
+            )
+          })
+          if (filter.width) {
+            goodsWheel?.setWidth(
+              Array.from(new Set(
+                [...goodsWheel._width, ...setWidthFilter]
+              )).sort(
+                (a: any, b: any) => a.localeCompare(b))
+            );
+            filter.setWidthSearch(goodsWheel._width);
+          } else {
+            goodsWheel?.setWidth(
+              Array.from(new Set(setWidthFilter)).sort(
+              (a: any, b: any) => a.localeCompare(b))
+            );
+            filter.setWidthSearch(goodsWheel._width);
+          }
+          if (filter.diameter) {
+            goodsWheel?.setDiameter(
+              Array.from(new Set(
+                [...goodsWheel._diameter, ...setDiameterFilter]
+              )).sort(
+                (a: any, b: any) => a.localeCompare(b))
+            );
+            filter.setDiameterSearch(goodsWheel._diameter);
+          } else {
+            goodsWheel?.setDiameter(
+              Array.from(new Set(setDiameterFilter)).sort(
+                (a: any, b: any) => a.localeCompare(b))
+            );
+            filter.setDiameterSearch(goodsWheel._diameter);
+          }
+          if (filter.brands) {
+            goodsWheel?.setBrands(
+              Array.from(new Set(
+                [...goodsWheel._brands, ...setBrandFilter]
+              )).sort(
+                (a: any, b: any) => a.localeCompare(b))
+            );
+            filter.setBrandSearch(goodsWheel._brands);
+          } else {
+            goodsWheel?.setBrands(
+              Array.from(new Set(setBrandFilter)).sort(
+                (a, b) => a.localeCompare(b))
+            );
+            filter.setBrandSearch(goodsWheel._brands);   
+          }
+          if (filter.bolt_count) {
+            goodsWheel?.setBoltCount(
+              Array.from(new Set(
+                [...goodsWheel._bolt_count, ...setBoltCountFilter]
+              ))
+            )
+          } else {
+            goodsWheel?.setBoltCount(
+              Array.from(new Set(setBoltCountFilter))
+            )
+          }
+          if (filter.bolt_count_pcd) {
+            goodsWheel?.setBoltCountPcd(
+              Array.from(new Set(
+                [...goodsWheel._bolt_count_pcd, ...setBoltCountPcdFilter]
+              ))
+            )
+          } else {
+            goodsWheel?.setBoltCountPcd(
+              Array.from(new Set(setBoltCountPcdFilter))
+            )
+          }
+          if (filter.color) {
+            goodsWheel?.setColor(
+              Array.from(new Set(
+                [...goodsWheel._color, ...setColorFilter]
+              ))
+            )
+          } else {
+            goodsWheel?.setColor(
+              Array.from(new Set(setColorFilter))
+            )
+          }
+          if (filter.dia) {
+            goodsWheel?.setDia(
+              Array.from(new Set(
+                [...goodsWheel._dia, ...setDiaFilter]
+              )).sort(
+                (a: any, b: any) => a.localeCompare(b))
+            )
+          } else {
+            goodsWheel?.setDia(
+              Array.from(new Set(setDiaFilter)).sort(
+                (a: any, b: any) => a.localeCompare(b))
+            )
+          }
+          if (filter.et) {
+            goodsWheel?.setEt(
+              Array.from(new Set(
+                [...goodsWheel._et, ...setEtFilter]
+              )).sort(
+                (a: any, b: any) => a.localeCompare(b))
+            )
+          } else {
+            goodsWheel?.setEt(
+              Array.from(new Set(setEtFilter)).sort(
+                (a: any, b: any) => a.localeCompare(b))
+            )
+          }
+          if (filter.pcd) {
+            goodsWheel?.setPcd(
+              Array.from(new Set(
+                [...goodsWheel._pcd, ...setPcdFilter]
+              ))
+            )
+          } else {
+            goodsWheel?.setPcd(
+              Array.from(new Set(setPcdFilter))
+            )
+          }
+          if (filter.pcd2) {
+            goodsWheel?.setPcd2(
+              Array.from(new Set(
+                [...goodsWheel._pcd2, ...setPcd2Filter]
+              ))
+            )
+          } else {
+            goodsWheel?.setPcd2(
+              Array.from(new Set(setPcd2Filter))
+            )
+          }
+          if (filter.type) {
+            goodsWheel?.setType(
+              Array.from(new Set(
+                [...goodsWheel._type, ...setTypeFilter]
+              ))
+            )
+          } else {
+            goodsWheel?.setType(
+              Array.from(new Set(setTypeFilter))
+            )
+          }
         }
         const task = taskLoad.shift();
         task();
@@ -284,13 +477,14 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
     return () => {
         isMounted = true;
     };
-  },[
-    filter, 
+  },
+  [
+    filter,
     params,
-    goodsTyre, 
-    page.limit, 
-    page.loadMore, 
-    page.offset, 
+    goodsTyre,
+    page.limit,
+    page.loadMore,
+    page.offset,
     filter.width,
     filter.height,
     filter.diameter,
@@ -305,6 +499,7 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
     filter.homologation,
     filter.reinforced,
     filter.sort,
+    goodsWheel
   ]);
 
   const handleFilterTyreChange = (e: any) => {
@@ -321,7 +516,7 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
   // console.log('FILTER_WIDTH: ', filter.width);
   // console.log('FILTER_HEIGHT: ', filter.height);
   // console.log('FILTER_DIAMETER: ', filter.diameter,);
-  console.log('GET_TYRES:', goodsTyre._tyres);
+  // console.log('GET_TYRES:', goodsTyre._tyres);
   // console.log('TYRES_FILTER: ', goodsTyre._tyres_filter);
   // console.log('TYRES_FILTER_WIDTH: ', goodsTyre._width);
   // console.log('TYRES_FILTER_HEIGHT: ', goodsTyre._height);
@@ -350,13 +545,23 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
           />
           : null
         }
+        {location.pathname.includes('wheels') ?
+          <FilterCatalogTyres
+            filterState={stateClick} 
+            setFilterAction={filterClick} 
+          />
+          : null
+        }
         </div>
         <div className='c'>
           {location.pathname.includes('tyres') ?
             <CatalogTyres/>
             : null
           }
-
+          {location.pathname.includes('wheels') ?
+            <CatalogWheels/>
+            : null
+          }
         </div>
         <div className='d'>
           <ReviewsMain props={'Відгуки клієнтів'}>

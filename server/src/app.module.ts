@@ -110,6 +110,8 @@ import { QuestionsModule } from './questions/questions.module';
 import { AnswersModule } from './answers/answers.module';
 import { Answer } from './answers/entities/answer.entity';
 import { Question } from './questions/entities/question.entity';
+import { ArticlesModule } from './articles/articles.module';
+import { Article } from './articles/entities/article.entity';
 
 @Module({
   imports: [
@@ -196,6 +198,7 @@ import { Question } from './questions/entities/question.entity';
           ReviewStore,
           Answer,
           Question,
+          Article,
         ],
         autoLoadModels: true,
         synchronize: true,
@@ -205,20 +208,12 @@ import { Question } from './questions/entities/question.entity';
     CacheModule.registerAsync<RedisClientOptions>({
       imports: [ConfigModule.register({ folder: './config' })],
       useFactory: async (configService: ConfigService) => {
-
         const store = createClient({
-          //ttl: configService.get('CACHE_TTL'),
-          //isGlobal: true,
-          //store: redisStore as unknown as CacheStore,
           socket: {
             host: configService.get('REDIS_HOST'),
             port: +configService.get('REDIS_PORT'),
           },
-          // username: configService.get('REDIS_USERNAME'),
-          // password: configService.get('REDIS_PASSWORD'),
-          
         });
-        //isGlobal: true;
         await store.connect();
         return { store: store as unknown as CacheStore };
       },
@@ -256,6 +251,7 @@ import { Question } from './questions/entities/question.entity';
     DescriptionModule,
     QuestionsModule,
     AnswersModule,
+    ArticlesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

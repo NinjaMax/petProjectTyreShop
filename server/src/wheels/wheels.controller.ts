@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { WheelsService } from './wheels.service';
 import { CreateWheelDto } from './dto/create-wheel.dto';
 import { GetWheelDto } from './dto/get-wheel.dto';
@@ -21,6 +21,38 @@ export class WheelsController {
   @Get('/id')
   findOne(@Param() getWheelDto: GetWheelDto) {
     return this.wheelsService.findWheelById(getWheelDto);
+  }
+  @Get('/no-offset')
+  findWheelsWithoutLimit(
+    @Query('width') width: string,
+    @Query('diameter') diameter: string,
+    @Query('bolt_count') bolt_count: string,
+    @Query('bolt_count_pcd') bolt_count_pcd: string,
+    @Query('brand') brand: string,
+    @Query('price') price: string,
+    @Query('type') type: string,
+    @Query('color') color: string,
+    @Query('dia') dia: string,
+    @Query('et') et: string,
+    @Query('pcd') pcd: string,
+    @Query('pcd2') pcd2: string,
+    @Query('sort') sort: string,
+  ) {
+    return this.wheelsService.findAllWheelsWithoutOffset(
+      width,
+      diameter,
+      bolt_count,
+      bolt_count_pcd,
+      brand,
+      price,
+      type,
+      color,
+      dia,
+      et,
+      pcd,
+      pcd2,
+      sort,
+    );
   }
 
   @Patch(':id')
