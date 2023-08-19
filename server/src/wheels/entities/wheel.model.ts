@@ -25,6 +25,8 @@ import { WheelWidth } from '../../properties/entities/wheels/wheel-width.model';
 import { StockWheels } from '../../stock/entities/stock-wheels.model';
 import { WheelConfigAttr } from '../interfaces/wheel.interface';
 import { Description } from '../../description/entities/description.entity';
+import { ReviewWheels } from '../../reviews/entities/review-wheels.model';
+import { RatingWheels } from '../../ratings/entities/rating-wheels.model';
 
 @Table({ tableName: 'wheel', updatedAt: false })
 export class Wheel extends Model<Wheel, WheelConfigAttr> {
@@ -120,6 +122,12 @@ export class Wheel extends Model<Wheel, WheelConfigAttr> {
 
   @HasMany(() => PriceWheels, 'id_wheel')
   price: PriceWheels[];
+
+  @HasMany(() => ReviewWheels, 'id')
+  reviews: ReviewWheels[];
+
+  @HasMany(() => RatingWheels, 'id')
+  rating: RatingWheels[];
 
   @BelongsTo(() => WheelBrand, 'id_brand')
   wheel_brand: WheelBrand;

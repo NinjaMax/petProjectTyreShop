@@ -5,11 +5,14 @@ import { GetRatingDto } from './dto/get-rating.dto';
 import { UpdateRatingDto } from './dto/update-rating.dto';
 import { RatingTyres } from './entities/rating-tyres.model';
 import sequelize from 'sequelize';
+import { RatingWheels } from './entities/rating-wheels.model';
 
 @Injectable()
 export class RatingsService {
   constructor(
     @InjectModel(RatingTyres) private ratingTyresRepository: typeof RatingTyres,
+    @InjectModel(RatingWheels)
+    private ratingWheelsRepository: typeof RatingWheels,
   ) {}
 
   async createRating(createRatingDto: CreateRatingDto) {
@@ -25,6 +28,21 @@ export class RatingsService {
     }
   }
 
+  async createRatingWheel(createRatingDto: CreateRatingDto) {
+    try {
+      const ratingWheel = await this.ratingWheelsRepository.create(
+        createRatingDto,
+      );
+
+      return ratingWheel;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
   async findAllRating() {
     try {
       const ratingsAll = await this.ratingTyresRepository.findAll({
@@ -32,6 +50,21 @@ export class RatingsService {
       });
 
       return ratingsAll;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async findAllRatingWheel() {
+    try {
+      const ratingsAllWheels = await this.ratingWheelsRepository.findAll({
+        include: { all: true },
+      });
+
+      return ratingsAllWheels;
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',
@@ -56,6 +89,22 @@ export class RatingsService {
     }
   }
 
+  async findRatingByIdWheel(getRatingDto: GetRatingDto) {
+    try {
+      const ratingIdWheel = await this.ratingWheelsRepository.findByPk(
+        getRatingDto.id_rating,
+        { include: { all: true } },
+      );
+
+      return ratingIdWheel;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
   async findAllRatingByIdModel(getRatingDto: GetRatingDto) {
     try {
       const ratingIdModel = await this.ratingTyresRepository.findAll({
@@ -63,6 +112,21 @@ export class RatingsService {
       });
 
       return ratingIdModel;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async findAllRatingWheelByIdModel(getRatingDto: GetRatingDto) {
+    try {
+      const ratingWheelIdModel = await this.ratingWheelsRepository.findAll({
+        where: { id_model: getRatingDto.id_model }
+      });
+
+      return ratingWheelIdModel;
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',
@@ -86,6 +150,21 @@ export class RatingsService {
     }
   }
 
+  async findAllWheelRatingByIdBrand(getRatingDto: GetRatingDto) {
+    try {
+      const ratingWheelIdBrand = await this.ratingWheelsRepository.findAll({
+        where: { id_brand: getRatingDto.id_brand }
+      });
+
+      return ratingWheelIdBrand;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
   async findCountRatingByIdBrand(id_brand: number) {
     try {
       const ratingAvgIdBrand = await this.ratingTyresRepository.findAll({
@@ -99,6 +178,27 @@ export class RatingsService {
       });
 
       return ratingAvgIdBrand;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async findCountRatingWheelByIdBrand(id_brand: number) {
+    try {
+      const ratingWheelAvgIdBrand = await this.ratingWheelsRepository.findAll({
+        where: { id_brand: id_brand },
+        attributes: [
+          [
+            sequelize.fn('avg', sequelize.col('rating_overall')),
+            'avgRatingBrand',
+          ],
+        ],
+      });
+
+      return ratingWheelAvgIdBrand;
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',
@@ -165,6 +265,27 @@ export class RatingsService {
           [
             sequelize.fn('avg', sequelize.col('rating_price_quality')),
             'avgRatingPriceQuality',
+          ],
+        ],
+      });
+
+      return ratingAvgIdModel;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async findCountRatingWheelByIdModel(id_model: number) {
+    try {
+      const ratingAvgIdModel = await this.ratingWheelsRepository.findAll({
+        where: { id_model: id_model },
+        attributes: [
+          [
+            sequelize.fn('avg', sequelize.col('rating_overall')),
+            'avgRatingModel',
           ],
         ],
       });

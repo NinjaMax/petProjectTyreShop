@@ -27,9 +27,19 @@ export class RatingsController {
     return this.ratingsService.findAllRating();
   }
 
+  @Get('/wheels')
+  findAllWheels() {
+    return this.ratingsService.findAllRatingWheel();
+  }
+
   @Get('/tyres/bybrand/:id_brand')
   findAllRatingByBrand(@Param('id_brand') id_brand: number) {
     return this.ratingsService.findCountRatingByIdBrand(id_brand);
+  }
+
+  @Get('/wheels/bybrand/:id_brand')
+  findAllRatingWheelByBrand(@Param('id_brand') id_brand: number) {
+    return this.ratingsService.findCountRatingWheelByIdBrand(id_brand);
   }
 
   @Get('/tyres/bybrand-season/')
@@ -46,6 +56,11 @@ export class RatingsController {
   @Get('/tyres/bymodel/:id_model')
   findAllRatingByModel(@Param('id_model') id_model: number) {
     return this.ratingsService.findCountRatingByIdModel(id_model);
+  }
+
+  @Get('/wheels/bymodel/:id_model')
+  findAllRatingWheelByModel(@Param('id_model') id_model: number) {
+    return this.ratingsService.findCountRatingWheelByIdModel(id_model);
   }
 
   @Get('/id')

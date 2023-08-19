@@ -11,12 +11,10 @@ import { ReviewsTyresConfigAttr } from '../interfaces/review-tyres.interface';
 import { Customer } from '../../customers/entities/customer.model';
 import { TyreBrand } from '../../properties/entities/tyres/tyre-brand.model';
 import { WheelModel } from '../../properties/entities/wheels/wheel-model.model';
-import { RatingTyres } from '../../ratings/entities/rating-tyres.model';
 import { Tyres } from '../../tyres/entities/tyres.model';
 import { Wheel } from '../../wheels/entities/wheel.model';
-import { Users } from '../../users/entities/users.model';
 import { WheelBrand } from '../../properties/entities/wheels/wheel-brand.model';
-//import { WheelModel } from '../properties/entities/wheels/wheel-model.model';
+import { RatingWheels } from '../../ratings/entities/rating-wheels.model';
 
 @Table({ tableName: 'review_wheels', createdAt: true, updatedAt: false })
 export class ReviewWheels extends Model<ReviewWheels, ReviewsTyresConfigAttr> {
@@ -94,8 +92,8 @@ export class ReviewWheels extends Model<ReviewWheels, ReviewsTyresConfigAttr> {
   @BelongsTo(() => Wheel, 'id')
   wheels: Wheel;
 
-  @HasOne(() => RatingTyres, 'id_review')
-  rating: RatingTyres;
+  @HasOne(() => RatingWheels, 'id_review')
+  rating: RatingWheels;
 
   @BelongsTo(() => WheelModel, 'id_model')
   model: WheelModel;

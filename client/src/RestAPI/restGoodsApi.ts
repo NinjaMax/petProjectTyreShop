@@ -424,7 +424,21 @@ const likesTyreReview = async (
 })
 .catch(error => {
     console.log(error)
-}); 
+});
+
+const likesWheelReview = async (
+    id_review: number, 
+    likeCount: number,
+    dislikeCount: number,
+    ) =>
+    await $hostPost.patch('/reviews/likes/wheel', {
+    id_review: id_review, 
+    likeCount: likeCount,
+    dislikeCount: dislikeCount,   
+})
+.catch(error => {
+    console.log(error)
+});
 
 const createTyreReview = async (
     data:IReviewTyreRestCreate, 
@@ -470,6 +484,34 @@ const createTyreReview = async (
 })
 .catch(error => {
         console.log(error)
+});
+
+const createWheelReview = async (
+    data:IReviewTyreRestCreate, 
+    id: number,
+    id_brand: number,
+    id_model: number,
+    id_customer?: number, 
+    customer_pictures?: string,   
+    ) =>
+    await $hostPost.post('/reviews/createwheel', {
+
+    email: data?.email,
+    description: data?.description,
+    positive: data?.positive,
+    negative: data?.negative,
+    driver_experience: data?.driver_experience,
+    car: data?.car,
+    name: data?.name,    
+    id: id,
+    id_brand: id_brand,
+    id_model: id_model,
+    id_customer: id_customer,
+    customer_pictures: customer_pictures,
+    rating_overall: data?.rating_overall,
+})
+.catch(error => {
+        console.log(error)
 }); 
 
 const getTyresModelRatingAvg = async (id_model: number) => {
@@ -481,9 +523,27 @@ const getTyresModelRatingAvg = async (id_model: number) => {
     return data;
 }
 
+const getWheelsModelRatingAvg = async (id_model: number) => {
+    const {data} = await $hostGet.get(
+        `/ratings/wheels/bymodel/${id_model ?? 0}`,
+    )
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
 const getTyresBrandRatingAvg = async (id_brand: number) => {
     const {data} = await $hostGet.get(
         `/ratings/tyres/bybrand/${id_brand ?? 0}`,
+    )
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+const getWheelsBrandRatingAvg = async (id_brand: number) => {
+    const {data} = await $hostGet.get(
+        `/ratings/wheels/bybrand/${id_brand ?? 0}`,
     )
     //localStorage.setItem('token', data.token)
     //console.log('GET_TYRES_BY_ID: ', data )
@@ -518,10 +578,36 @@ const getTyresCountReviewByBrand = async (
     return data;
 }
 
+const getWheelsCountReviewByBrand = async (
+    id_brand: number,
+    ) => {
+    const {data} = await $hostGet.get('/reviews/count/wheel-brand/',
+    {params: {
+        id_brand: id_brand ?? 0,
+    }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
 const getTyresCountReviewByModel = async (
     id_model: number,
     ) => {
     const {data} = await $hostGet.get('/reviews/count/model/',
+    {params: {
+        id_model: id_model ?? 0,
+    }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+const getWheelsCountReviewByModel = async (
+    id_model: number,
+    ) => {
+    const {data} = await $hostGet.get('/reviews/count/wheel-model/',
     {params: {
         id_model: id_model ?? 0,
     }
@@ -745,5 +831,11 @@ export {
     createStoreReview,
     getAllStoreReview,
     getAllQuestions,
-    getWheelsWithoutOffset
+    getWheelsWithoutOffset,
+    likesWheelReview,
+    createWheelReview,
+    getWheelsModelRatingAvg,
+    getWheelsBrandRatingAvg,
+    getWheelsCountReviewByBrand,
+    getWheelsCountReviewByModel
 }

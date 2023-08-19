@@ -68,7 +68,7 @@ const Main = observer(() => {
         let setRunFlatFilter :any[] = [];
         let setStuddedFilter :any[] = [];
     
-        console.log('TYRE_FILTER_GET: ', tyreFilterGoods);
+        //console.log('TYRE_FILTER_GET: ', tyreFilterGoods);
     
         page.loadMore > 0 ? goodsTyre?.setTyres(
         [...goodsTyre._tyres, 
@@ -263,7 +263,7 @@ const Main = observer(() => {
           filter.reinforced,
         );
         goodsTyre?.setTotalCount(tyreTotalCount.count);
-        console.log('SET_TYRES_TOTALCOUNT: ', tyreTotalCount.count);
+        //console.log('SET_TYRES_TOTALCOUNT: ', tyreTotalCount.count);
       }
       const task = taskLoad.shift();
       task();

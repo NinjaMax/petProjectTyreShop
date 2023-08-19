@@ -112,6 +112,8 @@ import { Answer } from './answers/entities/answer.entity';
 import { Question } from './questions/entities/question.entity';
 import { ArticlesModule } from './articles/articles.module';
 import { Article } from './articles/entities/article.entity';
+import { ReviewWheels } from './reviews/entities/review-wheels.model';
+import { RatingWheels } from './ratings/entities/rating-wheels.model';
 
 @Module({
   imports: [
@@ -199,6 +201,8 @@ import { Article } from './articles/entities/article.entity';
           Answer,
           Question,
           Article,
+          ReviewWheels,
+          RatingWheels
         ],
         autoLoadModels: true,
         synchronize: true,

@@ -22,9 +22,19 @@ export class ReviewsController {
     return this.reviewsService.createReview(createReviewDto);
   }
 
+  @Post('/createwheel')
+  createWheel(@Body() createReviewDto: CreateReviewDto) {
+    return this.reviewsService.createReviewWheel(createReviewDto);
+  }
+
   @Get('/tyres')
   findAll() {
     return this.reviewsService.findAllReviews();
+  }
+
+  @Get('/wheels')
+  findAllWheel() {
+    return this.reviewsService.findAllReviewsWheel();
   }
 
   @Get('count/brand')
@@ -32,9 +42,19 @@ export class ReviewsController {
     return this.reviewsService.countReviewByIdBrand(id_brand);
   }
 
+  @Get('count/wheel-brand')
+  countReviewWheelByBrand(@Query('id_brand') id_brand: number) {
+    return this.reviewsService.countReviewWheelByIdBrand(id_brand);
+  }
+
   @Get('count/model')
   countReviewByModel(@Query('id_model') id_model: number) {
     return this.reviewsService.countReviewByIdModel(id_model);
+  }
+
+  @Get('count/wheel-model')
+  countReviewWheelByModel(@Query('id_model') id_model: number) {
+    return this.reviewsService.countReviewWheelByIdModel(id_model);
   }
 
   @Get('/id')
@@ -42,16 +62,20 @@ export class ReviewsController {
     return this.reviewsService.findReviewById(getReviewDto);
   }
 
+  @Get('/id-wheel')
+  findOneWheel(@Param() @Body() getReviewDto: GetReviewDto) {
+    return this.reviewsService.findReviewWheelById(getReviewDto);
+  }
+
   @Patch('/likes')
-  updateLikes(
-    @Body() updateReviewDto: UpdateReviewDto
-    // id_review: number, 
-    // likeCount: number,
-    // dislikeCount: number,
-    ) {
+  updateLikes(@Body() updateReviewDto: UpdateReviewDto) {
     return this.reviewsService.countLikeByIdReview(updateReviewDto);
   }
 
+  @Patch('/likes/wheel')
+  updateWheelLikes(@Body() updateReviewDto: UpdateReviewDto) {
+    return this.reviewsService.countLikeByIdReviewWheel(updateReviewDto);
+  }
   
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {

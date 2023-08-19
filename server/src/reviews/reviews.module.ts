@@ -17,6 +17,11 @@ import { UsersModule } from '../users/users.module';
 import { ReviewStore } from './entities/review-store.model';
 import { ReviewsStoreService } from './reviews-store.service';
 import { ReviewsStoreController } from './reviews-store.controller';
+import { ReviewWheels } from './entities/review-wheels.model';
+import { Wheel } from '../wheels/entities/wheel.model';
+import { WheelsModule } from '../wheels/wheels.module';
+import { WheelBrand } from '../properties/entities/wheels/wheel-brand.model';
+import { WheelModel } from '../properties/entities/wheels/wheel-model.model';
 
 @Module({
   controllers: [ReviewsController, ReviewsStoreController],
@@ -30,8 +35,13 @@ import { ReviewsStoreController } from './reviews-store.controller';
       TyreModel,
       TyreBrand,
       Users,
+      ReviewWheels,
+      Wheel,
+      WheelBrand,
+      WheelModel
     ]),
     forwardRef(() => TyresModule),
+    forwardRef(() => WheelsModule),
     forwardRef(() => UsersModule),
     RatingsModule,
     PropertiesModule,
