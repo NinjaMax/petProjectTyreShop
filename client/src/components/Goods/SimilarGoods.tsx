@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../css/Goods/SimilarGoods.css';
-import TyresCardList from '../cards/TyresCardList';
+import TyresCardList from '../cards/CardList';
 
 type ISimilarGoods ={
     similarGoodsList?: any[] | null;

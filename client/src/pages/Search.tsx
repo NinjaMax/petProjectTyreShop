@@ -5,7 +5,7 @@ import LoadMoreGoods from '../components/ux/LoadMoreGoods';
 import { useHistory, useLocation } from 'react-router-dom';
 import { getTyresAll } from '../restAPI/restGoodsApi';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
-import TyresCard from '../components/cards/TyresCard';
+import TyresCard from '../components/cards/Card';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../context/Context';
 

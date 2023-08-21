@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import '../../css/NavBarSearch.css';
-import TyresCardList from '../cards/TyresCardList';
+import TyresCardList from '../cards/CardList';
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../../context/Context';

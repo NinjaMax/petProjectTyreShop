@@ -1,7 +1,7 @@
 import React, {Fragment, useContext, useEffect, useState} from 'react';
 import '../../css/BasketCss/BasketOrder.css';
 import ButtonAction from '../buttons/ButtonAction';
-import TyresCardList from '../cards/TyresCardList';
+import TyresCardList from '../cards/CardList';
 import SelectRadio from '../select/SelectRadio';
 import InputDataText from '../ux/InputDataText';
 import InputDataTel from '../ux/InputDataTel';

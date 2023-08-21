@@ -18,6 +18,7 @@ import { WheelEt } from '../properties/entities/wheels/wheel-et.model';
 import { WheelPcd } from '../properties/entities/wheels/wheel-pcd.model';
 import { WheelPcd2 } from '../properties/entities/wheels/wheel-pcd2.model';
 import { WheelBoltCountPcd } from '../properties/entities/wheels/wheel-boltCountPcd.model';
+import { WheelModel } from '../properties/entities/wheels/wheel-model.model';
 
 @Injectable()
 export class WheelsService {
@@ -831,6 +832,111 @@ export class WheelsService {
         });
         return wheelsAllWithoutLimitR;
       }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async findAllWheelsByDiameter(diameter: string) {
+    try {
+      const wheelsAllByDiameter = await this.wheelRepository.findAll({
+        include: [
+          { all: true },
+          { model: WheelDiameter, where: { diameter: diameter } },
+        ],
+      });
+      return wheelsAllByDiameter;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async findAllWheelsByBrandParams(
+    width: string,
+    bolt_count_pcd: string,
+    dia: string,
+    et: string,
+    diameter: string,
+    brand: string,
+  ) {
+    try {
+      const wheelsAllByBrandParams = await this.wheelRepository.findAll({
+        include: [
+          { all: true },
+          { model: WheelBrand, where: { brand: brand } },
+          { model: WheelWidth, where: { width: width } },
+          { model: WheelBoltCountPcd, where: { bolt_count_pcd: bolt_count_pcd } },
+          { model: WheelDia, where: { dia: dia } },
+          { model: WheelEt, where: { et: et } },
+          { model: WheelDiameter, where: { diameter: diameter } },
+        ],
+      });
+      return wheelsAllByBrandParams;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async findAllWheelsByBrandModel(brand: string, model: string) {
+    try {
+      const wheelsAllByBrandModel = await this.wheelRepository.findAll({
+        include: [
+          { all: true },
+          { model: WheelBrand, where: { brand: brand } },
+          { model: WheelModel, where: { model: model } },
+        ],
+      });
+      return wheelsAllByBrandModel;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async findAllWheelsByParams(
+    width: string,
+    bolt_count_pcd: string,
+    dia: string,
+    et: string,
+    diameter: string
+    ) {
+    try {
+      const wheelsAllByParams = await this.wheelRepository.findAll({
+        include: [
+          { all: true },
+          { model: WheelWidth, where: { width: width } },
+          { model: WheelBoltCountPcd, where: { bolt_count_pcd: bolt_count_pcd } },
+          { model: WheelDia, where: { dia: dia } },
+          { model: WheelEt, where: { et: et } },
+          { model: WheelDiameter, where: { diameter: diameter } },
+        ],
+      });
+      return wheelsAllByParams;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async findWheelsByIdParam(id: string) {
+    try {
+      const wheelsIdParam = await this.wheelRepository.findByPk(id, {
+        include: { all: true },
+      });
+      return wheelsIdParam;
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',

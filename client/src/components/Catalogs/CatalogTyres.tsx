@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import '../../css/Catalogs/CatalogTyres.css';
-import TyresCard from '../cards/TyresCard';
+import Card from '../cards/Card';
 import PopularSizeTyre from '../popularGoods/PopularSizeTyre';
 import PopularDiametrTyre from '../popularGoods/PopularDiametrTyre';
 import SelectRadio from '../select/SelectRadio';
@@ -165,12 +165,14 @@ const CatalogTyres = observer(() => {
             <div className="rowCatalogTyres">
                 {goodsTyre._tyres ? goodsTyre._tyres?.map(
                     (goods: any) => (
-                 <TyresCard
+                 <Card
                     key={goods.id}
                     goods={goods}
                     optionsBox={true} 
                     checkOrders={checkOrders} 
-                    forOrder={false}/>
+                    forOrder={false}
+                    typeCard={'tyre'}
+                    />
                 ))   
                 : null
                 }

@@ -6,7 +6,7 @@ import Rating from '../ux/Rating';
 import tyres from '../../assets/autotyrespilotspotps2.png';
 // import ButtonAction from '../buttons/ButtonAction';
 import CountBtnOrder from '../ux/CountBtnOrder';
-import { ITyreCard } from './interfaces/tyreCard.interface';
+import { ICard } from './interfaces/Card.interface';
 import { NavLink, useHistory } from 'react-router-dom';
 import { IRatingAvg } from '../../pages/types/RatingModelAvg.type';
 import { MAIN_ROUTE } from '../../utils/consts';
@@ -15,7 +15,7 @@ import { yieldToMain } from '../../restAPI/postTaskAdmin';
 import { createStringUrl } from '../../services/stringUrl';
 import { AsyncLocalStorage } from 'async_hooks';
 
-const TyresCardList = ({goods, forOrder, priceItem, countEvent}: ITyreCard) => {
+const CardList = ({goods, forOrder, priceItem, countEvent}: ICard) => {
     const [ratingModel, setRatingModel] = useState<IRatingAvg>()
     const history = useHistory();
 
@@ -132,4 +132,4 @@ const TyresCardList = ({goods, forOrder, priceItem, countEvent}: ITyreCard) => {
     );
 };
 
-export default TyresCardList;
+export default CardList;

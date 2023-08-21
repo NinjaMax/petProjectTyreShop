@@ -30,26 +30,62 @@ import { PropsWheelSizeDigitsService } from './props-wheel-services/props-wheel-
 import { PropsWheelTypeService } from './props-wheel-services/props-wheel-type.service';
 import { PropsWheelWidthService } from './props-wheel-services/props-wheel-width.service';
 import { WheelsModule } from '../wheels/wheels.module';
-
+import { PropertiesWheelModelController } from './props-wheels-controller/props-wheel-model-controller';
+import { PropertiesWheelDiameterController } from './props-wheels-controller/props-wheel-diameter-controller';
 
 @Module({
-  controllers: [],
-  providers: [PropsWheelBoltCountService, PropsWheelBoltCountPcdService,
-    PropsWheelBrandService, PropsWheelColorService, PropsWheelDiaService,
-    PropsWheelDiameterService, PropsWheelEtService, PropsWheelModelService,
-    PropsWheelPcdService, PropsWheelPcd2Service, PropsWheelSizeDigitsService, 
-    PropsWheelTypeService, PropsWheelWidthService],
-  imports: [ 
-    SequelizeModule.forFeature([WheelBoltCount, WheelBoltCountPcd, 
-        WheelBrand, WheelColor, WheelDia, WheelDiameter, WheelEt, 
-        WheelModel, WheelPcd, WheelPcd2, WheelSizeDigits, WheelType,
-        WheelWidth]),
-    RatingsModule, WheelsModule
+  controllers: [
+    PropertiesWheelModelController,
+    PropertiesWheelDiameterController,
   ],
-  exports: [PropsWheelBoltCountService, PropsWheelBoltCountPcdService,
-    PropsWheelBrandService, PropsWheelColorService, PropsWheelDiaService,
-    PropsWheelDiameterService, PropsWheelEtService, PropsWheelModelService,
-    PropsWheelPcdService, PropsWheelPcd2Service, PropsWheelSizeDigitsService, 
-    PropsWheelTypeService, PropsWheelWidthService]
+  providers: [
+    PropsWheelBoltCountService,
+    PropsWheelBoltCountPcdService,
+    PropsWheelBrandService,
+    PropsWheelColorService,
+    PropsWheelDiaService,
+    PropsWheelDiameterService,
+    PropsWheelEtService,
+    PropsWheelModelService,
+    PropsWheelPcdService,
+    PropsWheelPcd2Service,
+    PropsWheelSizeDigitsService,
+    PropsWheelTypeService,
+    PropsWheelWidthService,
+  ],
+  imports: [
+    SequelizeModule.forFeature([
+      WheelBoltCount,
+      WheelBoltCountPcd,
+      WheelBrand,
+      WheelColor,
+      WheelDia,
+      WheelDiameter,
+      WheelEt,
+      WheelModel,
+      WheelPcd,
+      WheelPcd2,
+      WheelSizeDigits,
+      WheelType,
+      WheelWidth,
+    ]),
+    RatingsModule,
+    WheelsModule,
+  ],
+  exports: [
+    PropsWheelBoltCountService,
+    PropsWheelBoltCountPcdService,
+    PropsWheelBrandService,
+    PropsWheelColorService,
+    PropsWheelDiaService,
+    PropsWheelDiameterService,
+    PropsWheelEtService,
+    PropsWheelModelService,
+    PropsWheelPcdService,
+    PropsWheelPcd2Service,
+    PropsWheelSizeDigitsService,
+    PropsWheelTypeService,
+    PropsWheelWidthService,
+  ],
 })
 export class PropertiesWheelModule {}

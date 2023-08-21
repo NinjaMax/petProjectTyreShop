@@ -5,8 +5,9 @@ import PropsCardIcons from './PropsCardIcons';
 import Rating from '../ux/Rating';
 import OptionsTyreBox from './OptionsTyreBox';
 import tyres from '../../assets/autotyrespilotspotps2.png';
+import wheels from '../../assets/vossen_cvt_gloss_graphite-16325-a.png';
 import ButtonAction from '../buttons/ButtonAction';
-import { ITyreCard } from './interfaces/tyreCard.interface';
+import { ICard } from './interfaces/Card.interface';
 import { GOODS_ROUTE, MAIN_ROUTE } from '../../utils/consts';
 import { Link, NavLink, useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
 import { Context } from '../../context/Context';
@@ -16,7 +17,7 @@ import { getTyresModelRatingAvg } from '../../restAPI/restGoodsApi';
 import { yieldToMain } from '../../restAPI/postTaskAdmin';
 import { IRatingAvg } from '../../pages/types/RatingModelAvg.type';
 
-const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
+const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
     const {page} = useContext<any>(Context);
     const [ratingModel, setRatingModel] = useState<IRatingAvg>()
     const history = useHistory();
@@ -53,19 +54,36 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
         history.push(
             MAIN_ROUTE + `${toStringUrl}`
         );
-    }
+    };
+
+    //console.log('GOODS: ', goods);
 
     return (
         <div className="tyresCard">
             <div >
-                <img id='imgTyres' src={tyres} alt="imgCards" />
+                {typeCard === 'tyre' ?
+                 <img id='imgTyres' src={tyres} alt="imgCards" /> 
+                 : null  
+                }
+                {typeCard === 'wheel'?
+                 <img id='imgTyres' src={wheels} alt="imgCards" /> 
+                 : null  
+
+                }
                 <p/>
                 <div className='tyresCardLinkName'>
                 <a id='tyresName'
                     onClick={addGoodsId} 
                     href={createStringUrl(goods?.full_name)}
                 >
-                    {goods?.full_name}
+                {typeCard === 'tyre' ?
+                    goods?.full_name
+                    : null
+                }
+                {typeCard === 'wheel' ?
+                    goods?.full_name_color
+                    : null
+                }
                 </a>
                 </div>
                 <div className='ratingTyres'>
@@ -83,15 +101,19 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
                 <div className='propsCard'>
                     <PropsCardIcons
                         type={goods?.vehicle_type}
+                        type_wheel={goods?.type}
                         season={goods?.season}
                     />
                 </div>
+                {typeCard === 'wheel' ?
                 <div className="tyresCardCountry">
                     <FlagsIcon 
                         country={goods?.country} 
                         year={goods?.year}
                     />
                 </div>
+                : null
+                }
                 <div className='tyresCardBonus'>
                    <img src='/iconBonus/skyBonus_48_b.png' 
                     width={30}
@@ -150,4 +172,4 @@ const TyresCard = observer(({goods, optionsBox, checkOrders}:ITyreCard) => {
     );
 });
 
-export default TyresCard;
+export default Card;

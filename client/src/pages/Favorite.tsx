@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import '../css/Pages/Favorite.css';
-import TyresCardList from '../components/cards/TyresCardList';
+import TyresCardList from '../components/cards/CardList';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { clearFavorites, getCompare, getFavorites, getTyresAll, getTyresById } from '../restAPI/restGoodsApi';
 import { Context } from '../context/Context';

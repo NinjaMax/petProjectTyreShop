@@ -97,9 +97,7 @@ export class PropsModelService {
     }
   }
 
-  async findAllTyresModelByBrand(
-    brand: number
-    ) {
+  async findAllTyresModelByBrand(brand: number) {
     try {
       const tyresAllModelsByBrand = await this.tyreModelRepository.findAll({
         include: [{ model: Tyres, where: { id_brand: brand } }],

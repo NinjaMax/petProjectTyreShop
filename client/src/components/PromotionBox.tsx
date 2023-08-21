@@ -1,6 +1,6 @@
 import React from 'react';
 import '../css/PromotionBox.css';
-import TyresCard from './cards/TyresCard';
+import TyresCard from './cards/Card';
 
 const PromotionBox = () => {
     return (

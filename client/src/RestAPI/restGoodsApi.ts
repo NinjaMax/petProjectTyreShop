@@ -155,6 +155,43 @@ const getTyresByIdParam = async (id:string) => {
     )
     //localStorage.setItem('token', data.token)
     //console.log('GET_TYRES_BY_IDPARAM: ', data )
+    // getTyresByIdParam,
+    // getTyresModelRatingAvg,
+    // getTyresBrandRatingAvg,
+    // getTyresBrandRatingAvgSeason,
+    // getTyresCountReviewByBrand,
+    // getTyresCountReviewByModel,
+    // createTyreReview,
+    // createWheelReview,
+    // likesTyreReview,
+    // getTyresParamsByBrandAndSeason,
+    // getTyresParamsBySeason,
+    // getAllTyresModelByBrand,
+    // getAllTyresParamsByModel,
+    // getAllTyresDiametersByModel,
+    return data;
+}
+
+const getWheelsByIdParam = async (id:string) => {
+    const {data} = await $hostGet.get(`wheels/paramid/${id ?? '0'}`,
+     //{params: {id: id}}
+    )
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_IDPARAM: ', data )
+    // getTyresByIdParam,
+    // getTyresModelRatingAvg,
+    // getTyresBrandRatingAvg,
+    // getTyresBrandRatingAvgSeason,
+    // getTyresCountReviewByBrand,
+    // getTyresCountReviewByModel,
+    // createTyreReview,
+    // createWheelReview,
+    // likesTyreReview,
+    // getTyresParamsByBrandAndSeason,
+    // getTyresParamsBySeason,
+    // getAllTyresModelByBrand,
+    // getAllTyresParamsByModel,
+    // getAllTyresDiametersByModel,
     return data;
 }
 
@@ -240,10 +277,67 @@ const getTyresParamsBySeason = async (
     return data;
 }
 
+const getWheelsParamsBy = async (
+    width: string,
+    bolt_count_pcd: string,
+    dia: string,
+    et: string,
+    diameter: string
+) => {
+    const {data} = await $hostGet.get('/wheels/params',
+    {params: {
+        width: width ?? '',
+        bolt_count_pcd: bolt_count_pcd ?? '',
+        dia: dia ?? '',
+        et: et ?? '',
+        diameter: diameter ?? '',
+    }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+const getWheelsParamsByBrand = async (
+    brand: string,
+    width: string,
+    bolt_count_pcd: string,
+    dia: string,
+    et: string,
+    diameter: string
+) => {
+    const {data} = await $hostGet.get('/wheels/params-brand',
+    {params: {
+        brand: brand ?? '',
+        width: width ?? '',
+        bolt_count_pcd: bolt_count_pcd ?? '',
+        dia: dia ?? '',
+        et: et ?? '',
+        diameter: diameter ?? ''
+    }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
 const getAllTyresModelByBrand = async (
     id_brand: string,
 ) => {
     const {data} = await $hostGet.get('/properties/tyres/model-by-brand',
+    {params: {
+        brand: id_brand ?? 0,
+    }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+const getAllWheelsModelByBrand = async (
+    id_brand: string,
+) => {
+    const {data} = await $hostGet.get('/properties/wheel/model-by-brand',
     {params: {
         brand: id_brand ?? 0,
     }
@@ -270,6 +364,19 @@ const getAllTyresDiametersByModel = async (
     id_model: string,
 ) => {
     const {data} = await $hostGet.get('/properties/tyres/diameter/by-model',
+    {params: {
+        model: id_model ?? 0,
+    }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+const getAllWheelsDiametersByModel = async (
+    id_model: string,
+) => {
+    const {data} = await $hostGet.get('/properties/wheels/diameter/by-model',
     {params: {
         model: id_model ?? 0,
     }
@@ -837,5 +944,10 @@ export {
     getWheelsModelRatingAvg,
     getWheelsBrandRatingAvg,
     getWheelsCountReviewByBrand,
-    getWheelsCountReviewByModel
+    getWheelsCountReviewByModel,
+    getWheelsByIdParam,
+    getWheelsParamsBy,
+    getWheelsParamsByBrand,
+    getAllWheelsModelByBrand,
+    getAllWheelsDiametersByModel
 }

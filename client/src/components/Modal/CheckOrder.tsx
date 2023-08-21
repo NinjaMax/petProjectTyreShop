@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import '../../css/Modal/CheckOrder.css';
 import ButtonAction from '../buttons/ButtonAction';
-import TyresCardList from '../cards/TyresCardList';
+import TyresCardList from '../cards/CardList';
 import { ICheckTyreModal } from './types/CheckTyreItem.type';
 import { useHistory } from 'react-router-dom';
 import { ICheckOrderItem } from '../catalogs/types/CheckOrder.type';

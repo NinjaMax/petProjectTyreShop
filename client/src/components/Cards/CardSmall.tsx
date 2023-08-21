@@ -15,7 +15,7 @@ interface IProductSmall {
     };
 }
 
-const TyreCardSmall = ({product}:IProductSmall) => {
+const CardSmall = ({product}:IProductSmall) => {
 
     return (
         <div className='tyreCardSmall'>
@@ -66,4 +66,4 @@ const TyreCardSmall = ({product}:IProductSmall) => {
     );
 };
 
-export default TyreCardSmall;
+export default CardSmall;

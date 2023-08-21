@@ -1,4 +1,4 @@
-export interface ITyreCard {
+export interface ICard {
     countModelReview?: number;
     avgRatingModel?: number;
     optionsBox?: boolean;
@@ -158,9 +158,50 @@ export interface ITyreCard {
         ratingCount?: number;
         quantity?: number;
         id_basket_storage?: number;  
+        bolt_count?: {
+            bolt_count: string,
+            id_bolt_count: number,
+        };
+        bolt_count_pcd?:{
+            bolt_count_pcd: string
+            id_bolt_count_pcd: number,
+        };
+        color?:{
+            color: string,
+            color_short: string,
+            id_color: string
+        };
+        dia?:{
+            dia: string,
+            id_dia: number,
+        };
+        et?:{
+            et: string,
+            id_et: number,
+        };
+        full_name_color?: string;
+        pcd?:{
+            id_pcd: number,
+            pcd: string,
+        };
+        pcd2?:{
+            id_pcd2: number,
+            pcd2: string,
+        };
+        wheel_brand?:{
+            brand: string,
+            id_brand: number,
+            id_description: number | null
+        };
+        type?:{
+            id_description: number | null,
+            id_type: string,
+            type: string,
+            type_ua?: string,
+        };
     };
     priceItem?: number;
-    
+    typeCard?: string;
     countEvent?(arg0: any): void;
     checkOrders?(arg0: any, ...arg:any[]): Promise<void | undefined>;
 }

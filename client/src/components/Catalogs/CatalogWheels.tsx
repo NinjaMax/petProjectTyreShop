@@ -8,7 +8,7 @@ import Pagination from '../Pagination';
 import { ICheckOrderItem } from './types/CheckOrder.type';
 import { addGoodsToBasket, createBasket, getBasketById } from '../../restAPI/restGoodsApi';
 import { Context } from '../../context/Context';
-import TyresCard from '../cards/TyresCard';
+import Card from '../cards/Card';
 import PopularSizeTyre from '../popularGoods/PopularSizeTyre';
 import PopularDiametrTyre from '../popularGoods/PopularDiametrTyre';
 import { observer } from 'mobx-react-lite';
@@ -105,7 +105,7 @@ const CatalogWheels = observer(() => {
   console.log("GOODS_WHEELS: ", goodsWheel._wheels)
   return (
     <div>
-        <h2>Шини</h2>
+        <h2>Диски</h2>
             <div className='popularCatalogTyre'>
                 <div>Популярні розміри:<PopularSizeTyre/></div>
                 <div>Популярні запити:<PopularDiametrTyre/></div>
@@ -156,12 +156,14 @@ const CatalogWheels = observer(() => {
             <div className="rowCatalogTyres">
                 {goodsWheel._wheels ? goodsWheel._wheels?.map(
                     (goods: any) => (
-                 <TyresCard
+                 <Card
                     key={goods.id}
                     goods={goods}
                     optionsBox={true} 
                     checkOrders={checkOrders} 
-                    forOrder={false}/>
+                    forOrder={false}
+                    typeCard={'wheel'}
+                    />
                 ))   
                 : null
                 }

@@ -12,7 +12,7 @@ import TyreMarking from './TyreMarking';
 import SocialMediaLinks from '../socialMedia/SocialMediaLinks';
 import { useParams } from 'react-router-dom';
 import { Context } from '../../context/Context';
-import { ITyreCard } from '../cards/interfaces/tyreCard.interface';
+import { ICard } from '../cards/interfaces/Card.interface';
 import { observer } from 'mobx-react-lite';
 import { getCompareGoods, getFavoritesGoods } from '../../restAPI/restGoodsApi';
 
@@ -22,7 +22,7 @@ const AllAboutProduct = observer(({
     paramsModelPrice,
     countModelReview,
     avgRatingModel
-}:ITyreCard) => {
+}:ICard) => {
     const[guardChecked, setGuardChecked] = useState<boolean>(false);
     // const param = useParams<any>();
     const {page} = useContext<any>(Context);
@@ -47,7 +47,7 @@ const AllAboutProduct = observer(({
             const getFavorite = await getFavoritesGoods(favoritesArray);
             page.setFavoritesCount(getFavorite?.data);
         } catch (error) {
-            console.log('COMPARE_ERROR: ',error);
+            console.log('COMPARE_ERROR: ', error);
         }
     };
 
@@ -167,7 +167,10 @@ const AllAboutProduct = observer(({
                     </div> 
                     )) : 
                 <div className="productInfoPrice">
-                    {paramsModelPrice ? <span>{'від ' + paramsModelPrice[0].tyres[0].price[0].price} 
+                    {paramsModelPrice ? <span>{'від ' + 
+                    paramsModelPrice[0]?.tyres[0]?.price[0]?.price ?? 
+                    paramsModelPrice[0]?.wheels[0]?.price[0]?.price
+                    } 
                      &#8372;</span>
                     : 'немає в наявності'}
                 </div> 

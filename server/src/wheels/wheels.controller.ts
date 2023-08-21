@@ -55,6 +55,47 @@ export class WheelsController {
     );
   }
 
+  @Get('/params')
+  findAllWheelsByParams(
+    @Query('width') width: string,
+    @Query('bolt_count_pcd') bolt_count_pcd: string,
+    @Query('dia') dia: string,
+    @Query('et') et: string,
+    @Query('diameter') diameter: string
+  ) {
+    return this.wheelsService.findAllWheelsByParams(
+      width,
+      bolt_count_pcd,
+      dia,
+      et,
+      diameter,
+    );
+  };
+
+  @Get('/params-brand')
+  findAllWheelsByBrandAndParams(
+    @Query('brand') brand: string,
+    @Query('width') width: string,
+    @Query('bolt_count_pcd') bolt_count_pcd: string,
+    @Query('dia') dia: string,
+    @Query('et') et: string,
+    @Query('diameter') diameter: string
+  ) {
+    return this.wheelsService.findAllWheelsByBrandParams(
+      brand,
+      width,
+      bolt_count_pcd,
+      dia,
+      et,
+      diameter,
+    );
+  };
+
+  @Get('/paramid/:id')
+  findTyresByParamId(@Param('id') id: string) {
+    return this.wheelsService.findWheelsByIdParam(id);
+  }
+  
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateWheelDto: UpdateWheelDto) {
     return this.wheelsService.update(+id, updateWheelDto);

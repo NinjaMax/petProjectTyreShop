@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import '../css/Pages/Compare.css';
 import { clearCompare, getCompare, getTyresById, getTyresModelRatingAvg } from '../restAPI/restGoodsApi';
-import TyresCardList from '../components/cards/TyresCardList';
+import TyresCardList from '../components/cards/CardList';
 import { Context } from '../context/Context';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
-import TyreCardSmall from '../components/cards/TyreCardSmall';
+import TyreCardSmall from '../components/cards/CardSmall';
 import ReviewsGoodsExtend from '../components/reviews/ReviewsGoodsExtend';
 import { IRatingAvg } from './types/RatingModelAvg.type';
 

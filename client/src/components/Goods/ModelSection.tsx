@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../../css/Goods/ModelSection.css';
-import TyresCardList from '../cards/TyresCardList';
+import TyresCardList from '../cards/CardList';
 
 type IModalSection ={
     modelGoods?:any[] | null,
