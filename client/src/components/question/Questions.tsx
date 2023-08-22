@@ -8,12 +8,12 @@ import { yieldToMain } from '../../restAPI/postTaskAdmin';
 import { FormValuesQuestion } from './types/QuestionCreate.type';
 import QuestionCreate from './QuestionCreate';
 import QuestionCard from './QuestionCard';
-import { createQuestion, getAllQuestions } from '../../restAPI/restGoodsApi';
+import { createQuestion, getAllQuestionsModel } from '../../restAPI/restGoodsApi';
 
 const Question = observer(() => {
   const [createQuestions, setCreateQuestions] = useState<boolean>(false);  
-  const { goodsTyre, page, customer} = useContext<any | null>(Context);
-  const [activeQuestion, setActiveQuestion] = useState<boolean>(false);
+  const { goodsTyre, goodsWheel, page, customer} = useContext<any | null>(Context);
+  //const [activeQuestion, setActiveQuestion] = useState<boolean>(false);
   const [dataQuestion, setDataQuestion] = useState<{} | null>(null);
   const [dataQuestionsList, setDataQuestionsList] = useState<any[] | null>(null);
 
@@ -22,7 +22,7 @@ const Question = observer(() => {
     const getProduct = async () => {
       const taskQuestion: any[] = [
         createQuestion,
-        getAllQuestions
+        getAllQuestionsModel
       ]
     let i: number = 0; 
     while (taskQuestion.length > i) {
@@ -31,9 +31,11 @@ const Question = observer(() => {
         if (dataQuestion) {
           const createQuestionOne: any = await taskQuestion[i](
           dataQuestion,
-          goodsTyre._product.id,
-          goodsTyre._product.tyre_brand.id_brand,
-          goodsTyre._product.tyre_model.id_model,
+          goodsTyre?._product?.id ?? goodsWheel?._product?.id,
+          goodsTyre?._product?.id_brand ?? 
+          goodsWheel?._product?.id_brand,
+          goodsTyre?._product?.id_model ?? 
+          goodsWheel?._product?.id_model,
           customer._customer.id_customer,
           customer._customer.picture ?? customer._customer.profile_image_url,
           );
@@ -44,8 +46,14 @@ const Question = observer(() => {
           }
         } 
       }
-      if (!isMounted && taskQuestion[i] === getAllQuestions) {
-        const getAllQuestions: any = await taskQuestion[i]();
+      if (!isMounted && taskQuestion[i] === getAllQuestionsModel
+        && (goodsTyre?._product?.id_model ||
+          goodsWheel?._product?.id_model)
+        ) {
+        const getAllQuestions: any = await taskQuestion[i](
+          goodsTyre?._product?.id_model ?? 
+          goodsWheel?._product?.id_model,
+        );
         if (getAllQuestions) {
           setDataQuestionsList(getAllQuestions);
           page.setQuestionsCount(getAllQuestions.length);
@@ -61,17 +69,7 @@ const Question = observer(() => {
       isMounted = true;
     };
   },
-  [
-    createQuestions,
-    customer._customer.id_customer,
-    customer._customer.picture,
-    customer._customer.profile_image_url,
-    dataQuestion,
-    goodsTyre._product.id,
-    goodsTyre._product.tyre_brand.id_brand,
-    goodsTyre._product.tyre_model.id_model,
-    page
-  ]);
+  [createQuestions, customer._customer.id_customer, customer._customer.picture, customer._customer.profile_image_url, dataQuestion, goodsTyre?._product?.id, goodsTyre?._product?.id_brand, goodsTyre?._product?.id_model, goodsWheel?._product?.id, goodsWheel?._product?.id_brand, goodsWheel?._product?.id_model, page]);
   const onSubmitQuestion = (data: FormValuesQuestion) => {
     setDataQuestion(data); 
   };

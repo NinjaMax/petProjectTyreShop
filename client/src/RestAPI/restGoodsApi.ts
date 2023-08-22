@@ -132,10 +132,15 @@ const clearFavorites = async () => {
     return data;
 }
     
-
-
 const getTyresAll = async () => {
     const {data} = await $hostGet.get('tyres')
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+const getWheelsAll = async () => {
+    const {data} = await $hostGet.get('/wheels/all')
     //localStorage.setItem('token', data.token)
     //console.log('GET_TYRES_BY_ID: ', data )
     return data;
@@ -775,8 +780,10 @@ const createQuestion = async (
         console.log(error)
 }); 
 
-const getAllQuestions = async () => {
-    const {data} = await $hostGet.get('/questions/allquestions')
+const getAllQuestionsModel = async (id_model: number) => {
+    const {data} = await $hostGet.get(
+        `/questions/all-bymodel/${id_model ?? 0}`
+        )
     //localStorage.setItem('token', data.token)
     //console.log('GET_TYRES_BY_ID: ', data )
     return data;
@@ -891,6 +898,7 @@ export {
     //getTyresDiameter,
     getTyresById,
     getTyresAll,
+    getWheelsAll,
     //getTyresByFullName,
     getTyresByIdParam,
     getTyresCountAll,
@@ -937,7 +945,7 @@ export {
     createQuestion,
     createStoreReview,
     getAllStoreReview,
-    getAllQuestions,
+    getAllQuestionsModel,
     getWheelsWithoutOffset,
     likesWheelReview,
     createWheelReview,

@@ -16,14 +16,38 @@ import ProductPayDel from '../components/goods/ProductPayDel';
 import YouWatched from '../components/goods/YouWatched';
 import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import { GOODS_ROUTE, NOT_FOUND_ROUTE } from '../utils/consts';
-import { createTyreReview, createWheelReview, getAllTyresDiametersByModel, getAllTyresModelByBrand, getAllTyresParamsByModel, getAllWheelsDiametersByModel, getAllWheelsModelByBrand, getTyresBrandRatingAvg, getTyresBrandRatingAvgSeason, getTyresById, getTyresByIdParam, getTyresCountReviewByBrand, getTyresCountReviewByModel, getTyresModelRatingAvg, getTyresParamsByBrandAndSeason, getTyresParamsBySeason, getWheelsByIdParam, getWheelsParamsBy, getWheelsParamsByBrand, likesTyreReview } from '../restAPI/restGoodsApi';
+import { 
+  createTyreReview, 
+  createWheelReview, 
+  getAllTyresDiametersByModel, 
+  getAllTyresModelByBrand, 
+  getAllTyresParamsByModel, 
+  getAllWheelsDiametersByModel, 
+  getAllWheelsModelByBrand, 
+  getTyresBrandRatingAvg, 
+  getTyresBrandRatingAvgSeason,  
+  getTyresByIdParam, 
+  getTyresCountReviewByBrand, 
+  getTyresCountReviewByModel, 
+  getTyresModelRatingAvg, 
+  getTyresParamsByBrandAndSeason, 
+  getTyresParamsBySeason, 
+  getWheelsBrandRatingAvg, 
+  getWheelsByIdParam, 
+  getWheelsCountReviewByBrand, 
+  getWheelsCountReviewByModel, 
+  getWheelsModelRatingAvg, 
+  getWheelsParamsBy, 
+  getWheelsParamsByBrand, 
+  likesTyreReview 
+} from '../restAPI/restGoodsApi';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../context/Context';
 import { createStringUrl } from '../services/stringUrl';
 import ButtonAction from '../components/buttons/ButtonAction';
 import Modal from '../components/modal/Modal';
-import ReviewTyreCreate from '../components/reviews/ReviewTyreCreate';
+import ReviewCreate from '../components/reviews/ReviewCreate';
 import { IReviewGoods } from '../components/reviews/interfaces/ReviewGoods.interface';
 import { IRatingAvg } from './types/RatingModelAvg.type';
 import { IRatingBrandAvg } from './types/RatingBrandAvg.type';
@@ -31,6 +55,7 @@ import { IRatingSeasonAvg } from './types/RatingBrandSeason.type';
 import { FormValues } from '../components/reviews/types/ReviewTyreCreate.type';
 import ModelSection from '../components/goods/ModelSection';
 import Question from '../components/question/Questions';
+import PropertiesWheelGoods from '../components/goods/PropertiesWheelGoods';
 
 type ILikeTyreType = {
   id_review: number;
@@ -52,7 +77,6 @@ const GoodsPage = observer(() => {
   //const [likeReview, setLikeReview] = useState<ILikeTyreType | null>(null);
   //const [dislikeReview, setDislikeReview] = useState<number>(0);
   // const [thumbUp, setThumbUp] = useState<boolean | null>(null);
-  // const [thumbDown, setThumbDown] = useState<boolean | null>(null);
   const [similarGoods, setSimilarGoods] = useState<any[] | null>();
   const [similarBrandGoods, setSimilarBrandGoods] = useState<any[] | null>();
   const [allModelsBrand, setAllModelsBrand] = useState<any[] | null>();
@@ -70,10 +94,14 @@ const GoodsPage = observer(() => {
       const taskProduct: any[] = [
         getTyresByIdParam,
         getTyresModelRatingAvg,
+        getWheelsModelRatingAvg,
         getTyresBrandRatingAvg,
+        getWheelsBrandRatingAvg,
         getTyresBrandRatingAvgSeason,
         getTyresCountReviewByBrand,
+        getWheelsCountReviewByBrand,
         getTyresCountReviewByModel,
+        getWheelsCountReviewByModel,
         createTyreReview,
         createWheelReview,
         getWheelsByIdParam,
@@ -106,11 +134,23 @@ const GoodsPage = observer(() => {
         );
         setRatingModelAvg(getRatingModel[0]);
       }
+      if (!isMounted && taskProduct[i] === getWheelsModelRatingAvg && goodsWheel._product.id_model) {
+        const getWheelRatingModel: any = await taskProduct[i](
+          goodsWheel._product.id_model
+        );
+        setRatingModelAvg(getWheelRatingModel[0]);
+      }
       if (!isMounted && taskProduct[i] === getTyresBrandRatingAvg && goodsTyre._product.id_brand) {
         const getRatingBrand: any = await taskProduct[i](
           goodsTyre._product.id_brand
         );
         setRatingBrandAvg(getRatingBrand[0]);
+      }
+      if (!isMounted && taskProduct[i] === getWheelsBrandRatingAvg && goodsWheel._product.id_brand) {
+        const getWheelRatingBrand: any = await taskProduct[i](
+          goodsWheel._product.id_brand
+        );
+        setRatingBrandAvg(getWheelRatingBrand[0]);
       }
       if (!isMounted && taskProduct[i] === getTyresBrandRatingAvgSeason && goodsTyre._product.id_brand) {
         const getRatingSummer: any = await taskProduct[i](
@@ -130,11 +170,19 @@ const GoodsPage = observer(() => {
         const getCountBrand: any = await taskProduct[i](goodsTyre._product.id_brand);
         setReviewCountBrand(getCountBrand);
       }
+      if (!isMounted && taskProduct[i] === getWheelsCountReviewByBrand && goodsWheel._product.id_brand) {
+        const getCountWheelBrand: any = await taskProduct[i](goodsWheel._product.id_brand);
+        setReviewCountBrand(getCountWheelBrand);
+      }
       if (!isMounted && taskProduct[i] === getTyresCountReviewByModel && goodsTyre._product.id_model) {
         const getCountModel: any = await taskProduct[i](goodsTyre._product.id_model);
         setReviewCountModel(getCountModel);
       }
-      if (!isMounted && taskProduct[i] === createTyreReview && dataReview) {
+      if (!isMounted && taskProduct[i] === getWheelsCountReviewByModel && goodsWheel._product.id_model) {
+        const getCountWheelModel: any = await taskProduct[i](goodsWheel._product.id_model);
+        setReviewCountModel(getCountWheelModel);
+      }
+      if (!isMounted && taskProduct[i] === createTyreReview && dataReview && goodsTyre._product) {
         if (dataReview) {
           const createReviewTyre: any = await taskProduct[i](
           dataReview,
@@ -166,7 +214,7 @@ const GoodsPage = observer(() => {
           }
         } 
       }
-      if (!isMounted && taskProduct[i] === createWheelReview && dataReview) {
+      if (!isMounted && taskProduct[i] === createWheelReview && dataReview && goodsWheel._product) {
         if (dataReview) {
           const createReviewWheel: any = await taskProduct[i](
           dataReview,
@@ -287,13 +335,14 @@ const GoodsPage = observer(() => {
     };
   },
   [
-    createReview,
-    customer._customer.id_customer,
-    customer._customer.picture,
-    customer._customer.profile_image_url,
-    dataReview,
+    createReview, 
+    customer._customer.id_customer, 
+    customer._customer.picture, 
+    customer._customer.profile_image_url, 
+    dataReview, 
     goodsTyre, 
-    goodsWheel
+    goodsWheel, 
+    page
   ]);
 
   useEffect(() => {
@@ -346,8 +395,8 @@ const GoodsPage = observer(() => {
   // console.log('MATCH_URL_PARAMS: ', match?.params.goodsItem);
   // console.log('MATCH_URL: ', match);
   console.log('RATING_SUMMER: ', ratingSummerAvg);
-  console.log('PRODUCT_WHEEL: ', goodsWheel._product);
-  console.log('PRODUCT_TYRE: ', goodsTyre?._product.length);
+  // console.log('PRODUCT_WHEEL: ', goodsWheel._product);
+  // console.log('PRODUCT_TYRE: ', goodsTyre?._product.length);
   // console.log('LOCALSORAGE_GOODS_ID: ',JSON.parse(localStorage.getItem('goodsId')!));
   // console.log('THUMB_UP:', thumbUp);
   // console.log('THUMB_DOWN:', thumbDown);
@@ -376,12 +425,15 @@ const GoodsPage = observer(() => {
             titleGoodsTab:"ВІДГУКИ", 
             value:"vidguki",
             checked: changeTabGoods,
-            reviewCount: goodsTyre?._product?.reviews?.length ?? 0,
+            reviewCount: goodsTyre?._product?.reviews?.length ??
+            goodsWheel?._product?.reviews?.length
+            ?? 0,
             }, {id:'4',
             titleGoodsTab:"ПИТАННЯ ТА ВІДПОВІДІ",
             value:"pitannja",
             checked: changeTabGoods,
-            reviewCount: page.questionsCount,
+            reviewCount: goodsWheel._product?.question?.length ?? 
+            goodsTyre._product?.question?.length,
             }
           ]}
             >
@@ -405,9 +457,13 @@ const GoodsPage = observer(() => {
                   avgRatingModel={ratingModelAvg?.avgRatingModel}
                 />
             :null}
-            {changeTabGoods === "charakteristiki"?
-                <PropertiesGoods product={goodsTyre._product}/> 
+            {changeTabGoods === "charakteristiki" && goodsTyre._product ?
+              <PropertiesGoods product={goodsTyre._product}/> 
             :null}
+            {changeTabGoods === "charakteristiki" && goodsWheel._product ?
+              <PropertiesWheelGoods product={goodsWheel._product}/>
+            : null
+            }
           {changeTabGoods === "vidguki" ?
             <div className='tabReviewsActive'>
               <div className='preReview'>
@@ -431,17 +487,18 @@ const GoodsPage = observer(() => {
                 </span> 
                 : null 
                 } 
-                
                 <ButtonAction 
                   props={'Написати відгук'}
                   eventItem={openToCreateReview}
                 />
               </div>
               <ReviewGoodsOverall 
+                typeGoods={goodsTyre?._product ? true : false}
                 reviewCount={reviewCountModel}
                 ratingsModel={ratingModelAvg}
               /> 
               <ReviewBrandOverall 
+                typeGoods={goodsTyre?._product ? true : false}
                 brandName={goodsTyre?._product?.tyre_brand?.brand ??
                   goodsWheel?._product?.wheel_brand?.brand 
                 }
@@ -457,6 +514,23 @@ const GoodsPage = observer(() => {
                 <ReviewsGoods 
                   productFullName={goodsTyre._product.full_name}
                   rating={goodsTyre._product.rating}
+                  reviewEntity={item}
+                  reviewExtend={false}
+                  btnLeft={undefined}
+                  btnRight={undefined} 
+                  //setLikeReview={setLikeReview} 
+                  //setThumbDown={setDislikeReview}
+                />
+                </Fragment>
+                )
+                : null
+              }
+              {goodsWheel?._product?.reviews?.length !== 0 ?
+                goodsWheel?._product?.reviews?.map((item: IReviewGoods) =>
+                <Fragment key={item.id_review}>
+                <ReviewsGoods 
+                  productFullName={goodsWheel._product.full_name}
+                  rating={goodsWheel._product.rating}
                   reviewEntity={item}
                   reviewExtend={false}
                   btnLeft={undefined}
@@ -512,7 +586,6 @@ const GoodsPage = observer(() => {
         <span>Усі моделі бренда {goodsTyre?.brand}</span>
         <AllModelBrand modelBrandList={allModelsBrand}/>
       </div>
-
       <div className='youWatched'>
         <YouWatched/>
       </div>
@@ -527,15 +600,12 @@ const GoodsPage = observer(() => {
         }
       </div>
         <Modal active={createReview} setActive={openToCreateReview}>
-          <ReviewTyreCreate 
+          <ReviewCreate 
             onSubmitReviewTyre={submitDataReview}
-            // active={createReview}
-            // setActive={openToCreateReview}
           />
         </Modal> 
     </div>
-
-    );
+  );
 });
 
 export default GoodsPage;

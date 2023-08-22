@@ -5,7 +5,7 @@ import RatingOptions from '../ux/RatingOptions';
 import { IReviewGoodsOverall } from './interfaces/ReviewGoodsOverall.interface';
 
 const ReviewGoodsOverall = (
-    {ratingsModel, reviewCount}:IReviewGoodsOverall) => {
+    {ratingsModel, reviewCount, typeGoods}:IReviewGoodsOverall) => {
     return (
         <div className='reviewGoodsOverall'>
             <div className="headingGoodsOverall">
@@ -20,6 +20,7 @@ const ReviewGoodsOverall = (
                 </RatingOptions>
                 <p> середня оцінка основана на { reviewCount ?? 0} відгуках.</p>
             </div>
+            { typeGoods ?
             <div className='ratingList'>
                 <div className='ratingListItems'>
                     <RatingOptions 
@@ -52,6 +53,9 @@ const ReviewGoodsOverall = (
                 </RatingOptions>
                 </div>
             </div>
+            : null
+            }
+            { typeGoods ?
             <div className='ratingList'>
                 <div className='ratingListItems'>
                     <RatingOptions 
@@ -94,6 +98,8 @@ const ReviewGoodsOverall = (
                 </RatingOptions>
                 </div>
             </div>
+            : null
+            }
         </div>
     );
 };

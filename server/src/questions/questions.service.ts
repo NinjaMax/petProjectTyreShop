@@ -8,6 +8,9 @@ import { TyresService } from '../tyres/tyres.service';
 import { PropsBrandService } from '../properties/props-tyres-services/props-tyre-brand.service';
 import { PropsModelService } from '../properties/props-tyres-services/props-tyre-model.service';
 import { CustomersService } from '../customers/customers.service';
+import { PropsWheelModelService } from '../properties/props-wheel-services/props-wheel-model.service';
+import { PropsWheelBrandService } from '../properties/props-wheel-services/props-wheel-brand.service';
+import { WheelsService } from '../wheels/wheels.service';
 
 @Injectable()
 export class QuestionsService {
@@ -17,6 +20,9 @@ export class QuestionsService {
     private tyresService: TyresService,
     private tyreBrandService: PropsBrandService,
     private tyreModelService: PropsModelService,
+    private wheelService: WheelsService,
+    private wheelModelService: PropsWheelModelService,
+    private wheelBrandService: PropsWheelBrandService,
     private customersService: CustomersService,
   ) {}
 
@@ -29,27 +35,54 @@ export class QuestionsService {
       const tyreBrand = await this.tyreBrandService.findBrandById(
         createQuestionDto,
       );
+      const wheelById = await this.wheelService.findWheelById(
+        createQuestionDto,
+      );
+      const wheelBrand = await this.wheelBrandService.findWheelBrandById(
+        createQuestionDto,
+      );
+      const wheelModel = await this.wheelModelService.findWheelModelById(
+        createQuestionDto,
+      );
       const customer = await this.customersService.findCustomerById(
         createQuestionDto,
       );
 
       if (tyreById && tyreModel && tyreBrand) {
-        const questionCreate = await this.questionsRepository.create(
+        const questionTyreCreate = await this.questionsRepository.create(
           createQuestionDto,
         );
 
-        await tyreById.$add('reviews', [questionCreate.id_question]);
-        await tyreModel.$add('reviews', [questionCreate.id_question]);
-        await tyreBrand.$add('reviews', [questionCreate.id_question]);
+        await tyreById.$add('reviews', [questionTyreCreate.id_question]);
+        await tyreModel.$add('reviews', [questionTyreCreate.id_question]);
+        await tyreBrand.$add('reviews', [questionTyreCreate.id_question]);
         if (customer) {
-          await questionCreate.$add('customer', customer.id_customer);
+          await questionTyreCreate.$add('customer', customer.id_customer);
         }
-        tyreById.question.push(questionCreate);
-        tyreModel.question.push(questionCreate);
-        tyreBrand.question.push(questionCreate);
+        tyreById.question.push(questionTyreCreate);
+        tyreModel.question.push(questionTyreCreate);
+        tyreBrand.question.push(questionTyreCreate);
 
-        questionCreate.reload();
-        return questionCreate;
+        questionTyreCreate.reload();
+        return questionTyreCreate;
+      }
+      if (wheelById && wheelBrand && wheelModel) {
+        const questionWheelCreate = await this.questionsRepository.create(
+          createQuestionDto,
+        );
+
+        await wheelById.$add('reviews', [questionWheelCreate.id_question]);
+        await wheelModel.$add('reviews', [questionWheelCreate.id_question]);
+        await wheelBrand.$add('reviews', [questionWheelCreate.id_question]);
+        if (customer) {
+          await questionWheelCreate.$add('customer', customer.id_customer);
+        }
+        wheelById.question.push(questionWheelCreate);
+        wheelModel.question.push(questionWheelCreate);
+        wheelBrand.question.push(questionWheelCreate);
+
+        questionWheelCreate.reload();
+        return questionWheelCreate;
       }
     } catch (error) {
       throw new HttpException(
@@ -65,6 +98,21 @@ export class QuestionsService {
         include: { all: true },
       });
       return allQuestions;
+    } catch (error) {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async findAllQuestionByIdModel(id_model: number) {
+    try {
+      const allQuestionsByIdModel = await this.questionsRepository.findAll({
+        where: { id_model: id_model },
+        include: { all: true },
+      });
+      return allQuestionsByIdModel;
     } catch (error) {
       throw new HttpException(
         'Data is incorrect and must be uniq',

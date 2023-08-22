@@ -12,10 +12,10 @@ interface IReviewTyreCreate {
     onSubmitReviewTyre(arg0: any): void;
 }
 
-const ReviewTyreCreate = observer(({
+const ReviewCreate = observer(({
     onSubmitReviewTyre,
 }: IReviewTyreCreate) => {
-    const {goodsTyre, customer} = useContext<any | null>(Context);
+    const {goodsTyre, goodsWheel, customer} = useContext<any | null>(Context);
     const {
         register, 
         handleSubmit,
@@ -32,7 +32,15 @@ const ReviewTyreCreate = observer(({
         if (goodsTyre.ratingList.rating_overall) {
             setValue('rating_overall', goodsTyre.ratingList.rating_overall)  
         }
-    },[goodsTyre.ratingList.rating_overall, register, setValue]);
+        if(goodsWheel.ratingList.rating_overall) {
+            setValue('rating_overall', goodsTyre.ratingList.rating_overall)  
+        }
+    },[
+        goodsTyre.ratingList.rating_overall,
+        goodsWheel.ratingList.rating_overall, 
+        register, 
+        setValue
+    ]);
 
     return (
     <div className='reviewTyreCreate'>
@@ -45,12 +53,15 @@ const ReviewTyreCreate = observer(({
                     nameRating={'Загальна оцінка'} 
                 >
                 <Rating 
-                    numScore={goodsTyre.ratingList.rating_overall}
+                    numScore={goodsTyre.ratingList.rating_overall ??
+                        goodsWheel.ratingList.rating_overall
+                    }
                     disabled={false}
                     nameRating={'rating_overall'}
                 />
                 </RatingOptions>      
             </div>
+            {goodsTyre._product ?
             <div className='reviewRatingListItems'>
                 <RatingOptions 
                     nameRating={'Керованість на сухій дорозі'}
@@ -62,6 +73,9 @@ const ReviewTyreCreate = observer(({
                     />
                 </RatingOptions>    
             </div>
+            : null
+            }
+            {goodsTyre._product  ?
             <div className='reviewRatingListItems'>
                 <RatingOptions 
                     nameRating={'Керованість на мокрій дорозі'} 
@@ -73,6 +87,9 @@ const ReviewTyreCreate = observer(({
                     />
                 </RatingOptions>    
             </div>
+            : null
+            }
+            {goodsTyre._product  ?
             <div className='reviewRatingListItems'>
                 <RatingOptions
                     nameRating={'Керованість на снігу'} 
@@ -84,6 +101,9 @@ const ReviewTyreCreate = observer(({
                     />
                  </RatingOptions>    
             </div>
+            : null
+            }
+            {goodsTyre._product  ?
             <div className='reviewRatingListItems'>
                 <RatingOptions 
                     nameRating={'Керованість на льду'} 
@@ -95,6 +115,9 @@ const ReviewTyreCreate = observer(({
                     />
                 </RatingOptions>    
             </div>
+            : null
+            }
+            {goodsTyre._product  ?
             <div className='reviewRatingListItems'>
                 <RatingOptions 
                     nameRating={'Проходимість'} 
@@ -106,6 +129,9 @@ const ReviewTyreCreate = observer(({
                     />
                 </RatingOptions>    
             </div>
+            : null
+            }
+            {goodsTyre._product  ?
             <div className='reviewRatingListItems'>
                 <RatingOptions 
                     nameRating={'Зносостійкість'} 
@@ -117,6 +143,9 @@ const ReviewTyreCreate = observer(({
                     />
                 </RatingOptions>    
             </div>
+            : null
+            }
+            {goodsTyre._product  ?
             <div className='reviewRatingListItems'>
                 <RatingOptions 
                     nameRating={'Ціна/Якість'} 
@@ -128,6 +157,8 @@ const ReviewTyreCreate = observer(({
                     />
                 </RatingOptions>    
             </div>
+            : null
+            }
         </div>
         <p/>
         <div className='reviewInputRatingBox'>
@@ -224,4 +255,4 @@ const ReviewTyreCreate = observer(({
   )
 });
 
-export default ReviewTyreCreate
+export default ReviewCreate

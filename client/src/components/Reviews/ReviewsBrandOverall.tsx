@@ -11,6 +11,7 @@ interface IReviewBrand {
     ratingWinter?:number;
     ratingAllseason?:number;
     brandName?:string;
+    typeGoods?:string | boolean;
 }
 
 const ReviewsBrandOverall = ({
@@ -19,7 +20,8 @@ const ReviewsBrandOverall = ({
     ratingSummer,
     ratingWinter,
     ratingAllseason,
-    brandName
+    brandName,
+    typeGoods
 }: IReviewBrand) => {
     return (
         <div className="reviewsBrand">
@@ -34,6 +36,7 @@ const ReviewsBrandOverall = ({
                 /> 
                 <span>середня оцінка основана на {countReviewBrand} відгуках.</span>  
             </div>
+            {typeGoods ?
             <div className='reviewBrandList'>
                 <RatingOptions 
                     nameRating={'середня оцінка Зимових моделей'}
@@ -44,6 +47,9 @@ const ReviewsBrandOverall = ({
                     /> 
                 </RatingOptions> 
             </div>
+            : null
+            }
+            {typeGoods ?
             <div className='reviewBrandList'>
                 <RatingOptions 
                     nameRating={'середня оцінка Літніх моделей'}
@@ -54,6 +60,9 @@ const ReviewsBrandOverall = ({
                     /> 
                 </RatingOptions> 
             </div>
+            : null
+            }
+            {typeGoods ?
             <div className='reviewBrandList'>
                 <RatingOptions 
                     nameRating={'середня оцінка Всесезонних моделей'}
@@ -64,6 +73,8 @@ const ReviewsBrandOverall = ({
                     /> 
                 </RatingOptions>
             </div>
+            : null
+            }
         </div>
         
     );

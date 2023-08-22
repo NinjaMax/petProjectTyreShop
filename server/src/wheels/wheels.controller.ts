@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { WheelsService } from './wheels.service';
 import { CreateWheelDto } from './dto/create-wheel.dto';
 import { GetWheelDto } from './dto/get-wheel.dto';
@@ -13,7 +22,7 @@ export class WheelsController {
     return this.wheelsService.createWheel(createWheelDto);
   }
 
-  @Get()
+  @Get('/all')
   findAll() {
     return this.wheelsService.findAllWheels();
   }

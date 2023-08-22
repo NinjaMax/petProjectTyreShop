@@ -4,7 +4,7 @@ import TyresCardList from '../cards/CardList';
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../../context/Context';
-import { getTyresAll} from '../../restAPI/restGoodsApi';
+import { getTyresAll, getWheelsAll} from '../../restAPI/restGoodsApi';
 import { yieldToMain } from '../../restAPI/postTaskAdmin';
 import { SEARCH_ROUTE } from '../../utils/consts';
 
@@ -34,18 +34,23 @@ const NavBarSearch = observer((
         const loadMaintask = async() => {
           const taskLoad: any[] = [
             getTyresAll,
-          ];
+            getWheelsAll
+            ];
         
-        let i:number = 0;
-        while(taskLoad.length > i) {
-        if(!isMounted && taskLoad[i] === getTyresAll) {
-            let tyreFilterGoods: any = await taskLoad[i]();
-            setTyreSearchMod(tyreFilterGoods);
-        }
-        const task = taskLoad.shift();
-        task();
-        await yieldToMain(); 
-        }
+            let i:number = 0;
+            while(taskLoad.length > i) {
+            if(!isMounted && taskLoad[i] === getTyresAll) {
+                let tyreFilterGoods: any = await taskLoad[i]();
+                setTyreSearchMod(tyreFilterGoods);
+            }
+            if(!isMounted && taskLoad[i] === getWheelsAll) {
+                let wheelFilterGoods: any = await taskLoad[i]();
+                setWheelSearchMod(wheelFilterGoods);
+            }
+            const task = taskLoad.shift();
+            task();
+            await yieldToMain(); 
+            }
         }
         loadMaintask();
         return () => {
@@ -64,13 +69,27 @@ const NavBarSearch = observer((
                 setTabSearchModTyre(newTyresSearch);
             }  
         } 
+        if(inputSearchMod.length !== 0) {
+            const newWheelsSearch: any = wheelSearchMod?.filter((itemGoods:any) =>
+            (itemGoods.id.toLowerCase().includes(inputSearchMod.toLowerCase()) ||    
+            itemGoods.full_name_color.toLowerCase().includes(inputSearchMod.toLowerCase()) ||
+            itemGoods.size_digits.size_only_digits.toLowerCase().includes(inputSearchMod.toLowerCase())
+            ));
+            if (newWheelsSearch) {
+                setTabSearchModWheel(newWheelsSearch);
+            }  
+        } 
         // else {
         //     setTabSearchModTyre(null);
         //     setTabSearchModWheel(null);
         //     setTabSearchModOil(null);
         //     setTabSearchModBattery(null);
         // }
-    },[inputSearchMod, tyreSearchMod]);
+    },[
+        inputSearchMod, 
+        tyreSearchMod, 
+        wheelSearchMod
+    ]);
 
     const searchTabModChange = (e: any) => {
         if (e.target.title === 'Шини') {
@@ -141,7 +160,7 @@ const NavBarSearch = observer((
                             onClick={searchTabModChange}
                         >Диски 
                             <span className='countSearch'>
-                            {10020}
+                            {tabSearchModWheel?.length}
                             </span>
                         </span>
                         </div>
@@ -157,7 +176,7 @@ const NavBarSearch = observer((
                             onClick={searchTabModChange}
                         >Акб 
                             <span className='countSearch'>
-                                {20}
+                                {tabSearchModBattery?.length}
                             </span>
                         </span>
                         </div>
@@ -173,7 +192,7 @@ const NavBarSearch = observer((
                             onClick={searchTabModChange}
                         >Масло 
                             <span className='countSearch'>
-                                {20}
+                                {tabSearchModOil?.length}
                             </span>
                         </span>
                         </div>

@@ -176,7 +176,6 @@ export class RatingsService {
           ],
         ],
       });
-
       return ratingAvgIdBrand;
     } catch {
       throw new HttpException(
@@ -197,7 +196,6 @@ export class RatingsService {
           ],
         ],
       });
-
       return ratingWheelAvgIdBrand;
     } catch {
       throw new HttpException(

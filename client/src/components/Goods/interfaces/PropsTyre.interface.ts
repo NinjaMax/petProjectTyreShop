@@ -42,5 +42,51 @@ export interface IPropsTyre {
         studded: {
             studded: string
         }
+        full_name_color?: string;
+        pcd?:{
+            id_pcd: number,
+            pcd: string,
+        };
+        pcd2?:{
+            id_pcd2: number,
+            pcd2: string,
+        };
+        wheel_brand?:{
+            brand: string,
+            id_brand: number,
+            id_description: number | null
+        };
+        wheel_model?:{
+            model: string,
+            id_model: number,
+            id_description: number | null
+        };
+        type?:{
+            id_description: number | null,
+            id_type: string,
+            type: string,
+            type_ua?: string,
+        };
+        bolt_count?: {
+            bolt_count: string,
+            id_bolt_count: number,
+        };
+        bolt_count_pcd?:{
+            bolt_count_pcd: string
+            id_bolt_count_pcd: number,
+        };
+        color?:{
+            color: string,
+            color_short: string,
+            id_color: string
+        };
+        dia?:{
+            dia: string,
+            id_dia: number,
+        };
+        et?:{
+            et: string,
+            id_et: number,
+        };
     };
 }

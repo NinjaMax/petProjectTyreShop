@@ -30,6 +30,11 @@ export class QuestionsController {
     return this.questionsService.findOneQuestion(+id);
   }
 
+  @Get('/all-bymodel/:id_model')
+  findAllByModel(@Param('id_model') id_model: string) {
+    return this.questionsService.findAllQuestionByIdModel(+id_model);
+  }
+
   @Patch(':id')
   update(
     @Param('id') id: string,

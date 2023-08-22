@@ -27,6 +27,7 @@ import { RatingTyres } from '../ratings/entities/rating-tyres.model';
 import { ReviewTyres } from '../reviews/entities/review-tyres.model';
 import { TyreCountry } from '../properties/entities/tyres/tyre-country.model';
 import { TyreYear } from '../properties/entities/tyres/tyre-year.model';
+import { TyreSizeDigits } from '../properties/entities/tyres/tyre-sizeDigits.model';
 
 @Injectable()
 export class TyresService {
@@ -83,7 +84,20 @@ export class TyresService {
   async findAllTyres() {
     try {
       const tyresAll = await this.tyresRepository.findAll({
-        include: { all: true },
+        include: [
+          { model: ReviewTyres },
+          { model: RatingTyres },
+          { model: PriceTyres },
+          { model: StockTyres },
+          { model: TyreYear },
+          { model: TyreCountry },
+          { model: TyreVehicleType },
+          { model: TyreSeason },
+          { model: TyreSizeDigits },
+          { model: TyreBrand},
+
+          //{ all: true },
+        ],
       });
       return tyresAll;
     } catch {
@@ -256,7 +270,7 @@ export class TyresService {
             { model: RatingTyres },
             { model: ReviewTyres },
             { model: StockTyres },
-            { model: TyreCountry},
+            { model: TyreCountry },
             { model: TyreYear },
             //{ all: true },
             width

@@ -27,6 +27,7 @@ import { WheelConfigAttr } from '../interfaces/wheel.interface';
 import { Description } from '../../description/entities/description.entity';
 import { ReviewWheels } from '../../reviews/entities/review-wheels.model';
 import { RatingWheels } from '../../ratings/entities/rating-wheels.model';
+import { Question } from '../../questions/entities/question.entity';
 
 @Table({ tableName: 'wheel', updatedAt: false })
 export class Wheel extends Model<Wheel, WheelConfigAttr> {
@@ -128,6 +129,9 @@ export class Wheel extends Model<Wheel, WheelConfigAttr> {
 
   @HasMany(() => RatingWheels, 'id')
   rating: RatingWheels[];
+
+  @HasMany(() => Question, 'id')
+  question: Question[];
 
   @BelongsTo(() => WheelBrand, 'id_brand')
   wheel_brand: WheelBrand;

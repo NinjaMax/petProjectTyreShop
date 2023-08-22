@@ -12,6 +12,7 @@ import { WheelPropsConfigAttr } from '../../interfaces/wheels/wheel-props.interf
 import { Description } from '../../../description/entities/description.entity';
 import { RatingWheels } from '../../../ratings/entities/rating-wheels.model';
 import { ReviewWheels } from '../../../reviews/entities/review-wheels.model';
+import { Question } from '../../../questions/entities/question.entity';
 
 @Table({ tableName: 'wheel_model', updatedAt: false, createdAt: false })
 export class WheelModel extends Model<WheelModel, WheelPropsConfigAttr> {
@@ -42,4 +43,7 @@ export class WheelModel extends Model<WheelModel, WheelPropsConfigAttr> {
 
   @HasMany(() => ReviewWheels, 'id_model')
   reviews: ReviewWheels[];
+
+  @HasMany(() => Question, 'id_model')
+  question: Question[];
 }

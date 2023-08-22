@@ -13,7 +13,7 @@ import { Link, NavLink, useHistory, useLocation, useParams, useRouteMatch } from
 import { Context } from '../../context/Context';
 import { observer } from 'mobx-react-lite';
 import { createStringUrl } from '../../services/stringUrl';
-import { getTyresModelRatingAvg } from '../../restAPI/restGoodsApi';
+import { getTyresModelRatingAvg, getWheelsModelRatingAvg } from '../../restAPI/restGoodsApi';
 import { yieldToMain } from '../../restAPI/postTaskAdmin';
 import { IRatingAvg } from '../../pages/types/RatingModelAvg.type';
 
@@ -30,12 +30,21 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
         const getRatingModel = async () => {
           const taskProduct: any[] = [
             getTyresModelRatingAvg,
+            getWheelsModelRatingAvg
           ];
         let i: number = 0; 
         while (taskProduct.length > i) {
           if (!isMounted && taskProduct[i] === getTyresModelRatingAvg && goods) {
             const getRating: any = await taskProduct[i](goods?.id_model);
-            setRatingModel(getRating[0]);
+            if(getRating) {
+             setRatingModel(getRating[0]);   
+            }
+          }
+          if (!isMounted && taskProduct[i] === getWheelsModelRatingAvg && goods) {
+            const getRating: any = await taskProduct[i](goods?.id_model);
+            if(getRating) {
+             setRatingModel(getRating[0]);   
+            }
           }
           const task = taskProduct.shift();
           task();
