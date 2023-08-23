@@ -13,6 +13,7 @@ import { Context } from '../context/Context';
 import { observer } from 'mobx-react-lite';
 import { tyreDiameterCat, tyreSeasonCat, tyreVehicleTypeCat } from '../services/tyresCatService';
 import CatalogWheels from '../components/catalogs/CatalogWheels';
+import FilterCatalogWheels from '../components/filterCatalog/FilterCatalogWheels';
 
 const CatalogTyresPage = observer(({crumbsItem}: any) => {
   const {goodsTyre, goodsWheel, filter} = useContext<any | null>(Context);
@@ -281,11 +282,11 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
           let wheelFilterGoods: any = await taskLoad[i](
             filter.width,
             filter.diameter,
-            filter.type,
-            filter.brands,
-            filter.price,
             filter.bolt_count,
             filter.bolt_count_pcd,
+            filter.brands,
+            filter.price,
+            filter.type,
             filter.color,
             filter.dia,
             filter.et,
@@ -308,7 +309,7 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
 
           //console.log('TYRE_FILTER_GET: ', tyreFilterGoods);
           page.loadMore > 0 ? goodsWheel?.setWheels(
-          [...goodsWheel._tyres, 
+          [...goodsWheel._wheels, 
             ...wheelFilterGoods.splice(page.offset, page.limit)] 
           ) : goodsWheel?.setWheels(
             wheelFilterGoods.splice(page.offset, page.limit));
@@ -536,6 +537,15 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
           />
         : null  
         }
+        {location.pathname.includes('wheels') ?
+          <BreadCrumbs 
+            route={['/','/wheels', `${params ?? null}`]} 
+            hrefTitle={
+              ['Головна','Диски',
+            `${(params.category) ?? null}`]}
+          />
+        : null  
+        }
         </div>
         <div className='b'>
         {location.pathname.includes('tyres') ?
@@ -546,7 +556,7 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
           : null
         }
         {location.pathname.includes('wheels') ?
-          <FilterCatalogTyres
+          <FilterCatalogWheels
             filterState={stateClick} 
             setFilterAction={filterClick} 
           />

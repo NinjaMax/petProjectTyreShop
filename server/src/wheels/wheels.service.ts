@@ -827,7 +827,7 @@ export class WheelsService {
               ),
               'ASC',
             ],
-            ['rating', 'rating', 'DESC'],
+            ['rating', 'rating_overall', 'ASC'],
           ],
         });
         return wheelsAllWithoutLimitR;

@@ -989,7 +989,7 @@ export class TyresService {
               ),
               'ASC',
             ],
-            ['rating', 'rating', 'DESC'],
+            ['rating', 'rating_overall', 'ASC'],
           ],
         });
         return tyresAllWithoutLimitR;

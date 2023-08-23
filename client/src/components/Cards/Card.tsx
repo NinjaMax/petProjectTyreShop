@@ -16,6 +16,7 @@ import { createStringUrl } from '../../services/stringUrl';
 import { getTyresModelRatingAvg, getWheelsModelRatingAvg } from '../../restAPI/restGoodsApi';
 import { yieldToMain } from '../../restAPI/postTaskAdmin';
 import { IRatingAvg } from '../../pages/types/RatingModelAvg.type';
+import OptionsWheelBox from './OptionsWheelBox';
 
 const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
     const {page} = useContext<any>(Context);
@@ -173,8 +174,11 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                 }
                 <p/>    
             </div>
-            { optionsBox ?
+            { optionsBox && typeCard === 'tyre' ?
                 <OptionsTyreBox character={goods}/>
+            :null}
+            { optionsBox && typeCard === 'wheel' ?
+                <OptionsWheelBox character={goods}/>
             :null}
             <p/>     
         </div>

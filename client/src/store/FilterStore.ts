@@ -446,7 +446,7 @@ export default class FilterStore {
     removeChipDiaItem(indexNumber: number) {
         this._chipDia.splice(indexNumber, 1);
     }
-    removeEtItem(indexNumber: number) {
+    removeChipEtItem(indexNumber: number) {
         this._chipEt.splice(indexNumber, 1);
     }
     removeChipPcdItem(indexNumber: number) {

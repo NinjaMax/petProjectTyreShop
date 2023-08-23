@@ -88,7 +88,7 @@ const AllAboutProduct = observer(({
                 {!paramsModel ? 
                 <div className="productInfoCode">
                     <div>код товара: {goods?.id}</div>
-                    { goods?.stock?.reduce((sum: any, current: any) => (sum.stock + current), 0) > 4 ?
+                    { goods?.stock?.reduce((sum: any, current: any) => (sum + current.stock), 0) > 4 ?
                     <div className='productInfoCodeStock'>
                         <i className="fas fa-check"></i>
                         в наявності

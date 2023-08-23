@@ -3,14 +3,14 @@ import '../css/Pages/Search.css';
 import Pagination from '../components/Pagination';
 import LoadMoreGoods from '../components/ux/LoadMoreGoods';
 import { useHistory, useLocation } from 'react-router-dom';
-import { getTyresAll } from '../restAPI/restGoodsApi';
+import { getTyresAll, getWheelsAll } from '../restAPI/restGoodsApi';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
-import TyresCard from '../components/cards/Card';
+import Card from '../components/cards/Card';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../context/Context';
 
 const Search = observer(() => {
-    const {page, goodsTyre} = useContext<any | null>(Context);
+    const {page, goodsTyre, goodsWheel} = useContext<any | null>(Context);
     const [inputTextSearch, setInputTextSearch] = useState<string>('');
     const [inputSearch, setInputSearch] = useState<string | null>('');
     const [tyreSearch, setTyreSearch] = useState<[] | null>(null);
@@ -49,12 +49,17 @@ const Search = observer(() => {
         const loadMaintask = async() => {
           const taskLoad: any[] = [
             getTyresAll,
+            getWheelsAll
           ];
             let i:number = 0;
             while(taskLoad.length > i) {
             if(!isMounted && taskLoad[i] === getTyresAll) {
                 let tyreFilterGoods: any = await taskLoad[i]();
                 setTyreSearch(tyreFilterGoods);
+            }
+            if(!isMounted && taskLoad[i] === getWheelsAll) {
+                let wheelFilterGoods: any = await taskLoad[i]();
+                setWheelSearch(wheelFilterGoods);
             }
             const task = taskLoad.shift();
             task();
@@ -87,14 +92,36 @@ const Search = observer(() => {
                         page.offset, page.limit)
                 );
             }
-        }  
+        }
+        if(inputSearch?.length !== 0) {
+            const newWheelsSearch: any = wheelSearch?.filter((itemGoods:any) =>
+            (itemGoods.id.toLowerCase().includes(inputSearch?.toLowerCase()) ||    
+            itemGoods.full_name.toLowerCase().includes(inputSearch?.toLowerCase()) ||
+            itemGoods.size_digits.size_only_digits.toLowerCase().includes(inputSearch?.toLowerCase())
+            ));
+            if (page.loadMore > 0) {
+                goodsWheel.setTotalCount(newWheelsSearch?.length);
+                setTabSearchWheel( prevState =>
+                    [...prevState, 
+                        ...newWheelsSearch?.splice(page.offset, page.limit)]
+                ); 
+            } else {
+                goodsWheel.setTotalCount(newWheelsSearch?.length);
+                setTabSearchWheel(
+                    newWheelsSearch?.splice(
+                        page.offset, page.limit)
+                );
+            }
+        }    
     },[
         goodsTyre, 
-        inputSearch,
+        inputSearch, 
         page.limit, 
         page.offset, 
         tyreSearch, 
-        page.loadMore
+        page.loadMore, 
+        wheelSearch, 
+        goodsWheel
     ]);
 
     const loadMoreGoods = (e: any) => {
@@ -217,11 +244,13 @@ const Search = observer(() => {
                 {tabSearchTyre && tabSearch === 'Шини' ? 
                 tabSearchTyre.map(
                     (goods: any) => (                    
-                <div className='outputDataSearchList' key={goods.id}>
-                    <TyresCard
+                <div className='outputDataSearchList' 
+                    key={goods.id}>
+                    <Card
                         key={goods.id}
                         goods={goods}
                         forOrder={false} 
+                        typeCard={'tyre'}
                     />
                 </div>
                 ))
@@ -230,11 +259,13 @@ const Search = observer(() => {
                 {tabSearchWheel && tabSearch === 'Диски' ? 
                 tabSearchWheel.map(
                     (goods: any) => (                    
-                <div className='outputDataSearchList' key={goods.id}>
-                    <TyresCard
+                <div className='outputDataSearchList' 
+                    key={goods.id}>
+                    <Card
                         key={goods.id}
                         goods={goods}
                         forOrder={false} 
+                        typeCard={'wheel'}
                     />
                 </div>
                 ))
@@ -243,8 +274,9 @@ const Search = observer(() => {
                 {tabSearchBattery && tabSearch === 'Акб' ? 
                 tabSearchBattery.map(
                     (goods: any) => (                    
-                <div className='outputDataSearchList' key={goods.id}>
-                    <TyresCard
+                <div className='outputDataSearchList' 
+                    key={goods.id}>
+                    <Card
                         key={goods.id}
                         goods={goods}
                         forOrder={false} 
@@ -256,8 +288,9 @@ const Search = observer(() => {
                 {tabSearchOil && tabSearch === 'Масло' ? 
                 tabSearchOil.map(
                     (goods: any) => (                    
-                <div className='outputDataSearchList' key={goods.id}>
-                    <TyresCard
+                <div className='outputDataSearchList' 
+                    key={goods.id}>
+                    <Card
                         key={goods.id}
                         goods={goods}
                         forOrder={false} 

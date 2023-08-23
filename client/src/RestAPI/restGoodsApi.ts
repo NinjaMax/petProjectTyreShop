@@ -158,22 +158,6 @@ const getTyresByIdParam = async (id:string) => {
     const {data} = await $hostGet.get(`tyres/paramid/${id ?? '0'}`,
      //{params: {id: id}}
     )
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_IDPARAM: ', data )
-    // getTyresByIdParam,
-    // getTyresModelRatingAvg,
-    // getTyresBrandRatingAvg,
-    // getTyresBrandRatingAvgSeason,
-    // getTyresCountReviewByBrand,
-    // getTyresCountReviewByModel,
-    // createTyreReview,
-    // createWheelReview,
-    // likesTyreReview,
-    // getTyresParamsByBrandAndSeason,
-    // getTyresParamsBySeason,
-    // getAllTyresModelByBrand,
-    // getAllTyresParamsByModel,
-    // getAllTyresDiametersByModel,
     return data;
 }
 
@@ -181,22 +165,6 @@ const getWheelsByIdParam = async (id:string) => {
     const {data} = await $hostGet.get(`wheels/paramid/${id ?? '0'}`,
      //{params: {id: id}}
     )
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_IDPARAM: ', data )
-    // getTyresByIdParam,
-    // getTyresModelRatingAvg,
-    // getTyresBrandRatingAvg,
-    // getTyresBrandRatingAvgSeason,
-    // getTyresCountReviewByBrand,
-    // getTyresCountReviewByModel,
-    // createTyreReview,
-    // createWheelReview,
-    // likesTyreReview,
-    // getTyresParamsByBrandAndSeason,
-    // getTyresParamsBySeason,
-    // getAllTyresModelByBrand,
-    // getAllTyresParamsByModel,
-    // getAllTyresDiametersByModel,
     return data;
 }
 
