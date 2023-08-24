@@ -19,7 +19,7 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
   const {goodsTyre, goodsWheel, filter} = useContext<any | null>(Context);
   const {page} = useContext<any | null>(Context);
   const [paramUrl, setParamUrl] = useState(0);
-  const [stateClick, setStateClick]=useState(true);
+  const [stateFilter, setStateFilter]=useState(false);
   const params = useParams<any>();
   const location = useLocation();
     
@@ -508,12 +508,18 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
   }  
 
   const filterClick = () => {
-    setStateClick(!stateClick);
+    setStateFilter(!stateFilter);
     // console.log(e.target);
   }
-  console.log('PARAMS: ', params.category);
-  console.log('LOCATION: ', location.pathname);
-  // console.log('CATALOG_CLOSE_FILTER: ', stateClick);
+  const closeFilter = () => {
+    //if(stateFilter) {
+      setStateFilter(!stateFilter);
+      //console.log('FILTER_CLOSED');
+    //}
+  };
+  // console.log('PARAMS: ', params.category);
+  // console.log('LOCATION: ', location.pathname);
+  // console.log('CATALOG_CLOSE_FILTER: ', stateFilter);
   // console.log('FILTER_WIDTH: ', filter.width);
   // console.log('FILTER_HEIGHT: ', filter.height);
   // console.log('FILTER_DIAMETER: ', filter.diameter,);
@@ -525,7 +531,7 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
   // console.log('TYRES_FILTER_BRANDS: ', goodsTyre._brands);
     return (
       <div className='catalogTyres'
-        onClick={() => setStateClick(false)}
+        onClick={closeFilter}
       >
         <div className='a'>
         {location.pathname.includes('tyres') ?
@@ -550,14 +556,14 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
         <div className='b'>
         {location.pathname.includes('tyres') ?
           <FilterCatalogTyres
-            filterState={stateClick} 
-            setFilterAction={filterClick} 
+            filterState={stateFilter} 
+            setFilterAction={setStateFilter} 
           />
           : null
         }
         {location.pathname.includes('wheels') ?
           <FilterCatalogWheels
-            filterState={stateClick} 
+            filterState={stateFilter} 
             setFilterAction={filterClick} 
           />
           : null

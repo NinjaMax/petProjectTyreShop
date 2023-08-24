@@ -6,9 +6,10 @@ import { IRatingAvg } from '../../pages/types/RatingModelAvg.type';
 
 type IRatingExtend = {
     ratingItem?: IRatingAvg
+    typeRating?: string;
 };
 
-const ReviewsGoodsExtend = ({ratingItem}:IRatingExtend) => {
+const ReviewsGoodsExtend = ({ratingItem, typeRating}:IRatingExtend) => {
     
     return (
         <div>
@@ -19,6 +20,7 @@ const ReviewsGoodsExtend = ({ratingItem}:IRatingExtend) => {
                     disabled={true}
                 />
             </div>
+            {typeRating === 'tyres' ?
             <div className='ratingList'>
                 <div className='ratingListItems'>
                     <RatingOptions 
@@ -91,6 +93,8 @@ const ReviewsGoodsExtend = ({ratingItem}:IRatingExtend) => {
                     </RatingOptions> 
                 </div>
             </div>
+            : null
+            }
         </div>
     );
 };

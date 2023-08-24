@@ -58,6 +58,14 @@ export class RatingsController {
     return this.ratingsService.findCountRatingByIdModel(id_model);
   }
 
+  @Get('/tyres/id-and-idmodel/')
+  findAllTyreRatingByIdAndIdModel(
+    @Query('id') id: number,
+    @Query('id_model') id_model: number
+  ) {
+    return this.ratingsService.findCountTyreRatingByIdAndIdModel(id, id_model);
+  }
+
   @Get('/wheels/bymodel/:id_model')
   findAllRatingWheelByModel(@Param('id_model') id_model: number) {
     return this.ratingsService.findCountRatingWheelByIdModel(id_model);
@@ -66,6 +74,14 @@ export class RatingsController {
   @Get('/id')
   findOne(@Body() getRatingDto: GetRatingDto) {
     return this.ratingsService.findRatingById(getRatingDto);
+  }
+
+  @Get('/wheels/id-and-idmodel/')
+  findAllWheelRatingByIdAndIdModel(
+    @Query('id') id: number,
+    @Query('id_model') id_model: number
+  ) {
+    return this.ratingsService.findCountRatingWheelByIdAndIdModel(id, id_model);
   }
 
   @Patch(':id')

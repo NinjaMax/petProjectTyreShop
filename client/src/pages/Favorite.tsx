@@ -1,8 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import '../css/Pages/Favorite.css';
-import TyresCardList from '../components/cards/CardList';
+import CardList from '../components/cards/CardList';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
-import { clearFavorites, getCompare, getFavorites, getTyresAll, getTyresById } from '../restAPI/restGoodsApi';
+import { 
+    clearFavorites, 
+    getFavorites, 
+    getTyresById, 
+    getWheelsById
+} from '../restAPI/restGoodsApi';
 import { Context } from '../context/Context';
 
 const Favorite = () => {
@@ -15,6 +20,7 @@ const Favorite = () => {
     const [oilSearchMod, setOilSearchMod] = useState<[] | null>(null);
     const [batterySearchMod, setBatterySearchMod] = useState<[] | null>(null);
     const [favoriteTyres, setFavoriteTyres] = useState<any[] | null>([]);
+    const [favoriteWheels, setFavoriteWheels] = useState<any[] | null>([]);
     const [tabSearchMod, setTabSearchMod] = useState<string>('Шини');
     const [tabSearchModWheel, setTabSearchModWheel] = useState<[]>([]);
     const [tabSearchModOil, setTabSearchModOil] = useState<[]>([]);
@@ -35,9 +41,13 @@ const Favorite = () => {
                 if(Array.isArray(curFavorites)){
                     curFavorites.forEach(async (element: string) => {      
                     let newTyresFavorite: any = await getTyresById(element);
-                   
-                    setFavoriteTyres(oldFavorite => [...oldFavorite!, newTyresFavorite]);
-                    
+                    let newWheelsFavorite: any = await getWheelsById(element);
+                    if(newTyresFavorite) {
+                        setFavoriteTyres(oldFavorite => [...oldFavorite!, newTyresFavorite]);
+                    }
+                    if(newWheelsFavorite) {
+                        setFavoriteWheels(oldFavorite => [...oldFavorite!, newWheelsFavorite])
+                    }
                     });
                 }
             }
@@ -78,7 +88,7 @@ const Favorite = () => {
     <div className="overlayFavoriteActive">
             {    
                 favoriteTyres?.length !== 0 || 
-                tabSearchModWheel?.length !== 0 || 
+                favoriteWheels?.length !== 0 || 
                 tabSearchModOil?.length !== 0 || 
                 tabSearchModBattery?.length !== 0 ?
                 <div className='outputDataFavorite'>
@@ -102,7 +112,7 @@ const Favorite = () => {
                         </div>
                         : null
                         }
-                        {tabSearchModWheel?.length !== 0 ?
+                        {favoriteWheels?.length !== 0 ?
                         <div className='outputDataFavoriteItems'>
                         <span 
                             title='Диски'
@@ -112,7 +122,7 @@ const Favorite = () => {
                             onClick={searchTabModChange}
                         >Диски 
                             <span className='countFavoriteSearch'>
-                            {10020}
+                            {favoriteWheels?.length}
                             </span>
                         </span>
                         </div>
@@ -163,7 +173,7 @@ const Favorite = () => {
                         <div 
                             className='outputDataFavoriteItemsList' 
                             key={goods.id}>
-                            <TyresCardList
+                            <CardList
                                 key={goods.id}
                                 goods={goods}
                                 forOrder={false} 
@@ -172,12 +182,12 @@ const Favorite = () => {
                         ))
                         : null
                         }
-                        {tabSearchModWheel && tabSearchMod === 'Диски' ? 
-                        tabSearchModWheel.map((goods: any) => (                    
+                        {favoriteWheels && tabSearchMod === 'Диски' ? 
+                        favoriteWheels?.map((goods: any) => (                    
                         <div className='outputDataFavoriteItemsList'
                             key={goods.id}
                         >
-                            <TyresCardList
+                            <CardList
                                 key={goods.id}
                                 goods={goods}
                                 forOrder={false} 
@@ -191,7 +201,7 @@ const Favorite = () => {
                         <div className='outputDataFavoriteItemsList'
                             key={goods.id}
                         >
-                            <TyresCardList
+                            <CardList
                                 key={goods.id}
                                 goods={goods}
                                 forOrder={false} 
@@ -205,7 +215,7 @@ const Favorite = () => {
                         <div className='outputDataFavoriteItemsList'
                             key={goods.id}
                         >
-                            <TyresCardList
+                            <CardList
                                 key={goods.id}
                                 goods={goods}
                                 forOrder={false} 

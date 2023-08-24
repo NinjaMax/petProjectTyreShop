@@ -154,6 +154,14 @@ const getTyresById = async (id:string) => {
     return data;
 }
 
+const getWheelsById = async (id:string) => {
+    const {data} = await $hostGet.get('/wheels/id',
+     {params: {id: id}})
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
 const getTyresByIdParam = async (id:string) => {
     const {data} = await $hostGet.get(`tyres/paramid/${id ?? '0'}`,
      //{params: {id: id}}
@@ -645,6 +653,36 @@ const getTyresBrandRatingAvgSeason = async (
     return data;
 }
 
+const getTyresRatingAvgIdAndIdmodel = async (
+    id: number,
+    id_model: number,
+    ) => {
+    const {data} = await $hostGet.get('/ratings/tyres/id-and-idmodel/',
+    {params: {
+        id: id ?? 0,
+        id_model: id_model ?? 0,
+    }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+const getWheelsRatingAvgIdAndIdmodel = async (
+    id: number,
+    id_model: number,
+    ) => {
+    const {data} = await $hostGet.get('/ratings/wheels/id-and-idmodel/',
+    {params: {
+        id: id ?? 0,
+        id_model: id_model ?? 0,
+    }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
 const getTyresCountReviewByBrand = async (
     id_brand: number,
     ) => {
@@ -917,6 +955,7 @@ export {
     getWheelsWithoutOffset,
     likesWheelReview,
     createWheelReview,
+    getWheelsById,
     getWheelsModelRatingAvg,
     getWheelsBrandRatingAvg,
     getWheelsCountReviewByBrand,
@@ -925,5 +964,7 @@ export {
     getWheelsParamsBy,
     getWheelsParamsByBrand,
     getAllWheelsModelByBrand,
-    getAllWheelsDiametersByModel
+    getAllWheelsDiametersByModel,
+    getWheelsRatingAvgIdAndIdmodel,
+    getTyresRatingAvgIdAndIdmodel
 }

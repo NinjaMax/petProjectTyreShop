@@ -18,6 +18,7 @@ const FilterMainBtn = observer(({
 }: IFilterMainBtn
 ) => {
   const {filter, goodsTyre} = useContext<any | null>(Context);
+  
   const filterClick = () => {
     filterAction!(false)
   }

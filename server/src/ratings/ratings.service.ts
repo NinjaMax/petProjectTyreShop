@@ -108,7 +108,7 @@ export class RatingsService {
   async findAllRatingByIdModel(getRatingDto: GetRatingDto) {
     try {
       const ratingIdModel = await this.ratingTyresRepository.findAll({
-        where: { id_model: getRatingDto.id_model }
+        where: { id_model: getRatingDto.id_model },
       });
 
       return ratingIdModel;
@@ -123,7 +123,7 @@ export class RatingsService {
   async findAllRatingWheelByIdModel(getRatingDto: GetRatingDto) {
     try {
       const ratingWheelIdModel = await this.ratingWheelsRepository.findAll({
-        where: { id_model: getRatingDto.id_model }
+        where: { id_model: getRatingDto.id_model },
       });
 
       return ratingWheelIdModel;
@@ -138,7 +138,7 @@ export class RatingsService {
   async findAllRatingByIdBrand(getRatingDto: GetRatingDto) {
     try {
       const ratingIdBrand = await this.ratingTyresRepository.findAll({
-        where: { id_brand: getRatingDto.id_brand }
+        where: { id_brand: getRatingDto.id_brand },
       });
 
       return ratingIdBrand;
@@ -153,7 +153,7 @@ export class RatingsService {
   async findAllWheelRatingByIdBrand(getRatingDto: GetRatingDto) {
     try {
       const ratingWheelIdBrand = await this.ratingWheelsRepository.findAll({
-        where: { id_brand: getRatingDto.id_brand }
+        where: { id_brand: getRatingDto.id_brand },
       });
 
       return ratingWheelIdBrand;
@@ -217,7 +217,7 @@ export class RatingsService {
             ],
           ],
         });
-  
+
       return ratingAvgIdBrandAllSeason;
     } catch {
       throw new HttpException(
@@ -276,6 +276,56 @@ export class RatingsService {
     }
   }
 
+  async findCountTyreRatingByIdAndIdModel(id: number, id_model: number) {
+    try {
+      const ratingTyreAvgIdAndIdModel =
+        await this.ratingTyresRepository.findAll({
+          where: { id: id, id_model: id_model },
+          attributes: [
+            [
+              sequelize.fn('avg', sequelize.col('rating_overall')),
+              'avgRatingModel',
+            ],
+            [
+              sequelize.fn('avg', sequelize.col('rating_dry_road')),
+              'avgRatingDryRoad',
+            ],
+            [
+              sequelize.fn('avg', sequelize.col('rating_wet_road')),
+              'avgRatingWetRoad',
+            ],
+            [
+              sequelize.fn('avg', sequelize.col('rating_snow_road')),
+              'avgRatingSnowRoad',
+            ],
+            [
+              sequelize.fn('avg', sequelize.col('rating_ice_road')),
+              'avgRatingIceRoad',
+            ],
+            [
+              sequelize.fn('avg', sequelize.col('rating_cross_country')),
+              'avgRatingCrossCountry',
+            ],
+            [
+              sequelize.fn('avg', sequelize.col('rating_treadwear')),
+              'avgRatingTreadwear',
+            ],
+            [
+              sequelize.fn('avg', sequelize.col('rating_price_quality')),
+              'avgRatingPriceQuality',
+            ],
+          ],
+        });
+
+      return ratingTyreAvgIdAndIdModel;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
   async findCountRatingWheelByIdModel(id_model: number) {
     try {
       const ratingAvgIdModel = await this.ratingWheelsRepository.findAll({
@@ -289,6 +339,28 @@ export class RatingsService {
       });
 
       return ratingAvgIdModel;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async findCountRatingWheelByIdAndIdModel(id: number, id_model: number) {
+    try {
+      const ratingWheelAvgIdAndIdModel =
+        await this.ratingWheelsRepository.findAll({
+          where: { id: id, id_model: id_model },
+          attributes: [
+            [
+              sequelize.fn('avg', sequelize.col('rating_overall')),
+              'avgRatingModel',
+            ],
+          ],
+        });
+
+      return ratingWheelAvgIdAndIdModel;
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',

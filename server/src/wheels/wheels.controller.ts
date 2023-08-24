@@ -28,9 +28,10 @@ export class WheelsController {
   }
 
   @Get('/id')
-  findOne(@Param() getWheelDto: GetWheelDto) {
-    return this.wheelsService.findWheelById(getWheelDto);
+  findOne(@Query('id') id: number) {
+    return this.wheelsService.findWheelByIdQuery(id);
   }
+
   @Get('/no-offset')
   findWheelsWithoutLimit(
     @Query('width') width: string,

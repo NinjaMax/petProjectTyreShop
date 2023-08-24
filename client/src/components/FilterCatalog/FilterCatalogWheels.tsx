@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import '../../css/FilterCatatogCss/FilterCatalogTyres.css';
 import CheckboxBtn from '../select/CheckboxBtn';
 import Accordion from './Accordion';
@@ -19,7 +19,6 @@ const FilterCatalogWheels = observer((
     {filterState, setFilterAction}: IFilterCatTyres) => {
     const {filter, goodsWheel, page} = useContext<any | null>(Context);
     const [stateWidth, setStateWidth]=useState(false);
-    //const [stateHeight, setStateHeight]=useState(false);
     const [stateDiameter, setStateDiameter]=useState(false);
     const [stateBoltCount, setStateBoltCount]=useState(false);
     const [stateBrand, setStateBrand]=useState(false);
@@ -30,6 +29,23 @@ const FilterCatalogWheels = observer((
     const [statePcd, setStatePcd]=useState(false);
     const [statePcd2, setStatePcd2]=useState(false);
     const [stateBoltCountPcd, setStateBoltCountPcd]=useState(false);
+    
+    useEffect(() => {
+        if(!filterState) {
+            setStateWidth(false);
+            setStateDiameter(false);
+            setStateBrand(false);
+            setStateBoltCount(false);
+            setStateDiameter(false);
+            setStateType(false);
+            setStateColor(false);
+            setStateDia(false);
+            setStateEt(false);
+            setStatePcd(false);
+            setStatePcd2(false);
+            setStateBoltCountPcd(false);
+        }
+    },[filterState])
 
     const handleChange  = (e: any) => {
         if (e.target.name === 'Ширина') {

@@ -12,7 +12,7 @@ const PropertiesWheelGoods = ({product}:IPropsTyre) => {
                 </div>
                 <div className="tooltiPropertiesGoods">
                     <span>Міжболтова відстань PCD: {product?.pcd?.pcd}
-                        <span className="tooltiTextPropertiesGoods">Кількість отворів для болтів</span>
+                        <span className="tooltiTextPropertiesGoods">Відстань між отворів для болтів</span>
                     </span>
                 </div>
                 <div className="tooltiPropertiesGoods">

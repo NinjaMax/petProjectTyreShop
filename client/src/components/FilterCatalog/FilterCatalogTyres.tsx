@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import '../../css/FilterCatatogCss/FilterCatalogTyres.css';
 import FilterMainBtn from '../mainFilterButton/FilterMainBtn';
 import CheckboxBtn from '../select/CheckboxBtn';
@@ -31,7 +31,24 @@ const FilterCatalogTyres = observer((
     const [stateRunFlat, setStateRunFlat]=useState(false);
     const [stateReinforced, setStateReinforced]=useState(false);
 
-    const handleChange  = (e: any) => {
+    useEffect(() => {
+        if(!filterState) {
+            setStateWidth(false);
+            setStateSeason(false);
+            setStateBrand(false);
+            setStateHeight(false);
+            setStateDiameter(false);
+            setStateHomologation(false);
+            setStateLoadIndex(false);
+            setStateSpeedIndex(false);
+            setStateRunFlat(false);
+            setStateReinforced(false);
+            setStateVehicleType(false);
+            setStateStudded(false);
+        }
+    },[filterState])
+
+    const handleChange = (e: any) => {
         if (e.target.name === 'Ширина') {
             page.setLoadMore(0);
             page.setOffset(0);
@@ -178,7 +195,7 @@ const FilterCatalogTyres = observer((
         }
     } 
     
-    const handleDeleteChange  = (e: any) => {
+    const handleDeleteChange = (e: any) => {
         if (e.target.getAttribute('data-name') === 'Ширина') {
             page.setLoadMore(0);
             page.setOffset(0);
@@ -486,6 +503,8 @@ const FilterCatalogTyres = observer((
         setStateVehicleType(false);
         setStateStudded(false);
     }
+
+    //console.log('FILTER_STATE: ', filterState);
 
     return (
         <div className='filterCatalogTyres'>

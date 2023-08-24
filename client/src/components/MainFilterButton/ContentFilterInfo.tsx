@@ -20,61 +20,65 @@ const ContentFilterInfo = ({infoMarking, width, setActive}: IContentInfo) => {
                 className="closeContentInfoBtn" 
                 onClick={() => {setActive!(false)}}>&times;
             </span>    
-            <h6>Як дізнатися розмір шини?</h6>
-            <h6>Маркування на боковині.</h6>
+            <h5>Як дізнатися розмір шини?</h5>
+            <h5>Маркування на боковині.</h5>
             {infoMarking === 'A' ?
             <div>
                 
                 <img src={imgMarkerA} alt='infoFilterImg'/>
-                <div className='info A'>
-                А. ШИРИНА ШИНИ <p/>
-                    Ширина шини в міліметрах, виміряна від одніеї боковини до іншої.
+                <div className='textMarker'>
+                <span>А. ШИРИНА ШИНИ</span>
+                <span>Ширина шини в міліметрах, виміряна від одніеї боковини до іншої.</span>   
                 </div>
              </div>
             :null}
-            {infoMarking==="B" ?
+            {infoMarking === "B" ?
             <div>
                 <img src={imgMarkerB} alt='infoFilterImg'/>
-                <div className='info B'>
-                В. СПІВВІДНОШЕННЯ СТОРІН<p/>
+                <div className='textMarker'>
+                <span>В. СПІВВІДНОШЕННЯ СТОРІН</span>
+                <span>
                     Це співвідношення висоти шини до її ширини, виражене у відсотках.
                     Наприклад, якщо значення співвідношення сторін 55, це означає, 
                     що висота шини складає 55% від її ширини.
+                </span>
                 </div>
             </div>
             :null}
 
-            {infoMarking==="C" ?
+            {infoMarking === "C" ?
             <div>
                 <img src={imgMarkerC} alt='infoFilterImg'/>
-                <div className='info C'>
-                С. ДІАМЕТР ДИСКА<p/>
-                    Діаметр (висота) диска в дюймах.
+                <div className='textMarker'>
+                <span>С. ДІАМЕТР ДИСКА</span>
+                <span>Діаметр (висота) диска в дюймах</span>    
                 </div>
             </div>
             :null}
-            {infoMarking==="D" ?
+            {infoMarking === "D" ?
             <div>
                 <img src={imgMarketD} alt='infoFilterImg'/>
-                <div className='info D'>
-                D. ІНДЕКС НАВАНТАЖЕННЯ<p/>
-                    Індекс навантаження - це максимальна вага (в кг), 
+                <div className='textMarker'>
+                <span>D. ІНДЕКС НАВАНТАЖЕННЯ</span>
+                <span>Індекс навантаження - це максимальна вага (в кг), 
                     при якій зберігається розмір і геометрія плями контакту, 
                     а шина зберігає всі свої характеристики.
-            </div>
+                </span> 
+            </div>   
             </div>
             :null}
-            {infoMarking==="E" ?
+            {infoMarking === "E" ?
             <div>
                 <img src={imgMarketE} alt='infoFilterImg'/>
-                <div className='info E'>
-                E.Індекс ШВИДКОСТІ<p/>
-                    Індекс швидкості - це максимальна швидкість (в км/год),
+                <div className='textMarker'>
+                <span>E.Індекс ШВИДКОСТІ</span>
+                <span>Індекс швидкості - це максимальна швидкість (в км/год),
                     яку шина здатна витримати при правильному тиску 
                     і відповідному навантаженні. 
                     Купуючі нові шини, необхідно переконатися, 
                     що їхній клас щвидкості відповідає швидкісним
                     можливостям вашого автомобіля.
+                </span>    
                 </div>
             </div>
             :null}

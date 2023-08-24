@@ -6,7 +6,7 @@ const OptionsWheelBox = ({character}: any) => {
         <div className='optionsTyreBox'>
             <div className="tooltipCardTyres">
                 <span>Ширина: {character?.width?.width}
-                    <span className="tooltipTextCardTyres">Ширина профіля шини</span>
+                    <span className="tooltipTextCardTyres">Ширина диску</span>
                 </span>
             </div>
             <div className="tooltipCardTyres">
@@ -36,7 +36,7 @@ const OptionsWheelBox = ({character}: any) => {
             </div>
             <div className="tooltipCardTyres">
                 <span>Виліт ET: {character?.et?.et}
-                    <span className="tooltipTextCardTyres">Виліт диска від стуриці</span>
+                    <span className="tooltipTextCardTyres">Виліт диска від ступиці</span>
                 </span>
             </div>
         </div>

@@ -32,6 +32,7 @@ import {
   getTyresModelRatingAvg, 
   getTyresParamsByBrandAndSeason, 
   getTyresParamsBySeason, 
+  getTyresRatingAvgIdAndIdmodel, 
   getWheelsBrandRatingAvg, 
   getWheelsByIdParam, 
   getWheelsCountReviewByBrand, 
@@ -39,6 +40,7 @@ import {
   getWheelsModelRatingAvg, 
   getWheelsParamsBy, 
   getWheelsParamsByBrand, 
+  getWheelsRatingAvgIdAndIdmodel, 
   likesTyreReview 
 } from '../restAPI/restGoodsApi';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
@@ -67,6 +69,7 @@ const GoodsPage = observer(() => {
   const {goodsTyre, goodsWheel, page, customer} = useContext<any | null>(Context);
   const [ratingModelAvg, setRatingModelAvg] = useState<IRatingAvg>();
   const [ratingBrandAvg, setRatingBrandAvg] = useState<IRatingBrandAvg>();
+  const [ratingIdAndIdModelAvg, setRatingIdAndModelAvg] = useState<IRatingAvg>();
   const [ratingSummerAvg, setRatingSummerAvg] = useState<IRatingSeasonAvg>();
   const [ratingWinterAvg, setRatingWinterAvg] = useState<IRatingSeasonAvg>();
   const [ratingAllSeasonAvg, setRatingAllSeasonAvg] = useState<IRatingSeasonAvg>();
@@ -95,6 +98,8 @@ const GoodsPage = observer(() => {
         getTyresByIdParam,
         getTyresModelRatingAvg,
         getWheelsModelRatingAvg,
+        getTyresRatingAvgIdAndIdmodel,
+        getWheelsRatingAvgIdAndIdmodel,
         getTyresBrandRatingAvg,
         getWheelsBrandRatingAvg,
         getTyresBrandRatingAvgSeason,
@@ -134,11 +139,34 @@ const GoodsPage = observer(() => {
         );
         setRatingModelAvg(getRatingModel[0]);
       }
+      if (!isMounted && taskProduct[i] === getTyresRatingAvgIdAndIdmodel && 
+        goodsTyre._product.length !== 0 && changeTabGoods === ("vseProTovar" || "vidguki") ) {
+        const getTyreRatingIdAndIdModel: any = await taskProduct[i](
+          goodsTyre._product.id,
+          goodsTyre._product.id_model
+        );
+        if(getTyreRatingIdAndIdModel) {
+          setRatingIdAndModelAvg(getTyreRatingIdAndIdModel[0]);
+        }
+      }
       if (!isMounted && taskProduct[i] === getWheelsModelRatingAvg && goodsWheel._product.id_model) {
         const getWheelRatingModel: any = await taskProduct[i](
           goodsWheel._product.id_model
         );
         setRatingModelAvg(getWheelRatingModel[0]);
+      }
+      if (!isMounted && taskProduct[i] === getWheelsRatingAvgIdAndIdmodel 
+        && 
+        goodsWheel._product.length !== 0 && changeTabGoods === ("vseProTovar" || "vidguki")
+        ) 
+        {
+        const getWheelRatingIdAndIdModel: any = await taskProduct[i](
+          goodsWheel._product.id,
+          goodsWheel._product.id_model
+        );
+        if(getWheelRatingIdAndIdModel) {
+          setRatingIdAndModelAvg(getWheelRatingIdAndIdModel[0]);
+        }
       }
       if (!isMounted && taskProduct[i] === getTyresBrandRatingAvg && goodsTyre._product.id_brand) {
         const getRatingBrand: any = await taskProduct[i](
@@ -334,16 +362,7 @@ const GoodsPage = observer(() => {
       isMounted = true;
     };
   },
-  [
-    createReview, 
-    customer._customer.id_customer, 
-    customer._customer.picture, 
-    customer._customer.profile_image_url, 
-    dataReview, 
-    goodsTyre, 
-    goodsWheel, 
-    page
-  ]);
+  [changeTabGoods, createReview, customer._customer.id_customer, customer._customer.picture, customer._customer.profile_image_url, dataReview, goodsTyre, goodsWheel, page]);
 
   useEffect(() => {
     if (goodsTyre._product.full_name) {
@@ -394,7 +413,8 @@ const GoodsPage = observer(() => {
   //console.log("DATA_REVIEW: ", dataReview);
   // console.log('MATCH_URL_PARAMS: ', match?.params.goodsItem);
   // console.log('MATCH_URL: ', match);
-  console.log('RATING_SUMMER: ', ratingSummerAvg);
+  console.log("RATING_AVRG_ID_AND_ID_MODEL: ", ratingIdAndIdModelAvg?.avgRatingModel);
+  //console.log('RATING_SUMMER: ', ratingSummerAvg);
   // console.log('PRODUCT_WHEEL: ', goodsWheel._product);
   // console.log('PRODUCT_TYRE: ', goodsTyre?._product.length);
   // console.log('LOCALSORAGE_GOODS_ID: ',JSON.parse(localStorage.getItem('goodsId')!));
@@ -433,7 +453,7 @@ const GoodsPage = observer(() => {
             value:"pitannja",
             checked: changeTabGoods,
             reviewCount: goodsWheel._product?.question?.length ?? 
-            goodsTyre._product?.question?.length,
+            goodsTyre._product?.question?.length ?? 0
             }
           ]}
             >
@@ -443,8 +463,8 @@ const GoodsPage = observer(() => {
                   paramsModel={paramsModel}
                   paramsModelPrice={allDiametersModel}
                   goods={goodsTyre._product}
-                  countModelReview={reviewCountModel}
-                  avgRatingModel={ratingModelAvg?.avgRatingModel}
+                  countModelReview={goodsTyre?._product?.reviews?.length}
+                  avgRatingModel={ratingIdAndIdModelAvg?.avgRatingModel}
                 />
             :null}
             {changeTabGoods === "vseProTovar" && 
@@ -453,8 +473,8 @@ const GoodsPage = observer(() => {
                   paramsModel={paramsModel}
                   paramsModelPrice={allDiametersModel}
                   goods={goodsWheel._product}
-                  countModelReview={reviewCountModel}
-                  avgRatingModel={ratingModelAvg?.avgRatingModel}
+                  countModelReview={goodsWheel?._product?.reviews?.length}
+                  avgRatingModel={ratingIdAndIdModelAvg?.avgRatingModel}
                 />
             :null}
             {changeTabGoods === "charakteristiki" && goodsTyre._product ?

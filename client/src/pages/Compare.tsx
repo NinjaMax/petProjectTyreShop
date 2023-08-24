@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import '../css/Pages/Compare.css';
-import { clearCompare, getCompare, getTyresById, getTyresModelRatingAvg } from '../restAPI/restGoodsApi';
+import { clearCompare, getCompare, getTyresById, getTyresModelRatingAvg, getWheelsById, getWheelsModelRatingAvg } from '../restAPI/restGoodsApi';
 import TyresCardList from '../components/cards/CardList';
 import { Context } from '../context/Context';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
-import TyreCardSmall from '../components/cards/CardSmall';
+import CardSmall from '../components/cards/CardSmall';
 import ReviewsGoodsExtend from '../components/reviews/ReviewsGoodsExtend';
 import { IRatingAvg } from './types/RatingModelAvg.type';
+
+
 
 const Compare = () => {
     const {page} = useContext<any | null>(Context);
@@ -16,6 +18,7 @@ const Compare = () => {
     const [oilSearchMod, setOilSearchMod] = useState<[] | null>(null);
     const [batterySearchMod, setBatterySearchMod] = useState<[] | null>(null);
     const [compareTyres, setCompareTyres] = useState<any[] | null>([]);
+    const [compareWheels, setCompareWheel] = useState<any[] | null>([]);
     const [tabSearchMod, setTabSearchMod] = useState<string>('Шини');
     const [tabSearchModWheel, setTabSearchModWheel] = useState<[]>([]);
     const [tabSearchModOil, setTabSearchModOil] = useState<[]>([]);
@@ -35,11 +38,22 @@ const Compare = () => {
               page.setFavoritesCount(curFavorites);
                 if(Array.isArray(curFavorites)){
                     curFavorites.forEach(async (element: string) => {      
-                    let newTyresFavorite: any = await getTyresById(element);
-                    let compareRatingModel = await getTyresModelRatingAvg(newTyresFavorite.id_model);
-                    newTyresFavorite.ratingAvg = compareRatingModel[0];
-                    setCompareTyres(oldCompare => [...oldCompare!, newTyresFavorite]);
-                    
+                    let newTyresCompare: any = await getTyresById(element);
+                    console.log("TYRES_COMPARE: ", newTyresCompare);
+                    if(newTyresCompare) {
+                        let compareRatingModel = await getTyresModelRatingAvg(newTyresCompare.id_model);
+                        
+                        console.log("COMPARE_RATING: ", compareRatingModel);
+                        newTyresCompare.ratingAvg = compareRatingModel[0];
+                        setCompareTyres(oldCompare => [...oldCompare!, newTyresCompare]);
+                    }
+                    let newWheelsCompare: any = await getWheelsById(element);
+                    console.log("WHEELS_COMPARE: ", newWheelsCompare);
+                    if(newWheelsCompare){
+                       let compareWheelRatingModel = await getWheelsModelRatingAvg(newWheelsCompare.id_model);
+                        newWheelsCompare.ratingAvg = compareWheelRatingModel[0];
+                        setCompareWheel(oldCompare => [...oldCompare!, newWheelsCompare]); 
+                    }
                     //setRatingModelAvg(oldCompareRating => [...oldCompareRating!, compareRatingModel]);
                     });
                 }
@@ -78,12 +92,13 @@ const Compare = () => {
     }
 
     console.log('COMPARE_TYRES: ', compareTyres);
+    console.log('COMPARE_WHEELS: ', compareWheels);
 
   return (
     <div id="myOverlay" className="overlayCompareActive">
             {    
                 compareTyres?.length !== 0 || 
-                tabSearchModWheel?.length !== 0 || 
+                compareWheels?.length !== 0 || 
                 tabSearchModOil?.length !== 0 || 
                 tabSearchModBattery?.length !== 0 ?
                 <div className='outputCompareData'>
@@ -107,7 +122,7 @@ const Compare = () => {
                         </div>
                         : null
                         }
-                        {tabSearchModWheel?.length !== 0 ?
+                        {compareWheels?.length !== 0 ?
                         <div className='outputDataCompareItems'>
                         <span 
                             title='Диски'
@@ -117,7 +132,7 @@ const Compare = () => {
                             onClick={searchTabModChange}
                         >Диски 
                             <span className='countCompareSearch'>
-                            {10020}
+                            {compareWheels?.length}
                             </span>
                         </span>
                         </div>
@@ -171,22 +186,22 @@ const Compare = () => {
                             <div className='propertiesTyresCompare'>
                                 <div className="tooltiComparePropertiesTyres">
                                     <span>Ширина: 
-                                        <span className="tooltiTextCompareTyres">Ширина профиля шины</span>
+                                        <span className="tooltiTextCompareTyres">Ширина профіля шини</span>
                                     </span>
                                 </div>
                                 <div className="tooltiComparePropertiesTyres">
                                     <span>Висота профіля: 
-                                        <span className="tooltiTextCompareTyres">Высота профиля шины</span>
+                                        <span className="tooltiTextCompareTyres">Висота профіля шини</span>
                                     </span>
                                 </div>
                                 <div className="tooltiComparePropertiesTyres">
                                     <span>Діаметр: 
-                                        <span className="tooltiTextCompareTyres">Посадочный диаметр шины</span>                        
+                                        <span className="tooltiTextCompareTyres">Посадковий діаметр шини</span>                        
                                     </span>
                                 </div>
                                 <div className="tooltiComparePropertiesTyres">
                                     <span>Бренд: 
-                                        <span className="tooltiTextCompareTyres">Производитель шины</span>
+                                        <span className="tooltiTextCompareTyres">Виробник шини</span>
                                     </span>
                                 </div>
                                 <div className="tooltiComparePropertiesTyres">
@@ -196,42 +211,112 @@ const Compare = () => {
                                 </div>
                                 <div className="tooltiComparePropertiesTyres">
                                     <span>Сезон: 
-                                        <span className="tooltiTextCompareTyres">Сезон применения шины</span>
+                                        <span className="tooltiTextCompareTyres">Сезон використання шини</span>
                                     </span>
                                 </div>
                                 <div className="tooltiComparePropertiesTyres">
                                     <span>Рік виробництва: 
-                                        <span className="tooltiTextCompareTyres">Год производства шины</span>
+                                        <span className="tooltiTextCompareTyres">Рік виробництва шини</span>
                                     </span>
                                 </div>
                                 <div className="tooltiComparePropertiesTyres">
                                     <span>Країна виробник: 
-                                        <span className="tooltiTextCompareTyres">Страна производства шины</span>
+                                        <span className="tooltiTextCompareTyres">Кораїна вирробник шини</span>
                                     </span>
                                 </div>
                                 <div className="tooltiComparePropertiesTyres">
                                     <span>Тип транспортного засобу:
-                                        <span className="tooltiTextCompareTyres">Тип применения-назначения шин </span>
+                                        <span className="tooltiTextCompareTyres">Тип використання шини </span>
                                     </span>
                                 </div>
                                 <div className="tooltiComparePropertiesTyres">
                                     <span>Индекс навантаження: 
-                                        <span className="tooltiTextCompareTyres">Максимальная нагрузка шины</span>
+                                        <span className="tooltiTextCompareTyres">Максимальне навантаження для шини</span>
                                     </span>
                                 </div>
                                 <div className="tooltiComparePropertiesTyres">
                                     <span>Индекс швидкості:
-                                        <span className="tooltiTextCompareTyres">Максимальная скорость</span>
+                                        <span className="tooltiTextCompareTyres">Максимальна швидкість для шини</span>
                                     </span>
                                 </div>
                                 <div className="tooltiComparePropertiesTyres">
                                     <span>Шип / не шип: 
-                                        <span className="tooltiTextCompareTyres">Шипованная или не шипованная шина</span>
+                                        <span className="tooltiTextCompareTyres">Шипована або не шипована шина</span>
                                     </span>
                                 </div>
                                 <div className="tooltiComparePropertiesTyres">
                                     <span>Повне наіменування: 
                                         <span className="tooltiTextCompareTyres">Повна назва товару</span>
+                                    </span>
+                                </div>
+                        </div>
+                        : null
+                        }
+                        {compareWheels && tabSearchMod === 'Диски' ?
+                            <div className='propertiesWheelsCompare'>
+                                <div className="tooltiComparePropertiesTyres">
+                                    <span>Ширина: 
+                                        <span className="tooltiTextCompareTyres">Ширина профиля диску</span>
+                                    </span>
+                                </div>
+                                <div className="tooltiComparePropertiesTyres">
+                                    <span>Міжболтова відстань PCD:
+                                        <span className="tooltiTextCompareTyres">Відстань між отворів для болтів</span>
+                                    </span>
+                                </div>
+                                <div className="tooltiComparePropertiesTyres">
+                                    <span>Діаметр: 
+                                        <span className="tooltiTextCompareTyres">Посадковий діаметр диску</span>                        
+                                    </span>
+                                </div>
+                                <div className="tooltiComparePropertiesTyres">
+                                    <span>Бренд: 
+                                        <span className="tooltiTextCompareTyres">Виробник диска</span>
+                                    </span>
+                                </div>
+                                <div className="tooltiComparePropertiesTyres">
+                                    <span>Модель: 
+                                        <span className="tooltiTextCompareTyres">Модель бренда</span>
+                                    </span>
+                                </div>
+                                <div className="tooltiComparePropertiesTyres">
+                                    <span>Тип диску: 
+                                        <span className="tooltiTextCompareTyres">Тип виробленного диску</span>
+                                    </span>
+                                </div>
+                                <div className="tooltiComparePropertiesTyres">
+                                    <span>Виліт ET: 
+                                        <span className="tooltiTextCompareTyres">Виліт диска ET від ступиці</span>
+                                    </span>
+                                </div>
+                                <div className="tooltiComparePropertiesTyres">
+                                    <span>Діаметр отвору DIA: 
+                                        <span className="tooltiTextCompareTyres">Діаметр посадкового отвору на ступицю DIA</span>
+                                    </span>
+                                </div>
+                                <div className="tooltiComparePropertiesTyres">
+                                    <span>Колір:
+                                        <span className="tooltiTextCompareTyres">Колір диску </span>
+                                    </span>
+                                </div>
+                                <div className="tooltiComparePropertiesTyres">
+                                    <span>Міжботова відстать додатково PCD2:
+                                        <span className="tooltiTextCompareTyres">Міжболтова відстань додатково PCD2 для отворів</span>
+                                    </span>
+                                </div>
+                                <div className="tooltiComparePropertiesTyres">
+                                    <span>Кількість болтів та міжболтова відстань:
+                                        <span className="tooltiTextCompareTyres">Кількість болтів диска та міжболтова відстать між ними</span>
+                                    </span>
+                                </div>
+                                <div className="tooltiComparePropertiesTyres">
+                                    <span>Кількість отворів для болтів:
+                                        <span className="tooltiTextCompareTyres">Кількість отворів для болтів диску</span>
+                                    </span>
+                                </div>
+                                <div className="tooltiComparePropertiesTyres">
+                                    <span>Повне наіменування диску: 
+                                        <span className="tooltiTextCompareTyres">Повна назва товару з кольором</span>
                                     </span>
                                 </div>
                         </div>
@@ -244,13 +329,16 @@ const Compare = () => {
                                 <div 
                                     className='outputDataCompareItemsList' 
                                     key={goods.id}>
-                                <TyreCardSmall
+                                <CardSmall
                                     key={goods.id}
                                     product={goods}
                                 />
                                 <p/>
                                 <div className='outputDataCompareItemsBoxRating'>
-                                    <ReviewsGoodsExtend ratingItem={goods.ratingAvg}/>
+                                    <ReviewsGoodsExtend 
+                                        typeRating={'tyres'}
+                                        ratingItem={goods.ratingAvg}
+                                    />
                                     <a href='/'>{goods.reviews?.length + 
                                     `${goods.reviews?.length === 1 ? ' відгук': ' відгуків'}`}</a>    
                                 </div>
@@ -273,16 +361,39 @@ const Compare = () => {
                                 ))
                                 : null
                             }
-                            {tabSearchModWheel && tabSearchMod === 'Диски' ? 
-                                tabSearchModWheel.map((goods: any) => (                    
+                            {compareWheels && tabSearchMod === 'Диски' ? 
+                                compareWheels.map((goods: any) => (                    
                                 <div className='outputDataCompareItemsList'
                                     key={goods.id}
                                 >
-                                    <TyresCardList
+                                    <CardSmall
                                         key={goods.id}
-                                        goods={goods}
-                                        forOrder={false} 
+                                        product={goods}
                                     />
+                                <p/>
+                                <div className='outputDataCompareItemsBoxRating'>
+                                    <ReviewsGoodsExtend 
+                                    ratingItem={goods.ratingAvg}
+                                    typeRating={'wheels'}
+                                    />
+                                    <a href='/'>{goods.reviews?.length + 
+                                    `${goods.reviews?.length === 1 ? ' відгук': ' відгуків'}`}</a>    
+                                </div>
+                                <div className='dataCompareItemsPropsTyre'>
+                                    <span>{goods.width.width ?? ''}</span>
+                                    <span>{goods.pcd?.pcd ?? ''}</span>
+                                    <span>{goods.diameter.diameter ?? ''}</span>
+                                    <span>{goods.wheel_brand.brand ?? ''}</span>
+                                    <span>{goods.wheel_model.model ?? ''}</span>
+                                    <span>{goods.type.type ?? ''}</span>
+                                    <span>{goods.et?.et ?? ''}</span>
+                                    <span>{goods.dia?.dia ?? ''}</span>
+                                    <span>{goods.color?.color?? ''}</span>
+                                    <span>{goods.pcd2.pcd2 ?? ''}</span>
+                                    <span>{goods.bolt_count_pcd?.bolt_count_pcd ?? ''}</span>
+                                    <span>{goods.bolt_count?.bolt_count ?? ''}</span>
+                                    <span>{goods.full_name_color ?? ''}</span>
+                                </div>
                                 </div>
                                 ))
                                 : null
@@ -297,6 +408,27 @@ const Compare = () => {
                                         goods={goods}
                                         forOrder={false} 
                                     />
+                                <p/>
+                                <div className='outputDataCompareItemsBoxRating'>
+                                    <ReviewsGoodsExtend ratingItem={goods.ratingAvg}/>
+                                    <a href='/'>{goods.reviews?.length + 
+                                    `${goods.reviews?.length === 1 ? ' відгук': ' відгуків'}`}</a>    
+                                </div>
+                                <div className='dataCompareItemsPropsTyre'>
+                                    <span>{goods.width.width ?? ''}</span>
+                                    <span>{goods.height.height ?? ''}</span>
+                                    <span>{goods.diameter.diameter ?? ''}</span>
+                                    <span>{goods.tyre_brand.brand ?? ''}</span>
+                                    <span>{goods.tyre_model.model ?? ''}</span>
+                                    <span>{goods.season.season_ua ?? ''}</span>
+                                    <span>{goods.year.manufacture_year ?? ''}</span>
+                                    <span>{goods.country.country_manufacturer_ua ?? ''}</span>
+                                    <span>{goods.vehicle_type.vehicle_type_ua ?? ''}</span>
+                                    <span>{goods.load_index.load_index_with_desc ?? ''}</span>
+                                    <span>{goods.speed_index.speed_index_with_desc ?? ''}</span>
+                                    <span>{goods.studded.studded ?? ''}</span>
+                                    <span>{goods.full_name ?? ''}</span>
+                                </div>
                                 </div>
                                 ))
                                 : null

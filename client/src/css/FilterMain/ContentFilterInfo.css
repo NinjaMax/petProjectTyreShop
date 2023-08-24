@@ -1,7 +1,7 @@
 .dropdownContentInfo {
     position: absolute;
     width: 530px;
-    height: 452.6px;
+    height: 449px;
     background-color:#9EB9D3;
     left: calc(var(--widthBtn)*1px);
     top: 0px;
@@ -32,6 +32,14 @@
     /*background-color:rgb(248, 115, 115);*/
     border-radius:25px;
     color: #8888;
-   
+}
+
+.textMarker {
+    display: flex;
+    flex-direction: column;
+    padding: 3px;
+}
+.textMarker span{
+    padding: 3px;
 }
 
