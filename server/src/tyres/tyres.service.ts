@@ -1166,7 +1166,6 @@ export class TyresService {
       const tyresIdQuery = await this.tyresRepository.findByPk(id, {
         include: { all: true },
       });
-
       return tyresIdQuery;
     } catch {
       throw new HttpException(

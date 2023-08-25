@@ -28,7 +28,7 @@ export class WheelsController {
   }
 
   @Get('/id')
-  findOne(@Query('id') id: number) {
+  findOne(@Query('id') id: string) {
     return this.wheelsService.findWheelByIdQuery(id);
   }
 

@@ -96,9 +96,10 @@ const GoodsPage = observer(() => {
     const getProduct = async () => {
       const taskProduct: any[] = [
         getTyresByIdParam,
+        getWheelsByIdParam,
         getTyresModelRatingAvg,
-        getWheelsModelRatingAvg,
         getTyresRatingAvgIdAndIdmodel,
+        getWheelsModelRatingAvg,
         getWheelsRatingAvgIdAndIdmodel,
         getTyresBrandRatingAvg,
         getWheelsBrandRatingAvg,
@@ -109,7 +110,6 @@ const GoodsPage = observer(() => {
         getWheelsCountReviewByModel,
         createTyreReview,
         createWheelReview,
-        getWheelsByIdParam,
         getWheelsParamsBy,
         getWheelsParamsByBrand,
         getAllWheelsModelByBrand,
@@ -137,10 +137,10 @@ const GoodsPage = observer(() => {
         const getRatingModel: any = await taskProduct[i](
           goodsTyre._product.id_model
         );
-        setRatingModelAvg(getRatingModel[0]);
+        setRatingModelAvg(getRatingModel[0]); 
       }
       if (!isMounted && taskProduct[i] === getTyresRatingAvgIdAndIdmodel && 
-        goodsTyre._product.length !== 0 && changeTabGoods === ("vseProTovar" || "vidguki") ) {
+        goodsTyre._product.id_model && goodsTyre._product.id ) {
         const getTyreRatingIdAndIdModel: any = await taskProduct[i](
           goodsTyre._product.id,
           goodsTyre._product.id_model
@@ -149,15 +149,15 @@ const GoodsPage = observer(() => {
           setRatingIdAndModelAvg(getTyreRatingIdAndIdModel[0]);
         }
       }
-      if (!isMounted && taskProduct[i] === getWheelsModelRatingAvg && goodsWheel._product.id_model) {
+      if (!isMounted && taskProduct[i] === getWheelsModelRatingAvg && 
+        goodsWheel._product.id_model) {
         const getWheelRatingModel: any = await taskProduct[i](
           goodsWheel._product.id_model
         );
         setRatingModelAvg(getWheelRatingModel[0]);
       }
-      if (!isMounted && taskProduct[i] === getWheelsRatingAvgIdAndIdmodel 
-        && 
-        goodsWheel._product.length !== 0 && changeTabGoods === ("vseProTovar" || "vidguki")
+      if (!isMounted && taskProduct[i] === getWheelsRatingAvgIdAndIdmodel &&
+        goodsWheel._product.id_model && goodsWheel._product.id
         ) 
         {
         const getWheelRatingIdAndIdModel: any = await taskProduct[i](
@@ -254,14 +254,14 @@ const GoodsPage = observer(() => {
           );
           if (createReviewWheel?.status === 201) {
             setDataReview(null);
-            goodsTyre.setNewRating('rating_overall', 0);
-            goodsTyre.setNewRating('rating_dry_road', 0);
-            goodsTyre.setNewRating('rating_wet_road', 0);
-            goodsTyre.setNewRating('rating_snow_road', 0);
-            goodsTyre.setNewRating('rating_ice_road', 0);
-            goodsTyre.setNewRating('rating_cross_country', 0);
-            goodsTyre.setNewRating('rating_treadwear', 0);
-            goodsTyre.setNewRating('rating_price_quality', 0);
+            goodsWheel.setNewRating('rating_overall', 0);
+            goodsWheel.setNewRating('rating_dry_road', 0);
+            goodsWheel.setNewRating('rating_wet_road', 0);
+            goodsWheel.setNewRating('rating_snow_road', 0);
+            goodsWheel.setNewRating('rating_ice_road', 0);
+            goodsWheel.setNewRating('rating_cross_country', 0);
+            goodsWheel.setNewRating('rating_treadwear', 0);
+            goodsWheel.setNewRating('rating_price_quality', 0);
             setCreateReview(!createReview);
           }
         } 
@@ -286,7 +286,7 @@ const GoodsPage = observer(() => {
           goodsWheel._product.et.et,
           goodsWheel._product.diameter.diameter,
         );
-        console.log('SIMILAR_BRAND_GOODS_PARAMS: ', getWheelsParamsByBrand);
+        //console.log('SIMILAR_BRAND_GOODS_PARAMS: ', getWheelsParamsByBrand);
         setSimilarBrandGoods(getWheelsParamsByBrand);
       }
       if (!isMounted && taskProduct[i] === getTyresParamsBySeason 
@@ -295,7 +295,7 @@ const GoodsPage = observer(() => {
           goodsTyre._product.params.params,
           goodsTyre._product.season.season_ua,
         );
-        console.log('SIMILAR_GOODS_PARAMS: ', getTyresParamsBySeason);
+        //console.log('SIMILAR_GOODS_PARAMS: ', getTyresParamsBySeason);
         setSimilarGoods(getTyresParamsBySeason);
       }
       if (!isMounted && taskProduct[i] === getWheelsParamsBy 
@@ -309,7 +309,7 @@ const GoodsPage = observer(() => {
           goodsWheel._product.et.et,
           goodsWheel._product.diameter.diameter,
         );
-        console.log('SIMILAR_GOODS_PARAMS: ', getWheelsParamsBy);
+        //console.log('SIMILAR_GOODS_PARAMS: ', getWheelsParamsBy);
         setSimilarGoods(getWheelsParamsBy);
       }
       if (!isMounted && taskProduct[i] === getAllTyresModelByBrand 
@@ -317,7 +317,7 @@ const GoodsPage = observer(() => {
         const getTyresModelByBrand: any = await taskProduct[i](
           goodsTyre._product.id_brand,
         );
-        console.log('ALL_TYRES_MODEL_BY_BRAND: ', getTyresModelByBrand);
+        //console.log('ALL_TYRES_MODEL_BY_BRAND: ', getTyresModelByBrand);
         setAllModelsBrand(getTyresModelByBrand);
       }
       if (!isMounted && taskProduct[i] === getAllWheelsModelByBrand 
@@ -325,7 +325,7 @@ const GoodsPage = observer(() => {
         const getWheelsModelByBrand: any = await taskProduct[i](
           goodsWheel._product.id_brand,
         );
-        console.log('ALL_TYRES_MODEL_BY_BRAND: ', getWheelsModelByBrand);
+        //console.log('ALL_TYRES_MODEL_BY_BRAND: ', getWheelsModelByBrand);
         setAllModelsBrand(getWheelsModelByBrand);
       }
       if (!isMounted && taskProduct[i] === getAllTyresParamsByModel 
@@ -333,7 +333,7 @@ const GoodsPage = observer(() => {
         const getTyresParamsByModel: any = await taskProduct[i](
           goodsTyre._product.id_model,
         );
-        console.log('ALL_TYRES_MODEL_PARAMS: ', getTyresParamsByModel);
+        //console.log('ALL_TYRES_MODEL_PARAMS: ', getTyresParamsByModel);
         setAllParamsModel(getTyresParamsByModel);
       }
       if (!isMounted && taskProduct[i] === getAllTyresDiametersByModel 
@@ -341,7 +341,7 @@ const GoodsPage = observer(() => {
         const getTyresDiametersByModel: any = await taskProduct[i](
           goodsTyre._product.id_model,
         );
-        console.log('ALL_TYRES_MODEL_PARAMS_DIAMETER: ', getTyresDiametersByModel);
+        //console.log('ALL_TYRES_MODEL_PARAMS_DIAMETER: ', getTyresDiametersByModel);
         setAllDiametersModel(getTyresDiametersByModel);
       }
       if (!isMounted && taskProduct[i] === getAllWheelsDiametersByModel 
@@ -349,7 +349,7 @@ const GoodsPage = observer(() => {
         const getWheelsDiametersByModel: any = await taskProduct[i](
           goodsTyre._product.id_model,
         );
-        console.log('ALL_WHEEL_MODEL_PARAMS: ', getWheelsDiametersByModel);
+        //console.log('ALL_WHEEL_MODEL_PARAMS: ', getWheelsDiametersByModel);
         setAllDiametersModel(getWheelsDiametersByModel);
       }
       const task = taskProduct.shift();
@@ -362,8 +362,9 @@ const GoodsPage = observer(() => {
       isMounted = true;
     };
   },
-  [changeTabGoods, createReview, customer._customer.id_customer, customer._customer.picture, customer._customer.profile_image_url, dataReview, goodsTyre, goodsWheel, page]);
+  [createReview, customer._customer.id_customer, customer._customer.picture, customer._customer.profile_image_url, dataReview, goodsTyre, goodsWheel, page]);
 
+  
   useEffect(() => {
     if (goodsTyre._product.full_name) {
       const getTyreUrl: string = 
@@ -413,10 +414,11 @@ const GoodsPage = observer(() => {
   //console.log("DATA_REVIEW: ", dataReview);
   // console.log('MATCH_URL_PARAMS: ', match?.params.goodsItem);
   // console.log('MATCH_URL: ', match);
-  console.log("RATING_AVRG_ID_AND_ID_MODEL: ", ratingIdAndIdModelAvg?.avgRatingModel);
+  // console.log('RATING_MODEL_AVRG: ', ratingModelAvg?.avgRatingModel);
+  // console.log("RATING_AVRG_ID_AND_ID_MODEL: ", ratingIdAndIdModelAvg?.avgRatingModel);
   //console.log('RATING_SUMMER: ', ratingSummerAvg);
-  // console.log('PRODUCT_WHEEL: ', goodsWheel._product);
-  // console.log('PRODUCT_TYRE: ', goodsTyre?._product.length);
+  // console.log('PRODUCT_WHEEL: ', goodsWheel?._product);
+  // console.log('PRODUCT_TYRE: ', goodsTyre?._product);
   // console.log('LOCALSORAGE_GOODS_ID: ',JSON.parse(localStorage.getItem('goodsId')!));
   // console.log('THUMB_UP:', thumbUp);
   // console.log('THUMB_DOWN:', thumbDown);

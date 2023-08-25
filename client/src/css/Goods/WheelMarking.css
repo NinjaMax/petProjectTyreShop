@@ -1,0 +1,185 @@
+
+#imgwheelMarking {
+    width:350px;
+
+}
+
+.wheelMarkingWidth span {
+    position: absolute;
+    top: 240px;
+    right: 318px;
+    font-size: 24px;
+    font-family: var(--main-font-family);
+    font-weight: bold;
+    color: black;
+    background-color: orange;
+    border-radius: 44%;
+    padding: 4px;
+
+}
+
+.wheelMarkingWidth:hover .tooltipWheelMarking {
+    visibility: visible;
+    opacity: 1;
+}
+
+.wheelMarkingDiameter span {
+    position: absolute;
+    top: 240px;
+    right: 125px;
+    font-size: 24px;
+    font-family: var(--main-font-family);
+    font-weight: bold;
+    color: black;
+    background-color: orange;
+    border-radius: 44%;
+    padding: 4px;
+}
+.wheelMarkingDiameter:hover .tooltipWheelMarking {
+    visibility: visible;
+    opacity: 1;
+}
+
+.wheelMarkingBoltCount span {
+    position: absolute;
+    top: 378px;
+    right: 265px;
+    font-size: 20px;
+    font-family: var(--main-font-family);
+    font-weight: bold;
+    color: black;
+    background-color: orange;
+    border-radius: 44%;
+    padding: 0px 6px 0px 6px;
+}
+
+.wheelMarkingBoltCount:hover .tooltipWheelMarking {
+    visibility: visible;
+    opacity: 1;
+}
+
+.wheelMarkingTyreSize span {
+    position: absolute;
+    top: 336px;
+    right: 220px;
+    font-size: 15px;
+    font-family: var(--main-font-family);
+    font-weight: bold;
+    color: black;
+    padding: 4px;
+}
+
+/* .tooltiPropertiesGoods:hover .tooltipWheelMarking {
+    visibility: visible;
+    opacity: 1;
+} */
+
+.wheelMarkingBrandName span {
+    position: absolute;
+    top: 306px;
+    right: 250px;
+    font-size: 15px;
+    font-family: var(--main-font-family);
+    font-weight: bold;
+    color: black;
+    padding: 4px;
+}
+
+/* .tooltiPropertiesGoods:hover .tooltipWheelMarking {
+    visibility: visible;
+    opacity: 1;
+} */
+
+.wheelMarkingWidth .tooltipWheelMarking {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    font-size: 13px;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    top: -70%;
+    left: 115%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+/* Tooltip arrow */
+.wheelMarkingWidth .tooltipWheelMarking::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #555 transparent transparent;
+}
+.wheelMarkingDiameter .tooltipWheelMarking {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    font-size: 13px;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    top: -70%;
+    left: 115%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+/* Tooltip arrow */
+.wheelMarkingDiameter .tooltipWheelMarking::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #555 transparent transparent;
+}
+.wheelMarkingBoltCount .tooltipWheelMarking {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    font-size: 13px;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    top: -70%;
+    left: 115%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+/* Tooltip arrow */
+.wheelMarkingBoltCount .tooltipWheelMarking::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #555 transparent transparent;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+/* .tooltiPropertiesGoods:hover .tooltipWheelMarking {
+    visibility: visible;
+    opacity: 1;
+} */
+

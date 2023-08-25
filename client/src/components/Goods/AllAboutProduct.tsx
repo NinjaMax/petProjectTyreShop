@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import '../../css/Goods/AllAboutProduct.css';
 import productImage from '../../assets/autotyrespilotspotps2.png';
+import wheelProduct from '../../assets/vossen_cvt_gloss_graphite-16325-a.png';
 import heartImg from '../../assets/icons/heart_64BlueClear.png';
 import scaleImg from '../../assets/icons/scales50.png';
 import ButtonAction from '../buttons/ButtonAction';
@@ -15,6 +16,7 @@ import { Context } from '../../context/Context';
 import { ICard } from '../cards/interfaces/Card.interface';
 import { observer } from 'mobx-react-lite';
 import { getCompareGoods, getFavoritesGoods } from '../../restAPI/restGoodsApi';
+import WheelMarking from './WheelMarking';
 
 const AllAboutProduct = observer(({
     goods, 
@@ -64,9 +66,19 @@ const AllAboutProduct = observer(({
 
     return (
         <div className='allAboutProduct'>
-            <div className='allProductImgBox'>
+            {goods?.tyre_brand ?
+             <div className='allProductImgBox'>
                 <img id='productImgGoods' src={productImage} alt='productImg'/>   
             </div>
+            : null   
+            }
+            {goods?.wheel_brand ?
+             <div className='allProductImgBox'>
+                <img id='productImgGoods' src={wheelProduct} alt='productImg'/>   
+            </div>  
+            : null 
+            }
+            
             <div className='allAboutProductInfo'>
                 <div className='productInfoName'>{
                     paramsModel ? 'Шини ' + goods?.tyre_brand?.brand + ' ' + goods?.tyre_model?.model 
@@ -240,10 +252,24 @@ const AllAboutProduct = observer(({
                 <SocialMediaLinks/>   
             </div>
             <div className='productRightgBox'>
-                <TyreMarking
+                {goods?.tyre_brand ?
+                  <TyreMarking
                     brand={goods?.tyre_brand?.brand}
                     param={goods?.params?.params}
-                />
+                />  
+                : null
+                }
+                {goods?.wheel_brand ?
+                    <WheelMarking 
+                        brand={goods?.tyre_brand?.brand}
+                        param={goods?.params?.params}
+                        width={goods.width?.width}
+                        diameter={goods?.diameter?.diameter}
+                        boltCount={goods?.bolt_count?.bolt_count}
+                    />
+                    : null
+                }
+                
                 <div className='attentionGoods'>
                     ЗВЕРНІТЬ УВАГУ
                     При покупці менше 4-х одиниць товару вартість може бути вище зазначеної. Бувають випадки, коли у нас немає можливості продати менше 4-х одиниць товару.

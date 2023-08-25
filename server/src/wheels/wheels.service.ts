@@ -111,7 +111,7 @@ export class WheelsService {
     }
   }
 
-  async findWheelByIdQuery(id: number) {
+  async findWheelByIdQuery(id: string) {
     try {
       const wheelByIdQuery = await this.wheelRepository.findByPk(id, {
         include: { all: true },
