@@ -1,6 +1,8 @@
-
+/* .wheelMarkingBox {
+    width: 315px;
+} */
 #imgwheelMarking {
-    width:350px;
+    width:360px;
 
 }
 
@@ -103,8 +105,8 @@
     /* Position the tooltip text */
     position: absolute;
     z-index: 1;
-    top: -70%;
-    left: 115%;
+    top: -130%;
+    left: -58%;
     opacity: 0;
     transition: opacity 0.3s;
 }
@@ -112,12 +114,12 @@
 .wheelMarkingWidth .tooltipWheelMarking::after {
     content: " ";
     position: absolute;
-    top: 50%;
-    right: 100%; /* To the right of the tooltip */
+    bottom: -22%;
+    right: 47%; /* To the right of the tooltip */
     margin-top: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent #555 transparent transparent;
+    border-color: #555 transparent  transparent transparent;
 }
 .wheelMarkingDiameter .tooltipWheelMarking {
     visibility: hidden;
@@ -132,8 +134,8 @@
     /* Position the tooltip text */
     position: absolute;
     z-index: 1;
-    top: -70%;
-    left: 115%;
+    top: -130%;
+    left: -58%;
     opacity: 0;
     transition: opacity 0.3s;
 }
@@ -141,12 +143,12 @@
 .wheelMarkingDiameter .tooltipWheelMarking::after {
     content: " ";
     position: absolute;
-    top: 50%;
-    right: 100%; /* To the right of the tooltip */
+    bottom: -22%;
+    right: 47%; /* To the right of the tooltip */
     margin-top: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent #555 transparent transparent;
+    border-color:  #555 transparent  transparent transparent;
 }
 .wheelMarkingBoltCount .tooltipWheelMarking {
     visibility: hidden;
@@ -161,8 +163,8 @@
     /* Position the tooltip text */
     position: absolute;
     z-index: 1;
-    top: -70%;
-    left: 115%;
+    top: -40%;
+    right: 160%;
     opacity: 0;
     transition: opacity 0.3s;
 }
@@ -171,11 +173,11 @@
     content: " ";
     position: absolute;
     top: 50%;
-    right: 100%; /* To the right of the tooltip */
+    right: -8.3%; /* To the right of the tooltip */
     margin-top: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent #555 transparent transparent;
+    border-color: transparent transparent  transparent #555;
 }
 /* Show the tooltip text when you mouse over the tooltip container */
 /* .tooltiPropertiesGoods:hover .tooltipWheelMarking {

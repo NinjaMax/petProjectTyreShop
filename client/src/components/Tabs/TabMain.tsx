@@ -35,7 +35,7 @@ const TabMain = () => {
         <div id="filterMain" className="tabContentMain">
             <FilterMainTyre/>
         </div>
-        <div className='popularContainer'>
+        {/* <div className='popularContainer'>
             <div className='popularSpan'>
                 <div className='titlePopular'>Популярні розміри</div>
                 <div className='popularBox'>
@@ -48,7 +48,7 @@ const TabMain = () => {
                     <PopularDiametrTyre/>
                 </div> 
             </div>
-        </div>       
+        </div>        */}
     </div>
 
     );

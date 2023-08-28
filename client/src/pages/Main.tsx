@@ -15,6 +15,7 @@ import { getTyresCountAll, getTyresWithoutOffset } from '../restAPI/restGoodsApi
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
 import { tyreDiameterCat, tyreSeasonCat, tyreVehicleTypeCat } from '../services/tyresCatService';
+import BrandsListMain from '../components/BrandsListMain';
 
 const Main = observer(() => {
   const {goodsTyre, filter, page, user, customer} = useContext<any | null>(Context);
@@ -287,6 +288,7 @@ const Main = observer(() => {
     <div className='main'>    
       <Slider/>
       <TabMain/>
+      <BrandsListMain/>
       <CategorySlide/>
       <TabProdMain/>
       <Benefits/>
