@@ -12,7 +12,7 @@ const Slider = () => {
         <div className="slideShowContainer">
           <div id='sliderOne' className="mySlides fade">
             <div className="numbertext">1 / 3</div>
-            <img src={sliderOne} alt='sliderOne'/>
+            <img src="/sliders/winter_tire_offer_with_logo_842_385.png" alt='sliderOne'/>
           </div>
           <div id="sliderTwo"className="mySlides fade">
             <div className="numbertext">2 / 3</div>
@@ -28,11 +28,14 @@ const Slider = () => {
           <DotSite/>
         </div>
         <div className='sliderImgBoxTop'>
-          <img id='imgSliderBoxTop' src={sliderBoxTopImg} alt='sliderBoxTop'/>
-        </div>
-        <div className='sliderImgBoxBottom'>
-          <img id='imgSliderBoxBottom' src={sliderBoxBottomImg} alt='sliderBoxBottom'/>
-        </div>
+          <img id='imgSliderBoxTop' src="/sliders/continental_offer_bonus_700_390.png" alt='sliderBoxTop'/>
+        </div> 
+        {/* <div className='sliderImgBoxTop'>
+          <img id='imgSliderBoxTop' src="/sliders/michelin_tyres_offer_700_473.png" alt='sliderBoxTop'/>
+        </div> */}
+        {/* <div className='sliderImgBoxBottom'>
+          <img id='imgSliderBoxBottom' src="/sliders/continental_offer_bonus_700_390.png" alt='sliderBoxBottom'/>
+        </div> */}
       </div>
       
       );

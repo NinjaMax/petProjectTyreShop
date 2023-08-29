@@ -23,20 +23,23 @@
 /* Style the buttons that are used to open the tab content */
 .tabMain button {
     background-color: #ddd;
-    border: #CADBEA solid 5px;
+    border: none;
+    /* border: #CADBEA solid 5px; */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     font-family: var(--main-font-family);
     font-size: 16px;
     font-weight:bolder;
     cursor: pointer;
     width: 150px;
     height: 50px;
-    border-radius:25px;
+    border-radius:15px;
 }
 
 /* Change background color of buttons on hover */
 .tabMain button:hover {
     background-color: #fff;
-    border-color:#71C2FF;
+    /* border-color:#71C2FF; */
+
 }
 
 .tablinksTyres:hover .arrowTabTyres, 
@@ -56,7 +59,7 @@
 
 .tabMain button:focus {
     background-color: #ccc;
-    border: solid #71C2FF;
+    /* border: solid #71C2FF; */
     border-width: 5px 5px 5px 5px;
 }
 
@@ -67,13 +70,19 @@
 .tablinksTyres:focus, .tabMainFilter {
     background-image:
     linear-gradient(45deg, rgb(199, 195, 244, 0.5), rgb(158, 185, 211, 0.5) 50%),
-    url("../../assets/img/tyreBlueBackground_1.png");
+    /* url("../../assets/img/tyreBlueBackground_1.png"); */
+    /* url("../../assets/img/tyres_tab_main.png"); */
+    url("../../assets/img/tyres_tab_main_1.png"); 
+    /* url("../../assets/img/tyres_tab_main_2.png"); */ /*??????*/
+    /* url("../../assets/img/tyres_tab_main_3.png"); */
+    /* url("../../assets/img/tyres_tab_main_4.png"); */
 }
 
 .tablinksWheel:focus, .tabMainFilter{
     background-image:
     linear-gradient(45deg, rgb(199, 195, 244, 0.5), rgb(158, 185, 211, 0.5) 50%),
-    url("../../assets/img/wheelBackgroundBlue_1.png");  
+    /* url("../../assets/img/wheelBackgroundBlue_1.png"); */
+    /* url("../../assets/img/wheels_tab_main.png"); */
 }
 
 
@@ -120,7 +129,7 @@
     align-items:center;
 }
 
-.arrowTabTyres, .arrowTabWheels, 
+/* .arrowTabTyres, .arrowTabWheels, 
 .arrowTabAkb, .arrowTabSelect {
     visibility: hidden;
     color:#fff;
@@ -173,7 +182,7 @@
     border-width: 10px;
     border-style: solid;
     border-color: #71C2FF transparent #71C2FF transparent ;
-}
+} */
 
 
 

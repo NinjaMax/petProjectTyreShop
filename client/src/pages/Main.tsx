@@ -289,11 +289,11 @@ const Main = observer(() => {
       <Slider/>
       <TabMain/>
       <BrandsListMain/>
-      <CategorySlide/>
       <TabProdMain/>
       <Benefits/>
+      <CategorySlide/>
       <ReviewsMain props={'Відгуки'}>
-        <ReviewStore/>
+      <ReviewStore/>
         {/* <ReviewsGoods 
           reviewExtend={false}
           btnLeft={undefined}
