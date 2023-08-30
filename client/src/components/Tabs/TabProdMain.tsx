@@ -2,27 +2,23 @@ import React from 'react';
 import '../../css/TabsCss/TabProdMain.css';
 import PromotionBox from '../PromotionBox';
 
+type ITabProd = {
+    titleTab: string;
+    children: JSX.Element | JSX.Element[] | any;
+};
 
-
-const TabProdMain = () => {
+const TabProdMain = ({titleTab, children}: ITabProd) => {
     return (
         <div>
             <div className="tabProdMain">
-                <button className="tabProdlinks" 
-                    value={'АКЦІЯ'} 
-                    onClick={(e) => e.currentTarget.value}>АКЦІЯ</button>
-                <button className="tabProdlinks" 
-                    value={'ЛІДЕРИ ПРОДАЖУ'} 
-                    onClick={(e) => e.currentTarget.value}>ЛІДЕРИ ПРОДАЖУ</button>
-                <button className="tabProdlinks" 
-                    value={'РЕКОМЕНДУЄМО'} 
-                    onClick={(e) => e.currentTarget.value}>РЕКОМЕНДУЄМО</button>
-                <button className="tabProdlinks" 
-                    value={'НОВИНКА'} 
-                    onClick={(e) => e.currentTarget.value}>НОВИНКА</button>
+                <span className="tabProdlinks" 
+                    title='АКЦІЯ' 
+                >
+                    {titleTab}
+                </span>
             </div>
             <div id="London" className="tabContentProdMain">
-                <PromotionBox/>
+                {children}
             </div>
         </div>
     );

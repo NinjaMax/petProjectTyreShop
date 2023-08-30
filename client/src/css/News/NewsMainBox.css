@@ -16,7 +16,7 @@
 }
 .columnNewsBox {
     /*float: left;*/
-    width: 33.33%;
+    width: 30%;
     height: 400px;
     padding: 0px;
     text-align:left;
@@ -24,12 +24,18 @@
     font-family: var(--main-font-family);
     cursor: pointer;
     color: #444B54;
-    border-radius:5px;
-    background-color:#C7C3F4;
+    border-radius:10px;
+    /* background-color:#C7C3F4; */
+    background-color:#9EB9D3;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
 .columnNewsBoxContent {
-    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    
+    padding: 15px;
 }
 
 .btnNewsMainBox {

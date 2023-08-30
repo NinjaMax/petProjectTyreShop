@@ -9,11 +9,10 @@ interface IChipOptions {
 }
 
 const ChipOptions =({props, chipName, clearFilter}: IChipOptions) => {
-
     return (
         <div className='chipOptions' 
             onClick={(e) => e.stopPropagation()}>
-            {props ? props?.split(',').map(
+            {typeof props === 'string' && props.length !== 0 ? props?.split(',').map(
                 (item: string, index: number) =>
             <Fragment key={item}>  
                 {item} 
@@ -24,6 +23,21 @@ const ChipOptions =({props, chipName, clearFilter}: IChipOptions) => {
                     onClick={clearFilter}>&times;
                 </span> 
             </Fragment>)
+             : null  
+            }
+            {Array.isArray(props) && props.length !== 0 ? 
+            props.length.toString().split(',').map(
+                (item: string, index: number) =>
+            <Fragment>  
+                {item} 
+                <span 
+                    data-index={index}
+                    data-name={chipName}
+                    className="closeChipBtn" 
+                    onClick={clearFilter}>&times;
+                </span> 
+            </Fragment>
+            )
              : null  
             }
         </div>

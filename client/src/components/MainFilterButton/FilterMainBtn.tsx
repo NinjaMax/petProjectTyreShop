@@ -20,7 +20,9 @@ const FilterMainBtn = observer(({
   const {filter, goodsTyre} = useContext<any | null>(Context);
   
   const filterClick = () => {
-    filterAction!(false)
+    if (filterState) {
+      filterAction!(false);
+    } 
   }
   const inputSearch = (e: any) => {
     console.log(e.target.value.length);
@@ -82,8 +84,12 @@ const FilterMainBtn = observer(({
               />
             </button>
             {filterState ?  
-              <div id="myDropdown3" className="dropdownContentFilterMainBtn" 
-                onClick={e=>e.stopPropagation()}>
+              <div id="myDropdown3" 
+                className={contentInfo ?
+                  "dropdownContentFilterMainBtn" :
+                  "dropdownContentFilterMainBtnRound"
+                } 
+                onClick={ e => e.stopPropagation()}>
                 <input 
                   id="myInput"
                   name={titleFilter}

@@ -2,7 +2,11 @@ import React from 'react';
 import '../css/PromotionBox.css';
 import TyresCard from './cards/Card';
 
-const PromotionBox = () => {
+type IPromoBox = {
+    itemsArray: [] | null;
+};
+
+const PromotionBox = ({itemsArray}: IPromoBox) => {
     return (
 
         <div className='promotionBox'>

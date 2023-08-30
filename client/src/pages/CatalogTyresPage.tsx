@@ -512,10 +512,10 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
     // console.log(e.target);
   }
   const closeFilter = () => {
-    //if(stateFilter) {
-      setStateFilter(!stateFilter);
+    if(stateFilter) {
+      setStateFilter(false);
       //console.log('FILTER_CLOSED');
-    //}
+    }
   };
   // console.log('PARAMS: ', params.category);
   // console.log('LOCATION: ', location.pathname);

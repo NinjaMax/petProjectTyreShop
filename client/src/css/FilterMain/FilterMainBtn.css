@@ -68,6 +68,19 @@
     z-index: 100;
     transition: 0.3s all linear;
 }
+
+.dropdownContentFilterMainBtnRound {
+    position: absolute;
+    background-color: #9EB9D3;
+    width: calc(var(--widthBtn)*1px);
+    height: 450.69px;
+    border: 1px solid #ddd;
+    border-radius:10px 10px 10px 10px;
+    z-index: 100;
+    transition: 0.3s all linear;
+}
+
+
 /*dropdown content info*/
 .dropdownContentFilterMainBtn .dropdownContentInfo {
     position: absolute;

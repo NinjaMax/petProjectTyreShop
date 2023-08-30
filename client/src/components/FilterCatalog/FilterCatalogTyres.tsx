@@ -336,6 +336,7 @@ const FilterCatalogTyres = observer((
     }
 
     const filterWidthClick = () => {
+        setFilterAction(!filterState);
         setStateWidth(!stateWidth);
         setStateSeason(false);
         setStateBrand(false);
@@ -350,6 +351,7 @@ const FilterCatalogTyres = observer((
         setStateStudded(false);
     }
     const filterHeightClick = () => {
+        setFilterAction(!filterState);
         setStateHeight(!stateHeight);
         setStateSeason(false);
         setStateBrand(false);
@@ -364,6 +366,7 @@ const FilterCatalogTyres = observer((
         setStateStudded(false);
     }
     const filterDiameterClick = () => {
+        setFilterAction(!filterState);
         setStateDiameter(!stateDiameter);
         setStateSeason(false);
         setStateBrand(false);
@@ -378,6 +381,7 @@ const FilterCatalogTyres = observer((
         setStateStudded(false);
     }
     const filterSeasonClick = () => {
+        setFilterAction(!filterState);
         setStateSeason(!stateSeason);
         setStateBrand(false);
         setStateWidth(false);
@@ -392,6 +396,7 @@ const FilterCatalogTyres = observer((
         //setStateStudded(false);
     }
     const filterStuddedClick = () => {
+        setFilterAction(!filterState);
         setStateStudded(!stateStudded);
         //setStateSeason(false);
         setStateBrand(false);
@@ -406,8 +411,10 @@ const FilterCatalogTyres = observer((
         setStateVehicleType(false);
     }
     const filterBrandClick = () => {
-        setStateSeason(false);
+        setFilterAction(!filterState);
         setStateBrand(!stateBrand);
+        setStateSeason(false);
+        
         setStateWidth(false);
         setStateHeight(false);
         setStateDiameter(false);
@@ -420,7 +427,8 @@ const FilterCatalogTyres = observer((
         setStateStudded(false);;
     }
     const filterVehicleTypeClick = () => {
-         setStateVehicleType(!stateVehicleType);
+        setFilterAction(!filterState);
+        setStateVehicleType(!stateVehicleType);
         setStateSeason(false);
         setStateBrand(false);
         setStateWidth(false);
@@ -434,6 +442,7 @@ const FilterCatalogTyres = observer((
         setStateStudded(false);
     }
     const filterSpeedIndexClick = () => {
+        setFilterAction(!filterState);
         setStateSpeedIndex(!stateSpeedIndex);
         setStateSeason(false);
         setStateBrand(false);
@@ -448,6 +457,7 @@ const FilterCatalogTyres = observer((
         setStateStudded(false);
     }
     const filterLoadIndexClick = () => {
+        setFilterAction(!filterState);
         setStateLoadIndex(!stateLoadIndex);
         setStateSeason(false);
         setStateBrand(false);
@@ -462,6 +472,7 @@ const FilterCatalogTyres = observer((
         setStateStudded(false);
     }
     const filterHomologationClick = () => {
+        setFilterAction(!filterState);
         setStateHomologation(!stateHomologation);
         setStateSeason(false);
         setStateBrand(false);
@@ -476,6 +487,7 @@ const FilterCatalogTyres = observer((
         setStateStudded(false);
     }
     const filterRunFlatClick = () => {
+        setFilterAction(!filterState);
         setStateRunFlat(!stateRunFlat);
         setStateSeason(false);
         setStateBrand(false);
@@ -490,6 +502,7 @@ const FilterCatalogTyres = observer((
         setStateStudded(false);
     }
     const filterReinforcedClick = () => {
+        setFilterAction(!filterState);
         setStateReinforced(!stateReinforced);
         setStateSeason(false);
         setStateBrand(false);

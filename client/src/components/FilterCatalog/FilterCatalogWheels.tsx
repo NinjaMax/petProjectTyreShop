@@ -579,7 +579,7 @@ const FilterCatalogWheels = observer((
                     titleName={'Кількість болтів'}
                     chipItem={filter.bolt_count}
                     deleteChip={handleDeleteChange}
-                    filterAction={filterColorClick}
+                    filterAction={filterBoltCountClick}
                     filterState={stateBoltCount}
                 >
                     <span>Кількість:</span>
@@ -610,7 +610,7 @@ const FilterCatalogWheels = observer((
                     titleName={'Колір'}
                     chipItem={filter.color}
                     deleteChip={handleDeleteChange}
-                    filterAction={filterBoltCountClick}
+                    filterAction={filterColorClick}
                     filterState={stateColor}
                 >
                     { goodsWheel._color ? 
