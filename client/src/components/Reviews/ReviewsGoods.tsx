@@ -173,7 +173,7 @@ const ReviewsGoods = ({
                     </div>: null}
                 </div>
                 {btnLeft & btnRight ?
-                <ButtonPrevNext prevBtnLeft={btnLeft} nextBtnRight={btnRight}/>
+                <ButtonPrevNext prevBtnLeft={btnLeft} nextBtnRight={btnRight} prevTop={0} nextTop={0}/>
                 :null} 
             </div>   
         </div>

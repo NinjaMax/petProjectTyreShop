@@ -1,6 +1,5 @@
 import React from 'react';
 import '../../css/TabsCss/TabProdMain.css';
-import PromotionBox from '../PromotionBox';
 
 type ITabProd = {
     titleTab: string;

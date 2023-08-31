@@ -40,6 +40,11 @@ export class OrdersController {
     return this.ordersService.findAllOrders();
   }
 
+  @Get('/all/order-leader')
+  findAllOrdersLeader() {
+    return this.ordersStorageService.findAllOrdersStorageLeader();
+  }
+
   @Get()
   findOrderById(@Query() getOrdersDto: GetOrdersDto) {
     return this.ordersService.findOrderById(getOrdersDto);

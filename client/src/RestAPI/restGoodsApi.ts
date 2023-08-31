@@ -75,6 +75,13 @@ const getTyresWithoutOffset = async (
     return data;
 }
 
+const getAllOrdersLeader = async () => {
+    const {data} = await $hostGet.get('/orders/all/order-leader')
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
 const getSession = async () => {
     const {data} = await $hostGet.get('/session')
     //localStorage.setItem('token', data.token)
@@ -966,5 +973,6 @@ export {
     getAllWheelsModelByBrand,
     getAllWheelsDiametersByModel,
     getWheelsRatingAvgIdAndIdmodel,
-    getTyresRatingAvgIdAndIdmodel
+    getTyresRatingAvgIdAndIdmodel,
+    getAllOrdersLeader
 }

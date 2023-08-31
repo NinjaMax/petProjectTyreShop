@@ -22,7 +22,12 @@ const Slider = () => {
             <div className="numbertext">3 / 3</div>
             <img src="img3.jpg"  alt='sliderThree'/>
           </div>
-            <ButtonPrevNext prevBtnLeft={-8} nextBtnRight={-8}/>
+            {/* <ButtonPrevNext 
+              prevTop={0}
+              prevBtnLeft={-8} 
+              nextTop={0}
+              nextBtnRight={-8}
+            /> */}
         </div>
         <div className='dotContainer'>
           <DotSite/>

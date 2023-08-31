@@ -88,7 +88,6 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                 {typeCard === 'wheel'?
                  <img id='imgTyres' src={wheels} alt="imgCards" /> 
                  : null  
-
                 }
                 <p/>
                 <div className='tyresCardLinkName'>
