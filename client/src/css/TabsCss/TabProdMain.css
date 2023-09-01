@@ -5,10 +5,11 @@
     border-radius:5px;
     background-color: #9EB9D3;
     margin: 10px 30px -3px 30px;
+    padding: 10px;
 }
 
 /* Style the buttons that are used to open the tab content */
-.tabProdMain button {
+/* .tabProdMain button {
     background-color: inherit;
     float: left;
     border: none;
@@ -16,22 +17,22 @@
     cursor: pointer;
     padding: 14px 16px;
     transition: 0.3s;
-}
+} */
 
 /* Change background color of buttons on hover */
-.tabProdMain button:hover {
+/* .tabProdMain button:hover {
     background-color: #ddd;
 }
 
 /* Create an active/current tablink class */
-.tabProdMain button.active {
+/*.tabProdMain button.active {
     background-color: #ccc;
-}
+} */
 
 /* Style the tab content */
 .tabContentProdMain {
     display: '';
-    padding: 6px 12px;
+    padding: 14px 12px;
     border: 1px solid #ccc;
     border-top: none;
     border-radius: 0px 0px 5px 5px;
@@ -40,6 +41,7 @@
 }
 
 .tabProdlinks {
+    margin-left: 10px;
     font-size: 16px;
     font-weight: bold;
     font-family:var(--main-font-family);

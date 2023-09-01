@@ -11,12 +11,12 @@ const TabProdMain = ({titleTab, children}: ITabProd) => {
         <div>
             <div className="tabProdMain">
                 <span className="tabProdlinks" 
-                    title='АКЦІЯ' 
+                    title={titleTab} 
                 >
                     {titleTab}
                 </span>
             </div>
-            <div id="London" className="tabContentProdMain">
+            <div className="tabContentProdMain">
                 {children}
             </div>
         </div>

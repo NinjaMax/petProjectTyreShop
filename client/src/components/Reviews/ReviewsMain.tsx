@@ -14,6 +14,8 @@ const ReviewsMain = ({props, children}: IReviewMain) => {
            <div className='reviewsMain'>
                 {children}
             </div> 
+            <p/>
+            <span>Дивитися всі відгуки про магазин</span>
         </div>
         
     );

@@ -27,6 +27,14 @@ export class ReviewsStoreController {
     return this.reviewsStoreService.findAllReviewsStore();
   }
 
+  @Get('/allstores-limit/')
+  findAllReviewWithLimit(
+    @Query('limit') limit: number,
+    @Query('offset') offset: number
+  ) {
+    return this.reviewsStoreService.findAllReviewsStoreLimit(limit, offset);
+  }
+
   @Get('/id')
   findOne(@Param() @Body() getReviewDto: GetReviewDto) {
     return this.reviewsStoreService.findReviewStoreById(getReviewDto);

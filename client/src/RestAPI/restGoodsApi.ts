@@ -769,6 +769,21 @@ const getAllStoreReview = async () => {
     return data;
 }
 
+const getAllStoreReviewLimit = async (
+    limit: number,
+    offset: number,
+    ) => {
+    const {data} = await $hostGet.get('/reviews-store/allstores-limit/',
+    {params: {
+        limit: limit ?? 1,
+        offset: offset ?? 0,
+    }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
 const createQuestion = async (
     data:any, 
     id: number,
@@ -974,5 +989,6 @@ export {
     getAllWheelsDiametersByModel,
     getWheelsRatingAvgIdAndIdmodel,
     getTyresRatingAvgIdAndIdmodel,
-    getAllOrdersLeader
+    getAllOrdersLeader,
+    getAllStoreReviewLimit
 }

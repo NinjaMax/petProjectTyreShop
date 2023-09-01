@@ -52,6 +52,23 @@ export class ReviewsStoreService {
     }
   }
 
+  async findAllReviewsStoreLimit(limit: number, offset: number) {
+    try {
+      const reviewStoreAllLimit = await this.reviewStoreRepository.findAll({
+        include: { all: true },
+        limit: limit,
+        offset: offset,
+      });
+
+      return reviewStoreAllLimit;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
   async findReviewStoreById(getReviewDto: GetReviewDto) {
     try {
       const reviewStoreId = await this.reviewStoreRepository.findByPk(

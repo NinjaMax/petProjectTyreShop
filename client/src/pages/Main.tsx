@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import '../css/Main.css';
 import { useLocation, useParams } from 'react-router-dom';
 import Slider from '../components/Slider';
@@ -11,17 +11,23 @@ import NewsMainBox from '../components/news/NewsMainBox';
 import ReviewStore from '../components/reviews/ReviewStore';
 import ReviewsGoods from '../components/reviews/ReviewsGoods';
 import { Context } from '../context/Context';
-import { getAllOrdersLeader, getTyresById, getTyresCountAll, getTyresWithoutOffset, getWheelsById, getWheelsWithoutOffset } from '../restAPI/restGoodsApi';
+import { getAllOrdersLeader, getAllStoreReviewLimit, getTyresById, getTyresCountAll, getTyresWithoutOffset, getWheelsById, getWheelsWithoutOffset } from '../restAPI/restGoodsApi';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
 import { tyreDiameterCat, tyreSeasonCat, tyreVehicleTypeCat } from '../services/tyresCatService';
 import BrandsListMain from '../components/BrandsListMain';
 import PromotionBox from '../components/PromotionBox';
+import ButtonPrevNext from '../components/buttons/ButtonPrevNext';
 
 const Main = observer(() => {
   const {goodsTyre, goodsWheel, filter, page} = useContext<any | null>(Context);
   const [filterClose, setFilterClose] = useState<boolean>(false);
   const [leaderOrder, setLeaderOrder] = useState<any[] | null>([]);
+  const [prevBtnLeader, setPrevBtnLeader] = useState<number>(0);
+  const [nextBtnLeader, setNextBtnLeader] = useState<number>(4);
+  const [reviewStoreAll, setReviewStoreAll] = useState<any[] | null>();
+  const [prevBtnReview, setPrevBtnReview] = useState<number>(0);
+  const [nextBtnReview, setNextBtnReview] = useState<number>(1);
   const params = useParams<any>();
   const location = useLocation();
     // const {page} = useContext<any | null>(Context);
@@ -35,6 +41,7 @@ const Main = observer(() => {
         getTyresCountAll,
         getWheelsWithoutOffset,
         getAllOrdersLeader,
+        getAllStoreReviewLimit,
       ];
       const tyreCatType = tyreVehicleTypeCat(params.category);
       console.log('CAT_TYPE: ', tyreCatType);
@@ -470,7 +477,9 @@ const Main = observer(() => {
             )
           }
         }
-        if(!isMounted && taskLoad[i] === getAllOrdersLeader) {
+        if(!isMounted && taskLoad[i] === getAllOrdersLeader
+          && (prevBtnLeader || nextBtnLeader) 
+          ) {
           let getOrdersLeader: any = await taskLoad[i]();
           getOrdersLeader.forEach( async(item: any) => {
             const getTyre = await getTyresById(item.id);
@@ -478,14 +487,26 @@ const Main = observer(() => {
             if (getTyre) {
               getTyre.typeCard = 'tyre';
               setLeaderOrder(
-                oldLeader => [...oldLeader!, getTyre]);
+                oldLeader => [...oldLeader!, getTyre].slice(0,8)
+                );
             }
             if (getWheel) {
               getWheel.typeCard = 'wheel';
               setLeaderOrder(
-                oldLeader => [...oldLeader!, getWheel]);
+                oldLeader => [...oldLeader!, getWheel].slice(0,8));
             }
           });
+        }
+        if(!isMounted && taskLoad[i] === getAllStoreReviewLimit
+          && (prevBtnReview || nextBtnReview) 
+          ) {
+          let getAllReviewStore: any = await taskLoad[i](
+            1,
+            nextBtnReview
+          );
+          if (getAllReviewStore) {
+            setReviewStoreAll(getAllReviewStore);
+          }
         }
         const task = taskLoad.shift();
         task();
@@ -498,33 +519,66 @@ const Main = observer(() => {
     };
   },
   [
-    filter,
-    params,
-    goodsTyre,
-    page.limit,
-    page.loadMore,
-    page.offset,
-    filter.width,
-    filter.height,
-    filter.diameter,
-    filter.season,
-    filter.brands,
-    filter.price,
-    filter.vehicle_type,
-    filter.speed_index,
-    filter.load_index,
-    filter.studded,
-    filter.run_flat,
-    filter.homologation,
-    filter.reinforced,
-    filter.sort,
-    goodsWheel
+    filter, 
+    params, 
+    goodsTyre, 
+    page.limit, 
+    page.loadMore, 
+    page.offset, 
+    filter.width, 
+    filter.height, 
+    filter.diameter, 
+    filter.season, 
+    filter.brands, 
+    filter.price, 
+    filter.vehicle_type, 
+    filter.speed_index, 
+    filter.load_index, 
+    filter.studded, 
+    filter.run_flat, 
+    filter.homologation, 
+    filter.reinforced, 
+    filter.sort, 
+    goodsWheel, 
+    nextBtnLeader, 
+    prevBtnLeader, 
+    prevBtnReview, 
+    nextBtnReview
   ]);
 
   const handleCloseFilter =() => {
     if(filterClose) {
       setFilterClose(false);
     }
+  };
+
+  const prevBtnEvent = () => {
+    setPrevBtnLeader(oldPrevBtn => oldPrevBtn - 1);
+    setNextBtnLeader(oldNextBtn => oldNextBtn - 1);
+    if (prevBtnLeader === -8 && nextBtnLeader === -4) {
+      setPrevBtnLeader(-1);
+      setNextBtnLeader(3);
+    }
+  };
+
+  const nextBtnEvent = () => {
+    setPrevBtnLeader(oldPrevBtn => oldPrevBtn + 1);
+    setNextBtnLeader(oldNextBtn => oldNextBtn + 1);
+    if (prevBtnLeader === 3 && nextBtnLeader === 7) {
+      setPrevBtnLeader(-4);
+      setNextBtnLeader(0);
+    }
+  };
+
+  const prevBtnReviewStore = () => {
+    setPrevBtnReview(oldPrevBtn => oldPrevBtn - 1);
+    if (prevBtnReview <= 0) {
+      setPrevBtnReview(0);
+    }
+  };
+
+  const nextBtnReviewStore = () => {
+    setNextBtnReview(oldNextBtn => oldNextBtn + 1);
   };
 
   return (
@@ -538,25 +592,64 @@ const Main = observer(() => {
 
       />
       <BrandsListMain/>
-      <TabProdMain titleTab='ЛІДЕР ПРОДАЖУ'>
-        <PromotionBox itemsArray={leaderOrder} />
+      <TabProdMain titleTab='ЛІДЕРИ ПРОДАЖУ'>
+        <PromotionBox 
+          prevButtonEvent={prevBtnEvent}
+          nextButtonEvent={nextBtnEvent}
+          prevBtn={prevBtnLeader}
+          nextBtn={nextBtnLeader}
+          itemsArray={leaderOrder} />
       </TabProdMain>
+      {/* <div onClick={e => e.stopPropagation()}>
       <TabProdMain titleTab='РЕКОМЕНДУЄМО'>
-        <PromotionBox itemsArray={null}/>
+        <PromotionBox 
+          prevButtonEvent={() => console.log('PREV_BTN_REC')}
+          nextButtonEvent={() => console.log('NEXT_BTN_REC')}
+          prevBtn={0}
+          nextBtn={4}
+          itemsArray={leaderOrder}/>
       </TabProdMain>
+      </div>
+      <div onClick={e => e.stopPropagation()}>
       <TabProdMain titleTab='НОВИНКИ'>
-        <PromotionBox itemsArray={null}/>
+        <PromotionBox 
+          prevButtonEvent={() => console.log('PREV_BTN_NOV')}
+          nextButtonEvent={() => console.log('NEXT_BTN_NOV')}
+          prevBtn={0}
+          nextBtn={4}
+          itemsArray={leaderOrder}/>
       </TabProdMain>
+      </div> */}
       <Benefits/>
       <CategorySlide/>
-      <ReviewsMain props={'Відгуки'}>
-      <ReviewStore/>
+      
+      <ReviewsMain props={'Відгуки про магазин'}>
+      <div>
+      {reviewStoreAll ? 
+         reviewStoreAll.map((item: any) =>
+        <div key={item.id_review_store + '_review'}>
+          <ReviewStore storeData={item}/>
+          <ButtonPrevNext 
+            prevBtnLeft={250} 
+            prevTop={275} 
+            nextBtnRight={250} 
+            nextTop={275}    
+            leftClickActive={prevBtnReviewStore} 
+            rightClickActive={nextBtnReviewStore}
+          />
+        </div>
+        )
+        : 
+        <span>Дивитися всі відгуки про магазин</span>
+      }
+      </div>
         {/* <ReviewsGoods 
           reviewExtend={false}
           btnLeft={undefined}
           btnRight={undefined} 
           reviewEntity={undefined}/> */}
       </ReviewsMain>
+
       <NewsMainBox/>
     </div>   
   );
