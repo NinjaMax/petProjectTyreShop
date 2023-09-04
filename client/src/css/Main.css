@@ -10,3 +10,17 @@
     /*font-family: 'Open Sans', sans-serif;*/
     /*font-family: 'Ubuntu', sans-serif;*/
 }
+
+.mainAfterReviews {
+    display:inline-block;
+    margin: 26px;
+    padding: 20px;
+}
+
+.mainLinkReview {
+    text-decoration:underline;
+    font-weight: 700;
+    font-size: 18px;
+    font-family: var(--main-font-family);
+    text-decoration-color: #6666;
+}

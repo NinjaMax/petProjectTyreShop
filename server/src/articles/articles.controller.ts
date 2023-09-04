@@ -6,10 +6,19 @@ import {
   Patch,
   Param,
   Delete,
+  Header,
+  UseInterceptors,
+  UploadedFile,
+  ParseFilePipe,
+  FileTypeValidator,
+  MaxFileSizeValidator,
+  Query,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @Controller('articles')
 export class ArticlesController {
@@ -20,9 +29,54 @@ export class ArticlesController {
     return this.articlesService.createArticle(createArticleDto);
   }
 
+  @Post('/upload-image')
+  @Header('Content-Type', 'multipart/form-data')
+  //@Header('Accept-Charset', 'utf-8')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './articles_img',
+        filename: (req, file, cb) => {
+          if (
+            !file.mimetype.includes('jpeg') ||
+            !file.mimetype.includes('png')
+          ) {
+            throw 'not supported format';
+          }
+          const fileName: string = file.originalname;
+          const newFileName: string = fileName;
+          cb(null, `${newFileName}`)
+          console.log('FILE_NAME: ', newFileName)
+        },
+      })
+    } 
+  ))
+  async uploadTyreFileAndPassValidation(
+    //@Body() body: CreateUploaderDto, 
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 15000000 }),
+          new FileTypeValidator({ fileType: 'jpeg/png' }),
+        ]
+      })
+    )
+    file: Express.Multer.File,
+  ) {
+    return file.path, file.filename;
+  }
+
   @Get('/all')
   findAll() {
     return this.articlesService.findAllArticles();
+  }
+  
+  @Get('/all-limit')
+  findAllArticlesLimit(
+    @Query('limit') limit: string,
+    @Query('offset') offset: string
+  ) {
+    return this.articlesService.findAllArticlesLimit(+limit, +offset);
   }
 
   @Get(':id')

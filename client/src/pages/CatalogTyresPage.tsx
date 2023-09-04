@@ -580,8 +580,11 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
           }
         </div>
         <div className='d'>
-          <ReviewsMain props={'Відгуки клієнтів'}>
-            {/* <ReviewsGoods reviewExtend={true} btnLeft={undefined} btnRight={undefined}/> */}
+          <ReviewsMain props={'Відгуки клієнтів'} 
+            prevBtnAction={() => console.log('REVIEW_PREV')} 
+            nextBtnAction={() => console.log('REVIEW_NEXT')}          
+          >
+          {/* <ReviewsGoods reviewExtend={true} btnLeft={undefined} btnRight={undefined}/> */}
           </ReviewsMain>
         </div>
         <div className='e'>

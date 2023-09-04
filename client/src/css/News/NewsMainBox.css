@@ -11,12 +11,17 @@
 .newsMainBoxList {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
 }
+.newsMainBoxListItem {
+    width: ;
+}
+
 .columnNewsBox {
     /*float: left;*/
-    width: 30%;
+    width: 410px;
     height: 400px;
     padding: 0px;
     text-align:left;
@@ -34,7 +39,6 @@
 .columnNewsBoxContent {
     display: flex;
     flex-direction: column;
-    
     padding: 15px;
 }
 

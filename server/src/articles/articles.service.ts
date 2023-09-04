@@ -21,9 +21,27 @@ export class ArticlesService {
     }
   }
 
+
+
+
   async findAllArticles() {
     try {
       const findAllArticles = await this.articlesRepository.findAll();
+      return findAllArticles;
+    } catch (error) {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async findAllArticlesLimit(limit: number, offset: number) {
+    try {
+      const findAllArticles = await this.articlesRepository.findAll({
+        limit: limit,
+        offset: offset,
+      });
       return findAllArticles;
     } catch (error) {
       throw new HttpException(

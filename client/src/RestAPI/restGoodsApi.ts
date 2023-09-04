@@ -770,13 +770,35 @@ const getAllStoreReview = async () => {
 }
 
 const getAllStoreReviewLimit = async (
-    limit: number,
-    offset: number,
+    limit: string,
+    offset: string,
     ) => {
     const {data} = await $hostGet.get('/reviews-store/allstores-limit/',
     {params: {
-        limit: limit ?? 1,
-        offset: offset ?? 0,
+        limit: limit ?? '1',
+        offset: offset ?? '0',
+    }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+const getAllArticles = async () => {
+    const {data} = await $hostGet.get('/articles/all')
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+const getAllArticlesLimit = async (
+    limit: string,
+    offset: string,
+    ) => {
+    const {data} = await $hostGet.get('/articles/all-limit',
+    {params: {
+        limit: limit ?? '3',
+        offset: offset ?? '0',
     }
     })
     //localStorage.setItem('token', data.token)
@@ -990,5 +1012,7 @@ export {
     getWheelsRatingAvgIdAndIdmodel,
     getTyresRatingAvgIdAndIdmodel,
     getAllOrdersLeader,
-    getAllStoreReviewLimit
+    getAllStoreReviewLimit,
+    getAllArticlesLimit,
+    getAllArticles
 }

@@ -12,7 +12,9 @@ const Slider = () => {
         <div className="slideShowContainer">
           <div id='sliderOne' className="mySlides fade">
             <div className="numbertext">1 / 3</div>
-            <img src="/sliders/winter_tire_offer_with_logo_842_385.png" alt='sliderOne'/>
+            <a href='/'>
+              <img src="/sliders/winter_tire_offer_with_logo_842_385.png" alt='sliderOne'/>
+            </a>
           </div>
           <div id="sliderTwo"className="mySlides fade">
             <div className="numbertext">2 / 3</div>
@@ -42,7 +44,6 @@ const Slider = () => {
           <img id='imgSliderBoxBottom' src="/sliders/continental_offer_bonus_700_390.png" alt='sliderBoxBottom'/>
         </div> */}
       </div>
-      
       );
     };
 

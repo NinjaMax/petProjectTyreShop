@@ -9,15 +9,13 @@ import ReviewsMain from '../components/reviews/ReviewsMain';
 import TabMain from '../components/tabs/TabMain';
 import NewsMainBox from '../components/news/NewsMainBox';
 import ReviewStore from '../components/reviews/ReviewStore';
-import ReviewsGoods from '../components/reviews/ReviewsGoods';
 import { Context } from '../context/Context';
-import { getAllOrdersLeader, getAllStoreReviewLimit, getTyresById, getTyresCountAll, getTyresWithoutOffset, getWheelsById, getWheelsWithoutOffset } from '../restAPI/restGoodsApi';
+import { getAllArticlesLimit, getAllOrdersLeader, getAllStoreReviewLimit, getTyresById, getTyresCountAll, getTyresWithoutOffset, getWheelsById, getWheelsWithoutOffset } from '../restAPI/restGoodsApi';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
 import { tyreDiameterCat, tyreSeasonCat, tyreVehicleTypeCat } from '../services/tyresCatService';
 import BrandsListMain from '../components/BrandsListMain';
 import PromotionBox from '../components/PromotionBox';
-import ButtonPrevNext from '../components/buttons/ButtonPrevNext';
 
 const Main = observer(() => {
   const {goodsTyre, goodsWheel, filter, page} = useContext<any | null>(Context);
@@ -27,7 +25,8 @@ const Main = observer(() => {
   const [nextBtnLeader, setNextBtnLeader] = useState<number>(4);
   const [reviewStoreAll, setReviewStoreAll] = useState<any[] | null>();
   const [prevBtnReview, setPrevBtnReview] = useState<number>(0);
-  const [nextBtnReview, setNextBtnReview] = useState<number>(1);
+  const [nextBtnReview, setNextBtnReview] = useState<number>(0);
+  const [articlesAll, setArticlesAll] = useState<any[] | null>();
   const params = useParams<any>();
   const location = useLocation();
     // const {page} = useContext<any | null>(Context);
@@ -42,6 +41,7 @@ const Main = observer(() => {
         getWheelsWithoutOffset,
         getAllOrdersLeader,
         getAllStoreReviewLimit,
+        getAllArticlesLimit
       ];
       const tyreCatType = tyreVehicleTypeCat(params.category);
       console.log('CAT_TYPE: ', tyreCatType);
@@ -498,7 +498,6 @@ const Main = observer(() => {
           });
         }
         if(!isMounted && taskLoad[i] === getAllStoreReviewLimit
-          && (prevBtnReview || nextBtnReview) 
           ) {
           let getAllReviewStore: any = await taskLoad[i](
             1,
@@ -506,6 +505,16 @@ const Main = observer(() => {
           );
           if (getAllReviewStore) {
             setReviewStoreAll(getAllReviewStore);
+          }
+        }
+        if(!isMounted && taskLoad[i] === getAllArticlesLimit
+          ) {
+          let getAllArticles: any = await taskLoad[i](
+            3,
+            0
+          );
+          if (getAllArticles) {
+            setArticlesAll(getAllArticles);
           }
         }
         const task = taskLoad.shift();
@@ -571,14 +580,19 @@ const Main = observer(() => {
   };
 
   const prevBtnReviewStore = () => {
-    setPrevBtnReview(oldPrevBtn => oldPrevBtn - 1);
-    if (prevBtnReview <= 0) {
+    if (prevBtnReview > 0) {
+      setPrevBtnReview(oldPrevBtn => oldPrevBtn - 1);
+      setNextBtnReview(oldNextBtn => oldNextBtn - 1);
+    }
+    if (prevBtnReview === 0) {
       setPrevBtnReview(0);
+      setNextBtnReview(0);
     }
   };
 
   const nextBtnReviewStore = () => {
     setNextBtnReview(oldNextBtn => oldNextBtn + 1);
+    setPrevBtnReview(oldPrevBtn => oldPrevBtn + 1);
   };
 
   return (
@@ -589,7 +603,6 @@ const Main = observer(() => {
       <TabMain
         filterMainState={filterClose}
         filterStateAction={setFilterClose}
-
       />
       <BrandsListMain/>
       <TabProdMain titleTab='ЛІДЕРИ ПРОДАЖУ'>
@@ -598,7 +611,8 @@ const Main = observer(() => {
           nextButtonEvent={nextBtnEvent}
           prevBtn={prevBtnLeader}
           nextBtn={nextBtnLeader}
-          itemsArray={leaderOrder} />
+          itemsArray={leaderOrder} 
+        />
       </TabProdMain>
       {/* <div onClick={e => e.stopPropagation()}>
       <TabProdMain titleTab='РЕКОМЕНДУЄМО'>
@@ -623,34 +637,27 @@ const Main = observer(() => {
       <Benefits/>
       <CategorySlide/>
       
-      <ReviewsMain props={'Відгуки про магазин'}>
-      <div>
-      {reviewStoreAll ? 
-         reviewStoreAll.map((item: any) =>
+      <ReviewsMain 
+        props={'Відгуки про магазин'}
+        prevBtnAction={prevBtnReviewStore}
+        nextBtnAction={nextBtnReviewStore}
+      >
+      <div >
+        {reviewStoreAll?.length !== 0 ? 
+         reviewStoreAll?.map((item: any) =>
         <div key={item.id_review_store + '_review'}>
           <ReviewStore storeData={item}/>
-          <ButtonPrevNext 
-            prevBtnLeft={250} 
-            prevTop={275} 
-            nextBtnRight={250} 
-            nextTop={275}    
-            leftClickActive={prevBtnReviewStore} 
-            rightClickActive={nextBtnReviewStore}
-          />
         </div>
         )
         : 
-        <span>Дивитися всі відгуки про магазин</span>
+        <div className='mainAfterReviews' >
+          <a className='mainLinkReview'
+           href='/review'>Дивитися всі відгуки про магазин</a>
+        </div>
       }
       </div>
-        {/* <ReviewsGoods 
-          reviewExtend={false}
-          btnLeft={undefined}
-          btnRight={undefined} 
-          reviewEntity={undefined}/> */}
       </ReviewsMain>
-
-      <NewsMainBox/>
+      <NewsMainBox articlesArr={articlesAll}/>
     </div>   
   );
 });
