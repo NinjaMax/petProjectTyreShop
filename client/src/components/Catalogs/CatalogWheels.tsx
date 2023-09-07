@@ -102,7 +102,7 @@ const CatalogWheels = observer(() => {
     }
   };
   
-  console.log("GOODS_WHEELS: ", goodsWheel._wheels)
+  //console.log("GOODS_WHEELS: ", goodsWheel._wheels)
   return (
     <div>
         <h2>Диски</h2>

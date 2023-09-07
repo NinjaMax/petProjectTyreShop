@@ -28,7 +28,7 @@ const ChipOptions =({props, chipName, clearFilter}: IChipOptions) => {
             {Array.isArray(props) && props.length !== 0 ? 
             props.length.toString().split(',').map(
                 (item: string, index: number) =>
-            <Fragment>  
+            <Fragment key={item + index}>  
                 {item} 
                 <span 
                     data-index={index}

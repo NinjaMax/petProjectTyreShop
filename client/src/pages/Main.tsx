@@ -90,13 +90,6 @@ const Main = observer(() => {
           let setRunFlatFilter :any[] = [];
           let setStuddedFilter :any[] = [];
 
-          //console.log('TYRE_FILTER_GET: ', tyreFilterGoods);
-          page.loadMore > 0 ? goodsTyre?.setTyres(
-          [...goodsTyre._tyres, 
-            ...tyreFilterGoods.splice(page.offset, page.limit)] 
-          ) : goodsTyre?.setTyres(
-            tyreFilterGoods.splice(page.offset, page.limit));
-
           goodsTyre?.setTyresFilter(tyreFilterGoods);
           goodsTyre._tyres_filter.map((item: any) => 
           { return (
@@ -114,6 +107,12 @@ const Main = observer(() => {
             setStuddedFilter.push(item.studded.studded)
             )
           })
+          page.loadMore > 0 ? goodsTyre?.setTyres(
+            [...goodsTyre._tyres, 
+              ...tyreFilterGoods.splice(page.offset, page.limit)] 
+            ) : goodsTyre?.setTyres(
+              tyreFilterGoods.splice(page.offset, page.limit));
+
           if (filter.width) {
             goodsTyre?.setWidth(
               Array.from(new Set(
@@ -172,7 +171,7 @@ const Main = observer(() => {
               Array.from(new Set(setBrandFilter)).sort(
                 (a, b) => a.localeCompare(b))
             );
-            filter.setBrandSearch(goodsTyre._brands);   
+            filter.setBrandSearch(goodsTyre._brands); 
           }
           if (filter.season) {
             goodsTyre?.setSeason(
@@ -303,7 +302,6 @@ const Main = observer(() => {
             filter.sort,
           );
           let setWidthFilter:any[] = [];
-          //let setHightFilter:any[] = [];
           let setDiameterFilter:any[] = [];
           let setBrandFilter:any[] = [];
           let setBoltCountFilter :any[] = [];
@@ -316,11 +314,7 @@ const Main = observer(() => {
           let setTypeFilter :any[] = [];
 
           //console.log('TYRE_FILTER_GET: ', tyreFilterGoods);
-          page.loadMore > 0 ? goodsWheel?.setWheels(
-          [...goodsWheel._wheels, 
-            ...wheelFilterGoods.splice(page.offset, page.limit)] 
-          ) : goodsWheel?.setWheels(
-            wheelFilterGoods.splice(page.offset, page.limit));
+          
 
             goodsWheel?.setWheelsFilter(wheelFilterGoods);
             goodsWheel._wheels_filter.map((item: any) => 
@@ -339,6 +333,12 @@ const Main = observer(() => {
             setTypeFilter.push(item.type.type)
             )
           })
+          page.loadMore > 0 ? goodsWheel?.setWheels(
+            [...goodsWheel._wheels, 
+              ...wheelFilterGoods.splice(page.offset, page.limit)] 
+            ) : goodsWheel?.setWheels(
+              wheelFilterGoods.splice(page.offset, page.limit));
+
           if (filter.width) {
             goodsWheel?.setWidth(
               Array.from(new Set(
@@ -548,6 +548,16 @@ const Main = observer(() => {
     filter.homologation, 
     filter.reinforced, 
     filter.sort, 
+    filter.bolt_count,
+    filter.bolt_count_pcd,
+    filter.brands,
+    filter.price,
+    filter.type,
+    filter.color,
+    filter.dia,
+    filter.et,
+    filter.pcd,
+    filter.pcd2,
     goodsWheel, 
     nextBtnLeader, 
     prevBtnLeader, 
@@ -657,7 +667,9 @@ const Main = observer(() => {
       }
       </div>
       </ReviewsMain>
-      <NewsMainBox articlesArr={articlesAll}/>
+      <NewsMainBox 
+        isNewsPage={false}
+        articlesArr={articlesAll}/>
     </div>   
   );
 });

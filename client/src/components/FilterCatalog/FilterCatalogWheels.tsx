@@ -49,16 +49,18 @@ const FilterCatalogWheels = observer((
 
     const handleChange  = (e: any) => {
         if (e.target.name === 'Ширина') {
+            filter.setWidth(e.target.value);
+            setStateWidth(!stateWidth);
+            setFilterAction(!filterState);
             page.setLoadMore(0);
             page.setOffset(0);
-            filter.setWidth(e.target.value);
-            setStateWidth(false);
         }
         if (e.target.name === 'Діаметр') {
+            filter.setDiameter(e.target.value);
+            setStateDiameter(!stateDiameter);
+            setFilterAction(!filterState);
             page.setLoadMore(0);
             page.setOffset(0);
-            filter.setDiameter(e.target.value);
-            setStateDiameter(false);
         }
         if (e.target.name === 'Бренд' && e.target.checked) {
             page.setLoadMore(0);
@@ -330,17 +332,18 @@ const FilterCatalogWheels = observer((
 
     const filterWidthClick = () => {
         setStateWidth(!stateWidth);
-        setStateBoltCount(false);
-        setStateBrand(false);
-        //setStateHeight(false);
-        setStateDiameter(false);
-        setStatePcd(false);
-        setStateEt(false);
-        setStateDia(false);
-        setStatePcd2(false);
-        setStateBoltCountPcd(false);
-        setStateType(false);
-        setStateColor(false);
+        setFilterAction(!filterState);
+        // setStateBoltCount(false);
+        // setStateBrand(false);
+        // //setStateHeight(false);
+        // setStateDiameter(false);
+        // setStatePcd(false);
+        // setStateEt(false);
+        // setStateDia(false);
+        // setStatePcd2(false);
+        // setStateBoltCountPcd(false);
+        // setStateType(false);
+        // setStateColor(false);
     }
     // const filterHeightClick = () => {
     //     //setStateHeight(!stateHeight);
@@ -358,143 +361,155 @@ const FilterCatalogWheels = observer((
     // }
     const filterDiameterClick = () => {
         setStateDiameter(!stateDiameter);
-        setStateBoltCount(false);
-        setStateBrand(false);
-        setStateWidth(false);
-        //setStateHeight(false);
-        setStatePcd(false);
-        setStateEt(false);
-        setStateDia(false);
-        setStatePcd2(false);
-        setStateBoltCountPcd(false);
-        setStateType(false);
-        setStateColor(false);
+        setFilterAction(!filterState);
+        // setStateBoltCount(false);
+        // setStateBrand(false);
+        // setStateWidth(false);
+        // //setStateHeight(false);
+        // setStatePcd(false);
+        // setStateEt(false);
+        // setStateDia(false);
+        // setStatePcd2(false);
+        // setStateBoltCountPcd(false);
+        // setStateType(false);
+        // setStateColor(false);
     }
     const filterColorClick = () => {
-        setStateBoltCount(!stateBoltCount);
-        setStateBrand(false);
-        setStateWidth(false);
-        //setStateHeight(false);
-        setStateDiameter(false);
-        setStatePcd(false);
-        setStateEt(false);
-        setStateDia(false);
-        setStatePcd2(false);
-        setStateBoltCountPcd(false);
-        setStateType(false);
+        setStateColor(!stateColor);
+        setFilterAction(!filterState);
+        
+        // setStateBrand(false);
+        // setStateWidth(false);
+        // //setStateHeight(false);
+        // setStateDiameter(false);
+        // setStatePcd(false);
+        // setStateEt(false);
+        // setStateDia(false);
+        // setStatePcd2(false);
+        // setStateBoltCountPcd(false);
+        // setStateType(false);
         //setStateColor(false);
     }
     const filterBoltCountClick = () => {
-        setStateColor(!stateColor);
+        setStateBoltCount(!stateBoltCount);
+        setFilterAction(!filterState);
         //setStateBoltCount(false);
-        setStateBrand(false);
-        setStateWidth(false);
-        //setStateHeight(false);
-        setStateDiameter(false);
-        setStatePcd(false);
-        setStateEt(false);
-        setStateDia(false);
-        setStatePcd2(false);
-        setStateBoltCountPcd(false);
-        setStateType(false);
+        // setStateBrand(false);
+        // setStateWidth(false);
+        // //setStateHeight(false);
+        // setStateDiameter(false);
+        // setStatePcd(false);
+        // setStateEt(false);
+        // setStateDia(false);
+        // setStatePcd2(false);
+        // setStateBoltCountPcd(false);
+        // setStateType(false);
     }
     const filterBrandClick = () => {
-        setStateBoltCount(false);
+        ;
         setStateBrand(!stateBrand);
-        setStateWidth(false);
-        //setStateHeight(false);
-        setStateDiameter(false);
-        setStatePcd(false);
-        setStateEt(false);
-        setStateDia(false);
-        setStatePcd2(false);
-        setStateBoltCountPcd(false);
-        setStateType(false);
-        setStateColor(false);;
+        setFilterAction(!filterState);
+        // setStateBoltCount(false)
+        // setStateWidth(false);
+        // //setStateHeight(false);
+        // setStateDiameter(false);
+        // setStatePcd(false);
+        // setStateEt(false);
+        // setStateDia(false);
+        // setStatePcd2(false);
+        // setStateBoltCountPcd(false);
+        // setStateType(false);
+        // setStateColor(false);
     }
     const filterTypeClick = () => {
         setStateType(!stateType);
-        setStateBoltCount(false);
-        setStateBrand(false);
-        setStateWidth(false);
-        //setStateHeight(false);
-        setStateDiameter(false);
-        setStatePcd(false);
-        setStateEt(false);
-        setStateDia(false);
-        setStatePcd2(false);
-        setStateBoltCountPcd(false);
-        setStateColor(false);
+        setFilterAction(!filterState);
+        // setStateBoltCount(false);
+        // setStateBrand(false);
+        // setStateWidth(false);
+        // //setStateHeight(false);
+        // setStateDiameter(false);
+        // setStatePcd(false);
+        // setStateEt(false);
+        // setStateDia(false);
+        // setStatePcd2(false);
+        // setStateBoltCountPcd(false);
+        // setStateColor(false);
     }
     const filterDiaClick = () => {
         setStateDia(!stateDia);
-        setStateBoltCount(false);
-        setStateBrand(false);
-        setStateWidth(false);
-        //setStateHeight(false);
-        setStateDiameter(false);
-        setStatePcd(false);
-        setStateEt(false);
-        setStatePcd2(false);
-        setStateBoltCountPcd(false);
-        setStateType(false);
-        setStateColor(false);
+        setFilterAction(!filterState);
+        // setStateBoltCount(false);
+        // setStateBrand(false);
+        // setStateWidth(false);
+        // //setStateHeight(false);
+        // setStateDiameter(false);
+        // setStatePcd(false);
+        // setStateEt(false);
+        // setStatePcd2(false);
+        // setStateBoltCountPcd(false);
+        // setStateType(false);
+        // setStateColor(false);
     }
     const filterEtClick = () => {
         setStateEt(!stateEt);
-        setStateBoltCount(false);
-        setStateBrand(false);
-        setStateWidth(false);
-        //setStateHeight(false);
-        setStateDiameter(false);
-        setStatePcd(false);
-        setStateDia(false);
-        setStatePcd2(false);
-        setStateBoltCountPcd(false);
-        setStateType(false);
-        setStateColor(false);
+        setFilterAction(!filterState);
+        // setStateBoltCount(false);
+        // setStateBrand(false);
+        // setStateWidth(false);
+        // //setStateHeight(false);
+        // setStateDiameter(false);
+        // setStatePcd(false);
+        // setStateDia(false);
+        // setStatePcd2(false);
+        // setStateBoltCountPcd(false);
+        // setStateType(false);
+        // setStateColor(false);
     }
     const filterPcdClick = () => {
         setStatePcd(!statePcd);
-        setStateBoltCount(false);
-        setStateBrand(false);
-        setStateWidth(false);
-        //setStateHeight(false);
-        setStateDiameter(false);
-        setStateEt(false);
-        setStateDia(false);
-        setStatePcd2(false);
-        setStateBoltCountPcd(false);
-        setStateType(false);
-        setStateColor(false);
+        setFilterAction(!filterState);
+        // setStateBoltCount(false);
+        // setStateBrand(false);
+        // setStateWidth(false);
+        // //setStateHeight(false);
+        // setStateDiameter(false);
+        // setStateEt(false);
+        // setStateDia(false);
+        // setStatePcd2(false);
+        // setStateBoltCountPcd(false);
+        // setStateType(false);
+        // setStateColor(false);
     }
     const filterPcd2Click = () => {
         setStatePcd2(!statePcd2);
-        setStateBoltCount(false);
-        setStateBrand(false);
-        setStateWidth(false);
-        //setStateHeight(false);
-        setStateDiameter(false);
-        setStatePcd(false);
-        setStateEt(false);
-        setStateDia(false);
-        setStateBoltCountPcd(false);
-        setStateType(false);
-        setStateColor(false);
+        setFilterAction(!filterState);
+        // setStateBoltCount(false);
+        // setStateBrand(false);
+        // setStateWidth(false);
+        // //setStateHeight(false);
+        // setStateDiameter(false);
+        // setStatePcd(false);
+        // setStateEt(false);
+        // setStateDia(false);
+        // setStateBoltCountPcd(false);
+        // setStateType(false);
+        // setStateColor(false);
     }
     const filterBoltCountPcdClick = () => {
         setStateBoltCountPcd(!stateBoltCountPcd);
-        setStateBoltCount(false);
-        setStateBrand(false);
-        setStateWidth(false);
-        //setStateHeight(false);
-        setStateDiameter(false);
-        setStatePcd(false);
-        setStateEt(false);
-        setStateDia(false);
-        setStatePcd2(false);
-        setStateType(false);
-        setStateColor(false);
+        setFilterAction(!filterState);
+        // setStateBoltCount(false);
+        // setStateBrand(false);
+        // setStateWidth(false);
+        // //setStateHeight(false);
+        // setStateDiameter(false);
+        // setStatePcd(false);
+        // setStateEt(false);
+        // setStateDia(false);
+        // setStatePcd2(false);
+        // setStateType(false);
+        // setStateColor(false);
     }
 
     return (

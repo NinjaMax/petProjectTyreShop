@@ -1,9 +1,11 @@
 import {makeAutoObservable} from 'mobx';
 
 export default class FilterStore {
+    _filterCount: number;
     _width:string | undefined;
     _chipWidth: string[];
     _height:string;
+    _chipHeight: string[];
     _brands: string;
     _chipBrands: string[];
     _models: string;
@@ -52,9 +54,11 @@ export default class FilterStore {
     _diameterSearch: string[]| null;
     _brandSearch: string[]| null;
     constructor() { 
+        this._filterCount = 0;
         this._width = '';
         this._chipWidth = [];
         this._height = '';
+        this._chipHeight = [];
         this._brands = '';
         this._chipBrands = [];
         this._models = '';
@@ -104,7 +108,9 @@ export default class FilterStore {
         this._batteries = [];
         makeAutoObservable(this);
     }
-
+    setFilterCount(filterBtn: number) {
+        this._filterCount = filterBtn;
+    }
     setWidth(width: string) {
         this._width = width;
     }
@@ -113,6 +119,9 @@ export default class FilterStore {
     }
     setHeight(height: string) {
         this._height = height;
+    }
+    setChipHeight(chipHeight: []) {
+        this._chipHeight = chipHeight;
     }
     setBrands(brands: string) {
         this._brands = brands;
@@ -255,6 +264,9 @@ export default class FilterStore {
     setBatteries(batteries: []) {
         this._batteries = batteries;
     }
+    get filterCount() {
+        return this._filterCount;
+    }
     get width() {
         return this._width;
     }
@@ -263,6 +275,9 @@ export default class FilterStore {
     }
     get height() {
         return this._height;
+    }
+    get chipHeight() {
+        return this._chipHeight;
     }
     get brands() {
         return this._brands;

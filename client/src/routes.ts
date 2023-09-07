@@ -3,6 +3,7 @@ import { ADMIN_ROUTE, ADMIN_AUTH_ROUTE, BASKET_ROUTE, CATALOG_TYRES_ROUTE,
   MAIN_ROUTE, CONTACT_ROUTE, SEARCH_ROUTE, NOT_FOUND_ROUTE, 
   COMPARISON_ROUTE, FAVORITES_ROUTE, REVIEW_STORE_ROUTE, 
   CATALOG_WHEELS_ROUTE,
+  NEWS_ROUTE,
 } from './utils/consts';
 import Admin from './pages/Admin';
 import AdminAuth from './components/auth/AdminAuth';
@@ -17,6 +18,7 @@ import NotFound from './pages/NotFound';
 import Compare from './pages/Compare';
 import Favorite from './pages/Favorite';
 import ReviewStorePage from './pages/ReviewStorePage';
+import News from './pages/News';
 
 export const adminRoutes = [
   {
@@ -34,8 +36,32 @@ export const publicRoutes = [
     exact: true,
     Component: Basket
   },
-  {
+    {
     path: CATALOG_TYRES_ROUTE + '/:category',
+    exact: true,
+    Component: CatalogTyresPage
+  },
+  {
+    path: CATALOG_TYRES_ROUTE + 
+    '/:season/:brands',
+    exact: true,
+    Component: CatalogTyresPage
+  },
+  {
+    path: CATALOG_TYRES_ROUTE + 
+    '/:season/:brands/:width',
+    exact: true,
+    Component: CatalogTyresPage
+  },
+  {
+    path: CATALOG_TYRES_ROUTE + 
+    '/:season/:brands/:width/:height',
+    exact: true,
+    Component: CatalogTyresPage
+  },
+  {
+    path: CATALOG_TYRES_ROUTE + 
+    '/:season/:brands/:width/:height/:diameter',
     exact: true,
     Component: CatalogTyresPage
   },
@@ -53,6 +79,11 @@ export const publicRoutes = [
     path: SEARCH_ROUTE,
     exact: true,
     Component: Search
+  },
+  {
+    path: NEWS_ROUTE,
+    exact: true,
+    Component: News
   },
   {
     path: REVIEW_STORE_ROUTE,

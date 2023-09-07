@@ -7,22 +7,24 @@
     font-family: var(--main-font-family);
     font-weight: bold;
     padding-left: 34px;
+    margin: 15px;
 }
 .newsMainBoxList {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     gap: 30px;
 }
 .newsMainBoxListItem {
-    width: ;
+    /* width: ; */
 }
 
 .columnNewsBox {
     /*float: left;*/
     width: 410px;
-    height: 400px;
+    height: 415px;
     padding: 0px;
     text-align:left;
     font-size: 14px;
@@ -39,14 +41,21 @@
 .columnNewsBoxContent {
     display: flex;
     flex-direction: column;
-    padding: 15px;
+    padding: 8px;
 }
 
-.btnNewsMainBox {
-    text-align: center;
+.btnNewsMainContainer {
+    /* display: block; */
+    margin-left: 42%;
+    margin-top: 25px;
+    /* padding: 20px; */
+    
 }
 
 .btmNewsMainBox {
+    padding: 10px;
+    text-decoration: none;
+    color: #FFFF;
     height: 50px;
     margin-top: 10px;
     text-align: center;

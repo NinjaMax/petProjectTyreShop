@@ -12,7 +12,7 @@ interface ITabMain {
 
 const TabMain = ({filterMainState, filterStateAction}: ITabMain) => {
     const [filterOpenClose, setFilterOpenClose] = useState<boolean>(false);
-    const [filterState, setFilterState] = useState<string>('ШИНИ')
+    const [filterState, setFilterState] = useState<string>('ШИНИ');
     const [filterTyreState, setFilterTyreState] = useState<boolean>(false);
     const [filterWheeleState, setFilterTWheelState] = useState<boolean>(false);
     //const [filterBatteryState, setFilterBatteryState] = useState<boolean>(false);

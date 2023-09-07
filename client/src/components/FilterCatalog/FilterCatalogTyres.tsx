@@ -50,30 +50,36 @@ const FilterCatalogTyres = observer((
 
     const handleChange = (e: any) => {
         if (e.target.name === 'Ширина') {
+
+            filter.setWidth(e.target.value);
+            setStateWidth(!stateWidth);
+            setFilterAction(!filterState);
             page.setLoadMore(0);
             page.setOffset(0);
-            filter.setWidth(e.target.value);
-            setStateWidth(false);
         }
         if (e.target.name === 'Профіль') {
+
+            filter.setHeight(e.target.value);
+            setStateHeight(!stateHeight);
+            setFilterAction(!filterState);
             page.setLoadMore(0);
             page.setOffset(0);
-            filter.setHeight(e.target.value);
-            setStateHeight(false);
         }
         if (e.target.name === 'Діаметр') {
+
+            filter.setDiameter(e.target.value);
+            setStateDiameter(!stateDiameter);
+            setFilterAction(!filterState);
             page.setLoadMore(0);
             page.setOffset(0);
-            filter.setDiameter(e.target.value);
-            setStateDiameter(false);
         }
         if (e.target.name === 'Бренд' && e.target.checked) {
-            page.setLoadMore(0);
-            page.setOffset(0);
             filter.setChipBrands(
                 Array.from(
                     new Set([...filter.chipBrands, e.target.value]))
-            );     
+            );
+            page.setLoadMore(0);
+            page.setOffset(0);        
         } else if (e.target.name === 'Бренд') {
             const cancelBrand = filter.chipBrands.findIndex(
                 (item: string) => item === e.target.value);
@@ -92,7 +98,7 @@ const FilterCatalogTyres = observer((
             const cancelSeason = filter.chipSeason.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipSeasonItem(cancelSeason);
-            filter.setChipBrands(Array.from(
+            filter.setChipSeason(Array.from(
                 new Set([...filter.chipSeason])));
         }
         if (e.target.name === 'Тип авто' && e.target.checked) {
@@ -200,16 +206,19 @@ const FilterCatalogTyres = observer((
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setWidth(null);
+            filter.setFilterCount(filter.filterCount - 1);
         }
         if (e.target.getAttribute('data-name') === 'Профіль') {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setHeight(null);
+            filter.setFilterCount(filter.filterCount - 1);
         }
         if (e.target.getAttribute('data-name') === 'Діаметр') {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setDiameter(null);
+            filter.setFilterCount(filter.filterCount - 1);
         }
         if (e.target.getAttribute('data-name') === 'Бренд') {
             page.setLoadMore(0);
@@ -218,6 +227,7 @@ const FilterCatalogTyres = observer((
             filter.setChipBrands(Array.from(
                 new Set([...filter.chipBrands])));
             filter.setBrands(filter.chipBrands.join(','));
+            filter.setFilterCount(filter.filterCount - 1);
         }
         if (e.target.getAttribute('data-name') === 'Сезон') {
             page.setLoadMore(0);
@@ -336,185 +346,189 @@ const FilterCatalogTyres = observer((
     }
 
     const filterWidthClick = () => {
-        setFilterAction(!filterState);
         setStateWidth(!stateWidth);
-        setStateSeason(false);
-        setStateBrand(false);
-        setStateHeight(false);
-        setStateDiameter(false);
-        setStateHomologation(false);
-        setStateLoadIndex(false);
-        setStateSpeedIndex(false);
-        setStateRunFlat(false);
-        setStateReinforced(false);
-        setStateVehicleType(false);
-        setStateStudded(false);
+        setFilterAction(!filterState);
+        
+        // setStateSeason(false);
+        // setStateBrand(false);
+        // setStateHeight(false);
+        // setStateDiameter(false);
+        // setStateHomologation(false);
+        // setStateLoadIndex(false);
+        // setStateSpeedIndex(false);
+        // setStateRunFlat(false);
+        // setStateReinforced(false);
+        // setStateVehicleType(false);
+        // setStateStudded(false);
     }
     const filterHeightClick = () => {
-        setFilterAction(!filterState);
         setStateHeight(!stateHeight);
-        setStateSeason(false);
-        setStateBrand(false);
-        setStateWidth(false);
-        setStateDiameter(false);
-        setStateHomologation(false);
-        setStateLoadIndex(false);
-        setStateSpeedIndex(false);
-        setStateRunFlat(false);
-        setStateReinforced(false);
-        setStateVehicleType(false);
-        setStateStudded(false);
+        setFilterAction(!filterState);
+        
+        // setStateSeason(false);
+        // setStateBrand(false);
+        // setStateWidth(false);
+        // setStateDiameter(false);
+        // setStateHomologation(false);
+        // setStateLoadIndex(false);
+        // setStateSpeedIndex(false);
+        // setStateRunFlat(false);
+        // setStateReinforced(false);
+        // setStateVehicleType(false);
+        // setStateStudded(false);
     }
     const filterDiameterClick = () => {
-        setFilterAction(!filterState);
         setStateDiameter(!stateDiameter);
-        setStateSeason(false);
-        setStateBrand(false);
-        setStateWidth(false);
-        setStateHeight(false);
-        setStateHomologation(false);
-        setStateLoadIndex(false);
-        setStateSpeedIndex(false);
-        setStateRunFlat(false);
-        setStateReinforced(false);
-        setStateVehicleType(false);
-        setStateStudded(false);
+        setFilterAction(!filterState);
+        
+        // setStateSeason(false);
+        // setStateBrand(false);
+        // setStateWidth(false);
+        // setStateHeight(false);
+        // setStateHomologation(false);
+        // setStateLoadIndex(false);
+        // setStateSpeedIndex(false);
+        // setStateRunFlat(false);
+        // setStateReinforced(false);
+        // setStateVehicleType(false);
+        // setStateStudded(false);
     }
     const filterSeasonClick = () => {
-        setFilterAction(!filterState);
         setStateSeason(!stateSeason);
-        setStateBrand(false);
-        setStateWidth(false);
-        setStateHeight(false);
-        setStateDiameter(false);
-        setStateHomologation(false);
-        setStateLoadIndex(false);
-        setStateSpeedIndex(false);
-        setStateRunFlat(false);
-        setStateReinforced(false);
-        setStateVehicleType(false);
+        setFilterAction(!filterState);
+        
+        // setStateBrand(false);
+        // setStateWidth(false);
+        // setStateHeight(false);
+        // setStateDiameter(false);
+        // setStateHomologation(false);
+        // setStateLoadIndex(false);
+        // setStateSpeedIndex(false);
+        // setStateRunFlat(false);
+        // setStateReinforced(false);
+        // setStateVehicleType(false);
         //setStateStudded(false);
     }
     const filterStuddedClick = () => {
         setFilterAction(!filterState);
         setStateStudded(!stateStudded);
         //setStateSeason(false);
-        setStateBrand(false);
-        setStateWidth(false);
-        setStateHeight(false);
-        setStateDiameter(false);
-        setStateHomologation(false);
-        setStateLoadIndex(false);
-        setStateSpeedIndex(false);
-        setStateRunFlat(false);
-        setStateReinforced(false);
-        setStateVehicleType(false);
+        // setStateBrand(false);
+        // setStateWidth(false);
+        // setStateHeight(false);
+        // setStateDiameter(false);
+        // setStateHomologation(false);
+        // setStateLoadIndex(false);
+        // setStateSpeedIndex(false);
+        // setStateRunFlat(false);
+        // setStateReinforced(false);
+        // setStateVehicleType(false);
     }
     const filterBrandClick = () => {
         setFilterAction(!filterState);
         setStateBrand(!stateBrand);
-        setStateSeason(false);
+        // setStateSeason(false);
         
-        setStateWidth(false);
-        setStateHeight(false);
-        setStateDiameter(false);
-        setStateHomologation(false);
-        setStateLoadIndex(false);
-        setStateSpeedIndex(false);
-        setStateRunFlat(false);
-        setStateReinforced(false);
-        setStateVehicleType(false);
-        setStateStudded(false);;
+        // setStateWidth(false);
+        // setStateHeight(false);
+        // setStateDiameter(false);
+        // setStateHomologation(false);
+        // setStateLoadIndex(false);
+        // setStateSpeedIndex(false);
+        // setStateRunFlat(false);
+        // setStateReinforced(false);
+        // setStateVehicleType(false);
+        // setStateStudded(false);
     }
     const filterVehicleTypeClick = () => {
         setFilterAction(!filterState);
         setStateVehicleType(!stateVehicleType);
-        setStateSeason(false);
-        setStateBrand(false);
-        setStateWidth(false);
-        setStateHeight(false);
-        setStateDiameter(false);
-        setStateHomologation(false);
-        setStateLoadIndex(false);
-        setStateSpeedIndex(false);
-        setStateRunFlat(false);
-        setStateReinforced(false);
-        setStateStudded(false);
+        // setStateSeason(false);
+        // setStateBrand(false);
+        // setStateWidth(false);
+        // setStateHeight(false);
+        // setStateDiameter(false);
+        // setStateHomologation(false);
+        // setStateLoadIndex(false);
+        // setStateSpeedIndex(false);
+        // setStateRunFlat(false);
+        // setStateReinforced(false);
+        // setStateStudded(false);
     }
     const filterSpeedIndexClick = () => {
         setFilterAction(!filterState);
         setStateSpeedIndex(!stateSpeedIndex);
-        setStateSeason(false);
-        setStateBrand(false);
-        setStateWidth(false);
-        setStateHeight(false);
-        setStateDiameter(false);
-        setStateHomologation(false);
-        setStateLoadIndex(false);
-        setStateRunFlat(false);
-        setStateReinforced(false);
-        setStateVehicleType(false);
-        setStateStudded(false);
+        // setStateSeason(false);
+        // setStateBrand(false);
+        // setStateWidth(false);
+        // setStateHeight(false);
+        // setStateDiameter(false);
+        // setStateHomologation(false);
+        // setStateLoadIndex(false);
+        // setStateRunFlat(false);
+        // setStateReinforced(false);
+        // setStateVehicleType(false);
+        // setStateStudded(false);
     }
     const filterLoadIndexClick = () => {
         setFilterAction(!filterState);
         setStateLoadIndex(!stateLoadIndex);
-        setStateSeason(false);
-        setStateBrand(false);
-        setStateWidth(false);
-        setStateHeight(false);
-        setStateDiameter(false);
-        setStateHomologation(false);
-        setStateSpeedIndex(false);
-        setStateRunFlat(false);
-        setStateReinforced(false);
-        setStateVehicleType(false);
-        setStateStudded(false);
+        // setStateSeason(false);
+        // setStateBrand(false);
+        // setStateWidth(false);
+        // setStateHeight(false);
+        // setStateDiameter(false);
+        // setStateHomologation(false);
+        // setStateSpeedIndex(false);
+        // setStateRunFlat(false);
+        // setStateReinforced(false);
+        // setStateVehicleType(false);
+        // setStateStudded(false);
     }
     const filterHomologationClick = () => {
         setFilterAction(!filterState);
         setStateHomologation(!stateHomologation);
-        setStateSeason(false);
-        setStateBrand(false);
-        setStateWidth(false);
-        setStateHeight(false);
-        setStateDiameter(false);
-        setStateLoadIndex(false);
-        setStateSpeedIndex(false);
-        setStateRunFlat(false);
-        setStateReinforced(false);
-        setStateVehicleType(false);
-        setStateStudded(false);
+        // setStateSeason(false);
+        // setStateBrand(false);
+        // setStateWidth(false);
+        // setStateHeight(false);
+        // setStateDiameter(false);
+        // setStateLoadIndex(false);
+        // setStateSpeedIndex(false);
+        // setStateRunFlat(false);
+        // setStateReinforced(false);
+        // setStateVehicleType(false);
+        // setStateStudded(false);
     }
     const filterRunFlatClick = () => {
         setFilterAction(!filterState);
         setStateRunFlat(!stateRunFlat);
-        setStateSeason(false);
-        setStateBrand(false);
-        setStateWidth(false);
-        setStateHeight(false);
-        setStateDiameter(false);
-        setStateHomologation(false);
-        setStateLoadIndex(false);
-        setStateSpeedIndex(false);
-        setStateReinforced(false);
-        setStateVehicleType(false);
-        setStateStudded(false);
+        // setStateSeason(false);
+        // setStateBrand(false);
+        // setStateWidth(false);
+        // setStateHeight(false);
+        // setStateDiameter(false);
+        // setStateHomologation(false);
+        // setStateLoadIndex(false);
+        // setStateSpeedIndex(false);
+        // setStateReinforced(false);
+        // setStateVehicleType(false);
+        // setStateStudded(false);
     }
     const filterReinforcedClick = () => {
         setFilterAction(!filterState);
         setStateReinforced(!stateReinforced);
-        setStateSeason(false);
-        setStateBrand(false);
-        setStateWidth(false);
-        setStateHeight(false);
-        setStateDiameter(false);
-        setStateHomologation(false);
-        setStateLoadIndex(false);
-        setStateSpeedIndex(false);
-        setStateRunFlat(false);
-        setStateVehicleType(false);
-        setStateStudded(false);
+        // setStateSeason(false);
+        // setStateBrand(false);
+        // setStateWidth(false);
+        // setStateHeight(false);
+        // setStateDiameter(false);
+        // setStateHomologation(false);
+        // setStateLoadIndex(false);
+        // setStateSpeedIndex(false);
+        // setStateRunFlat(false);
+        // setStateVehicleType(false);
+        // setStateStudded(false);
     }
 
     //console.log('FILTER_STATE: ', filterState);

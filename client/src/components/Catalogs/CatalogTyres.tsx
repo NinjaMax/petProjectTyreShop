@@ -14,7 +14,7 @@ import { ICheckOrderItem } from './types/CheckOrder.type';
 import { addGoodsToBasket, createBasket, getBasketById } from '../../restAPI/restGoodsApi';
 
 const CatalogTyres = observer(() => {
-    const [active, setActive] = useState(false);
+    const [active, setActive] = useState<boolean>(false);
     const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem[] | null>([]);
     const [goodsCat, setGoodsCat] = useState([]);
     const {goodsTyre, page, filter, customer} = useContext<any | null>(Context);

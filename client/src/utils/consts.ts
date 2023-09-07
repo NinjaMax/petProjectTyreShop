@@ -2,6 +2,7 @@ export const ADMIN_ROUTE = '/admin';
 export const ADMIN_AUTH_ROUTE = '/admin/auth';
 export const LOGIN_ROUTE = '/login';
 export const FAVORITES_ROUTE = '/favorites';
+export const NEWS_ROUTE = '/news';
 export const COMPARISON_ROUTE = '/comparison';
 export const REGISTRATION_ROUTE = '/registration';
 export const SEARCH_ROUTE = '/search';

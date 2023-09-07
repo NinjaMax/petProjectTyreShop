@@ -19,6 +19,9 @@ import { WheelPcd } from '../properties/entities/wheels/wheel-pcd.model';
 import { WheelPcd2 } from '../properties/entities/wheels/wheel-pcd2.model';
 import { WheelBoltCountPcd } from '../properties/entities/wheels/wheel-boltCountPcd.model';
 import { WheelModel } from '../properties/entities/wheels/wheel-model.model';
+import { StockWheels } from 'src/stock/entities/stock-wheels.model';
+import { ReviewWheels } from 'src/reviews/entities/review-wheels.model';
+import { RatingWheels } from 'src/ratings/entities/rating-wheels.model';
 
 @Injectable()
 export class WheelsService {
@@ -175,7 +178,10 @@ export class WheelsService {
       if (sort === 'ASC') {
         const wheelsAllWithoutLimitC = await this.wheelRepository.findAll({
           include: [
-            { all: true },
+            { model: RatingWheels },
+            { model: ReviewWheels },
+            { model: StockWheels },
+            // { all: true },
             width
               ? {
                   model: WheelWidth,
@@ -310,7 +316,10 @@ export class WheelsService {
       if (sort === 'DESC') {
         const wheelsAllWithoutLimitE = await this.wheelRepository.findAll({
           include: [
-            { all: true },
+            // { all: true },
+            { model: RatingWheels },
+            { model: ReviewWheels },
+            { model: StockWheels },
             width
               ? {
                   model: WheelWidth,
@@ -445,7 +454,10 @@ export class WheelsService {
       if (sort === 'oldPrice') {
         const wheelsAllWithoutLimitO = await this.wheelRepository.findAll({
           include: [
-            { all: true },
+            // { all: true },
+            { model: RatingWheels },
+            { model: ReviewWheels },
+            { model: StockWheels },
             width
               ? {
                   model: WheelWidth,
@@ -580,7 +592,10 @@ export class WheelsService {
       if (sort === 'title') {
         const wheelsAllWithoutLimitT = await this.wheelRepository.findAll({
           include: [
-            { all: true },
+            // { all: true },
+            { model: RatingWheels },
+            { model: ReviewWheels },
+            { model: StockWheels },
             width
               ? {
                   model: WheelWidth,
@@ -715,7 +730,10 @@ export class WheelsService {
       if (sort === 'rating') {
         const wheelsAllWithoutLimitR = await this.wheelRepository.findAll({
           include: [
-            { all: true },
+            // { all: true },
+            { model: RatingWheels },
+            { model: ReviewWheels },
+            { model: StockWheels },
             width
               ? {
                   model: WheelWidth,

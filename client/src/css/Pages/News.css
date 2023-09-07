@@ -1,0 +1,15 @@
+.newsBox {
+    /* width: 100%; */
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.newsContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    
+}
