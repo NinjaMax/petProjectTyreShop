@@ -10,7 +10,7 @@ import { Context } from '../../../context/Context';
 import { observer } from 'mobx-react-lite';
 import { seasonCar } from '../../../services/tyresPropsService';
 import { createStringUrl } from '../../../services/stringUrl';
-import { generatePath, useHistory } from 'react-router-dom';
+import { Link, Redirect, generatePath, useHistory } from 'react-router-dom';
 import { CATALOG_TYRES_ROUTE, MAIN_ROUTE } from '../../../utils/consts';
 
 interface IFilterMainTyres {
@@ -185,65 +185,66 @@ const FilterMainTyre = observer((
         // setStateDiameter(false);
     }
 
-    const pickUp = () => {
-        const toStringUrlWidth: string | undefined = createStringUrl(
-            filter.width
-        );
-        const toStringUrlHeight: string | undefined = createStringUrl(
-            filter.height
-        );
-        const toStringUrlDiameter: string | undefined = createStringUrl(
-            filter.diameter 
-        );
-        const toStringUrlSeason: string | undefined  = createStringUrl(
-            filter.season 
-        );
-        const toStringUrBrand: string | undefined  = createStringUrl( 
-            filter.brands
-        );
+    const pickUp = () =>
+    {
+        // const toStringUrlWidth: string | undefined = createStringUrl(
+        //     filter.width
+        // );
+        // const toStringUrlHeight: string | undefined = createStringUrl(
+        //     filter.height
+        // );
+        // const toStringUrlDiameter: string | undefined = createStringUrl(
+        //     filter.diameter 
+        // );
+        // const toStringUrlSeason: string | undefined  = createStringUrl(
+        //     filter.season 
+        // );
+        // const toStringUrBrand: string | undefined  = createStringUrl( 
+        //     filter.brands
+        // );
         localStorage.setItem('filterUrl', JSON.stringify(
-            [
+            [   
+                filter.season,
+                filter.brands,
                 filter.width, 
                 filter.height,
                 filter.diameter,
-                filter.season,
-                filter.brands
+                
+                
             ]
         ));
-        const tyresObj: string = 'tyres';
-            //if (filter.season) {
-            history.push(
-                `${CATALOG_TYRES_ROUTE}` + 
-                toStringUrlSeason.length ? `/${toStringUrlSeason}` 
-                : toStringUrBrand.length > 0 ? `/${toStringUrBrand}` 
-                : toStringUrlWidth.length ? `/${toStringUrlWidth}` 
-                : toStringUrlHeight.length ? `/${toStringUrlHeight}`
-                : toStringUrlDiameter.length ? `/${toStringUrlDiameter}` : '/'
-            );
-            //}
-            // if (filter.brands) {
-            //     history.push(
-            //         CATALOG_TYRES_ROUTE + `/${toStringUrlSeason}/${toStringUrBrand}/${toStringUrlWidth}/${toStringUrlHeight}/${toStringUrlDiameter}`
-            //     );
-            // }
-            // history.push(
-            //     generatePath(CATALOG_TYRES_ROUTE + '/:season?/:brands/:width/:height/:diameter', 
-            //     {
-            //         season: toStringUrlSeason,
-            //         brands: toStringUrBrand,
-            //         width: toStringUrlWidth,
-            //         height: toStringUrlHeight,
-            //         diameter: toStringUrlDiameter
-            //     })
-            // );
-            // generatePath("/user/:season/:brands", {
-            //     season: filter.season,
-            //     brands: filter.brands
-            // })    
-        console.log('ПІДІБРАТИ: ', toStringUrlWidth);
-        //console.log('FILTER_SEASON: ', filter.chipSeason[0]);
-        console.log('FILTER_SEASON: ', toStringUrlSeason.length);
-        console.log('FILTER_BRANDS: ', filter.brands);
+        
+        //const tyreCatalogPath: string | undefined = 
+        //`${CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/${toStringUrlSeason}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${toStringUrBrand}` : ''}${filter.width ? `/w${toStringUrlWidth}` : ''}${filter.height ? `/h${toStringUrlHeight}` : ''}${filter.diameter ? `/d${toStringUrlDiameter}` : ''}`;
+        // const tyreCatalogPath: string | undefined = 
+        // `${CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/:season` : '' }${filter.brands && !filter.brands.includes(',') ? `/:brands` : ''}${filter.width ? `/:width` : ''}${filter.height ? `/:height` : ''}${filter.diameter ? `/:diameter` : ''}`;
+        
+        // const paramsTyre =
+        // {
+        //     season: toStringUrlSeason,
+        //     brands: toStringUrBrand,
+        //     width: 'w' + toStringUrlWidth,
+        //     height: 'h' + toStringUrlHeight,
+        //     diameter: 'r' + toStringUrlDiameter
+        // };
+
+        // history.push(
+        //     //tyreCatalogPath
+        //    generatePath(tyreCatalogPath, paramsTyre)
+        // );
+
+        // console.log('ПІДІБРАТИ: ', toStringUrlWidth);
+        // //console.log('TYRE_CATALOG_PATH: ', tyreCatalogPath);
+        // console.log('FILTER_SEASON_LENGTH: ', toStringUrlSeason.length);
+        // console.log('FILTER_SEASON: ', filter.season.includes(','));
+        // console.log('FILTER_BRANDS: ', filter.brands);
+        // console.log('FILTER_WIDTH: ', filter.width);
+        // console.log('FILTER_HEIGHT: ', filter.height);
+        // console.log('FILTER_DIAMETER: ', filter.diameter);
+
+
+        document.location.assign('/tyres');
+        
     };
     // const handleChange = (e: any) => {
         

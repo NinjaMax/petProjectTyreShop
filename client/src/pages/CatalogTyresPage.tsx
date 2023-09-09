@@ -35,21 +35,31 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
         getTyresCountAll,
         //getWheelsWithoutOffset,
       ];
-      const tyreCatType = tyreVehicleTypeCat(params.category);
-      console.log('CAT_TYPE: ', tyreCatType);
-      const tyreCatSeason = tyreSeasonCat(params.category);
-      console.log('CAT_SEASON: ', tyreCatSeason);
-      const tyreCatDiameter = tyreDiameterCat(params.category);
-      console.log('CAT_DIAM: ', tyreCatDiameter);
-      if (tyreCatType) {
-        filter.setVehicleType(tyreCatType);
-      }
-      if (tyreCatSeason) {
-        filter.setSeason(tyreCatSeason);
-      }
-      if (tyreCatDiameter) {
-        filter.setDiameter(tyreCatDiameter);
-      }
+      // // const tyreCatType = tyreVehicleTypeCat(params.category);
+      // // console.log('CAT_VEHICLE_TYPE: ', tyreCatType);
+      // // const tyreCatSeason = tyreSeasonCat(params.season);
+      // // console.log('CAT_SEASON: ', tyreCatSeason);
+      // // const tyreCatDiameter = tyreDiameterCat(params.diameter);
+      // // console.log('CAT_DIAM: ', tyreCatDiameter);
+      // // if (tyreCatType) {
+      // //   filter.setVehicleType(tyreCatType);
+      // // }
+      // // if (tyreCatSeason) {
+      // //   filter.setSeason(tyreCatSeason);
+      // // }
+      // // if (tyreCatDiameter) {
+      // //   filter.setDiameter(tyreCatDiameter);
+      // // }
+      // if (params.season?.includes('w')) {
+      //   const findWidth = goodsTyre._width?.find((width:string) => width === params.season?.includes('w-'));
+      //   if (findWidth) {
+      //     filter.setWidth(findWidth);
+      //   }
+      //   console.log('_WIDTH: ', goodsTyre._width);
+      //   console.log('SET_FILTER_WIDTH: ', findWidth);
+      //   console.log('GET_FILTER_WIDTH: ', params.season?.slice(1, params.season?.length));
+      // }
+
       let i:number = 0;
       while(taskLoad.length > i) {
         if(!isMounted && taskLoad[i] === getTyresWithoutOffset) {
@@ -265,6 +275,24 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
               Array.from(new Set(setReinforcedFilter))
             )
           }
+          // const tyreCatType = tyreVehicleTypeCat(params.category);
+          // console.log('CAT_VEHICLE_TYPE: ', tyreCatType);
+          // const tyreCatSeason = tyreSeasonCat(params.season);
+          // console.log('CAT_SEASON: ', tyreCatSeason);
+          // const tyreCatDiameter = tyreDiameterCat(params.diameter);
+          // console.log('CAT_DIAM: ', tyreCatDiameter);
+          // if (tyreCatType) {
+          //   filter.setVehicleType(tyreCatType);
+          // }
+          // if (tyreCatSeason) {
+          //   filter.setSeason(tyreCatSeason);
+          // }
+          // if (tyreCatDiameter) {
+          //   filter.setDiameter(tyreCatDiameter);
+          // }
+
+
+          
         }
         if(!isMounted && taskLoad[i] === getTyresCountAll) {
           let tyreTotalCount: any = await taskLoad[i](
@@ -284,6 +312,145 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
           );
           goodsTyre?.setTotalCount(tyreTotalCount);
           //console.log('SET_TYRES_TOTALCOUNT: ', tyreTotalCount);
+        }
+
+        if (params.season) {
+          const tyreCatSeason = tyreSeasonCat(params.season);
+          // const findSeason = goodsTyre._season?.find((season:string) => season === params.season);
+          // if (findSeason) {
+          //   filter.setSeason(findSeason);
+          // }
+          if (tyreCatSeason) {
+            filter.setSeason(tyreCatSeason);
+          }
+        }
+        if (params.season) {
+          const tyreCatType = tyreVehicleTypeCat(params.typeVehicle);
+          // const findSeason = goodsTyre._vehicle_type?.find((vehicleType:string) => vehicleType === params.season);
+          // if (findSeason) {
+          //   filter.setVehicleType(findSeason);
+          // }
+          if (tyreCatType) {
+            filter.setVehicleType(tyreCatType);
+          }
+        }
+        if (params.typeVehicle) {
+          const tyreCatType = tyreVehicleTypeCat(params.typeVehicle);
+          // const findVehicleInType = goodsTyre._vehicle_type?.find((vehicleType:string) => vehicleType.toLocaleLowerCase() === params.typeVehicle);
+          // if (findVehicleInType) {
+          //   filter.setVehicleType(findVehicleInType);
+          // }
+          if (tyreCatType) {
+            filter.setVehicleType(tyreCatType);
+          }
+        }
+        if (params.season) {
+          const findBrands = goodsTyre._brands?.find((brands:string) => brands.toLocaleLowerCase() === params.season);
+          if (findBrands) {
+            filter.setBrands(findBrands);
+          }
+        }
+        if (params.typeVehicle) {
+          const findBrandsInType = goodsTyre._brands?.find((brands:string) => brands.toLocaleLowerCase() === params.typeVehicle);
+          if (findBrandsInType) {
+            filter.setBrands(findBrandsInType);
+          }
+        }
+        if (params.brands) {
+          const findBrand = goodsTyre._brands?.find((brands:string) => brands.toLocaleLowerCase() === params.brands);
+          if (findBrand) {
+            filter.setBrands(findBrand);
+          }
+        }
+        if (params.season?.includes('w')) {
+          const findWidth = goodsTyre._width?.find((width:string) => width === params.season?.slice(1, params.season?.length));
+          if (findWidth) {
+            filter.setWidth(findWidth);
+          }
+        }
+        if (params.typeVehicle?.includes('w')) {
+          const findWidthInType = goodsTyre._width?.find((width:string) => width === params.typeVehicle?.slice(1, params.typeVehicle?.length));
+          if (findWidthInType) {
+            filter.setWidth(findWidthInType);
+          }
+        }
+        if (params.brands?.includes('w')) {
+          const findWidthInBrand = goodsTyre._width?.find((width:string) => width === params.brands?.slice(1, params.brands?.length));
+          if (findWidthInBrand) {
+            filter.setWidth(findWidthInBrand);
+          }
+        }
+        if (params.width?.includes('w')) {
+          const findWidth = goodsTyre._width?.find((width:string) => width === params.width?.slice(1, params.width?.length));
+          if (findWidth) {
+            filter.setWidth(findWidth);
+          }
+        }
+        if (params.season?.includes('h')) {
+          const findHeight = goodsTyre._height?.find((height:string) => height === params.season?.slice(1, params.season?.length));
+          if (findHeight) {
+            filter.setHeight(findHeight);
+          }
+        }
+        if (params.typeVehicle?.includes('h')) {
+          const findHeightInType = goodsTyre._height?.find((height:string) => height === params.typeVehicle?.slice(1, params.typeVehicle?.length));
+          if (findHeightInType) {
+            filter.setHeight(findHeightInType);
+          }
+        }
+        if (params.brands?.includes('h')) {
+          const findHeightInBrand = goodsTyre._height?.find((height:string) => height === params.brands?.slice(1, params.brands?.length));
+          if (findHeightInBrand) {
+            filter.setHeight(findHeightInBrand);
+          }
+        }
+        if (params.width?.includes('h')) {
+          const findHeightInBrand = goodsTyre._height?.find((height:string) => height === params.width?.slice(1, params.width?.length));
+          if (findHeightInBrand) {
+            filter.setHeight(findHeightInBrand);
+          }
+        }
+        if (params.height?.includes('h')) {
+          const findHeight = goodsTyre._height?.find((height:string) => height === params.height?.slice(1, params.height?.length));
+          if (findHeight) {
+            filter.setHeight(findHeight);
+          }
+        }
+        if (params.season?.includes('r')) {
+          const findDiameter = goodsTyre._diameter?.find((diameter:string) => diameter === params.season?.slice(1, params.season?.length));
+          if (findDiameter) {
+            filter.setDiameter(findDiameter);
+          }
+        }
+        if (params.typeVehicle?.includes('r')) {
+          const findDiameterInType = goodsTyre._diameter?.find((diameter:string) => diameter === params.typeVehicle?.slice(1, params.typeVehicle?.length));
+          if (findDiameterInType) {
+            filter.setDiameter(findDiameterInType);
+          }
+        }
+        if (params.brands?.includes('r')) {
+          const findDiameterInBrand = goodsTyre._diameter?.find((diameter:string) => diameter === params.brands?.slice(1, params.brands?.length));
+          if (findDiameterInBrand) {
+            filter.setDiameter(findDiameterInBrand);
+          }
+        }
+        if (params.width?.includes('r')) {
+          const findDiameterInBrand = goodsTyre._diameter?.find((diameter:string) => diameter === params.width?.slice(1, params.width?.length));
+          if (findDiameterInBrand) {
+            filter.setDiameter(findDiameterInBrand);
+          }
+        }
+        if (params.height?.includes('r')) {
+          const findDiameterInBrand = goodsTyre._diameter?.find((diameter:string) => diameter === params.height?.slice(1, params.height?.length));
+          if (findDiameterInBrand) {
+            filter.setDiameter(findDiameterInBrand);
+          }
+        }
+        if (params.diameter?.includes('r')) {
+          const findDiameter = goodsTyre._diameter?.find((diameter:string) => diameter === params.diameter?.slice(1, params.height?.length));
+          if (findDiameter) {
+            filter.setDiameter(findDiameter);
+          }
         }
         // if(!isMounted && taskLoad[i] === getWheelsWithoutOffset) {
         //   let wheelFilterGoods: any = await taskLoad[i](
@@ -1002,7 +1169,10 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
   //   season: filter.season || false,
   //   brands: filter.brands || false
   // })  
-  //console.log('FILTER_COUNT: ', filter.filterCount);
+  //generatePath();
+  const filterURLGet = localStorage.getItem('filterUrl');
+  
+  console.log('FILTER_URL_GET: ', filterURLGet);
   console.log('PARAMS: ', params);
   console.log('PARAMS_WIDTH: ', params.width);
   console.log('PARAMS_HEIGHT: ', params.height);

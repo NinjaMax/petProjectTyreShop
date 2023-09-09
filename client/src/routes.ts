@@ -36,35 +36,120 @@ export const publicRoutes = [
     exact: true,
     Component: Basket
   },
-    {
-    path: CATALOG_TYRES_ROUTE + '/:category',
-    exact: true,
-    Component: CatalogTyresPage
-  },
   {
     path: CATALOG_TYRES_ROUTE + 
-    '/:season/:brands',
+    '/:season?/:typeVehicle?/:brands?/:width?/:height?/:diameter?',
     exact: true,
     Component: CatalogTyresPage
   },
-  {
-    path: CATALOG_TYRES_ROUTE + 
-    '/:season/:brands/:width',
-    exact: true,
-    Component: CatalogTyresPage
-  },
-  {
-    path: CATALOG_TYRES_ROUTE + 
-    '/:season/:brands/:width/:height',
-    exact: true,
-    Component: CatalogTyresPage
-  },
-  {
-    path: CATALOG_TYRES_ROUTE + 
-    '/:season/:brands/:width/:height/:diameter',
-    exact: true,
-    Component: CatalogTyresPage
-  },
+  // {
+  //   path: CATALOG_TYRES_ROUTE + 
+  //   '/:brands/:width/:height/:diameter',
+  //   exact: true,
+  //   Component: CatalogTyresPage
+  // },
+  // {
+  //   path: CATALOG_TYRES_ROUTE + 
+  //   '/:season/:brands/:width/:height',
+  //   exact: true,
+  //   Component: CatalogTyresPage
+  // },
+  // {
+  //   path: CATALOG_TYRES_ROUTE + 
+  //   '/:width/:height/:diameter',
+  //   exact: true,
+  //   Component: CatalogTyresPage
+  // },
+  // {
+  //   path: CATALOG_TYRES_ROUTE + 
+  //   '/:width/:diameter',
+  //   exact: true,
+  //   Component: CatalogTyresPage
+  // },
+  // {
+  //   path: CATALOG_TYRES_ROUTE + 
+  //   '/:diameter?',
+  //   exact: true,
+  //   Component: CatalogTyresPage
+  // },
+  // {
+  //   path: CATALOG_TYRES_ROUTE + 
+  //   '/:brands/:width/:height',
+  //   exact: true,
+  //   Component: CatalogTyresPage
+  // },
+  // {
+  //   path: CATALOG_TYRES_ROUTE + 
+  //   '/:season/:brands/:diameter',
+  //   exact: true,
+  //   Component: CatalogTyresPage
+  // },
+  // {
+  //   path: CATALOG_TYRES_ROUTE + 
+  //   '/:season/:brands/:height',
+  //   exact: true,
+  //   Component: CatalogTyresPage
+  // },
+  // {
+  //   path: CATALOG_TYRES_ROUTE + 
+  //   '/:season/:brands/:width',
+  //   exact: true,
+  //   Component: CatalogTyresPage
+  // },
+  // {
+  //   path: CATALOG_TYRES_ROUTE + 
+  //   '/:season/:brands',
+  //   exact: true,
+  //   Component: CatalogTyresPage
+  // },
+  // {
+  //   path: CATALOG_TYRES_ROUTE + 
+  //   '/:season/:diameter',
+  //   exact: true,
+  //   Component: CatalogTyresPage
+  // },
+  // {
+  //   path: CATALOG_TYRES_ROUTE + 
+  //   '/:brands/:diameter',
+  //   exact: true,
+  //   Component: CatalogTyresPage
+  // },
+  // {
+  //   path: CATALOG_TYRES_ROUTE + 
+  //   '/:brands/:width',
+  //   exact: true,
+  //   Component: CatalogTyresPage
+  // },
+
+  // {
+  //   path: CATALOG_TYRES_ROUTE + 
+  //   '/:width',
+  //   exact: true,
+  //   Component: CatalogTyresPage
+  // },
+  // {
+  //   path: CATALOG_TYRES_ROUTE + 
+  //   '/:height',
+  //   exact: true,
+  //   Component: CatalogTyresPage
+  // },
+  // {
+  //   path: CATALOG_TYRES_ROUTE + 
+  //   '/:season?',
+  //   exact: true,
+  //   Component: CatalogTyresPage
+  // },
+  // {
+  //   path: CATALOG_TYRES_ROUTE + 
+  //   '/:brands',
+  //   exact: true,
+  //   Component: CatalogTyresPage
+  // },
+  // {
+  //   path: CATALOG_TYRES_ROUTE + '/:category?',
+  //   exact: true,
+  //   Component: CatalogTyresPage
+  // },
   {
     path: CATALOG_TYRES_ROUTE,
     exact: true,
