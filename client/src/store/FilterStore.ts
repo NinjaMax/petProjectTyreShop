@@ -12,6 +12,7 @@ export default class FilterStore {
     _price:string;
     _chipPrice:string[];
     _diameter: string;
+    _chipDiameter: string[];
     _season: string;
     _chipSeason: string[];
     _vehicle_type: string;
@@ -65,6 +66,7 @@ export default class FilterStore {
         this._price = '';
         this._chipPrice = ['0','0'];
         this._diameter = '';
+        this._chipDiameter = [];
         this._season = '';
         this._chipSeason =[];
         this._vehicle_type = '';
@@ -140,6 +142,9 @@ export default class FilterStore {
     }
     setDiameter(diameter: string) {
         this._diameter = diameter;
+    }
+    setChipDiameter(diameter: []) {
+        this._chipDiameter = diameter;
     }
     setSeason(season: string) {
         this._season = season;
@@ -288,6 +293,9 @@ export default class FilterStore {
     get diameter() {
         return this._diameter;
     }
+    get chipDiameter() {
+        return this._chipDiameter;
+    }
     get models() {
         return this._models;
     }
@@ -421,7 +429,15 @@ export default class FilterStore {
         return this._batteries;
     }
     
-
+    removeChipWidthItem() {
+        this._chipWidth.splice(0, 1);
+    }
+    removeChipHeightItem() {
+        this._chipHeight.splice(0, 1);
+    }
+    removeChipDiameterItem() {
+        this._chipDiameter.splice(0, 1);
+    }
     removeChipBrandsItem(indexNumber: number) {
         this._chipBrands.splice(indexNumber, 1);
     }

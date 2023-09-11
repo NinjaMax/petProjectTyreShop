@@ -6,9 +6,17 @@ const tyreVehicleTypeCat = (type: string | undefined) => {
     switch (type) {
         case 'legkovi':
             return TyreCatVehicles.LEGRKOVOI_CAT_TYPE;
+        case 'legkovii':
+            return TyreCatVehicles.LEGRKOVOI_CAT_TYPE;
         case 'vnedorognik':
             return TyreCatVehicles.VNEDOROGNIK_CAT_TYPE;
+        case 'pozashlyakhovik':
+            return TyreCatVehicles.VNEDOROGNIK_CAT_TYPE;   
+        case 'pozakhlyakhovik':
+                return TyreCatVehicles.VNEDOROGNIK_CAT_TYPE;
         case 'microavtobus':
+            return TyreCatVehicles.LEGKOGRUZ_CAT_TYPE;
+        case 'legkovantazhnii':
             return TyreCatVehicles.LEGKOGRUZ_CAT_TYPE;
         case 'selhoz':
             return TyreCatVehicles.SELHOZ_CAT_TYPE;
@@ -25,11 +33,16 @@ const tyreSeasonCat = (season_cat: string | undefined) => {
     switch (season_cat) {
         case 'litni':
             return TyreCatSeasons.SUMMER_CAT;
+        case 'litnii':
+                return TyreCatSeasons.SUMMER_CAT;
         case 'zimni':
             return TyreCatSeasons.WINTER_CAT;
         case 'vsesezon':
             return TyreCatSeasons.ALLSEASON_CAT;
-
+        case 'vsesezonna':
+                return TyreCatSeasons.ALLSEASON_CAT;
+        case 'zimova':
+                return TyreCatSeasons.WINTER_CAT;
     }
 }
 

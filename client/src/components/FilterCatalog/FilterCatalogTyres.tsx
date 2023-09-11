@@ -50,24 +50,33 @@ const FilterCatalogTyres = observer((
 
     const handleChange = (e: any) => {
         if (e.target.name === 'Ширина') {
-
             filter.setWidth(e.target.value);
+            filter.setChipWidth(
+                Array.from(
+                    new Set([...filter.chipWidth, e.target.value]))
+            );
             setStateWidth(!stateWidth);
             setFilterAction(!filterState);
             page.setLoadMore(0);
             page.setOffset(0);
         }
         if (e.target.name === 'Профіль') {
-
             filter.setHeight(e.target.value);
+            filter.setChipHeight(
+                Array.from(
+                    new Set([...filter.chipHeight, e.target.value]))
+            );
             setStateHeight(!stateHeight);
             setFilterAction(!filterState);
             page.setLoadMore(0);
             page.setOffset(0);
         }
         if (e.target.name === 'Діаметр') {
-
             filter.setDiameter(e.target.value);
+            filter.setChipDiameter(
+                Array.from(
+                    new Set([...filter.chipDiameter, e.target.value]))
+            );
             setStateDiameter(!stateDiameter);
             setFilterAction(!filterState);
             page.setLoadMore(0);
@@ -206,19 +215,19 @@ const FilterCatalogTyres = observer((
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setWidth(null);
-            filter.setFilterCount(filter.filterCount - 1);
+            filter.removeChipWidthItem();
         }
         if (e.target.getAttribute('data-name') === 'Профіль') {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setHeight(null);
-            filter.setFilterCount(filter.filterCount - 1);
+            filter.removeChipHeightItem();
         }
         if (e.target.getAttribute('data-name') === 'Діаметр') {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setDiameter(null);
-            filter.setFilterCount(filter.filterCount - 1);
+            filter.removeChipDiameterItem();
         }
         if (e.target.getAttribute('data-name') === 'Бренд') {
             page.setLoadMore(0);
@@ -227,7 +236,6 @@ const FilterCatalogTyres = observer((
             filter.setChipBrands(Array.from(
                 new Set([...filter.chipBrands])));
             filter.setBrands(filter.chipBrands.join(','));
-            filter.setFilterCount(filter.filterCount - 1);
         }
         if (e.target.getAttribute('data-name') === 'Сезон') {
             page.setLoadMore(0);
