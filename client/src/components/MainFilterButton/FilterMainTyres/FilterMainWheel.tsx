@@ -10,6 +10,7 @@ import { Context } from '../../../context/Context';
 import { observer } from 'mobx-react-lite';
 import { seasonCar, typeCar } from '../../../services/tyresPropsService';
 import FilterMainBtnWheel from '../FIlterMainBtnWheel';
+import { useParams } from 'react-router-dom';
 
 interface IFilterMainWheels {
     handleChange?(args0: any): void;
@@ -22,6 +23,7 @@ const FilterMainWheel = observer((
 
     //const [handleItem, setHandleItem] = useState();
     const {filter, goodsWheel, page} = useContext<any | null>(Context);
+    const params = useParams<any>();
     const [stateWidth, setStateWidth]=useState(false);
     const [stateDiameter, setStateDiameter]=useState(false);
     const [stateBoltCount, setStateBoltCount]=useState(false);

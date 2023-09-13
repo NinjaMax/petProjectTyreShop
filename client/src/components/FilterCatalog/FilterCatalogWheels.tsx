@@ -8,12 +8,13 @@ import { Context } from '../../context/Context';
 import { observer } from 'mobx-react-lite';
 import { seasonCar, typeCar } from '../../services/tyresPropsService';
 import FilterMainBtnWheel from '../mainFilterButton/FIlterMainBtnWheel';
+import { useParams } from 'react-router-dom';
 
 interface IFilterCatTyres {
     handleChange?(args0: any): void;
     setFilterAction(args0: any): void;
     filterState: boolean;
-}
+}   
 
 const FilterCatalogWheels = observer((
     {filterState, setFilterAction}: IFilterCatTyres) => {
@@ -29,6 +30,7 @@ const FilterCatalogWheels = observer((
     const [statePcd, setStatePcd]=useState(false);
     const [statePcd2, setStatePcd2]=useState(false);
     const [stateBoltCountPcd, setStateBoltCountPcd]=useState(false);
+    const params = useParams<any>();
     
     useEffect(() => {
         if(!filterState) {
@@ -333,17 +335,6 @@ const FilterCatalogWheels = observer((
     const filterWidthClick = () => {
         setStateWidth(!stateWidth);
         setFilterAction(!filterState);
-        // setStateBoltCount(false);
-        // setStateBrand(false);
-        // //setStateHeight(false);
-        // setStateDiameter(false);
-        // setStatePcd(false);
-        // setStateEt(false);
-        // setStateDia(false);
-        // setStatePcd2(false);
-        // setStateBoltCountPcd(false);
-        // setStateType(false);
-        // setStateColor(false);
     }
     // const filterHeightClick = () => {
     //     //setStateHeight(!stateHeight);
@@ -362,154 +353,43 @@ const FilterCatalogWheels = observer((
     const filterDiameterClick = () => {
         setStateDiameter(!stateDiameter);
         setFilterAction(!filterState);
-        // setStateBoltCount(false);
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // //setStateHeight(false);
-        // setStatePcd(false);
-        // setStateEt(false);
-        // setStateDia(false);
-        // setStatePcd2(false);
-        // setStateBoltCountPcd(false);
-        // setStateType(false);
-        // setStateColor(false);
     }
     const filterColorClick = () => {
         setStateColor(!stateColor);
         setFilterAction(!filterState);
-        
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // //setStateHeight(false);
-        // setStateDiameter(false);
-        // setStatePcd(false);
-        // setStateEt(false);
-        // setStateDia(false);
-        // setStatePcd2(false);
-        // setStateBoltCountPcd(false);
-        // setStateType(false);
-        //setStateColor(false);
     }
     const filterBoltCountClick = () => {
         setStateBoltCount(!stateBoltCount);
         setFilterAction(!filterState);
-        //setStateBoltCount(false);
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // //setStateHeight(false);
-        // setStateDiameter(false);
-        // setStatePcd(false);
-        // setStateEt(false);
-        // setStateDia(false);
-        // setStatePcd2(false);
-        // setStateBoltCountPcd(false);
-        // setStateType(false);
     }
     const filterBrandClick = () => {
         ;
         setStateBrand(!stateBrand);
         setFilterAction(!filterState);
-        // setStateBoltCount(false)
-        // setStateWidth(false);
-        // //setStateHeight(false);
-        // setStateDiameter(false);
-        // setStatePcd(false);
-        // setStateEt(false);
-        // setStateDia(false);
-        // setStatePcd2(false);
-        // setStateBoltCountPcd(false);
-        // setStateType(false);
-        // setStateColor(false);
     }
     const filterTypeClick = () => {
         setStateType(!stateType);
         setFilterAction(!filterState);
-        // setStateBoltCount(false);
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // //setStateHeight(false);
-        // setStateDiameter(false);
-        // setStatePcd(false);
-        // setStateEt(false);
-        // setStateDia(false);
-        // setStatePcd2(false);
-        // setStateBoltCountPcd(false);
-        // setStateColor(false);
     }
     const filterDiaClick = () => {
         setStateDia(!stateDia);
         setFilterAction(!filterState);
-        // setStateBoltCount(false);
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // //setStateHeight(false);
-        // setStateDiameter(false);
-        // setStatePcd(false);
-        // setStateEt(false);
-        // setStatePcd2(false);
-        // setStateBoltCountPcd(false);
-        // setStateType(false);
-        // setStateColor(false);
     }
     const filterEtClick = () => {
         setStateEt(!stateEt);
         setFilterAction(!filterState);
-        // setStateBoltCount(false);
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // //setStateHeight(false);
-        // setStateDiameter(false);
-        // setStatePcd(false);
-        // setStateDia(false);
-        // setStatePcd2(false);
-        // setStateBoltCountPcd(false);
-        // setStateType(false);
-        // setStateColor(false);
     }
     const filterPcdClick = () => {
         setStatePcd(!statePcd);
         setFilterAction(!filterState);
-        // setStateBoltCount(false);
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // //setStateHeight(false);
-        // setStateDiameter(false);
-        // setStateEt(false);
-        // setStateDia(false);
-        // setStatePcd2(false);
-        // setStateBoltCountPcd(false);
-        // setStateType(false);
-        // setStateColor(false);
     }
     const filterPcd2Click = () => {
         setStatePcd2(!statePcd2);
         setFilterAction(!filterState);
-        // setStateBoltCount(false);
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // //setStateHeight(false);
-        // setStateDiameter(false);
-        // setStatePcd(false);
-        // setStateEt(false);
-        // setStateDia(false);
-        // setStateBoltCountPcd(false);
-        // setStateType(false);
-        // setStateColor(false);
     }
     const filterBoltCountPcdClick = () => {
         setStateBoltCountPcd(!stateBoltCountPcd);
         setFilterAction(!filterState);
-        // setStateBoltCount(false);
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // //setStateHeight(false);
-        // setStateDiameter(false);
-        // setStatePcd(false);
-        // setStateEt(false);
-        // setStateDia(false);
-        // setStatePcd2(false);
-        // setStateType(false);
-        // setStateColor(false);
     }
 
     return (

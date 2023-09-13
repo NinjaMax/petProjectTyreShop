@@ -8,6 +8,9 @@ import PriceRange from './PriceRange';
 import { Context } from '../../context/Context';
 import { observer } from 'mobx-react-lite';
 import { seasonCar, typeCar } from '../../services/tyresPropsService';
+import { useHistory, useParams } from 'react-router-dom';
+import { tyreSeasonCat, tyreVehicleTypeCat } from '../../services/tyresCatService';
+import { createStringUrl } from '../../services/stringUrl';
 
 interface IFilterCatTyres {
     handleChange?(args0: any): void;
@@ -30,6 +33,9 @@ const FilterCatalogTyres = observer((
     const [stateHomologation, setStateHomologation]=useState(false);
     const [stateRunFlat, setStateRunFlat]=useState(false);
     const [stateReinforced, setStateReinforced]=useState(false);
+
+    const params = useParams<any>();
+    const history = useHistory();
 
     useEffect(() => {
         if(!filterState) {
@@ -214,24 +220,92 @@ const FilterCatalogTyres = observer((
         if (e.target.getAttribute('data-name') === 'Ширина') {
             page.setLoadMore(0);
             page.setOffset(0);
+            if (params.season?.slice(1, params.season?.length) === filter.width) {
+                params.season = undefined;
+            }
+            if (params.studded?.slice(1, params.studded?.length) === filter.width) {
+                params.studded = undefined;
+            }
+            if (params.type?.slice(1, params.type?.length) === filter.width) {
+                params.type = undefined;
+            }
+            if (params.brands?.slice(1, params.brands?.length) === filter.width) {
+                params.brands = undefined;
+            }
+            if (params.width?.slice(1, params.width?.length) === filter.width) {
+                params.width = undefined;   
+            }
             filter.setWidth(null);
             filter.removeChipWidthItem();
         }
         if (e.target.getAttribute('data-name') === 'Профіль') {
             page.setLoadMore(0);
             page.setOffset(0);
+            if (params.season?.slice(1, params.season?.length) === filter.height) {
+                params.season = undefined;
+            }
+            if (params.studded?.slice(1, params.studded?.length) === filter.height) {
+                params.studded = undefined;
+            }
+            if (params.type?.slice(1, params.type?.length) === filter.height) {
+                params.type = undefined;
+            }
+            if (params.brands?.slice(1, params.brands?.length) === filter.height) {
+                params.brands = undefined;
+            }
+            if (params.width?.slice(1, params.width?.length) === filter.height) {
+                params.width = undefined;   
+            }
+            if (params.height?.slice(1, params.height?.length) === filter.height) {
+                params.height = undefined;   
+            }
             filter.setHeight(null);
             filter.removeChipHeightItem();
+            params.height = undefined;
         }
         if (e.target.getAttribute('data-name') === 'Діаметр') {
             page.setLoadMore(0);
             page.setOffset(0);
+            if (params.season?.slice(1, params.season?.length) === filter.diameter) {
+                params.season = undefined;
+            }
+            if (params.studded?.slice(1, params.studded?.length) === filter.diameter) {
+                params.studded = undefined;
+            }
+            if (params.type?.slice(1, params.type?.length) === filter.diameter) {
+                params.type = undefined;
+            }
+            if (params.brands?.slice(1, params.brands?.length) === filter.diameter) {
+                params.brands = undefined;
+            }
+            if (params.width?.slice(1, params.width?.length) === filter.diameter) {
+                params.width = undefined;   
+            }
+            if (params.height?.slice(1, params.height?.length) === filter.diameter) {
+                params.height = undefined;   
+            }
+            if (params.diameter?.slice(1, params.diameter?.length) === filter.diameter) {
+                params.diameter = undefined;   
+            }
             filter.setDiameter(null);
             filter.removeChipDiameterItem();
+            params.diameter = undefined;
         }
         if (e.target.getAttribute('data-name') === 'Бренд') {
             page.setLoadMore(0);
             page.setOffset(0);
+            if (params.season === createStringUrl(filter.brands)) {
+                params.season = undefined;
+            }
+            if (params.studded === createStringUrl(filter.brands)) {
+                params.studded = undefined;  
+            }
+            if (params.type === createStringUrl(filter.brands)) {
+                params.type = undefined;
+            }
+            if (params.brands === createStringUrl(filter.brands)) {
+                params.brands = undefined;
+            }
             filter.removeChipBrandsItem(e.target.getAttribute('data-index'));
             filter.setChipBrands(Array.from(
                 new Set([...filter.chipBrands])));
@@ -240,6 +314,9 @@ const FilterCatalogTyres = observer((
         if (e.target.getAttribute('data-name') === 'Сезон') {
             page.setLoadMore(0);
             page.setOffset(0);
+            if (params.season === createStringUrl(filter.season)) {
+              params.season = undefined;  
+            }
             filter.removeChipSeasonItem(e.target.getAttribute('data-index'));
             filter.setChipSeason(Array.from(
                 new Set([...filter.chipSeason])));
@@ -248,6 +325,15 @@ const FilterCatalogTyres = observer((
         if (e.target.getAttribute('data-name') === 'Тип авто') {
             page.setLoadMore(0);
             page.setOffset(0);
+            if (params.season === createStringUrl(filter.vehicle_type)) {
+                params.season = undefined;  
+            }
+            if (params.studded === createStringUrl(filter.vehicle_type)) {
+                params.studded = undefined;  
+            }
+            if (params.type === createStringUrl(filter.vehicle_type)) {
+                params.type = undefined;  
+            }
             filter.removeChipVehicleTypeItem(e.target.getAttribute('data-index'));
             filter.setChipVehicleType(Array.from(
                 new Set([...filter.chipVehicleType])));
@@ -256,6 +342,12 @@ const FilterCatalogTyres = observer((
         if (e.target.getAttribute('data-name') === 'Шип / Не шип') {
             page.setLoadMore(0);
             page.setOffset(0);
+            if(params.season === createStringUrl(filter.vehicle_type)) {
+                params.season = undefined;  
+            }
+            if(params.studded === createStringUrl(filter.studded)) {
+                params.studded = undefined;  
+            }
             filter.removeChipStuddedItem(e.target.getAttribute('data-index'));
             filter.setChipStudded(Array.from(
                 new Set([...filter.chipStudded])));
@@ -264,6 +356,33 @@ const FilterCatalogTyres = observer((
         if (e.target.getAttribute('data-name') === 'Індекс швидкості') {
             page.setLoadMore(0);
             page.setOffset(0);
+            if (params.season?.slice(3, params.season?.length) === createStringUrl(filter.speed_index)) {
+                params.season = undefined;
+            }
+            if (params.studded?.slice(3, params.studded?.length) === createStringUrl(filter.speed_index)) {
+                params.studded = undefined;  
+            }
+            if (params.type?.slice(3, params.type?.length) === createStringUrl(filter.speed_index)) {
+                params.type = undefined;
+            }
+            if (params.brands?.slice(3, params.brands?.length) === createStringUrl(filter.speed_index)) {
+                params.brands = undefined;
+            }
+            if (params.width?.slice(3, params.width?.length) === createStringUrl(filter.speed_index)) {
+                params.width = undefined;   
+            }
+            if (params.height?.slice(3, params.height?.length) === createStringUrl(filter.speed_index)) {
+                params.height = undefined;   
+            }
+            if (params.diameter?.slice(3, params.diameter?.length) === createStringUrl(filter.speed_index)) {
+                params.diameter = undefined;   
+            }
+            if (params.loadindex?.slice(3, params.loadindex?.length) === createStringUrl(filter.speed_index)) {
+                params.loadindex = undefined;   
+            }
+            if (params.speedindex?.slice(3, params.speedindex?.length) === createStringUrl(filter.speed_index)) {
+                params.speedindex = undefined;   
+            }
             filter.removeChipSpeedIndexItem(e.target.getAttribute('data-index'));
             filter.setChipSpeedIndex(Array.from(
                 new Set([...filter.chipSpeedIndex])));
@@ -272,6 +391,30 @@ const FilterCatalogTyres = observer((
         if (e.target.getAttribute('data-name') === 'Індекс навантаження') {
             page.setLoadMore(0);
             page.setOffset(0);
+            if (params.season?.slice(3, params.season?.length) === createStringUrl(filter.load_index)) {
+                params.season = undefined;
+            }
+            if (params.studded?.slice(3, params.studded?.length) === createStringUrl(filter.load_index)) {
+                params.studded = undefined;  
+            }
+            if (params.type?.slice(3, params.type?.length) === createStringUrl(filter.load_index)) {
+                params.type = undefined;
+            }
+            if (params.brands?.slice(3, params.brands?.length) === createStringUrl(filter.load_index)) {
+                params.brands = undefined;
+            }
+            if (params.width?.slice(3, params.width?.length) === createStringUrl(filter.load_index)) {
+                params.width = undefined;   
+            }
+            if (params.height?.slice(3, params.height?.length) === createStringUrl(filter.load_index)) {
+                params.height = undefined;   
+            }
+            if (params.diameter?.slice(3, params.diameter?.length) === createStringUrl(filter.load_index)) {
+                params.diameter = undefined;   
+            }
+            if (params.loadindex?.slice(3, params.loadindex?.length) === createStringUrl(filter.load_index)) {
+                params.loadindex = undefined;   
+            }
             filter.removeChipLoadIndexItem(e.target.getAttribute('data-index'));
             filter.setChipLoadIndex(Array.from(
                 new Set([...filter.chipLoadIndex])));
@@ -280,6 +423,39 @@ const FilterCatalogTyres = observer((
         if (e.target.getAttribute('data-name') === 'Омологація') {
             page.setLoadMore(0);
             page.setOffset(0);
+            if (params.season?.slice(3, params.season?.length) === createStringUrl(filter.homologation)) {
+                params.season = undefined;
+            }
+            if (params.studded?.slice(3, params.studded?.length) === createStringUrl(filter.homologation)) {
+                params.studded = undefined;  
+            }
+            if (params.type?.slice(3, params.type?.length) === createStringUrl(filter.homologation)) {
+                params.type = undefined;
+            }
+            if (params.brands?.slice(3, params.brands?.length) === createStringUrl(filter.homologation)) {
+                params.brands = undefined;
+            }
+            if (params.width?.slice(3, params.width?.length) === createStringUrl(filter.homologation)) {
+                params.width = undefined;   
+            }
+            if (params.height?.slice(3, params.height?.length) === createStringUrl(filter.homologation)) {
+                params.height = undefined;   
+            }
+            if (params.diameter?.slice(3, params.diameter?.length) === createStringUrl(filter.homologation)) {
+                params.diameter = undefined;   
+            }
+            if (params.loadindex?.slice(3, params.loadindex?.length) === createStringUrl(filter.homologation)) {
+                params.loadindex = undefined;   
+            }
+            if (params.speedindex?.slice(3, params.speedindex?.length) === createStringUrl(filter.homologation)) {
+                params.speedindex = undefined;   
+            }
+            if (params.reinforced?.slice(3, params.reinforced?.length) === createStringUrl(filter.homologation)) {
+                params.reinforced = undefined;   
+            }
+            if (params.om?.slice(3, params.om?.length) === createStringUrl(filter.homologation)) {
+                params.om = undefined;   
+            }
             filter.removeChipHomologationItem(e.target.getAttribute('data-index'));
             filter.setChipHomologation(Array.from(
                 new Set([...filter.chipHomologation])));
@@ -296,6 +472,36 @@ const FilterCatalogTyres = observer((
         if (e.target.getAttribute('data-name') === 'Високонагруженість') {
             page.setLoadMore(0);
             page.setOffset(0);
+            if (params.season?.slice(3, params.season?.length) === createStringUrl(filter.reinforced)) {
+                params.season = undefined;
+            }
+            if (params.studded?.slice(3, params.studded?.length) === createStringUrl(filter.reinforced)) {
+                params.studded = undefined;  
+            }
+            if (params.type?.slice(3, params.type?.length) === createStringUrl(filter.reinforced)) {
+                params.type = undefined;
+            }
+            if (params.brands?.slice(3, params.brands?.length) === createStringUrl(filter.reinforced)) {
+                params.brands = undefined;
+            }
+            if (params.width?.slice(3, params.width?.length) === createStringUrl(filter.speed_index)) {
+                params.width = undefined;   
+            }
+            if (params.height?.slice(3, params.height?.length) === createStringUrl(filter.reinforced)) {
+                params.height = undefined;   
+            }
+            if (params.diameter?.slice(3, params.diameter?.length) === createStringUrl(filter.reinforced)) {
+                params.diameter = undefined;   
+            }
+            if (params.loadindex?.slice(3, params.loadindex?.length) === createStringUrl(filter.reinforced)) {
+                params.loadindex = undefined;   
+            }
+            if (params.speedindex?.slice(3, params.speedindex?.length) === createStringUrl(filter.reinforced)) {
+                params.speedindex = undefined;   
+            }
+            if (params.reinforced?.slice(3, params.reinforced?.length) === createStringUrl(filter.reinforced)) {
+                params.reinforced = undefined;   
+            }
             filter.removeChipReinforcedItem(e.target.getAttribute('data-index'));
             filter.setChipReinforced(Array.from(
                 new Set([...filter.chipReinforced])));
@@ -356,187 +562,50 @@ const FilterCatalogTyres = observer((
     const filterWidthClick = () => {
         setStateWidth(!stateWidth);
         setFilterAction(!filterState);
-        
-        // setStateSeason(false);
-        // setStateBrand(false);
-        // setStateHeight(false);
-        // setStateDiameter(false);
-        // setStateHomologation(false);
-        // setStateLoadIndex(false);
-        // setStateSpeedIndex(false);
-        // setStateRunFlat(false);
-        // setStateReinforced(false);
-        // setStateVehicleType(false);
-        // setStateStudded(false);
     }
     const filterHeightClick = () => {
         setStateHeight(!stateHeight);
         setFilterAction(!filterState);
-        
-        // setStateSeason(false);
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // setStateDiameter(false);
-        // setStateHomologation(false);
-        // setStateLoadIndex(false);
-        // setStateSpeedIndex(false);
-        // setStateRunFlat(false);
-        // setStateReinforced(false);
-        // setStateVehicleType(false);
-        // setStateStudded(false);
     }
     const filterDiameterClick = () => {
         setStateDiameter(!stateDiameter);
         setFilterAction(!filterState);
-        
-        // setStateSeason(false);
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // setStateHeight(false);
-        // setStateHomologation(false);
-        // setStateLoadIndex(false);
-        // setStateSpeedIndex(false);
-        // setStateRunFlat(false);
-        // setStateReinforced(false);
-        // setStateVehicleType(false);
-        // setStateStudded(false);
     }
     const filterSeasonClick = () => {
         setStateSeason(!stateSeason);
         setFilterAction(!filterState);
-        
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // setStateHeight(false);
-        // setStateDiameter(false);
-        // setStateHomologation(false);
-        // setStateLoadIndex(false);
-        // setStateSpeedIndex(false);
-        // setStateRunFlat(false);
-        // setStateReinforced(false);
-        // setStateVehicleType(false);
-        //setStateStudded(false);
     }
     const filterStuddedClick = () => {
         setFilterAction(!filterState);
         setStateStudded(!stateStudded);
-        //setStateSeason(false);
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // setStateHeight(false);
-        // setStateDiameter(false);
-        // setStateHomologation(false);
-        // setStateLoadIndex(false);
-        // setStateSpeedIndex(false);
-        // setStateRunFlat(false);
-        // setStateReinforced(false);
-        // setStateVehicleType(false);
     }
     const filterBrandClick = () => {
         setFilterAction(!filterState);
         setStateBrand(!stateBrand);
-        // setStateSeason(false);
-        
-        // setStateWidth(false);
-        // setStateHeight(false);
-        // setStateDiameter(false);
-        // setStateHomologation(false);
-        // setStateLoadIndex(false);
-        // setStateSpeedIndex(false);
-        // setStateRunFlat(false);
-        // setStateReinforced(false);
-        // setStateVehicleType(false);
-        // setStateStudded(false);
     }
     const filterVehicleTypeClick = () => {
         setFilterAction(!filterState);
         setStateVehicleType(!stateVehicleType);
-        // setStateSeason(false);
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // setStateHeight(false);
-        // setStateDiameter(false);
-        // setStateHomologation(false);
-        // setStateLoadIndex(false);
-        // setStateSpeedIndex(false);
-        // setStateRunFlat(false);
-        // setStateReinforced(false);
-        // setStateStudded(false);
     }
     const filterSpeedIndexClick = () => {
         setFilterAction(!filterState);
         setStateSpeedIndex(!stateSpeedIndex);
-        // setStateSeason(false);
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // setStateHeight(false);
-        // setStateDiameter(false);
-        // setStateHomologation(false);
-        // setStateLoadIndex(false);
-        // setStateRunFlat(false);
-        // setStateReinforced(false);
-        // setStateVehicleType(false);
-        // setStateStudded(false);
     }
     const filterLoadIndexClick = () => {
         setFilterAction(!filterState);
         setStateLoadIndex(!stateLoadIndex);
-        // setStateSeason(false);
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // setStateHeight(false);
-        // setStateDiameter(false);
-        // setStateHomologation(false);
-        // setStateSpeedIndex(false);
-        // setStateRunFlat(false);
-        // setStateReinforced(false);
-        // setStateVehicleType(false);
-        // setStateStudded(false);
     }
     const filterHomologationClick = () => {
         setFilterAction(!filterState);
         setStateHomologation(!stateHomologation);
-        // setStateSeason(false);
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // setStateHeight(false);
-        // setStateDiameter(false);
-        // setStateLoadIndex(false);
-        // setStateSpeedIndex(false);
-        // setStateRunFlat(false);
-        // setStateReinforced(false);
-        // setStateVehicleType(false);
-        // setStateStudded(false);
     }
     const filterRunFlatClick = () => {
         setFilterAction(!filterState);
         setStateRunFlat(!stateRunFlat);
-        // setStateSeason(false);
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // setStateHeight(false);
-        // setStateDiameter(false);
-        // setStateHomologation(false);
-        // setStateLoadIndex(false);
-        // setStateSpeedIndex(false);
-        // setStateReinforced(false);
-        // setStateVehicleType(false);
-        // setStateStudded(false);
     }
     const filterReinforcedClick = () => {
         setFilterAction(!filterState);
         setStateReinforced(!stateReinforced);
-        // setStateSeason(false);
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // setStateHeight(false);
-        // setStateDiameter(false);
-        // setStateHomologation(false);
-        // setStateLoadIndex(false);
-        // setStateSpeedIndex(false);
-        // setStateRunFlat(false);
-        // setStateVehicleType(false);
-        // setStateStudded(false);
     }
 
     //console.log('FILTER_STATE: ', filterState);

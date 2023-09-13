@@ -10,7 +10,7 @@ import { Context } from '../../../context/Context';
 import { observer } from 'mobx-react-lite';
 import { seasonCar } from '../../../services/tyresPropsService';
 import { createStringUrl } from '../../../services/stringUrl';
-import { Link, Redirect, generatePath, useHistory } from 'react-router-dom';
+import { Link, Redirect, generatePath, useHistory, useParams } from 'react-router-dom';
 import { CATALOG_TYRES_ROUTE, MAIN_ROUTE } from '../../../utils/consts';
 
 interface IFilterMainTyres {
@@ -22,7 +22,8 @@ interface IFilterMainTyres {
 const FilterMainTyre = observer((
     {filterState, filterOpenCloseAction}: IFilterMainTyres) => {
     const {filter, goodsTyre, page} = useContext<any | null>(Context);
-    const history = useHistory();
+    //const history = useHistory();
+    //const params = useParams<any>();
     //const [handleItem, setHandleItem] = useState();
 
     const [stateWidth, setStateWidth]=useState<boolean>(false);
@@ -110,6 +111,7 @@ const FilterMainTyre = observer((
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setHeight(null);
+
         }
         if (e.target.getAttribute('data-name') === 'Діаметр') {
             page.setLoadMore(0);

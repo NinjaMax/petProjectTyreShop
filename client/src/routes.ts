@@ -36,19 +36,26 @@ export const publicRoutes = [
     exact: true,
     Component: Basket
   },
-  {
-    path: CATALOG_TYRES_ROUTE + 
-    '/:season?/:type?/:brands?/:width?/:height?/:diameter?',
-    exact: true,
-    Component: CatalogTyresPage
-  },
+
   {
     path: CATALOG_TYRES_ROUTE,
     exact: true,
     Component: CatalogTyresPage
   },
   {
+    path: CATALOG_TYRES_ROUTE + 
+    '/:season?/:studded?/:type?/:brands?/:width?/:height?/:diameter?/:loadindex?/:speedindex?/:reinforced?/:om?',
+    exact: true,
+    Component: CatalogTyresPage
+  },
+  {
     path: CATALOG_WHEELS_ROUTE,
+    exact: true,
+    Component: CatalogTyresPage
+  },
+  {
+    path: CATALOG_WHEELS_ROUTE + 
+    '/:season?/:studded?/:type?/:brands?/:width?/:height?/:diameter?/:loadindex?/:speedindex?/:reinforced?/:om?',
     exact: true,
     Component: CatalogTyresPage
   },
