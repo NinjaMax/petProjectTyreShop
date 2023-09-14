@@ -1,4 +1,4 @@
-.filterCatalogTyres {
+.filterCatalogWheels {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -6,7 +6,7 @@
     /* border: 2px solid palevioletred; */
 }
 
-.filterTyresOption {
+.filterWheelsOption {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -16,7 +16,7 @@
     font-family: var(--main-font-family);
 }
 
-.checkBoxBtnOn {
+.checkBoxWheelBtnOn {
     /* appearance: none; */
     position: absolute;
     cursor: pointer;
@@ -32,39 +32,37 @@
     /* top: 68%; */
     right:-105px;
 }
-.checkBoxBtnOn:hover {
+.checkBoxWheelBtnOn:hover {
     background-color: #9C93D1;
 }
-.checkBoxBtnOn:active {
+.checkBoxWheelBtnOn:active {
     background-color: #9EB9D3;
 }
-.season {
-    top: 31%;
-}
+
 .brands {
     top: 70%;
 }
-.vehicleType {
-    top: 60%;
-}
-.studded {
-    top: 35%;
-}
-.speedIndex {
-    top: 65%;
-}
-.loadIndex {
-    top: 68%;
-}
-.homologation {
-    top: 75%;
-}
-.runFlat {
-    top: 70%;
-}
-.reinforced {
-    top: 76%;
+.wheelType {
+    top: 55%;
 }
 .boltCount {
-    top: 76%;
+    top: 30%;
+}
+.boltCountPcd {
+    top: 85%;
+}
+.pcd2 {
+    top: 80%;
+}
+.pcd {
+    top: 72%;
+}
+.et {
+    top: 66%;
+}
+.dia {
+    top: 61%;
+}
+.wheelColor {
+    top: 35%;
 }

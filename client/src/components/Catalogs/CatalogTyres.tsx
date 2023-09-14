@@ -114,7 +114,7 @@ const CatalogTyres = observer(() => {
 
     return (
         <div>
-            <h2>Шини</h2>
+            <h2>{`Шини ${filter.season ? `${filter.season}` : ''} ${filter.studded ? `${filter.studded}` : ''} ${filter.vehicle_type ? `${filter.vehicle_type}` : ''} ${filter.brands ? `${filter.brands}` : ''} ${filter.width ? `${filter.width}/` : ''} ${filter.height ? `${filter.height}` : ''} ${filter.diameter ? `R${filter.diameter}` : ''}`}</h2>
             <div className='popularCatalogTyre'>
                 <div>Популярні розміри:<PopularSizeTyre/></div>
                 <div>Популярні запити:<PopularDiametrTyre/></div>

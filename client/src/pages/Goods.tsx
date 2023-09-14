@@ -14,7 +14,7 @@ import AllTyreModelSize from '../components/goods/AllTyreModelSize';
 import AllModelBrand from '../components/goods/AllModelBrand';
 import ProductPayDel from '../components/goods/ProductPayDel';
 import YouWatched from '../components/goods/YouWatched';
-import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
+import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
 import { GOODS_ROUTE, NOT_FOUND_ROUTE } from '../utils/consts';
 import { 
   createTyreReview, 
@@ -88,7 +88,8 @@ const GoodsPage = observer(() => {
   const [allDiametersModel, setAllDiametersModel] = useState<any[] | null>();
   const [paramsModel, setParamsModel] = useState<boolean>(false);
   const history =  useHistory();
-  const param = useParams<any>();
+  const params = useParams<any>();
+  const location = useLocation();
   let match = useRouteMatch<any>('/:goodsItem');
   
   useEffect(() => {
@@ -366,20 +367,32 @@ const GoodsPage = observer(() => {
 
   
   useEffect(() => {
-    if (goodsTyre._product.full_name) {
-      const getTyreUrl: string = 
-      createStringUrl(goodsTyre._product.full_name)
+    let isMounted = false;
+    const getPathCard = async () => {
+      if (!isMounted) {
+        if (goodsTyre._product.full_name) {
+          const getTyreUrl: string = 
+          createStringUrl(goodsTyre._product.full_name)
       //console.log('PRODUCT_STRING_URL:', getTyreUrl);
-      if (match?.params.goodsItem !== getTyreUrl) {
-        history.push(NOT_FOUND_ROUTE);
+          if (match?.params.goodsItem !== getTyreUrl) {
+            history.push(NOT_FOUND_ROUTE);
+          }
+        }
+        if (history.location.hash === '#vidguki') {
+          setChangeTabGoods("vidguki");
+        }
       }
     }
+    getPathCard();
+    return () => {
+      isMounted = true;
+    };
   },[
     goodsTyre._product.full_name,
     history, 
     match?.params.goodsItem
   ]) ;
-
+  //console.log('LOCATION_PATH:', history.location.hash);
   // const tumbUpAction = () => {
   //   setThumbUp(!thumbUp);
   // };

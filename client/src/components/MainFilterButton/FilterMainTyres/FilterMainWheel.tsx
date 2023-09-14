@@ -58,13 +58,15 @@ const FilterMainWheel = observer((
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setWidth(e.target.value);
-            setStateWidth(false);
+            setStateWidth(!stateWidth);
+            filterOpenCloseAction(!filterState);
         }
         if (e.target.name === 'Діаметр') {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setDiameter(e.target.value);
-            setStateDiameter(false);
+            setStateDiameter(!stateDiameter);
+            filterOpenCloseAction(!filterState);
         }
         if (e.target.name === 'Бренд' && e.target.checked) {
             page.setLoadMore(0);
@@ -72,41 +74,46 @@ const FilterMainWheel = observer((
             filter.setChipBrands(
                 Array.from(
                     new Set([...filter.chipBrands, e.target.value]))
-            );     
+            ); 
+            filter.setBrands(filter.chipBrands.join(','));     
         } else if (e.target.name === 'Бренд') {
             const cancelBrand = filter.chipBrands.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipBrandsItem(cancelBrand);
             filter.setChipBrands(Array.from(
-                new Set([...filter.chipBrands])));
+                new Set([...filter.chipBrands]))
+            );
+            filter.setBrands(filter.chipBrands.join(',')); 
         }
         if (e.target.name === 'Кількість болтів' && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setChipBoltCount(
-                Array.from(
-                    new Set([...filter.chipBoltCount, e.target.value]))
-            );     
+                Array.from(new Set([...filter.chipBoltCount, e.target.value]))
+            );
+            filter.setBoltCount(filter.chipBoltCount.join(','));     
         } else if (e.target.name === 'Кількість болтів') {
             const cancelSeason = filter.chipBoltCount.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipBoltCountdItem(cancelSeason);
-            filter.setChipBoltCount(Array.from(
-                new Set([...filter.chipBoltCount])));
+            filter.setChipBoltCount(Array.from(new Set([...filter.chipBoltCount]))
+            );
+            filter.setBoltCount(filter.chipBoltCount.join(','));
         }
         if (e.target.name === 'Тип диска' && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setChipType(
-                Array.from(
-                    new Set([...filter.chipType, e.target.value]))
-            );     
+                Array.from(new Set([...filter.chipType, e.target.value]))
+            ); 
+            filter.setType(filter.chipType.join(','));    
         } else if (e.target.name === 'Тип диска') {
             const cancelVehicleType = filter.chipType.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipTypeItem(cancelVehicleType);
-            filter.setChipType(Array.from(
-                new Set([...filter.chipType])));
+            filter.setChipType(Array.from(new Set([...filter.chipType]))
+            );
+            filter.setType(filter.chipType.join(','));
         }
         // if (e.target.name === 'Колір' && e.target.checked) {
         //     page.setLoadMore(0);
@@ -508,6 +515,13 @@ const FilterMainWheel = observer((
     //     setStateType(false);
     //     setStateColor(false);
     // }
+
+    const pickUp = () => {
+ 
+        localStorage.setItem('filterWheelUrl', `${filter.type},${filter.brands},${filter.width},${filter.bolt_count},${filter.diameter}`);
+
+        document.location.assign('/wheels');
+    };
     
     return (
         <div className='filterMain'>
@@ -633,7 +647,10 @@ const FilterMainWheel = observer((
             }
             </FilterMainBtnWheel>
             <div className='btnSelect'>
-                <ButtonAction props={'ПІДІБРАТИ'} />
+                <ButtonAction 
+                    props={'ПІДІБРАТИ'}
+                    eventItem={pickUp} 
+                />
             </div>
             {/* <CheckboxBtn 
                 value={"ship"} 

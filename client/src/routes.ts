@@ -55,7 +55,7 @@ export const publicRoutes = [
   },
   {
     path: CATALOG_WHEELS_ROUTE + 
-    '/:season?/:studded?/:type?/:brands?/:width?/:height?/:diameter?/:loadindex?/:speedindex?/:reinforced?/:om?',
+    '/:type?/:brands?/:width?/:diameter?/:boltcount?/:pcd?/:et?/:dia?',
     exact: true,
     Component: CatalogTyresPage
   },

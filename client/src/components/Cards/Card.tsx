@@ -112,7 +112,11 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                         disabled={true}
                         nameRating='Карта товара'
                     />
-                    <a className='reviewCard' href='/#'>
+                    <a className='reviewCard' 
+                        href={goods?.reviews.length !== 0 ? 
+                        createStringUrl(goods?.full_name) +'#vidguki' : 
+                        '#'}
+                    >
                        {goods?.reviews.length} відгуки
                     </a>
                 </div>

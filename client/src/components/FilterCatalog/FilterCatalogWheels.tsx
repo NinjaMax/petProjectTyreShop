@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import '../../css/FilterCatatogCss/FilterCatalogTyres.css';
+import '../../css/FilterCatatogCss/FilterCatalogWheels.css';
 import CheckboxBtn from '../select/CheckboxBtn';
 import Accordion from './Accordion';
 import SelectFilterList from '../select/SelectFilterList';
@@ -9,6 +9,7 @@ import { observer } from 'mobx-react-lite';
 import { seasonCar, typeCar } from '../../services/tyresPropsService';
 import FilterMainBtnWheel from '../mainFilterButton/FIlterMainBtnWheel';
 import { useParams } from 'react-router-dom';
+import { createStringUrl } from '../../services/stringUrl';
 
 interface IFilterCatTyres {
     handleChange?(args0: any): void;
@@ -52,6 +53,10 @@ const FilterCatalogWheels = observer((
     const handleChange  = (e: any) => {
         if (e.target.name === 'Ширина') {
             filter.setWidth(e.target.value);
+            filter.setChipWidth(
+                Array.from(
+                    new Set([...filter.chipWidth, e.target.value]))
+            );
             setStateWidth(!stateWidth);
             setFilterAction(!filterState);
             page.setLoadMore(0);
@@ -59,6 +64,10 @@ const FilterCatalogWheels = observer((
         }
         if (e.target.name === 'Діаметр') {
             filter.setDiameter(e.target.value);
+            filter.setChipDiameter(
+                Array.from(
+                    new Set([...filter.chipDiameter, e.target.value]))
+            );
             setStateDiameter(!stateDiameter);
             setFilterAction(!filterState);
             page.setLoadMore(0);
@@ -196,21 +205,45 @@ const FilterCatalogWheels = observer((
         if (e.target.getAttribute('data-name') === 'Ширина') {
             page.setLoadMore(0);
             page.setOffset(0);
+            if (params.type?.slice(1, params.type?.length) === filter.width) {
+                params.type = undefined;
+            }
+            if (params.brands?.slice(1, params.brands?.length) === filter.width) {
+                params.brands = undefined;
+            }
+            if (params.width?.slice(1, params.width?.length) === filter.width) {
+                params.width = undefined;   
+            }
             filter.setWidth(null);
+            filter.removeChipWidthItem();
         }
-        // if (e.target.getAttribute('data-name') === 'Профіль') {
-        //     page.setLoadMore(0);
-        //     page.setOffset(0);
-        //     filter.setHeight(null);
-        // }
         if (e.target.getAttribute('data-name') === 'Діаметр') {
             page.setLoadMore(0);
             page.setOffset(0);
+            if (params.type?.slice(1, params.type?.length) === filter.diameter) {
+                params.type = undefined;
+            }
+            if (params.brands?.slice(1, params.brands?.length) === filter.diameter) {
+                params.brands = undefined;
+            }
+            if (params.width?.slice(1, params.width?.length) === filter.diameter) {
+                params.width = undefined;   
+            }
+            if (params.diameter?.slice(1, params.diameter?.length) === filter.diameter) {
+                params.diameter = undefined;   
+            }
             filter.setDiameter(null);
+            filter.removeChipDiameterItem();
         }
         if (e.target.getAttribute('data-name') === 'Бренд') {
             page.setLoadMore(0);
             page.setOffset(0);
+            if (params.type === createStringUrl(filter.brands)) {
+                params.type = undefined;
+            }
+            if (params.brands === createStringUrl(filter.brands)) {
+                params.brands = undefined;
+            }
             filter.removeChipBrandsItem(e.target.getAttribute('data-index'));
             filter.setChipBrands(Array.from(
                 new Set([...filter.chipBrands])));
@@ -219,6 +252,21 @@ const FilterCatalogWheels = observer((
         if (e.target.getAttribute('data-name') === 'Кількість болтів') {
             page.setLoadMore(0);
             page.setOffset(0);
+            if (params.type === createStringUrl(filter.bolt_count)) {
+                params.type = undefined;
+            }
+            if (params.brands === createStringUrl(filter.bolt_count)) {
+                params.brands = undefined;
+            }
+            if (params.width === createStringUrl(filter.bolt_count)) {
+                params.width = undefined;   
+            }
+            if (params.diameter === createStringUrl(filter.bolt_count)) {
+                params.diameter = undefined;   
+            }
+            if (params.boltcount === createStringUrl(filter.bolt_count)) {
+                params.boltcount = undefined;   
+            }
             filter.removeChipBoltCountdItem(e.target.getAttribute('data-index'));
             filter.setChipBoltCount(Array.from(
                 new Set([...filter.chipBoltCount])));
@@ -227,6 +275,9 @@ const FilterCatalogWheels = observer((
         if (e.target.getAttribute('data-name') === 'Тип диска') {
             page.setLoadMore(0);
             page.setOffset(0);
+            if (params.type === createStringUrl(filter.type)) {
+                params.type = undefined;  
+            }
             filter.removeChipTypeItem(e.target.getAttribute('data-index'));
             filter.setChipType(Array.from(
                 new Set([...filter.chipType])));
@@ -235,7 +286,7 @@ const FilterCatalogWheels = observer((
         if (e.target.getAttribute('data-name') === 'Колір') {
             page.setLoadMore(0);
             page.setOffset(0);
-            filter.removechipColorItem(e.target.getAttribute('data-index'));
+            filter.removeChipColorItem(e.target.getAttribute('data-index'));
             filter.setChipColor(Array.from(
                 new Set([...filter.chipColor])));
             filter.setColor(filter.chipColor.join(','));
@@ -243,6 +294,30 @@ const FilterCatalogWheels = observer((
         if (e.target.getAttribute('data-name') === 'Діаметр ступиці') {
             page.setLoadMore(0);
             page.setOffset(0);
+            if (params.type?.slice(3, params.type?.length) === createStringUrl(filter.dia)) {
+                params.type = undefined;
+            }
+            if (params.brands?.slice(3, params.brands?.length) === createStringUrl(filter.dia)) {
+                params.brands = undefined;
+            }
+            if (params.width?.slice(3, params.width?.length) === createStringUrl(filter.dia)) {
+                params.width = undefined;   
+            }
+            if (params.diameter?.slice(3, params.diameter?.length) === createStringUrl(filter.dia)) {
+                params.diameter = undefined;   
+            }
+            if (params.boltcount?.slice(3, params.boltcount?.length) === createStringUrl(filter.dia)) {
+                params.boltcount = undefined;   
+            }
+            if (params.pcd?.slice(3, params.pcd?.length) === createStringUrl(filter.dia)) {
+                params.pcd = undefined;   
+            }
+            if (params.et?.slice(3, params.et?.length) === createStringUrl(filter.dia)) {
+                params.et = undefined;   
+            }
+            if (params.dia?.slice(3, params.dia?.length) === createStringUrl(filter.dia)) {
+                params.dia = undefined;   
+            }
             filter.removeChipDiaItem(e.target.getAttribute('data-index'));
             filter.setChipDia(Array.from(
                 new Set([...filter.chipDia])));
@@ -251,6 +326,27 @@ const FilterCatalogWheels = observer((
         if (e.target.getAttribute('data-name') === 'Виліт ET') {
             page.setLoadMore(0);
             page.setOffset(0);
+            if (params.type?.slice(2, params.type?.length) === createStringUrl(filter.et)) {
+                params.type = undefined;
+            }
+            if (params.brands?.slice(2, params.brands?.length) === createStringUrl(filter.et)) {
+                params.brands = undefined;
+            }
+            if (params.width?.slice(2, params.width?.length) === createStringUrl(filter.et)) {
+                params.width = undefined;   
+            }
+            if (params.diameter?.slice(2, params.diameter?.length) === createStringUrl(filter.et)) {
+                params.diameter = undefined;   
+            }
+            if (params.boltcount?.slice(2, params.boltcount?.length) === createStringUrl(filter.et)) {
+                params.boltcount = undefined;   
+            }
+            if (params.pcd?.slice(2, params.pcd?.length) === createStringUrl(filter.et)) {
+                params.pcd = undefined;   
+            }
+            if (params.et?.slice(2, params.et?.length) === createStringUrl(filter.et)) {
+                params.et = undefined;   
+            }
             filter.removeChipEtItem(e.target.getAttribute('data-index'));
             filter.setChipEt(Array.from(
                 new Set([...filter.chipEt])));
@@ -259,12 +355,30 @@ const FilterCatalogWheels = observer((
         if (e.target.getAttribute('data-name') === 'Міжболтова відстань') {
             page.setLoadMore(0);
             page.setOffset(0);
+            if (params.type?.slice(3, params.type?.length) === createStringUrl(filter.pcd)) {
+                params.type = undefined;
+            }
+            if (params.brands?.slice(3, params.brands?.length) === createStringUrl(filter.pcd)) {
+                params.brands = undefined;
+            }
+            if (params.width?.slice(3, params.width?.length) === createStringUrl(filter.pcd)) {
+                params.width = undefined;   
+            }
+            if (params.diameter?.slice(3, params.diameter?.length) === createStringUrl(filter.pcd)) {
+                params.diameter = undefined;   
+            }
+            if (params.boltcount?.slice(3, params.boltcount?.length) === createStringUrl(filter.pcd)) {
+                params.boltcount = undefined;   
+            }
+            if (params.pcd?.slice(3, params.pcd?.length) === createStringUrl(filter.pcd)) {
+                params.pcd = undefined;   
+            }
             filter.removeChipPcdItem(e.target.getAttribute('data-index'));
             filter.setChipPcd(Array.from(
                 new Set([...filter.chipPcd])));
             filter.setPcd(filter.chipPcd.join(','));
         }
-        if (e.target.getAttribute('data-name') === 'Додаткове міжболтове') {
+        if (e.target.getAttribute('data-name') === 'Додаткове міжболтове PCD2') {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.removeChipPcd2Item(e.target.getAttribute('data-index'));
@@ -336,20 +450,6 @@ const FilterCatalogWheels = observer((
         setStateWidth(!stateWidth);
         setFilterAction(!filterState);
     }
-    // const filterHeightClick = () => {
-    //     //setStateHeight(!stateHeight);
-    //     setStateBoltCount(false);
-    //     setStateBrand(false);
-    //     setStateWidth(false);
-    //     setStateDiameter(false);
-    //     setStatePcd(false);
-    //     setStateEt(false);
-    //     setStateDia(false);
-    //     setStatePcd2(false);
-    //     setStateBoltCountPcd(false);
-    //     setStateType(false);
-    //     setStateColor(false);
-    // }
     const filterDiameterClick = () => {
         setStateDiameter(!stateDiameter);
         setFilterAction(!filterState);
@@ -363,7 +463,6 @@ const FilterCatalogWheels = observer((
         setFilterAction(!filterState);
     }
     const filterBrandClick = () => {
-        ;
         setStateBrand(!stateBrand);
         setFilterAction(!filterState);
     }
@@ -393,11 +492,11 @@ const FilterCatalogWheels = observer((
     }
 
     return (
-        <div className='filterCatalogTyres'>
+        <div className='filterCatalogWheels'>
             <div className='filterCatalogTyresHeader'>
                 Фильтр Дисків
             </div>
-            <div className='filterTyresOption'>
+            <div className='filterWheelsOption'>
                 <FilterMainBtnWheel 
                     filterAction={filterWidthClick}
                     filterState={stateWidth}
@@ -420,27 +519,6 @@ const FilterCatalogWheels = observer((
                        )) : null
                     }
                 </FilterMainBtnWheel>
-                {/* <FilterMainBtn 
-                    filterAction={filterHeightClick}
-                    filterState={stateHeight}
-                    chipItem={filter._height}
-                    deleteChip={handleDeleteChange}
-                    width={247.4} 
-                    titleFilter={'Профіль'} 
-                    contentInfo={'B'}>
-                    {goodsWheel._height ? 
-                        goodsWheel._height.map((heightItem: any) => (
-                    <SelectFilterList
-                        key={heightItem === '' || 'undefined' ? heightItem + 1 : heightItem}
-                        nameFilter={'Профіль'}
-                        value={heightItem === '' || undefined ? '0' : heightItem}
-                        items={heightItem === '' || undefined ? '0' : heightItem}
-                        checked={filter._height}
-                        onChange={handleChange}
-                        width={247.4}
-                     /> )) : null  
-                    }
-                </FilterMainBtn> */}
                 <FilterMainBtnWheel 
                     filterAction={filterDiameterClick}
                     filterState={stateDiameter}
@@ -463,9 +541,9 @@ const FilterCatalogWheels = observer((
                     />  )) : null
                     }
                 </FilterMainBtnWheel>
-                { filter._bolt_count.length !== 0 && stateBoltCount ?
+                { filter._chipBoltCount.length !== 0 && stateBoltCount ?
                   <button 
-                    className='checkBoxBtnOn season'
+                    className='checkBoxWheelBtnOn boltCount'
                     onClick={filterBoltCountAdd}
                   >Показати</button> 
                   : null 
@@ -494,9 +572,9 @@ const FilterCatalogWheels = observer((
                     }
                     <p/>
                 </Accordion>
-                { filter._color.length !== 0 && stateColor ?
+                { filter._chipColor.length !== 0 && stateColor ?
                   <button 
-                    className='checkBoxBtnOn studded'
+                    className='checkBoxWheelBtnOn wheelColor'
                     onClick={filterColorAdd}
                   >Показати</button> 
                   : null 
@@ -529,7 +607,7 @@ const FilterCatalogWheels = observer((
                 </Accordion>
                 { filter._chipBrands.length !== 0 && stateBrand ?
                   <button 
-                    className='checkBoxBtnOn brands'
+                    className='checkBoxWheelBtnOn brands'
                     onClick={filterBrandAdd}
                   >Показати</button> 
                   : null 
@@ -562,7 +640,7 @@ const FilterCatalogWheels = observer((
                 /> 
                 { filter._chipType.length !== 0 && stateType ?
                   <button 
-                    className='checkBoxBtnOn vehicleType'
+                    className='checkBoxWheelBtnOn wheelType'
                     onClick={filterTypeAdd}
                   >Показати</button> 
                   : null 
@@ -590,7 +668,7 @@ const FilterCatalogWheels = observer((
                 </Accordion>
                 { filter._chipDia.length !== 0 && stateDia ?
                   <button 
-                    className='checkBoxBtnOn speedIndex'
+                    className='checkBoxWheelBtnOn dia'
                     onClick={filterDiaAdd}
                   >Показати</button> 
                   : null 
@@ -619,7 +697,7 @@ const FilterCatalogWheels = observer((
                 </Accordion>
                 { filter._chipEt.length !== 0 && stateEt ?
                   <button 
-                    className='checkBoxBtnOn loadIndex'
+                    className='checkBoxWheelBtnOn et'
                     onClick={filterEtAdd}
                   >Показати</button> 
                   : null 
@@ -650,7 +728,7 @@ const FilterCatalogWheels = observer((
                 </Accordion>
                 { filter._chipPcd.length !== 0 && statePcd ?
                   <button 
-                    className='checkBoxBtnOn homologation'
+                    className='checkBoxWheelBtnOn pcd'
                     onClick={filterPcdAdd}
                   >Показати</button> 
                   : null 
@@ -681,7 +759,7 @@ const FilterCatalogWheels = observer((
                 </Accordion>
                 { filter._chipPcd2.length !== 0 && statePcd2 ?
                   <button 
-                    className='checkBoxBtnOn runFlat'
+                    className='checkBoxWheelBtnOn pcd2'
                     onClick={filterPcd2Add}
                   >Показати</button> 
                   : null 
@@ -711,7 +789,7 @@ const FilterCatalogWheels = observer((
                 </Accordion>
                 { filter._chipBoltCountPcd.length !== 0 && stateBoltCountPcd ?
                   <button 
-                    className='checkBoxBtnOn reinforced'
+                    className='checkBoxWheelBtnOn boltCountPcd'
                     onClick={filterBoltCountPcddAdd}
                   >Показати</button> 
                   : null 

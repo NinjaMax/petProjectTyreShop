@@ -1,5 +1,5 @@
+import { WheelCatType } from "./enum/ParamsWheelsType.enum";
 import { WheelType } from "./enum/WheelsType.enum";
-
 
 const typeWheels = (type_wheels: string | undefined | any) => {
     switch (type_wheels) {
@@ -17,6 +17,27 @@ const typeWheels = (type_wheels: string | undefined | any) => {
     }
 }
 
+const typeWheelsCat = (type_wheels_cat: string | undefined) => {
+    switch (type_wheels_cat) {
+        case 'stalnij':
+        case 'stalni':
+            return WheelCatType.STEELY_CAT;
+        case 'stalnii':
+            return WheelCatType.STEELY_CAT;
+        case 'litoj':
+        case 'litii':
+            return WheelCatType.CAST_CAT;
+        case 'litoy':    
+            return WheelCatType.CAST_CAT;
+        case 'kovanij':
+            return WheelCatType.IRON_CAT;
+        case 'kovanii':
+        case 'kovani':    
+            return WheelCatType.IRON_CAT;
+    }
+}
+
 export {
     typeWheels,
+    typeWheelsCat
 }

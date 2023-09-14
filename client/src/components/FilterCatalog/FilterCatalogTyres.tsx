@@ -289,7 +289,6 @@ const FilterCatalogTyres = observer((
             }
             filter.setDiameter(null);
             filter.removeChipDiameterItem();
-            params.diameter = undefined;
         }
         if (e.target.getAttribute('data-name') === 'Бренд') {
             page.setLoadMore(0);
