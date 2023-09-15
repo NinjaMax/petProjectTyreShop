@@ -12,6 +12,7 @@ import { observer } from 'mobx-react-lite';
 import LoadMoreGoods from '../ux/LoadMoreGoods';
 import { ICheckOrderItem } from './types/CheckOrder.type';
 import { addGoodsToBasket, createBasket, getBasketById } from '../../restAPI/restGoodsApi';
+import { tyreBrandLogo } from '../../services/tyreBrandImg.service';
 
 const CatalogTyres = observer(() => {
     const [active, setActive] = useState<boolean>(false);
@@ -114,7 +115,12 @@ const CatalogTyres = observer(() => {
 
     return (
         <div>
-            <h2>{`Шини ${filter.season ? `${filter.season}` : ''} ${filter.studded ? `${filter.studded}` : ''} ${filter.vehicle_type ? `${filter.vehicle_type}` : ''} ${filter.brands ? `${filter.brands}` : ''} ${filter.width ? `${filter.width}/` : ''} ${filter.height ? `${filter.height}` : ''} ${filter.diameter ? `R${filter.diameter}` : ''}`}</h2>
+            <h2>{`Шини ${filter.season && !filter.season.includes(',') ? `${filter.season}` : ''} ${filter.studded && !filter.studded.includes(',') ? `${filter.studded}` : ''} ${filter.vehicle_type && !filter.vehicle_type.includes(',') ? `${filter.vehicle_type}` : ''} ${filter.brands && !filter.brands.includes(',') ? `${filter.brands}` : ''} ${filter.width ? `${filter.width}` : ''} ${filter.height ? `/${filter.height}` : ''} ${filter.diameter ? `R${filter.diameter}` : ''}`}</h2>
+            { filter.brands && !filter.brands.includes(',') ?
+                <div>
+                    <img src={tyreBrandLogo(filter.brands)} alt='tyreBrandLogo'/>
+                </div> : null  
+            }
             <div className='popularCatalogTyre'>
                 <div>Популярні розміри:<PopularSizeTyre/></div>
                 <div>Популярні запити:<PopularDiametrTyre/></div>

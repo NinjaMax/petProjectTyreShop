@@ -5,7 +5,7 @@
     gap:16px;
 }
 
-.popularDiametrTyre span {
+.popularDiametrTyre a {
     border-radius: 25px;
     background-color:#ddd;
     cursor: pointer;
@@ -13,8 +13,9 @@
     font-size: 16px;
     font-family: var(--main-font-family);
     font-weight: bold;
+    text-decoration: none;
 }
 
-.popularDiametrTyre span:hover {
+.popularDiametrTyre a:hover {
     background-color:#fff;
 }

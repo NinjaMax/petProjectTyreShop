@@ -17,9 +17,9 @@ const NavBarDropTyres = () => {
         <div className="rowNavbar">
           <div className="columnNavbar">
             <h4>по сезону</h4>
-            <a className='columnNavbarAnch' href='tyres/litni'>Літні шини</a>
-            <a className='columnNavbarAnch' href="tyres/zimni">Зимові шини</a>
-            <a className='columnNavbarAnch' href="tyres/vsesezon">Всесезонні шини</a>
+            <a className='columnNavbarAnch' href='/tyres/litni'>Літні шини</a>
+            <a className='columnNavbarAnch' href="/tyres/zimni">Зимові шини</a>
+            <a className='columnNavbarAnch' href="/tyres/vsesezon">Всесезонні шини</a>
           </div>
           <div className="columnNavbar">
             <h4>по типу транспорту</h4>

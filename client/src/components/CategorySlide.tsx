@@ -11,28 +11,47 @@ const CategorySlide = () => {
         <div>
             <div className="rowCategoreSlider">
                 <div className="columnCategorySlider">
-                  <img src={summerCat} className="hover-shadow" alt='categorySlider'/>
-                  <div className='contentCategorySlider'>
-                    <h2>Літні шини</h2>
-                  </div>
+                  <a href='/tyres/lіtnya'>
+                    <img src={summerCat} 
+                      className="hover-shadow" 
+                      alt='categorySlider'/>
+                    <div className='contentCategorySlider'>
+                      <h2>Літні шини</h2>
+                    </div>
+                  </a>
                 </div>
                 <div className="columnCategorySlider">
-                  <img src={winterCat} onClick={(e) => console.log(e.currentTarget)} className="hover-shadow" alt='categorySlider'/>
-                  <div className='contentCategorySlider'>
-                    <h2>Зимові шини</h2>
-                  </div>
+                  <a href='/tyres/zimova'>
+                    <img src={winterCat}
+                      className="hover-shadow" 
+                      alt='categorySlider'
+                    />
+                    <div className='contentCategorySlider'>
+                      <h2>Зимові шини</h2>
+                    </div>
+                  </a> 
                 </div>
                 <div className="columnCategorySlider">
-                  <img src={allseasonCat} onClick={(e) => console.log(e.currentTarget)} className="hover-shadow" alt='categorySlider'/>
-                  <div className='contentCategorySlider'>
-                    <h2>Всесезонні шини</h2>
-                  </div>
+                  <a href='/tyres/vsesezonna'>
+                    <img src={allseasonCat} 
+                      className="hover-shadow" 
+                      alt='categorySlider'
+                    />
+                    <div className='contentCategorySlider'>
+                      <h2>Всесезонні шини</h2>
+                    </div>
+                  </a>
                 </div>
                 <div className="columnCategorySlider">
-                  <img src={wheelsCat} onClick={(e) => console.log(e.currentTarget)} className="hover-shadow" alt='categorySlider'/>
-                  <div className='contentCategorySlider'>
-                    <h2>Диски</h2>
-                  </div>
+                  <a href='/wheels'>
+                    <img src={wheelsCat} 
+                      className="hover-shadow" 
+                      alt='categorySlider'
+                    />
+                    <div className='contentCategorySlider'>
+                      <h2>Диски</h2>
+                    </div>
+                  </a>
                 </div>
             </div>
         </div>

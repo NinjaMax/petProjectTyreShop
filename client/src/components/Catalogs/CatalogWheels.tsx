@@ -105,7 +105,7 @@ const CatalogWheels = observer(() => {
   //console.log("GOODS_WHEELS: ", goodsWheel._wheels)
   return (
     <div>
-        <h2>{`Диски ${filter.type  ? `${filter.type }` : ''} ${filter.brands ? `${filter.brands}` : ''} ${filter.width ? `W${filter.width}` : ''} ${filter.diameter ? `R${filter.diameter}` : ''} ${filter.bolt_count ? `${filter.bolt_count}` : ''} ${filter.pcd ? `x${filter.pcd}` : ''} ${filter.et ? `ET${filter.et}` : ''} ${filter.dia ? `DIA${filter.dia}` : ''}`}</h2>
+        <h2>{`Диски ${filter.type && !filter.type.includes(',')  ? `${filter.type }` : ''} ${filter.brands && !filter.brands.includes(',') ? `${filter.brands}` : ''} ${filter.width ? `W${filter.width}` : ''} ${filter.diameter ? `R${filter.diameter}` : ''} ${filter.bolt_count && !filter.bolt_count.includes(',') ? `${filter.bolt_count}` : ''} ${filter.pcd && !filter.pcd.includes(',') ? `PCD${filter.pcd}` : ''} ${filter.et && !filter.et.includes(',') ? `ET${filter.et}` : ''} ${filter.dia && !filter.dia.includes(',') ? `DIA${filter.dia}` : ''}`}</h2>
             <div className='popularCatalogTyre'>
                 <div>Популярні розміри:<PopularSizeTyre/></div>
                 <div>Популярні запити:<PopularDiametrTyre/></div>

@@ -378,6 +378,14 @@ const GoodsPage = observer(() => {
             history.push(NOT_FOUND_ROUTE);
           }
         }
+        if (goodsWheel._product.full_name) {
+          const getWheelUrl: string = 
+          createStringUrl(goodsWheel._product.full_name)
+      //console.log('PRODUCT_STRING_URL:', getTyreUrl);
+          if (match?.params.goodsItem !== getWheelUrl) {
+            history.push(NOT_FOUND_ROUTE);
+          }
+        }
         if (history.location.hash === '#vidguki') {
           setChangeTabGoods("vidguki");
         }
@@ -388,7 +396,8 @@ const GoodsPage = observer(() => {
       isMounted = true;
     };
   },[
-    goodsTyre._product.full_name,
+    goodsTyre._product.full_name, 
+    goodsWheel._product.full_name, 
     history, 
     match?.params.goodsItem
   ]) ;

@@ -1948,9 +1948,9 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
         <div className='a'>
         {location.pathname.includes('tyres') ?
           <BreadCrumbs 
-            route={['/','/tyres', `${params ?? null}`]} 
+            route={['/','/tyres', `${params.season ?? null}`, `${params.studded ?? params.type ?? params.brands ?? null}`,`${params.season ?? null}${params.studded ?? null}${params.type ?? null}${params.brands ?? null}${params.width ?? null}${params.height ?? null}${params.diameter ?? null}${params.loadindex ?? null}${params.speedindex ?? null}${params.reinforced ?? null}${params.om ?? null}`]} 
             hrefTitle={
-              ['Головна','Шини',
+              ['Інтернет-магазин SkyParts','Шини', `${filter.season && !filter.season.includes(',') ? filter.season : ''}`, filter.brands && !filter.brands.includes(',') ? `${filter.season} ${filter.brands}` : '', `Шини ${filter.vehicle_type && !filter.vehicle_type.includes(',') ? filter.vehicle_type : ''} ${filter.season && !filter.season.includes(',') ? filter.season : ''}${filter.studded && !filter.studded.includes(',') ? filter.studded : ''} ${filter.brands && !filter.brands.includes(',') ? filter.brands : ''} ${filter.width ? filter.width : ''} ${filter.height ? '/' + filter.height : ''} ${filter.diameter ? 'R' + filter.diameter : '' } ${filter.load_index && !filter.load_index.includes(',') ? filter.load_index : ''} ${filter.speed_index && !filter.speed_index.includes(',') ? filter.speed_index : ''} ${filter.reinforced && !filter.reinforced.includes(',') ? filter.reinforced : ''} ${filter.homologation && !filter.homologation.includes(',')  ? filter.homologation : ''}`
             //`${(params.category) ?? null}`
           ]}
           />
@@ -1958,9 +1958,9 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
         }
         {location.pathname.includes('wheels') ?
           <BreadCrumbs 
-            route={['/','/wheels', `${params ?? null}`]} 
+            route={['/','/wheels',`${params.type ?? null}`, `${params.brands ?? null}`,`${params.type ?? null}${params.brands ?? null}${params.width ?? null}${params.diameter ?? null}${params.boltcount ?? null}${params.pcd ?? null}${params.et ?? null}${params.dia ?? null}`]} 
             hrefTitle={
-              ['Головна','Диски',
+              ['Інтернет-магазин SkyParts','Диски', filter.type && !filter.type.includes(',') ? `${filter.type}` : '', filter.brands && !filter.brands.includes(',') ? `${filter.type} ${filter.brands}` : '', `Диски ${filter.type.includes(',') ? filter.type : ''} ${filter.brands && !filter.brands.includes(',') ? filter.brands : ''} ${filter.width ? 'W' + filter.width : ''} ${filter.diameter ? 'R' + filter.diameter : '' } ${filter.bolt_count && !filter.bolt_count.includes(',') ? filter.bolt_count : ''} ${filter.pcd && !filter.pcd.includes(',') ? 'PCD' + filter.pcd : ''} ${filter.et && !filter.et.includes(',') ? 'ET' + filter.et : ''} ${filter.dia && !filter.dia.includes(',') ? 'DIA' + filter.dia : ''}`
             //`${(params.category) ?? null}`
           ]}
           />

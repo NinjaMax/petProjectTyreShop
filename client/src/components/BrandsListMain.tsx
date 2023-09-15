@@ -6,34 +6,34 @@ const BrandsListMain = () => {
   return (
     <div className='brandListMainContainer'>
     <div className='brandListMainBox'>
-            <a className='brandListMainItem' href='/'>
+            <a className='brandListMainItem' href='/tyres/goodyear'>
                 <img className='imgBrandListMain' 
                 src={tyreBrandLogo('Goodyear')}
                 alt='goodyearimg'
                 />
                 GoodYear
             </a>
-            <a className='brandListMainItem' href='/'>
+            <a className='brandListMainItem' href='/tyres/continental'>
                 <img className='imgBrandListMain' 
                 src={tyreBrandLogo('Continental')} alt='imgContinental'/>
                 Continental
             </a>
-            <a className='brandListMainItem' href='/'>
+            <a className='brandListMainItem' href='/tyres/hankook'>
                 <img className='imgBrandListMain' 
                 src={tyreBrandLogo('Hankook')} alt='imgHankook'/>
                 Hankook
             </a>
-            <a className='brandListMainItem' href='/'>
+            <a className='brandListMainItem' href='/tyres/bridgestone'>
                 <img className='imgBrandListMain' 
                 src={tyreBrandLogo('Bridgestone')} alt='imgBridgestone'/>
                 Bridgestone
             </a>
-            <a className='brandListMainItem' href='/'>
+            <a className='brandListMainItem' href='/tyres/nokian'>
                 <img className='imgBrandListMain' 
                 src={tyreBrandLogo('Nokian')} alt='imgNokian'/>
                 Nokian
             </a>
-            <a className='brandListMainItem' href='/'>
+            <a className='brandListMainItem' href='/tyres/michelin'>
                 <img className='imgBrandListMain' 
                 src={tyreBrandLogo('Michelin')} alt='imgMichelin'/>
                 Michelin

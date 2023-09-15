@@ -19,9 +19,9 @@ const NavBarDropWheels = () => {
         <div className="rowNavbar">
           <div className="columnNavbar">
             <h4>по типу диска</h4>
-            <a className='columnNavbarAnch' href="/#">Сталеві</a>
-            <a className='columnNavbarAnch' href="/#">Легкосплавні</a>
-            <a className='columnNavbarAnch' href="/#">Всесезонні шини</a>
+            <a className='columnNavbarAnch' href="/wheels/stalni">Сталеві</a>
+            <a className='columnNavbarAnch' href="/wheels/litoi">Легкосплавні</a>
+            <a className='columnNavbarAnch' href="/#">Ковані</a>
           </div>
           <div className="columnNavbar">
             <h4>по типу транспорту</h4>
@@ -35,18 +35,18 @@ const NavBarDropWheels = () => {
           </div>
           <div className="columnNavbar">
             <h4>по діаметру</h4>
-            <a className='columnNavbarAnch' href="/#">R13</a>
-            <a className='columnNavbarAnch' href="/#">R14</a>
-            <a className='columnNavbarAnch' href="/#">R15</a>
-            <a className='columnNavbarAnch' href="/#">R16</a>
-            <a className='columnNavbarAnch' href="/#">R17</a>
-            <a className='columnNavbarAnch' href="/#">R18</a>
-            <a className='columnNavbarAnch' href="/#">R19</a>
-            <a className='columnNavbarAnch' href="/#">R20</a>
-            <a className='columnNavbarAnch' href="/#">R21</a>
-            <a className='columnNavbarAnch' href="/#">R17.5</a>
-            <a className='columnNavbarAnch' href="/#">R19.5</a>
-            <a className='columnNavbarAnch' href="/#">R22.5</a>
+            <a className='columnNavbarAnch' href="/wheels/r13">R13</a>
+            <a className='columnNavbarAnch' href="/wheels/r14">R14</a>
+            <a className='columnNavbarAnch' href="/wheels/r15">R15</a>
+            <a className='columnNavbarAnch' href="/wheels/r16">R16</a>
+            <a className='columnNavbarAnch' href="/wheels/r17">R17</a>
+            <a className='columnNavbarAnch' href="/wheels/r18">R18</a>
+            <a className='columnNavbarAnch' href="/wheels/r19">R19</a>
+            <a className='columnNavbarAnch' href="/wheels/r20">R20</a>
+            <a className='columnNavbarAnch' href="/wheels/r21">R21</a>
+            <a className='columnNavbarAnch' href="/wheels/r17.5">R17.5</a>
+            <a className='columnNavbarAnch' href="/wheels/r19.5">R19.5</a>
+            <a className='columnNavbarAnch' href="/wheels/r22.5">R22.5</a>
           </div>
         </div>
       </div>

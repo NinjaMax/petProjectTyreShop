@@ -24,10 +24,14 @@ const typeWheelsCat = (type_wheels_cat: string | undefined) => {
             return WheelCatType.STEELY_CAT;
         case 'stalnii':
             return WheelCatType.STEELY_CAT;
+        case 'stalnoi':
+            return WheelCatType.STEELY_CAT;
         case 'litoj':
         case 'litii':
             return WheelCatType.CAST_CAT;
         case 'litoy':    
+            return WheelCatType.CAST_CAT;
+        case 'litoi':    
             return WheelCatType.CAST_CAT;
         case 'kovanij':
             return WheelCatType.IRON_CAT;
