@@ -274,7 +274,7 @@ const GoodsPage = observer(() => {
           goodsTyre._product.tyre_brand.brand,
           goodsTyre._product.season.season_ua,
         );
-        console.log('SIMILAR_BRAND_GOODS_PARAMS: ', getTyresParamsByBrandSeason);
+        //console.log('SIMILAR_BRAND_GOODS_PARAMS: ', getTyresParamsByBrandSeason);
         setSimilarBrandGoods(getTyresParamsByBrandSeason);
       }
       if (!isMounted && taskProduct[i] === getWheelsParamsByBrand 
@@ -363,8 +363,16 @@ const GoodsPage = observer(() => {
       isMounted = true;
     };
   },
-  [createReview, customer._customer.id_customer, customer._customer.picture, customer._customer.profile_image_url, dataReview, goodsTyre, goodsWheel, page]);
-
+  [
+    createReview,
+    customer._customer.id_customer,
+    customer._customer.picture,
+    customer._customer.profile_image_url,
+    dataReview,
+    goodsTyre,
+    goodsWheel, 
+    page
+  ]);
   
   useEffect(() => {
     let isMounted = false;
@@ -448,7 +456,23 @@ const GoodsPage = observer(() => {
   return (
     <div className='goodsCard'>
       <div className='goodsBreadCrumbs'>
-        <BreadCrumbs route={['/','/tyres']} hrefTitle={['Home','Tyres']}/>
+      {location.pathname.includes('tyres') ?
+        <BreadCrumbs 
+          route={['/','/tyres', `${createStringUrl(goodsTyre._product.tyre_brand?.brand) ?? ''}`, `${goodsTyre._product.season?.season_ua ? `${createStringUrl(goodsTyre._product.season?.season_ua)}/${createStringUrl(goodsTyre._product.tyre_brand?.brand)}` : ''}`,`${createStringUrl(goodsTyre._product.tyre_brand?.brand) ?? null}-${createStringUrl(goodsTyre._product.tyre_model?.model) ?? null}`,`${createStringUrl(params.season) ?? null}${createStringUrl(params.studded) ?? null}${createStringUrl(goodsTyre._product.vehicle_type?.vehicle_type_ua) ?? null}${createStringUrl(goodsTyre._product.tyre_brand?.brand) ?? null}${createStringUrl(goodsTyre._product.width?.width) ?? null}${createStringUrl(goodsTyre._product.height?.height) ?? null}${createStringUrl(goodsTyre._product.diameter?.diameter) ?? null}${createStringUrl(goodsTyre._product.load_index?.load_index) ?? null}${createStringUrl(goodsTyre._product.speed_index?.speed_index) ?? null}${createStringUrl(goodsTyre._product.reinforce?.reinforce) ?? null}${createStringUrl(goodsTyre._product.homologation?.homologation) ?? null}`]} 
+          hrefTitle={['Інтернет-магазин SkyParts','Шини', `${goodsTyre._product.tyre_brand?.brand && !goodsTyre._product.tyre_brand?.brand?.includes(',') ? `Шини ${goodsTyre._product.tyre_brand?.brand}` : ''}`, goodsTyre._product.tyre_brand?.brand ? `Шина ${goodsTyre._product.season.season_ua} ${goodsTyre._product.tyre_brand.brand}` : '',`${goodsTyre._product.tyre_brand?.brand ?? ''} ${goodsTyre._product.tyre_model?.model ?? ''}`, `Шини ${goodsTyre._product.vehicle_type?.vehicle_type_ua && !goodsTyre._product.vehicle_type.vehicle_type_ua?.includes(',') ? goodsTyre._product.vehicle_type.vehicle_type_ua : ''} ${goodsTyre._product.season?.season_ua && !goodsTyre._product.season.season_ua?.includes(',') ? goodsTyre._product.season.season_ua : ''}${goodsTyre._product.studded?.studded && !goodsTyre._product.studded.studded?.includes(',') ? goodsTyre._product.studded.studded : ''} ${goodsTyre._product.tyre_brand?.brand && !goodsTyre._product.tyre_brand.brand?.includes(',') ? goodsTyre._product.tyre_brand.brand : ''}  ${goodsTyre._product.tyre_model?.model && !goodsTyre._product.tyre_model.model?.includes(',') ? goodsTyre._product.tyre_model.model : ''}${goodsTyre._product.width?.width ? goodsTyre._product.width.width : ''} ${goodsTyre._product.height?.height ? '/' + goodsTyre._product.height.height : ''} ${goodsTyre._product.diameter?.diameter ? 'R' + goodsTyre._product.diameter.diameter : '' } ${goodsTyre._product.load_index?.load_index && !goodsTyre._product.load_index.load_index?.includes(',') ? goodsTyre._product.load_index.load_index : ''} ${goodsTyre._product.speed_index?.speed_index && !goodsTyre._product.speed_index.speed_index?.includes(',') ? goodsTyre._product.speed_index.speed_index : ''} ${goodsTyre._product.reinforce?.reinforce && !goodsTyre._product.reinforce.reinforce?.includes(',') ? goodsTyre._product.reinforce.reinforce : ''} ${goodsTyre._product.homologation?.homologation && !goodsTyre._product.homologation.homologation?.includes(',')  ? goodsTyre._product.homologation.homologation : ''}`]}
+        />
+        : null  
+        }
+        {location.pathname.includes('wheels') ?
+          <BreadCrumbs 
+            route={['/','/wheels',`${params.type ?? null}`,`${filter.brands && !filter.brands.includes(',') ?  createStringUrl(filter.brands) : null}`,`${params.type ?? null}${params.brands ?? null}${params.width ?? null}${params.diameter ?? null}${params.boltcount ?? null}${params.pcd ?? null}${params.et ?? null}${params.dia ?? null}`]} 
+            hrefTitle={
+              ['Інтернет-магазин SkyParts','Диски', filter.type && !filter.type.includes(',') ? `${filter.type}` : '', filter.brands && !filter.brands.includes(',') ? `${filter.type} ${filter.brands}` : '', `Диски ${filter.type.includes(',') ? filter.type : ''} ${filter.brands && !filter.brands.includes(',') ? filter.brands : ''} ${filter.width ? 'W' + filter.width : ''} ${filter.diameter ? 'R' + filter.diameter : '' } ${filter.bolt_count && !filter.bolt_count.includes(',') ? filter.bolt_count : ''} ${filter.pcd && !filter.pcd.includes(',') ? 'PCD' + filter.pcd : ''} ${filter.et && !filter.et.includes(',') ? 'ET' + filter.et : ''} ${filter.dia && !filter.dia.includes(',') ? 'DIA' + filter.dia : ''}`
+            //`${(params.category) ?? null}`
+          ]}
+          />
+        : null  
+        }
       </div>
       <div className={changeTabGoods === "vseProTovar" ? 
         'tabGoods' : 'tabGoodsActive'}

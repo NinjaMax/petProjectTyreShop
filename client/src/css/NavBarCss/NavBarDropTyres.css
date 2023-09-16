@@ -74,6 +74,7 @@
     text-decoration: none;
     display: block;
     text-align: left;
+    border-radius: 12px;
   }
   
   /* Add a background color on hover */

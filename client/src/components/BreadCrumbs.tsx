@@ -15,9 +15,6 @@ const BreadCrumbs = ({route, hrefTitle}: IBreadCrumbs) => {
         <div>
             <ul className="breadcrumb">
                 {newRoute ? 
-                //newRoute.map(
-                //    (item: string, index: number) => (
-                //<Fragment key={item + index}>
                   <li className='listBreadCrumbs' >
                     <a href={newRoute[0]} className='anchBreadCrumbs'>{hrefTitle[0]}</a>
                     <span> {'>'} </span>
@@ -25,23 +22,33 @@ const BreadCrumbs = ({route, hrefTitle}: IBreadCrumbs) => {
                     <span> {'>'} </span>
                     {newRoute[2] ?
                         <Fragment>
-                        <a href={newRoute.slice(1, newRoute.length - 1).join('/')} className='anchBreadCrumbs'>{hrefTitle[2]}</a>
-                        <span> {newRoute[3] ? '>' : ''} </span>
+                        <a className='anchBreadCrumbs' href={hrefTitle[2] ? newRoute[1] +'/' + newRoute[2] : newRoute.slice(1, newRoute.length - 1).join('/')} >{hrefTitle[2]}</a>
+                        <span> {hrefTitle[2] ? '>' : ''} </span>
                         </Fragment>
                         : null
                     }
                     {newRoute[3] ?
                         <Fragment>
-                        
-                        <a href={hrefTitle[2] ? newRoute.slice(1, newRoute.length).join('/') : newRoute.slice(1, newRoute.length - 1).join('/')} className='anchBreadCrumbs'>{hrefTitle[3]}</a> 
-                        <span> {newRoute[3] ? '>' : ''} </span>
+                        <a className='anchBreadCrumbs' href={hrefTitle[3].length > 0 ? newRoute[1] +'/' + newRoute[3] : newRoute.slice(1, newRoute.length - 1).join('/')} >{hrefTitle[3]}</a> 
+                        <span> {hrefTitle[3] ? '>' : ''} </span>
+                        </Fragment>  
+                       : null
+                    }
+                    {newRoute[4] ?
+                        <Fragment>
+                        <a className='anchBreadCrumbs' href={hrefTitle[4] ? newRoute[1] + '/' + newRoute[4] : newRoute.slice(1, newRoute.length - 1).join('/')} >{hrefTitle[4]}</a> 
+                        <span> {hrefTitle[4] ? '>' : ''} </span>
+                        </Fragment>  
+                       : null
+                    }
+                    {newRoute[5] ?
+                        <Fragment>
+                        <a className='anchBreadCrumbs' href={hrefTitle[5] ? newRoute.slice(2, newRoute.length).join('/') : newRoute.slice(1, newRoute.length - 1).join('/')} >{hrefTitle[5]}</a> 
+                        <span> {hrefTitle[5] ? '>' : ''} </span>
                         </Fragment>  
                        : null
                     }
                  </li>
-                //</Fragment> 
-               
-                //))
                  : null 
                 }
                 <span>  {hrefTitle[hrefTitle.length - 1]}</span>

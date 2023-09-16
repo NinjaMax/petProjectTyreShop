@@ -92,8 +92,9 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                 <p/>
                 <div className='tyresCardLinkName'>
                 <a id='tyresName'
+                    className='cardLinkProduct'
                     onClick={addGoodsId} 
-                    href={createStringUrl(goods?.full_name)}
+                    href={'/' + createStringUrl(goods?.full_name)}
                 >
                 {typeCard === 'tyre' ?
                     goods?.full_name
