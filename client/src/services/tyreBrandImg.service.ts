@@ -11,6 +11,7 @@ const tyreBrandLogo = (brand: string | undefined) => {
             return TyreBrand.BARUM_LOGO;
         case 'BfGoodrich':
         case 'bfGoodrich':
+        case 'BFGoodrich':    
             return TyreBrand.BFGOODRICH_LOGO;
         case 'Bridgestone':
         case 'bridgestone':
@@ -33,6 +34,9 @@ const tyreBrandLogo = (brand: string | undefined) => {
         case 'Firestone':
         case 'firestone':
             return TyreBrand.FIRESTONE_LOGO;
+        case 'Fulda':
+        case 'fulda':
+            return TyreBrand.FULDA_LOGO;
         case 'General':
         case 'General Tyre':
             return TyreBrand.GENERAL_LOGO;
@@ -68,6 +72,8 @@ const tyreBrandLogo = (brand: string | undefined) => {
             return TyreBrand.KUMHO_LOGO;
         case 'Ling Long':
         case 'LingLong':
+        case 'linglong':
+        case 'ling long':   
             return TyreBrand.LINGLONG_LOGO;
         case 'Matador':
         case 'matador':

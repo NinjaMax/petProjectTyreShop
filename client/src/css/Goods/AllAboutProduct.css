@@ -130,7 +130,17 @@
 }
 
 .productInfoRatingLink {
+    margin-left: 15px;
     text-decoration: none;
+}
+
+.productInfoRating {
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 35px;
 }
 
 .additionalTools {

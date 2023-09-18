@@ -28,24 +28,20 @@
 .tabGoodsActive {
   grid-area: 2 / 1 / 4 / 4;
 }
-/* .modelSectionGoods {
+.modelSectionGoods {
   display: none;
 }
-
 .modelSectionGoodsActive {
   grid-area: 6 / 1 / 8 / 5;
-} */
-
+}
 .productPayDelGoods {
   grid-area: 4 / 1 / 4 / 5;
   text-align: center;
 }
-
 .productPayDelGoodsNext {
   grid-area: 4 / 1 / 4 / 4;
   text-align: center;
 }
-
 .goodsBenefits {
   grid-area: 5 / 1 / 5 / 5;
   text-align: center;
@@ -56,22 +52,18 @@
   text-align: center;
 
 }
-
 .similarGoods {
   grid-area: 6 / 1 / 6 / 4;
 }
 .similarGoodsNone {
   display: none;
 }
-
 .similarGoodsModel {
   grid-area: 7 / 1 / 7 / 4;
 }
-
 .similarGoodsModelNone {
   display: none;
 }
-
 .allSizeModel {
   grid-area: 8 / 1 / 8 / 4;
 }
@@ -95,6 +87,27 @@
   display: none;
 }
 
+.youWatched {
+  grid-area: 10 / 1 / 10 / 4;
+}
+
+.youWatchedModel {
+  grid-area: 8 / 1 / 8 / 4;
+}
+.smallCardNext {
+  grid-area: 2 / 4 / 10 / 5;
+}
+.smallCardNextNone {
+  display: none;
+}
+.goodsModalBox {
+  grid-area: 11 / 1 / 11 / 4;
+  height: 30px;
+}
+.goodsModalBoxModel {
+  grid-area: 9 / 1 / 9 / 4;
+  height: 30px;
+}
 .allModelBrand span {
   font-size: 16px;
   font-family: var(--main-font-family);
@@ -102,17 +115,6 @@
   margin: 10px 0px 10px 50px;
 }
 
-.youWatched {
-  grid-area: 10 / 1 / 10 / 4;
-}
-
-.smallCardNext {
-  grid-area: 2 / 4 / 10 / 5;
-}
-
-.smallCardNextNone {
-  display: none;
-}
 .preReview {
   display:flex;
   flex-direction: row;

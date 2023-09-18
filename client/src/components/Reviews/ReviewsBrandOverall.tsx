@@ -3,6 +3,7 @@ import '../../css/Reviews/ReviewsBrandOverall.css';
 import Rating from '../ux/Rating';
 import brandImg from '../../assets/img/continental_logo.png';
 import RatingOptions from '../ux/RatingOptions';
+import { tyreBrandLogo } from '../../services/tyreBrandImg.service';
 
 interface IReviewBrand {
     avgBrand?:number; 
@@ -29,7 +30,7 @@ const ReviewsBrandOverall = ({
                 <span className='reviewBrandTitle'>Рейтинг бренда</span>
                 <p/>
                 <span className='reviewBrandName'>{brandName}</span>
-                <img src={brandImg} alt='brandImg'/>
+                <img src={tyreBrandLogo(brandName)} alt='brandImg'/>
                 <Rating 
                     numScore={avgBrand ?? 0}
                     disabled={true}

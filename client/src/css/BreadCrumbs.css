@@ -8,7 +8,7 @@
 /* Display list items side by side */
 .breadcrumb .listBreadCrumbs {
     display: inline;
-    font-size: 18px;
+    font-size: 16px;
     font-family: var(--main-font-family);
 }
 
@@ -29,4 +29,9 @@
 .breadcrumb .listBreadCrumbs .anchBreadCrumbs:hover {
     color: #01447e;
     text-decoration: underline;
+}
+
+.breadcrumbSpan {
+    font-size: 16px;
+    font-family: var(--main-font-family);
 }

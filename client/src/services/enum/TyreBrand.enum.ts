@@ -10,6 +10,7 @@ export enum TyreBrand {
     DUNLOP_LOGO = '/iconsBrand/dunlop_logo_260_62.png',
     FALKEN_LOGO = '/iconsBrand/falken_logo_337_62.png',
     FIRESTONE_LOGO = '/iconsBrand/firestone_logo_366_62.png',
+    FULDA_LOGO = '/iconsBrand/fulda_logo_383_62.png',
     GENERAL_LOGO = '/iconsBrand/general_logo_449_62.png',
     GISLAVED_LOGO = '/iconsBrand/gislaved_logo_212_62.png',
     GITI_LOGO = '/iconsBrand/giti_logo_283_62.png',

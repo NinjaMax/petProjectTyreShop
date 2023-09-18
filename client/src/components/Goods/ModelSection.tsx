@@ -41,14 +41,14 @@ const ModelSection = ({modelGoods, modelName}: IModalSection) => {
                             onClick={searchTabModChange}
                         >
                         <span 
-                            title={diameter.diameter}
+                            title={'R' + diameter.diameter}
                             //data-index={index}
                             key={diameter.id_diameter}
                             className={tabSearchMod === diameter.diameter ? 
                             'activatedModelSectionTitle':
                             'titleModelSectionChoose' }
                             
-                        >{diameter.diameter} 
+                        >R {diameter.diameter} 
                             <span className='countModelSectionDiam'
                                 key={diameter.id}
                             >
@@ -59,11 +59,7 @@ const ModelSection = ({modelGoods, modelName}: IModalSection) => {
                         )
                     : null
                     }
-                    <div className='titleModelSectionSelect'
-                        onClick={() => console.log('Clear')}
-                    >
-                        Очистити обрані товари
-                    </div>
+                    <p/>
                     </div>
                     <p/>
                     <div className='modelSectionItemsBox'>

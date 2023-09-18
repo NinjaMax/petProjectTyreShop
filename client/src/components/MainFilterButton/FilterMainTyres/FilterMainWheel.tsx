@@ -518,7 +518,7 @@ const FilterMainWheel = observer((
 
     const pickUp = () => {
  
-        localStorage.setItem('filterWheelUrl', `${filter.type},${filter.brands},${filter.width},${filter.bolt_count},${filter.diameter}`);
+        localStorage.setItem('filterWheelUrl', `${filter.type}/${filter.brands}/${filter.width}/${filter.bolt_count}/${filter.diameter}`);
 
         document.location.assign('/wheels');
     };

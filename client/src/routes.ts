@@ -36,12 +36,21 @@ export const publicRoutes = [
     exact: true,
     Component: Basket
   },
-
   {
     path: CATALOG_TYRES_ROUTE,
     exact: true,
     Component: CatalogTyresPage
   },
+  // {
+  //   path: CATALOG_TYRES_ROUTE + '/:model',
+  //   exact: true,
+  //   Component: GoodsPage
+  // },
+  // {
+  //   path: CATALOG_TYRES_ROUTE + '/model',
+  //   exact: true,
+  //   Component: CatalogTyresPage
+  // },
   {
     path: CATALOG_TYRES_ROUTE + 
     '/:season?/:studded?/:type?/:brands?/:width?/:height?/:diameter?/:loadindex?/:speedindex?/:reinforced?/:om?',
@@ -110,12 +119,16 @@ export const publicRoutes = [
     exact: true,
     Component: NotFound,
   }, 
+  //   {
+  //   path: '/:model',
+  //   exact: true,
+  //   Component: GoodsPage
+  // },
   {
     path: '/' + GOODS_ROUTE,
     exact: true,
     Component: GoodsPage
   },
-
   {
     path: MAIN_ROUTE,
     exact: true,

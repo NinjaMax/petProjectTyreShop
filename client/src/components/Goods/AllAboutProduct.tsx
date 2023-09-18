@@ -17,6 +17,7 @@ import { ICard } from '../cards/interfaces/Card.interface';
 import { observer } from 'mobx-react-lite';
 import { getCompareGoods, getFavoritesGoods } from '../../restAPI/restGoodsApi';
 import WheelMarking from './WheelMarking';
+import { tyreBrandLogo } from '../../services/tyreBrandImg.service';
 
 const AllAboutProduct = observer(({
     goods, 
@@ -86,6 +87,7 @@ const AllAboutProduct = observer(({
                     }
                 </div>
                 <div className='productInfoRating'>
+                    <div>
                     <Rating
                         id={goods?.id} 
                         numScore={avgRatingModel ?? 0}
@@ -96,6 +98,16 @@ const AllAboutProduct = observer(({
                         {countModelReview ?? 0} 
                         {countModelReview === 1 ? ' відгук' : ' відгуків'}
                     </a>
+                    </div>
+                    {goods?.tyre_brand?.brand ?
+                    <img 
+                        src={tyreBrandLogo(goods?.tyre_brand?.brand)} 
+                        alt='brandProduct'
+                        width={88}
+                        height={26}
+                    />
+                        : null
+                    }
                 </div>
                 {!paramsModel ? 
                 <div className="productInfoCode">

@@ -189,7 +189,7 @@ const FilterMainTyre = observer((
 
     const pickUp = () => {
  
-        localStorage.setItem('filterTyreUrl', `${filter.season},${filter.brands},${filter.width},${filter.height},${filter.diameter}`);
+        localStorage.setItem('filterTyreUrl', `${filter.season}/${filter.brands}/${filter.width}/${filter.height}/${filter.diameter}`);
 
         document.location.assign('/tyres');
     };

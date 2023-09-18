@@ -29,21 +29,21 @@ const BreadCrumbs = ({route, hrefTitle}: IBreadCrumbs) => {
                     }
                     {newRoute[3] ?
                         <Fragment>
-                        <a className='anchBreadCrumbs' href={hrefTitle[3].length > 0 ? newRoute[1] +'/' + newRoute[3] : newRoute.slice(1, newRoute.length - 1).join('/')} >{hrefTitle[3]}</a> 
+                        <a className='anchBreadCrumbs' href={hrefTitle[3].length > 0 ? newRoute[1] + '/' + newRoute[3] : newRoute.slice(1, newRoute.length - 1).join('/')} >{hrefTitle[3]}</a> 
                         <span> {hrefTitle[3] ? '>' : ''} </span>
                         </Fragment>  
                        : null
                     }
                     {newRoute[4] ?
                         <Fragment>
-                        <a className='anchBreadCrumbs' href={hrefTitle[4] ? newRoute[1] + '/' + newRoute[4] : newRoute.slice(1, newRoute.length - 1).join('/')} >{hrefTitle[4]}</a> 
+                        <a className='anchBreadCrumbs' href={hrefTitle[4] ? newRoute[4] : newRoute.slice(1, newRoute.length - 1).join('/')} >{hrefTitle[4]}</a> 
                         <span> {hrefTitle[4] ? '>' : ''} </span>
                         </Fragment>  
                        : null
                     }
                     {newRoute[5] ?
                         <Fragment>
-                        <a className='anchBreadCrumbs' href={hrefTitle[5] ? newRoute.slice(2, newRoute.length).join('/') : newRoute.slice(1, newRoute.length - 1).join('/')} >{hrefTitle[5]}</a> 
+                        <a className='anchBreadCrumbs' href={newRoute[5]} >{hrefTitle[5]}</a> 
                         <span> {hrefTitle[5] ? '>' : ''} </span>
                         </Fragment>  
                        : null
@@ -51,7 +51,7 @@ const BreadCrumbs = ({route, hrefTitle}: IBreadCrumbs) => {
                  </li>
                  : null 
                 }
-                <span>  {hrefTitle[hrefTitle.length - 1]}</span>
+                <span className='breadcrumbSpan'>  {hrefTitle[hrefTitle.length - 1]}</span>
             </ul>
         </div>
     );
