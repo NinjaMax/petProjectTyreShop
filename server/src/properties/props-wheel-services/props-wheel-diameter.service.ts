@@ -112,6 +112,32 @@ export class PropsWheelDiameterService {
     }
   }
 
+  async findAllWheelsDiametersByBrand(brand: number) {
+    try {
+      const whelsAllDiametersByModel =
+        await this.wheelDiameterRepository.findAll({
+          include: [
+            {
+              model: Wheel,
+              where: { id_brand: brand },
+              include: [
+                PriceWheels,
+                ReviewWheels,
+                RatingWheels,
+                WheelDiameter,
+                WheelType,
+              ],
+            },
+          ],
+        });
+      return whelsAllDiametersByModel;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,)
+    }
+  };
+
   async findAllWheelsDiametersByModel(model: number) {
     try {
       const whelsAllDiametersByModel =
@@ -137,7 +163,6 @@ export class PropsWheelDiameterService {
         HttpStatus.NOT_FOUND,)
     }
   };
-
 
   async updateWheelDiameter(updatePropertyDto: UpdatePropertyDto) {
     try {

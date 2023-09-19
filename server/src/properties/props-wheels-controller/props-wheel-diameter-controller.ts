@@ -36,6 +36,11 @@ export class PropertiesWheelDiameterController {
     return this.propsWheelDiameterService.findWheelDiameterById(getPropertyDto);
   }
 
+  @Get('/wheels/diameter/by-brand')
+  findAllParamsByBrand(@Query('brand') brand: string) {
+    return this.propsWheelDiameterService.findAllWheelsDiametersByBrand(+brand);
+  }
+
   @Get('/wheels/diameter/by-model')
   findAllParamsByModel(@Query('model') model: string) {
     return this.propsWheelDiameterService.findAllWheelsDiametersByModel(+model);

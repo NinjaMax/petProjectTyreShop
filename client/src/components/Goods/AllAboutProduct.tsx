@@ -81,13 +81,22 @@ const AllAboutProduct = observer(({
             }
             
             <div className='allAboutProductInfo'>
-                <div className='productInfoName'>{
-                    paramsModel ? 'Шини ' + goods?.tyre_brand?.brand + ' ' + goods?.tyre_model?.model 
-                    : goods?.full_name
-                    }
-                </div>
+                {goods?.tyre_brand ?
+                    <div className='productInfoName'>{
+                        paramsModel ? 'Шини ' + goods?.tyre_brand?.brand + ' ' + goods?.tyre_model?.model 
+                        : goods?.full_name
+                        }
+                    </div> : null
+                }
+                {goods?.wheel_brand ?
+                    <div className='productInfoName'>{
+                        paramsModel ? 'Диски ' + goods?.wheel_brand?.brand 
+                        : goods?.full_name
+                        }
+                    </div> : null
+                }
                 <div className='productInfoRating'>
-                    <div>
+                    
                     <Rating
                         id={goods?.id} 
                         numScore={avgRatingModel ?? 0}
@@ -98,13 +107,13 @@ const AllAboutProduct = observer(({
                         {countModelReview ?? 0} 
                         {countModelReview === 1 ? ' відгук' : ' відгуків'}
                     </a>
-                    </div>
+                    
                     {goods?.tyre_brand?.brand ?
-                    <img 
+                    <img className='imgAllAboutProduct'
                         src={tyreBrandLogo(goods?.tyre_brand?.brand)} 
                         alt='brandProduct'
                         width={88}
-                        height={26}
+                        height={22}
                     />
                         : null
                     }
@@ -191,15 +200,35 @@ const AllAboutProduct = observer(({
                     </div> 
                     )) : 
                 <div className="productInfoPrice">
-                    {paramsModelPrice ? <span>{'від ' + 
-                    paramsModelPrice[0]?.tyres[0]?.price[0]?.price ?? 
+                {paramsModelPrice && paramsModelPrice[0]?.tyres ? 
+                    <span>{'від ' + 
+                    paramsModelPrice[0]?.tyres[0]?.price[0]?.price
+                    //paramsModelPrice[0]?.wheels[0]?.price[0]?.price 
+                    } 
+                    &#8372;
+                    </span>
+                    : 
+                    paramsModelPrice && paramsModelPrice[0]?.wheels ?
+                    <span>{'від ' + 
+                    //paramsModelPrice[0]?.tyres[0]?.price[0]?.price ??
+                    paramsModelPrice[0]?.wheels[0]?.price[0]?.price 
+                    } 
+                    &#8372;
+                    </span>
+                    :
+                    'немає в наявності'
+                }
+                {/* {paramsModelPrice && paramsModelPrice[0]?.wheels ? 
+                    <span>{'від ' + 
+                    //paramsModelPrice[0]?.tyres[0]?.price[0]?.price ?? 
                     paramsModelPrice[0]?.wheels[0]?.price[0]?.price
                     } 
                      &#8372;</span>
-                    : 'немає в наявності'}
+                    : 'немає в наявності'
+                } */}
                 </div> 
                 }
-                { !paramsModel ?
+                {!paramsModel ?
                 <>
                 <div className='btnGoodsBox'>
                     <ButtonAction 

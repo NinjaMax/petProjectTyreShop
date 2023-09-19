@@ -14,7 +14,7 @@ const ModelSection = ({modelGoods, modelName}: IModalSection) => {
    
     useEffect(() => {
         if (modelGoods) {
-            //console.log('MODEL_GOODS: ', modelGoods![+tabIndexModel].diameter)
+            //console.log('MODEL_GOODS: ', modelGoods![+tabIndexModel]?.diameter)
             setTabSearchMod(modelGoods![+tabIndexModel].diameter);
         }
     },[modelGoods, tabIndexModel]);
@@ -42,7 +42,7 @@ const ModelSection = ({modelGoods, modelName}: IModalSection) => {
                         >
                         <span 
                             title={'R' + diameter.diameter}
-                            //data-index={index}
+                            data-index={index}
                             key={diameter.id_diameter}
                             className={tabSearchMod === diameter.diameter ? 
                             'activatedModelSectionTitle':
@@ -52,7 +52,7 @@ const ModelSection = ({modelGoods, modelName}: IModalSection) => {
                             <span className='countModelSectionDiam'
                                 key={diameter.id}
                             >
-                                {diameter?.tyres?.length}
+                                {diameter?.tyres?.length ?? diameter?.wheels?.length}
                             </span>
                         </span>
                         </div>
@@ -65,6 +65,20 @@ const ModelSection = ({modelGoods, modelName}: IModalSection) => {
                     <div className='modelSectionItemsBox'>
                         {tabSearchMod ? 
                         modelGoods![+tabIndexModel].tyres?.map((goods:any) => (                    
+                        <div 
+                            className='modelSectionItemsList' 
+                            key={goods.id}>
+                            <TyresCardList
+                                key={goods.id}
+                                goods={goods}
+                                forOrder={false} 
+                            />
+                        </div>
+                        ))
+                        : null
+                        }
+                        {tabSearchMod ? 
+                        modelGoods![+tabIndexModel].wheels?.map((goods:any) => (                    
                         <div 
                             className='modelSectionItemsList' 
                             key={goods.id}>

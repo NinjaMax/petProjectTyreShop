@@ -374,6 +374,19 @@ const getAllWheelsDiametersByModel = async (
     return data;
 }
 
+const getAllWheelsDiametersByBrand = async (
+    id_brand: string,
+) => {
+    const {data} = await $hostGet.get('/properties/wheels/diameter/by-brand',
+    {params: {
+        brand: id_brand ?? 0,
+    }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
 const createBasket = async (
     name?: string,
     phone?: bigint,
@@ -1008,7 +1021,7 @@ export {
     getWheelsParamsBy,
     getWheelsParamsByBrand,
     getAllWheelsModelByBrand,
-    getAllWheelsDiametersByModel,
+    getAllWheelsDiametersByBrand,
     getWheelsRatingAvgIdAndIdmodel,
     getTyresRatingAvgIdAndIdmodel,
     getAllOrdersLeader,

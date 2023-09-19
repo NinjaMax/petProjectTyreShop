@@ -22,7 +22,7 @@ import {
   getAllTyresDiametersByModel, 
   getAllTyresModelByBrand, 
   getAllTyresParamsByModel, 
-  getAllWheelsDiametersByModel, 
+  getAllWheelsDiametersByBrand, 
   getAllWheelsModelByBrand, 
   getTyresBrandRatingAvg, 
   getTyresBrandRatingAvgSeason,  
@@ -114,7 +114,7 @@ const GoodsPage = observer(() => {
         getWheelsParamsBy,
         getWheelsParamsByBrand,
         getAllWheelsModelByBrand,
-        getAllWheelsDiametersByModel,
+        getAllWheelsDiametersByBrand,
         likesTyreReview,
         getTyresParamsByBrandAndSeason,
         getTyresParamsBySeason,
@@ -326,7 +326,7 @@ const GoodsPage = observer(() => {
         const getWheelsModelByBrand: any = await taskProduct[i](
           goodsWheel._product.id_brand,
         );
-        //console.log('ALL_TYRES_MODEL_BY_BRAND: ', getWheelsModelByBrand);
+        //console.log('ALL_WHEELS_MODEL_BY_BRAND: ', getWheelsModelByBrand);
         setAllModelsBrand(getWheelsModelByBrand);
       }
       if (!isMounted && taskProduct[i] === getAllTyresParamsByModel 
@@ -345,13 +345,13 @@ const GoodsPage = observer(() => {
         //console.log('ALL_TYRES_MODEL_PARAMS_DIAMETER: ', getTyresDiametersByModel);
         setAllDiametersModel(getTyresDiametersByModel);
       }
-      if (!isMounted && taskProduct[i] === getAllWheelsDiametersByModel 
+      if (!isMounted && taskProduct[i] === getAllWheelsDiametersByBrand 
         && goodsWheel._product.id_brand && goodsWheel._product.id_diameter) {
-        const getWheelsDiametersByModel: any = await taskProduct[i](
-          goodsTyre._product.id_model,
+        const getWheelsDiametersByBrand: any = await taskProduct[i](
+          goodsWheel._product.id_brand,
         );
-        //console.log('ALL_WHEEL_MODEL_PARAMS: ', getWheelsDiametersByModel);
-        setAllDiametersModel(getWheelsDiametersByModel);
+        //console.log('ALL_WHEEL_MODEL_PARAMS_DIAMETER: ', getWheelsDiametersByBrand);
+        setAllDiametersModel(getWheelsDiametersByBrand);
       }
       const task = taskProduct.shift();
       task();
@@ -396,13 +396,16 @@ const GoodsPage = observer(() => {
         if (goodsWheel._product.full_name) {
           const getWheelUrl: string = 
           createStringUrl(goodsWheel._product.full_name);
-          const getTyreBrandUrl = createStringUrl(
-            goodsTyre._product.wheel_brand?.brand + '-' 
-            + goodsTyre._product.wheel_model?.model);
+          const getWheelBrandUrl = createStringUrl(
+            goodsWheel._product.wheel_brand?.brand + '-' 
+            + goodsWheel._product.wheel_model?.model);
           //console.log('PRODUCT_STRING_URL:', getTyreUrl);
           if (match?.params.goodsItem !== getWheelUrl && 
-            match?.params.goodsItem !== getTyreBrandUrl) {
+            match?.params.goodsItem !== getWheelBrandUrl) {
             history.push(NOT_FOUND_ROUTE);
+          }
+          if (match?.params.goodsItem === getWheelBrandUrl) {
+            setParamsModel(true);
           }
         }
         if (history.location.hash === '#vidguki') {
@@ -415,12 +418,14 @@ const GoodsPage = observer(() => {
       isMounted = true;
     };
   },[
-    goodsTyre._product.full_name, 
+    goodsTyre._product.full_name,
     goodsTyre._product.tyre_brand?.brand, 
     goodsTyre._product.tyre_model?.model, 
     goodsTyre._product.wheel_brand?.brand, 
     goodsTyre._product.wheel_model?.model, 
     goodsWheel._product.full_name, 
+    goodsWheel._product.wheel_brand?.brand, 
+    goodsWheel._product.wheel_model?.model, 
     history, match?.params.goodsItem
   ]) ;
   //console.log('LOCATION_PATH:', history.location.hash);
@@ -456,7 +461,7 @@ const GoodsPage = observer(() => {
   };
   // console.log('LIKE_REVIEW: ', likeReview);
   //console.log("DATA_REVIEW: ", dataReview);
-  console.log('MATCH_URL_PARAMS: ', match?.params.goodsItem);
+  //console.log('MATCH_URL_PARAMS: ', match?.params.goodsItem);
   // console.log('MATCH_URL: ', match);
   // console.log('RATING_MODEL_AVRG: ', ratingModelAvg?.avgRatingModel);
   // console.log("RATING_AVRG_ID_AND_ID_MODEL: ", ratingIdAndIdModelAvg?.avgRatingModel);
@@ -467,7 +472,7 @@ const GoodsPage = observer(() => {
   // console.log('THUMB_UP:', thumbUp);
   // console.log('THUMB_DOWN:', thumbDown);
 
-  console.log("PARAMS: ", params);
+  //console.log("PARAMS: ", params);
 
   return (
     <div className='goodsCard'>
@@ -651,7 +656,7 @@ const GoodsPage = observer(() => {
       {paramsModel ?
         <ModelSection 
           modelGoods={allDiametersModel}
-          modelName={goodsTyre?._product?.tyre_model?.model}
+          modelName={goodsTyre?._product?.tyre_model?.model ?? goodsWheel?._product?.wheel_model?.model}
         /> 
         : null
       }
@@ -662,15 +667,18 @@ const GoodsPage = observer(() => {
       <div className={paramsModel ? 'similarGoodsNone' : 'similarGoods'}>
         <SimilarGoods similarGoodsList={similarGoods}/>
       </div>
+      {goodsTyre?.model ?
       <div className={paramsModel ? 'allSizeModelNone' : 'allSizeModel'}>
-        <span>Усі розміри моделі {goodsTyre?.model}</span>
+        <span>Усі розміри моделі {goodsTyre?.model ?? ''}</span>
         <AllTyreModelSize sizeTyresList={allParamsModel}/>
       </div>
+      : null  
+      }
       <div className={paramsModel ? 'allModelBrandNone' : 'allModelBrand'}>
-        <span>Усі моделі бренда {goodsTyre?.brand}</span>
+        <span>Усі моделі бренда {goodsTyre?.brand ?? goodsWheel?.brand ?? ''}</span>
         <AllModelBrand 
-          brand={goodsTyre?._product?.tyre_brand?.brand}
-          modelBrandList={allModelsBrand}
+          brand={goodsTyre?._product?.tyre_brand?.brand ?? goodsWheel?._product?.wheel_brand?.brand}
+          modelBrandList={allModelsBrand ?? []}
         />
       </div>
       <div className= {paramsModel ? 'youWatchedModel' : 'youWatched'}>

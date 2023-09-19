@@ -130,7 +130,7 @@
 }
 
 .productInfoRatingLink {
-    margin-left: 15px;
+   
     text-decoration: none;
 }
 
@@ -138,9 +138,13 @@
     text-decoration: none;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
-    gap: 35px;
+    gap: 10px;
+}
+
+.imgAllAboutProduct {
+    margin-left: 160px;
 }
 
 .additionalTools {

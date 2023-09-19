@@ -241,6 +241,7 @@ const NavBar = observer(() => {
     <NavBarDropTyres/>
     <NavBarDropWheels/>
     <NavBarDropTyres/>
+    <NavBarDropTyres/>
     <a href="/home" className='anchorBtn'>Доставка і оплата</a>
     <a href='/contact' className='anchorBtn'>Контакти</a>
     <span data-href="/home">067 777 77 77</span>

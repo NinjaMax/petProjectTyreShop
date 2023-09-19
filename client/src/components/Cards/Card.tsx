@@ -82,7 +82,13 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
         <div className="tyresCard">
             <div >
                 {typeCard === 'tyre' ?
+                <a id='tyresName'
+                    className='cardLinkProduct'
+                    onClick={addGoodsId} 
+                    href={'/' + createStringUrl(goods?.full_name)}
+                >
                  <img id='imgTyres' src={tyres} alt="imgCards" /> 
+                </a>
                  : null  
                 }
                 {typeCard === 'wheel'?
@@ -130,7 +136,7 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                         season={goods?.season}
                     />
                 </div>
-                {typeCard === 'wheel' ?
+                {typeCard === 'tyre' ?
                 <div className="tyresCardCountry">
                     <FlagsIcon 
                         country={goods?.country} 
