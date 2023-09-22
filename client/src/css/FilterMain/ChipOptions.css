@@ -1,9 +1,32 @@
 .chipOptions {
+    /* background-color:#CADBEA;
+    border-radius: 25px; */
+    display: block;
+    /* flex-direction: column;
+    flex-wrap: wrap;
+    cursor: pointer; */
+    
+}
+
+.chipOptionsList {
     background-color:#CADBEA;
     border-radius: 25px;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    flex-wrap: wrap;
     cursor: pointer;
+    margin: 3px;
+    padding-left: 8px;
+    padding-right: 8px;
+    /* width:max-content; */
 }
+
+/* .chipOptionsItem {
+    background-color:#CADBEA;
+    
+} */
 
 .closeChipBtn {
     cursor: pointer;

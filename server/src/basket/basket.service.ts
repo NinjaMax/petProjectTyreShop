@@ -125,9 +125,9 @@ export class BasketService {
 
   async findBasketByIdParam(id: number) {
     try {
-      const basketId = await this.basketRepository.findByPk(id,
-        {include: [Basket_Storage]}
-      );
+      const basketId = await this.basketRepository.findByPk(id,{
+        include: [Basket_Storage]
+      });
       return basketId;
 
     } catch {
@@ -139,7 +139,7 @@ export class BasketService {
   }
 
   async addGoodsToBasket(createBasketDto: CreateBasketDto) {
-    //try {
+    try {
       const findGoodsToBasket =
         await this.basketStorageService.findBasketStorageOne(createBasketDto);
 
@@ -157,16 +157,16 @@ export class BasketService {
 
         return basketStorage;
       }
-    //} catch {
-      // throw new HttpException(
-      //   'Data is incorrect and must be uniq',
-      //   HttpStatus.NOT_FOUND,
-      // );
-    //}
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async updateBasket(updateBasketDto: UpdateBasketDto) {
-    //try {
+    try {
       if (updateBasketDto.id_basket) {
         const basketUpdate = await this.basketRepository.update(
           {
@@ -200,12 +200,12 @@ export class BasketService {
       } else {
           return null;
       }
-    // } catch {
-    //   throw new HttpException(
-    //     'Data is incorrect and must be uniq',
-    //     HttpStatus.NOT_FOUND,
-    //   );
-    //}
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async removeBasket(getBasketDto: GetBasketDto) {

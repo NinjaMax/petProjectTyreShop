@@ -25,8 +25,8 @@ const FilterMainBtn = observer(({
     } 
   }
   const inputSearch = (e: any) => {
-    console.log(e.target.value.length);
-    console.log(e.target.name);
+    // console.log(e.target.value.length);
+    // console.log(e.target.name);
     if (e.target.name === 'Ширина') {
       if (e.target.value.length !==0) {
         const newGoodsTyreWidth = goodsTyre._width.filter(
@@ -71,42 +71,45 @@ const FilterMainBtn = observer(({
 
   return (
     <div className='dropdownFilterMainBtnBack'>
-        <div className="dropdownFilterMainBtn">
-            <button onClick={filterAction} 
-              className="dropBtnFilterMainBtn" 
-              style={{"--widthBtn":width} as React.CSSProperties}
-              > 
-              {titleFilter} <i className='fa fa-caret-down'/>
-              <ChipOptions 
-                chipName={titleFilter}
-                clearFilter={deleteChip}
-                props={chipItem} 
-              />
-            </button>
-            {filterState ?  
-              <div id="myDropdown3" 
-                className={contentInfo ?
-                  "dropdownContentFilterMainBtn" :
-                  "dropdownContentFilterMainBtnRound"
-                } 
-                onClick={ e => e.stopPropagation()}>
-                <input 
-                  id="myInput"
-                  name={titleFilter}
-                  onChange={inputSearch}
-                  type="text" placeholder=" Пошук.."  />
-                <div className='contentOptionsFilterMainBtn'>
-                  {children}
-                </div>
-               {contentInfo?
-                <ContentFilterInfo 
-                  setActive={filterClick}
-                  infoMarking={contentInfo} 
-                  width={width}/>
-                : null}
-              </div>
+      <div className="dropdownFilterMainBtn">
+        <button onClick={filterAction} 
+          className="dropBtnFilterMainBtn" 
+          style={{"--widthBtn":width} as React.CSSProperties}
+        > 
+          {titleFilter} <i className='fa fa-caret-down'/>
+          <ChipOptions 
+            chipName={titleFilter}
+            clearFilter={deleteChip}
+            props={chipItem} 
+          />
+        </button>
+        {filterState ?  
+        <div 
+          id="myDropdown3" 
+          className={contentInfo ?
+            "dropdownContentFilterMainBtn" :
+            "dropdownContentFilterMainBtnRound"
+            } 
+          onClick={ e => e.stopPropagation()}
+        >
+          <input 
+            id="myInput"
+            name={titleFilter}
+            onChange={inputSearch}
+            type="text" placeholder=" Пошук.."  
+          />
+          <div className='contentOptionsFilterMainBtn'>
+            {children}
+          </div>
+          {contentInfo?
+          <ContentFilterInfo 
+            setActive={filterClick}
+            infoMarking={contentInfo} 
+            width={width}/>
             : null}
-        </div>       
+        </div>
+        : null}
+      </div>       
     </div>
   );
 });

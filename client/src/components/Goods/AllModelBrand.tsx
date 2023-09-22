@@ -30,7 +30,7 @@ const AllModelBrand = ({brand, modelBrandList}: IModelBrand) => {
         localStorage.setItem('goodsId', JSON.stringify(e.target.getAttribute('data-iditem')));
     };
 
-    console.log(modelBrandList);
+    //console.log(modelBrandList);
 
     return (
         <div className='allModelBrandsBox'>

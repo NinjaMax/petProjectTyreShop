@@ -14,14 +14,18 @@ const ChipOptions =({props, chipName, clearFilter}: IChipOptions) => {
             onClick={(e) => e.stopPropagation()}>
             {typeof props === 'string' && props.length !== 0 ? props?.split(',').map(
                 (item: string, index: number) =>
-            <Fragment key={item}>  
-                {item} 
-                <span 
-                    data-index={index}
-                    data-name={chipName}
-                    className="closeChipBtn" 
-                    onClick={clearFilter}>&times;
-                </span> 
+            <Fragment key={item}> 
+                <div className='chipOptionsList'>
+                    <div className='chipOptionsItem'>
+                    {item} 
+                     <span 
+                        data-index={index}
+                         data-name={chipName}
+                        className="closeChipBtn" 
+                        onClick={clearFilter}>&times;
+                    </span> 
+                    </div>
+                </div> 
             </Fragment>)
              : null  
             }

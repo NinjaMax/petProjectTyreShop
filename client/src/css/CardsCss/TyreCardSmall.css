@@ -18,6 +18,11 @@
     height: 120px;
 }
 
+.tyresRatingSmall {
+    margin-left: 25%;
+    text-align: center;
+}
+
 .tyreCardSmall:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     
@@ -37,6 +42,9 @@
     font-size: 18px;
     font-family: var(--main-font-family);
     color: black;
+}
+.tyresSmallLinkProduct {
+    text-decoration: none;
 }
 
 

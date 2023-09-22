@@ -1,7 +1,13 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import '../css/PromotionBox.css';
 import Card from './cards/Card';
 import ButtonPrevNext from './buttons/ButtonPrevNext';
+import Modal from './modal/Modal';
+import CheckOrder from './modal/CheckOrder';
+import { ICheckOrderItem } from './catalogs/types/CheckOrder.type';
+import { Context } from '../context/Context';
+import { addGoodsToBasket, createBasket, getBasketById } from '../restAPI/restGoodsApi';
+import { observer } from 'mobx-react-lite';
 
 type IPromoBox = {
     itemsArray: any[] | null;
@@ -11,51 +17,65 @@ type IPromoBox = {
     nextBtn: number;
 };
 
-const PromotionBox = ({
+const PromotionBox = observer(({
     itemsArray, 
     prevButtonEvent,
     nextButtonEvent,
     prevBtn,
     nextBtn
 }: IPromoBox) => {
-    // const [initialArray, setInitialArray] = useState<any[] | null>(itemsArray);
-    // const [goodsArray, setGoodsArray] = useState<any[] | null>(itemsArray);
-    // const [prevBtn, setPrevBtn] = useState<number>(0);
-    // const [nextBtn, setNextBtn] = useState<number>(4);
-
-    // useEffect(() => {
-    //     if (itemsArray && prevBtn === 0 && nextBtn === 4) {
-    //        setGoodsArray(itemsArray.slice(0, 4)); 
-    //        console.log('INITIAL STATE ACTION SLICE');
-    //     } 
-    //     if (prevBtn !== 0 && nextBtn !== 4) {
-    //         setGoodsArray(initialArray!.slice(prevBtn, nextBtn));
-    //         console.log('ARRAY ACTION SLICE');
-    //     }
-    // },[initialArray, itemsArray, nextBtn, prevBtn]);
-
-    // useEffect(() =>{
-    //     if (itemsArray && prevBtn && nextBtn) {
-    //         setGoodsArray(itemsArray.slice(prevBtn, nextBtn));
-    //         console.log('NEXT PREV ACTION SLICE');
-    //     } 
-    // },[itemsArray, nextBtn, prevBtn])
-
-    // const prevBtnEvent = () => {
-    //     setPrevBtn(oldPrevBtn => oldPrevBtn - 1);
-    //     setNextBtn(oldNextBtn => oldNextBtn - 1);
-    //     //console.log('PREV BTN ACTION', prevBtn);
-    // };
-
-    // const nextBtnEvent = () => {
-    //     setPrevBtn(oldPrevBtn => oldPrevBtn + 1);
-    //     setNextBtn(oldNextBtn => oldNextBtn + 1);
-    //     //console.log('NEXT BTN ACTION', nextBtn);
-    // };
-    // console.log('PREV BTN GET_ACTION', prevBtn);
-    // console.log('NEXT BTN GET_ACTION', nextBtn);
-    // console.log('ITEM_ARRAY: ', itemsArray);
-
+    const {customer, page} = useContext<any | null>(Context);
+    const [active, setActive] = useState<boolean>(false);
+    const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem[] | null>([]);
+    
+    const checkOrders = async (
+        item : ICheckOrderItem, 
+        ratingModel: {avgRatingModel: number }
+        ) => {
+        try {
+            setActive(!active);
+            if (!active) {
+                const basket: any = await createBasket(
+                    customer.customer?.id,
+                );
+                console.log('CREATE_BASKET_ID_BASKET: ', basket.data.id_basket);
+                if(basket?.status === 201) {
+                    const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
+                    const addTobasket: any = await addGoodsToBasket(
+                    +item.id,
+                    item.id_cat,
+                    checkItem?.quantity ? checkItem?.quantity + 4 : 4,
+                    item.price[0].price,
+                    item.stock[0].id_supplier,
+                    item.stock[0].id_storage,
+                    //item.category.category,
+                    basket.data.id_basket,
+                    item.full_name,
+                    item.season?.season_ua,
+                    ratingModel?.avgRatingModel,
+                    item.reviews.length,
+                    item.diameter.diameter,
+                    ); 
+                    console.log('ADD_BASK: ', addTobasket);
+                    if (addTobasket?.status === 201) {
+                        const updateBasketStorage = await getBasketById(basket.data.id_basket);
+                        setCheckOrderItem(
+                            [...updateBasketStorage?.basket_storage]
+                        );
+                        page.setBasketCount(
+                            updateBasketStorage?.basket_storage.reduce(
+                                (sum: any, current: any) => (sum + current.quantity),0)
+                        );
+                    console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
+                    console.log('ADD_TO_BASKET: ', addTobasket?.data); 
+                    }  
+                }
+            }
+        } catch (error) {
+            console.log('BASKET_ERROR: ',error);
+        }
+      }
+    
     return (
         <div className='promotionBox'>
             {itemsArray?.length !== 0 && prevBtn >= 0 ? 
@@ -66,7 +86,8 @@ const PromotionBox = ({
                     goods={item}
                     typeCard={item.typeCard}
                     optionsBox={false} 
-                    checkOrders={undefined}
+                    checkOrders={checkOrders}
+                    forOrder={false}
                 />
                 </Fragment>
                 )
@@ -82,7 +103,8 @@ const PromotionBox = ({
                     goods={item}
                     typeCard={item.typeCard}
                     optionsBox={false} 
-                    checkOrders={undefined}
+                    checkOrders={checkOrders}
+                    forOrder={false}
                 />
                 </Fragment>
                 )
@@ -96,7 +118,10 @@ const PromotionBox = ({
                 leftClickActive={prevButtonEvent}
                 rightClickActive={nextButtonEvent}
             />
+            <Modal active={active} setActive={setActive}>
+                <CheckOrder orderItem={checkOrderItem}/> 
+            </Modal> 
         </div>
     );
-};
+});
 export default PromotionBox;

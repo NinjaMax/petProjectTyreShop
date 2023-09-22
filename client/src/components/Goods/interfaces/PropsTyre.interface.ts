@@ -8,6 +8,7 @@ export interface IPropsTyre {
         tyre_brand: {brand: string};
         tyre_model: {model: string};
         country: {
+            id_country: number;
             country_manufacturer_ua :string;
             country_manufacturer: string;
         };
@@ -15,7 +16,11 @@ export interface IPropsTyre {
         id: string; 
         full_name: string; 
         manufacture_year: string;
-        category: {category: string};
+        category: {
+            id_cat: string;
+            category_ua: string;
+            category: string
+        };
         price: [{
             price_wholesale: number;
             price: number;

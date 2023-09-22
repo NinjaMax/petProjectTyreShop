@@ -6,8 +6,10 @@
     padding: 13px;
     width: 247.4px;
     text-align: center;
-    border: none;
+    /* border: none; */
     border-radius: 20px;
+    border: #CADBEA solid;
+    border-width: 0 0 5px 0;
     outline: none;
     transition: 0.4s;
     font-size: 16px;
@@ -17,6 +19,8 @@
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
 .activeButton, .accordion:hover {
     background-color: #CADBEA;
+    border: #71C2FF solid;
+    border-width: 0 0 5px 0;
 }
 
 .accordion:after {
@@ -34,7 +38,7 @@
     content: "\2212"; /* Unicode character for "minus" sign (-) */
 }
 .panelAccordion {
-    height:300px;
+    max-height:300px;
     overflow-y: scroll;
     overflow-x:hidden;
 }

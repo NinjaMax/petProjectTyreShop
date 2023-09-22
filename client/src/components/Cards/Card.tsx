@@ -92,7 +92,13 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                  : null  
                 }
                 {typeCard === 'wheel'?
-                 <img id='imgTyres' src={wheels} alt="imgCards" /> 
+                <a id='tyresName'
+                    className='cardLinkProduct'
+                    onClick={addGoodsId} 
+                    href={'/' + createStringUrl(goods?.full_name)}
+                >
+                    <img id='imgTyres' src={wheels} alt="imgCards" /> 
+                </a>
                  : null  
                 }
                 <p/>
@@ -181,7 +187,7 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                     <ButtonAction 
                         props={"КУПИТИ"} 
                         widthBtn={260} 
-                        eventItem={() =>{
+                        eventItem={() => {
                             checkOrders!(goods, ratingModel)
                         }}
                     />

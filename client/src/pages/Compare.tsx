@@ -1,29 +1,35 @@
 import React, { useContext, useEffect, useState } from 'react';
 import '../css/Pages/Compare.css';
-import { clearCompare, getCompare, getTyresById, getTyresModelRatingAvg, getWheelsById, getWheelsModelRatingAvg } from '../restAPI/restGoodsApi';
+import { addGoodsToBasket, clearCompare, createBasket, getBasketById, getCompare, getTyresById, getTyresModelRatingAvg, getWheelsById, getWheelsModelRatingAvg } from '../restAPI/restGoodsApi';
 import TyresCardList from '../components/cards/CardList';
 import { Context } from '../context/Context';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import CardSmall from '../components/cards/CardSmall';
 import ReviewsGoodsExtend from '../components/reviews/ReviewsGoodsExtend';
 import { IRatingAvg } from './types/RatingModelAvg.type';
+import Modal from '../components/modal/Modal';
+import CheckOrder from '../components/modal/CheckOrder';
+import { ICheckOrderItem } from '../components/catalogs/types/CheckOrder.type';
+import { observer } from 'mobx-react-lite';
 
 
 
-const Compare = () => {
-    const {page} = useContext<any | null>(Context);
-    const [getFavoriteList, setGetFavoriteList] = useState<any[]>([]);
-    const [tyreSearchMod, setTyreSearchMod] = useState<[] | null>(null);
-    const [wheelSearchMod, setWheelSearchMod] = useState<[] | null>(null);
-    const [oilSearchMod, setOilSearchMod] = useState<[] | null>(null);
-    const [batterySearchMod, setBatterySearchMod] = useState<[] | null>(null);
+const Compare = observer(() => {
+    const {page, customer} = useContext<any | null>(Context);
+    const [active, setActive] = useState(false);
+    //const [getFavoriteList, setGetFavoriteList] = useState<any[]>([]);
+    //const [tyreSearchMod, setTyreSearchMod] = useState<[] | null>(null);
+    //const [wheelSearchMod, setWheelSearchMod] = useState<[] | null>(null);
+    //const [oilSearchMod, setOilSearchMod] = useState<[] | null>(null);
+    //const [batterySearchMod, setBatterySearchMod] = useState<[] | null>(null);
     const [compareTyres, setCompareTyres] = useState<any[] | null>([]);
     const [compareWheels, setCompareWheel] = useState<any[] | null>([]);
     const [tabSearchMod, setTabSearchMod] = useState<string>('Шини');
-    const [tabSearchModWheel, setTabSearchModWheel] = useState<[]>([]);
+    //const [tabSearchModWheel, setTabSearchModWheel] = useState<[]>([]);
     const [tabSearchModOil, setTabSearchModOil] = useState<[]>([]);
     const [tabSearchModBattery, setTabSearchModBattery] = useState<[]>([]);
     const [ratingModelAvg, setRatingModelAvg] = useState<IRatingAvg[] | null>([]);
+    const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem[] | null>([]);
 
     useEffect(() => {
         let isMounted = false;
@@ -91,8 +97,54 @@ const Compare = () => {
         }
     }
 
-    console.log('COMPARE_TYRES: ', compareTyres);
-    console.log('COMPARE_WHEELS: ', compareWheels);
+    const checkOrders = async (
+        item : ICheckOrderItem, 
+        ratingModel: {avgRatingModel: number }
+        ) => {
+        try {
+            setActive(!active);
+            if (!active) {
+                const basket: any = await createBasket(
+                    customer.customer?.id,
+                );
+                console.log('CREATE_BASKET_ID_BASKET: ', basket.data.id_basket);
+                if(basket?.status === 201) {
+                    const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
+                    const addTobasket: any = await addGoodsToBasket(
+                    +item.id,
+                    item.id_cat,
+                    checkItem?.quantity ? checkItem?.quantity + 4 : 4,
+                    item.price[0].price,
+                    item.stock[0].id_supplier,
+                    item.stock[0].id_storage,
+                    //item.category.category,
+                    basket.data.id_basket,
+                    item.full_name,
+                    item.season?.season_ua ?? null,
+                    ratingModel?.avgRatingModel,
+                    item.reviews.length,
+                    item.diameter.diameter,
+                    ); 
+                    console.log('ADD_BASK: ', addTobasket);
+                    if (addTobasket?.status === 201) {
+                        const updateBasketStorage = await getBasketById(basket.data.id_basket);
+                        setCheckOrderItem(
+                            [...updateBasketStorage?.basket_storage]
+                        );
+                        page.setBasketCount(
+                            updateBasketStorage?.basket_storage.reduce(
+                                (sum: any, current: any) => (sum + current.quantity),0)
+                        );
+                    console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
+                    console.log('ADD_TO_BASKET: ', addTobasket?.data); 
+                    }  
+                }
+            }
+        } catch (error) {
+            console.log('BASKET_ERROR: ',error);
+        }
+    }
+
 
   return (
     <div id="myOverlay" className="overlayCompareActive">
@@ -332,6 +384,7 @@ const Compare = () => {
                                 <CardSmall
                                     key={goods.id}
                                     product={goods}
+                                    checkOrders={checkOrders}
                                 />
                                 <p/>
                                 <div className='outputDataCompareItemsBoxRating'>
@@ -369,6 +422,7 @@ const Compare = () => {
                                     <CardSmall
                                         key={goods.id}
                                         product={goods}
+                                        checkOrders={checkOrders}
                                     />
                                 <p/>
                                 <div className='outputDataCompareItemsBoxRating'>
@@ -452,8 +506,11 @@ const Compare = () => {
                 </div>
             : <div className='noCompareGoods'>НЕ ДОДАНО ПОРІВНЯННЯ ТОВАРІВ.</div>
             }
+            <Modal active={active} setActive={setActive}>
+                <CheckOrder orderItem={checkOrderItem}/> 
+            </Modal> 
         </div>
     )
-}
+});
 
 export default Compare;

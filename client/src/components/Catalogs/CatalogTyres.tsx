@@ -50,7 +50,7 @@ const CatalogTyres = observer(() => {
                     item.price[0].price,
                     item.stock[0].id_supplier,
                     item.stock[0].id_storage,
-                    item.category.category,
+                    //item.category.category,
                     basket.data.id_basket,
                     item.full_name,
                     item.season.season_ua,

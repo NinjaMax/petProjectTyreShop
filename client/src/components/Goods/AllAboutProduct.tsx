@@ -15,9 +15,12 @@ import { useParams } from 'react-router-dom';
 import { Context } from '../../context/Context';
 import { ICard } from '../cards/interfaces/Card.interface';
 import { observer } from 'mobx-react-lite';
-import { getCompareGoods, getFavoritesGoods } from '../../restAPI/restGoodsApi';
+import { addGoodsToBasket, createBasket, getBasketById, getCompareGoods, getFavoritesGoods } from '../../restAPI/restGoodsApi';
 import WheelMarking from './WheelMarking';
 import { tyreBrandLogo } from '../../services/tyreBrandImg.service';
+import Modal from '../modal/Modal';
+import CheckOrder from '../modal/CheckOrder';
+import { ICheckOrderItem } from '../catalogs/types/CheckOrder.type';
 
 const AllAboutProduct = observer(({
     goods, 
@@ -27,8 +30,10 @@ const AllAboutProduct = observer(({
     avgRatingModel
 }:ICard) => {
     const[guardChecked, setGuardChecked] = useState<boolean>(false);
+    const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem[] | null>([]);
+    const [active, setActive] = useState<boolean>(false);
     // const param = useParams<any>();
-    const {page} = useContext<any>(Context);
+    const {page, customer} = useContext<any>(Context);
     // useEffect(() => {
     //     if (0) {
 
@@ -64,6 +69,54 @@ const AllAboutProduct = observer(({
             console.log('COMPARE_ERROR: ',error);
         }
     };
+    const checkOrders = async (
+        item : any, 
+        avgRatingModel: number | undefined
+        ) => {
+        try {
+            setActive(!active);
+            if (!active) {
+                const basket: any = await createBasket(
+                    customer.customer?.id,
+                );
+                console.log('CREATE_BASKET_ID_BASKET: ', basket.data.id_basket);
+                if(basket?.status === 201) {
+                    const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
+                    const addTobasket: any = await addGoodsToBasket(
+                    +item.id,
+                    item.id_cat,
+                    checkItem?.quantity ? checkItem?.quantity + 4 : 4,
+                    item.price[0].price,
+                    item.stock[0].id_supplier,
+                    item.stock[0].id_storage,
+                    //item.category.category,
+                    basket.data.id_basket,
+                    item.full_name,
+                    item.season?.season_ua,
+                    avgRatingModel,
+                    item.reviews.length,
+                    item.diameter.diameter,
+                    ); 
+                    console.log('ADD_BASK: ', addTobasket);
+                    if (addTobasket?.status === 201) {
+                        const updateBasketStorage = await getBasketById(basket.data.id_basket);
+                        setCheckOrderItem(
+                            [...updateBasketStorage?.basket_storage]
+                        );
+                        page.setBasketCount(
+                            updateBasketStorage?.basket_storage.reduce(
+                                (sum: any, current: any) => (sum + current.quantity),0)
+                        );
+                    console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
+                    console.log('ADD_TO_BASKET: ', addTobasket?.data); 
+                    }  
+                }
+            }
+        } catch (error) {
+            console.log('BASKET_ERROR: ',error);
+        }
+    }
+
 
     return (
         <div className='allAboutProduct'>
@@ -234,7 +287,7 @@ const AllAboutProduct = observer(({
                     <ButtonAction 
                         props={"КУПИТИ"} 
                         widthBtn={280} 
-                        eventItem={undefined}
+                        eventItem={() => checkOrders(goods, avgRatingModel)}
                     />      
                 </div>
                 <div className='btnGoodsBoxTwo'>
@@ -290,7 +343,10 @@ const AllAboutProduct = observer(({
                 </div>
                 : null
                 }
-                <SocialMediaLinks/>   
+                <SocialMediaLinks/> 
+                <Modal active={active} setActive={setActive}>
+                    <CheckOrder orderItem={checkOrderItem}/> 
+                </Modal> 
             </div>
             <div className='productRightgBox'>
                 {goods?.tyre_brand ?

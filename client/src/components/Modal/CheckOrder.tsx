@@ -1,10 +1,13 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import '../../css/Modal/CheckOrder.css';
 import ButtonAction from '../buttons/ButtonAction';
 import TyresCardList from '../cards/CardList';
 import { ICheckTyreModal } from './types/CheckTyreItem.type';
 import { useHistory } from 'react-router-dom';
 import { ICheckOrderItem } from '../catalogs/types/CheckOrder.type';
+import { getBasketOrder, removeBasketStorageGoods, updateBasketStorageGoods } from '../../restAPI/restGoodsApi';
+import { Context } from '../../context/Context';
+import { observer } from 'mobx-react-lite';
 
 type CheckOrderItem = {
 
@@ -161,8 +164,10 @@ type CheckOrderItem = {
     orderItem?: ICheckOrderItem[] | null;
 };
 
-const CheckOrder = ({orderItem}:any) => {
+const CheckOrder = observer(({orderItem}:any) => {
     const [checkItems, setCheckItems] = useState<any[]>([]);
+    const {page} = useContext<any | null>(Context);
+
 
     useEffect(() => {
         let isMounted = false;
@@ -180,21 +185,92 @@ const CheckOrder = ({orderItem}:any) => {
         history.push('/basket');
     };
 
+    const countQuantyti = async (e: any) => {
+        try {
+            if (e.target.value === 'plus') {
+            const updateQuantityPlus = await updateBasketStorageGoods({
+                quantity: Number(e.target.getAttribute('data-count')) + 1,
+                id_basket_storage: e.target.getAttribute('data-id') 
+            })
+                if (updateQuantityPlus) {
+                    const getUpdateBasketPlus: any = await getBasketOrder();
+                    setCheckItems([...getUpdateBasketPlus?.basket_storage.sort(
+                        (a: any, b: any) => (+b.id_basket_storage) - (+a.id_basket_storage)
+                    )]);
+                    page.setBasketCount(
+                        getUpdateBasketPlus?.basket_storage.reduce(
+                            (sum: any, current: any) => (sum + current.quantity),0)
+                    );
+                }
+                
+            }
+            if (e.target.value === 'minus') {
+                const updateQuantityMinus = await updateBasketStorageGoods({
+                    quantity: Number(e.target.getAttribute('data-count')) - 1,
+                    id_basket_storage: e.target.getAttribute('data-id') 
+                })
+                if (updateQuantityMinus) {
+                    const getUpdateBasketMinus: any = await getBasketOrder();
+                    setCheckItems([...getUpdateBasketMinus?.basket_storage.sort(
+                        (a: any, b: any) => (+b.id_basket_storage) - (+a.id_basket_storage)
+                    )]);
+                    page.setBasketCount(
+                        getUpdateBasketMinus?.basket_storage.reduce(
+                        (sum: any, current: any) => (sum + current.quantity),0)
+                    );
+                }
+            }
+        } catch (error) {
+            console.log('BASKET_QUANTITY_ITEM_ERROR: ',error);
+        }
+    };
+
+    const removeGoodsAction = async (e: any) => {
+        try {
+            await removeBasketStorageGoods(e.target.getAttribute('data-id'));
+            const removeBasketGoods: any = await getBasketOrder();
+
+            if (removeBasketGoods?.basket_storage) {
+                setCheckItems([...removeBasketGoods?.basket_storage.sort(
+                    (a: any, b: any) => (+b.id_basket_storage) - (+a.id_basket_storage)
+                )]);
+                page.setBasketCount(
+                    removeBasketGoods?.basket_storage.reduce(
+                        (sum: any, current: any) => (sum + current.quantity),0)
+                    );
+            } else {
+                setCheckItems([]);
+                page.setBasketCount(0);
+            }    
+        } catch (error) {
+            console.log('REMOVE_ITEM_FROM_BASKER_ERROR: ', error);
+        }
+    };
+
     return (
         <div className='checkOrderContainer'>
-                <div>Кошик</div>
+                <div className='checkOrderTitle'>Кошик</div>
                 <div className='checkOrder'>
                 {checkItems?.length !== 0 ?
                     checkItems?.map((item: any) =>
                     <div 
-                        className='checkOrderItem' 
+                         
                         key={item.id + 'b'}
                     >
+                        <div className='checkOrderItem'>
                         <TyresCardList 
                             goods={item}
                             priceItem={item.price}
                             forOrder={true}
-                        />   
+                            countEvent={countQuantyti}
+                        />
+                        <div 
+                            data-id={item.id_basket_storage} 
+                            onClick={removeGoodsAction}
+                            className='checkOrderItemRemove'
+                        >
+                        </div>
+                        </div>    
                     </div>
                    ) : null
                 }    
@@ -205,6 +281,6 @@ const CheckOrder = ({orderItem}:any) => {
                 />    
         </div>       
     );
-};
+});
 export default CheckOrder;
 

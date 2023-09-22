@@ -680,13 +680,7 @@ const FilterCatalogTyres = observer((
                     />  )) : null
                     }
                 </FilterMainBtn>
-                { filter._chipSeason.length !== 0 && stateSeason ?
-                  <button 
-                    className='checkBoxBtnOn season'
-                    onClick={filterSeasonAdd}
-                  >Показати</button> 
-                  : null 
-                } 
+
                 <Accordion 
                     titleName={'Сезон'}
                     chipItem={filter.season}
@@ -694,6 +688,14 @@ const FilterCatalogTyres = observer((
                     filterAction={filterSeasonClick}
                     filterState={stateSeason}
                 >
+                { filter._chipSeason.length !== 0 && stateSeason ?
+                  <button 
+                    className='checkBoxBtnOn season'
+                    onClick={filterSeasonAdd}
+                  >Показати</button> 
+                  : null 
+                } 
+
                     <span>Сезон:</span>
                     {goodsTyre._season ?
                         goodsTyre._season.map(
@@ -738,8 +740,8 @@ const FilterCatalogTyres = observer((
                             'не шип'
                             : studdedItem} 
                         imageSrc={studdedItem.length === 0 ?
-                            './iconsSigns/imagesNoThorn_1_64.png' :
-                            './iconsSigns/imagesThorn_1_64.png'
+                            '/iconsSigns/imagesNoThorn_1_64.png' :
+                            '/iconsSigns/imagesThorn_1_64.png'
                         }
                         /> 
                        )) : null
@@ -833,7 +835,7 @@ const FilterCatalogTyres = observer((
                         value={speedIndexItem} 
                         titleName={'Індекс швидкості'}
                         titleCheckbox={speedIndexItem} 
-                        imageSrc={'./iconsSigns/speed_limit_64.png'}
+                        imageSrc={'/iconsSigns/speed_limit_64.png'}
                     />  )) : null
                     }
                     <p/>
@@ -862,7 +864,7 @@ const FilterCatalogTyres = observer((
                         value={loadIndexItem} 
                         titleName={'Індекс навантаження'}
                         titleCheckbox={loadIndexItem} 
-                        imageSrc={'./iconsSigns/load_limit_1_64_empty.png'}
+                        imageSrc={'/iconsSigns/load_limit_1_64_empty.png'}
                     /> 
                     ))
                      : null

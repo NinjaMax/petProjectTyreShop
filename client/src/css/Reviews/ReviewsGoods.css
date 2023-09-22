@@ -4,7 +4,7 @@
 }
 .reviewsGoodsContainer {
   position: relative;
-  background-color: #fff;
+  background-color: #ddd;
   font-family: var(--main-font-family);
   /* border: 0.1px solid #ccc; */
   border-radius:10px 10px 10px 10px;

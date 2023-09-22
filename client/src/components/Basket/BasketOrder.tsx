@@ -26,7 +26,7 @@ import SuccessNotif from '../notifications/SuccessNotif';
 import { useHistory } from 'react-router-dom';
 
 type IbasketData = {
-    name?: string | null,
+    name?: string,
     phone?: number | null,
     email?: string | null,
     address?: string | null,
@@ -344,7 +344,8 @@ const BasketOrder = observer(() => {
                         total_cost: bonusUser ? (sumGoods! + deliverySum! + commisionPay! + dopGarantySum) - bonusUser :
                         sumGoods! + deliverySum! + commisionPay! + dopGarantySum,
                     }
-                    });
+                }
+            );
         };
 
         return () => {

@@ -16,6 +16,9 @@ import { observer } from 'mobx-react-lite';
 import { tyreDiameterCat, tyreSeasonCat, tyreVehicleTypeCat } from '../services/tyresCatService';
 import BrandsListMain from '../components/BrandsListMain';
 import PromotionBox from '../components/PromotionBox';
+// import Modal from '../components/modal/Modal';
+// import CheckOrder from '../components/modal/CheckOrder';
+// import { ICheckOrderItem } from '../components/catalogs/types/CheckOrder.type';
 
 const Main = observer(() => {
   const {goodsTyre, goodsWheel, filter, page} = useContext<any | null>(Context);

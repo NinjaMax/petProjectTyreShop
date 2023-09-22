@@ -686,11 +686,15 @@ const GoodsPage = observer(() => {
       </div>
       <div className={changeTabGoods==="vseProTovar" ? "smallCardOne":"smallCardNext"}>
         {goodsTyre._product && !paramsModel ?
-          <TyreCardSmall product={goodsTyre._product}/>
+          <TyreCardSmall 
+          rating={ratingIdAndIdModelAvg}
+          product={goodsTyre._product}/>
         : null 
         }
         {goodsWheel._product && !paramsModel ?
-          <TyreCardSmall product={goodsWheel._product}/>
+          <TyreCardSmall 
+          rating={ratingIdAndIdModelAvg}
+            product={goodsWheel._product}/>
         : null 
         }
       </div>

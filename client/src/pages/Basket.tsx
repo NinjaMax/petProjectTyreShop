@@ -5,7 +5,10 @@ import BasketOrder from '../components/basket/BasketOrder';
 const Basket = () => {
     return (
         <div>
-            <BreadCrumbs route={['/','/basket']} hrefTitle={['Home','Basket']}/>
+        <BreadCrumbs 
+          route={['/','/basket',]} 
+          hrefTitle={['Інтернет-магазин SkyParts', 'Корзина']}
+        />
             <BasketOrder/>
         </div>
     );
