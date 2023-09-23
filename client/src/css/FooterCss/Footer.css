@@ -18,8 +18,16 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-}
 
+    
+}
+.footerLogo {
+    margin-left: -10px;
+}
+.footerSocialSectionItem {
+    width: 30px;
+    height: 30px;
+}
 .footerContainer a {
     color: #444B54;
     font-weight: bold;
@@ -29,4 +37,13 @@
 .contactSection {
     color: #444B54;
     font-weight: bold;
+}
+.footerCopyPaste {
+    color: #444B54;
+    font-weight: bold;
+}
+
+.footerTitleColumn {
+    color: #444B54;
+    text-decoration: underline;
 }

@@ -1,49 +1,99 @@
 /* Navbar container */
 .navbar {
-    /*overflow:hidden;*/
-    background-color: #fff;
-    font-family: var(--main-font-family);
-    /*font-family: 'Fredoka', sans-serif;*/
-    display:flex;
-    flex-direction: row;
-    justify-content:space-around;
-    align-items:center;
-    margin: 0px 20px 0 20px;
-    /*position:relative;*/
-  }
-  .navbar img {
-    width: 181px;
-    height: 60px;
-    /*margin-left: 50px;*/
-    cursor: pointer;
-  }
+  /*overflow:hidden;*/
+  background-color: #fff;
+  font-family: var(--main-font-family);
+  /*font-family: 'Fredoka', sans-serif;*/
+  display:flex;
+  flex-direction: row;
+  justify-content:space-around;
+  align-items:center;
+  margin: 0px 20px 0 20px;
+  /*position:relative;*/
+}
+.navbar img {
+  width: 162px;
+  height: 62px;
+  /*margin-left: 50px;*/
+  cursor: pointer;
+}
   
   /* Links inside the navbar */
-  .navbar .anchorBtn {
-    /*float: left;*/
-    font-size: 16px;
-    font-family: var(--main-font-family);
-    color: #444B54;
-    text-align:center;
-    padding: 14px 16px;
-    text-decoration: none;
-    border-radius:2px;
-  }
+.navbar .anchorBtn {
+  /*float: left;*/
+  font-size: 16px;
+  font-family: var(--main-font-family);
+  color: #444B54;
+  text-align:center;
+  padding: 14px 16px;
+  text-decoration: none;
+  border-radius:2px;
+}
   
   /* Add a red background color to navbar links on hover */
-  .navbar .anchorBtn:hover {
-    border: #71C2FF solid;
-    border-width:0 0 5px 0;
-  }
+.navbar .anchorBtn:hover {
+  border: #71C2FF solid;
+  border-width:0 0 5px 0;
+}
 
-  .enterAuthNavBar {
-    cursor: pointer;
-    padding: 3px;
-  }
+.enterAuthNavBar {
+  cursor: pointer;
+  padding: 3px;
+}
 
-  .enterAuthNavBar:hover {
-    background-color:  #9EB9D3;
-    border-radius:20px;
-  }
+.enterAuthNavBar:hover {
+  background-color:  #9EB9D3;
+  border-radius:20px;
+}
+.navbarPhoneBox {
+  display:flex;
+  flex-direction: column;
+  background-color: #ffff;
+  margin: 5px;
+  border-radius: 10px 10px 0px 0px;
   
+}
+.navbarPhone {
+  font-size: 16px;
+  font-family: var(--main-font-family);
+  color: #444B54;
+  padding: 3px;
+  text-align: center;
+  vertical-align:sub;
+}
+.navbarPhoneDropDown {
+  display: none;
+}
+.navbarPhoneBtnUp {
+  display: none;
+}
+.navbarPhoneBtn {
+  font-weight:bolder;
+  color: #444B54;
+}
+.navbarPhoneBox:hover {
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+}
+.navbarPhoneBox:hover .navbarPhoneDropDown {
+  display:flex;
+  flex-direction: column;
+  gap: 1px;
+  position: absolute;
+  top: 11.38%;
+  color: #444B54;
+  background-color: #ffff;
+  margin-left: 0px;
+  padding-left: 2px;
+  padding-right: 17px;
+  border-radius: 0px 0px 10px 10px;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+ 
+}
+.navbarPhoneBox:hover .navbarPhoneBtnDown {
+  display: none;
+}
+.navbarPhoneBox:hover .navbarPhoneBtnUp {
+  display: inline;
+}
+
   

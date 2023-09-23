@@ -5,11 +5,11 @@
     /* top: 50%; */
     width: auto;
     margin-top: -30px;
-    padding: 16px;
+    padding: 12px 20px 12px 20px;
     color: #444B54;
     font-weight: bold;
     font-size: 20px;
-    border-radius: 10px;
+    border-radius: 50px;
     user-select: none;
   }
   
@@ -31,6 +31,6 @@
   
   /* On hover, add a black background color with a little bit see-through */
   .prevButton:hover, .nextButton:hover {
-    background-color: #9EB9D3;
+    background-color: #71C2FF;
     color: white;
   }

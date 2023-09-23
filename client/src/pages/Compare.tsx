@@ -12,8 +12,6 @@ import CheckOrder from '../components/modal/CheckOrder';
 import { ICheckOrderItem } from '../components/catalogs/types/CheckOrder.type';
 import { observer } from 'mobx-react-lite';
 
-
-
 const Compare = observer(() => {
     const {page, customer} = useContext<any | null>(Context);
     const [active, setActive] = useState(false);

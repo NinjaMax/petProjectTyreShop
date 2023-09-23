@@ -6,47 +6,55 @@ const Footer = () => {
   
   <div className="footerContainer">
     <div className='footerBox'>
-      <section
-        className="footerSocialSection">
-        <div className="me-5 d-none d-lg-block">
-          <span>Будьте на звязку з нами в соціальних мережах:</span>
+      <section className="footerSocialSection">
+        <p/>
+        <div className='footerLogo'>
+          <img width={160} height={62}  src='/logoSky180.png' alt='logoShop'/>
         </div>
-        <div>
+        <div className="me-5 d-none d-lg-block">
+          <p/>
+        </div>
+        <div className='footerSocialSectionItem'>
           <a href="/#" className="me-4 text-reset">
             <i className="fab fa-facebook-f"></i>
           </a>
         </div>
-        <div>
+        <div className='footerSocialSectionItem'>
           <a href="/#" className="me-4 text-reset">
-            <i className="fab fa-twitter"></i>
+          <i className="fab fa-square-x-twitter"></i>
           </a>
         </div>
-        <div>
+        <div className='footerSocialSectionItem'>
           <a href="/#" className="me-4 text-reset">
             <i className="fab fa-google"></i>
           </a>
         </div>
-        <div>
+        <div className='footerSocialSectionItem'>
           <a href="/#" className="me-4 text-reset">
             <i className="fab fa-instagram"></i>
           </a>
         </div>
-        <div>
+        <div className='footerSocialSectionItem'>
           <a href="/#" className="me-4 text-reset">
             <i className="fab fa-linkedin"></i>
+          </a>
+        </div>
+        <div className='footerSocialSectionItem'>
+          <a href="/#" className="me-4 text-reset">
+          <i className="fab fa-telegram"></i>
           </a>
         </div>
       </section>
       <section className="">
         <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-          <h6 className="text-uppercase fw-bold mb-4">
-            <i className="fas fa-gem me-3"></i>Компанія
-          </h6>
+          <h4 className="footerTitleColumn">
+            Компанія
+          </h4>
           <p>
             <a href="/#" className="text-reset">О компании</a>
           </p>
           <p>
-            <a href="/#" className="text-reset">Відгуки</a>
+            <a href="/review" className="text-reset">Відгуки</a>
           </p>
           <p>
             <a href="/#" className="text-reset">Шиномонтаж</a>
@@ -55,14 +63,14 @@ const Footer = () => {
       </section>
       <section>
         <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-          <h6 className="text-uppercase fw-bold mb-4">
-            Products
-          </h6>
+          <h4 className="footerTitleColumn">
+            Товари
+          </h4>
           <p>
-            <a href="/#" className="text-reset">Шини</a>
+            <a href="/tyres" className="text-reset">Шини</a>
           </p>
           <p>
-            <a href="/#" className="text-reset">Диски</a>
+            <a href="/wheels" className="text-reset">Диски</a>
           </p>
           <p>
             <a href="/#" className="text-reset">Акб</a>
@@ -71,13 +79,13 @@ const Footer = () => {
             <a href="/#" className="text-reset">Автохімія масла</a>
           </p>
           <p>
-            <a href="/#" className="text-reset">Літні шини</a>
+            <a href="/tyres/litni" className="text-reset">Літні шини</a>
           </p>
           <p>
-            <a href="/#" className="text-reset">Зимові шини</a>
+            <a href="/tyres/zimni" className="text-reset">Зимові шини</a>
           </p>
           <p>
-            <a href="/#" className="text-reset">Легкові шини</a>
+            <a href="/tyres/legkovi" className="text-reset">Легкові шини</a>
           </p>
           <p>
             <a href="/#" className="text-reset">Вантажні шини</a>
@@ -89,9 +97,9 @@ const Footer = () => {
       </section>
       <section>
         <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-          <h6 className="text-uppercase fw-bold mb-4">
-            Useful links
-          </h6>
+          <h4 className="footerTitleColumn">
+            Покупцям
+          </h4>
           <p>
             <a href="/#" className="text-reset">Доставка і оплата</a>
           </p>
@@ -102,19 +110,19 @@ const Footer = () => {
             <a href="/#" className="text-reset">Гарантія SKYSAFE</a>
           </p>
           <p>
-            <a href="/#" className="text-reset">Контакти</a>
+            <a href="/contact" className="text-reset">Контакти</a>
           </p>
           <p>
             <a href="/#" className="text-reset">Бонусна програма</a>
           </p>
           <p>
-            <a href="/#" className="text-reset">Статті</a>
+            <a href="/news" className="text-reset">Статті</a>
           </p>
         </div>
       </section>
       <section>
         <div className="contactSection">
-          <h4 className="text-uppercase fw-bold mb-4">
+          <h4 className="footerTitleColumn">
             Контакти
           </h4>
           <p><i className="fas fa-home me-3"></i> Україна, м Харків 10012</p>
@@ -127,8 +135,8 @@ const Footer = () => {
         </div>
       </section>
     </div>
-    <div className="text-center p-4">
-      © 2023 Copyright:
+    <div className="footerCopyPaste">
+        ©2023 Copyright:
       <a className="text-reset fw-bold" href="/#"> skyparts.com.ua</a>
     </div>
   </div>

@@ -236,15 +236,23 @@ const NavBar = observer(() => {
   return (
   <div className="navbar">
     <a href='/'>
-      <img data-href='/' src='/logoSky180.png' alt='logoShop'/>
+      <img src='/logoSky180.png' alt='logoShop'/>
     </a>
     <NavBarDropTyres/>
     <NavBarDropWheels/>
-    <NavBarDropTyres/>
-    <NavBarDropTyres/>
     <a href="/home" className='anchorBtn'>Доставка і оплата</a>
     <a href='/contact' className='anchorBtn'>Контакти</a>
-    <span data-href="/home">067 777 77 77</span>
+    <div className='navbarPhoneBox'>
+      <span className='navbarPhone'>067 777 77 77 
+        <span className='navbarPhoneBtnDown'> <i className="fa fa-caret-down"></i></span>
+        <span className='navbarPhoneBtnUp'> <i className="fa fa-caret-up"></i></span>
+      </span>
+      <span className='navbarPhoneDropDown'>
+        <span>099 777 77 77</span>
+        <span>063 777 77 77</span>
+      </span>
+    </div>
+    
     <span data-href="/">Більше</span>
     <ButtonSearch clickSearchBtn={clickSearchBtn}/>
     {searchBtn? 

@@ -19,9 +19,9 @@ const ReviewsMain = ({props, children, prevBtnAction, nextBtnAction}: IReviewMai
             </div> 
             <ButtonPrevNext 
                 prevBtnLeft={250} 
-                prevTop={275} 
+                prevTop={280} 
                 nextBtnRight={250} 
-                nextTop={275}    
+                nextTop={280}    
                 leftClickActive={prevBtnAction} 
                 rightClickActive={nextBtnAction}
             />

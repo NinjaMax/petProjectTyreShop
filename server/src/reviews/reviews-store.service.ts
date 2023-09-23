@@ -58,6 +58,8 @@ export class ReviewsStoreService {
         include: { all: true },
         limit: limit,
         offset: offset,
+        order: [['createdAt', 'DESC']],
+
       });
 
       return reviewStoreAllLimit;
