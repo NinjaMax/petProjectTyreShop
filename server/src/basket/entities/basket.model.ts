@@ -47,6 +47,12 @@ export class Basket extends Model<Basket, BasketConfigAttr> {
   delivery: string;
 
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  delivery_dep: string;
+
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  delivery_dep_ref: string;
+
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
   city_delivery: string;
 
   @Column({ type: DataType.STRING, unique: false, allowNull: true })

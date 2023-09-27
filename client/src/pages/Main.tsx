@@ -654,6 +654,12 @@ const Main = observer(() => {
         props={'Відгуки про магазин'}
         prevBtnAction={prevBtnReviewStore}
         nextBtnAction={nextBtnReviewStore}
+        buttonPosition={{
+          prevBtnLeft: 250, 
+          prevTop: 280, 
+          nextBtnRight: 250,  
+          nextTop: 280, 
+        }}
       >
       <div >
         {reviewStoreAll?.length !== 0 ? 
@@ -667,7 +673,7 @@ const Main = observer(() => {
           <a className='mainLinkReview'
            href='/review'>Дивитися всі відгуки про магазин</a>
         </div>
-      }
+        }
       </div>
       </ReviewsMain>
       <NewsMainBox 

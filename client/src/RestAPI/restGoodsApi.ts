@@ -395,6 +395,8 @@ const createBasket = async (
     notes?: string,
     storage?: string,
     delivery?: string,
+    delivery_dep?: string,
+    delivery_dep_ref?: string,
     city_delivery?: string,
     ref_city_delivery?: string,
     pay_view?: string,
@@ -410,6 +412,8 @@ await $hostPost.post('/basket', {
     notes: notes,
     storage: storage,
     delivery: delivery,
+    delivery_dep: delivery_dep,
+    delivery_dep_ref: delivery_dep_ref,
     city_delivery: city_delivery,
     ref_city_delivery: ref_city_delivery,
     pay_view: pay_view,
@@ -485,6 +489,8 @@ await $hostPost.patch('/basket/update',
     notes: data?.notes,
     storage: data?.storage,
     delivery: data?.delivery,
+    delivery_dep: data?.delivery_dep,
+    delivery_dep_ref: data?.delivery_dep_ref,
     city_delivery: data?.city_delivery,
     ref_city_delivery: data?.ref_city_delivery,
     pay_view: data?.pay_view,
@@ -797,6 +803,36 @@ const getAllStoreReviewLimit = async (
     return data;
 }
 
+const getTyresReviewLimit = async (
+    limit: string,
+    offset: string,
+    ) => {
+    const {data} = await $hostGet.get('/reviews/tyres/limit/',
+    {params: {
+        limit: limit ?? '1',
+        offset: offset ?? '0',
+    }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+const getWheelsReviewLimit = async (
+    limit: string,
+    offset: string,
+    ) => {
+    const {data} = await $hostGet.get('/reviews/wheels/limit/',
+    {params: {
+        limit: limit ?? '1',
+        offset: offset ?? '0',
+    }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
 const getAllArticles = async () => {
     const {data} = await $hostGet.get('/articles/all')
     //localStorage.setItem('token', data.token)
@@ -962,7 +998,7 @@ export {
     getTyresById,
     getTyresAll,
     getWheelsAll,
-    //getTyresByFullName,
+    getTyresReviewLimit,
     getTyresByIdParam,
     getTyresCountAll,
     getTyresBrandPropsAll,
@@ -1013,6 +1049,7 @@ export {
     likesWheelReview,
     createWheelReview,
     getWheelsById,
+    getWheelsReviewLimit,
     getWheelsModelRatingAvg,
     getWheelsBrandRatingAvg,
     getWheelsCountReviewByBrand,

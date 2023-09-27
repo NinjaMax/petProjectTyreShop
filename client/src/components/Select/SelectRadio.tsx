@@ -21,7 +21,7 @@ const SelectRadio = ({
 
     return (
         <div className={addOptions ? 'selectRadioActive':'selectRadio'} 
-                data-style={{"--direction": direction}}>   
+                style={{"--direction":direction} as React.CSSProperties}>   
             <div key={radioData.value}>
                 <label 
                     className={disabled ? 

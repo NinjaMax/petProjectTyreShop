@@ -3,4 +3,6 @@ export type IDapertmentNP = {
     MainDescription: string,
     ref_city_delivery?: string,
     address?: string,
+    id?: string,
+    name?: string,
 };

@@ -83,6 +83,9 @@ export type IDepart = {
             WarehouseStatus?: string,
             WarehouseStatusDate?: string,
             WorkInMobileAwis?: string,
+            address?: string,
+            id?: string,
+            name?: string,
         //},
         //...{}[],
     // ]

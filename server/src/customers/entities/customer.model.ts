@@ -42,6 +42,15 @@ export class Customer extends Model<Customer, CustomerConfigAttr> {
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
   delivery: string;
 
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  delivery_city_ref: string;
+
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  delivery_dep: string;
+
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  delivery_dep_ref: string;
+
   @Column({ type: DataType.STRING, unique: false, allowNull: false })
   password: string;
 

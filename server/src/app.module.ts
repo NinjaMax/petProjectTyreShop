@@ -126,6 +126,11 @@ import { RatingWheels } from './ratings/entities/rating-wheels.model';
         username: configService.get('POSTGRES_USER'),
         password: configService.get('POSTGRES_PASSWORD'),
         database: configService.get('POSTGRES_DB'),
+        pool: {
+          max: 100,
+          idle: 10000,
+          acquire: 60000,
+        },
         models: [
           Tyres,
           Wheel,

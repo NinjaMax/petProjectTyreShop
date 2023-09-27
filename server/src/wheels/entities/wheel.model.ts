@@ -40,6 +40,9 @@ export class Wheel extends Model<Wheel, WheelConfigAttr> {
   })
   id: number;
 
+  @Column({ type: DataType.BIGINT, unique: true, allowNull: true })
+  id_goods_sup: number;
+
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   full_name: string;
 

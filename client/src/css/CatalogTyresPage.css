@@ -5,8 +5,8 @@
     grid-template-areas: 
                     "a a a a"
                     "b c c c"
-                    "d d d d"
-                    "e e e e";
+                    "b d d d"
+                    "b e e e";
     grid-gap:5px;
     margin-left: 30px;
     margin-right: 30px;

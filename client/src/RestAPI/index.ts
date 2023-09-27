@@ -66,6 +66,13 @@ const $novaPoshtaPost = axios.create({
     //withCredentials: true,
   })
 
+const $deliveryPost = axios.create({
+    baseURL: process.env.REACT_APP_DELIVERY_API,
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+    },
+})
+
 // const authInterceptor = (config: any) => {
 //     config.headers.authorization = `Bearer ${localStorage.getItem('token')}`
 //     return config
@@ -82,5 +89,6 @@ export {
     $authHostPostLogIn,
     $authHostDeleteLogOut,
     $hostPostUpload,
-    $novaPoshtaPost
+    $novaPoshtaPost,
+    $deliveryPost,
 }

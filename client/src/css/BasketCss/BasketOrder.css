@@ -126,7 +126,7 @@
     align-items: flex-start;
     gap: 5px;
     position: absolute;
-    top: 108%;
+    top: 72%;
     overflow-y: auto;
     max-height: 150px;
     border-radius: 8px;
@@ -173,7 +173,7 @@
     /* top: 110%; */
     overflow-y: auto;
     max-height: 150px;
-    border-radius: solid #cccc 6px;
+    border-radius: solid #9999 6px;
     background-color: #ffff;
     /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
     appearance: none;
@@ -197,17 +197,70 @@
     padding: 2px;
 }
 
-.basketDepartList select {
+.basketSelectDepart {
     appearance: none;
     cursor: pointer;
     width: 480px;
-    /* background-color: red; */
-    border-radius: 6px;
+    font-family: var(--main-font-family);
+    color: #444B54;
+    font-size:16px;
+    border-radius: 10px;
+    border-color: #9999;
+    border-style: solid;
+    border-width: 2px;
     padding: 3px;
     z-index: 9;
 }
 
-.basketDepartList option {
+.basketDepartListDel {
+    /* content: "▼"; */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    position: relative;
+    font-family: var(--main-font-family);
+    top: 50%;
+    overflow-y: auto;
+    max-height: 150px;
+    border-radius: solid #9999 6px;
+    background-color: #ffff;
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
+    appearance: none;
+}
+.basketDepartListDel::after {
+    content: "▼";
+    font-size: 1rem;
+    top: 0.5px;
+    right: 5px;
+    position: absolute;
+    z-index: 9;
+    /* appearance: none; */
+    /* cursor: pointer; */
+  }
+  .basketDepartListDel .basketDepartListItem {
+    cursor: pointer;
+    /* background-color: blueviolet; */
+    width: 540px;
+    border-radius: 6px;
+    padding: 2px;
+}
+.basketSelectDepartDel {
+    appearance: none;
+    cursor: pointer;
+    width: 480px;
+    font-family: var(--main-font-family);
+    color: #444B54;
+    font-size:16px;
+    border-radius: 10px;
+    border-color: #9999;
+    border-style: solid;
+    border-width: 2px;
+    padding: 3px;
+    z-index: 9;
+}
+
+/* .basketDepartList option {
     appearance: none;
     cursor: pointer;
     border-radius: 6px;
@@ -217,7 +270,7 @@
     /* width: 550px;
     border-radius: 6px;
     padding: 2px; */
-}
+/*} */
 
 .basketDepartList option:hover {
     cursor: pointer;

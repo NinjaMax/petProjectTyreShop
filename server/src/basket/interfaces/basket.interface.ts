@@ -17,4 +17,6 @@ export interface BasketConfigAttr {
   commission_cost: number;
   bonus_decrease: number;
   total_cost: number;
+  delivery_dep: string;
+  delivery_dep_ref: string;
 }

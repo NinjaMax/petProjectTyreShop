@@ -6,4 +6,6 @@ export type CalcNovaPoshta = {
     goodsQuantity?: string,
     goodsDescription?: string,
     redeliveryCost?: string,
+    warehouseSender?: string | null,
+    warehouseReceiver?: string | null,
 };

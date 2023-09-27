@@ -49,8 +49,8 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
   })
   id: number;
 
-  // @Column({type: DataType.BIGINT, unique: true, allowNull: true})
-  // id_goods_provider: number;
+  @Column({ type: DataType.BIGINT, unique: true, allowNull: true })
+  id_goods_sup: number;
 
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   full_name: string;
@@ -148,6 +148,10 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
   @ForeignKey(() => Description)
   @Column({ type: DataType.INTEGER })
   id_description: number;
+
+  @ForeignKey(() => TyreEuromark)
+  @Column({ type: DataType.INTEGER })
+  id_euromark: number;
 
   @HasMany(() => StockTyres, 'id_tyre')
   stock: StockTyres[];

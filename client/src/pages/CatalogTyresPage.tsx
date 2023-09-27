@@ -8,7 +8,7 @@ import BreadCrumbs from '../components/BreadCrumbs';
 import CyrillicToTranslit from 'cyrillic-to-translit-js';
 import { generatePath, useHistory, useLocation, useParams } from 'react-router-dom';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
-import { getTyresCountAll, getTyresWithoutOffset, getWheelsWithoutOffset} from '../restAPI/restGoodsApi';
+import { getTyresCountAll, getTyresReviewLimit, getTyresWithoutOffset, getWheelsReviewLimit, getWheelsWithoutOffset} from '../restAPI/restGoodsApi';
 import { Context } from '../context/Context';
 import { observer } from 'mobx-react-lite';
 import { tyreDiameterCat, tyreSeasonCat, tyreVehicleTypeCat } from '../services/tyresCatService';
@@ -21,7 +21,9 @@ import { typeWheelsCat } from '../services/wheelsProps.service';
 const CatalogTyresPage = observer(({crumbsItem}: any) => {
   const {goodsTyre, goodsWheel, filter} = useContext<any | null>(Context);
   const {page} = useContext<any | null>(Context);
-  const [paramUrl, setParamUrl] = useState(0);
+  const [reviewGoodsData, setReviewGoodsData] = useState<any[] | null>();
+  const [prevBtnReview, setPrevBtnReview] = useState<number>(0);
+  const [nextBtnReview, setNextBtnReview] = useState<number>(0);
   const params = useParams<any>();
   const location = useLocation();
   const history = useHistory();
@@ -37,7 +39,7 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
       const taskLoad: any[] = [
         getTyresWithoutOffset,  
         getTyresCountAll,
-        //getWheelsWithoutOffset,
+        getTyresReviewLimit,
         
       ];
       if (localStorage.getItem('filterTyreUrl')) {
@@ -316,6 +318,17 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
           );
           goodsTyre?.setTotalCount(tyreTotalCount);
           //console.log('SET_TYRES_TOTALCOUNT: ', tyreTotalCount);
+        }
+        if(!isMounted && taskLoad[i] === getTyresReviewLimit &&
+          location.pathname.includes('tyres')
+          ) {
+          let getReviewTyres: any = await taskLoad[i](
+            1,
+            nextBtnReview
+          );
+          if (getReviewTyres) {
+            setReviewGoodsData(getReviewTyres);
+          }
         }
         const task = taskLoad.shift();
         task();
@@ -1047,7 +1060,8 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
     filter.homologation,
     filter.reinforced,
     filter.sort,
-    //goodsWheel
+    nextBtnReview,
+    location.pathname,
   ]);
 
   useEffect(() => {
@@ -1199,6 +1213,7 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
     const loadMaintask = async() => {
       const taskLoad: any[] = [
         getWheelsWithoutOffset,
+        getWheelsReviewLimit
       ];
 
       if (localStorage.getItem('filterWheelUrl')) {
@@ -1442,6 +1457,17 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
             goodsWheel?.setType(
               Array.from(new Set(setTypeFilter))
             )
+          }
+        }
+        if(!isMounted && taskLoad[i] === getWheelsReviewLimit &&
+          location.pathname.includes('wheels')
+          ) {
+          let getReviewWheels: any = await taskLoad[i](
+            1,
+            nextBtnReview
+          );
+          if (getReviewWheels) {
+            setReviewGoodsData(getReviewWheels);
           }
         }
         const task = taskLoad.shift();
@@ -1867,12 +1893,26 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
     filter.sort, 
     page.limit, 
     page.loadMore, 
-    page.offset
+    page.offset,
+    nextBtnReview,
+    location.pathname,
   ]);
 
-  const handleFilterTyreChange = (e: any) => {
-    console.log(e.currentTarget.value);
-  }  
+  const prevBtnReviewGoods = () => {
+    if (prevBtnReview > 0) {
+      setPrevBtnReview(oldPrevBtn => oldPrevBtn - 1);
+      setNextBtnReview(oldNextBtn => oldNextBtn - 1);
+    }
+    if (prevBtnReview === 0) {
+      setPrevBtnReview(0);
+      setNextBtnReview(0);
+    }
+  };
+
+  const nextBtnReviewGoods = () => {
+    setNextBtnReview(oldNextBtn => oldNextBtn + 1);
+    setPrevBtnReview(oldPrevBtn => oldPrevBtn + 1);
+  };
 
   const filterClick = () => {
     setStateFilter(!stateFilter);
@@ -1886,22 +1926,22 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
   };
   
   //console.log('FILTER_URL_GET: ', filterURLGet);
-  console.log('PARAMS: ', params);
-  console.log('PARAMS_WIDTH: ', params.width);
-  console.log('PARAMS_HEIGHT: ', params.height);
-  console.log('PARAMS_DIAMETER: ', params.diameter);
-  console.log('PARAMS_BRANDS: ', params.brands);
-  console.log('PARAMS_SEASON: ', params.season);
-  console.log('PARAMS_TYPE: ', params.type);
-  console.log('LOCATION: ', location.pathname);
-  //console.log('SEASON: ', tyreSeasonCat(params.season));
-  // console.log('CATALOG_CLOSE_FILTER: ', stateFilter);
-  // console.log('FILTER_WIDTH: ', filter.width);
-  // console.log('FILTER_CHIP_WIDTH: ', filter.chipWidth);
-  console.log('FILTER_BRANDS: ', filter.brands);
-  console.log('FILTER_CHIP_BRANDS: ', filter.chipBrands);
-  console.log('FILTER_SEASON: ', filter.season);
-  console.log('FILTER_CHIP_SEASON: ', filter.chipSeason);
+  //console.log('PARAMS: ', params.pathname);
+  // console.log('PARAMS_WIDTH: ', params.width);
+  // console.log('PARAMS_HEIGHT: ', params.height);
+  // console.log('PARAMS_DIAMETER: ', params.diameter);
+  // console.log('PARAMS_BRANDS: ', params.brands);
+  // console.log('PARAMS_SEASON: ', params.season);
+  // console.log('PARAMS_TYPE: ', params.type);
+  // console.log('LOCATION: ', location.pathname);
+  // //console.log('SEASON: ', tyreSeasonCat(params.season));
+  // // console.log('CATALOG_CLOSE_FILTER: ', stateFilter);
+  // // console.log('FILTER_WIDTH: ', filter.width);
+  // // console.log('FILTER_CHIP_WIDTH: ', filter.chipWidth);
+  // console.log('FILTER_BRANDS: ', filter.brands);
+  // console.log('FILTER_CHIP_BRANDS: ', filter.chipBrands);
+  // console.log('FILTER_SEASON: ', filter.season);
+  // console.log('FILTER_CHIP_SEASON: ', filter.chipSeason);
   // console.log('FILTER_HEIGHT: ', filter.height);
   // console.log('FILTER_DIAMETER: ', filter.diameter,);
   // console.log('GET_TYRES:', goodsTyre._tyres);
@@ -1910,6 +1950,8 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
   // console.log('TYRES_FILTER_HEIGHT: ', goodsTyre._height);
   // console.log('TYRES_FILTER_DIAMETER: ', goodsTyre._diameter);
   // console.log('TYRES_FILTER_BRANDS: ', goodsTyre._brands);
+  //console.log('REVIEWS_DATA: ', reviewGoodsData);
+
     return (
       <div className='catalogTyres'
         onClick={closeFilter}
@@ -1963,11 +2005,39 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
           }
         </div>
         <div className='d'>
-          <ReviewsMain props={'Відгуки клієнтів'} 
-            prevBtnAction={() => console.log('REVIEW_PREV')} 
-            nextBtnAction={() => console.log('REVIEW_NEXT')}          
+          <ReviewsMain 
+            props={'Відгуки кліентів'} 
+            prevBtnAction={prevBtnReviewGoods} 
+            nextBtnAction={nextBtnReviewGoods}    
+            buttonPosition={{
+              prevBtnLeft: 450, 
+              prevTop: 335, 
+              nextBtnRight: 140,  
+              nextTop: 335, 
+            }}      
           >
-          {/* <ReviewsGoods reviewExtend={true} btnLeft={undefined} btnRight={undefined}/> */}
+            <div >
+            {reviewGoodsData?.length !== 0 ? 
+              reviewGoodsData?.map((item: any) =>
+              <div key={item.id_review_store + '_review'}>
+              <ReviewsGoods 
+                productFullName={item.tyres.full_name} 
+                rating={[item.rating]} 
+                reviewEntity={item} 
+                reviewExtend={false} 
+                btnLeft={undefined} 
+                btnRight={undefined}
+              />
+              </div>
+              )
+              : 
+              <div className='mainAfterReviews' >
+                <a className='mainLinkReview'
+                  href='/review'>Дивитися всі відгуки про магазин
+                </a>
+              </div>
+            }
+            </div>
           </ReviewsMain>
         </div>
         <div className='e'>

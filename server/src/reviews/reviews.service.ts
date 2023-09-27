@@ -216,6 +216,42 @@ export class ReviewsService {
     }
   }
 
+  async findReviewsTyresLimit(limit: number, offset: number) {
+    try {
+      const reviewTyresLimit = await this.reviewTyresRepository.findAll({
+        include: { all: true },
+        limit: limit,
+        offset: offset,
+        order: [['createdAt', 'DESC']],
+
+      });
+      return reviewTyresLimit;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async findReviewsWheelsLimit(limit: number, offset: number) {
+    try {
+      const reviewWheelsLimit = await this.reviewWheelsRepository.findAll({
+        include: { all: true },
+        limit: limit,
+        offset: offset,
+        order: [['createdAt', 'DESC']],
+
+      });
+      return reviewWheelsLimit;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
   async countReviewByIdBrand(id_brand: number) {
     try {
       const reviewIdBrand = await this.reviewTyresRepository.count({

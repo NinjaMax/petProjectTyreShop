@@ -31,6 +31,8 @@ export class BasketService {
             notes: createBasketDto.notes,
             storage: createBasketDto.storage,
             delivery: createBasketDto.delivery,
+            delivery_dep: createBasketDto.delivery_dep,
+            delivery_dep_ref: createBasketDto.delivery_dep_ref,
             city_delivery: createBasketDto.city_delivery,
             ref_city_delivery: createBasketDto.ref_city_delivery,
             pay_view: createBasketDto.pay_view,
@@ -57,6 +59,8 @@ export class BasketService {
           notes: createBasketDto.notes,
           storage: createBasketDto.storage,
           delivery: createBasketDto.delivery,
+          delivery_dep: createBasketDto.delivery_dep,
+          delivery_dep_ref: createBasketDto.delivery_dep_ref,
           pay_view: createBasketDto.pay_view,
           dop_garanty: createBasketDto.dop_garanty,
           session_id: session,
@@ -168,7 +172,7 @@ export class BasketService {
   async updateBasket(updateBasketDto: UpdateBasketDto) {
     try {
       if (updateBasketDto.id_basket) {
-        const basketUpdate = await this.basketRepository.update(
+        await this.basketRepository.update(
           {
             //id: updateBasketDto.id,
             name: updateBasketDto.name,
@@ -178,6 +182,8 @@ export class BasketService {
             notes: updateBasketDto.notes,
             storage: updateBasketDto.storage,
             delivery: updateBasketDto.delivery,
+            delivery_dep: updateBasketDto.delivery_dep,
+            delivery_dep_ref: updateBasketDto.delivery_dep_ref,
             city_delivery: updateBasketDto.city_delivery,
             ref_city_delivery: updateBasketDto.ref_city_delivery,
             pay_view: updateBasketDto.pay_view,
@@ -189,16 +195,15 @@ export class BasketService {
             total_cost: updateBasketDto.total_cost,
             id_customer: updateBasketDto.id_customer,
           },
-            { where: { id_basket: updateBasketDto.id_basket } },
+          { where: { id_basket: updateBasketDto.id_basket } },
         );
         const basketAfterUpdate = await this.basketRepository.findByPk(
-        updateBasketDto.id_basket,
-        { include: [Basket_Storage] },
+          updateBasketDto.id_basket,
+          { include: [Basket_Storage] },
         ); 
-
         return basketAfterUpdate;
       } else {
-          return null;
+        return null;
       }
     } catch {
       throw new HttpException(

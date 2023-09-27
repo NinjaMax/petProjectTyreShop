@@ -16,6 +16,8 @@ export class GetBasketDto {
   readonly ratingCount: number;
   readonly reviewCount: number;
   readonly delivery: string;
+  readonly delivery_dep: string;
+  readonly delivery_dep_ref: string;
   readonly season: string;
   readonly category: string;
   readonly id_cat: number;
@@ -33,4 +35,8 @@ export class GetBasketDto {
   readonly commission_cost: number;
   readonly bonus_decrease: number;
   readonly total_cost: number;
+  readonly diameter: string;
+  readonly ref_diameter: string;
+  readonly weight: string;
+  readonly ref_weight: string;
 }

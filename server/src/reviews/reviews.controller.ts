@@ -37,6 +37,22 @@ export class ReviewsController {
     return this.reviewsService.findAllReviewsWheel();
   }
 
+  @Get('/tyres/limit/')
+  findTyresReviewWithLimit(
+    @Query('limit') limit: string,
+    @Query('offset') offset: string
+  ) {
+    return this.reviewsService.findReviewsTyresLimit(+limit, +offset);
+  }
+
+  @Get('/wheels/limit/')
+  findWheelsReviewWithLimit(
+    @Query('limit') limit: string,
+    @Query('offset') offset: string
+  ) {
+    return this.reviewsService.findReviewsWheelsLimit(+limit, +offset);
+  }
+
   @Get('count/brand')
   countReviewByBrand(@Query('id_brand') id_brand: number) {
     return this.reviewsService.countReviewByIdBrand(id_brand);

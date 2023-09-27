@@ -75,23 +75,21 @@ export class BasketStorageService {
   }
 
   async findBasketStorageOne(getBasketDto: GetBasketDto) {
-    // try {
+    try {
       const basketStorageOne = await this.basketStorageRepository.findOne({
-        where: { id: getBasketDto.id, 
-          id_basket: getBasketDto.id_basket
-        },
+        where: { id: getBasketDto.id, id_basket: getBasketDto.id_basket },
       });
       if (basketStorageOne) {
         return basketStorageOne;
       } else {
         return null;
       }
-    // } catch {
-    //   throw new HttpException(
-    //     'Data is incorrect and must be uniq',
-    //     HttpStatus.NOT_FOUND,
-    //   );
-    // }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async findAllGoodsBasketStorage(getBasketDto: GetBasketDto) {
@@ -113,12 +111,16 @@ export class BasketStorageService {
     updateBasketDto: UpdateBasketDto,
     basketStorageId: number,
   ) {
-    // try {
+    try {
       const basketStorageUpdate = await this.basketStorageRepository.update(
         {
           id: updateBasketDto.id,
           id_cat: updateBasketDto.id_cat,
           quantity: updateBasketDto.quantity,
+          diameter: updateBasketDto.diameter,
+          ref_diameter: updateBasketDto.ref_diameter,
+          weight: updateBasketDto.weight,
+          ref_weight: updateBasketDto.ref_weight,
           price: updateBasketDto.price,
           id_supplier: updateBasketDto.id_supplier,
           id_storage: updateBasketDto.id_storage,
@@ -133,12 +135,12 @@ export class BasketStorageService {
       );
 
       return basketStorageUpdate;
-    // } catch {
-    //   throw new HttpException(
-    //     'Data is incorrect and must be uniq',
-    //     HttpStatus.NOT_FOUND,
-    //   );
-    // }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async removeBasketStorageById(id: number) {

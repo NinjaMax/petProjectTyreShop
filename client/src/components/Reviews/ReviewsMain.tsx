@@ -8,9 +8,21 @@ interface IReviewMain {
     children?: JSX.Element | JSX.Element [];
     prevBtnAction(arg0:any):void;
     nextBtnAction(arg0:any):void;
+    buttonPosition: {
+        prevBtnLeft: number, 
+        prevTop: number, 
+        nextBtnRight: number,  
+        nextTop: number, 
+    };
 }
 
-const ReviewsMain = ({props, children, prevBtnAction, nextBtnAction}: IReviewMain) => {
+const ReviewsMain = ({
+    props, 
+    children, 
+    prevBtnAction, 
+    nextBtnAction,
+    buttonPosition
+}: IReviewMain) => {
     return (
         <div className='reviewBox'>
            <div className='textReview'>{props}</div>
@@ -18,10 +30,10 @@ const ReviewsMain = ({props, children, prevBtnAction, nextBtnAction}: IReviewMai
                 {children}
             </div> 
             <ButtonPrevNext 
-                prevBtnLeft={250} 
-                prevTop={280} 
-                nextBtnRight={250} 
-                nextTop={280}    
+                prevBtnLeft={buttonPosition.prevBtnLeft} 
+                prevTop={buttonPosition.prevTop} 
+                nextBtnRight={buttonPosition.nextBtnRight} 
+                nextTop={buttonPosition.prevTop}    
                 leftClickActive={prevBtnAction} 
                 rightClickActive={nextBtnAction}
             />

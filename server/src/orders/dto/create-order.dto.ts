@@ -65,7 +65,8 @@ export class CreateOrderDto {
   readonly checkedIn: boolean;
   readonly city_delivery: string;
   readonly ref_city_delivery: string;
-
+  readonly delivery_dep: string;
+  readonly delivery_dep_ref: string;
   readonly delivery_cost: number;
   readonly dop_garanty: number;
   readonly commission_cost: number;
@@ -75,4 +76,8 @@ export class CreateOrderDto {
   readonly delivery_city_ref: string;
   readonly delivery_city_depart: string;
   readonly delivery_city_depart_ref: string;
+  readonly diameter: string;
+  readonly ref_diameter: string;
+  readonly weight: string;
+  readonly ref_weight: string;
 }
