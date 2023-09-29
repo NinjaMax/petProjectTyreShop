@@ -58,10 +58,10 @@ export class AddTyresToDbService {
   ) {}
 
   async addTyresToDb(item: ItemPriceTyresConfigAttr) {
-    //try {
+    try {
       await this.tyresservice.createTyresFromPrice(
         +item.id,
-        item.id_sup ?? 0,
+        item.id_sup,
         item.full_name ?? '',
         item.photo_url ?? '',
         item.update_date,
@@ -212,11 +212,11 @@ export class AddTyresToDbService {
       );
 
       return 'Price added to DATA BASE';
-    // } catch (error) {
-    //   throw new HttpException(
-    //     'Data is incorrect, check your data',
-    //     HttpStatus.NOT_FOUND,
-    //   );
-    // }
+    } catch (error) {
+      throw new HttpException(
+        'Data is incorrect, check your data',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 }

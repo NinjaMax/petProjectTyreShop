@@ -58,32 +58,6 @@ export class SuppliersService {
           await this.contractService.createContractFromPrice(id_supplier, name);
         return contractSupplier;
       }
-      // let supplierId = await this.suppliersRepository.findByPk(id_supplier);
-
-      // if(supplierId) {
-
-      //   await this.suppliersRepository.update(
-      //     { name: name, city: city, 
-      //       city_ua: city_ua},
-      //     {where:{id_supplier: supplierId.id_supplier}}
-      //   );
-
-      //   return supplierId;
-
-      // } else {
-
-      //   let supplierNew = await this.suppliersRepository.create(
-      //     {id_supplier, name, city, city_ua});
-
-      //   let contractSupplier = await this.contractService.
-      //   createContractFromPrice(id_supplier, name);
-
-        //await supplierNew.$add('contract', contractSupplier);
-
-        //supplierNew.reload();
-
-       //return supplierNew;
-      //}
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found', 

@@ -46,6 +46,7 @@ export class AddWheelsToDbService {
     try {
       await this.wheelsService.createWheelFromPrice(
         +item.id,
+        item.id_sup,
         item.full_name ?? '',
         item.fullname_color_full ?? '',
         item.fullname_hotline ?? '',

@@ -106,7 +106,7 @@ export class TwitterAuthService {
         });
 
       
-      console.log('TWITTER_USER: ', twitterUser.data);
+      //console.log('TWITTER_USER: ', twitterUser.data);
       const custmByTwitter = await this.customersService.findCustmByEmailOrName(
         twitterUser.data,
       );
@@ -123,7 +123,7 @@ export class TwitterAuthService {
           twitterUser.data.phone ?? phone,
           twitterUser.data.profile_image_url
         );
-        console.log('NEW_TWITTER_USER: ', newCustomer); 
+        //console.log('NEW_TWITTER_USER: ', newCustomer); 
         twitterUser.data.contract = newCustomer.contract;
       }
       if (custmByTwitter) {
@@ -142,13 +142,13 @@ export class TwitterAuthService {
   }
 
   async getCurrentTwitterUser(req: Request, res: Response, cookies: string) {
-    console.log('get_CUSTOMER_TWITTER');
+    //console.log('get_CUSTOMER_TWITTER');
     try {
       //const getCoockies: string | undefined = req.cookies[name];
-      console.log('GET_COOCKIES_TWITTER: ', cookies);
+      //console.log('GET_COOCKIES_TWITTER: ', cookies);
       if (cookies) {
         const decoded = this.jwtService.verify(cookies);
-        console.log('decoded_TWITTER', decoded.data);
+        //console.log('decoded_TWITTER', decoded.data);
         return decoded.data;
       } else {
         console.log('Користувач TWITER не авторизован');

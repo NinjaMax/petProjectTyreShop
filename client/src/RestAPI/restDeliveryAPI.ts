@@ -17,7 +17,7 @@ const getWareHousesDelivery = async (dataCityId: string) =>
       console.log(`Не вірно вказані дані, або інша помилка.`, error);
     });
   
-  const getCalcPriceDelivery = async (dataCalc: CalcDelivery
+  const getCalcPriceDelivery = async (dataCalc: any
   ) =>
   await $deliveryPost.post('/PostReceiptCalculate',
   {
@@ -32,7 +32,7 @@ const getWareHousesDelivery = async (dataCityId: string) =>
     deliveryScheme: 0, //Схема доставки
     category: [ //Масив категорій вантажу
     {
-     categoryId: dataCalc.goodsType, //Id категорії вантажу
+     categoryId: dataCalc.goodsDescription, //Id категорії вантажу
      countPlace: dataCalc.goodsQuantity, //Кількість місць
      helf: 0, //Вага вантажу
      size: 0 // Об’єм вантажу

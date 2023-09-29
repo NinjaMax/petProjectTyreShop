@@ -126,10 +126,17 @@ import { RatingWheels } from './ratings/entities/rating-wheels.model';
         username: configService.get('POSTGRES_USER'),
         password: configService.get('POSTGRES_PASSWORD'),
         database: configService.get('POSTGRES_DB'),
+        dialectOptions: {
+          connectTimeout: 60000,
+          supportBigNumbers: true,
+          bigNumberStrings: true,
+        },
         pool: {
-          max: 100,
+          max: 10,
+          min: 0,
           idle: 10000,
           acquire: 60000,
+          evict: 1000,
         },
         models: [
           Tyres,

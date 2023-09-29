@@ -64,9 +64,9 @@ export class AuthService {
         );
 
         const tokenCutmAccess = await this.createAccessToken(newCustomer);
-        console.log('SIGN_UP', tokenCutmAccess);
+        //console.log('SIGN_UP', tokenCutmAccess);
         res.cookie('auth_custm', tokenCutmAccess, {
-          maxAge: 900000,
+          maxAge: 3600000,
           httpOnly: true,
           secure: true,
         });
@@ -116,7 +116,7 @@ export class AuthService {
   async matchPass(matchPass: { randomPass: number; passMatch: number }) {
     try {
       setTimeout(() => (matchPass.randomPass = null), 90000);
-      console.log('RNDM_SMS ', matchPass.randomPass);
+      console.log('RANDOM_SMS ', matchPass.randomPass);
       console.log('PASSW_USER ', matchPass.passMatch);
       if (matchPass.randomPass === matchPass.passMatch) {
         return true;
@@ -153,9 +153,9 @@ export class AuthService {
           );
         } else {
           const loginUser = await this.createAccessToken(existingCustomer);
-          console.log('LOGIN_CUSTOMER: ', loginUser);
+          //console.log('LOGIN_CUSTOMER: ', loginUser);
           res.cookie('auth_custm', loginUser, {
-            maxAge: 900000,
+            maxAge: 3600000,
             httpOnly: true,
             secure: true,
           });
@@ -173,7 +173,7 @@ export class AuthService {
     res: Response,
     cookie_custm: { accessToken: string },
   ) {
-    console.log('GET_Customer');
+    //console.log('GET_Customer');
     try {
       // const getCoockiesCustm: string | undefined = req.cookies[name];
       // console.log('GET_COOCKIES_CUSTM', getCoockiesCustm);
@@ -183,7 +183,7 @@ export class AuthService {
         );
         // const existingCustomer =
         //   await this.customersService.findCustomerByPhone(decodedCustm.phone);
-        console.log('decoded_COOKIE: ', decodedCustm);
+        //console.log('decoded_COOKIE: ', decodedCustm);
         return decodedCustm;
       } else {
         console.log('Користувач не авторизован');
@@ -211,15 +211,15 @@ export class AuthService {
           createPass.password,
         );
         const tokenUserAccess = await this.createAccessTokenUser(newUser);
-        console.log('SIGN_UP', tokenUserAccess);
+        //console.log('SIGN_UP', tokenUserAccess);
         res.cookie('auth_user', tokenUserAccess, {
-          maxAge: 1800000,
+          maxAge: 36000000,
           httpOnly: true,
           secure: true,
         });
       }
     } catch (error) {
-      console.log('SIGNUP_ERROR: ', error);
+      //console.log('SIGNUP_ERROR: ', error);
       throw new HttpException(`${error.message}`, HttpStatus.UNAUTHORIZED);
     }
   }
@@ -244,9 +244,9 @@ export class AuthService {
           );
         } else {
           const loginUser = await this.createAccessTokenUser(existingUser);
-          console.log('LOGIN_USER: ', loginUser);
+          //console.log('LOGIN_USER: ', loginUser);
           res.cookie('auth_user', loginUser, {
-            maxAge: 900000,
+            maxAge: 3600000,
             httpOnly: true,
             secure: true,
           });

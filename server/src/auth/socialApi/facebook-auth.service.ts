@@ -97,7 +97,7 @@ export class FacebookAuthService {
       });
 
     
-    console.log('FACEBOOK_USER: ', facebookUser);
+    //console.log('FACEBOOK_USER: ', facebookUser);
     const custmByFacebook = await this.customersService.findCustmByEmailOrName(
       facebookUser,
     );
@@ -127,13 +127,13 @@ export class FacebookAuthService {
   }
 
   async getCurrentFacebookUser(req: Request, res: Response, cookies: string) {
-    console.log('get Facebook user');
+    //console.log('get Facebook user');
     try {
       //const getCoockies: string | undefined = req.cookies[name];
       console.log('GET_COOCKIES_FACEBOOK', cookies);
       if (cookies) {
         const decoded = this.jwtService.verify(cookies);
-        console.log('decoded FACEBOOK', decoded);
+        //console.log('decoded FACEBOOK', decoded);
         return decoded;
       } else {
         console.log('Користувач Facebook не авторизован');

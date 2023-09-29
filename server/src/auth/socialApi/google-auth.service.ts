@@ -101,7 +101,7 @@ export class GoogleAuthService {
           throw new Error(error.message);
         });
       //let token: any = {};
-      console.log('GOOGLE_USER: ', googleUser);
+      //console.log('GOOGLE_USER: ', googleUser);
       const custmByGoogle = await this.customersService.findCustomerByEmail(
         googleUser,
       );
@@ -116,7 +116,7 @@ export class GoogleAuthService {
           phone,
           googleUser.picture
         );
-        console.log('NEW_GOOGLE_USER: ', newCustomer); 
+        //console.log('NEW_GOOGLE_USER: ', newCustomer); 
         googleUser.contract = newCustomer.contract;
       }
       if (custmByGoogle) {
@@ -135,16 +135,16 @@ export class GoogleAuthService {
   }
 
   async getCurrentUser(req: Request, res: Response, cookies: string) {
-    console.log('get_CUSTOMER');
+    //console.log('get_CUSTOMER');
     try {
       //const getCoockies: string | undefined = req.cookies[name];
-      console.log('GET_COOCKIES_GOOGLE: ', cookies);
+      //console.log('GET_COOCKIES_GOOGLE: ', cookies);
       if (cookies) {
         const decoded = this.jwtService.verify(cookies);
         // const getCustomerData = await this.customersService.findCustomerByEmail(
         //   decoded.email
         // );
-        console.log('decoded_GOOGLE', decoded);
+        //console.log('decoded_GOOGLE', decoded);
         return decoded;
       } else {
         console.log('Користувач Google не авторизован');

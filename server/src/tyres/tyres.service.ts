@@ -52,13 +52,7 @@ export class TyresService {
     photo_url: string,
     update_date: Date,
   ) {
-    //try {
-      // const findTyre =
-      //   await this.tyresRepository.findOne({
-      //     where: { id: id },
-      //   });
-      
-
+    try {
       const [tyresIdFromPrice, created] =
         await this.tyresRepository.findOrCreate({
           where: { id: id },
@@ -71,8 +65,6 @@ export class TyresService {
           },
         });
       if (!created) {
-        // if (!findTyre) {
-        //   const updateTyre = await this.tyresRepository.update(
         await tyresIdFromPrice.update(
           {
             //full_name: full_name,
@@ -80,28 +72,16 @@ export class TyresService {
             id_goods_sup: id_sup,
             update_date: update_date,
           },
-          //{ where: { id: id } },
           { where: { id: tyresIdFromPrice.id } },
         );
-        //return updateTyre;
         return tyresIdFromPrice;
       } 
-      // else {
-      //   const createTyre = await this.tyresRepository.create({
-      //       id: id,
-      //       id_goods_sup: id_sup,
-      //       full_name: full_name,
-      //       photo_url: photo_url,
-      //       update_date: update_date,
-      //     });
-      //     return createTyre;
-      // }
-    // } catch {
-    //   throw new HttpException(
-    //     'Data is incorrect and must be uniq',
-    //     HttpStatus.NOT_FOUND,
-    //   );
-    // }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async findAllTyres() {
@@ -118,7 +98,6 @@ export class TyresService {
           { model: TyreSeason },
           { model: TyreSizeDigits },
           { model: TyreBrand},
-
           //{ all: true },
         ],
       });

@@ -24,9 +24,11 @@ import Modal from '../modal/Modal';
 import ErrorsNotif from '../notifications/ErrorsNotif';
 import SuccessNotif from '../notifications/SuccessNotif';
 import { useHistory } from 'react-router-dom';
-import { getCityDelivery, getWareHousesDelivery } from '../../restAPI/restDeliveryAPI';
+import { getCalcPriceDelivery, getCityDelivery, getWareHousesDelivery } from '../../restAPI/restDeliveryAPI';
 import { ICityDel } from './types/CityDelivery.type';
 import { IDapertmentDelivery } from './types/DepartmentDelivery.type';
+import { cargoTypesDelivery } from '../../services/cargoTypesDelivery';
+import { tyresCarDiameterDelivery, tyresCargoDiameterDelivery } from '../../services/tyresDiameterDelivery';
 
 type IbasketData = {
     name?: string,
@@ -145,40 +147,76 @@ const BasketOrder = observer(() => {
         );//new
     
         dataSupplier.citySender = dataSupByCity?.DeliveryCity ?? dataSupByCity0.id;
+        dataSupplier.warehouseSender = depart?.id;
         dataSupplier.goodsQuantity = taskGetSupplier[i].quantity;
         dataSupplier.cityReceiver = depart?.ref_city_delivery;
         dataSupplier.warehouseReceiver = depart?.id; //new
 
         dataSupplier.goodsCost = String(taskGetSupplier[i].price * taskGetSupplier[i].quantity);
+
         if (redeliveryCost === 'Зворотній платіж (Післяплата)') {
         dataSupplier.redeliveryCost = 
         String(taskGetSupplier[i].price * taskGetSupplier[i].quantity);  
         } else {
         dataSupplier.redeliveryCost = String(1);
         }
+        if (delivery === 'Нова Пошта') {
+
+        }
         let goodsTypeRef = cargoTypesNovaPoshta(taskGetSupplier[i].category);
         dataSupplier.goodsType = goodsTypeRef;
+        let goodsTypeRefDelivery = cargoTypesDelivery(taskGetSupplier[i].category);
 
-        if (goodsTypeRef === "Cargo") {
+        if (goodsTypeRef === "Cargo" && delivery === 'Нова Пошта') {
             console.log('CARGO_TYPE');
         }
-        if (goodsTypeRef === "TiresWheels") {
+        if (goodsTypeRef === "TiresWheels" && delivery === 'Нова Пошта') {
             let tyreDiameterRef = tyresDiameter(taskGetSupplier[i].diameter);
-        dataSupplier.goodsDescription = tyreDiameterRef;
+            dataSupplier.goodsDescription = tyreDiameterRef;
         }
-        if (goodsTypeRef === "TiresWheels" && taskGetSupplier[i].category === "диски") {
-        let wheelsDiameterRef = wheelsDiameter(taskGetSupplier[i].diameter);
-        dataSupplier.goodsDescription = wheelsDiameterRef;
+        if (goodsTypeRef === "TiresWheels" && taskGetSupplier[i].category === "диски"
+        && delivery === 'Нова Пошта') {
+            let wheelsDiameterRef = wheelsDiameter(taskGetSupplier[i].diameter);
+            dataSupplier.goodsDescription = wheelsDiameterRef;
+        }
+
+        if (goodsTypeRefDelivery === "Cargo" && delivery === 'Делівері') {
+            console.log('CARGO_TYPE');
+        }
+        if (goodsTypeRefDelivery === "Battery" && delivery === 'Делівері') {
+            console.log('Battery_TYPE');
+        }
+        if (goodsTypeRefDelivery === "TiresWheelsCar" && taskGetSupplier[i].category === "легковые шины" && delivery === 'Делівері') {
+            let tyreDiameterRef = tyresCarDiameterDelivery(taskGetSupplier[i].diameter);
+            dataSupplier.goodsDescription = tyreDiameterRef;
+        }
+        if (goodsTypeRefDelivery === "TiresWheelsCargo" && taskGetSupplier[i].category === "грузовые шины" && delivery === 'Делівері') {
+            let tyreDiameterRef = tyresCargoDiameterDelivery(taskGetSupplier[i].diameter);
+            dataSupplier.goodsDescription = tyreDiameterRef;
+        }
+        if (goodsTypeRefDelivery === "TiresWheelsCar" && taskGetSupplier[i].category === "диски"
+        && delivery === 'Делівері' && taskGetSupplier[i].diameter !== '17.5' && taskGetSupplier[i].diameter !== '19.5' 
+        && taskGetSupplier[i].diameter < 21
+        ) {
+            let wheelsDiameterRef = tyresCarDiameterDelivery(taskGetSupplier[i].diameter);
+            dataSupplier.goodsDescription = wheelsDiameterRef;
+        }
+        if (goodsTypeRefDelivery === "TiresWheelsCar" && taskGetSupplier[i].category === "диски"
+        && delivery === 'Делівері' && (taskGetSupplier[i].diameter > 19 || taskGetSupplier[i].diameter !== '17.5')
+        ) {
+            let wheelsDiameterRef = tyresCargoDiameterDelivery(taskGetSupplier[i].diameter);
+            dataSupplier.goodsDescription = wheelsDiameterRef;
         }
 
         if (taskGetSupplier[i] && dataSupplier) {
-            let getCalcDelivery = await getCalcPriceNovaPoshta(dataSupplier);
-            //getCalcPriceDelivery
-            if (getCalcDelivery.success === true) {
+            let getCalcNovaPoshta = await getCalcPriceNovaPoshta(dataSupplier);
+            let getCalcDelivery = getCalcPriceDelivery(dataSupplier);
+            console.log(getCalcDelivery);
+            if (getCalcNovaPoshta.success === true) {
                 setCostNovaPoshta(oldCalc =>
                     [...oldCalc!,
-                        getCalcDelivery.data[0].Cost,
-                        getCalcDelivery.data[0].CostRedelivery,
+                        getCalcNovaPoshta.data[0].Cost,
+                        getCalcNovaPoshta.data[0].CostRedelivery,
                     ]
                 );
             }             
@@ -228,8 +266,8 @@ const BasketOrder = observer(() => {
             }
             if (!isMounted && 
                 taskUpdateBasket[i] === getWareHousesDelivery && dataDepartmentDelivery) {
-                const getDapartDelivery: any = await taskUpdateBasket[i](dataDepartmentDelivery);
-                if (getDapartDelivery?.success) {
+                const getDapartDelivery: any = await taskUpdateBasket[i](dataDepartmentDelivery?.id);
+                if (getDapartDelivery?.data) {
                     setDepartListDelivery([...getDapartDelivery?.data]);
                 }
             }
@@ -490,21 +528,29 @@ const BasketOrder = observer(() => {
         setCityListActive(false); 
     };
 
-    const chooseDepartEvent = (e: any) => {
-        setChooseDepartmentNP({
-            Ref: e.currentTarget.getAttribute('data-depref'),
-            Description: e.target.value,
-            CityRef: e.currentTarget.getAttribute('data-cityref'),
+    const chooseDepartEvent = async (e: any) => {
+        const departData = e.target.value.split('//');
+        if (delivery === "Нова Пошта") {
+            setChooseDepartmentNP({
+                Ref: departData[0],
+                Description: departData[1],
+                CityRef: departData[2],
+            });  
+        }
+        if (delivery === "Делівері")
+            setChooseDepartmentDelivery({
+                id: departData[0],
+                name: departData[1],
+                CityId: departData[2],
         });
-        setChooseDepartmentDelivery({
-            id: e.currentTarget.getAttribute('data-depref'),
-            name: e.target.value,
-            CityId: e.currentTarget.getAttribute('data-cityref'),
-        });
-
-        // delivery_dep?: string | null,
-        // delivery_dep_ref?: string | null,
-
+        
+        await updateBasket(
+            {...basketData,
+                delivery_dep: departData[1],
+                delivery_dep_ref: departData[0],
+                id_basket: basketData?.id_basket, 
+            }
+        );
     };
 
     const useBonusActive = () => {
@@ -833,9 +879,8 @@ const BasketOrder = observer(() => {
                         {chooseCity && departListNovaPoshta?.map((depart: IDepart) =>
                                 <option 
                                     key={depart?.SiteKey}
-                                    value={depart?.Description}
-                                    data-depref={depart?.Ref}
-                                    data-cityref={depart?.CityRef}
+                                    label={depart?.Description}
+                                    value={`${depart?.Ref}//${depart?.Description}//${depart?.CityRef}`}
                                 >
                                 {depart?.Description}
                                 </option>
@@ -871,9 +916,8 @@ const BasketOrder = observer(() => {
                                 (depart: IDapertmentDelivery) =>
                                 <option 
                                     key={depart?.id}
-                                    value={depart?.name + ', ' + depart?.address}
-                                    data-depref={depart?.id}
-                                    data-cityref={depart?.CityId}
+                                    label={depart?.name + ', ' + depart?.address}
+                                    value={`${depart?.id}//${depart?.name + ', ' + depart?.address}//${depart?.CityId}`}
                                 >
                                 {depart?.name + ', ' + depart?.address}
                                 </option>
