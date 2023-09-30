@@ -24,7 +24,7 @@ const getWareHousesDelivery = async (dataCityId: string) =>
     culture: "uk-Ua", //Культура
     areasSendId: dataCalc.citySender, //Місто відправлення
     areasResiveId: dataCalc.cityReceiver, //Місто прибуття
-    warehouseSendId: dataCalc.warehouseSender, //Склад відправлення
+    warehouseSendId: dataCalc.warehouseSender ?? '', //Склад відправлення
     warehouseResiveId: dataCalc.warehouseReceiver, //Склад прибуття
     InsuranceValue: dataCalc.goodsCost, //Страхова вартість вантажу
     CashOnDeliveryValue: 0, //Вартість післяплати
