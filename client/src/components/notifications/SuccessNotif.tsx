@@ -15,10 +15,10 @@ const SuccessNotif = ({active, setActive, children}: INotification) => {
             <div
                 className= {active ? 'notificationBox active': 'notificationBox'} 
                 onClick={(e)=>e.stopPropagation()} >
-            {/* <div className="check"> */}
-                <i className="far fa-check-circle color"></i> &nbsp; &nbsp;
-                <span>{children}</span>
-            {/* </div> */}
+                <i className="far fa-check-circle color"></i>
+                <div className='notificationTextSucccess'>
+                    {children}
+                </div>
             </div>
         </div>
     );

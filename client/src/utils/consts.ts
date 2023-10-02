@@ -16,4 +16,5 @@ export const GOODS_ROUTE = ':goodsItem';
 export const MAIN_ROUTE = '/';
 export const CONTACT_ROUTE = '/contact';
 export const NOT_FOUND_ROUTE = '/404';
+export const DELIVERY_ROUTE = '/delivery';
 

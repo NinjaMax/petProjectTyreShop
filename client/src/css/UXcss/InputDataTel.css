@@ -16,7 +16,7 @@
 
 .inputDataTel:hover + .inputDataTelLabel {
   
-    top: 365px;
+    top: 390px;
     left: 240px;
     padding: 1px;
     font-size: 8px;
@@ -25,7 +25,7 @@
 
 .inputDataTel:focus + .inputDataTelLabel {
   
-    top: 365px;
+    top: 390px;
     left: 240px;
     padding: 1px;
     font-size: 8px;
@@ -34,7 +34,7 @@
 /*-------------------------------------------------*/
 .inputDataTelLabel {
     position: absolute;
-    top: 375px;
+    top: 406px;
     left: 90px;
     color:#999;
     transition: top 0.2s;
@@ -50,7 +50,7 @@
 }
 
 .inputDataTelLabel:hover {
-    top: 365px;
+    top: 390px;
     left: 240px;
     padding: 1px;
     font-size: 8px;
@@ -59,7 +59,7 @@
 
 .inputDataTelLabelActive {
     position: absolute;
-    top: 365px;
+    top: 390px;
     left: 240px;
     padding: 1px;
     font-size: 8px;

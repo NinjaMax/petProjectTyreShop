@@ -52,12 +52,15 @@
   max-height: 100px;
   text-align: left;
   display: flex;
+  flex-direction: row;
   align-items: center;
+  gap: 5px;
   padding: 10px;
   /* background-color: #2B3246; */
   cursor:pointer;
-  box-shadow:  9px 9px 18px #262c3e,
-    -9px -9px 18px #30384e;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  /* box-shadow:  9px 9px 18px #262c3e,
+    -9px -9px 18px #30384e; */
   color: rgb(255, 10, 1);
   margin: 20px;
 }
@@ -76,8 +79,7 @@
   padding: 10px;
   background-color: #2B3246;
   cursor:pointer;
-  box-shadow:  9px 9px 18px #262c3e,
-    -9px -9px 18px #30384e;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   color: #0ad406;
   margin: 20px;
 }
@@ -100,8 +102,9 @@
   padding: 10px;
   background-color: #2B3246;
   cursor:pointer;
-  box-shadow:  9px 9px 18px #262c3e,
-    -9px -9px 18px #30384e;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  /* box-shadow:  9px 9px 18px #262c3e,
+    -9px -9px 18px #30384e; */
   color: rgb(82, 125, 243);
   margin: 20px;
 }
@@ -126,8 +129,7 @@
   padding: 10px;
   background-color: #2B3246;
   cursor:pointer;
-  box-shadow:  9px 9px 18px #262c3e,
-    -9px -9px 18px #30384e;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   color: rgb(247, 149, 72);
   margin: 20px;
 }
@@ -150,8 +152,7 @@
   padding: 10px;
   background-color: #2B3246;
   cursor:pointer;
-  box-shadow:  9px 9px 18px #262c3e,
-    -9px -9px 18px #30384e;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   color: rgb(255, 10, 1);
   margin: 20px;
 }
@@ -177,7 +178,7 @@
 
 @keyframes color {
   50% {
-   color: #2B3246;
+   color: green
   }
   100% {
     color: #0ad406;
@@ -201,7 +202,8 @@
 
 @keyframes shine {
   0% {
-   color: #2B3246;
+   color: red;
+   /* color: #2B3246; */
   }
   50% {
     text-shadow:
@@ -211,6 +213,17 @@
       0 0 60px red,
       0 0 80px red;
   }
+}
+
+.notificationTextError {
+  font-family: var(--main-font-family);
+  padding: 5px;
+  color: red;
+}
+.notificationTextSucccess {
+  font-family: var(--main-font-family);
+  padding: 5px;
+  color:#444B54;
 }
 /* .modalWindow {
   opacity: 0;

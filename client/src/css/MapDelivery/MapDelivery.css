@@ -1,0 +1,13 @@
+.mapDeliveryContainer {
+    display: block;
+    margin: 50px 50px 30px 20px;
+
+}
+
+#map { 
+    /* position: absolute; */
+    /* top: 0;
+    bottom: 0; */
+    height: 180px; 
+    width: 650px;
+}

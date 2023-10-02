@@ -31,7 +31,7 @@ import { yieldToMain } from '../../restAPI/yieldMain';
 import NavBarDropWheels from './NavBarDropWheels';
 import { getCompare, getFavorites, getSession } from '../../restAPI/restGoodsApi';
 import CompareGoods from '../ux/CompareGoods';
-import { COMPARISON_ROUTE, FAVORITES_ROUTE } from '../../utils/consts';
+import { COMPARISON_ROUTE, DELIVERY_ROUTE, FAVORITES_ROUTE } from '../../utils/consts';
 
 const NavBar = observer(() => {
   const {customer, page, goodsTyre} = useContext<any | null>(Context);
@@ -64,17 +64,17 @@ const NavBar = observer(() => {
         if(!isUser && taskSocial[i] === signInGoogle) {
           let authGoogle: any = await taskSocial[i]();
           setGoogleIsAuth(authGoogle);
-          console.log('SET_GOOGLE_AUTH: ', authGoogle)
+          //console.log('SET_GOOGLE_AUTH: ', authGoogle)
         } 
         if (!isUser && taskSocial[i] === signInFacebook){
           let authFacebook: any = await taskSocial[i]();
           setFacebookIsAuth(authFacebook);
-          console.log('SET_FACEBOOK_AUTH: ', authFacebook)
+          //console.log('SET_FACEBOOK_AUTH: ', authFacebook)
         }
         if (!isUser && taskSocial[i] === signInTwitter){
           let authTwitter: any = await taskSocial[i]();
           setTwitterIsAuth(authTwitter);
-          console.log('SET_TWITTER_AUTH: ', authTwitter)
+          //console.log('SET_TWITTER_AUTH: ', authTwitter)
         }
         const task = taskSocial.shift();
         task();
@@ -98,7 +98,7 @@ const NavBar = observer(() => {
       let i:number = 0;
       while(taskCustm.length > i) {
         let curCustm: any = await taskCustm[i]();
-        console.log(`CURR_CUSTM: `, curCustm);
+        //console.log(`CURR_CUSTM: `, curCustm);
         if (!isCurUser && curCustm) {
           customer.setIsAuth(true);
           customer.setUser(curCustm);
@@ -123,14 +123,14 @@ const NavBar = observer(() => {
       while(taskFavorite.length > i) {
         if (!isMounted && taskFavorite[i] === getCompare) {
           let curComparison: any = await taskFavorite[i]();
-          console.log('CURRENT_COMPARISON: ', curComparison)
+          //console.log('CURRENT_COMPARISON: ', curComparison)
           //setComparisonCount(curComparison.length);
           page.setComparisonCount(curComparison);
           
         }
         if (!isMounted && taskFavorite[i] === getFavorites) {
           let curFavorites: any = await taskFavorite[i]();
-          console.log('CURRENT_FAVORITES: ', curFavorites)
+          //console.log('CURRENT_FAVORITES: ', curFavorites)
           page.setFavoritesCount(curFavorites);
           //setFavoritesCount(curFavorites.length);
         }
@@ -163,7 +163,7 @@ const NavBar = observer(() => {
 
   const clickSearchBtn = () => {
     setSearchBtn(!searchBtn);
-    console.log('CLOSE NAVBAR SEARCH');
+    //console.log('CLOSE NAVBAR SEARCH');
   }
 
   const signActiveUp = () => {
@@ -240,7 +240,7 @@ const NavBar = observer(() => {
     </a>
     <NavBarDropTyres/>
     <NavBarDropWheels/>
-    <a href="/home" className='anchorBtn'>Доставка і оплата</a>
+    <a href={DELIVERY_ROUTE} className='anchorBtn'>Доставка і оплата</a>
     <a href='/contact' className='anchorBtn'>Контакти</a>
     <div className='navbarPhoneBox'>
       <span className='navbarPhone'>067 777 77 77 

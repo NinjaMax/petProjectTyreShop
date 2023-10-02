@@ -10,6 +10,8 @@
     overflow: hidden;
     margin-left: 45px;
     margin-right: 45px;
+    /* margin-top: 10px; */
+    margin-bottom: 45px;
     padding: 15px;
 }
 
@@ -23,6 +25,8 @@
     left: 45%;
     margin-left: 70px;
     margin-right: 55px;
+    margin-bottom: 45px;
+    margin-top: 15px;
     width: 90%;
     text-align: center;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -109,9 +113,9 @@
 .basketColmRightCheckbox {
     margin: 10px;
 }
-.basketOrder i {
+/* .basketOrder i {
     color: aqua;
-}
+} */
 
 .basketColmItemLeft {
     display: flex;
@@ -177,6 +181,7 @@
     background-color: #ffff;
     /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
     appearance: none;
+    border-radius: 10px;
 }
 .basketDepartList::after {
     content: "▼";
@@ -394,4 +399,11 @@
 .basketOrder span {
     font-weight:bolder;
     color: #444B54;
+}
+
+.basketOrderNotes {
+    font-size: small;
+    font-weight: bold;
+    font-family: var(--main-font-family);
+    color: red;
 }

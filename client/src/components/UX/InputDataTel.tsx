@@ -17,7 +17,7 @@ interface IinputDataTel {
 
 const InputDataTel = ({onAccept, dataTel}: IinputDataTel) => {
 
-    const refLabel: IinputDataTel = useRef();
+    const refLabel = useRef<any>();
 
     // const inputEvent: string = (e: any) => {
     //     if(e.currentTarget.value.length > 4 && e.currentTarget.value.length <= 10 ) {

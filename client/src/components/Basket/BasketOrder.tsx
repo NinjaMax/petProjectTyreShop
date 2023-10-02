@@ -41,8 +41,8 @@ const BasketOrder = observer(() => {
     const [departListNovaPoshta, setDepartListNovaPoshta] = useState<IDepart[]>();
     const [departListDelivery, setDepartListDelivery] = useState<IDepart[]>();
     const [cityListActive, setCityListActive] = useState<boolean>(false);
-    const [chooseDepartmentNP, setChooseDepartmentNP] = useState<any>();
-    const [chooseDepartmentDelivery, setChooseDepartmentDelivery] = useState<IDapertmentDelivery>();
+    //const [chooseDepartmentNP, setChooseDepartmentNP] = useState<any>();
+    //const [chooseDepartmentDelivery, setChooseDepartmentDelivery] = useState<IDapertmentDelivery>();
     const [inputCity, setInputCity] = useState<string>();
     const [chooseCity, setChooseCity] = useState<string>();
     const [dataDepartmentNP, setDataDepartmentNP] = useState<IDapertmentNP>();
@@ -72,7 +72,7 @@ const BasketOrder = observer(() => {
             if (!isMounted && taskBasketSession[i] === getBasketOrder && page.basketCount !== 0) {
             const getBasket: any = await taskBasketSession[i]();
                 if (getBasket) {
-                    console.log('GET_BASKET_SESSION: ', getBasket)
+                    //console.log('GET_BASKET_SESSION: ', getBasket)
                     setBasketData({
                         ...getBasket,
                         id_customer: customer.id_customer,
@@ -102,7 +102,7 @@ const BasketOrder = observer(() => {
         ...goodsBasket!
         ];
         setDeliverySum(null);
-        console.log('DEPART_DATA: ', depart);
+        //console.log('DEPART_DATA: ', depart);
         let i: number = 0; 
         while (taskGetSupplier.length > i) {
         let getCitySup: any = await getSupplierById(
@@ -115,13 +115,13 @@ const BasketOrder = observer(() => {
         if (delivery === 'Нова Пошта') {
             let dataSupByCity = citySupNovaPoshta?.data[0]?.Addresses.find(
             (item: any) => item.MainDescription === getCitySup.city_ua);
-            console.log('DEPART_SUPPL_CITY: ', dataSupByCity); 
+            //console.log('DEPART_SUPPL_CITY: ', dataSupByCity); 
             dataSupplier.citySender = dataSupByCity?.DeliveryCity;
         }
         if (delivery === 'Делівері') {
             let dataSupByCity0 = citySupDelivery?.data?.find(
             (item: any) => item.name === getCitySup.city_ua); 
-            console.log('DEPART_SUPPL_CITY_DEL: ', dataSupByCity0); 
+            //console.log('DEPART_SUPPL_CITY_DEL: ', dataSupByCity0); 
             dataSupplier.citySender = dataSupByCity0?.id;
         }
         dataSupplier.warehouseSender = getCitySup?.delivery_dep_ref;
@@ -135,12 +135,12 @@ const BasketOrder = observer(() => {
             dataSupplier.redeliveryCost = 
             String(taskGetSupplier[i].price * taskGetSupplier[i].quantity);  
         } else {
-        dataSupplier.redeliveryCost = String(1);
+            dataSupplier.redeliveryCost = String(1);
         }
-        console.log('GOODS_CATEGORY: ', taskGetSupplier[i]);
+        //console.log('GOODS_CATEGORY: ', taskGetSupplier[i]);
         let goodsTypeRef = cargoTypesNovaPoshta(taskGetSupplier[i].category);
         dataSupplier.goodsType = goodsTypeRef;
-        console.log('GOODS_TYPE_REF: ', goodsTypeRef);
+        //console.log('GOODS_TYPE_REF: ', goodsTypeRef);
         let goodsTypeRefDelivery = cargoTypesDelivery(taskGetSupplier[i].category);
 
         if (goodsTypeRef === "Cargo" && delivery === 'Нова Пошта') {
@@ -163,12 +163,12 @@ const BasketOrder = observer(() => {
         }
         if (goodsTypeRefDelivery === "TiresWheelsCar" && taskGetSupplier[i].category === "легковые шины" && delivery === 'Делівері') {
             let tyreDiameterRef = tyresCarDiameterDelivery(taskGetSupplier[i].diameter);
-            console.log('Легковіе шини деливери: ', tyreDiameterRef)
+            //console.log('Легковіе шини деливери: ', tyreDiameterRef)
             dataSupplier.goodsDescription = tyreDiameterRef;
         }
         if (goodsTypeRefDelivery === "TiresWheelsCargo" && taskGetSupplier[i].category === "грузовые шины" && delivery === 'Делівері') {
             let tyreDiameterRefCargo = tyresCargoDiameterDelivery(taskGetSupplier[i].diameter);
-            console.log('Грузовіе шини деливери: ', tyreDiameterRefCargo)
+            //console.log('Грузовіе шини деливери: ', tyreDiameterRefCargo)
             dataSupplier.goodsDescription = tyreDiameterRefCargo;
         }
         if (goodsTypeRefDelivery === "TiresWheelsCar" && taskGetSupplier[i].category === "диски"
@@ -176,25 +176,24 @@ const BasketOrder = observer(() => {
         && taskGetSupplier[i].diameter < 21
         ) {
             let wheelsDiameterRef = tyresCarDiameterDelivery(taskGetSupplier[i].diameter);
-            console.log('Легкові диски деливери: ', wheelsDiameterRef)
+            //console.log('Легкові диски деливери: ', wheelsDiameterRef)
             dataSupplier.goodsDescription = wheelsDiameterRef;
         }
         if (goodsTypeRefDelivery === "TiresWheelsCar" && taskGetSupplier[i].category === "диски"
         && delivery === 'Делівері' && (taskGetSupplier[i].diameter > 19 || taskGetSupplier[i].diameter !== '17.5')
         ) {
             let wheelsDiameterRefCargo = tyresCargoDiameterDelivery(taskGetSupplier[i].diameter);
-            console.log('Грузові диски деливери: ', wheelsDiameterRefCargo)
+            //console.log('Грузові диски деливери: ', wheelsDiameterRefCargo)
             dataSupplier.goodsDescription = wheelsDiameterRefCargo;
         }
-        console.log('DATA_SUPPLIER: ', dataSupplier);
         if (taskGetSupplier[i] && dataSupplier && delivery === 'Нова Пошта') {
             let getCalcNovaPoshta = await getCalcPriceNovaPoshta(dataSupplier);
             if (getCalcNovaPoshta.success === true) {
-                setCostNovaPoshta(oldCalc =>
-                    [...oldCalc!,
+                setCostNovaPoshta(oldCalc => { 
+                return [...oldCalc!,
                         getCalcNovaPoshta.data[0].Cost,
                         getCalcNovaPoshta.data[0].CostRedelivery,
-                    ]
+                    ]}
                 );
             }             
             if (getCitySup.city_ua === 'Харків' && depart?.address?.includes('м. Київ')) {
@@ -204,14 +203,14 @@ const BasketOrder = observer(() => {
             }
         }
         if (taskGetSupplier[i] && dataSupplier && delivery === 'Делівері') {
-            console.log('GET_DATA_SUPPLIER: ', dataSupplier);
             let getCalcDelivery = await getCalcPriceDelivery(dataSupplier);
-            console.log('GET_CALC_DELIVERY: ', getCalcDelivery?.data?.allSumma);
             if (getCalcDelivery.status === true) {
-                setCostDelivery(oldCalc =>
-                    [...oldCalc!,
+                setCostDelivery(oldCalc => {
+                return [...oldCalc!,
                         getCalcDelivery?.data?.allSumma,
+                        0
                     ]
+                }
                 );
             }             
             if (getCitySup.city_ua === 'Харків' && depart?.address?.includes('м. Київ')) {
@@ -268,7 +267,7 @@ const BasketOrder = observer(() => {
             if (!isMounted && 
                 taskUpdateBasket[i] === updateBasket) {
                 const updateBasket = await taskUpdateBasket[i]({...basketData});
-                console.log('UPDATE_BASKET_DATA: ', updateBasket.data);
+                //console.log('UPDATE_BASKET_DATA: ', updateBasket.data);
             }
 
             const task = taskUpdateBasket.shift();
@@ -287,7 +286,7 @@ const BasketOrder = observer(() => {
         if (!isMounted) {
             setSumGoods(Number(
             goodsBasket?.reduce((sum, current) => ( sum + current.total), 0).toFixed()));
-            //console.log('sumGoods: ', sumGoods);
+            //console.log('sumGoods: ', sumGoods); 0,00001
         }
         if (!isMounted && costNovaPoshta?.length !== 0 && delivery === 'Нова Пошта') {
             setDeliverySum(Number(
@@ -306,8 +305,8 @@ const BasketOrder = observer(() => {
         };
         if (!isMounted && costDelivery?.length !== 0 && delivery === 'Делівері') {
             setDeliverySum(Number(
-                (32 + ( goodsBasket?.reduce((sum, current) => ( sum + current.total), 0)) +
-               costDelivery?.reduce((sum: number, current: number) => ( sum + current), 0)
+                (32 + ( goodsBasket?.reduce((sum, current) => ( sum + current.total), 0)) * 0.00001 +
+               (costDelivery?.reduce((sum: number, current: number) => ( sum + current), 0))
                 ).toFixed())
             );
             setBasketData(prevData => { return {
@@ -521,47 +520,55 @@ const BasketOrder = observer(() => {
     };
        
     const checkedRadioDelivery = async (e: any) => {
-        setDelivery(e.currentTarget.getAttribute('data-select'));
-        setPayMethod(null);
-        if (e.currentTarget.getAttribute('data-select') === "Делівері") {
-            setChooseCity('');
-            setPayMethod("Карткою (VISA / MASTERCARD)");
-        }
-        if (delivery === 'Делівері' && e.currentTarget.getAttribute('data-select') === 'Нова Пошта') {
-            setChooseCity('');
-        }
-        const updateBasketDelivery = await updateBasket(
-            {...basketData,
-                delivery: e.currentTarget.getAttribute('data-select'),
-                id_basket: basketData?.id_basket, 
+        try {
+            setDelivery(e.currentTarget.getAttribute('data-select'));
+            setDeliverySum(null);
+            setPayMethod(null);
+            if (e.currentTarget.getAttribute('data-select') === "Делівері") {
+                setChooseCity(undefined);
+                setPayMethod("Карткою (VISA / MASTERCARD)");
             }
-        );
-        if (updateBasketDelivery?.status === 200) {
-            setBasketData({...updateBasketDelivery?.data})  
+            if (delivery === 'Делівері' && e.currentTarget.getAttribute('data-select') === 'Нова Пошта') {
+                setChooseCity(undefined);
+            }
+            const updateBasketDelivery = await updateBasket(
+                {...basketData,
+                    delivery: e.currentTarget.getAttribute('data-select'),
+                    id_basket: basketData?.id_basket, 
+                }
+            );
+            if (updateBasketDelivery?.status === 200) {
+                setBasketData({...updateBasketDelivery?.data})  
+            }
+        } catch (error) {
+            console.log('RADIO_DELIVERY_ERROR: ', error);
         }
     };
 
     const checkedRadioPayment = async (e: any) => {
-        setPayMethod(null);
-        setCostNovaPoshta([]);
-        setPayMethod(e.currentTarget.getAttribute('data-select'));
-        if (e.currentTarget.getAttribute('data-select') !== 'Зворотній платіж (Післяплата)' || 
-        e.currentTarget.getAttribute('data-select') !== 'Готівкою') {
-            setCommitionPay((Number((sumGoods! * 0.015).toFixed())));
+        try {
+            setPayMethod(null);
+            setDeliverySum(null);
+            setCostNovaPoshta([]);
+            setCostDelivery([]);
+            setPayMethod(e.currentTarget.getAttribute('data-select'));
+            if (e.currentTarget.getAttribute('data-select') !== 'Зворотній платіж (Післяплата)' || 
+            e.currentTarget.getAttribute('data-select') !== 'Готівкою') {
+                setCommitionPay((Number((sumGoods! * 0.015).toFixed())));
         
-            const updateBasketPay = await updateBasket(
+                const updateBasketPay = await updateBasket(
                 {...basketData,
                     pay_view: e.currentTarget.getAttribute('data-select'),
                     id_basket: basketData?.id_basket, 
                 }   
-            );
-            if (updateBasketPay?.status === 200) {
+                );
+                if (updateBasketPay?.status === 200) {
                 setBasketData({...updateBasketPay?.data});  
-            }
-            basketSupplierGoods(updateBasketPay?.data, updateBasketPay?.data.pay_view);
-        } else {
-            setCommitionPay(null);
-            const updateBasketPay = await updateBasket(
+                }
+                basketSupplierGoods(updateBasketPay?.data, updateBasketPay?.data.pay_view);
+            } else {
+                setCommitionPay(null);
+                const updateBasketPay = await updateBasket(
                 {...basketData,
                     pay_view: e.currentTarget.getAttribute('data-select'),
                     id_basket: basketData?.id_basket, 
@@ -570,7 +577,10 @@ const BasketOrder = observer(() => {
                 if (updateBasketPay?.status === 200) {
                     setBasketData({...updateBasketPay?.data});  
                 }
-            basketSupplierGoods(updateBasketPay?.data, updateBasketPay?.data.pay_view);
+                basketSupplierGoods(updateBasketPay?.data, updateBasketPay?.data.pay_view);
+            }
+        } catch (error) {
+            console.log('RADIO_PAYMENT_ERROR: ', error);
         }
     };
 
@@ -583,6 +593,8 @@ const BasketOrder = observer(() => {
     const cityChooseActive = async (e: any) => {
         try {
             setCostNovaPoshta([]);
+            setCostDelivery([]);
+            setDeliverySum(null);
             setChooseCity(e.target.textContent);
             
             setDataDepartmentNP({
@@ -621,29 +633,23 @@ const BasketOrder = observer(() => {
     };
 
     const chooseDepartEvent = async (e: any) => {
-        let departData = e.target.value.split('//');
-        if (delivery === "Нова Пошта") {
-            setChooseDepartmentNP({
-                Ref: departData[0],
-                Description: departData[1],
-                CityRef: departData[2],
-            });  
-        };
-        if (delivery === "Делівері") {
-            setChooseDepartmentDelivery({
-                id: departData[0],
-                name: departData[1],
-                CityId: departData[2],
-            });
-        };
-        const updateBasketDep = await updateBasket(
-            {...basketData,
-                delivery_dep: departData[1],
-                delivery_dep_ref: departData[0],
-                id_basket: basketData?.id_basket, 
-            }
-        );
-        basketSupplierGoods(updateBasketDep?.data, updateBasketDep?.data.pay_view);
+        try {
+            let departData = e.target.value.split('//');
+            setCostNovaPoshta([]);
+            setCostDelivery([]);
+            setDeliverySum(null);
+
+            const updateBasketDep = await updateBasket(
+                {...basketData,
+                    delivery_dep: departData[1],
+                    delivery_dep_ref: departData[0],
+                    id_basket: basketData?.id_basket, 
+                }
+            );
+            basketSupplierGoods(updateBasketDep?.data, updateBasketDep?.data.pay_view);
+        } catch (error) {
+            console.log('SELECT_DEPART_ERROR: ', error);
+        }
     };
 
     const useBonusActive = () => {
@@ -708,7 +714,7 @@ const BasketOrder = observer(() => {
     const countQuantytiAction = async (e: any) => {
         try {
             if (e.target.value === 'plus') {
-            const updateQuantityPlus = await updateBasketStorageGoods({
+                const updateQuantityPlus = await updateBasketStorageGoods({
                 quantity: Number(e.target.getAttribute('data-count')) + 1,
                 id_basket_storage: e.target.getAttribute('data-id') 
             })
@@ -793,8 +799,8 @@ const BasketOrder = observer(() => {
                 if (updateBasketData?.status === 200) {
                     const createOrder: any = await responseForm({
                         ...updateBasketData?.data,
-                        delivery_city_depart: chooseDepartmentNP?.Description,
-                        delivery_city_depart_ref: chooseDepartmentNP?.Ref
+                        // delivery_city_depart: chooseDepartmentNP?.Description,
+                        // delivery_city_depart_ref: chooseDepartmentNP?.Ref
                     });
                     basketData?.basket_storage?.forEach( async(item: CreateGoods):Promise<any> => {
                         await createGoodsToOrder(item, createOrder?.data?.id_order!); 
@@ -954,9 +960,8 @@ const BasketOrder = observer(() => {
                         addOptions={delivery === "Нова Пошта" ?? false}
                         direction={"column"} 
                         activeOptions={checkedRadioDelivery}
-                        disabled={chooseCity ? false : true}
+                        disabled={false}
                     > 
-                    </SelectRadio>
                     {delivery === "Нова Пошта" && chooseCity?.length !== 0 ?    
                         <div 
                             className='basketDepartList' 
@@ -982,6 +987,7 @@ const BasketOrder = observer(() => {
                         </select>    
                         </div>
                     : null}
+                    </SelectRadio>
                     <SelectRadio 
                         radioData={{
                             value: "delivery", 
@@ -991,7 +997,7 @@ const BasketOrder = observer(() => {
                         addOptions={delivery === "Делівері" ?? false}
                         direction={"column"} 
                         activeOptions={checkedRadioDelivery}
-                        disabled={chooseCity ? false :true}
+                        disabled={false}
                     >
                     {delivery === "Делівері" && chooseCity ?    
                         <div 
@@ -1109,6 +1115,9 @@ const BasketOrder = observer(() => {
                             title='Післяплата'
                             alt='money_back'
                         />
+                        <div className='basketOrderNotes'>
+                            {delivery !== "Нова Пошта" ? '*послуга недоступна' : null}
+                        </div>
                     </SelectRadio>
                 </div> 
             </div>
@@ -1270,15 +1279,14 @@ const BasketOrder = observer(() => {
                     <SuccessNotif 
                     active={newOrder} 
                     setActive={setNewOrder}
-                >
-                {   `Ви оформили та підтвердили, 
-                    Ваше замовлення №${getIdOrder}. Очікуйте інформацію про готовність та статус замовлення.
+                    >
+                    {   `Ви оформили та підтвердили, 
+                     Ваше замовлення №${getIdOrder}. Очікуйте інформацію про готовність та статус замовлення.
                         Дякуємо за покупку!`
-                }   
-                </SuccessNotif>   
+                    }   
+                    </SuccessNotif>   
                 </div>
-            }    
-        
+            }
         </div>
     );
 });
