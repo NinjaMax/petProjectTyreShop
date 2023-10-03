@@ -3,6 +3,29 @@ import { WareHouseNPType } from './enum/typeWareHouseNP.enum';
 import { $novaPoshtaPost } from './index';
 import { CalcNovaPoshta } from './types/CalcNovaPoshta.type';
 
+const getCityInRegionNovaPoshta = async (refRegionData: string, page: number) =>
+  await $novaPoshtaPost.post('/v2.0/json/',
+    {
+      "apiKey":  process.env.REACT_APP_NOVA_POSHTA_API_KEY,
+      "modelName": "Address",
+      "calledMethod": "getSettlements",
+      "methodProperties": {
+   "AreaRef" : refRegionData,
+   "Ref" : "",
+   "RegionRef" : "",
+   "Page" : page,
+   "Warehouse" : "1",
+   "FindByString" : "",
+   "Limit" : "150"
+      }
+   }
+    )
+    .then((response) => response.data)
+    .catch((error: any) => {
+      console.log(`Не вірно вказані дані, або інша помилка.`, error);
+    });
+
+
 const getCityNovaPoshta = async (dataCity: string) =>
   await $novaPoshtaPost.post('/v2.0/json/',
     {
@@ -31,7 +54,7 @@ const getWareHousesNovaPoshta = async (dataCity: IDapertmentNP) =>
       "CityName" : dataCity?.MainDescription,
       "CityRef" : dataCity?.DeliveryCity,
       "Page" : "1",
-      "Limit" : "200",
+      "Limit" : "250",
       "Language" : "UA",
       "TypeOfWarehouseRef" : WareHouseNPType.REF_VANTAGNE,
       "WarehouseId" : ""
@@ -89,5 +112,6 @@ const getWareHousesNovaPoshta = async (dataCity: IDapertmentNP) =>
 export { 
     getCityNovaPoshta,
     getWareHousesNovaPoshta,
-    getCalcPriceNovaPoshta
+    getCalcPriceNovaPoshta,
+    getCityInRegionNovaPoshta
 };

@@ -1,6 +1,14 @@
 import { $deliveryPost } from './index';
 import { CalcDelivery } from './types/CalcDelivery.type';
 
+const getCityInRegionDelivery = async (refRegionId: string) =>
+  await $deliveryPost.get(`/GetAreasList?culture=uk-UA&fl_all=false&regionId=${refRegionId}&country=1`,
+    )
+    .then((response) => response.data)
+    .catch((error: any) => {
+      console.log(`Не вірно вказані дані, або інша помилка.`, error);
+    });
+
 const getCityDelivery = async (dataCity: string) =>
   await $deliveryPost.get(`/GetAreasList?culture=uk-UA&fl_all=fl_all&regionId=null&country=1&cityName=${dataCity}`,
     )
@@ -59,5 +67,6 @@ const getWareHousesDelivery = async (dataCityId: string) =>
 export { 
     getCityDelivery,
     getWareHousesDelivery,
-    getCalcPriceDelivery
+    getCalcPriceDelivery,
+    getCityInRegionDelivery
 };
