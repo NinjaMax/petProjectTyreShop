@@ -1,12 +1,44 @@
+
 .deliveryPageContainer {
-    display: block; 
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    font-family: var(--main-font-family);
     overflow: visible;
     margin-top: 25px;
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-left: 100px;
+    margin-right: 100px;
     margin-bottom: 40px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
 
 }
 .deliveryPageBox {
-    margin: auto;
+    margin: auto; 
+}
+
+.deliveryPageText {
+    padding: 30px;
+}
+.deliveryPageTextHeader {
+    font-weight: bold;
+}
+
+.deliveryPageRegionList {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 35px;
+
+}
+.deliveryPageRegionListUl {
+    list-style-type: none;
+}
+
+.deliveryPageRegionListUl li {
+    margin-bottom: 10px;
+}
+
+.deliveryPageRegionListUl a{
+    text-decoration: none;
 }

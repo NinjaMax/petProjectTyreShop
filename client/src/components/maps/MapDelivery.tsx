@@ -4,6 +4,12 @@ import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Icon } from 'leaflet';
 
+type IMapDelivery = {
+  markerPosition: string[];
+  centerPosition: string[];
+  popupInfo: string[];
+};
+
 const MapDelivery = () => {
 
   const customMarker = new Icon({
@@ -17,11 +23,12 @@ const MapDelivery = () => {
           <MapContainer 
             center={[51.505, -0.09]} 
             zoom={17} 
-            scrollWheelZoom={false}
+            scrollWheelZoom={true}
             style={{ 
-              width: "50%", 
-              height: "calc(50vh - 4rem)",
+              width: "95%", 
+              height: "calc(60vh - 4rem)",
               display: "block", 
+              borderRadius: "10px",
             }}
           >
             <TileLayer

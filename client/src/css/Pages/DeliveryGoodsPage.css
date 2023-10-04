@@ -1,0 +1,84 @@
+.deliveryGoodsPage {
+    display: grid;
+    grid-template-columns: repeat(4, 24%);
+    grid-template-areas: 
+                    "a a a a"
+                    "b c c c"
+                    "b d d d"
+                    "b e e e"
+                    "b f f f";
+    grid-gap:5px;
+    margin-left: 50px;
+    margin-right: 50px;
+    padding: 5px;
+    font-family: var(--main-font-family);
+}
+
+.a {
+    grid-area: a;
+}
+
+.b {
+    grid-area: b;
+    /* border: rebeccapurple solid 3px; */
+}
+
+.c {
+    grid-area: c;
+    /* border: rebeccapurple solid 3px; */
+}
+
+.d {
+    grid-area: d;
+    border-radius: 10px;
+    display: flex; 
+    flex-direction: row;
+    justify-content:flex-start;
+    gap: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    /* border: rebeccapurple solid 3px; */
+}
+
+.e {
+    grid-area: e;
+    /* border: rebeccapurple solid 3px; */
+}
+
+.f {
+    grid-area: e;
+    /* border: rebeccapurple solid 3px; */
+}
+.deliveryGoodsMap {
+    width: 600px;
+}
+.deliveryGoodsList {
+    width: 420px;
+}
+
+.deliveryGoodsDeliveryChoose {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.deliveryGoodsDepartData {
+    height: 295px;
+}
+
+.deliveryGoodsDepartDataList {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    gap: 10px;
+    padding: 5px;
+    max-height: 295px;
+}
+
+.deliveryGoodsDepartDataList li {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    padding: 3px;
+}

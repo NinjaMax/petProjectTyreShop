@@ -130,7 +130,7 @@ export class FacebookAuthService {
     //console.log('get Facebook user');
     try {
       //const getCoockies: string | undefined = req.cookies[name];
-      console.log('GET_COOCKIES_FACEBOOK', cookies);
+      //console.log('GET_COOCKIES_FACEBOOK', cookies);
       if (cookies) {
         const decoded = this.jwtService.verify(cookies);
         //console.log('decoded FACEBOOK', decoded);

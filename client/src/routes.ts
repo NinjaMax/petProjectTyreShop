@@ -5,6 +5,7 @@ import { ADMIN_ROUTE, ADMIN_AUTH_ROUTE, BASKET_ROUTE, CATALOG_TYRES_ROUTE,
   CATALOG_WHEELS_ROUTE,
   NEWS_ROUTE,
   DELIVERY_ROUTE,
+  DELIVERY_GOODS_ROUTE,
 } from './utils/consts';
 import Admin from './pages/Admin';
 import AdminAuth from './components/auth/AdminAuth';
@@ -21,6 +22,7 @@ import Favorite from './pages/Favorite';
 import ReviewStorePage from './pages/ReviewStorePage';
 import News from './pages/News';
 import DeliveryPage from './pages/DeliveryPage';
+import DeliveryGoodsPage from './pages/DeliveryGoodsPage';
 
 export const adminRoutes = [
   {
@@ -49,9 +51,9 @@ export const publicRoutes = [
     Component: DeliveryPage
   },
   {
-    path: DELIVERY_ROUTE + '/:region',
+    path: DELIVERY_GOODS_ROUTE + '/:region',
     exact: true,
-    Component: DeliveryPage
+    Component: DeliveryGoodsPage
   },
   {
     path: CATALOG_TYRES_ROUTE + 

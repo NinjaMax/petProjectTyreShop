@@ -27,7 +27,7 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
   const params = useParams<any>();
   const location = useLocation();
   const history = useHistory();
-  const [stateFilter, setStateFilter]=useState(false);
+  const [stateFilter, setStateFilter]=useState<boolean>(false);
     
   const cyrillicToTranslit = new (CyrillicToTranslit as any)();
   const paramsCat = cyrillicToTranslit.transform(params.category,''
