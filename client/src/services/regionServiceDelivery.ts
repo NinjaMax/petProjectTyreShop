@@ -1,7 +1,7 @@
 import { RegionDelivery } from "./enum/RegionDelivery.enum";
 import { RegionNovaPoshta } from "./enum/RegionNovaPoshta.enum";
 
-const regionDelivery = (region: string | undefined) => {
+const regionDelivery = (region:  string |undefined) => {
     switch (region) {
         case "Вінницька область":
             return RegionDelivery.REF_VN_REGION_ID;

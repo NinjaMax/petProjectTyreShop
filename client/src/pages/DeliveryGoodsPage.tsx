@@ -14,7 +14,41 @@ import { tyreSeasonCat, tyreVehicleTypeCat } from '../services/tyresCatService';
 import { getTyresCountAll, getTyresReviewLimit, getTyresWithoutOffset } from '../restAPI/restGoodsApi';
 import MapDelivery from '../components/maps/MapDelivery';
 import { getCityInRegionNovaPoshta, getCityNovaPoshta, getWareHousesNovaPoshta } from '../restAPI/restNovaPoshtaAPI';
-import {regionNovaPoshata} from '../services/regionServiceDelivery';
+import {regionDelivery, regionNovaPoshata} from '../services/regionServiceDelivery';
+
+type ICityMarkerData = {
+  Area: string,
+  AreaDescription: string,
+  AreaDescriptionRu: string,
+  AreaDescriptionTranslit: string,
+  Delivery1: string,
+  Delivery2: string,
+  Delivery3: string,
+  Delivery4: string,
+  Delivery5: string,
+  Delivery6: string,
+  Delivery7: string,
+  Description: string,
+  DescriptionRu: string,
+  DescriptionTranslit: string,
+  Index1: string,
+  Index2: string,
+  IndexCOATSU1: string,
+  Latitude: string,
+  Longitude: string,
+  Ref: string,
+  Region: string,
+  RegionsDescription: string,
+  RegionsDescriptionRu: string,
+  RegionsDescriptionTranslit: string,
+  SettlementType: string,
+  SettlementTypeDescription: string,
+  SettlementTypeDescriptionRu: string,
+  SettlementTypeDescriptionTranslit: string,
+  SpecialCashCheck:number,
+  Warehouse: string,
+};
+
 
 const DeliveryGoodsPage = () => {
   const {goodsTyre, goodsWheel, filter} = useContext<any | null>(Context);
@@ -26,9 +60,14 @@ const DeliveryGoodsPage = () => {
   const [prevBtnReview, setPrevBtnReview] = useState<number>(0);
   const [nextBtnReview, setNextBtnReview] = useState<number>(0);
   const [cityRegion, setCityRegion] = useState<string>();
+  const [cityMarkerData, setCityMarkerData] = useState<ICityMarkerData>();
+  const [novaPoshtaRegion, setNovaPoshtaRegion] = useState<string>();
+  const [novaPoshtaWareHouseList, setNovaPoshtaWareHouseList] = useState<any[] | null>();
+  const [deliveryWareHouseList, setDeliveryWareHouseList] = useState<any[] | null>();
+  const [deliveryRegion, setDeliveryRegion] = useState<string | number>();
   const [stateFilter, setStateFilter]=useState<boolean>(false);
   
-  useEffect(() =>{
+  useEffect(() => {
     let isMounted = false;
     const loadMaintask = async() => {
       const taskLoad: any[] = [
@@ -1071,7 +1110,7 @@ const DeliveryGoodsPage = () => {
     location.pathname,
   ]);
 
-  useEffect(() =>{
+  useEffect(() => {
     let isMounted = false;
     const loadRegionData = async() => {
       if(!isMounted) {
@@ -1079,47 +1118,105 @@ const DeliveryGoodsPage = () => {
         if (getRegionItem) {
           setCityRegion(getRegionItem[0]);
           const getRefRegionNP = regionNovaPoshata(getRegionItem[1]);
+          setNovaPoshtaRegion(getRefRegionNP);
+          const getRefRegionDelivery = regionDelivery(getRegionItem[1]);
+          setDeliveryRegion(getRefRegionDelivery);
           console.log('GET_REGION_REF_NP: ', getRefRegionNP)
         }
         
         console.log('GET_REGION_DATA: ', getRegionItem);
-      }      
+      } 
+      if (!isMounted && novaPoshtaRegion && cityRegion) {
+        let regionCityList: any[] | null = [];
+        let regionFilteredCityList: any[] | null = [];
+        let getCountRegionCity: any = await getCityInRegionNovaPoshta(novaPoshtaRegion, 1);
+        console.log('NOVA_POSHTA_CITY_LIST: ', getCountRegionCity?.info.totalCount);
+        const countPage = Math.ceil(getCountRegionCity?.info.totalCount / 150);
+        console.log('COUNT_PAGE_LIST: ', countPage);
+        if (countPage > 1) {
+          for (let index = 1; index <= countPage; index++) {
+           console.log('INDEX: ', index);
+           let getRegionCity: any = await getCityInRegionNovaPoshta(novaPoshtaRegion, index);
+           regionCityList.push(...getRegionCity.data);
+          }
+        } else {
+          let getRegionCity: any = await getCityInRegionNovaPoshta(novaPoshtaRegion, 1);
+          regionCityList.push(...getRegionCity.data);
+        }
+        console.log('REGION_CITY_LIST_NOVAPOSHTA: ', regionCityList);
+        const getCityMArkerData = regionCityList.find((item: any) => item.Description === cityRegion);
+          // let getCity = await getCityNovaPoshta('Балаклія Харківська область');
+        setCityMarkerData(getCityMArkerData);
+        console.log('CITY_MARKER_DATA: ', getCityMArkerData);
+        for (let index = 0; index < regionCityList.length; index++) {
+
+          let getCityWareHouse = await getWareHousesNovaPoshta(
+          {
+            MainDescription: regionCityList[index].Description,
+            DeliveryCity :''
+          });
+          if (getCityWareHouse.info.totalCount !== 0) {
+            regionFilteredCityList.push(regionCityList[index]);
+            // let getCityDepart = getCityWareHouse.data.find((item: any) => item.CityDescription === cityRegion);
+            // if (getCityDepart) {
+            //   console.log('GET_CITY_DEPART: ', getCityDepart);
+            // }
+          }
+           
+        }
+        //);
+        console.log('REGION_FILTERED_CITY_LIST: ', regionFilteredCityList);
+        //console.log('CITY_WAREHOUSE: ', getCityWareHouse);
+        regionCityList = null;
+      }     
     }
     loadRegionData();
     return () => {
         isMounted = true;
     };
-  },[]);
+  },[cityRegion, novaPoshtaRegion]);
 
-  // useEffect(() =>{
+  // useEffect(() => {
   //   let isMounted = false;
   //   const loadDeliveryTask = async() => {
   //     const taskDeliveryLoad: any[] = [
-  //       getCityNovaPoshta,
-  //       getWareHousesNovaPoshta,
-  //       getCityInRegionNovaPoshta
+  //       //getCityNovaPoshta,
+  //       getCityInRegionNovaPoshta,
+  //       //getWareHousesNovaPoshta,
         
-  //     ];
+        
+  //      ];
+  //     const getRegionItem = localStorage.getItem('regionData')?.split(',');
+  //       if (getRegionItem) {
+  //         setCityRegion(getRegionItem[0]);
+  //         const getRefRegionNP = regionNovaPoshata(getRegionItem[1]);
+  //         setNovaPoshtaRegion(getRefRegionNP);
+  //         const getRefRegionDelivery = regionDelivery(getRegionItem[1]);
+  //         setDeliveryRegion(getRefRegionDelivery);
+  //         console.log('GET_REGION_REF_NP: ', getRefRegionNP)
+  //       }
+        
+  //       console.log('GET_REGION_DATA: ', getRegionItem);
+
 
   //     let i:number = 0;
   //     while(taskDeliveryLoad.length > i) {
-  //       if(!isMounted && taskDeliveryLoad[i] === getTyresCountAll) {
-  //         let tyreTotalCount: any = await taskDeliveryLoad[i](
+  //       // if(!isMounted && taskDeliveryLoad[i] === getCityNovaPoshta) {
+  //       //   let tyreTotalCount: any = await taskDeliveryLoad[i](
 
-  //         );
-  //         const getMainFilterItem = localStorage.getItem('regionData')?.split(',');
-  //         //console.log('SET_TYRES_TOTALCOUNT: ', tyreTotalCount);
-  //       }
-  //       if(!isMounted && taskDeliveryLoad[i] === getTyresReviewLimit 
+  //       //   );
+  //       //   const getMainFilterItem = localStorage.getItem('regionData')?.split(',');
+  //       //   //console.log('SET_TYRES_TOTALCOUNT: ', tyreTotalCount);
+  //       // }
+  //       if(!isMounted && taskDeliveryLoad[i] === getCityInRegionNovaPoshta
   //         //location.pathname.includes('tyres')
   //         ) {
-  //         let getReviewTyres: any = await taskDeliveryLoad[i](
-  //           1,
-  //           nextBtnReview
-  //         );
-  //         if (getReviewTyres) {
-  //           setReviewGoodsData(getReviewTyres);
-  //         }
+  //         let getReviewTyres: any = await taskDeliveryLoad[i](novaPoshtaRegion, 1);
+  //         console.log('NOVA_POSHTA_CITY_LIST: ', getReviewTyres);
+          
+  //         // if (getReviewTyres) {
+  //         //   setReviewGoodsData(getReviewTyres);
+  //         // }
   //       }
   //     }
   //   }
@@ -1128,8 +1225,7 @@ const DeliveryGoodsPage = () => {
   //       isMounted = true;
   //   };
   // },
-  // [ 
-  // ]);
+  // [novaPoshtaRegion]);
 
 
   useEffect(() => {
@@ -1325,9 +1421,16 @@ const DeliveryGoodsPage = () => {
         <CatalogTyres/>
       </div>
       <div className='d'>
-        <div className='deliveryGoodsMap'>
-          <MapDelivery/>
-        </div>
+        {cityMarkerData ?
+          <div className='deliveryGoodsMap'>
+          <MapDelivery 
+            centerPosition={[Number(cityMarkerData?.Latitude), Number(cityMarkerData?.Longitude)]}
+            markerPosition={[Number(cityMarkerData?.Latitude), Number(cityMarkerData?.Longitude)]}
+            popupInfo={['DILLIKEYYZ']}
+          />
+          </div> 
+        : null
+        }
         <div className='deliveryGoodsList'>
           <br/>
           <span>Способи доставки</span>
