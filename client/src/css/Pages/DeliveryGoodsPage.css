@@ -4,6 +4,7 @@
     grid-template-areas: 
                     "a a a a"
                     "b c c c"
+                    "b g g g"
                     "b d d d"
                     "b e e e"
                     "b f f f";
@@ -27,6 +28,10 @@
     grid-area: c;
     /* border: rebeccapurple solid 3px; */
 }
+.g {
+    grid-area: g;
+    /* border: rebeccapurple solid 3px; */
+}
 
 .d {
     grid-area: d;
@@ -45,7 +50,7 @@
 }
 
 .f {
-    grid-area: e;
+    grid-area: f;
     /* border: rebeccapurple solid 3px; */
 }
 .deliveryGoodsMap {
@@ -61,6 +66,7 @@
     justify-content:space-around;
     gap: 8px;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .deliveryGoodsDepartData {
@@ -71,14 +77,46 @@
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
-    gap: 10px;
-    padding: 5px;
+    gap: 1px;
+    margin: 5px;
+    padding: 1px;
     max-height: 295px;
 }
 
+.deliveryGoodsDepartDataList ul {
+    list-style-type: none;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    padding-left: 20px;
+}
 .deliveryGoodsDepartDataList li {
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     cursor: pointer;
-    padding: 3px;
+    padding: 8px;
+    margin-right:4px;
+}
+.deliveryGoodsDepartDataList li:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    background-color: #ddd;
+}
+.deliveryGoodsDepartDataList li:active {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    background-color: #ccc;
+}
+.deliveryGoodsCityInRegion {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 500px;
+}
+
+.deliveryGoodsCityInRegion ul {
+    list-style-type: none;
+}
+.deliveryGoodsCityInRegion li {
+    margin-bottom: 10px;
+}
+.deliveryGoodsCityInRegion a {
+    text-decoration: none;
 }

@@ -8,13 +8,14 @@ import ReviewsGoods from '../components/reviews/ReviewsGoods';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { Context } from '../context/Context';
 import { createStringUrl } from '../services/stringUrl';
-import { CATALOG_TYRES_ROUTE } from '../utils/consts';
+import { CATALOG_TYRES_ROUTE, DELIVERY_GOODS_ROUTE } from '../utils/consts';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { tyreSeasonCat, tyreVehicleTypeCat } from '../services/tyresCatService';
 import { getTyresCountAll, getTyresReviewLimit, getTyresWithoutOffset } from '../restAPI/restGoodsApi';
 import MapDelivery from '../components/maps/MapDelivery';
 import { getCityInRegionNovaPoshta, getCityNovaPoshta, getWareHousesNovaPoshta } from '../restAPI/restNovaPoshtaAPI';
 import {regionDelivery, regionNovaPoshata} from '../services/regionServiceDelivery';
+import SpinnerCarRot from '../components/spinners/SpinnerCarRot';
 
 type ICityMarkerData = {
   Area: string,
@@ -62,10 +63,14 @@ const DeliveryGoodsPage = () => {
   const [cityRegion, setCityRegion] = useState<string>();
   const [cityMarkerData, setCityMarkerData] = useState<ICityMarkerData>();
   const [novaPoshtaRegion, setNovaPoshtaRegion] = useState<string>();
+  const [novaPoshtaCityInRegion, setNovaPoshtaCityInRegion] = useState<any[] | null>();
   const [novaPoshtaWareHouseList, setNovaPoshtaWareHouseList] = useState<any[] | null>();
+  const [markerState, setMarkerState] = useState<string | null>();
   const [deliveryWareHouseList, setDeliveryWareHouseList] = useState<any[] | null>();
+  const [deliveryDepart, setDeliveryDepart] = useState<any[] | null>();
   const [deliveryRegion, setDeliveryRegion] = useState<string | number>();
   const [stateFilter, setStateFilter]=useState<boolean>(false);
+  const [region, setRegion] = useState<string>();
   
   useEffect(() => {
     let isMounted = false;
@@ -1117,6 +1122,7 @@ const DeliveryGoodsPage = () => {
         const getRegionItem = localStorage.getItem('regionData')?.split(',');
         if (getRegionItem) {
           setCityRegion(getRegionItem[0]);
+          setRegion(getRegionItem[1]);
           const getRefRegionNP = regionNovaPoshata(getRegionItem[1]);
           setNovaPoshtaRegion(getRefRegionNP);
           const getRefRegionDelivery = regionDelivery(getRegionItem[1]);
@@ -1129,6 +1135,8 @@ const DeliveryGoodsPage = () => {
       if (!isMounted && novaPoshtaRegion && cityRegion) {
         let regionCityList: any[] | null = [];
         let regionFilteredCityList: any[] | null = [];
+        let cityDepartData: any[] | null = [];
+        //let departLatLong: any[] | null = [];
         let getCountRegionCity: any = await getCityInRegionNovaPoshta(novaPoshtaRegion, 1);
         console.log('NOVA_POSHTA_CITY_LIST: ', getCountRegionCity?.info.totalCount);
         const countPage = Math.ceil(getCountRegionCity?.info.totalCount / 150);
@@ -1157,17 +1165,26 @@ const DeliveryGoodsPage = () => {
           });
           if (getCityWareHouse.info.totalCount !== 0) {
             regionFilteredCityList.push(regionCityList[index]);
-            // let getCityDepart = getCityWareHouse.data.find((item: any) => item.CityDescription === cityRegion);
-            // if (getCityDepart) {
-            //   console.log('GET_CITY_DEPART: ', getCityDepart);
-            // }
+            let getCityDepart = getCityWareHouse.data.filter((item: any) => item.CityDescription === cityRegion);
+            if (getCityDepart.length > 0) {
+              cityDepartData.push(...getCityDepart);
+            }
           }
            
-        }
-        //);
-        console.log('REGION_FILTERED_CITY_LIST: ', regionFilteredCityList);
+        };
+        // cityDepartData.map((item: any) =>
+        //   departLatLong?.push([+item.Latitude, +item.Longitude])
+        // );
+        
+        setNovaPoshtaCityInRegion([...regionFilteredCityList]);
+        setNovaPoshtaWareHouseList([...cityDepartData]);
+        //setNovaPoshtaDepart(departLatLong);
+        
         //console.log('CITY_WAREHOUSE: ', getCityWareHouse);
         regionCityList = null;
+        regionFilteredCityList = null;
+        cityDepartData = null;
+        //departLatLong = null;
       }     
     }
     loadRegionData();
@@ -1176,6 +1193,9 @@ const DeliveryGoodsPage = () => {
     };
   },[cityRegion, novaPoshtaRegion]);
 
+  console.log('REGION_FILTERED_CITY_LIST: ', novaPoshtaCityInRegion);
+  console.log('CITY_DEPART_NOVAPOSHTA_DATA_LIST: ', novaPoshtaWareHouseList);
+  //console.log('CITY_DEPART_NOVAPOSHTA_LOCATION: ',  novaPoshtaDepart);
   // useEffect(() => {
   //   let isMounted = false;
   //   const loadDeliveryTask = async() => {
@@ -1373,6 +1393,10 @@ const DeliveryGoodsPage = () => {
     // filter.dia
   ]);
 
+  const addDeliveryLink = (e: any) => {
+    localStorage.setItem('regionData', e.currentTarget.getAttribute('data-region'));
+  };
+
   const filterClick = () => {
     setStateFilter(!stateFilter);
     // console.log(e.target);
@@ -1400,6 +1424,11 @@ const DeliveryGoodsPage = () => {
     setPrevBtnReview(oldPrevBtn => oldPrevBtn + 1);
   };
 
+  const markerClick = (e: any) => {
+    setMarkerState(e.target.getAttribute('data-position'));
+    console.log('MARKER_CLICK: ', e.target.getAttribute('data-position'));
+  };
+
 
   return (
     <div className='deliveryGoodsPage'
@@ -1420,81 +1449,376 @@ const DeliveryGoodsPage = () => {
       <div className='c'>
         <CatalogTyres/>
       </div>
+      <div className='g'>
+        <h3> Способи доставки шин в {cityRegion} </h3> 
+      </div>
+      {cityMarkerData && novaPoshtaWareHouseList ?
       <div className='d'>
-        {cityMarkerData ?
           <div className='deliveryGoodsMap'>
           <MapDelivery 
             centerPosition={[Number(cityMarkerData?.Latitude), Number(cityMarkerData?.Longitude)]}
-            markerPosition={[Number(cityMarkerData?.Latitude), Number(cityMarkerData?.Longitude)]}
-            popupInfo={['DILLIKEYYZ']}
+            markerPosition={novaPoshtaWareHouseList}
+            popupInfo={markerState}
           />
           </div> 
-        : null
-        }
         <div className='deliveryGoodsList'>
-          <br/>
-          <span>Способи доставки</span>
           <br/>
           <div className='deliveryGoodsDeliveryChoose'>
             <span>Нова Пошта</span>
             <span>Делівері</span> 
           </div>
-          <div className='deliveryGoodsDepartData'>
-            <ul className='deliveryGoodsDepartDataList'>
-              <li>ВІДДІЛЕННЯ №2 вул. Маковія Бурлицького Першого, 15</li>
-              <li>ВІДДІЛЕННЯ №2</li>
-              <li>ВІДДІЛЕННЯ №2</li>
-              <li>ВІДДІЛЕННЯ №2</li>
-              <li>ВІДДІЛЕННЯ №2</li>
-              <li>ВІДДІЛЕННЯ №2</li>
-              <li>ВІДДІЛЕННЯ №2</li>
-              <li>ВІДДІЛЕННЯ №2</li>
-              <li>ВІДДІЛЕННЯ №2</li>
-              <li>ВІДДІЛЕННЯ №2</li>
-              <li>ВІДДІЛЕННЯ №2</li>
-              <li>ВІДДІЛЕННЯ №2</li>
+          <div className='deliveryGoodsDepartDataList'>
+          {novaPoshtaWareHouseList ? novaPoshtaWareHouseList.map((item: any) => (
+          <div 
+            className='deliveryGoodsDepartData'
+            key={item.SiteKey + '-Depart'}
+          >
+            <ul>
+              <li 
+                onClick={markerClick} 
+                data-position={[Number(item.Latitude),Number(item.Longitude),item.Description,'тел: '+ item.Phone]} 
+              >
+                {item.Description}<br/> тел: {item.Phone}
+              </li>
             </ul>  
+          </div>
+          ))
+          : null
+          }
           </div>
         </div>
       </div>
+        : <SpinnerCarRot/>
+      }
       <div className='e'>
-
+      {cityRegion && novaPoshtaCityInRegion?
+        <h3>Доставка шин в інші міста {region}</h3> 
+        : <h3>Доставка шин в інші областя України</h3>
+      }
+      <div className='deliveryGoodsCityInRegion'>
+      {region && novaPoshtaCityInRegion ? 
+      novaPoshtaCityInRegion?.filter(
+        entity => entity.Description !== cityRegion)
+      .map((item) =>
+      <div key={item.SiteKey}>
+        <ul>
+          <li>
+          <a
+            href={DELIVERY_GOODS_ROUTE + '/' + 
+            createStringUrl(`${item.Description} ${region}`)}
+            data-region={`${item.Description},${region}`}
+            onClick={addDeliveryLink}
+            title={`Доставка шин дисків акб автохіміі в ${item.Description}`}
+          >
+            {item.Description}
+          </a>
+          </li>
+        </ul>
+      </div>
+      )
+      
+      : <SpinnerCarRot/>
+      }
+      </div>
+      {region && !novaPoshtaCityInRegion ? 
+      <div>
+        <ul>
+        <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Сімферопіль АРК')}
+                data-region='Сімферопіль,АРК'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в АРК'
+              >
+                АРК
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Вінниця Вінницька область')}
+                data-region='Вінниця,Вінницька область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Вінницю'
+              >
+                Шини в Вінниці
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Луцьк Волинська область')}
+                data-region='Луцьк,Волинська область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Луцьку'
+              >
+                Шини в Луцьку
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Дніпро Дніпропетровська область')}
+                data-region='Дніпро,Дніпропетровська область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Дніпрі'
+              >
+                Шини в Дніпрі
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Краматорськ Донецька область')}
+                data-region='Краматорськ,Донецька область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Краматорську'
+              >
+                Шини в Краматорську
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Житомир Житомирська область')}
+                data-region='Житомир,Житомирська область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Житомирі'
+              >
+                Шини в Житомирі
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Ужгород Закарпатська область')}
+                data-region='Ужгород,Закарпатська область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Ужгороді'
+              >
+                Шини в Ужгороді
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Запоріжжя Запорізька область')}
+                data-region='Запоріжжя,Запорізька область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Запоріжжі'
+              >
+                Шини в Запоріжжі
+              </a>
+            </li>
+          </ul>
+          <ul className='deliveryPageRegionListUl'>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Івано-Франківськ Івано-Франківська область')}
+                data-region='Івано-Франківськ,Івано-Франківська область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Івано-Франківську'
+              >
+                Шини в Івано-Франківську
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Київ Київська область')}
+                data-region='Київ,Київська область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Київі'
+              >
+                Шини в Київі
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Кропивницький Кіровоградська область')}
+                data-region='Кропивницький,Кіровоградська область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Кропивницькому'
+              >
+                Шини в Кропивницькомі
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE 
+                //createStringUrl('Луганськ Луганська область')
+                }
+                data-region='Луганськ,Луганська область'
+                //onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Луганська область'
+              >
+                Луганськ - тимчасово не доступна
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Львів Львівська область')}
+                data-region='Львів,Львівська область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Львові'
+              >
+                Шини в Львові
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Миколаїв Миколаївська область')}
+                data-region='Миколаїв,Миколаївська область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Миколаїві'
+              >
+                Шини в Миколаїві
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Одеса Одеська область')}
+                data-region='Одеса,Одеська область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Одесі'
+              >
+                Шини в Одесі
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Полтава Полтавська область')}
+                data-region='Полтава,Полтавська область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Полтаві'
+              >
+                Шини в Полтаві
+              </a>
+            </li>
+          </ul>
+          <ul className='deliveryPageRegionListUl'>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Рівне Рівненська область')}
+                data-region='Рівне,Рівненська область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Рівне'
+              >
+                Шини в Рівне
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Суми Сумська область')}
+                data-region='Суми,Сумська область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Сумах'
+              >
+                Шини в Сумах
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Тернопіль Тернопільська область')}
+                data-region='Тернопіль,Тернопільська область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Тернополі'
+              >
+                Шини а Тернополі
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Харків Харківська область')}
+                data-region='Харків,Харківська область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Харкові'
+              >
+                Шини в Харкові
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Херсон Херсонська область')}
+                data-region='Херсон,Херсонська область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Херсоні'
+              >
+                Шини в Херсоні
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Хмельницький Хмельницька область')}
+                data-region='Хмельницький,Хмельницька область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Хмельницькому'
+              >
+                Шини в Хмельницькому
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Черкаси Черкаська область')}
+                data-region='Черкаси,Черкаська область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Черкасах'
+              >
+                Шини в Черкасах
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Чернівці, Чернівецька область')}
+                data-region='Чернівці,Чернівецька область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Чернівцях'
+              >
+                Шини в Чернівцях
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl('Чернігів, Чернігівська область')}
+                data-region='Чернігів,Чернігівська область'
+                onClick={addDeliveryLink}
+                title='Доставка шин дисків акб автохіміі в Чернігові'
+              >
+                Шини в Чернігові
+              </a>
+            </li>
+        </ul>
+      </div>
+      
+      : null
+      }
       </div>
       <div className='f'>
       <ReviewsMain 
-            props={'Відгуки кліентів'} 
-            prevBtnAction={prevBtnReviewGoods} 
-            nextBtnAction={nextBtnReviewGoods}    
-            buttonPosition={{
-              prevBtnLeft: 450, 
-              prevTop: 395, 
-              nextBtnRight: 140,  
-              nextTop: 395, 
-            }}      
-          >
-            <div >
-            {reviewGoodsData?.length !== 0 ? 
-              reviewGoodsData?.map((item: any) =>
-              <div key={item.id_review_store + '_review'}>
-              <ReviewsGoods 
-                productFullName={item.tyres.full_name} 
-                rating={[item.rating]} 
-                reviewEntity={item} 
-                reviewExtend={false} 
-                btnLeft={undefined} 
-                btnRight={undefined}
-              />
-              </div>
-              )
-              : 
-              <div className='mainAfterReviews' >
-                <a className='mainLinkReview'
-                  href='/review'>Дивитися всі відгуки про магазин
-                </a>
-              </div>
-            }
+        props={'Відгуки кліентів'} 
+        prevBtnAction={prevBtnReviewGoods} 
+        nextBtnAction={nextBtnReviewGoods}    
+        buttonPosition={{
+          prevBtnLeft: 450, 
+          prevTop: 395, 
+          nextBtnRight: 140,  
+          nextTop: 395, 
+        }}      
+      >
+        <div >
+        {reviewGoodsData?.length !== 0 ? 
+          reviewGoodsData?.map((item: any) =>
+          <div key={item.id_review_store + '_review'}>
+            <ReviewsGoods 
+              productFullName={item.tyres.full_name} 
+              rating={[item.rating]} 
+              reviewEntity={item} 
+              reviewExtend={false} 
+              btnLeft={undefined} 
+              btnRight={undefined}
+            />
             </div>
-          </ReviewsMain>
+            )
+            : 
+            <div className='mainAfterReviews' >
+              <a className='mainLinkReview'
+                href='/review'>Дивитися всі відгуки про магазин
+              </a>
+            </div>
+          }
+        </div>
+      </ReviewsMain>
       </div>
     </div>
   )
