@@ -3,6 +3,7 @@
     grid-template-columns: repeat(4, 24%);
     grid-template-areas: 
                     "a a a a"
+                    "h h h h"
                     "b c c c"
                     "b g g g"
                     "b d d d"
@@ -53,6 +54,23 @@
     grid-area: f;
     /* border: rebeccapurple solid 3px; */
 }
+
+.h {
+    grid-area: h;
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    align-items:center;
+    gap: 25px;
+    margin-left: 75px;
+    margin-right: 75px;
+}
+.h .deliveryGoodsPageHtitle {
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
+}
+
 .deliveryGoodsMap {
     width: 600px;
 }
@@ -89,26 +107,34 @@
     margin-bottom: 7px;
     padding-left: 20px;
 }
-.deliveryGoodsDepartDataList li {
+.deliveryGoodsListDepartment {
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     cursor: pointer;
     padding: 8px;
     margin-right:4px;
 }
-.deliveryGoodsDepartDataList li:hover {
+.deliveryGoodsListDepartment:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     background-color: #ddd;
 }
-.deliveryGoodsDepartDataList li:active {
+.deliveryGoodsListDepartment:active {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     background-color: #ccc;
+}
+.deliveryGoodsListDepartment.active {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    padding: 8px;
+    margin-right:4px;
+    background-color: #cccc;
 }
 .deliveryGoodsCityInRegion {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    height: 500px;
+    max-height: 600px;
 }
 
 .deliveryGoodsCityInRegion ul {
@@ -119,4 +145,26 @@
 }
 .deliveryGoodsCityInRegion a {
     text-decoration: none;
+}
+.deliveryGoodsCityInRegionList {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 350px;
+}
+.deliveryGoodsDeliveryChooseBtn{
+    border: #ccc solid;
+    border-width:0 0 5px 0;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.deliveryGoodsDeliveryChooseBtn:hover {
+    border: #71C2FF solid;
+    border-width:0 0 5px 0;
+}
+.deliveryGoodsDeliveryChooseBtn.active {
+    border: #71C2FF solid;
+    border-width:0 0 5px 0;
+    background-color: #ffff;
 }

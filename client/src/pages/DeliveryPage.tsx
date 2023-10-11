@@ -39,7 +39,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Сімферопіль АРК')}
-                data-region='Сімферопіль,АРК'
+                data-region='Сімферопіль,АРК,Сімферопіль'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в АРК'
               >
@@ -49,7 +49,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Вінниця Вінницька область')}
-                data-region='Вінниця,Вінницька область'
+                data-region='Вінниця,Вінницька область,Вінниця'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Вінницька область'
               >
@@ -59,7 +59,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Луцьк Волинська область')}
-                data-region='Луцьк,Волинська область'
+                data-region='Луцьк,Волинська область,Луцьк'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Волинська область'
               >
@@ -69,7 +69,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Дніпро Дніпропетровська область')}
-                data-region='Дніпро,Дніпропетровська область'
+                data-region='Дніпро,Дніпропетровська область,Дніпро'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Дніпропетровська область'
               >
@@ -79,7 +79,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Краматорськ Донецька область')}
-                data-region='Краматорськ,Донецька область'
+                data-region='Краматорськ,Донецька область,Краматорськ'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Донецька область'
               >
@@ -89,7 +89,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Житомир Житомирська область')}
-                data-region='Житомир,Житомирська область'
+                data-region='Житомир,Житомирська область,Житомир'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Житомирська область'
               >
@@ -99,7 +99,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Ужгород Закарпатська область')}
-                data-region='Ужгород,Закарпатська область'
+                data-region='Ужгород,Закарпатська область,Ужгород'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Закарпатська область'
               >
@@ -109,7 +109,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Запоріжжя Запорізька область')}
-                data-region='Запоріжжя,Запорізька область'
+                data-region='Запоріжжя,Запорізька область,Запоріжжя'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Запорізька область'
               >
@@ -121,7 +121,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Івано-Франківськ Івано-Франківська область')}
-                data-region='Івано-Франківськ,Івано-Франківська область'
+                data-region='Івано-Франківськ,Івано-Франківська область,Івано-Франківськ'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Івано-Франківська область'
               >
@@ -131,7 +131,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Київ Київська область')}
-                data-region='Київ,Київська область'
+                data-region='Київ,Київська область,Київ'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Київська область'
               >
@@ -141,7 +141,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Кропивницький Кіровоградська область')}
-                data-region='Кропивницький,Кіровоградська область'
+                data-region='Кропивницький,Кіровоградська область,Кропивницький'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Кіровоградська область'
               >
@@ -151,7 +151,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Луганськ Луганська область')}
-                data-region='Луганськ,Луганська область'
+                data-region='Луганськ,Луганська область,Луганськ'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Луганська область'
               >
@@ -161,7 +161,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Львів Львівська область')}
-                data-region='Львів,Львівська область'
+                data-region='Львів,Львівська область,Львів'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Львівська область'
               >
@@ -171,7 +171,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Миколаїв Миколаївська область')}
-                data-region='Миколаїв,Миколаївська область'
+                data-region='Миколаїв,Миколаївська область,Миколаїв'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Миколаївська область'
               >
@@ -181,7 +181,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Одеса Одеська область')}
-                data-region='Одеса,Одеська область'
+                data-region='Одеса,Одеська область,Одеса'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Одеська область'
               >
@@ -191,7 +191,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Полтава Полтавська область')}
-                data-region='Полтава,Полтавська область'
+                data-region='Полтава,Полтавська область,Полтава'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Полтавська область'
               >
@@ -203,7 +203,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Рівне Рівненська область')}
-                data-region='Рівне,Рівненська область'
+                data-region='Рівне,Рівненська область,Рівне'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Рівненська область'
               >
@@ -213,7 +213,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Суми Сумська область')}
-                data-region='Суми,Сумська область'
+                data-region='Суми,Сумська область,Суми'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Сумська область'
               >
@@ -223,7 +223,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Тернопіль Тернопільська область')}
-                data-region='Тернопіль,Тернопільська область'
+                data-region='Тернопіль,Тернопільська область,Тернопіль'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Тернопільська область'
               >
@@ -233,7 +233,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Харків Харківська область')}
-                data-region='Харків,Харківська область'
+                data-region='Харків,Харківська область,Харків'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Харківська область'
               >
@@ -243,7 +243,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Херсон Херсонська область')}
-                data-region='Херсон,Херсонська область'
+                data-region='Херсон,Херсонська область,Херсон'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Херсонська область'
               >
@@ -253,7 +253,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Хмельницький Хмельницька область')}
-                data-region='Хмельницький,Хмельницька область'
+                data-region='Хмельницький,Хмельницька область,Хмельницький'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Хмельницька область'
               >
@@ -263,7 +263,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Черкаси Черкаська область')}
-                data-region='Черкаси,Черкаська область'
+                data-region='Черкаси,Черкаська область,Черкаси'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Черкаська область'
               >
@@ -273,7 +273,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Чернівці, Чернівецька область')}
-                data-region='Чернівці,Чернівецька область'
+                data-region='Чернівці,Чернівецька область,Чернівці'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Чернівецька область'
               >
@@ -283,7 +283,7 @@ const DeliveryPage = () => {
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
                 createStringUrl('Чернігів, Чернігівська область')}
-                data-region='Чернігів,Чернігівська область'
+                data-region='Чернігів,Чернігівська область,Чернігів'
                 onClick={addDeliveryLink}
                 title='Доставка шин дисків акб автохіміі в Чернігівська область'
               >

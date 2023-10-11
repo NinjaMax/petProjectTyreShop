@@ -11,6 +11,7 @@ import { seasonCar, typeCar } from '../../services/tyresPropsService';
 import { useHistory, useParams } from 'react-router-dom';
 import { tyreSeasonCat, tyreVehicleTypeCat } from '../../services/tyresCatService';
 import { createStringUrl } from '../../services/stringUrl';
+import { homologationByCar } from '../../services/homologation';
 
 interface IFilterCatTyres {
     handleChange?(args0: any): void;
@@ -895,7 +896,7 @@ const FilterCatalogTyres = observer((
                         value={homologationItem} 
                         titleName={'Омологація'}
                         titleCheckbox={homologationItem} 
-                        imageSrc={''}
+                        imageSrc={homologationByCar(homologationItem) ?? ''}
                     /> 
                     ))
                      : null

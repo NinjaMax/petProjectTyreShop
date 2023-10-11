@@ -10,12 +10,12 @@ import { Context } from '../context/Context';
 import { createStringUrl } from '../services/stringUrl';
 import { CATALOG_TYRES_ROUTE, DELIVERY_GOODS_ROUTE } from '../utils/consts';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
-import { tyreSeasonCat, tyreVehicleTypeCat } from '../services/tyresCatService';
 import { getTyresCountAll, getTyresReviewLimit, getTyresWithoutOffset } from '../restAPI/restGoodsApi';
 import MapDelivery from '../components/maps/MapDelivery';
-import { getCityInRegionNovaPoshta, getCityNovaPoshta, getWareHousesNovaPoshta } from '../restAPI/restNovaPoshtaAPI';
+import { getCityInRegionNovaPoshta, getWareHousesNovaPoshta } from '../restAPI/restNovaPoshtaAPI';
 import {regionDelivery, regionNovaPoshata} from '../services/regionServiceDelivery';
 import SpinnerCarRot from '../components/spinners/SpinnerCarRot';
+import { getCityInRegionDelivery, getWareHousesDelivery } from '../restAPI/restDeliveryAPI';
 
 type ICityMarkerData = {
   Area: string,
@@ -50,9 +50,8 @@ type ICityMarkerData = {
   Warehouse: string,
 };
 
-
 const DeliveryGoodsPage = () => {
-  const {goodsTyre, goodsWheel, filter} = useContext<any | null>(Context);
+  const {goodsTyre, filter} = useContext<any | null>(Context);
   const {page} = useContext<any | null>(Context);
   const params = useParams<any>();
   const location = useLocation();
@@ -61,16 +60,18 @@ const DeliveryGoodsPage = () => {
   const [prevBtnReview, setPrevBtnReview] = useState<number>(0);
   const [nextBtnReview, setNextBtnReview] = useState<number>(0);
   const [cityRegion, setCityRegion] = useState<string>();
+  const [cityCenterRegion, setCityCenterRegion] = useState<string>();
   const [cityMarkerData, setCityMarkerData] = useState<ICityMarkerData>();
   const [novaPoshtaRegion, setNovaPoshtaRegion] = useState<string>();
   const [novaPoshtaCityInRegion, setNovaPoshtaCityInRegion] = useState<any[] | null>();
   const [novaPoshtaWareHouseList, setNovaPoshtaWareHouseList] = useState<any[] | null>();
   const [markerState, setMarkerState] = useState<string | null>();
   const [deliveryWareHouseList, setDeliveryWareHouseList] = useState<any[] | null>();
-  const [deliveryDepart, setDeliveryDepart] = useState<any[] | null>();
+  const [chooseDepart, setChooseDepart] = useState<string| null>();
   const [deliveryRegion, setDeliveryRegion] = useState<string | number>();
   const [stateFilter, setStateFilter]=useState<boolean>(false);
   const [region, setRegion] = useState<string>();
+  const [tabDelivery, setTabDelivery] = useState<string>('Нова Пошта');
   
   useEffect(() => {
     let isMounted = false;
@@ -79,55 +80,7 @@ const DeliveryGoodsPage = () => {
         getTyresWithoutOffset,  
         getTyresCountAll,
         getTyresReviewLimit,
-
-        
       ];
-      // if (localStorage.getItem('filterTyreUrl')) {
-      //   const getMainFilterItem = localStorage.getItem('filterTyreUrl')?.split('/');
-      //   if (getMainFilterItem![0]) {
-      //     filter.setSeason(getMainFilterItem![0]);
-      //     if (getMainFilterItem![0]?.includes(',')) {
-      //       filter.setChipSeason(
-      //         Array.from(new Set([...getMainFilterItem![0]?.split(',')]))
-      //       ); 
-      //     } else {
-      //       filter.setChipSeason(
-      //         Array.from(new Set([...filter.chipSeason, getMainFilterItem![0]]))
-      //       ); 
-      //     }
-      //   }
-      //   if (getMainFilterItem![1]) {
-      //     filter.setBrands(getMainFilterItem![1]);
-      //     if (getMainFilterItem![1]?.includes(',')) {
-      //       filter.setChipBrands(
-      //         Array.from(new Set([...getMainFilterItem![1]?.split(',')]))
-      //       );
-      //     } else {
-      //       filter.setChipBrands(
-      //         Array.from(new Set([...filter.chipBrands, getMainFilterItem![1]]))
-      //       );
-      //     }
-      //   }
-      //   if (getMainFilterItem![2]) {
-      //     filter.setWidth(getMainFilterItem![2]);
-      //     filter.setChipWidth(
-      //       Array.from(new Set([...filter.chipWidth, getMainFilterItem![2]]))
-      //     );
-      //   }
-      //   if (getMainFilterItem![3]) {
-      //     filter.setHeight(getMainFilterItem![3]);
-      //     filter.setChipHeight(
-      //       Array.from(new Set([...filter.chipHeight, getMainFilterItem![3]]))
-      //     );
-      //   }
-      //   if (getMainFilterItem![4]) {
-      //     filter.setDiameter(getMainFilterItem![4]);
-      //     filter.setChipDiameter(
-      //       Array.from(new Set([...filter.chipDiameter, getMainFilterItem![4]]))
-      //     );
-      //   }
-      //   localStorage.removeItem('filterTyreUrl');
-      // }
 
       let i:number = 0;
       while(taskLoad.length > i) {
@@ -357,10 +310,8 @@ const DeliveryGoodsPage = () => {
             filter.reinforced,
           );
           goodsTyre?.setTotalCount(tyreTotalCount);
-          //console.log('SET_TYRES_TOTALCOUNT: ', tyreTotalCount);
         }
         if(!isMounted && taskLoad[i] === getTyresReviewLimit 
-          //location.pathname.includes('tyres')
           ) {
           let getReviewTyres: any = await taskLoad[i](
             1,
@@ -370,719 +321,10 @@ const DeliveryGoodsPage = () => {
             setReviewGoodsData(getReviewTyres);
           }
         }
-        // if(!isMounted && taskLoad[i] === getTyresReviewLimit 
-        //   //location.pathname.includes('tyres')
-        //   ) {
-        //   let getReviewTyres: any = await taskLoad[i](
-        //     1,
-        //     nextBtnReview
-        //   );
-        //   if (getReviewTyres) {
-        //     setReviewGoodsData(getReviewTyres);
-        //   }
-        // }
         const task = taskLoad.shift();
         task();
         await yieldToMain(); 
       }
-      // if (params.season && !filter.season && filter.chipSeason.length === 0 ) {
-      //   const tyreCatSeason = tyreSeasonCat(params.season);
-      //   if (tyreCatSeason) {
-      //     filter.setSeason(tyreCatSeason);
-      //     filter.setChipSeason(
-      //       Array.from(new Set([...filter.chipSeason, tyreCatSeason]))
-      //     ); 
-      //   }
-      // }
-      // if (params.season && !filter.studded && filter.chipStudded.length === 0 ) {
-      //   const tyreStudded = goodsTyre._studded?.find(
-      //     (studded:string) => 
-      //     createStringUrl(studded.toLocaleLowerCase()) === params.season);
-      //   if (tyreStudded) {
-      //     filter.setStudded(tyreStudded);
-      //     filter.setChipStudded(
-      //       Array.from(new Set([...filter.chipStudded, tyreStudded]))
-      //     ); 
-      //   }
-      // }
-      // if (params.studded && !filter.studded && filter.chipStudded.length === 0 ) {
-      //   const tyreStudded = goodsTyre._studded?.find(
-      //     (studded:string) => 
-      //     createStringUrl(studded.toLocaleLowerCase()) === params.studded);
-      //   if (tyreStudded) {
-      //     filter.setStudded(tyreStudded);
-      //     filter.setChipStudded(
-      //       Array.from(new Set([...filter.chipStudded, tyreStudded]))
-      //     ); 
-      //   }
-      // }
-      // if (params.season && !filter.vehicle_type && filter.chipVehicleType.length === 0) {
-      //   const tyreCatType = tyreVehicleTypeCat(params.season);
-      //   if (tyreCatType) {
-      //     filter.setVehicleType(tyreCatType);
-      //     filter.setChipVehicleType(
-      //       Array.from(new Set([...filter.chipVehicleType, tyreCatType]))
-      //     );  
-      //   }
-      // }
-      // if (params.studded && !filter.vehicle_type && filter.chipVehicleType.length === 0) {
-      //   const tyreCatType = tyreVehicleTypeCat(params.studded);
-      //   if (tyreCatType) {
-      //     filter.setVehicleType(tyreCatType);
-      //     filter.setChipVehicleType(
-      //       Array.from(new Set([...filter.chipVehicleType, tyreCatType]))
-      //     ); 
-      //   }
-      // }
-      // if (params.type && !filter.vehicle_type && filter.chipVehicleType.length === 0) {
-      //   const tyreCatType = tyreVehicleTypeCat(params.type);
-      //   if (tyreCatType) {
-      //     filter.setVehicleType(tyreCatType);
-      //     filter.setChipVehicleType(
-      //       Array.from(new Set([...filter.chipVehicleType, tyreCatType]))
-      //     );     
-      //   }
-      // }
-      // if (params.season && !filter.brands && filter.chipBrands.length === 0) {
-      //   const findBrands = goodsTyre._brands?.find(
-      //     (brands:string) => 
-      //     createStringUrl(brands.toLocaleLowerCase()) === params.season);
-      //   if (findBrands) {
-      //     filter.setBrands(findBrands);
-      //     filter.setChipBrands(
-      //       Array.from(new Set([...filter.chipBrands, findBrands]))
-      //     );
-      //   }
-      // }
-      // if (params.studded && !filter.brands && filter.chipBrands.length === 0) {
-      //   const findBrandsInStudded = goodsTyre._brands?.find(
-      //     (brands:string) => 
-      //     createStringUrl(brands.toLocaleLowerCase()) === params.studded);
-      //   if (findBrandsInStudded) {
-      //     filter.setBrands(findBrandsInStudded);
-      //     filter.setChipBrands(
-      //       Array.from(new Set([...filter.chipBrands, findBrandsInStudded]))
-      //     );
-      //   }
-      // }
-      // if (params.type && !filter.brands && filter.chipBrands.length === 0) {
-      //   const findBrandsInType = goodsTyre._brands?.find(
-      //     (brands:string) => 
-      //     createStringUrl(brands.toLocaleLowerCase()) === params.type);
-      //   if (findBrandsInType) {
-      //     filter.setBrands(findBrandsInType);
-      //     filter.setChipBrands(
-      //       Array.from(new Set([...filter.chipBrands, findBrandsInType]))
-      //     );
-      //   }
-      // }
-      // if (params.brands && !filter.brands && filter.chipBrands.length === 0) {
-      //   const findBrand = goodsTyre._brands?.find(
-      //     (brands:string) => 
-      //     createStringUrl(brands.toLocaleLowerCase()) === params.brands);
-      //   if (findBrand) {
-      //     filter.setBrands(findBrand);
-      //     filter.setChipBrands(
-      //       Array.from(new Set([...filter.chipBrands, findBrand]))
-      //     );
-      //   }
-      // }
-      // if (params.season?.includes('w') && !filter.width && filter.chipWidth.length === 0 ) {
-      //   const findWidth = goodsTyre._width?.find((width:string) => width === params.season?.slice(1, params.season?.length));
-      //   if (findWidth) {
-      //     filter.setWidth(findWidth);
-      //     filter.setChipWidth(
-      //       Array.from(new Set([...filter.chipWidth, findWidth]))
-      //     );
-      //   }
-      // }
-      // if (params.studded?.includes('w') && !filter.width && filter.chipWidth.length === 0 ) {
-      //   const findWidthInStudded = goodsTyre._width?.find((width:string) => width === params.studded?.slice(1, params.studded?.length));
-      //   if (findWidthInStudded) {
-      //     filter.setWidth(findWidthInStudded);
-      //     filter.setChipWidth(
-      //       Array.from(new Set([...filter.chipWidth, findWidthInStudded]))
-      //     );
-      //   }
-      // }
-      // if (params.type?.includes('w') && !filter.width && filter.chipWidth.length === 0 ) {
-      //   const findWidthInType = goodsTyre._width?.find((width:string) => width === params.type?.slice(1, params.type?.length));
-      //   if (findWidthInType) {
-      //     filter.setWidth(findWidthInType);
-      //     filter.setChipWidth(
-      //       Array.from(new Set([...filter.chipWidth, findWidthInType]))
-      //     );
-      //   }
-      // }
-      // if (params.brands?.includes('w') && !filter.width && filter.chipWidth.length === 0 ) {
-      //   const findWidthInBrand = goodsTyre._width?.find((width:string) => width === params.brands?.slice(1, params.brands?.length));
-      //   if (findWidthInBrand) {
-      //     filter.setWidth(findWidthInBrand);
-      //     filter.setChipWidth(
-      //       Array.from(new Set([...filter.chipWidth, findWidthInBrand]))
-      //     );
-      //   }
-      // }
-      // if (params.width?.includes('w') && !filter.width && filter.chipWidth.length === 0 ) {
-      //   const findWidth = goodsTyre._width?.find((width:string) => width === params.width?.slice(1, params.width?.length));
-      //   if (findWidth) {
-      //     filter.setWidth(findWidth);
-      //     filter.setChipWidth(
-      //       Array.from(new Set([...filter.chipWidth, findWidth]))
-      //     );
-      //   }
-      // }
-      // if (params.season?.includes('h') && !filter.height && filter.chipHeight.length === 0) {
-      //   const findHeight = goodsTyre._height?.find((height:string) => height === params.season?.slice(1, params.season?.length));
-      //   if (findHeight) {
-      //     filter.setHeight(findHeight);
-      //     filter.setChipHeight(
-      //       Array.from(
-      //         new Set([...filter.chipHeight, findHeight]))
-      //     );
-      //   }
-      // }
-      // if (params.studded?.includes('h') && !filter.height && filter.chipHeight.length === 0) {
-      //   const findHeightInStudded = goodsTyre._height?.find((height:string) => height === params.studded?.slice(1, params.studded?.length));
-      //   if (findHeightInStudded) {
-      //     filter.setHeight(findHeightInStudded);
-      //     filter.setChipHeight(
-      //       Array.from(new Set([...filter.chipHeight, findHeightInStudded]))
-      //     );
-      //   }
-      // }
-      // if (params.type?.includes('h') && !filter.height && filter.chipHeight.length === 0) {
-      //   const findHeightInType = goodsTyre._height?.find((height:string) => height === params.type?.slice(1, params.type?.length));
-      //   if (findHeightInType) {
-      //     filter.setHeight(findHeightInType);
-      //     filter.setChipHeight(
-      //       Array.from(new Set([...filter.chipHeight, findHeightInType]))
-      //     );
-      //   }
-      // }
-      // if (params.brands?.includes('h') && !filter.height && filter.chipHeight.length === 0) {
-      //   const findHeightInBrand = goodsTyre._height?.find((height:string) => height === params.brands?.slice(1, params.brands?.length));
-      //   if (findHeightInBrand) {
-      //     filter.setHeight(findHeightInBrand);
-      //     filter.setChipHeight(
-      //       Array.from(new Set([...filter.chipHeight, findHeightInBrand]))
-      //     );
-      //   }
-      // }
-      // if (params.width?.includes('h') && !filter.height && filter.chipHeight.length === 0) {
-      //   const findHeightInBrand = goodsTyre._height?.find((height:string) => height === params.width?.slice(1, params.width?.length));
-      //   if (findHeightInBrand) {
-      //     filter.setHeight(findHeightInBrand);
-      //     filter.setChipHeight(
-      //       Array.from(new Set([...filter.chipHeight, findHeightInBrand]))
-      //     );
-      //   }
-      // }
-      // if (params.height?.includes('h') && !filter.height && filter.chipHeight.length === 0) {
-      //   const findHeight = goodsTyre._height?.find((height:string) => height === params.height?.slice(1, params.height?.length));
-      //   if (findHeight) {
-      //     filter.setHeight(findHeight);
-      //     filter.setChipHeight(
-      //       Array.from(new Set([...filter.chipHeight, findHeight]))
-      //     );
-      //   }
-      // }
-      // if (params.season?.includes('r') && !filter.diameter && filter.chipDiameter.length === 0) {
-      //   const findDiameter = goodsTyre._diameter?.find(
-      //     (diameter:string) => 
-      //     diameter === params.season?.slice(1, params.season?.length));
-      //   if (findDiameter) {
-      //     filter.setDiameter(findDiameter);
-      //     filter.setChipDiameter(
-      //       Array.from(
-      //         new Set([...filter.chipDiameter, findDiameter]))
-      //     );
-      //   }
-      // }
-      // if (params.studded?.includes('r') && !filter.diameter && filter.chipDiameter.length === 0) {
-      //   const findDiameterInType = goodsTyre._diameter?.find(
-      //     (diameter:string) => 
-      //     diameter === params.studded?.slice(1, params.studded?.length));
-      //   if (findDiameterInType) {
-      //     filter.setDiameter(findDiameterInType);
-      //     filter.setChipDiameter(
-      //       Array.from(new Set([...filter.chipDiameter, findDiameterInType]))
-      //     );
-      //   }
-      // }
-      // if (params.type?.includes('r') && !filter.diameter && filter.chipDiameter.length === 0) {
-      //   const findDiameterInType = goodsTyre._diameter?.find(
-      //     (diameter:string) => 
-      //     diameter === params.type?.slice(1, params.type?.length));
-      //   if (findDiameterInType) {
-      //     filter.setDiameter(findDiameterInType);
-      //     filter.setChipDiameter(
-      //       Array.from(new Set([...filter.chipDiameter, findDiameterInType]))
-      //     );
-      //   }
-      // }
-      // if (params.brands?.includes('r') && !filter.diameter && filter.chipDiameter.length === 0) {
-      //   const findDiameterInBrand = goodsTyre._diameter?.find(
-      //     (diameter:string) => 
-      //     diameter === params.brands?.slice(1, params.brands?.length));
-      //   if (findDiameterInBrand) {
-      //     filter.setDiameter(findDiameterInBrand);
-      //     filter.setChipDiameter(
-      //       Array.from(new Set([...filter.chipDiameter, findDiameterInBrand]))
-      //     );
-      //   }
-      // }
-      // if (params.width?.includes('r') && !filter.diameter && filter.chipDiameter.length === 0) {
-      //   const findDiameterInBrand = goodsTyre._diameter?.find(
-      //     (diameter:string) => 
-      //     diameter === params.width?.slice(1, params.width?.length));
-      //   if (findDiameterInBrand) {
-      //     filter.setDiameter(findDiameterInBrand);
-      //     filter.setChipDiameter(
-      //       Array.from(new Set([...filter.chipDiameter, findDiameterInBrand]))
-      //     );
-      //   }
-      // }
-      // if (params.height?.includes('r') && !filter.diameter && filter.chipDiameter.length === 0) {
-      //   const findDiameterInBrand = goodsTyre._diameter?.find(
-      //     (diameter:string) => 
-      //     diameter === params.height?.slice(1, params.height?.length));
-      //   if (findDiameterInBrand) {
-      //     filter.setDiameter(findDiameterInBrand);
-      //     filter.setChipDiameter(
-      //       Array.from(new Set([...filter.chipDiameter, findDiameterInBrand]))
-      //     );
-      //   }
-      // }
-      // if (params.diameter?.includes('r') && !filter.diameter && filter.chipDiameter.length === 0) {
-      //   const findDiameter = goodsTyre._diameter?.find(
-      //     (diameter:string) => 
-      //     diameter === params.diameter?.slice(1, params.height?.length));
-      //   if (findDiameter) {
-      //     filter.setDiameter(findDiameter);
-      //     filter.setChipDiameter(
-      //       Array.from(new Set([...filter.chipDiameter, findDiameter]))
-      //     );
-      //   }
-      // }
-      // if (params.season?.includes('li-') && !filter.load_index && filter.chipLoadIndex.length === 0) {
-      //   const findLoadIndex = goodsTyre._load_index?.find(
-      //     (load_index_with_desc:string) => 
-      //     createStringUrl(load_index_with_desc.toLocaleLowerCase()) === params.season?.slice(3, params.season?.length));
-      //   if (findLoadIndex) {
-      //     filter.setLoadIndex(findLoadIndex);
-      //     filter.setChipLoadIndex(
-      //       Array.from(new Set([...filter.chipLoadIndex, findLoadIndex]))
-      //     );
-      //   }
-      // }
-      // if (params.studded?.includes('li-') && !filter.load_index && filter.chipLoadIndex.length === 0) {
-      //   const findBrandsInStudded = goodsTyre._load_index?.find(
-      //     (load_index_with_desc:string) => 
-      //     createStringUrl(load_index_with_desc.toLocaleLowerCase()) === params.studded?.slice(3, params.studded?.length));
-      //   if (findBrandsInStudded) {
-      //     filter.setLoadIndex(findBrandsInStudded);
-      //     filter.setChipLoadIndex(
-      //       Array.from(new Set([...filter.chipLoadIndex, findBrandsInStudded]))
-      //     );
-      //   }
-      // }
-      // if (params.type?.includes('li-') && !filter.load_index && filter.chipLoadIndex.length === 0) {
-      //   const findBrandsInType = goodsTyre._load_index?.find(
-      //     (load_index_with_desc:string) => 
-      //     createStringUrl(load_index_with_desc.toLocaleLowerCase()) === params.type?.slice(3, params.type?.length));
-      //   if (findBrandsInType) {
-      //     filter.setLoadIndex(findBrandsInType);
-      //     filter.setChipLoadIndex(
-      //       Array.from(new Set([...filter.chipLoadIndex, findBrandsInType]))
-      //     );
-      //   }
-      // }
-      // if (params.brands?.includes('li-') && !filter.load_index && filter.chipLoadIndex.length === 0) {
-      //   const findBrand = goodsTyre._load_index?.find(
-      //     (load_index_with_desc:string) => 
-      //     createStringUrl(load_index_with_desc.toLocaleLowerCase()) === params.brands?.slice(3, params.brands?.length));
-      //   if (findBrand) {
-      //     filter.setLoadIndex(findBrand);
-      //     filter.setChipLoadIndex(
-      //       Array.from(new Set([...filter.chipLoadIndex, findBrand]))
-      //     );
-      //   }
-      // }
-      // if (params.width?.includes('li-') && !filter.load_index && filter.chipLoadIndex.length === 0) {
-      //   const findLoadIndexWidth = goodsTyre._load_index?.find(
-      //     (load_index_with_desc:string) => 
-      //     createStringUrl(load_index_with_desc.toLocaleLowerCase()) === params.width?.slice(3, params.width?.length));
-      //   if (findLoadIndexWidth) {
-      //     filter.setLoadIndex(findLoadIndexWidth);
-      //     filter.setChipLoadIndex(
-      //       Array.from(new Set([...filter.chipLoadIndex, findLoadIndexWidth]))
-      //     );
-      //   }
-      // }
-      // if (params.height?.includes('li-') && !filter.load_index && filter.chipLoadIndex.length === 0) {
-      //   const findLoadIndexHeight = goodsTyre._load_index?.find(
-      //     (load_index_with_desc:string) => 
-      //     createStringUrl(load_index_with_desc.toLocaleLowerCase()) === params.height?.slice(3, params.height?.length));
-      //   if (findLoadIndexHeight) {
-      //     filter.setLoadIndex(findLoadIndexHeight);
-      //     filter.setChipLoadIndex(
-      //       Array.from(new Set([...filter.chipLoadIndex, findLoadIndexHeight]))
-      //     );
-      //   }
-      // }
-      // if (params.diameter?.includes('li-') && !filter.load_index && filter.chipLoadIndex.length === 0) {
-      //   const findLoadIndexBrand = goodsTyre._load_index?.find(
-      //     (load_index_with_desc:string) => 
-      //     createStringUrl(load_index_with_desc.toLocaleLowerCase()) === params.diameter?.slice(3, params.diameter?.length));
-      //   if (findLoadIndexBrand) {
-      //     filter.setLoadIndex(findLoadIndexBrand);
-      //     filter.setChipLoadIndex(
-      //       Array.from(new Set([...filter.chipLoadIndex, findLoadIndexBrand]))
-      //     );
-      //   }
-      // }
-      // if (params.loadindex?.includes('li-') && !filter.load_index && filter.chipLoadIndex.length === 0) {
-      //   const findLoadIndex = goodsTyre._load_index?.find(
-      //     (load_index_with_desc:string) => 
-      //     createStringUrl(load_index_with_desc.toLocaleLowerCase()) === params.loadindex?.slice(3, params.loadindex?.length));
-      //   if (findLoadIndex) {
-      //     filter.setLoadIndex(findLoadIndex);
-      //     filter.setChipLoadIndex(
-      //       Array.from(new Set([...filter.chipLoadIndex, findLoadIndex]))
-      //     );
-      //   }
-      // }
-      // if (params.season?.includes('si-') && !filter.speed_index && filter.chipSpeedIndex.length === 0) {
-      //   const findSpeedIndex = goodsTyre._speed_index?.find(
-      //     (speed_index_with_desc:string) => 
-      //     createStringUrl(speed_index_with_desc.toLocaleLowerCase()) === params.season?.slice(3, params.season?.length));
-      //   if (findSpeedIndex) {
-      //     filter.setSpeedIndex(findSpeedIndex);
-      //     filter.setChipSpeedIndex(
-      //       Array.from(new Set([...filter.chipSpeedIndex, findSpeedIndex]))
-      //     );
-      //   }
-      // }
-      // if (params.studded?.includes('si-') && !filter.speed_index && filter.chipSpeedIndex.length === 0) {
-      //   const findSpeedIndexStudded = goodsTyre._speed_index?.find(
-      //     (speed_index_with_desc:string) => 
-      //     createStringUrl(speed_index_with_desc.toLocaleLowerCase()) === params.studded?.slice(3, params.studded?.length));
-      //   if (findSpeedIndexStudded) {
-      //     filter.setSpeedIndex(findSpeedIndexStudded);
-      //     filter.setChipSpeedIndex(
-      //       Array.from(new Set([...filter.chipSpeedIndex, findSpeedIndexStudded]))
-      //     );
-      //   }
-      // }
-      // if (params.type?.includes('si-') && !filter.speed_index && filter.chipSpeedIndex.length === 0) {
-      //   const findSpeedIndexInType = goodsTyre._speed_index?.find(
-      //     (speed_index_with_desc:string) => 
-      //     createStringUrl(speed_index_with_desc.toLocaleLowerCase()) === params.type?.slice(3, params.type?.length));
-      //   if (findSpeedIndexInType) {
-      //     filter.setSpeedIndex(findSpeedIndexInType);
-      //     filter.setChipSpeedIndex(
-      //       Array.from(new Set([...filter.chipSpeedIndex, findSpeedIndexInType]))
-      //     );
-      //   }
-      // }
-      // if (params.brands?.includes('si-') && !filter.speed_index && filter.chipSpeedIndex.length === 0) {
-      //   const findSpeedIndexBrand = goodsTyre._speed_index?.find(
-      //     (speed_index_with_desc:string) => 
-      //     createStringUrl(speed_index_with_desc.toLocaleLowerCase()) === params.brands?.slice(3, params.brands?.length));
-      //   if (findSpeedIndexBrand) {
-      //     filter.setSpeedIndex(findSpeedIndexBrand);
-      //     filter.setChipSpeedIndex(
-      //       Array.from(new Set([...filter.chipSpeedIndex, findSpeedIndexBrand]))
-      //     );
-      //   }
-      // }
-      // if (params.width?.includes('si-') && !filter.speed_index && filter.chipSpeedIndex.length === 0) {
-      //   const findSpeedIndexWidth = goodsTyre._speed_index?.find(
-      //     (speed_index_with_desc:string) => 
-      //     createStringUrl(speed_index_with_desc.toLocaleLowerCase()) === params.width?.slice(3, params.width?.length));
-      //   if (findSpeedIndexWidth) {
-      //     filter.setSpeedIndex(findSpeedIndexWidth);
-      //     filter.setChipSpeedIndex(
-      //       Array.from(new Set([...filter.chipSpeedIndex, findSpeedIndexWidth]))
-      //     );
-      //   }
-      // }
-      // if (params.height?.includes('si-') && !filter.speed_index && filter.chipSpeedIndex.length === 0) {
-      //   const findSpeedIndexHeight = goodsTyre._speed_index?.find(
-      //     (speed_index_with_desc:string) => 
-      //     createStringUrl(speed_index_with_desc.toLocaleLowerCase()) === params.height?.slice(3, params.height?.length));
-      //   if (findSpeedIndexHeight) {
-      //     filter.setSpeedIndex(findSpeedIndexHeight);
-      //     filter.setChipSpeedIndex(
-      //       Array.from(new Set([...filter.chipSpeedIndex, findSpeedIndexHeight]))
-      //     );
-      //   }
-      // }
-      // if (params.diameter?.includes('si-') && !filter.speed_index && filter.chipSpeedIndex.length === 0) {
-      //   const findSpeedIndexDiameter = goodsTyre._speed_index?.find(
-      //     (speed_index_with_desc:string) => 
-      //     createStringUrl(speed_index_with_desc.toLocaleLowerCase()) === params.diameter?.slice(3, params.diameter?.length));
-      //   if (findSpeedIndexDiameter) {
-      //     filter.setSpeedIndex(findSpeedIndexDiameter);
-      //     filter.setChipSpeedIndex(
-      //       Array.from(new Set([...filter.chipSpeedIndex, findSpeedIndexDiameter]))
-      //     );
-      //   }
-      // }
-      // if (params.loadindex?.includes('si-') && !filter.speed_index && filter.chipSpeedIndex.length === 0) {
-      //   const findSpeedIndexLoad = goodsTyre._speed_index?.find(
-      //     (speed_index_with_desc:string) => 
-      //     createStringUrl(speed_index_with_desc.toLocaleLowerCase()) === params.loadindex?.slice(3, params.loadindex?.length));
-      //   if (findSpeedIndexLoad) {
-      //     filter.setSpeedIndex(findSpeedIndexLoad);
-      //     filter.setChipSpeedIndex(
-      //       Array.from(new Set([...filter.chipSpeedIndex, findSpeedIndexLoad]))
-      //     );
-      //   }
-      // }
-      // if (params.speedindex?.includes('si-') && !filter.speed_index && filter.chipSpeedIndex.length === 0) {
-      //   const findSpeedIndex = goodsTyre._speed_index?.find(
-      //     (speed_index_with_desc:string) => 
-      //     createStringUrl(speed_index_with_desc.toLocaleLowerCase()) === params.speedindex?.slice(3, params.speedindex?.length));
-      //   if (findSpeedIndex) {
-      //     filter.setSpeedIndex(findSpeedIndex);
-      //     filter.setChipSpeedIndex(
-      //       Array.from(new Set([...filter.chipSpeedIndex, findSpeedIndex]))
-      //     );
-      //   }
-      // }
-      // if (params.season?.includes('xl-') && !filter.reinforced && filter.chipReinforced.length === 0) {
-      //   const findReinforcedSeason = goodsTyre._reinforced?.find(
-      //     (reinforced:string) => 
-      //     createStringUrl(reinforced.toLocaleLowerCase()) === params.season?.slice(3, params.season?.length));
-      //   if (findReinforcedSeason) {
-      //     filter.setReinforced(findReinforcedSeason);
-      //     filter.setChipReinforced(
-      //       Array.from(new Set([...filter.chipReinforced, findReinforcedSeason]))
-      //     );
-      //   }
-      // }
-      // if (params.studded?.includes('xl-') && !filter.reinforced && filter.chipReinforced.length === 0) {
-      //   const findReinforcedStudded = goodsTyre._reinforced?.find(
-      //     (reinforced:string) => 
-      //     createStringUrl(reinforced.toLocaleLowerCase()) === params.studded?.slice(3, params.studded?.length));
-      //   if (findReinforcedStudded) {
-      //     filter.setReinforced(findReinforcedStudded);
-      //     filter.setChipReinforced(
-      //       Array.from(new Set([...filter.chipReinforced, findReinforcedStudded]))
-      //     );
-      //   }
-      // }
-      // if (params.type?.includes('xl-') && !filter.reinforced && filter.chipReinforced.length === 0) {
-      //   const findReinforcedInType = goodsTyre._reinforced?.find(
-      //     (reinforced:string) => 
-      //     createStringUrl(reinforced.toLocaleLowerCase()) === params.type?.slice(3, params.type?.length));
-      //   if (findReinforcedInType) {
-      //     filter.setReinforced(findReinforcedInType);
-      //     filter.setChipReinforced(
-      //       Array.from(new Set([...filter.chipReinforced, findReinforcedInType]))
-      //     );
-      //   }
-      // }
-      // if (params.brands?.includes('xl-') && !filter.reinforced && filter.chipReinforced.length === 0) {
-      //   const findReinforcedBrand = goodsTyre._reinforced?.find(
-      //     (reinforced:string) => 
-      //     createStringUrl(reinforced.toLocaleLowerCase()) === params.brands?.slice(3, params.brands?.length));
-      //   if (findReinforcedBrand) {
-      //     filter.setReinforced(findReinforcedBrand);
-      //     filter.setChipReinforced(
-      //       Array.from(new Set([...filter.chipReinforced, findReinforcedBrand]))
-      //     );
-      //   }
-      // }
-      // if (params.width?.includes('xl-') && !filter.reinforced && filter.chipReinforced.length === 0) {
-      //   const findReinforcedWidth = goodsTyre._reinforced?.find(
-      //     (reinforced:string) => 
-      //     createStringUrl(reinforced.toLocaleLowerCase()) === params.width?.slice(3, params.width?.length));
-      //   if (findReinforcedWidth) {
-      //     filter.setReinforced(findReinforcedWidth);
-      //     filter.setChipReinforced(
-      //       Array.from(new Set([...filter.chipReinforced, findReinforcedWidth]))
-      //     );
-      //   }
-      // }
-      // if (params.height?.includes('xl-') && !filter.reinforced && filter.chipReinforced.length === 0) {
-      //   const findReinforcedHeight = goodsTyre._reinforced?.find(
-      //     (reinforced:string) => 
-      //     createStringUrl(reinforced.toLocaleLowerCase()) === params.height?.slice(3, params.height?.length));
-      //   if (findReinforcedHeight) {
-      //     filter.setReinforced(findReinforcedHeight);
-      //     filter.setChipReinforced(
-      //       Array.from(new Set([...filter.chipReinforced, findReinforcedHeight]))
-      //     );
-      //   }
-      // }
-      // if (params.diameter?.includes('xl-') && !filter.reinforced && filter.chipReinforced.length === 0) {
-      //   const findReinforcedDiameter = goodsTyre._reinforced?.find(
-      //     (reinforced:string) => 
-      //     createStringUrl(reinforced.toLocaleLowerCase()) === params.diameter?.slice(3, params.diameter?.length));
-      //   if (findReinforcedDiameter) {
-      //     filter.setReinforced(findReinforcedDiameter);
-      //     filter.setChipReinforced(
-      //       Array.from(new Set([...filter.chipReinforced, findReinforcedDiameter]))
-      //     );
-      //   }
-      // }
-      // if (params.loadindex?.includes('xl-') && !filter.reinforced && filter.chipReinforced.length === 0) {
-      //   const findReinforcedLoad = goodsTyre._reinforced?.find(
-      //     (reinforced:string) => 
-      //     createStringUrl(reinforced.toLocaleLowerCase()) === params.loadindex?.slice(3, params.loadindex?.length));
-      //   if (findReinforcedLoad) {
-      //     filter.setReinforced(findReinforcedLoad);
-      //     filter.setChipReinforced(
-      //       Array.from(new Set([...filter.chipReinforced, findReinforcedLoad]))
-      //     );
-      //   }
-      // }
-      // if (params.speedindex?.includes('xl-') && !filter.reinforced && filter.chipReinforced.length === 0) {
-      //   const findReinforcedSpeed = goodsTyre._reinforced?.find(
-      //     (reinforced:string) => 
-      //     createStringUrl(reinforced.toLocaleLowerCase()) === params.speedindex?.slice(3, params.speedindex?.length));
-      //   if (findReinforcedSpeed) {
-      //     filter.setReinforced(findReinforcedSpeed);
-      //     filter.setChipReinforced(
-      //       Array.from(new Set([...filter.chipReinforced, findReinforcedSpeed]))
-      //     );
-      //   }
-      // }
-      // if (params.reinforced?.includes('xl-') && !filter.reinforced && filter.chipReinforced.length === 0) {
-      //   const findReinforced = goodsTyre._reinforced?.find(
-      //     (reinforced:string) => 
-      //     createStringUrl(reinforced.toLocaleLowerCase()) === params.reinforced?.slice(3, params.reinforced?.length));
-      //   if (findReinforced) {
-      //     filter.setReinforced(findReinforced);
-      //     filter.setChipReinforced(
-      //       Array.from(new Set([...filter.chipReinforced, findReinforced]))
-      //     );
-      //   }
-      // }
-      // if (params.season?.includes('om-') && !filter.homologation && filter.chipHomologation.length === 0) {
-      //   const findOmSeason = goodsTyre._homologation?.find(
-      //     (homologation:string) => 
-      //     createStringUrl(homologation.toLocaleLowerCase()) === params.season?.slice(3, params.season?.length));
-      //   if (findOmSeason) {
-      //     filter.setHomologation(findOmSeason);
-      //     filter.setChipHomologation(
-      //       Array.from(new Set([...filter.chipHomologation, findOmSeason]))
-      //     );
-      //   }
-      // }
-      // if (params.studded?.includes('om-') && !filter.homologation && filter.chipHomologation.length === 0) {
-      //   const findOmStudded = goodsTyre._homologation?.find(
-      //     (homologation:string) => 
-      //     createStringUrl(homologation.toLocaleLowerCase()) === params.studded?.slice(3, params.studded?.length));
-      //   if (findOmStudded) {
-      //     filter.setHomologation(findOmStudded);
-      //     filter.setChipHomologation(
-      //       Array.from(new Set([...filter.chipHomologation, findOmStudded]))
-      //     );
-      //   }
-      // }
-      // if (params.type?.includes('om-') && !filter.homologation && filter.chipHomologation.length === 0) {
-      //   const findOmInType = goodsTyre._homologation?.find(
-      //     (homologation:string) => 
-      //     createStringUrl(homologation.toLocaleLowerCase()) === params.type?.slice(3, params.type?.length));
-      //   if (findOmInType) {
-      //     filter.setHomologation(findOmInType);
-      //     filter.setChipHomologation(
-      //       Array.from(new Set([...filter.chipHomologation, findOmInType]))
-      //     );
-      //   }
-      // }
-      // if (params.brands?.includes('om-') && !filter.homologation && filter.chipHomologation.length === 0) {
-      //   const findOmBrand = goodsTyre._homologation?.find(
-      //     (homologation:string) => 
-      //     createStringUrl(homologation.toLocaleLowerCase()) === params.brands?.slice(3, params.brands?.length));
-      //   if (findOmBrand) {
-      //     filter.setHomologation(findOmBrand);
-      //     filter.setChipHomologation(
-      //       Array.from(new Set([...filter.chipHomologation, findOmBrand]))
-      //     );
-      //   }
-      // }
-      // if (params.width?.includes('om-') && !filter.homologation && filter.chipHomologation.length === 0) {
-      //   const findOmWidth = goodsTyre._homologation?.find(
-      //     (homologation:string) => 
-      //     createStringUrl(homologation.toLocaleLowerCase()) === params.width?.slice(3, params.width?.length));
-      //   if (findOmWidth) {
-      //     filter.setHomologation(findOmWidth);
-      //     filter.setChipHomologation(
-      //       Array.from(new Set([...filter.chipHomologation, findOmWidth]))
-      //     );
-      //   }
-      // }
-      // if (params.height?.includes('om-') && !filter.homologation && filter.chipHomologation.length === 0) {
-      //   const findOmHeight = goodsTyre._homologation?.find(
-      //     (homologation:string) => 
-      //     createStringUrl(homologation.toLocaleLowerCase()) === params.height?.slice(3, params.height?.length));
-      //   if (findOmHeight) {
-      //     filter.setHomologation(findOmHeight);
-      //     filter.setChipHomologation(
-      //       Array.from(new Set([...filter.chipHomologation, findOmHeight]))
-      //     );
-      //   }
-      // }
-      // if (params.diameter?.includes('om-') && !filter.homologation && filter.chipHomologation.length === 0) {
-      //   const findOmDiameter = goodsTyre._homologation?.find(
-      //     (homologation:string) => 
-      //     createStringUrl(homologation.toLocaleLowerCase()) === params.diameter?.slice(3, params.diameter?.length));
-      //   if (findOmDiameter) {
-      //     filter.setHomologation(findOmDiameter);
-      //     filter.setChipHomologation(
-      //       Array.from(new Set([...filter.chipHomologation, findOmDiameter]))
-      //     );
-      //   }
-      // }
-      // if (params.loadindex?.includes('om-') && !filter.homologation && filter.chipHomologation.length === 0) {
-      //   const findOmLoad = goodsTyre._homologation?.find(
-      //     (homologation:string) => 
-      //     createStringUrl(homologation.toLocaleLowerCase()) === params.loadindex?.slice(3, params.loadindex?.length));
-      //   if (findOmLoad) {
-      //     filter.setHomologation(findOmLoad);
-      //     filter.setChipHomologation(
-      //       Array.from(new Set([...filter.chipHomologation, findOmLoad]))
-      //     );
-      //   }
-      // }
-      // if (params.speedindex?.includes('om-') && !filter.homologation && filter.chipHomologation.length === 0) {
-      //   const findOmSpeed = goodsTyre._homologation?.find(
-      //     (homologation:string) => 
-      //     createStringUrl(homologation.toLocaleLowerCase()) === params.speedindex?.slice(3, params.speedindex?.length));
-      //   if (findOmSpeed) {
-      //     filter.setHomologation(findOmSpeed);
-      //     filter.setChipHomologation(
-      //       Array.from(new Set([...filter.chipHomologation, findOmSpeed]))
-      //     );
-      //   }
-      // }
-      // if (params.reinforced?.includes('om-') && !filter.homologation && filter.chipHomologation.length === 0) {
-      //   const findReinforcedOm = goodsTyre._homologation?.find(
-      //     (homologation:string) => 
-      //     createStringUrl(homologation.toLocaleLowerCase()) === params.reinforced?.slice(3, params.reinforced?.length));
-      //   if (findReinforcedOm) {
-      //     filter.setHomologation(findReinforcedOm);
-      //     filter.setChipHomologation(
-      //       Array.from(new Set([...filter.chipHomologation, findReinforcedOm]))
-      //     );
-      //   }
-      // }
-      // if (params.om?.includes('om-') && !filter.homologation && filter.chipHomologation.length === 0) {
-      //   const findOm = goodsTyre._homologation?.find(
-      //     (homologation:string) => 
-      //     createStringUrl(homologation.toLocaleLowerCase()) === params.om?.slice(3, params.om?.length));
-      //   if (findOm) {
-      //     filter.setHomologation(findOm);
-      //     filter.setChipHomologation(
-      //       Array.from(new Set([...filter.chipHomologation, findOm]))
-      //     );
-      //   }
-      // }
     }
     loadMaintask();
     return () => {
@@ -1123,137 +365,94 @@ const DeliveryGoodsPage = () => {
         if (getRegionItem) {
           setCityRegion(getRegionItem[0]);
           setRegion(getRegionItem[1]);
+          setCityCenterRegion(getRegionItem[2]);
           const getRefRegionNP = regionNovaPoshata(getRegionItem[1]);
           setNovaPoshtaRegion(getRefRegionNP);
           const getRefRegionDelivery = regionDelivery(getRegionItem[1]);
           setDeliveryRegion(getRefRegionDelivery);
-          console.log('GET_REGION_REF_NP: ', getRefRegionNP)
         }
-        
-        console.log('GET_REGION_DATA: ', getRegionItem);
       } 
       if (!isMounted && novaPoshtaRegion && cityRegion) {
-        let regionCityList: any[] | null = [];
-        let regionFilteredCityList: any[] | null = [];
-        let cityDepartData: any[] | null = [];
-        //let departLatLong: any[] | null = [];
-        let getCountRegionCity: any = await getCityInRegionNovaPoshta(novaPoshtaRegion, 1);
-        console.log('NOVA_POSHTA_CITY_LIST: ', getCountRegionCity?.info.totalCount);
-        const countPage = Math.ceil(getCountRegionCity?.info.totalCount / 150);
-        console.log('COUNT_PAGE_LIST: ', countPage);
-        if (countPage > 1) {
-          for (let index = 1; index <= countPage; index++) {
-           console.log('INDEX: ', index);
-           let getRegionCity: any = await getCityInRegionNovaPoshta(novaPoshtaRegion, index);
-           regionCityList.push(...getRegionCity.data);
-          }
-        } else {
-          let getRegionCity: any = await getCityInRegionNovaPoshta(novaPoshtaRegion, 1);
-          regionCityList.push(...getRegionCity.data);
-        }
-        console.log('REGION_CITY_LIST_NOVAPOSHTA: ', regionCityList);
-        const getCityMArkerData = regionCityList.find((item: any) => item.Description === cityRegion);
-          // let getCity = await getCityNovaPoshta('Балаклія Харківська область');
-        setCityMarkerData(getCityMArkerData);
-        console.log('CITY_MARKER_DATA: ', getCityMArkerData);
-        for (let index = 0; index < regionCityList.length; index++) {
+        try {
+          let regionCityList: any[] | null = [];
+          let regionFilteredCityList: any[] | null = [];
+          let cityDepartData: any[] | null = [];
 
-          let getCityWareHouse = await getWareHousesNovaPoshta(
-          {
-            MainDescription: regionCityList[index].Description,
-            DeliveryCity :''
-          });
-          if (getCityWareHouse.info.totalCount !== 0) {
-            regionFilteredCityList.push(regionCityList[index]);
-            let getCityDepart = getCityWareHouse.data.filter((item: any) => item.CityDescription === cityRegion);
-            if (getCityDepart.length > 0) {
-              cityDepartData.push(...getCityDepart);
+          let getCountRegionCity: any = await getCityInRegionNovaPoshta(novaPoshtaRegion, 1);
+          const countPage = Math.ceil(getCountRegionCity?.info.totalCount / 150);
+     
+          if (countPage > 1) {
+            for (let index = 1; index <= countPage; index++) {
+              let getRegionCity: any = await getCityInRegionNovaPoshta(novaPoshtaRegion, index);
+              regionCityList.push(...getRegionCity.data);
             }
+          } else {
+            let getRegionCity: any = await getCityInRegionNovaPoshta(novaPoshtaRegion, 1);
+            regionCityList.push(...getRegionCity.data);
           }
-           
-        };
-        // cityDepartData.map((item: any) =>
-        //   departLatLong?.push([+item.Latitude, +item.Longitude])
-        // );
-        
-        setNovaPoshtaCityInRegion([...regionFilteredCityList]);
-        setNovaPoshtaWareHouseList([...cityDepartData]);
-        //setNovaPoshtaDepart(departLatLong);
-        
-        //console.log('CITY_WAREHOUSE: ', getCityWareHouse);
-        regionCityList = null;
-        regionFilteredCityList = null;
-        cityDepartData = null;
-        //departLatLong = null;
-      }     
+          
+          for (let index = 0; index < regionCityList.length; index++) {
+            let getCityWareHouse = await getWareHousesNovaPoshta(
+            {
+              MainDescription: regionCityList[index].Description,
+              DeliveryCity :''
+            });
+            
+            if (getCityWareHouse.info.totalCount !== 0 && getCityWareHouse.data.length !== 0 &&
+              getCityWareHouse.data[0].SettlementAreaDescription === region &&
+              getCityWareHouse.data[0].SettlementRef === regionCityList[index].Ref
+              ) {
+              regionFilteredCityList.push(regionCityList[index]);
+              let cityRef = regionCityList[index].Ref;
+              let getCityDepart = getCityWareHouse.data.filter((item: any) => item.CityDescription === cityRegion 
+                && item.SettlementAreaDescription === region && item.SettlementRef === cityRef
+              );
+              if (getCityDepart.length > 0) {
+                cityDepartData.push(...getCityDepart);
+              }
+            }
+            
+          };
+          const getCityMarkerData = regionFilteredCityList.find((item: any) => item.Description === cityRegion);
+          setCityMarkerData(getCityMarkerData);
+          setNovaPoshtaCityInRegion([...regionFilteredCityList]);
+          setNovaPoshtaWareHouseList([...cityDepartData]);
+          
+          regionCityList = null;
+          regionFilteredCityList = null;
+          cityDepartData = null;       
+        } catch (error) {
+          console.log('NOVAPOSHTA_SET_REGION_ERROR: ', error);
+        }
+      }   
+      if (!isMounted && deliveryRegion && cityRegion) {
+        try {
+          let getCountRegionCityD: any = await getCityInRegionDelivery(deliveryRegion);
+          if (getCountRegionCityD.status === true) {
+            let cityPresent = getCountRegionCityD.data.find((item: any) => item.name === cityRegion);
+            if (cityPresent) {
+              let getCityWareHouseDel = await getWareHousesDelivery(
+                cityPresent.id
+              );
+              setDeliveryWareHouseList(getCityWareHouseDel.data);
+            }
+          };        
+        } catch (error) {
+          console.log('DELIVERY_SET_REGION_ERROR: ', error);
+        }
+      }  
     }
     loadRegionData();
     return () => {
         isMounted = true;
     };
-  },[cityRegion, novaPoshtaRegion]);
-
-  console.log('REGION_FILTERED_CITY_LIST: ', novaPoshtaCityInRegion);
-  console.log('CITY_DEPART_NOVAPOSHTA_DATA_LIST: ', novaPoshtaWareHouseList);
-  //console.log('CITY_DEPART_NOVAPOSHTA_LOCATION: ',  novaPoshtaDepart);
-  // useEffect(() => {
-  //   let isMounted = false;
-  //   const loadDeliveryTask = async() => {
-  //     const taskDeliveryLoad: any[] = [
-  //       //getCityNovaPoshta,
-  //       getCityInRegionNovaPoshta,
-  //       //getWareHousesNovaPoshta,
-        
-        
-  //      ];
-  //     const getRegionItem = localStorage.getItem('regionData')?.split(',');
-  //       if (getRegionItem) {
-  //         setCityRegion(getRegionItem[0]);
-  //         const getRefRegionNP = regionNovaPoshata(getRegionItem[1]);
-  //         setNovaPoshtaRegion(getRefRegionNP);
-  //         const getRefRegionDelivery = regionDelivery(getRegionItem[1]);
-  //         setDeliveryRegion(getRefRegionDelivery);
-  //         console.log('GET_REGION_REF_NP: ', getRefRegionNP)
-  //       }
-        
-  //       console.log('GET_REGION_DATA: ', getRegionItem);
-
-
-  //     let i:number = 0;
-  //     while(taskDeliveryLoad.length > i) {
-  //       // if(!isMounted && taskDeliveryLoad[i] === getCityNovaPoshta) {
-  //       //   let tyreTotalCount: any = await taskDeliveryLoad[i](
-
-  //       //   );
-  //       //   const getMainFilterItem = localStorage.getItem('regionData')?.split(',');
-  //       //   //console.log('SET_TYRES_TOTALCOUNT: ', tyreTotalCount);
-  //       // }
-  //       if(!isMounted && taskDeliveryLoad[i] === getCityInRegionNovaPoshta
-  //         //location.pathname.includes('tyres')
-  //         ) {
-  //         let getReviewTyres: any = await taskDeliveryLoad[i](novaPoshtaRegion, 1);
-  //         console.log('NOVA_POSHTA_CITY_LIST: ', getReviewTyres);
-          
-  //         // if (getReviewTyres) {
-  //         //   setReviewGoodsData(getReviewTyres);
-  //         // }
-  //       }
-  //     }
-  //   }
-  //   loadDeliveryTask();
-  //   return () => {
-  //       isMounted = true;
-  //   };
-  // },
-  // [novaPoshtaRegion]);
-
+  },[cityRegion, deliveryRegion, novaPoshtaRegion, region]);
 
   useEffect(() => {
     let isMounted = false;
     const createNewTyrePath = async() => {
       if(!isMounted) {
         if (filter.season || filter.studded || filter.vehicle_type || filter.brands || filter.width || filter.height || filter.diameter || filter.load_index || filter.speed_index || filter.reinforced || filter.homologation) {
-        //if (location.pathname.includes('tyres')) {
           const toStringUrlSeason: string | undefined = createStringUrl(
             filter.season 
           );
@@ -1289,82 +488,11 @@ const DeliveryGoodsPage = () => {
           );
 
           const tyreCatalogPath: string | undefined = 
-          `${CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/${toStringUrlSeason}` : '' }${filter.studded && !filter.studded.includes(',') ? `/${toStringUrlStudded}` : '' }${filter.vehicle_type && !filter.vehicle_type.includes(',') ? `/${toStringUrlTypeVehicle}` : ''}${filter.brands && !filter.brands.includes(',') ? `/${toStringUrlBrand}` : ''}${filter.width ? `/w${toStringUrlWidth}` : ''}${filter.height ? `/h${toStringUrlHeight}` : ''}${filter.diameter ? `/r${toStringUrlDiameter}` : ''}${filter.load_index && !filter.load_index.includes(',') ? `/li-${toStringUrlLoadIndex}` : '' }${filter.speed_index && !filter.speed_index.includes(',') ? `/si-${toStringUrlSpeedIndex}` : '' }${filter.reinforced && !filter.reinforced.includes(',') ? `/xl-${toStringUrlReinforced}` : '' }${filter.homologation && !filter.homologation.includes(',') ? `/om-${toStringUrlOm}` : '' }`;
-          //history.push(
-          // `${CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/${toStringUrlSeason}` : '' }${filter.vehicle_type ? `/:${toStringUrTypeVehicle}` : ''}${filter.brands && !filter.brands.includes(',') ? `/${toStringUrBrand}` : ''}${filter.width ? `/w${toStringUrlWidth}` : ''}${filter.height ? `/h${toStringUrlHeight}` : ''}${filter.diameter ? `/r${toStringUrlDiameter}` : ''}`
-          //);
-          
-        // const paramsTyre =
-        // {
-        //   season: toStringUrlSeason,
-        //   studded: toStringUrStunded,
-        //   type: toStringUrlTypeVehicle,
-        //   brands: toStringUrlBrand,
-        //   width: 'w' + toStringUrlWidth,
-        //   height: 'h' + toStringUrlHeight,
-        //   diameter: 'r' + toStringUrlDiameter,
-        //   loadindex: 'li' + toStringUrlLoadIndex,
-        //   speedindex: 'si' + toStringUrlSpeedIndex,
-        //   reinforced: 'xl' + toStringUrlReinforced,
-        //   om: 'om' + toStringUrlOm
-        // };
-
-        
+          `${CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/${toStringUrlSeason}` : '' }${filter.studded && !filter.studded.includes(',') ? `/${toStringUrlStudded}` : '' }${filter.vehicle_type && !filter.vehicle_type.includes(',') ? `/${toStringUrlTypeVehicle}` : ''}${filter.brands && !filter.brands.includes(',') ? `/${toStringUrlBrand}` : ''}${filter.width ? `/w${toStringUrlWidth}` : ''}${filter.height ? `/h${toStringUrlHeight}` : ''}${filter.diameter ? `/r${toStringUrlDiameter}` : ''}${filter.load_index && !filter.load_index.includes(',') ? `/li-${toStringUrlLoadIndex}` : '' }${filter.speed_index && !filter.speed_index.includes(',') ? `/si-${toStringUrlSpeedIndex}` : '' }${filter.reinforced && !filter.reinforced.includes(',') ? `/xl-${toStringUrlReinforced}` : '' }${filter.homologation && !filter.homologation.includes(',') ? `/om-${toStringUrlOm}` : '' }`; 
           history.push(
-          //generatePath(
             tyreCatalogPath, 
-          //  paramsTyre
-          //)
           );
-      }
-        // if (location.pathname.includes('wheels')) {
-        //   const toStringUrlTypeWheel: string | undefined = createStringUrl(
-        //     filter.type 
-        //   );
-        //   const toStringUrlBrand: string | undefined = createStringUrl( 
-        //     filter.brands
-        //   );
-        //   const toStringUrlWidth: string | undefined = createStringUrl(
-        //     filter.width
-        //   );
-        //   const toStringUrlDiameter: string | undefined = createStringUrl(
-        //     filter.diameter 
-        //   );
-        //   const toStringUrlBoltCount: string | undefined = createStringUrl(
-        //     filter.bolt_count
-        //   );
-        //   const toStringUrlPcd: string | undefined = createStringUrl(
-        //     filter.pcd
-        //   );
-        //   const toStringUrEt: string | undefined = createStringUrl(
-        //     filter.et
-        //   );
-        //   const toStringUrlDia: string | undefined = createStringUrl(
-        //     filter.dia,
-        //   );
-
-        //   const wheelCatalogPath: string | undefined = 
-        //   `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${toStringUrlTypeWheel}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${toStringUrlBrand}` : ''}${filter.width ? `/w${toStringUrlWidth}` : ''}${filter.diameter ? `/r${toStringUrlDiameter}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${toStringUrlBoltCount}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${toStringUrlPcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${toStringUrEt}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${toStringUrlDia}` : '' }`;
-        // const paramsWheel =
-        // {
-        //   type: toStringUrlTypeWheel,
-        //   brands: toStringUrlBrand,
-        //   width: 'w' + toStringUrlWidth,
-        //   diameter: 'r' + toStringUrlDiameter,
-        //   boltcount: toStringUrlBoltCount
-        //   pcd: 'pcd' + toStringUrlPcd,
-        //   et: 'et' + toStringUrEt,
-        //   dia: 'dia' + toStringUrlDia,
-        //   
-        //   
-        // };
-          //history.push(
-            //generatePath(
-            //  wheelCatalogPath, 
-            //  paramsTyre
-            //)
-          //);
-        //}
+        }
       }
     };
     createNewTyrePath();
@@ -1388,23 +516,15 @@ const DeliveryGoodsPage = () => {
     location.pathname, 
     filter.type, 
     filter.bolt_count, 
-    // filter.pcd, 
-    // filter.et, 
-    // filter.dia
   ]);
 
   const addDeliveryLink = (e: any) => {
     localStorage.setItem('regionData', e.currentTarget.getAttribute('data-region'));
   };
 
-  const filterClick = () => {
-    setStateFilter(!stateFilter);
-    // console.log(e.target);
-  }
   const closeFilter = () => {
     if(stateFilter) {
       setStateFilter(false);
-      //console.log('FILTER_CLOSED');
     }
   };
 
@@ -1425,10 +545,25 @@ const DeliveryGoodsPage = () => {
   };
 
   const markerClick = (e: any) => {
+    setMarkerState(null);
     setMarkerState(e.target.getAttribute('data-position'));
-    console.log('MARKER_CLICK: ', e.target.getAttribute('data-position'));
+    setChooseDepart(e.target.getAttribute('data-choose'));
   };
 
+  const moveToDeliveriRegion = () => {
+    document.documentElement.scrollTo({
+      top: 2800,
+      left: 0,
+      behavior: "smooth",
+    });
+  };
+
+  const chooseDelivery = (e: any) => {
+    setMarkerState(null);
+    setTabDelivery(e.target.textContent);
+  };
+
+  //console.log('DELIVERY: ', deliveryWareHouseList);
 
   return (
     <div className='deliveryGoodsPage'
@@ -1439,6 +574,23 @@ const DeliveryGoodsPage = () => {
           route={['/','/delivery-pay', '/delivery']} 
           hrefTitle={['Інтернет-магазин SkyParts','Доставка оплата', `Доставка шин в ${cityRegion}`]}
         /> 
+      </div>
+      <div className='h'>
+        <h2>Купити шини {cityRegion}</h2> 
+        {cityRegion && cityRegion === cityCenterRegion ?
+        <span 
+          className='deliveryGoodsPageHtitle' 
+          onClick={moveToDeliveriRegion}
+        >
+          Доставка шин в інші міста {region}
+        </span> 
+        : <span 
+            className='deliveryGoodsPageHtitle' 
+            onClick={moveToDeliveriRegion}
+          >
+          Доставка шин в інші областя України
+          </span>
+        }
       </div>
       <div className='b'>
         <FilterCatalogTyres
@@ -1454,31 +606,97 @@ const DeliveryGoodsPage = () => {
       </div>
       {cityMarkerData && novaPoshtaWareHouseList ?
       <div className='d'>
+        { tabDelivery === 'Нова Пошта' ?
           <div className='deliveryGoodsMap'>
           <MapDelivery 
             centerPosition={[Number(cityMarkerData?.Latitude), Number(cityMarkerData?.Longitude)]}
-            markerPosition={novaPoshtaWareHouseList}
+            markerPositionNP={novaPoshtaWareHouseList}
+            markerPositionDel={null}
             popupInfo={markerState}
           />
-          </div> 
+          </div> : null
+        }
+        { tabDelivery === 'Делівері' ?
+          <div className='deliveryGoodsMap'>
+          <MapDelivery 
+            centerPosition={[Number(cityMarkerData?.Latitude), Number(cityMarkerData?.Longitude)]}
+            markerPositionNP={null}
+            markerPositionDel={deliveryWareHouseList}
+            popupInfo={markerState}
+          />
+          </div> : null
+        }
         <div className='deliveryGoodsList'>
           <br/>
           <div className='deliveryGoodsDeliveryChoose'>
-            <span>Нова Пошта</span>
-            <span>Делівері</span> 
+            {novaPoshtaWareHouseList ?
+            <span 
+              className={ tabDelivery === 'Нова Пошта' ?
+              'deliveryGoodsDeliveryChooseBtn active' :
+                'deliveryGoodsDeliveryChooseBtn'
+              }
+              onClick={chooseDelivery}
+            >
+              Нова Пошта
+            </span>
+            : null
+            }
+            {deliveryWareHouseList ?
+            <span 
+              className={ tabDelivery === 'Делівері' ?
+                'deliveryGoodsDeliveryChooseBtn active' :
+                'deliveryGoodsDeliveryChooseBtn'
+              }
+              onClick={chooseDelivery}
+            >
+              Делівері
+            </span>
+            : null 
+            }
           </div>
           <div className='deliveryGoodsDepartDataList'>
-          {novaPoshtaWareHouseList ? novaPoshtaWareHouseList.map((item: any) => (
+          {novaPoshtaWareHouseList && tabDelivery === 'Нова Пошта' ? 
+          novaPoshtaWareHouseList.map((item: any) => (
           <div 
             className='deliveryGoodsDepartData'
             key={item.SiteKey + '-Depart'}
           >
             <ul>
-              <li 
-                onClick={markerClick} 
+              <li
+                className={
+                  chooseDepart === item.SiteKey ?
+                  'deliveryGoodsListDepartment active' :
+                  'deliveryGoodsListDepartment'
+                }
+                onClick={markerClick}
+                data-choose={item.SiteKey} 
                 data-position={[Number(item.Latitude),Number(item.Longitude),item.Description,'тел: '+ item.Phone]} 
               >
                 {item.Description}<br/> тел: {item.Phone}
+              </li>
+            </ul>  
+          </div>
+          ))
+          : null
+          }
+          {deliveryWareHouseList && tabDelivery === 'Делівері' ? 
+          deliveryWareHouseList.map((item: any) => (
+          <div 
+            className='deliveryGoodsDepartData'
+            key={item.id}
+          >
+            <ul>
+              <li
+                className={
+                  chooseDepart === item.id ?
+                  'deliveryGoodsListDepartment active' :
+                  'deliveryGoodsListDepartment'
+                }
+                onClick={markerClick} 
+                data-choose={item.id} 
+                data-position={[Number(item.latitudeCorrect),Number(item.longitudeCorrect),item.name + ' ' + item.address,'тел: 0800-509-609']} 
+              >
+                {item.name + ' ' + item.address}<br/> тел: 0800-509-609
               </li>
             </ul>  
           </div>
@@ -1491,22 +709,22 @@ const DeliveryGoodsPage = () => {
         : <SpinnerCarRot/>
       }
       <div className='e'>
-      {cityRegion && novaPoshtaCityInRegion?
+      {cityRegion && cityRegion === cityCenterRegion ?
         <h3>Доставка шин в інші міста {region}</h3> 
         : <h3>Доставка шин в інші областя України</h3>
       }
       <div className='deliveryGoodsCityInRegion'>
-      {region && novaPoshtaCityInRegion ? 
+      {region && cityRegion === cityCenterRegion ? 
       novaPoshtaCityInRegion?.filter(
         entity => entity.Description !== cityRegion)
       .map((item) =>
-      <div key={item.SiteKey}>
+      <div key={item.Ref}>
         <ul>
           <li>
-          <a
+          <a 
             href={DELIVERY_GOODS_ROUTE + '/' + 
             createStringUrl(`${item.Description} ${region}`)}
-            data-region={`${item.Description},${region}`}
+            data-region={`${item.Description},${region},${cityRegion}`}
             onClick={addDeliveryLink}
             title={`Доставка шин дисків акб автохіміі в ${item.Description}`}
           >
@@ -1516,273 +734,271 @@ const DeliveryGoodsPage = () => {
         </ul>
       </div>
       )
-      
-      : <SpinnerCarRot/>
-      }
-      </div>
-      {region && !novaPoshtaCityInRegion ? 
-      <div>
-        <ul>
-        <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Сімферопіль АРК')}
-                data-region='Сімферопіль,АРК'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в АРК'
-              >
-                АРК
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Вінниця Вінницька область')}
-                data-region='Вінниця,Вінницька область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Вінницю'
-              >
-                Шини в Вінниці
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Луцьк Волинська область')}
-                data-region='Луцьк,Волинська область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Луцьку'
-              >
-                Шини в Луцьку
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Дніпро Дніпропетровська область')}
-                data-region='Дніпро,Дніпропетровська область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Дніпрі'
-              >
-                Шини в Дніпрі
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Краматорськ Донецька область')}
-                data-region='Краматорськ,Донецька область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Краматорську'
-              >
-                Шини в Краматорську
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Житомир Житомирська область')}
-                data-region='Житомир,Житомирська область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Житомирі'
-              >
-                Шини в Житомирі
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Ужгород Закарпатська область')}
-                data-region='Ужгород,Закарпатська область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Ужгороді'
-              >
-                Шини в Ужгороді
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Запоріжжя Запорізька область')}
-                data-region='Запоріжжя,Запорізька область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Запоріжжі'
-              >
-                Шини в Запоріжжі
-              </a>
-            </li>
-          </ul>
-          <ul className='deliveryPageRegionListUl'>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Івано-Франківськ Івано-Франківська область')}
-                data-region='Івано-Франківськ,Івано-Франківська область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Івано-Франківську'
-              >
-                Шини в Івано-Франківську
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Київ Київська область')}
-                data-region='Київ,Київська область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Київі'
-              >
-                Шини в Київі
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Кропивницький Кіровоградська область')}
-                data-region='Кропивницький,Кіровоградська область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Кропивницькому'
-              >
-                Шини в Кропивницькомі
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE 
-                //createStringUrl('Луганськ Луганська область')
-                }
-                data-region='Луганськ,Луганська область'
-                //onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Луганська область'
-              >
-                Луганськ - тимчасово не доступна
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Львів Львівська область')}
-                data-region='Львів,Львівська область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Львові'
-              >
-                Шини в Львові
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Миколаїв Миколаївська область')}
-                data-region='Миколаїв,Миколаївська область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Миколаїві'
-              >
-                Шини в Миколаїві
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Одеса Одеська область')}
-                data-region='Одеса,Одеська область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Одесі'
-              >
-                Шини в Одесі
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Полтава Полтавська область')}
-                data-region='Полтава,Полтавська область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Полтаві'
-              >
-                Шини в Полтаві
-              </a>
-            </li>
-          </ul>
-          <ul className='deliveryPageRegionListUl'>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Рівне Рівненська область')}
-                data-region='Рівне,Рівненська область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Рівне'
-              >
-                Шини в Рівне
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Суми Сумська область')}
-                data-region='Суми,Сумська область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Сумах'
-              >
-                Шини в Сумах
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Тернопіль Тернопільська область')}
-                data-region='Тернопіль,Тернопільська область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Тернополі'
-              >
-                Шини а Тернополі
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Харків Харківська область')}
-                data-region='Харків,Харківська область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Харкові'
-              >
-                Шини в Харкові
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Херсон Херсонська область')}
-                data-region='Херсон,Херсонська область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Херсоні'
-              >
-                Шини в Херсоні
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Хмельницький Хмельницька область')}
-                data-region='Хмельницький,Хмельницька область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Хмельницькому'
-              >
-                Шини в Хмельницькому
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Черкаси Черкаська область')}
-                data-region='Черкаси,Черкаська область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Черкасах'
-              >
-                Шини в Черкасах
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Чернівці, Чернівецька область')}
-                data-region='Чернівці,Чернівецька область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Чернівцях'
-              >
-                Шини в Чернівцях
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Чернігів, Чернігівська область')}
-                data-region='Чернігів,Чернігівська область'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Чернігові'
-              >
-                Шини в Чернігові
-              </a>
-            </li>
-        </ul>
-      </div>
-      
       : null
       }
+      {region && cityRegion !== cityCenterRegion ? 
+      <div className='deliveryGoodsCityInRegionList'>
+        <ul>
+        <li>
+          <a href={DELIVERY_GOODS_ROUTE + '/' + 
+            createStringUrl('Сімферопіль АРК')}
+            data-region='Сімферопіль,АРК,Сімферопіль'
+            onClick={addDeliveryLink}
+            title='Доставка шин дисків акб автохіміі в АРК'
+          >
+            Шини в АРК
+          </a>
+        </li>
+        <li>
+          <a href={DELIVERY_GOODS_ROUTE + '/' + 
+            createStringUrl('Вінниця Вінницька область')}
+            data-region='Вінниця,Вінницька область,Вінниця'
+            onClick={addDeliveryLink}
+            title='Доставка шин дисків акб автохіміі в Вінницю'
+          >
+            Шини в Вінниці
+          </a>
+        </li>
+        <li>
+          <a href={DELIVERY_GOODS_ROUTE + '/' + 
+            createStringUrl('Луцьк Волинська область')}
+            data-region='Луцьк,Волинська область,Луцьк'
+            onClick={addDeliveryLink}
+            title='Доставка шин дисків акб автохіміі в Луцьку'
+          >
+            Шини в Луцьку
+          </a>
+        </li>
+        <li>
+          <a href={DELIVERY_GOODS_ROUTE + '/' + 
+            createStringUrl('Дніпро Дніпропетровська область')}
+            data-region='Дніпро,Дніпропетровська область,Дніпро'
+            onClick={addDeliveryLink}
+            title='Доставка шин дисків акб автохіміі в Дніпрі'
+          >
+            Шини в Дніпрі
+          </a>
+        </li>
+        <li>
+          <a href={DELIVERY_GOODS_ROUTE + '/' + 
+            createStringUrl('Краматорськ Донецька область')}
+            data-region='Краматорськ,Донецька область,Краматорськ'
+            onClick={addDeliveryLink}
+            title='Доставка шин дисків акб автохіміі в Краматорську'
+          >
+            Шини в Краматорську
+          </a>
+        </li>
+        <li>
+          <a href={DELIVERY_GOODS_ROUTE + '/' + 
+            createStringUrl('Житомир Житомирська область')}
+            data-region='Житомир,Житомирська область,Житомир'
+            onClick={addDeliveryLink}
+            title='Доставка шин дисків акб автохіміі в Житомирі'
+          >
+            Шини в Житомирі
+          </a>
+        </li>
+        <li>
+          <a href={DELIVERY_GOODS_ROUTE + '/' + 
+            createStringUrl('Ужгород Закарпатська область')}
+            data-region='Ужгород,Закарпатська область,Ужгород'
+            onClick={addDeliveryLink}
+            title='Доставка шин дисків акб автохіміі в Ужгороді'
+          >
+            Шини в Ужгороді
+          </a>
+        </li>
+          <li>
+            <a href={DELIVERY_GOODS_ROUTE + '/' + 
+              createStringUrl('Запоріжжя Запорізька область')}
+              data-region='Запоріжжя,Запорізька область,Запоріжжя'
+              onClick={addDeliveryLink}
+              title='Доставка шин дисків акб автохіміі в Запоріжжі'
+            >
+              Шини в Запоріжжі
+            </a>
+          </li>
+        </ul>
+        <ul className='deliveryPageRegionListUl'>
+          <li>
+            <a href={DELIVERY_GOODS_ROUTE + '/' + 
+              createStringUrl('Івано-Франківськ Івано-Франківська область')}
+              data-region='Івано-Франківськ,Івано-Франківська область,Івано-Франківськ'
+              onClick={addDeliveryLink}
+              title='Доставка шин дисків акб автохіміі в Івано-Франківську'
+            >
+              Шини в Івано-Франківську
+            </a>
+          </li>
+          <li>
+            <a href={DELIVERY_GOODS_ROUTE + '/' + 
+              createStringUrl('Київ Київська область')}
+              data-region='Київ,Київська область,Київ'
+              onClick={addDeliveryLink}
+              title='Доставка шин дисків акб автохіміі в Київі'
+            >
+              Шини в Київі
+            </a>
+          </li>
+          <li>
+            <a href={DELIVERY_GOODS_ROUTE + '/' + 
+              createStringUrl('Кропивницький Кіровоградська область')}
+              data-region='Кропивницький,Кіровоградська область,Кропивницький'
+              onClick={addDeliveryLink}
+              title='Доставка шин дисків акб автохіміі в Кропивницькому'
+            >
+              Шини в Кропивницькомі
+            </a>
+          </li>
+          <li>
+            <a href={DELIVERY_GOODS_ROUTE 
+              //createStringUrl('Луганськ Луганська область')
+              }
+              data-region='Луганськ,Луганська область,Луганськ'
+              //onClick={addDeliveryLink}
+              title='Доставка шин дисків акб автохіміі в Луганська область'
+            >
+              Луганськ - тимчасово не доступна
+            </a>
+          </li>
+          <li>
+            <a href={DELIVERY_GOODS_ROUTE + '/' + 
+              createStringUrl('Львів Львівська область')}
+              data-region='Львів,Львівська область,Львів'
+              onClick={addDeliveryLink}
+              title='Доставка шин дисків акб автохіміі в Львові'
+            >
+              Шини в Львові
+            </a>
+          </li>
+          <li>
+            <a href={DELIVERY_GOODS_ROUTE + '/' + 
+              createStringUrl('Миколаїв Миколаївська область')}
+              data-region='Миколаїв,Миколаївська область,Миколаїв'
+              onClick={addDeliveryLink}
+              title='Доставка шин дисків акб автохіміі в Миколаїві'
+            >
+              Шини в Миколаїві
+            </a>
+          </li>
+          <li>
+            <a href={DELIVERY_GOODS_ROUTE + '/' + 
+              createStringUrl('Одеса Одеська область')}
+              data-region='Одеса,Одеська область,Одеса'
+              onClick={addDeliveryLink}
+              title='Доставка шин дисків акб автохіміі в Одесі'
+            >
+              Шини в Одесі
+            </a>
+          </li>
+          <li>
+            <a href={DELIVERY_GOODS_ROUTE + '/' + 
+              createStringUrl('Полтава Полтавська область')}
+              data-region='Полтава,Полтавська область,Полтава'
+              onClick={addDeliveryLink}
+              title='Доставка шин дисків акб автохіміі в Полтаві'
+            >
+              Шини в Полтаві
+            </a>
+          </li>
+        </ul>
+        <ul className='deliveryPageRegionListUl'>
+          <li>
+            <a href={DELIVERY_GOODS_ROUTE + '/' + 
+              createStringUrl('Рівне Рівненська область')}
+              data-region='Рівне,Рівненська область,Рівне'
+              onClick={addDeliveryLink}
+              title='Доставка шин дисків акб автохіміі в Рівне'
+            >
+              Шини в Рівне
+            </a>
+          </li>
+          <li>
+            <a href={DELIVERY_GOODS_ROUTE + '/' + 
+              createStringUrl('Суми Сумська область')}
+              data-region='Суми,Сумська область,Суми'
+              onClick={addDeliveryLink}
+              title='Доставка шин дисків акб автохіміі в Сумах'
+            >
+              Шини в Сумах
+            </a>
+          </li>
+          <li>
+            <a href={DELIVERY_GOODS_ROUTE + '/' + 
+              createStringUrl('Тернопіль Тернопільська область')}
+              data-region='Тернопіль,Тернопільська область,Тернопіль'
+              onClick={addDeliveryLink}
+              title='Доставка шин дисків акб автохіміі в Тернополі'
+            >
+              Шини а Тернополі
+            </a>
+          </li>
+          <li>
+            <a href={DELIVERY_GOODS_ROUTE + '/' + 
+              createStringUrl('Харків Харківська область')}
+              data-region='Харків,Харківська область,Харків'
+              onClick={addDeliveryLink}
+              title='Доставка шин дисків акб автохіміі в Харкові'
+            >
+              Шини в Харкові
+            </a>
+          </li>
+          <li>
+            <a href={DELIVERY_GOODS_ROUTE + '/' + 
+              createStringUrl('Херсон Херсонська область')}
+              data-region='Херсон,Херсонська область,Херсон'
+              onClick={addDeliveryLink}
+              title='Доставка шин дисків акб автохіміі в Херсоні'
+            >
+              Шини в Херсоні
+            </a>
+          </li>
+          <li>
+            <a href={DELIVERY_GOODS_ROUTE + '/' + 
+              createStringUrl('Хмельницький Хмельницька область')}
+              data-region='Хмельницький,Хмельницька область,Хмельницький'
+              onClick={addDeliveryLink}
+              title='Доставка шин дисків акб автохіміі в Хмельницькому'
+            >
+              Шини в Хмельницькому
+            </a>
+          </li>
+          <li>
+            <a href={DELIVERY_GOODS_ROUTE + '/' + 
+              createStringUrl('Черкаси Черкаська область')}
+              data-region='Черкаси,Черкаська область,Черкаси'
+              onClick={addDeliveryLink}
+              title='Доставка шин дисків акб автохіміі в Черкасах'
+            >
+              Шини в Черкасах
+            </a>
+          </li>
+          <li>
+            <a href={DELIVERY_GOODS_ROUTE + '/' + 
+              createStringUrl('Чернівці Чернівецька область')}
+              data-region='Чернівці,Чернівецька область,Чернівці'
+              onClick={addDeliveryLink}
+              title='Доставка шин дисків акб автохіміі в Чернівцях'
+            >
+              Шини в Чернівцях
+            </a>
+          </li>
+          <li>
+            <a href={DELIVERY_GOODS_ROUTE + '/' + 
+              createStringUrl('Чернігів Чернігівська область')}
+              data-region='Чернігів,Чернігівська область,Чернігів'
+              onClick={addDeliveryLink}
+              title='Доставка шин дисків акб автохіміі в Чернігові'
+            >
+              Шини в Чернігові
+            </a>
+          </li>
+        </ul>
+      </div>
+      : null
+      }
+      </div>
       </div>
       <div className='f'>
       <ReviewsMain 

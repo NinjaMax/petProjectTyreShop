@@ -13,4 +13,9 @@ export type IProps = {
         type?: string,
         type_ua?: string,
     }
+    homologation?: {
+        id_homologation?: number,
+        homologation?: string,
+        id_description?: number,
+    };
 }

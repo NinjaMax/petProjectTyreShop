@@ -1,6 +1,5 @@
 import { TyreBrand } from "./enum/TyreBrand.enum";
 
-
 const tyreBrandLogo = (brand: string | undefined) => {
     switch (brand) {
         case 'Apollo':
