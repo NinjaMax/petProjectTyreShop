@@ -48,8 +48,6 @@ const PropsCardIcons = ({type, type_wheel, season, homologation}:IProps) => {
         homologation?.homologation
     ]);
 
-    console.log("HOMOLOGATION", homologation);
-
     return (
         <div className='propsCarIconBox'>
             { type ?

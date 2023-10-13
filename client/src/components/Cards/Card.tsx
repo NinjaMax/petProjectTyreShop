@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import '../../css/CardsCss/TyresCard.css';
 import FlagsIcon from './FlagsIcon';
 import PropsCardIcons from './PropsCardIcons';
@@ -8,9 +8,8 @@ import tyres from '../../assets/autotyrespilotspotps2.png';
 import wheels from '../../assets/vossen_cvt_gloss_graphite-16325-a.png';
 import ButtonAction from '../buttons/ButtonAction';
 import { ICard } from './interfaces/Card.interface';
-import { GOODS_ROUTE, MAIN_ROUTE } from '../../utils/consts';
-import { Link, NavLink, useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
-//import { Context } from '../../context/Context';
+import { MAIN_ROUTE } from '../../utils/consts';
+import { useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { createStringUrl } from '../../services/stringUrl';
 import { 
@@ -22,12 +21,8 @@ import { IRatingAvg } from '../../pages/types/RatingModelAvg.type';
 import OptionsWheelBox from './OptionsWheelBox';
 
 const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
-    //const {page} = useContext<any>(Context);
     const [ratingModel, setRatingModel] = useState<IRatingAvg>()
     const history = useHistory();
-    // const goodsItem = useParams();
-    // const location = useLocation();
-    // let match = useRouteMatch('/:goodsItem');
     
     useEffect(() => {
         let isMounted = false;

@@ -18,4 +18,5 @@ export const CONTACT_ROUTE = '/contact';
 export const NOT_FOUND_ROUTE = '/404';
 export const DELIVERY_ROUTE = '/delivery-pay';
 export const DELIVERY_GOODS_ROUTE = '/delivery';
+export const CAR_SELECT_ROUTE = '/car';
 

@@ -833,6 +833,13 @@ const getWheelsReviewLimit = async (
     return data;
 }
 
+const getArticlesId = async (id: number) => {
+    const {data} = await $hostGet.get(`/articles/${id}`)
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
 const getAllArticles = async () => {
     const {data} = await $hostGet.get('/articles/all')
     //localStorage.setItem('token', data.token)
@@ -1064,5 +1071,6 @@ export {
     getAllOrdersLeader,
     getAllStoreReviewLimit,
     getAllArticlesLimit,
-    getAllArticles
+    getAllArticles,
+    getArticlesId
 }

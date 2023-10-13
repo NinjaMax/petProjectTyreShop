@@ -130,8 +130,8 @@ const homologationByCar = (homologation: string | undefined) => {
             return CarBrand.VOLKSWAGEN_CAR_BRAND;
         case 'VOL':
             return CarBrand.VOLVO_CAR_BRAND;
-        case 'A':
         case 'TO':
+        case 'A':
             return CarBrand.TOYOTA_CAR_BRAND;
         case 'RE':
             return CarBrand.RENAULT_CAR_BRAND;
@@ -144,6 +144,17 @@ const homologationByCar = (homologation: string | undefined) => {
             return CarBrand.MINI_COOPER_CAR_BRAND;
         case 'JP':
             return CarBrand.JEEP_CAR_BRAND;
+        case 'OP':
+        case 'OP1':    
+            return CarBrand.OPEL_CAR_BRAND;
+        case 'PE':
+            return CarBrand.PEUGEOT_CAR_BRAND;
+        case 'SI':
+            return CarBrand.CITROEN_CAR_BRAND;
+        case 'SE':    
+            return CarBrand.SEAT_CAR_BRAND;
+        case 'SK':    
+            return CarBrand.SKODA_CAR_BRAND;
         default:
             return null;
     }

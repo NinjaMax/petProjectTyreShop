@@ -608,8 +608,6 @@ const FilterCatalogTyres = observer((
         setStateReinforced(!stateReinforced);
     }
 
-    //console.log('FILTER_STATE: ', filterState);
-
     return (
         <div className='filterCatalogTyres'>
             <div className='filterCatalogTyresHeader'>

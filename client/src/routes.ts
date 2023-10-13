@@ -6,6 +6,7 @@ import { ADMIN_ROUTE, ADMIN_AUTH_ROUTE, BASKET_ROUTE, CATALOG_TYRES_ROUTE,
   NEWS_ROUTE,
   DELIVERY_ROUTE,
   DELIVERY_GOODS_ROUTE,
+  CAR_SELECT_ROUTE,
 } from './utils/consts';
 import Admin from './pages/Admin';
 import AdminAuth from './components/auth/AdminAuth';
@@ -23,6 +24,8 @@ import ReviewStorePage from './pages/ReviewStorePage';
 import News from './pages/News';
 import DeliveryPage from './pages/DeliveryPage';
 import DeliveryGoodsPage from './pages/DeliveryGoodsPage';
+import CarSelect from './pages/CarSelect';
+import NewsItemPage from './pages/NewsItemPage';
 
 export const adminRoutes = [
   {
@@ -73,6 +76,11 @@ export const publicRoutes = [
     Component: CatalogTyresPage
   },
   {
+    path: CAR_SELECT_ROUTE,
+    exact: true,
+    Component: CarSelect
+  },
+  {
     path: SEARCH_ROUTE,
     exact: true,
     Component: Search
@@ -81,6 +89,11 @@ export const publicRoutes = [
     path: NEWS_ROUTE,
     exact: true,
     Component: News
+  },
+  {
+    path: NEWS_ROUTE + '/:articles',
+    exact: true,
+    Component: NewsItemPage
   },
   {
     path: REVIEW_STORE_ROUTE,

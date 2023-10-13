@@ -17,6 +17,9 @@
     flex-wrap: wrap;
     gap: 30px;
 }
+.newsMainBoxList a {
+    text-decoration: none;
+}
 .newsMainBoxListItem {
     /* width: ; */
 }
@@ -42,6 +45,10 @@
     display: flex;
     flex-direction: column;
     padding: 8px;
+    height: 180px;
+}
+.columnNewsBoxDate {
+    padding-left: 8px;
 }
 
 .btnNewsMainContainer {

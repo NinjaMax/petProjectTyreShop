@@ -42,6 +42,11 @@ export enum CarBrand {
     TOYOTA_CAR_BRAND = '/iconsCarBrand/toyota_48.png',
     VOLKSWAGEN_CAR_BRAND = '/iconsCarBrand/volkswagen_48.png',
     VOLVO_CAR_BRAND = '/iconsCarBrand/volvo_48.png',
+    SEAT_CAR_BRAND = '/iconsCarBrand/seat_48.png',
+    SKODA_CAR_BRAND = '/iconsCarBrand/skoda_48.png',
+    PEUGEOT_CAR_BRAND = '/iconsCarBrand/peugeot_48.png',
+    CITROEN_CAR_BRAND = '/iconsCarBrand/citroen_48.png',
+    OPEL_CAR_BRAND = '/iconsCarBrand/opel_48.png',
 
     NO_TYPE = '/iconsTypeCar/noTypeCar.png',
 };

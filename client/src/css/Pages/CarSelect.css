@@ -1,0 +1,556 @@
+/*
+Please, don't try to change these variables,
+because all of them will be replaced by values picked via colorpicker.
+
+If you really need to use less variables, feel free to create your own.
+
+@color-main: #be3e1d;
+@color-link: @color-main;
+@color-content: #333333;
+@background-main: #ffffff;
+
+@color-border: #efefef;
+@color-link-hover: darken(@color-link, 20);
+@color-dashed-border: @color-border;
+@color-tabs: darken(@color-content, 10);
+@color-tabs-border: darken(@color-border, 20);
+@color-content-header: lighten(@color-content, 15);
+@color-content-note: @color-content;
+@color-market: @color-content;
+@color-vehicles-table: @color-content;
+@color-vehicles-header: @color-content;
+@color-vehicles-oem: @color-content;
+@color-label-make: @color-link;
+@color-label-make-count: @color-content;
+@color-label-model: @color-link;
+@color-label-model-years: darken(@background-label-model, 35);
+@color-label-model-selected: @background-main;
+@color-trims-years: @color-content;
+@color-trims-years-header: @color-content-header;
+@color-select: @color-content;
+@color-select-border: darken(@color-border, 15);
+@color-select-hover-border: darken(@color-select-border, 15);
+@color-select-button: @color-content;
+@color-select-button-shadow: fade(@color-content, 20);
+@color-on-wheelsize: @background-main;
+@color-on-wheelsize-link: @color-link;
+
+@background-tabs: @background-main;
+@background-content: @background-main;
+@background-select: @background-main;
+@background-select-hover: darken(@background-select, 20);
+@background-select-button: @background-select;
+@background-select-button-focus: @background-select;
+@background-select-button-gradient: darken(@background-select, 10);
+@background-label-make: darken(@background-main, 10);
+@background-label-model: darken(@background-main, 5);
+@background-label-model-selected: @color-main;
+@background-trims-years: @background-label-model;
+@background-vehicles-table: @background-main;
+@background-vehicles-header: @background-main;
+@background-vehicles-oem: @background-main;
+@background-on-wheelsize-button: lighten(@color-content, 10);
+*/
+
+
+html, body {
+    /* //  background-color: @background-main;
+    //  color: @color-content; */
+    }
+    
+    button, a {
+    /* //  outline: none; */
+    
+      &:focus {
+    /* //    outline: none !important; */
+      }
+    }
+    
+    a {
+    /* //  color: @color-link; */
+    
+      &:hover, &:active, &:focus {
+    /* //    color: @color-link-hover; */
+      }
+    }
+    
+    .widget .nav-tabs {
+    /* //  display: table;
+    //  width: 100%;
+    //  border: none;
+    //  background-color: @background-tabs; */
+    
+      > li {
+    /* //    display: table-cell;
+    //    text-align: center;
+    //    float: none;
+    //    border: 1px solid transparent;
+    //    border-top-width: 4px;
+    //    border-bottom-color: @color-tabs-border; */
+    
+        a {
+    /* //      background-color: @background-tabs;
+    //      border-radius: 0;
+    //      border: none;
+    //      color: @color-tabs;
+    //      font-weight: bold;
+    //      font-size: 16px;
+    //      margin: 0;
+    //      padding: 10px; */
+        }
+    
+        &.active {
+          &:not(:first-child) {
+    /* //        border-left-color: @color-tabs-border !important; */
+          }
+          &:not(:last-child) {
+    /* //        border-right-color: @color-tabs-border !important; */
+          }
+    /* //      border-top-color: @color-main !important;
+    //      border-bottom-color: transparent; */
+    
+          a {
+    /* //        color: @color-main;
+    //        background-color: @background-tabs;
+    //        border: none; */
+          }
+        }
+      }
+    }
+    
+    .widget {
+      .tab-content {
+    /* //    padding-bottom: 3px; */
+      }
+    
+      .tab-pane {
+         margin-right: 10px;
+    /* //    padding: 5px 5px 0;
+    //    background-color: @background-content; */
+      }
+    }
+    
+    .widget .finder {
+      h4 {
+    /* //    color: @color-content-header;
+    //    font-size: 15px;
+    //    font-weight: bold; */
+      }
+    
+      .bootstrap-select {
+    /* //    width: 33%;
+    //    margin-right: 0.5%; */
+    
+        .btn {
+    /* //      color: @color-select-button;
+    //      background: @background-select-button linear-gradient(
+    //          to bottom,
+    //          @background-select-button,
+    //          @background-select-button-gradient
+    //      );
+    //      border-radius: 2px;
+    //      font-size: 13px;
+    //      font-weight: bold;
+    //      padding: 4px 24px;
+    //      border-color: @color-select-border; */
+    
+            background-color: #71C2FF;
+            color: #444B54;
+            padding: 16px;
+            font-size: 16px;
+        /* //font-family: var(--main-font-family); */
+            border: #CADBEA solid;
+            border-width: 0 0 5px 0;
+            cursor: pointer;
+            width: 198px; 
+        /* //width: calc(var(--widthBtn)*1px); */
+            background-color: #eee;
+            border-radius: 20px;
+        /* margin-top: 3px; */
+            overflow: auto;
+    
+          &:hover {
+            border: #71C2FF solid;
+            border-width: 0 0 5px 0;
+    /* //        border-color: @color-select-hover-border; */
+          }
+        }
+    
+        &.open .dropdown-toggle {
+    
+    /* //      box-shadow: inset 0 3px 5px @color-select-button-shadow; */
+        }
+    
+        .dropdown-menu {
+                                /* //position: absolute; */
+        background-color: #9EB9D3;
+        width: 195px;
+        max-height: 450px;
+        border: 1px solid #ddd;
+        border-radius:10px 10px 10px 10px;
+        z-index: 100;
+        transition: 0.3s all linear;
+    /* //      background-color: @background-select; */
+    
+          &.open {
+                                  /* //position: absolute; */
+               overflow-x: auto; 
+    /* //        border: 1px solid @color-select-border; */
+    
+            .selectpicker {
+                            /* //position: absolute; */
+    
+    /* //          max-height: 183px; */
+            }
+    
+            li > a {
+    /* //          color: @color-select; */
+    
+              &:hover, &:focus {
+    /* //            background-color: @background-select-hover; */
+              }
+            }
+          }
+        }
+    
+        .dropdown-menu li:first-child {
+    /* //      border-bottom: 1px dashed @color-tabs-border; */
+    
+          a {
+    /* //        font-style: italic; */
+          }
+        }
+    
+        &:last-child {
+    /* //      margin-right: 0; */
+        }
+      }
+    
+      @media (max-width: 350px) {
+        .bootstrap-select {
+    /* //      width: 100%;
+    //      margin: 0 0 3px; */
+        }
+      }
+    }
+    
+    .widget .finder-result {
+    /* //  margin-top: 10px;
+    //   */
+      table {
+        tr.oem {
+    /* //      font-weight: bold;
+    //      background-color: @background-vehicles-oem; */
+    
+          td {
+    /* //        color: @color-vehicles-oem; */
+          }
+        }
+    
+        .market-header tr td {
+    /* //      color: @color-market;
+    //      cursor: default; */
+    
+          .market-name {
+    /* //        display: inline;
+    //        padding: 5px 0; */
+          }
+          .glyphicon {
+    /* //        display: none; */
+          }
+        }
+    
+        @media (min-width: 351px) {
+          .caret {
+    /* //        margin-top: 8px;
+    //        border-top: none;
+    //        border-right: 6px solid transparent;
+    //        border-left: 6px solid transparent; */
+    
+            &.caret-collapsed {
+    /* //          border-top: 5px solid; */
+            }
+            &.caret-expanded {
+    /* //          border-bottom: 5px solid; */
+            }
+          }
+    
+          .market-header tr td {
+    /* //        font-size: 24px; */
+          }
+        }
+    
+        &.ws-collapse {
+          thead.content-header, tbody {
+    /* //        display: none; */
+          }
+          .market-header tr td {
+    /* //        cursor: pointer; */
+    
+            .market-name {
+    /* //          border-bottom: 1px dashed @color-market; */
+            }
+            .glyphicon {
+    /* //          display: inline-block;
+    //          position: relative;
+    //          top: 2px;
+    //          margin-left: 10px; */
+            }
+          }
+        }
+      }
+    
+      .btn-go-to-ws {
+    /* //    background-color: @background-on-wheelsize-button;
+    //    color: @color-on-wheelsize;
+    //    display: block; */
+        height: 30px;
+    
+        .model-title {
+    /* //      font-weight: bold; */
+          font-size: 8px;
+        }
+    
+        @media (max-width: 350px) {
+          .model-title {
+    /* //        display: block;
+    //        white-space: normal; */
+          }
+        }
+    
+        .separator {
+    /* //      margin: 0 5px; */
+        }
+    
+        .ws-logo {
+    /* //      color: @color-on-wheelsize-link;
+    //      font-size: 20px;
+    //      font-weight: bold;
+    //      margin-right: 5px; */
+            font-size: 8px;
+        }
+    
+        .glyphicon {
+    /* //      font-size: 18px; */
+        }
+      }
+    
+      .matching-make {
+    /* //    padding: 7px 0;
+    //    border-bottom: 1px dashed @color-dashed-border; */
+    
+        .tag {
+    /* //      float: left;
+    //      display: block;
+    //      padding: 4px 8px;
+    //      background-color: @background-label-make;
+    //      color: @color-label-make-count;
+    //      margin: 0 20px 0 0; */
+    
+          a {
+    /* //        text-transform: uppercase;
+    //        font-weight: bold;
+    //        margin: 0 5px 0 0; */
+          }
+        }
+    
+        .models-list {
+    /* //      overflow: hidden; */
+        }
+    
+        .matching-model {
+    /* //      margin: 3px 10px 5px 0;
+    //      background-color: @background-label-model;
+    //      padding: 1px 7px;
+    //      display: inline-block; */
+    
+          span {
+    /* //        color: @color-label-model-years;
+    //        letter-spacing: -1px; */
+            
+          }
+    
+          &.selected {
+    /* //        background-color: @background-label-model-selected;
+    //        color: @color-label-model-selected; */
+    
+            span {
+                
+    /* //          color: @color-label-model-selected; */
+            }
+          }
+        }
+    
+        .matching-trims-years {
+    /* //      padding: 15px 20px;
+    //      background-color: @background-trims-years;
+    //      color: @color-trims-years;
+    //      border-radius: 10px;
+    //      margin-top: 10px; */
+    
+          h4 {
+    /* //        color: @color-trims-years-header;
+    //        margin-top: 0; */
+          }
+    
+          .trim {
+    /* //        display: inline-block;
+    //        font-weight: bold;
+    //        min-width: 60px; */
+          }
+    
+          .year {
+    /* //        margin: 0 0 0 5px; */
+          }
+        }
+      }
+    }
+    
+    .widget .finder-result-loading {
+    /* //  margin: 15px 4px 0;
+    //  background: url(/static/widget/img/shadow.gif) repeat scroll center center transparent;
+    //  outline: 2px dashed #dedede;
+    //  outline-offset: 2px;
+    //  min-height: 70px;
+    //  position: relative; */
+    
+      .loader {
+    /* //    background: url(/static/widget/img/preloader-wheel.gif) no-repeat scroll center center transparent;
+    //    display: block;
+    //    width: 32px;
+    //    height: 32px;
+    //    margin: auto;
+    //    position: absolute;
+    //    top: 0;
+    //    bottom: 0;
+    //    left: 0;
+    //    right: 0; */
+      }
+    }
+    
+    @media only screen and (max-width: 350px) {
+      .adaptive-tables {
+        .cf:after {
+    /* //      visibility: hidden; /*display: block;*/
+    /* //      font-size: 0;
+    //      content: " ";
+    //      clear: both;
+    //      height: 0; */ 
+        }
+        * html .cf {
+    /* //      zoom: 1; */
+        }
+        *:first-child + html .cf {
+    /* //      zoom: 1; */
+        }
+        table {
+    /* //      display: block;
+    //      position: relative;
+    //      width: 100%;
+    //      border-collapse: collapse;
+    //      border-spacing: 0; */
+        }
+    
+        table .caret {
+    /* //      margin: 5px 0 0 8px;
+    //      border-right: none;
+    //      border-top: 6px solid transparent;
+    //      border-bottom: 6px solid transparent; */
+    
+          &.caret-collapsed {
+    /* //        border-left: 7px solid; */
+          }
+          &.caret-expanded {
+    /* //        border-right: 7px solid; */
+          }
+        }
+        table .market-header {
+    /* //      display: block;
+    //      margin: 30px 0 20px; */
+    
+          tr {
+    /* //        display: block; */
+          }
+          td {
+    /* //        display: block;
+    //        text-align: center;
+    //        font-size: 20px; */
+          }
+        }
+    
+        th, td {
+    /* //      margin: 0;
+    //      vertical-align: top;
+    //      height: 35px; */
+        }
+        th {
+    /* //      text-align: left;
+    //      border: none !important; */
+        }
+        thead.content-header {
+    /* //      display: block;
+    //      float: left; */
+    
+          tr {
+    /* //        display: block; */
+          }
+        }
+        tbody {
+    /* //      display: block;
+    //      width: auto;
+    //      position: relative;
+    //      overflow-x: auto;
+    //      white-space: nowrap; */
+        }
+        th {
+    /* //      display: block;
+    //      text-align: right; */
+        }
+        tbody tr {
+    /* //      display: inline-block;
+    //      vertical-align: top; */
+        }
+        td {
+    /* //      display: block;
+    //      min-height: 1.45em;
+    //      text-align: left; */
+        }
+        tr.collapse {
+    /* //      display: none; */
+        }
+        tbody tr.collapse.in {
+    /* //      display: inline-block; */
+        }
+    
+        th {
+    /* //      border-bottom: 0;
+    //      border-left: 0; */
+        }
+        td {
+    /* //      border-left: 0;
+    //      border-right: 0;
+    //      border-bottom: 0; */
+        }
+        tbody tr {
+    /* //      border-left: 0px solid @color-border; */
+        }
+        th:last-child, td:last-child {
+    /* //      border-bottom: 0px solid @color-border; */
+        }
+      }
+    }
+    .brand-icons [class^='make-'] .text {
+    /* //  padding-left: 32px;
+    //  position: relative;
+    //  display: inline-block; */
+    }
+    .brand-icons [class^='make-'] .text:before {
+    /* //  display: block;
+    //  content: '';
+    //  position: absolute;
+    //  background:url('/static/widget/img/car-vehicles-brands-sprite-image-optmized.png') no-repeat scroll 1000px 0 transparent;
+    //  height: 20px;
+    //  width: 27px;
+    //  top: 0;
+    //  left: 0; */
+    }
