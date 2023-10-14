@@ -114,6 +114,8 @@ import { ArticlesModule } from './articles/articles.module';
 import { Article } from './articles/entities/article.entity';
 import { ReviewWheels } from './reviews/entities/review-wheels.model';
 import { RatingWheels } from './ratings/entities/rating-wheels.model';
+import { join } from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
@@ -235,6 +237,9 @@ import { RatingWheels } from './ratings/entities/rating-wheels.model';
       },
       isGlobal: true,
       inject: [ConfigService],
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public/imageArticle'),
     }),
     TyresModule,
     WheelsModule,

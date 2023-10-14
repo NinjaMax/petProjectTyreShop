@@ -30,6 +30,7 @@
     "@nestjs/mapped-types": "^1.2.0",
     "@nestjs/platform-express": "^9.2.1",
     "@nestjs/sequelize": "^9.0.2",
+    "@nestjs/serve-static": "^4.0.0",
     "@types/cookie-parser": "^1.4.3",
     "@types/cors": "^2.8.13",
     "argon2": "^0.30.3",

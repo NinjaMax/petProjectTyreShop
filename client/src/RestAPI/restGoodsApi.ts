@@ -840,6 +840,13 @@ const getArticlesId = async (id: number) => {
     return data;
 }
 
+const getArticlesImage = async (imageName: string) => {
+    const {data} = await $hostGet.get(`/public/imageArticle/${imageName}`)
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
 const getAllArticles = async () => {
     const {data} = await $hostGet.get('/articles/all')
     //localStorage.setItem('token', data.token)
@@ -1072,5 +1079,6 @@ export {
     getAllStoreReviewLimit,
     getAllArticlesLimit,
     getAllArticles,
-    getArticlesId
+    getArticlesId,
+    getArticlesImage
 }

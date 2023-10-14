@@ -16,7 +16,7 @@ export class ArticlesService {
     } catch (error) {
       throw new HttpException(
         'Data is incorrect and must be uniq',
-        HttpStatus.NOT_FOUND,
+        HttpStatus.BAD_REQUEST,
       );
     }
   }

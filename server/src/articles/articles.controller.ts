@@ -21,6 +21,7 @@ import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+//import { join } from 'path';
 
 @Controller('articles')
 export class ArticlesController {
@@ -37,22 +38,19 @@ export class ArticlesController {
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: '../../../client/public/img',
-        filename: (req, file, cb) => {
+        destination: './public/imageArticle',
+        filename: ( req, file, cb) => {
+          //try {
           if (
-            !file.mimetype.includes('image/jpeg') ||
-            !file.mimetype.includes('image/png')
+            !file.originalname.match(/\.(jpg|jpeg|png|gif)$/)
+            // !file.mimetype.includes('image/jpeg') ||
+            // !file.mimetype.includes('image/png')
           ) {
-            console.log('MIME_TYPE: ', file.mimetype);
-            throw new HttpException(
-              'not supported format',
-              HttpStatus.BAD_REQUEST,
-            );
+            new Error('Invalid. not supported format')
           }
           const fileName: string = file.originalname;
           const newFileName: string = fileName;
           cb(null, `${newFileName}`)
-          console.log('ARTICLE_FILE_NAME: ', newFileName)
         },
       })
     } 
@@ -63,13 +61,17 @@ export class ArticlesController {
       new ParseFilePipe({
         validators: [
           new MaxFileSizeValidator({ maxSize: 15000000 }),
-          new FileTypeValidator({ fileType: /\.(jpg|jpeg|png)$/}),
+          new FileTypeValidator({ fileType: 'image/jpeg|image/png'}),
+          //new FileTypeValidator({ fileType: /\.(jpg|jpeg|png)$/}),
         ]
       })
     )
     file: Express.Multer.File,
   ) {
-    return file.path, file.filename;
+    return {
+      path: file.destination, 
+      name: file.filename
+    };
   }
 
   @Get('/all')
