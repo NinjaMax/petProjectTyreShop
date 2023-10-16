@@ -239,7 +239,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
       inject: [ConfigService],
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public/imageArticle'),
+      rootPath: join(__dirname, '..', 'public'),
     }),
     TyresModule,
     WheelsModule,

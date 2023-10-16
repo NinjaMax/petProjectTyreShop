@@ -21,9 +21,6 @@ export class ArticlesService {
     }
   }
 
-
-
-
   async findAllArticles() {
     try {
       const findAllArticles = await this.articlesRepository.findAll();

@@ -30,10 +30,10 @@ export class UploaderController {
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: './upload_prices',
+        destination: '.downloads/upload_prices',
         filename: (req, file, cb) => {
           if (!file.mimetype.includes('csv')) {
-            throw 'not supported format';
+            cb(new Error('Error: Unacceptable file format'), null);
           }
           const fileName: string = file.originalname;
           const newFileName: string = fileName;
@@ -64,10 +64,10 @@ export class UploaderController {
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: './upload_prices',
+        destination: './downloads/upload_prices',
         filename: (res, file, cb) => {
           if (!file.mimetype.includes('csv')) {
-            throw 'Not supported format';
+            cb(new Error('Error: Unacceptable file format'), null);
           }
 
           const fileName: string = file.originalname;

@@ -13,6 +13,7 @@ type ArticleItemType = {
 
 const NewsItemPage = () => {
     const [article, setArticle] = useState<ArticleItemType>();
+    const [articlesPictures, setArticlesPictures] = useState<string[]>();
     //const [articleImage, setArticleImage] = useState<string>();
   
     useEffect(() => {
@@ -26,6 +27,7 @@ const NewsItemPage = () => {
                      if (getArticle) {
                         console.log('ARTICLE: ', getArticle)
                         setArticle(getArticle);
+                        setArticlesPictures(getArticle?.articles_pictures.split(','))
                     }   
                 } catch (error) {
                     console.log('ERROR_GET_ARTICLE_ID: ', error);   
@@ -67,20 +69,18 @@ const NewsItemPage = () => {
     return (
     <div className='newsItemPageContainer'>
         <div>
-            {article?.title}
+            <h2>{article?.title}</h2>
         </div>
         <div>
             <img 
-                src={'https://localhost:4000/' + article?.articles_pictures}
-                //src={article?.articles_pictures} 
-                width={350}
-                height={250}
+                src={process.env.REACT_APP_HOST + '/imageArticle/' + articlesPictures}
                 alt='imgArticle'
             />
         </div>
         <div dangerouslySetInnerHTML={{ __html: article?.description}}>
             
         </div>
+        <br/>
         <div>
             {new Date(article?.createdAt).toLocaleDateString()}
         </div>

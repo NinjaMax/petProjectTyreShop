@@ -21,7 +21,6 @@ import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-//import { join } from 'path';
 
 @Controller('articles')
 export class ArticlesController {
@@ -34,35 +33,31 @@ export class ArticlesController {
 
   @Post('/upload-image')
   @Header('Content-Type', 'multipart/form-data')
-  //@Header('Accept-Charset', 'utf-8')
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
         destination: './public/imageArticle',
         filename: ( req, file, cb) => {
           //try {
-          if (
-            !file.originalname.match(/\.(jpg|jpeg|png|gif)$/)
-            // !file.mimetype.includes('image/jpeg') ||
-            // !file.mimetype.includes('image/png')
-          ) {
-            new Error('Invalid. not supported format')
+          if (!file.originalname.match(/\.(jpg|jpeg|png|gif|webp)$/)) {
+            cb( new Error('Error: Unacceptable file format'), null);
+          } else {
+            const fileName: string = file.originalname;
+            const newFileName: string = fileName;
+            cb(null, `${newFileName}`) 
           }
-          const fileName: string = file.originalname;
-          const newFileName: string = fileName;
-          cb(null, `${newFileName}`)
         },
       })
     } 
   ))
   async uploadTyreFileAndPassValidation(
-    //@Body() body: CreateUploaderDto, 
     @UploadedFile(
       new ParseFilePipe({
         validators: [
           new MaxFileSizeValidator({ maxSize: 15000000 }),
-          new FileTypeValidator({ fileType: 'image/jpeg|image/png'}),
-          //new FileTypeValidator({ fileType: /\.(jpg|jpeg|png)$/}),
+          new FileTypeValidator({
+            fileType: 'image/jpeg|image/png|image/gif|image/webp',
+          }),
         ]
       })
     )
