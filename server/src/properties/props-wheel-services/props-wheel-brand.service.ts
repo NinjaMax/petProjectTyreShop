@@ -44,26 +44,17 @@ export class PropsWheelBrandService {
   }
 
   async createWheelBrandFromPrice(id: number, brand: string) {
-
     try {
-
       const [wheelBrand, created] = await this.wheelBrandRepository.findOrCreate(
         {where: {brand: brand}, 
           defaults: {brand: brand}
         }
       );
-
       if(created || !created) {
-
         await wheelBrand.$add('wheels', id);
-
       }
-
-
     } catch {
-
       throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
-
     }
 
   }

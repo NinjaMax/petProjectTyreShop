@@ -129,16 +129,16 @@ import { ServeStaticModule } from '@nestjs/serve-static';
         password: configService.get('POSTGRES_PASSWORD'),
         database: configService.get('POSTGRES_DB'),
         dialectOptions: {
-          connectTimeout: 60000,
+          //connectTimeout: 60000,
           supportBigNumbers: true,
           bigNumberStrings: true,
         },
         pool: {
-          max: 10,
+          max: 45,
           min: 0,
-          idle: 10000,
-          acquire: 60000,
-          evict: 1000,
+          idle: 5000,
+          acquire: 300000,
+          evict: 5000,
         },
         models: [
           Tyres,

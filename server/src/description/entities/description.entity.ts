@@ -24,7 +24,7 @@ export class Description extends Model<Description, DescriptionConfigAttr> {
   })
   id_description: number;
 
-  @Column({ type: DataType.STRING, unique: false, allowNull: false })
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
   description: string;
 
   @HasMany(() => Tyres, 'id_description')

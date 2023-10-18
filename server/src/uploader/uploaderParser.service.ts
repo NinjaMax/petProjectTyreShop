@@ -18,7 +18,11 @@ export class UploaderPaprserService {
     try {
       let resultsTyre: any[] = [];
       fs.createReadStream(join(process.cwd(), path))
-        .pipe(csvParser())
+        .pipe(
+          csvParser({
+            separator: ';'
+          }),
+        )
         .on('data', (data: any) => {
           resultsTyre?.push(data);
         })

@@ -36,21 +36,21 @@ export class SuppliersService {
     city: string, 
     city_ua: string
   ) {
-    try {
+    //try {
       const [supplierFind, created] = 
         await this.suppliersRepository.findOrCreate({
           where: { id_supplier: id_supplier },
           defaults: {
             id_supplier: id_supplier,
-            name: name,
+            name: name +' ('+ city_ua +')',
             city: city,
             city_ua: city_ua,
           },
         });
       if (!created) {
         await supplierFind.update(
-          { name: name, city: city, city_ua: city_ua },
-          { where: { id_supplier: supplierFind.id_supplier } },
+          { name: name +' ('+ city_ua +')', city: city, city_ua: city_ua },
+          { where: { id_supplier: supplierFind.id_supplier }},
         );
         return supplierFind;
       } else {
@@ -58,12 +58,12 @@ export class SuppliersService {
           await this.contractService.createContractFromPrice(id_supplier, name);
         return contractSupplier;
       }
-    } catch {
-      throw new HttpException(
-        'Data is incorrect or Not Found', 
-        HttpStatus.NOT_FOUND
-      );
-    }
+    // } catch {
+    //   throw new HttpException(
+    //     'Data is incorrect or Not Found', 
+    //     HttpStatus.NOT_FOUND
+    //   );
+    // }
   }
 
   async findAllSupplier() {

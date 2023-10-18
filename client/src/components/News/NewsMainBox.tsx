@@ -1,7 +1,5 @@
 import React from 'react';
 import '../../css/News/NewsMainBox.css';
-// import newsImage from '../../assets/img/all_season_tyres_road_kwik_fit_header.jpg';
-import newsImage2 from '../../assets/michelintyres.jpg';
 import { IArticle } from './types/Article.type';
 import { IArticleItem } from './types/ArticleItem.types';
 import { createStringUrl } from '../../services/stringUrl';
@@ -25,11 +23,9 @@ const NewsMainBox = ({articlesArr, isNewsPage}: IArticle ) => {
             >
             <div className="newsMainBoxListItem" key={article.id_articles}>
                 <div className="columnNewsBox">
-                    <img src={newsImage2} alt='imageNews'/>
+                    <img src={process.env.REACT_APP_HOST + '/imageArticle/' + article?.articles_pictures} alt='imageNews'/>
                     <div className='columnNewsBoxContent'>
-                        <h3>{article.title}</h3>
-                        {article.description.slice(0, 200) + '...'}
-                        <p/>
+                        <h2>{article.title}</h2>
                     </div>  
                     <div className='columnNewsBoxDate'>{new Date(article.createdAt).toLocaleDateString()}</div>  
                 </div>

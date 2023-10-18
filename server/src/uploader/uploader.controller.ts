@@ -30,7 +30,7 @@ export class UploaderController {
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: '.downloads/upload_prices',
+        destination: './downloads/upload_prices',
         filename: (req, file, cb) => {
           if (!file.mimetype.includes('csv')) {
             cb(new Error('Error: Unacceptable file format'), null);
@@ -48,7 +48,7 @@ export class UploaderController {
     @UploadedFile(
       new ParseFilePipe({
         validators: [
-          new MaxFileSizeValidator({ maxSize: 15000000 }),
+          new MaxFileSizeValidator({ maxSize: 20000000 }),
           new FileTypeValidator({ fileType: 'csv' }),
         ]
       })
@@ -82,7 +82,7 @@ export class UploaderController {
     @UploadedFile(
       new ParseFilePipe({
         validators: [
-          new MaxFileSizeValidator({ maxSize: 15000000 }),
+          new MaxFileSizeValidator({ maxSize: 20000000 }),
           new FileTypeValidator({ fileType: 'csv' }),
         ]
       })

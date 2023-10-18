@@ -55,7 +55,7 @@ export class TyresService {
     try {
       const [tyresIdFromPrice, created] =
         await this.tyresRepository.findOrCreate({
-          where: { id: id },
+          where: { id: +id },
           defaults: {
             id: id,
             id_goods_sup: id_sup,
@@ -64,8 +64,10 @@ export class TyresService {
             update_date: update_date,
           },
         });
+
       if (!created) {
-        await tyresIdFromPrice.update(
+        //console.log('FIND_TYRE: ', tyresIdFromPrice)
+        const updateTyres = await tyresIdFromPrice.update(
           {
             //full_name: full_name,
             //photo_url: photo_url,
@@ -74,12 +76,15 @@ export class TyresService {
           },
           { where: { id: tyresIdFromPrice.id } },
         );
-        return tyresIdFromPrice;
-      } 
-    } catch {
+        return updateTyres;
+      } else {
+        return created;
+      }
+    } catch (error){
       throw new HttpException(
         'Data is incorrect and must be uniq',
         HttpStatus.NOT_FOUND,
+        error.message
       );
     }
   }

@@ -30,39 +30,27 @@ export class ContractService {
   }
 
   async createContractFromPrice(id_supplier: number, name: string) {
-
-    try {
-
-      let findContract = await this.contractRepository.findOne(
-        {where: {id_supplier: +id_supplier}});
-
-      if(findContract){
-
+    //try {
+      const findContract = await this.contractRepository.findOne({
+        where: { id_supplier: +id_supplier }
+      });
+      if (findContract) {
         return findContract;
-
       } else {
-
-        let contractPrice = await this.contractRepository.create({name});
-
+        const contractPrice = await this.contractRepository.create({ name });
         contractPrice.name = name + " Основний договір";
-        contractPrice.save();
         await contractPrice.$set('supplier', id_supplier);
-
+        await contractPrice.save();
+        
         return contractPrice; 
       }
-      
-
-    } catch (error) {
-
-     throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
-    
-    }
+    // } catch (error) {
+    //   throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+    // }
   }
 
   async findAllContract() {
-
     try {
-
       const contractAll = await this.contractRepository.findAll({include: {all: true}});
 
       return contractAll;

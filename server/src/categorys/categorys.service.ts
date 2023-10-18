@@ -11,15 +11,11 @@ export class CategorysService {
     ) {}
 
   async createCategory(createCategoryDto: CreateCategoryDto) {
-
     try {
-      
       const category = await this.categoryRepository.create(createCategoryDto);
-
+      
       return category;
-
     } catch {
-
       throw new HttpException(
         'Data is incorrect and must be uniq',
         HttpStatus.NOT_FOUND,
@@ -28,23 +24,22 @@ export class CategorysService {
   }
 
   async createCategoryFromPrice(id: number, category: string) {
-
     try {
-      
       const [findCategory, created] = await this.categoryRepository.findOrCreate(
        {where:{category: category}, defaults: {category: category}}
       );
-      
       if(created || !created) {
-
-        findCategory.$add('tyres', id);
-
+        await findCategory.$add('tyres', id);
+        //await findCategory.update()
+        // await findCategory.save();
+        // await findCategory.reload();
       }
-      
-    } catch {
-
-      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
-
+    } catch (error){
+      console.log(error);
+      //  throw new HttpException(
+      //   'Data is incorrect and must be uniq', 
+      //   HttpStatus.NOT_FOUND,
+      //   error.message);
     }
   }
 
@@ -57,15 +52,11 @@ export class CategorysService {
       );
       
       if(created || !created) {
-
         await findCategory.$add('wheels', id);
-
       }
       
     } catch {
-
       throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
-
     }
   }
 
@@ -100,6 +91,11 @@ export class CategorysService {
   }
 
   update(id: number, updateCategoryDto: UpdateCategoryDto) {
+    try {
+      
+    } catch (error) {
+      
+    }
     return `This action updates a #${id} category`;
   }
 

@@ -49,7 +49,7 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
   })
   id: number;
 
-  @Column({ type: DataType.BIGINT, unique: true, allowNull: true })
+  @Column({ type: DataType.BIGINT, unique: false, allowNull: true })
   id_goods_sup: number;
 
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
@@ -70,7 +70,7 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
   id_model: number;
 
   @ForeignKey(() => Category)
-  @Column({ type: DataType.INTEGER })
+  @Column({ type: DataType.INTEGER})
   id_cat: number;
 
   @ForeignKey(() => TyreParams)

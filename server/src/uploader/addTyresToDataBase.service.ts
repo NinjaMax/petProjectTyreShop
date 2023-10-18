@@ -58,165 +58,171 @@ export class AddTyresToDbService {
   ) {}
 
   async addTyresToDb(item: ItemPriceTyresConfigAttr) {
-    try {
+    //try {
+      //console.log('ITEM_GOODS: ', item['Категория товара'])
       await this.tyresservice.createTyresFromPrice(
-        +item.id,
-        item.id_sup,
-        item.full_name ?? '',
-        item.photo_url ?? '',
-        item.update_date,
+        +item['ID товара'],
+        item['Артикул товару у постачальника'] ?? null,
+        item['Полное название товара'] ?? '',
+        item['Посилання на фото'] ?? '',
+        item['Дата обновления'],
       );
 
-      await this.categoryService.createCategoryFromPrice(
-        +item.id,
-        item.price_list_type ?? '',
-      );
 
-      await this.supplierService.createSupplierFromPrice(
-        +item.provider_id,
-        item.provider ?? '',
-        item.city ?? '',
-        item.city_ua ?? '',
-      );
 
-      await this.propsBrandService.createTyreBrandFromPrice(
-        +item.id,
-        +item.brand_id,
-        item.brand ?? '',
-      );
+      // await this.supplierService.createSupplierFromPrice(
+      //   +item['ID Постачальника'],
+      //   item['Поставщик'] ?? '',
+      //   item['Город'] ?? '',
+      //   item['Город (укр)'] ?? '',
+      // );
 
-      await this.propsTyreModel.createTyreModelFromPrice(
-        +item.id,
-        +item.model_id,
-        String(item.model) === 'undefined' ? '' : String(item.model),
-      );
+      // await this.categoryService.createCategoryFromPrice(
+      //   +item['ID товара'],
+      //   item['Категория товара'] ?? '',
+      // );
 
-      await this.propsTyreCountry.createTyreCountryFromPrice(
-        +item.id,
-        item.country_manufacturer ?? '',
-        item.country_manufacturer_ua ?? '',
-      );
 
-      await this.propsTyreDemo.createTyreDemoFromPrice(
-        +item.id,
-        item.demo ?? '',
-      );
+      // await this.propsBrandService.createTyreBrandFromPrice(
+      //   +item['ID товара'],
+      //   +item['ID Бренда'],
+      //   item['Бренд'] ?? '',
+      // );
 
-      await this.propsTyreDiameter.createTyreDiameterFromPrice(
-        +item.id,
-        String(item.diameter).replace(/,/g, '.') === 'undefined'
-          ? ''
-          : String(item.diameter).replace(/,/g, '.'),
-      );
+      // await this.propsTyreModel.createTyreModelFromPrice(
+      //   +item['ID товара'],
+      //   +item['ID Моделі'],
+      //   item['Модель'] === 'undefined' ? '' : String(item['Модель']),
+      // );
 
-      await this.propsTyreHeight.createTyreHeightFromPrice(
-        +item.id,
-        String(item.height).replace(/,/g, '.') === 'undefined'
-          ? ''
-          : String(item.height).replace(/,/g, '.'),
-      );
+      // await this.propsTyreCountry.createTyreCountryFromPrice(
+      //   +item['ID товара'],
+      //   item['Страна производитель'] ?? '',
+      //   item['Страна производитель (укр)'] ?? '',
+      // );
 
-      await this.propsTyreHomologation.createTyreHomologationFromPrice(
-        +item.id,
-        item.homologation ?? '',
-      );
+      // await this.propsTyreDemo.createTyreDemoFromPrice(
+      //   +item['ID товара'],
+      //   item.demo ?? '',
+      // );
 
-      await this.propsTyreLoadIndex.createLoadIndexFromPrice(
-        +item.id,
-        String(item.load_index) === 'undefined' ? '' : String(item.load_index),
-        item.load_index_with_desc ?? '',
-      );
+      // await this.propsTyreDiameter.createTyreDiameterFromPrice(
+      //   +item['ID товара'],
+      //   String(item['Диаметр']).replace(/,/g, '.') === 'undefined'
+      //     ? ''
+      //     : String(item['Диаметр']).replace(/,/g, '.'),
+      // );
 
-      await this.propsTyreParams.createParamsFromPrice(
-        +item.id,
-        item.params ?? '',
-      );
+      // await this.propsTyreHeight.createTyreHeightFromPrice(
+      //   +item['ID товара'],
+      //   String(item['Высота профиля']).replace(/,/g, '.') === 'undefined'
+      //     ? ''
+      //     : String(item['Высота профиля']).replace(/,/g, '.'),
+      // );
 
-      await this.propsTyreReinforce.createTyreReinforceFromPrice(
-        +item.id,
-        item.reinforce ?? '',
-      );
+      // await this.propsTyreHomologation.createTyreHomologationFromPrice(
+      //   +item['ID товара'],
+      //   item['Оммологация'] ?? '',
+      // );
 
-      await this.propsTyreRunFlat.createTyreRunFlatFromPrice(
-        +item.id,
-        item.run_flat ?? '',
-      );
+      // await this.propsTyreLoadIndex.createLoadIndexFromPrice(
+      //   +item['ID товара'],
+      //   String(item['Индекс нагрузки']) === 'undefined'
+      //     ? ''
+      //     : String(item['Индекс нагрузки']),
+      //     item['Індекс навантаження з описом'] ?? '',
+      // );
 
-      await this.propsTyreSeal.createTyreSealFromPrice(
-        +item.id,
-        item.seal ?? '',
-      );
+      // await this.propsTyreParams.createParamsFromPrice(
+      //   +item['ID товара'],
+      //   item['Параметры'] ?? '',
+      // );
 
-      await this.propsTyreSeason.createTyreSeasonFromPrice(
-        +item.id,
-        +item.season_id,
-        item.season ?? '',
-        item.season_ua ?? '',
-      );
+      // await this.propsTyreReinforce.createTyreReinforceFromPrice(
+      //   +item['ID товара'],
+      //   item['Усиление'] ?? '',
+      // );
 
-      await this.propsTyreSilent.createTyreSilentFromPrice(
-        +item.id,
-        item.silent ?? '',
-      );
+      // await this.propsTyreRunFlat.createTyreRunFlatFromPrice(
+      //   +item['ID товара'],
+      //   item['RunFlat'] ?? '',
+      // );
 
-      await this.propsTyreSizeDigits.createTyreSizeDigitsFromPrice(
-        +item.id,
-        item.size_only_digits ?? '',
-      );
+      // await this.propsTyreSeal.createTyreSealFromPrice(
+      //   +item['ID товара'],
+      //   item.seal ?? '',
+      // );
 
-      await this.propsTyreSpeedIndex.createTyreSpeedIndexFromPrice(
-        +item.id,
-        item.speed_index ?? '',
-        item.speed_index_with_desc ?? '',
-      );
+      // await this.propsTyreSeason.createTyreSeasonFromPrice(
+      //   +item['ID товара'],
+      //   +item['ID Сезону'],
+      //   item['Сезон'] ?? '',
+      //   item['Сезон (укр)'] ?? '',
+      // );
 
-      await this.propsTyreStudded.createTyreStuddedFromPrice(
-        +item.id,
-        item.studded ?? '',
-      );
+      // await this.propsTyreSilent.createTyreSilentFromPrice(
+      //   +item['ID товара'],
+      //   item.silent ?? '',
+      // );
 
-      await this.propsTyreVehicleType.createTyreVehicleTypeFromPrice(
-        +item.id,
-        +item.vehicle_type_id,
-        item.vehicle_type ?? '',
-        item.vehicle_type_ua ?? '',
-      );
+      // await this.propsTyreSizeDigits.createTyreSizeDigitsFromPrice(
+      //   +item['ID товара'],
+      //   item['ID розміру'] ?? '',
+      // );
 
-      await this.propsTyreWidth.createTyreWidthFromPrice(
-        +item.id,
-        String(item.width).replace(/,/g, '.') === 'undefined'
-          ? ''
-          : String(item.width).replace(/,/g, '.'),
-      );
+      // await this.propsTyreSpeedIndex.createTyreSpeedIndexFromPrice(
+      //   +item['ID товара'],
+      //   item['Индекс скорости'] ?? '',
+      //   item['Індекс швидкості з описом'] ?? '',
+      // );
 
-      await this.propsTyreYear.createTyreYearFromPrice(
-        +item.id,
-        item.manufacture_year ?? '',
-      );
+      // await this.propsTyreStudded.createTyreStuddedFromPrice(
+      //   +item['ID товара'],
+      //   item['Шип/не шип'] ?? '',
+      // );
 
-      await this.stockTyresService.createStockTyreFromPrice(
-        +item.id,
-        +item.in_stock,
-        +item.provider_id,
-        item.update_date,
-      );
+      // await this.propsTyreVehicleType.createTyreVehicleTypeFromPrice(
+      //   +item['ID товара'],
+      //   +item['ID типу транспортного засобу (призначення)'],
+      //   item['Тип транспортного средства (назначение)'] ?? '',
+      //   item['Тип транспортного средства (назначение) (укр)'] ?? '',
+      // );
 
-      await this.priceTyreService.createPriceTyresFromPrice(
-        +item.id,
-        +item.user_price_wholesale,
-        +item.user_price,
-        +item.user_delivery_price,
-        +item.user_price_plus_user_delivery_price,
-        +item.provider_id,
-        item.update_date,
-      );
+      // await this.propsTyreWidth.createTyreWidthFromPrice(
+      //   +item['ID товара'],
+      //   String(item['Ширина профиля']).replace(/,/g, '.') === 'undefined'
+      //     ? ''
+      //     : String(item['Ширина профиля']).replace(/,/g, '.'),
+      // );
+
+      // await this.propsTyreYear.createTyreYearFromPrice(
+      //   +item['ID товара'],
+      //   item['Год изготовления шин'] ?? '',
+      // );
+
+      // await this.stockTyresService.createStockTyreFromPrice(
+      //   +item['ID товара'],
+      //   +item['В наличии'],
+      //   +item['ID Постачальника'],
+      //   item['Дата обновления'],
+      // );
+
+      // await this.priceTyreService.createPriceTyresFromPrice(
+      //   +item['ID товара'],
+      //   +item['Моя оптовая цена (со скидкой)'],
+      //   +item['Моя розничная цена'],
+      //   +item['Моя ціна доставки'],
+      //   +item['Моя роздрібна ціна+доставка'],
+      //   +item['ID Постачальника'],
+      //   item['Дата обновления'],
+      // );
 
       return 'Price added to DATA BASE';
-    } catch (error) {
-      throw new HttpException(
-        'Data is incorrect, check your data',
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    // } catch (error) {
+    //   throw new HttpException(
+    //     'Data is incorrect, check your data',
+    //     HttpStatus.NOT_FOUND,
+    //   );
+    // }
   }
 }
