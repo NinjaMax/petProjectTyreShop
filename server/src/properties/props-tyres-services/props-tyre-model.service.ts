@@ -59,7 +59,15 @@ export class PropsModelService {
       if (created || !created) {
         await tyreModel.$add('tyres', id);
       }
-    } catch {
+    } catch (error) {
+      console.log(
+        'ERROR_GET ID ID_MODEL: ',
+        error,
+        'ID: ',
+        id,
+        'ID_MODEL: ',
+        id_model,
+      );
       throw new HttpException(
         'Data is incorrect or Not Found',
         HttpStatus.NOT_FOUND,

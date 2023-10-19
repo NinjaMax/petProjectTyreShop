@@ -25,7 +25,7 @@ export class TyreModel extends Model<TyreModel, TyreModelConfigAttr> {
   })
   id_model: number;
    
-  @Column({ type: DataType.STRING, unique: true, allowNull: false })
+  @Column({ type: DataType.STRING, allowNull: false })
   model: string;
 
   @ForeignKey(() => Description)

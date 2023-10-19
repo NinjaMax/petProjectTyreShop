@@ -20,7 +20,8 @@ export class UploaderPaprserService {
       fs.createReadStream(join(process.cwd(), path))
         .pipe(
           csvParser({
-            separator: ';'
+            separator: ';',
+            skipComments: true,
           }),
         )
         .on('data', (data: any) => {
@@ -51,7 +52,10 @@ export class UploaderPaprserService {
     try {
       let resultsWheel: any[] = [];
       fs.createReadStream(join(process.cwd(), path))
-        .pipe(csvParser())
+        .pipe(csvParser({
+          separator: ';',
+          skipComments: true,
+        }))
         .on('data', (data: any) => {
           resultsWheel?.push(data);
         })

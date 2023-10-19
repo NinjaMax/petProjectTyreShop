@@ -2019,10 +2019,10 @@ const CatalogTyresPage = observer(({crumbsItem}: any) => {
             <div >
             {reviewGoodsData?.length !== 0 ? 
               reviewGoodsData?.map((item: any) =>
-              <div key={item.id_review_store + '_review'}>
+              <div key={item?.id_review_store + '_review'}>
               <ReviewsGoods 
-                productFullName={item.tyres.full_name} 
-                rating={[item.rating]} 
+                productFullName={item?.tyres?.full_name} 
+                rating={[item?.rating]} 
                 reviewEntity={item} 
                 reviewExtend={false} 
                 btnLeft={undefined} 

@@ -8,7 +8,7 @@ import { TyreSeason } from '../properties/entities/tyres/tyre-season.model';
 import { TyreVehicleType } from '../properties/entities/tyres/tyre-vehicleType.model';
 import { TyreDiameter } from '../properties/entities/tyres/tyre-diameter.model';
 import { TyreParams } from '../properties/entities/tyres/tyre-params.model';
-import { Op, Sequelize } from 'sequelize';
+import { Op } from 'sequelize';
 import { TyreWidth } from '../properties/entities/tyres/tyre-width.model';
 import { TyreHeight } from '../properties/entities/tyres/tyre-height.model';
 import { TyreBrand } from '../properties/entities/tyres/tyre-brand.model';
@@ -21,7 +21,6 @@ import { TyreHomologation } from '../properties/entities/tyres/tyre-homologation
 import { StockTyres } from '../stock/entities/stock-tyres.model';
 import { TyreReinforce } from '../properties/entities/tyres/tyre-reinforce.model';
 import sequelize from 'sequelize';
-import { TyreSort } from './interfaces/tyresSort.interface';
 import { TyreModel } from '../properties/entities/tyres/tyre-model.model';
 import { RatingTyres } from '../ratings/entities/rating-tyres.model';
 import { ReviewTyres } from '../reviews/entities/review-tyres.model';
@@ -47,7 +46,7 @@ export class TyresService {
 
   async createTyresFromPrice(
     id: number,
-    id_sup: number,
+    id_sup: string,
     full_name: string,
     photo_url: string,
     update_date: Date,
@@ -66,7 +65,6 @@ export class TyresService {
         });
 
       if (!created) {
-        //console.log('FIND_TYRE: ', tyresIdFromPrice)
         const updateTyres = await tyresIdFromPrice.update(
           {
             //full_name: full_name,
@@ -77,14 +75,13 @@ export class TyresService {
           { where: { id: tyresIdFromPrice.id } },
         );
         return updateTyres;
-      } else {
-        return created;
-      }
+      } 
     } catch (error){
+      console.log('ERROR_DETAIL: ', error, id);
       throw new HttpException(
-        'Data is incorrect and must be uniq',
+        //'Data is incorrect and must be uniq',
+        error.message,
         HttpStatus.NOT_FOUND,
-        error.message
       );
     }
   }

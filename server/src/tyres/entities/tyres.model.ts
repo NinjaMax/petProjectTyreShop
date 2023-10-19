@@ -43,22 +43,21 @@ export class Tyres extends Model<Tyres, TyresConfigAttr> {
   @Column({
     type: DataType.BIGINT,
     unique: true,
-    allowNull: false,
     primaryKey: true,
     autoIncrement: false,
   })
   id: number;
 
-  @Column({ type: DataType.BIGINT, unique: false, allowNull: true })
-  id_goods_sup: number;
+  @Column({ type: DataType.STRING })
+  id_goods_sup: string;
 
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   full_name: string;
 
-  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  @Column({ type: DataType.STRING })
   photo_url: string;
 
-  @Column({ type: DataType.DATE, unique: false, allowNull: true })
+  @Column({ type: DataType.DATE })
   update_date: Date;
 
   @ForeignKey(() => TyreBrand)
