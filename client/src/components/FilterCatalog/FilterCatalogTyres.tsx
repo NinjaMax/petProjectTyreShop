@@ -36,7 +36,7 @@ const FilterCatalogTyres = observer((
     const [stateReinforced, setStateReinforced]=useState(false);
 
     const params = useParams<any>();
-    const history = useHistory();
+    //const history = useHistory();
 
     useEffect(() => {
         if(!filterState) {

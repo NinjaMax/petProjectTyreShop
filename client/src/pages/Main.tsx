@@ -1,6 +1,6 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../css/Main.css';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Slider from '../components/Slider';
 import CategorySlide from '../components/CategorySlide';
 import TabProdMain from '../components/tabs/TabProdMain';
@@ -16,9 +16,6 @@ import { observer } from 'mobx-react-lite';
 import { tyreDiameterCat, tyreSeasonCat, tyreVehicleTypeCat } from '../services/tyresCatService';
 import BrandsListMain from '../components/BrandsListMain';
 import PromotionBox from '../components/PromotionBox';
-// import Modal from '../components/modal/Modal';
-// import CheckOrder from '../components/modal/CheckOrder';
-// import { ICheckOrderItem } from '../components/catalogs/types/CheckOrder.type';
 
 const Main = observer(() => {
   const {goodsTyre, goodsWheel, filter, page} = useContext<any | null>(Context);
@@ -31,9 +28,6 @@ const Main = observer(() => {
   const [nextBtnReview, setNextBtnReview] = useState<number>(0);
   const [articlesAll, setArticlesAll] = useState<any[] | null>();
   const params = useParams<any>();
-  const location = useLocation();
-    // const {page} = useContext<any | null>(Context);
-    // const [pageNum, setPageNum] = useState(0);
 
   useEffect(() =>{
     let isMounted = false;
@@ -43,15 +37,13 @@ const Main = observer(() => {
         getTyresCountAll,
         getWheelsWithoutOffset,
         getAllOrdersLeader,
-        getAllStoreReviewLimit,
-        getAllArticlesLimit
       ];
       const tyreCatType = tyreVehicleTypeCat(params.category);
-      console.log('CAT_TYPE: ', tyreCatType);
+      //console.log('CAT_TYPE: ', tyreCatType);
       const tyreCatSeason = tyreSeasonCat(params.category);
-      console.log('CAT_SEASON: ', tyreCatSeason);
+      //console.log('CAT_SEASON: ', tyreCatSeason);
       const tyreCatDiameter = tyreDiameterCat(params.category);
-      console.log('CAT_DIAM: ', tyreCatDiameter);
+      //console.log('CAT_DIAM: ', tyreCatDiameter);
       if (tyreCatType) {
         filter.setVehicleType(tyreCatType);
       }
@@ -80,6 +72,7 @@ const Main = observer(() => {
             filter.reinforced,
             filter.sort,
           );
+
           let setWidthFilter:any[] = [];
           let setHightFilter:any[] = [];
           let setDiameterFilter:any[] = [];
@@ -93,7 +86,7 @@ const Main = observer(() => {
           let setRunFlatFilter :any[] = [];
           let setStuddedFilter :any[] = [];
 
-          goodsTyre?.setTyresFilter(tyreFilterGoods);
+          goodsTyre?.setTyresFilter(tyreFilterGoods.rows);
           goodsTyre._tyres_filter.map((item: any) => 
           { return (
             setWidthFilter.push(item.width.width),
@@ -112,9 +105,9 @@ const Main = observer(() => {
           })
           page.loadMore > 0 ? goodsTyre?.setTyres(
             [...goodsTyre._tyres, 
-              ...tyreFilterGoods.splice(page.offset, page.limit)] 
+              ...tyreFilterGoods.rows.slice(page.offset, page.limit)] 
             ) : goodsTyre?.setTyres(
-              tyreFilterGoods.splice(page.offset, page.limit));
+              tyreFilterGoods.rows.slice(page.offset, page.limit));
 
           if (filter.width) {
             goodsTyre?.setWidth(
@@ -286,7 +279,6 @@ const Main = observer(() => {
             filter.reinforced,
           );
           goodsTyre?.setTotalCount(tyreTotalCount);
-          //console.log('SET_TYRES_TOTALCOUNT: ', tyreTotalCount);
         }
         if(!isMounted && taskLoad[i] === getWheelsWithoutOffset) {
           let wheelFilterGoods: any = await taskLoad[i](
@@ -316,10 +308,7 @@ const Main = observer(() => {
           let setPcd2Filter :any[] = [];
           let setTypeFilter :any[] = [];
 
-          //console.log('TYRE_FILTER_GET: ', tyreFilterGoods);
-          
-
-            goodsWheel?.setWheelsFilter(wheelFilterGoods);
+          goodsWheel?.setWheelsFilter(wheelFilterGoods);
             goodsWheel._wheels_filter.map((item: any) => 
           { return (
             setWidthFilter.push(item.width.width),
@@ -500,26 +489,6 @@ const Main = observer(() => {
             }
           });
         }
-        if(!isMounted && taskLoad[i] === getAllStoreReviewLimit
-          ) {
-          let getAllReviewStore: any = await taskLoad[i](
-            1,
-            nextBtnReview
-          );
-          if (getAllReviewStore) {
-            setReviewStoreAll(getAllReviewStore);
-          }
-        }
-        if(!isMounted && taskLoad[i] === getAllArticlesLimit
-          ) {
-          let getAllArticles: any = await taskLoad[i](
-            3,
-            0
-          );
-          if (getAllArticles) {
-            setArticlesAll(getAllArticles);
-          }
-        }
         const task = taskLoad.shift();
         task();
         await yieldToMain(); 
@@ -564,9 +533,45 @@ const Main = observer(() => {
     goodsWheel, 
     nextBtnLeader, 
     prevBtnLeader, 
-    prevBtnReview, 
-    nextBtnReview
   ]);
+
+  useEffect(() => {
+    let isMountedReview = false;
+    const getTyresReviews = async () => {
+      if (!isMountedReview) {
+        let getAllReviewStore: any = await getAllStoreReviewLimit(
+          String(1),
+          String(nextBtnReview)
+        );
+        if (getAllReviewStore) {
+          setReviewStoreAll(getAllReviewStore);
+        }
+      }
+    };
+    getTyresReviews();
+    return () => {
+      isMountedReview = true;
+    };
+  },[nextBtnReview]);
+
+  useEffect(() => {
+    let isMountedReview = false;
+    const getTyresReviews = async () => {
+      if (!isMountedReview) {
+        let getAllArticles: any = await getAllArticlesLimit(
+          String(3),
+          String(0)
+        );
+        if (getAllArticles) {
+          setArticlesAll(getAllArticles);
+        }
+      }
+    };
+    getTyresReviews();
+    return () => {
+      isMountedReview = true;
+    };
+  },[]);
 
   const handleCloseFilter =() => {
     if(filterClose) {

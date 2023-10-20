@@ -17,7 +17,7 @@ export default class GoodsTyreStore {
     _run_flat:string[];
     _reinforced:string[];
     _descriptions: {};
-    _tyres_filter: [];
+    _tyres_filter: [] | null;
     _product: {};
     _totalCount: number;
     _ratingList:{[key: string]: number};

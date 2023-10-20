@@ -9,59 +9,58 @@ import wheels from '../../assets/vossen_cvt_gloss_graphite-16325-a.png';
 import ButtonAction from '../buttons/ButtonAction';
 import { ICard } from './interfaces/Card.interface';
 import { MAIN_ROUTE } from '../../utils/consts';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { createStringUrl } from '../../services/stringUrl';
 import { 
     getTyresRatingAvgIdAndIdmodel, 
     getWheelsRatingAvgIdAndIdmodel 
 } from '../../restAPI/restGoodsApi';
-import { yieldToMain } from '../../restAPI/postTaskAdmin';
 import { IRatingAvg } from '../../pages/types/RatingModelAvg.type';
 import OptionsWheelBox from './OptionsWheelBox';
 
 const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
     const [ratingModel, setRatingModel] = useState<IRatingAvg>()
     const history = useHistory();
+    const location = useLocation();
     
-    useEffect(() => {
-        let isMounted = false;
-        const getRatingModel = async () => {
-          const taskProduct: any[] = [
-            getTyresRatingAvgIdAndIdmodel,
-            getWheelsRatingAvgIdAndIdmodel,
-          ];
-        let i: number = 0; 
-        while (taskProduct.length > i) {
-          if (!isMounted && taskProduct[i] === getTyresRatingAvgIdAndIdmodel 
-            && goods) {
-            const getRating: any = await taskProduct[i](
-                goods?.id,
-                goods?.id_model);
-            if(getRating) {
-             setRatingModel(getRating[0]);   
-            }
-          }
-          if (!isMounted && taskProduct[i] === getWheelsRatingAvgIdAndIdmodel 
-            && goods) {
-            const getWheelRating: any = await taskProduct[i](
-                goods?.id,
-                goods?.id_model
-            );
-            if(getWheelRating) {
-             setRatingModel(getWheelRating[0]);   
-            }
-          }
-          const task = taskProduct.shift();
-          task();
-          await yieldToMain();
-        }
-        };
-        getRatingModel();
-        return () => {
-          isMounted = true;
-        };
-      },[goods, goods?.id_model]);
+    // useEffect(() => {
+    //     let isMounted = false;
+    //     const getRatingModel = async () => {
+    //       if (!isMounted && location.pathname.includes('tyres')) {
+    //         const getRating: any = await getTyresRatingAvgIdAndIdmodel(
+    //             +goods!.id,
+    //             goods?.id_model ?? 0
+    //         );
+    //         if(getRating) {
+    //          setRatingModel(getRating[0]);   
+    //         }
+    //       }
+    //     };
+    //     getRatingModel();
+    //     return () => {
+    //       isMounted = true;
+    //     };
+    //   },[goods, location.pathname]);
+
+    //   useEffect(() => {
+    //     let isMounted = false;
+    //     const getRatingModel = async () => {
+    //       if (!isMounted && location.pathname.includes('wheels')) {
+    //         const getWheelRating: any = await getWheelsRatingAvgIdAndIdmodel(
+    //             +goods!.id ?? 0,
+    //             goods?.id_model ?? 0
+    //         );
+    //         if(getWheelRating) {
+    //          setRatingModel(getWheelRating[0]);   
+    //         }
+    //     }
+    //     };
+    //     getRatingModel();
+    //     return () => {
+    //       isMounted = true;
+    //     };
+    //   },[goods, location.pathname]);
     
     const addGoodsId = () => {
         const toStringUrl = createStringUrl(goods?.full_name);
@@ -124,7 +123,7 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                         createStringUrl(goods?.full_name) +'#vidguki' : 
                         '#'}
                     >
-                       {goods?.reviews.length} відгуки
+                       {goods?.reviews?.length} відгуки
                     </a>
                 </div>
                 <div className="tyresCardCode">код товара: {goods?.id}</div>

@@ -7,13 +7,13 @@ const typeCar = (type: string | undefined) => {
         case 'легковий':
             return TyreType.LEGRKOVOI_TYPE;
         case 'внедорожник':
-        case 'позахляховик':
+        case 'позашляховик':
             return TyreType.VNEDOROGNIK_TYPE;
         case 'легкогрузовой':
         case 'легковантажний':
             return TyreType.LEGKOGRUZ_TYPE;
-        case 'сельхоз':
-        case 'сільхоз':
+        case 'с/г':
+        case 'с/х':
             return TyreType.SELHOZ_TYPE;
         case 'спецтехника':
         case 'спецтехніка':

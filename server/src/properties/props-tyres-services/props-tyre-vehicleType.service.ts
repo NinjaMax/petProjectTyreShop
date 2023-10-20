@@ -69,7 +69,8 @@ export class PropsTyreVehicleTypeService {
       if (created || !created) {
         await tyreVehicleType.$add('tyres', id);
       }
-    } catch {
+    } catch (error){
+      console.log('ERROR: ', error, 'ID: ', id, 'TYPE: ', vehicle_type_ua);
       throw new HttpException(
         'Data is incorrect and must be uniq',
         HttpStatus.NOT_FOUND,

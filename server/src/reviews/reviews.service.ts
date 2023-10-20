@@ -13,6 +13,10 @@ import { ReviewWheels } from './entities/review-wheels.model';
 import { WheelsService } from '../wheels/wheels.service';
 import { PropsWheelBrandService } from 'src/properties/props-wheel-services/props-wheel-brand.service';
 import { PropsWheelModelService } from 'src/properties/props-wheel-services/props-wheel-model.service';
+import { Tyres } from 'src/tyres/entities/tyres.model';
+import { RatingTyres } from 'src/ratings/entities/rating-tyres.model';
+import { Wheel } from 'src/wheels/entities/wheel.model';
+import { RatingWheels } from 'src/ratings/entities/rating-wheels.model';
 
 @Injectable()
 export class ReviewsService {
@@ -52,7 +56,7 @@ export class ReviewsService {
         );
         const newReview = await this.reviewTyresRepository.findByPk(
           reviewCreate.id_review,
-          { include: { all: true } },
+          { include: [{ model: Tyres }, { model: RatingTyres }] },
         );
 
         await tyre.$add('reviews', [reviewCreate.id_review]);
@@ -114,7 +118,7 @@ export class ReviewsService {
         );
         const newReviewWheel = await this.reviewWheelsRepository.findByPk(
           reviewWheelCreate.id_review,
-          { include: { all: true } },
+          { include: [{ model: Wheel }, { model: RatingWheels }], },
         );
 
         await wheel.$add('reviews', [reviewWheelCreate.id_review]);
@@ -157,7 +161,7 @@ export class ReviewsService {
   async findAllReviews() {
     try {
       const reviewTyresAll = await this.reviewTyresRepository.findAll({
-        include: { all: true },
+        include: [{ model: Tyres }, { model: RatingTyres }],
       });
 
       return reviewTyresAll;
@@ -172,7 +176,7 @@ export class ReviewsService {
   async findAllReviewsWheel() {
     try {
       const reviewWheelsAll = await this.reviewWheelsRepository.findAll({
-        include: { all: true },
+        include: [{ model: Wheel }, { model: RatingWheels }],
       });
 
       return reviewWheelsAll;
@@ -188,7 +192,7 @@ export class ReviewsService {
     try {
       const reviewId = await this.reviewTyresRepository.findByPk(
         getReviewDto.id_review,
-        { include: { all: true } },
+        { include: [{ model: Tyres }, { model: RatingTyres }] },
       );
 
       return reviewId;
@@ -204,7 +208,7 @@ export class ReviewsService {
     try {
       const reviewWheelId = await this.reviewWheelsRepository.findByPk(
         getReviewDto.id_review,
-        { include: { all: true } },
+        { include: [{ model: Wheel }, { model: RatingWheels }], },
       );
 
       return reviewWheelId;
@@ -219,7 +223,7 @@ export class ReviewsService {
   async findReviewsTyresLimit(limit: number, offset: number) {
     try {
       const reviewTyresLimit = await this.reviewTyresRepository.findAll({
-        include: { all: true },
+        include: [{ model: Tyres }, { model: RatingTyres }],
         limit: limit,
         offset: offset,
         order: [['createdAt', 'DESC']],
@@ -237,7 +241,7 @@ export class ReviewsService {
   async findReviewsWheelsLimit(limit: number, offset: number) {
     try {
       const reviewWheelsLimit = await this.reviewWheelsRepository.findAll({
-        include: { all: true },
+        include: [{ model: Wheel }, { model: RatingWheels }],
         limit: limit,
         offset: offset,
         order: [['createdAt', 'DESC']],

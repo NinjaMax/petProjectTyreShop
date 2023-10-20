@@ -179,7 +179,7 @@ export class AddTyresToDbService {
 
       await this.propsTyreVehicleType.createTyreVehicleTypeFromPrice(
         +item['ID товара'],
-        +item['ID типу транспортного засобу (призначення)'],
+        item['ID типу транспортного засобу (призначення)'] ?? Math.floor( Math.random() * 15) + 1,
         item['Тип транспортного средства (назначение)'] ?? '',
         item['Тип транспортного средства (назначение) (укр)'] ?? '',
       );
@@ -218,7 +218,6 @@ export class AddTyresToDbService {
       console.log('ERROR', error);
       throw new HttpException(
         'Data is incorrect, check your data',
-
         HttpStatus.NOT_FOUND,
       );
     }

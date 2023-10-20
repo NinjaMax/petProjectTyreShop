@@ -23,7 +23,7 @@ const NewsMainBox = ({articlesArr, isNewsPage}: IArticle ) => {
             >
             <div className="newsMainBoxListItem" key={article.id_articles}>
                 <div className="columnNewsBox">
-                    <img src={process.env.REACT_APP_HOST + '/imageArticle/' + article?.articles_pictures} alt='imageNews'/>
+                    <img width={1290} src={process.env.REACT_APP_HOST + '/imageArticle/' + article?.articles_pictures} alt='imageNews'/>
                     <div className='columnNewsBoxContent'>
                         <h2>{article.title}</h2>
                     </div>  
