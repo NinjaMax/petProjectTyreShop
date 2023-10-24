@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import '../css/Main.css';
 import { useParams } from 'react-router-dom';
 import Slider from '../components/Slider';
@@ -29,34 +29,274 @@ const Main = observer(() => {
   const [articlesAll, setArticlesAll] = useState<any[] | null>();
   const params = useParams<any>();
 
+
+  const loadMainFilterTyreTask =  useCallback( async() => {
+    console.time('LOAD_FILTER_TASK');
+    // const taskLoad: any[] = [
+    //   getTyresWithoutOffset,
+    // ];
+    // const tyreCatType = tyreVehicleTypeCat(params.category);
+    // //console.log('CAT_TYPE: ', tyreCatType);
+    // const tyreCatSeason = tyreSeasonCat(params.category);
+    // //console.log('CAT_SEASON: ', tyreCatSeason);
+    // const tyreCatDiameter = tyreDiameterCat(params.category);
+    // //console.log('CAT_DIAM: ', tyreCatDiameter);
+    // if (tyreCatType) {
+    //   filter.setVehicleType(tyreCatType);
+    // }
+    // if (tyreCatSeason) {
+    //   filter.setSeason(tyreCatSeason);
+    // }
+    // if (tyreCatDiameter) {
+    //   filter.setDiameter(tyreCatDiameter);
+    // }
+    // let i:number = 0;
+    // while(taskLoad.length > i) {
+    //     let tyreFilterGoods: any = await taskLoad[i](
+    //       filter.width,
+    //       filter.height,
+    //       filter.diameter,
+    //       filter.season,
+    //       filter.brands,
+    //       filter.price,
+    //       filter.vehicle_type,
+    //       filter.speed_index,
+    //       filter.load_index,
+    //       filter.studded,
+    //       filter.run_flat,
+    //       filter.homologation,
+    //       filter.reinforced,
+    //       filter.sort,
+    //     );
+
+        let setWidthFilter:any[] = [];
+        let setHightFilter:any[] = [];
+        let setDiameterFilter:any[] = [];
+        let setBrandFilter:any[] = [];
+        let setSeasonFilter :any[] = [];
+        let setVehicleTypeFilter :any[] = [];
+        let setSpeedIndexFilter :any[] = [];
+        let setLoadIndexFilter: any[] = [];
+        let setHomologationFilter :any[] = [];
+        let setReinforcedFilter :any[] = [];
+        let setRunFlatFilter :any[] = [];
+        let setStuddedFilter :any[] = [];
+
+        //goodsTyre?.setTyresFilter(tyreFilterGoods.rows);
+        // for (let j = 0; j < tyreFilterGoods.rows.length; j++) {
+          
+        //   goodsTyre._tyres_filter[j] = tyreFilterGoods[j];
+        // }
+
+        goodsTyre._tyres_filter.map((item: any) => 
+        { return (
+          setWidthFilter.push(item.width.width),
+          setHightFilter.push(item.height.height),
+          setDiameterFilter.push(item.diameter.diameter),
+          setBrandFilter.push(item.tyre_brand.brand),
+          setSeasonFilter.push(item.season.season_ua),
+          setVehicleTypeFilter.push(item.vehicle_type.vehicle_type_ua),
+          setSpeedIndexFilter.push(item.speed_index.speed_index_with_desc),
+          setLoadIndexFilter.push(item.load_index.load_index_with_desc),
+          setHomologationFilter.push(item.homologation.homologation),
+          setReinforcedFilter.push(item.reinforce.reinforce),
+          setRunFlatFilter.push(item.run_flat.run_flat),
+          setStuddedFilter.push(item.studded.studded)
+          )
+        })
+        // page.loadMore > 0 ? goodsTyre?.setTyres(
+        //   [...goodsTyre._tyres, 
+        //     ...tyreFilterGoods.rows.slice(page.offset, page.limit)] 
+        //   ) : goodsTyre?.setTyres(
+        //     tyreFilterGoods.rows.slice(page.offset, page.limit));
+
+        if (filter.width) {
+          goodsTyre?.setWidth(
+            Array.from(new Set(
+              [...goodsTyre._width, ...setWidthFilter]
+            )).sort(
+              (a: any, b: any) => a.localeCompare(b))
+          );
+          filter.setWidthSearch(goodsTyre._width);
+        } else {
+          goodsTyre?.setWidth(
+            Array.from(new Set(setWidthFilter)).sort(
+            (a: any, b: any) => a.localeCompare(b))
+          );
+          filter.setWidthSearch(goodsTyre._width);
+        }
+        if (filter.height) {
+          goodsTyre?.setHeight(
+            Array.from(new Set(
+              [...goodsTyre._height, ...setHightFilter]
+            )).sort(
+              (a: any, b: any) => a.localeCompare(b))
+          );
+          filter.setHeightSearch(goodsTyre._height);
+        } else {
+          goodsTyre?.setHeight(
+            Array.from(new Set(setHightFilter)).sort(
+              (a: any, b: any) => a.localeCompare(b))
+          );
+          filter.setHeightSearch(goodsTyre._height);
+        }
+        if (filter.diameter) {
+          goodsTyre?.setDiameter(
+            Array.from(new Set(
+              [...goodsTyre._diameter, ...setDiameterFilter]
+            )).sort(
+              (a: any, b: any) => a.localeCompare(b))
+          );
+          filter.setDiameterSearch(goodsTyre._diameter);
+        } else {
+          goodsTyre?.setDiameter(
+            Array.from(new Set(setDiameterFilter)).sort(
+              (a: any, b: any) => a.localeCompare(b))
+          );
+          filter.setDiameterSearch(goodsTyre._diameter);
+        }
+        if (filter.brands) {
+          goodsTyre?.setBrands(
+            Array.from(new Set(
+              [...goodsTyre._brands, ...setBrandFilter]
+            )).sort(
+              (a: any, b: any) => a.localeCompare(b))
+          );
+          filter.setBrandSearch(goodsTyre._brands);
+        } else {
+          goodsTyre?.setBrands(
+            Array.from(new Set(setBrandFilter)).sort(
+              (a, b) => a.localeCompare(b))
+          );
+          filter.setBrandSearch(goodsTyre._brands); 
+        }
+        if (filter.season) {
+          goodsTyre?.setSeason(
+            Array.from(new Set(
+              [...goodsTyre._season, ...setSeasonFilter]
+            ))
+          )
+        } else {
+          goodsTyre?.setSeason(
+            Array.from(new Set(setSeasonFilter))
+          )
+        }
+        if (filter.vehicle_type) {
+          goodsTyre?.setVehicleType(
+            Array.from(new Set(
+              [...goodsTyre._vehicle_type, ...setVehicleTypeFilter]
+            ))
+          )
+        } else {
+          goodsTyre?.setVehicleType(
+            Array.from(new Set(setVehicleTypeFilter))
+          )
+        }
+        if (filter.studded) {
+          goodsTyre?.setStudded(
+            Array.from(new Set(
+              [...goodsTyre._studded, ...setStuddedFilter]
+            ))
+          )
+        } else {
+          goodsTyre?.setStudded(
+            Array.from(new Set(setStuddedFilter))
+          )
+        }
+        if (filter.speed_index) {
+          goodsTyre?.setSpeedIndex(
+            Array.from(new Set(
+              [...goodsTyre._speed_index, ...setSpeedIndexFilter]
+            )).sort(
+              (a: any, b: any) => a.localeCompare(b))
+          )
+        } else {
+          goodsTyre?.setSpeedIndex(
+            Array.from(new Set(setSpeedIndexFilter)).sort(
+              (a: any, b: any) => a.localeCompare(b))
+          )
+        }
+        if (filter.load_index) {
+          goodsTyre?.setLoadIndex(
+            Array.from(new Set(
+              [...goodsTyre._load_index, ...setLoadIndexFilter]
+            )).sort(
+              (a: any, b: any) => a.localeCompare(b))
+          )
+        } else {
+          goodsTyre?.setLoadIndex(
+            Array.from(new Set(setLoadIndexFilter)).sort(
+              (a: any, b: any) => a.localeCompare(b))
+          )
+        }
+        if (filter.homologation) {
+          goodsTyre?.setHomologation(
+            Array.from(new Set(
+              [...goodsTyre._homologation, ...setHomologationFilter]
+            ))
+          )
+        } else {
+          goodsTyre?.setHomologation(
+            Array.from(new Set(setHomologationFilter))
+          )
+        }
+        if (filter.run_flat) {
+          goodsTyre?.setRunFlat(
+            Array.from(new Set(
+              [...goodsTyre._run_flat, ...setRunFlatFilter]
+            ))
+          )
+        } else {
+          goodsTyre?.setRunFlat(
+            Array.from(new Set(setRunFlatFilter))
+          )
+        }
+        if (filter.reinforced) {
+          goodsTyre?.setReinforced(
+            Array.from(new Set(
+              [...goodsTyre._reinforced, ...setReinforcedFilter]
+            ))
+          )
+        } else {
+          goodsTyre?.setReinforced(
+            Array.from(new Set(setReinforcedFilter))
+          )
+        }
+
+        console.timeEnd('LOAD_FILTER_TASK');
+  },[filter, goodsTyre]);
+
   useEffect(() =>{
     let isMounted = false;
-    const loadMaintask = async() => {
-      const taskLoad: any[] = [
-        getTyresWithoutOffset,
-        getTyresCountAll,
-        getWheelsWithoutOffset,
-        getAllOrdersLeader,
-      ];
-      const tyreCatType = tyreVehicleTypeCat(params.category);
-      //console.log('CAT_TYPE: ', tyreCatType);
-      const tyreCatSeason = tyreSeasonCat(params.category);
-      //console.log('CAT_SEASON: ', tyreCatSeason);
-      const tyreCatDiameter = tyreDiameterCat(params.category);
-      //console.log('CAT_DIAM: ', tyreCatDiameter);
-      if (tyreCatType) {
-        filter.setVehicleType(tyreCatType);
-      }
-      if (tyreCatSeason) {
-        filter.setSeason(tyreCatSeason);
-      }
-      if (tyreCatDiameter) {
-        filter.setDiameter(tyreCatDiameter);
-      }
-      let i:number = 0;
-      while(taskLoad.length > i) {
-        if(!isMounted && taskLoad[i] === getTyresWithoutOffset) {
-          let tyreFilterGoods: any = await taskLoad[i](
+    
+    const loadMainTyreTask = async() => {
+      
+      //const taskLoad: any[] = [
+        //getTyresWithoutOffset,
+        //loadMainFilterTyreTask
+      //];
+      // const tyreCatType = tyreVehicleTypeCat(params.category);
+      // //console.log('CAT_TYPE: ', tyreCatType);
+      // const tyreCatSeason = tyreSeasonCat(params.category);
+      // //console.log('CAT_SEASON: ', tyreCatSeason);
+      // const tyreCatDiameter = tyreDiameterCat(params.category);
+      // //console.log('CAT_DIAM: ', tyreCatDiameter);
+      // if (tyreCatType) {
+      //   filter.setVehicleType(tyreCatType);
+      // }
+      // if (tyreCatSeason) {
+      //   filter.setSeason(tyreCatSeason);
+      // }
+      // if (tyreCatDiameter) {
+      //   filter.setDiameter(tyreCatDiameter);
+      // }
+      //let i:number = 0;
+      //while(taskLoad.length > i) {
+        //if(!isMounted && taskLoad[i] === getTyresWithoutOffset) {
+          if(!isMounted) {
+          console.time('GET_REQUEST_FROM_DATA_BASE');
+          let tyreFilterGoods: any = await getTyresWithoutOffset(
+          //let tyreFilterGoods: any = await taskLoad[i](
             filter.width,
             filter.height,
             filter.diameter,
@@ -73,6 +313,9 @@ const Main = observer(() => {
             filter.sort,
           );
 
+          //console.log('GET_TYRES: ', tyreFilterGoods.rows)
+          console.timeEnd('GET_REQUEST_FROM_DATA_BASE');
+
           let setWidthFilter:any[] = [];
           let setHightFilter:any[] = [];
           let setDiameterFilter:any[] = [];
@@ -86,8 +329,27 @@ const Main = observer(() => {
           let setRunFlatFilter :any[] = [];
           let setStuddedFilter :any[] = [];
 
-          goodsTyre?.setTyresFilter(tyreFilterGoods.rows);
-          goodsTyre._tyres_filter.map((item: any) => 
+          //console.time('LOAD_SET_TYRE_FILTER');
+          //tyreFilterGoods.rows.map((row: any) =>
+          //  goodsTyre?.setTyresFilter(tyreFilterGoods.rows)
+          //)
+          
+          // for (let j = 0; j < tyreFilterGoods.rows.length; j++) {
+          //   goodsTyre?.setTyresFilter(tyreFilterGoods[j]);
+          // }
+          //console.timeEnd('LOAD_SET_TYRE_FILTER'); 
+          // page.loadMore > 0 ? goodsTyre?.setTyres(
+          //   [...goodsTyre._tyres, 
+          //     ...tyreFilterGoods.rows.slice(page.offset, page.limit)] 
+          //   ) : goodsTyre?.setTyres(
+          //     tyreFilterGoods.rows.slice(page.offset, page.limit));
+
+          //goodsTyre?.setTyres(
+          //  tyreFilterGoods.rows.slice(page.offset, page.limit)
+          //);
+          
+          tyreFilterGoods.rows.map((item: any) =>
+          //goodsTyre._tyres_filter.map((item: any) => 
           { return (
             setWidthFilter.push(item.width.width),
             setHightFilter.push(item.height.height),
@@ -103,11 +365,11 @@ const Main = observer(() => {
             setStuddedFilter.push(item.studded.studded)
             )
           })
-          page.loadMore > 0 ? goodsTyre?.setTyres(
-            [...goodsTyre._tyres, 
-              ...tyreFilterGoods.rows.slice(page.offset, page.limit)] 
-            ) : goodsTyre?.setTyres(
-              tyreFilterGoods.rows.slice(page.offset, page.limit));
+          // page.loadMore > 0 ? goodsTyre?.setTyres(
+          //   [...goodsTyre._tyres, 
+          //     ...tyreFilterGoods.rows.slice(page.offset, page.limit)] 
+          //   ) : goodsTyre?.setTyres(
+          //     tyreFilterGoods.rows.slice(page.offset, page.limit));
 
           if (filter.width) {
             goodsTyre?.setWidth(
@@ -261,25 +523,331 @@ const Main = observer(() => {
               Array.from(new Set(setReinforcedFilter))
             )
           }
-        }
-        if(!isMounted && taskLoad[i] === getTyresCountAll) {
-          let tyreTotalCount: any = await taskLoad[i](
-            filter.width,
-            filter.height,
-            filter.diameter,
-            filter.season,
-            filter.brands,
-            filter.price,
-            filter.vehicle_type,
-            filter.speed_index,
-            filter.load_index,
-            filter.studded,
-            filter.run_flat,
-            filter.homologation,
-            filter.reinforced,
-          );
-          goodsTyre?.setTotalCount(tyreTotalCount);
-        }
+        //}
+        // const task = taskLoad.shift();
+        // task();
+        // await yieldToMain(); 
+    }
+    }
+    console.time('LOAD_MAIN_TYRE_TASK');
+    loadMainTyreTask();
+    console.timeEnd('LOAD_MAIN_TYRE_TASK');
+    return () => {
+        isMounted = true;
+    };
+  },
+  [
+    filter, 
+    // params, 
+    goodsTyre, 
+    page.limit, 
+    //page.loadMore, 
+    page.offset, 
+    filter.width, 
+    filter.height, 
+    filter.diameter, 
+    filter.season, 
+    filter.brands, 
+    filter.price, 
+    filter.vehicle_type, 
+    filter.speed_index, 
+    filter.load_index, 
+    filter.studded, 
+    filter.run_flat, 
+    filter.homologation, 
+    filter.reinforced, 
+    filter.sort,
+    //loadMainFilterTyreTask
+  ]);
+
+//   useEffect(() =>{
+//     let isMounted = false;
+//   const loadMainFilterTyreTask = async() => {
+//     const taskLoad: any[] = [
+//       getTyresWithoutOffset,
+//     ];
+//     const tyreCatType = tyreVehicleTypeCat(params.category);
+//     //console.log('CAT_TYPE: ', tyreCatType);
+//     const tyreCatSeason = tyreSeasonCat(params.category);
+//     //console.log('CAT_SEASON: ', tyreCatSeason);
+//     const tyreCatDiameter = tyreDiameterCat(params.category);
+//     //console.log('CAT_DIAM: ', tyreCatDiameter);
+//     if (tyreCatType) {
+//       filter.setVehicleType(tyreCatType);
+//     }
+//     if (tyreCatSeason) {
+//       filter.setSeason(tyreCatSeason);
+//     }
+//     if (tyreCatDiameter) {
+//       filter.setDiameter(tyreCatDiameter);
+//     }
+//     let i:number = 0;
+//     while(taskLoad.length > i) {
+//     if(!isMounted && goodsTyre._tyres_filter) {
+//         let tyreFilterGoods: any = await taskLoad[i](
+//           filter.width,
+//           filter.height,
+//           filter.diameter,
+//           filter.season,
+//           filter.brands,
+//           filter.price,
+//           filter.vehicle_type,
+//           filter.speed_index,
+//           filter.load_index,
+//           filter.studded,
+//           filter.run_flat,
+//           filter.homologation,
+//           filter.reinforced,
+//           filter.sort,
+//         );
+
+//         let setWidthFilter:any[] = [];
+//         let setHightFilter:any[] = [];
+//         let setDiameterFilter:any[] = [];
+//         let setBrandFilter:any[] = [];
+//         let setSeasonFilter :any[] = [];
+//         let setVehicleTypeFilter :any[] = [];
+//         let setSpeedIndexFilter :any[] = [];
+//         let setLoadIndexFilter: any[] = [];
+//         let setHomologationFilter :any[] = [];
+//         let setReinforcedFilter :any[] = [];
+//         let setRunFlatFilter :any[] = [];
+//         let setStuddedFilter :any[] = [];
+
+//         goodsTyre?.setTyresFilter(tyreFilterGoods.rows);
+//         for (let j = 0; j < tyreFilterGoods.rows.length; j++) {
+          
+//           goodsTyre._tyres_filter[j] = tyreFilterGoods[j];
+//         }
+
+//         goodsTyre._tyres_filter.map((item: any) => 
+//         { return (
+//           setWidthFilter.push(item.width.width),
+//           setHightFilter.push(item.height.height),
+//           setDiameterFilter.push(item.diameter.diameter),
+//           setBrandFilter.push(item.tyre_brand.brand),
+//           setSeasonFilter.push(item.season.season_ua),
+//           setVehicleTypeFilter.push(item.vehicle_type.vehicle_type_ua),
+//           setSpeedIndexFilter.push(item.speed_index.speed_index_with_desc),
+//           setLoadIndexFilter.push(item.load_index.load_index_with_desc),
+//           setHomologationFilter.push(item.homologation.homologation),
+//           setReinforcedFilter.push(item.reinforce.reinforce),
+//           setRunFlatFilter.push(item.run_flat.run_flat),
+//           setStuddedFilter.push(item.studded.studded)
+//           )
+//         })
+//         page.loadMore > 0 ? goodsTyre?.setTyres(
+//           [...goodsTyre._tyres, 
+//             ...tyreFilterGoods.rows.slice(page.offset, page.limit)] 
+//           ) : goodsTyre?.setTyres(
+//             tyreFilterGoods.rows.slice(page.offset, page.limit));
+
+//         if (filter.width) {
+//           goodsTyre?.setWidth(
+//             Array.from(new Set(
+//               [...goodsTyre._width, ...setWidthFilter]
+//             )).sort(
+//               (a: any, b: any) => a.localeCompare(b))
+//           );
+//           filter.setWidthSearch(goodsTyre._width);
+//         } else {
+//           goodsTyre?.setWidth(
+//             Array.from(new Set(setWidthFilter)).sort(
+//             (a: any, b: any) => a.localeCompare(b))
+//           );
+//           filter.setWidthSearch(goodsTyre._width);
+//         }
+//         if (filter.height) {
+//           goodsTyre?.setHeight(
+//             Array.from(new Set(
+//               [...goodsTyre._height, ...setHightFilter]
+//             )).sort(
+//               (a: any, b: any) => a.localeCompare(b))
+//           );
+//           filter.setHeightSearch(goodsTyre._height);
+//         } else {
+//           goodsTyre?.setHeight(
+//             Array.from(new Set(setHightFilter)).sort(
+//               (a: any, b: any) => a.localeCompare(b))
+//           );
+//           filter.setHeightSearch(goodsTyre._height);
+//         }
+//         if (filter.diameter) {
+//           goodsTyre?.setDiameter(
+//             Array.from(new Set(
+//               [...goodsTyre._diameter, ...setDiameterFilter]
+//             )).sort(
+//               (a: any, b: any) => a.localeCompare(b))
+//           );
+//           filter.setDiameterSearch(goodsTyre._diameter);
+//         } else {
+//           goodsTyre?.setDiameter(
+//             Array.from(new Set(setDiameterFilter)).sort(
+//               (a: any, b: any) => a.localeCompare(b))
+//           );
+//           filter.setDiameterSearch(goodsTyre._diameter);
+//         }
+//         if (filter.brands) {
+//           goodsTyre?.setBrands(
+//             Array.from(new Set(
+//               [...goodsTyre._brands, ...setBrandFilter]
+//             )).sort(
+//               (a: any, b: any) => a.localeCompare(b))
+//           );
+//           filter.setBrandSearch(goodsTyre._brands);
+//         } else {
+//           goodsTyre?.setBrands(
+//             Array.from(new Set(setBrandFilter)).sort(
+//               (a, b) => a.localeCompare(b))
+//           );
+//           filter.setBrandSearch(goodsTyre._brands); 
+//         }
+//         if (filter.season) {
+//           goodsTyre?.setSeason(
+//             Array.from(new Set(
+//               [...goodsTyre._season, ...setSeasonFilter]
+//             ))
+//           )
+//         } else {
+//           goodsTyre?.setSeason(
+//             Array.from(new Set(setSeasonFilter))
+//           )
+//         }
+//         if (filter.vehicle_type) {
+//           goodsTyre?.setVehicleType(
+//             Array.from(new Set(
+//               [...goodsTyre._vehicle_type, ...setVehicleTypeFilter]
+//             ))
+//           )
+//         } else {
+//           goodsTyre?.setVehicleType(
+//             Array.from(new Set(setVehicleTypeFilter))
+//           )
+//         }
+//         if (filter.studded) {
+//           goodsTyre?.setStudded(
+//             Array.from(new Set(
+//               [...goodsTyre._studded, ...setStuddedFilter]
+//             ))
+//           )
+//         } else {
+//           goodsTyre?.setStudded(
+//             Array.from(new Set(setStuddedFilter))
+//           )
+//         }
+//         if (filter.speed_index) {
+//           goodsTyre?.setSpeedIndex(
+//             Array.from(new Set(
+//               [...goodsTyre._speed_index, ...setSpeedIndexFilter]
+//             )).sort(
+//               (a: any, b: any) => a.localeCompare(b))
+//           )
+//         } else {
+//           goodsTyre?.setSpeedIndex(
+//             Array.from(new Set(setSpeedIndexFilter)).sort(
+//               (a: any, b: any) => a.localeCompare(b))
+//           )
+//         }
+//         if (filter.load_index) {
+//           goodsTyre?.setLoadIndex(
+//             Array.from(new Set(
+//               [...goodsTyre._load_index, ...setLoadIndexFilter]
+//             )).sort(
+//               (a: any, b: any) => a.localeCompare(b))
+//           )
+//         } else {
+//           goodsTyre?.setLoadIndex(
+//             Array.from(new Set(setLoadIndexFilter)).sort(
+//               (a: any, b: any) => a.localeCompare(b))
+//           )
+//         }
+//         if (filter.homologation) {
+//           goodsTyre?.setHomologation(
+//             Array.from(new Set(
+//               [...goodsTyre._homologation, ...setHomologationFilter]
+//             ))
+//           )
+//         } else {
+//           goodsTyre?.setHomologation(
+//             Array.from(new Set(setHomologationFilter))
+//           )
+//         }
+//         if (filter.run_flat) {
+//           goodsTyre?.setRunFlat(
+//             Array.from(new Set(
+//               [...goodsTyre._run_flat, ...setRunFlatFilter]
+//             ))
+//           )
+//         } else {
+//           goodsTyre?.setRunFlat(
+//             Array.from(new Set(setRunFlatFilter))
+//           )
+//         }
+//         if (filter.reinforced) {
+//           goodsTyre?.setReinforced(
+//             Array.from(new Set(
+//               [...goodsTyre._reinforced, ...setReinforcedFilter]
+//             ))
+//           )
+//         } else {
+//           goodsTyre?.setReinforced(
+//             Array.from(new Set(setReinforcedFilter))
+//           )
+//         }
+//       }
+//       const task = taskLoad.shift();
+//       task();
+//       await yieldToMain(); 
+//     }
+//   }
+//   loadMainFilterTyreTask();
+//   return () => {
+//       isMounted = true;
+//   };
+// },
+// [
+//   filter, 
+//   filter.width, 
+//   filter.height, 
+//   filter.diameter, 
+//   filter.season, 
+//   filter.brands, 
+//   filter.price, 
+//   filter.vehicle_type, 
+//   filter.speed_index, 
+//   filter.load_index, 
+//   filter.studded, 
+//   filter.run_flat, 
+//   filter.homologation, 
+//   filter.reinforced, 
+//   filter.sort, 
+//   goodsTyre,
+//   goodsTyre._tyres_filter
+// ]);
+  
+  useEffect(() =>{
+    let isMounted = false;
+    const loadMainWheelTask = async() => {
+      const taskLoad: any[] = [
+        getWheelsWithoutOffset,
+      ];
+      // const tyreCatType = tyreVehicleTypeCat(params.category);
+      // //console.log('CAT_TYPE: ', tyreCatType);
+      // const tyreCatSeason = tyreSeasonCat(params.category);
+      // //console.log('CAT_SEASON: ', tyreCatSeason);
+      // const tyreCatDiameter = tyreDiameterCat(params.category);
+      // //console.log('CAT_DIAM: ', tyreCatDiameter);
+      // if (tyreCatType) {
+      //   filter.setVehicleType(tyreCatType);
+      // }
+      // if (tyreCatSeason) {
+      //   filter.setSeason(tyreCatSeason);
+      // }
+      // if (tyreCatDiameter) {
+      //   filter.setDiameter(tyreCatDiameter);
+      // }
+      let i:number = 0;
+      while(taskLoad.length > i) {
         if(!isMounted && taskLoad[i] === getWheelsWithoutOffset) {
           let wheelFilterGoods: any = await taskLoad[i](
             filter.width,
@@ -309,7 +877,8 @@ const Main = observer(() => {
           let setTypeFilter :any[] = [];
 
           goodsWheel?.setWheelsFilter(wheelFilterGoods);
-            goodsWheel._wheels_filter.map((item: any) => 
+
+          goodsWheel._wheels_filter.map((item: any) => 
           { return (
             setWidthFilter.push(item.width.width),
             //setHightFilter.push(item.height.height),
@@ -469,32 +1038,12 @@ const Main = observer(() => {
             )
           }
         }
-        if(!isMounted && taskLoad[i] === getAllOrdersLeader
-          && (prevBtnLeader || nextBtnLeader) 
-          ) {
-          let getOrdersLeader: any = await taskLoad[i]();
-          getOrdersLeader.forEach( async(item: any) => {
-            const getTyre = await getTyresById(item.id);
-            const getWheel = await getWheelsById(item.id);
-            if (getTyre) {
-              getTyre.typeCard = 'tyre';
-              setLeaderOrder(
-                oldLeader => [...oldLeader!, getTyre].slice(0,8)
-                );
-            }
-            if (getWheel) {
-              getWheel.typeCard = 'wheel';
-              setLeaderOrder(
-                oldLeader => [...oldLeader!, getWheel].slice(0,8));
-            }
-          });
-        }
         const task = taskLoad.shift();
         task();
         await yieldToMain(); 
     }
     }
-    loadMaintask();
+    loadMainWheelTask();
     return () => {
         isMounted = true;
     };
@@ -502,23 +1051,14 @@ const Main = observer(() => {
   [
     filter, 
     params, 
-    goodsTyre, 
     page.limit, 
     page.loadMore, 
     page.offset, 
     filter.width, 
     filter.height, 
-    filter.diameter, 
-    filter.season, 
+    filter.diameter,  
     filter.brands, 
     filter.price, 
-    filter.vehicle_type, 
-    filter.speed_index, 
-    filter.load_index, 
-    filter.studded, 
-    filter.run_flat, 
-    filter.homologation, 
-    filter.reinforced, 
     filter.sort, 
     filter.bolt_count,
     filter.bolt_count_pcd,
@@ -531,8 +1071,6 @@ const Main = observer(() => {
     filter.pcd,
     filter.pcd2,
     goodsWheel, 
-    nextBtnLeader, 
-    prevBtnLeader, 
   ]);
 
   useEffect(() => {
@@ -555,8 +1093,36 @@ const Main = observer(() => {
   },[nextBtnReview]);
 
   useEffect(() => {
+    let isMountedLeader = false;
+    const getLeadersOrder = async () => {
+      if (!isMountedLeader && (prevBtnLeader || nextBtnLeader)) {
+        let getOrdersLeader: any = await getAllOrdersLeader();
+        getOrdersLeader.forEach( async(item: any) => {
+          const getTyre = await getTyresById(item.id);
+          const getWheel = await getWheelsById(item.id);
+          if (getTyre) {
+            getTyre.typeCard = 'tyre';
+            setLeaderOrder(
+              oldLeader => [...oldLeader!, getTyre].slice(0,8)
+              );
+          }
+          if (getWheel) {
+            getWheel.typeCard = 'wheel';
+            setLeaderOrder(
+              oldLeader => [...oldLeader!, getWheel].slice(0,8));
+          }
+        });
+      }
+    };
+    getLeadersOrder();
+    return () => {
+      isMountedLeader = true;
+    };
+  },[nextBtnLeader, prevBtnLeader]);
+
+  useEffect(() => {
     let isMountedReview = false;
-    const getTyresReviews = async () => {
+    const getArticles = async () => {
       if (!isMountedReview) {
         let getAllArticles: any = await getAllArticlesLimit(
           String(3),
@@ -567,7 +1133,7 @@ const Main = observer(() => {
         }
       }
     };
-    getTyresReviews();
+    getArticles();
     return () => {
       isMountedReview = true;
     };

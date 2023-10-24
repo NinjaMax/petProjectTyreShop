@@ -1,6 +1,5 @@
 import React, {useContext, useState, useEffect} from 'react';
 import '../../css/NavBarCss/NavBar.css';
-import logoShop from '../../../public/logoSky300.png';
 import { observer } from 'mobx-react-lite';
 import ButtonSearch from '../buttons/ButtonSearch';
 import BasketNavBar from '../basket/BasketNavBar';

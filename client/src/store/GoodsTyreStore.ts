@@ -17,7 +17,7 @@ export default class GoodsTyreStore {
     _run_flat:string[];
     _reinforced:string[];
     _descriptions: {};
-    _tyres_filter: [] | null;
+    _tyres_filter: any [] | null;
     _product: {};
     _totalCount: number;
     _ratingList:{[key: string]: number};
@@ -80,8 +80,14 @@ export default class GoodsTyreStore {
     setDiameter(diameters: string[]) {
         this._diameter = diameters;
     }
-    setTyresFilter(tyres_filter: []) {
+    setTyresFilter(tyres_filter: any []) {
         this._tyres_filter = tyres_filter;
+        // tyres_filter.map((tyresItem) => 
+        //     this._tyres_filter?.push(tyresItem)
+        // );
+        // for (let j = 0; j < tyres_filter.length; j++) {
+        //     this._tyres_filter![j] = tyres_filter[j];
+        // }
     }
     setProduct(product: {}) {
         this._product = product;

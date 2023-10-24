@@ -7,7 +7,9 @@ import {
   Param,
   Delete,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
+import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
 import { TyresService } from './tyres.service';
 import { CreateTyreDto } from './dto/create-tyre.dto';
 import { UpdateTyreDto } from './dto/update-tyre.dto';
@@ -15,6 +17,7 @@ import { GetTyreDto } from './dto/get-tyre.dto';
 //import { CreateStockTyresDto } from '../stock/dto/create-stock_tyres.dto';
 
 @Controller('tyres')
+
 export class TyresController {
 
   constructor(private readonly tyresService: TyresService) {}
@@ -79,6 +82,9 @@ export class TyresController {
     );
   }
 
+  //@UseInterceptors(CacheInterceptor)
+  //@CacheKey('tyre-no-offset')
+  //@CacheTTL(60)
   @Get('/no-offset')
   findTyresWithoutLimit(
     @Query('width') width: string,

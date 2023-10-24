@@ -116,6 +116,7 @@ import { ReviewWheels } from './reviews/entities/review-wheels.model';
 import { RatingWheels } from './ratings/entities/rating-wheels.model';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import RedisStore from 'connect-redis';
 
 @Module({
   imports: [
@@ -229,11 +230,17 @@ import { ServeStaticModule } from '@nestjs/serve-static';
         const store = createClient({
           socket: {
             host: configService.get('REDIS_HOST'),
-            port: +configService.get('REDIS_PORT'),
+            port: +configService.get('REDIS_PORT'), 
           },
         });
-        await store.connect();
-        return { store: store as unknown as CacheStore };
+
+        await store.connect().catch(console.error);
+        const redisStore = new RedisStore({
+          client: store,
+          //prefix: 'tyre-no-offset: ', 
+          ttl: 300,
+        });
+        return { store: redisStore as unknown as CacheStore };
       },
       isGlobal: true,
       inject: [ConfigService],
