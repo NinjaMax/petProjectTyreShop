@@ -13,6 +13,7 @@ import { TyreModel } from '../properties/entities/tyres/tyre-model.model';
 import { RatingTyres } from '../ratings/entities/rating-tyres.model';
 import { ReviewTyres } from '../reviews/entities/review-tyres.model';
 import { Supplier } from '../suppliers/entities/supplier.model';
+import { RedisModule } from '../redis/redis.module';
 
 //import { PropertiesTyreModule } from 'src/properties/propertiesTyre.module';
 
@@ -20,13 +21,22 @@ import { Supplier } from '../suppliers/entities/supplier.model';
   controllers: [TyresController],
   providers: [TyresService],
   imports: [
-    SequelizeModule.forFeature([Tyres, PriceTyres, StockTyres, Supplier, 
-    TyreModel, TyreBrand, RatingTyres, ReviewTyres]),
-    forwardRef(() => StockModule), 
-    SuppliersModule, AuthModule
-    //PropertiesTyreModule 
-
+    SequelizeModule.forFeature([
+      Tyres,
+      PriceTyres,
+      StockTyres,
+      Supplier,
+      TyreModel,
+      TyreBrand,
+      RatingTyres,
+      ReviewTyres,
+    ]),
+    forwardRef(() => StockModule),
+    SuppliersModule,
+    AuthModule,
+    //PropertiesTyreModule
+    RedisModule,
   ],
-  exports: [TyresService]
+  exports: [TyresService],
 })
 export class TyresModule {}

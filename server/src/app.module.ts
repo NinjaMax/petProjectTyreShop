@@ -116,7 +116,8 @@ import { ReviewWheels } from './reviews/entities/review-wheels.model';
 import { RatingWheels } from './ratings/entities/rating-wheels.model';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import RedisStore from 'connect-redis';
+//import RedisStore from 'connect-redis';
+import { RedisModule } from './redis/redis.module';
 
 @Module({
   imports: [
@@ -224,27 +225,27 @@ import RedisStore from 'connect-redis';
       }),
       inject: [ConfigService],
     }),
-    CacheModule.registerAsync<RedisClientOptions>({
-      imports: [ConfigModule.register({ folder: './config' })],
-      useFactory: async (configService: ConfigService) => {
-        const store = createClient({
-          socket: {
-            host: configService.get('REDIS_HOST'),
-            port: +configService.get('REDIS_PORT'), 
-          },
-        });
+    // CacheModule.registerAsync<RedisClientOptions>({
+    //   imports: [ConfigModule.register({ folder: './config' })],
+    //   useFactory: async (configService: ConfigService) => {
+    //     const store = createClient({
+    //       socket: {
+    //         host: configService.get('REDIS_HOST'),
+    //         port: +configService.get('REDIS_PORT'), 
+    //       },
+    //     });
 
-        await store.connect().catch(console.error);
-        const redisStore = new RedisStore({
-          client: store,
-          //prefix: 'tyre-no-offset: ', 
-          ttl: 300,
-        });
-        return { store: redisStore as unknown as CacheStore };
-      },
-      isGlobal: true,
-      inject: [ConfigService],
-    }),
+    //     await store.connect().catch(console.error);
+    //     const redisStore = new RedisStore({
+    //       client: store,
+    //       prefix: 'tyre:', 
+    //       ttl: 300,
+    //     });
+    //     return { store: redisStore as unknown as CacheStore };
+    //   },
+    //   isGlobal: true,
+    //   inject: [ConfigService],
+    // }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
@@ -280,6 +281,7 @@ import RedisStore from 'connect-redis';
     QuestionsModule,
     AnswersModule,
     ArticlesModule,
+    RedisModule,
   ],
   controllers: [AppController],
   providers: [AppService],

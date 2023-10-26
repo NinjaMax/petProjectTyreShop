@@ -83,7 +83,7 @@ export class TyresController {
   }
 
   //@UseInterceptors(CacheInterceptor)
-  //@CacheKey('tyre-no-offset')
+  //@CacheKey('tyre:')
   //@CacheTTL(60)
   @Get('/no-offset')
   findTyresWithoutLimit(
