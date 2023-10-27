@@ -15,8 +15,10 @@ const homologationByCar = (homologation: string | undefined) => {
         case 'AMS':
         case 'AMX':
             return CarBrand.ASTON_MARTIN_CAR_BRAND;
-        
         case 'AO':
+        case 'AO (+)':
+        case 'AO (+) Elect':
+        case 'AO A':
         case 'AO1':
         case 'AO2':
         case 'AOE':
@@ -24,7 +26,9 @@ const homologationByCar = (homologation: string | undefined) => {
         case 'RO2':
         case 'RO3':
         case 'AUDI':
-        case 'AU':    
+        case 'AU':   
+        case'AO Elect': 
+        case 'AOExtended':
             return CarBrand.AUDI_CAR_BRAND;
         case 'B':
         case 'B1':
@@ -36,8 +40,9 @@ const homologationByCar = (homologation: string | undefined) => {
         case 'CH':
         case 'CH1':
         case 'DC':
-                return CarBrand.CHRYSLER_CAR_BRAND;
+            return CarBrand.CHRYSLER_CAR_BRAND;
         case '*':
+        case 'M3':
             return CarBrand.BMW_CAR_BRAND;
         case 'K1':
         case 'K2':
@@ -62,6 +67,7 @@ const homologationByCar = (homologation: string | undefined) => {
         case 'JLR':
             return CarBrand.JAGUAR_CAR_BRAND;
         case 'HO':
+        case 'FRV':
             return CarBrand.HONDA_CAR_BRAND;
         case 'HN':
         case 'GOE':    
@@ -70,7 +76,8 @@ const homologationByCar = (homologation: string | undefined) => {
             return CarBrand.LAMBORGHINI_CAR_BRAND;
         case 'LR':
         case 'LRO':
-        case 'LR J':    
+        case 'LR J': 
+        case 'E LR':   
             return CarBrand.LAND_ROVER_CAR_BRAND;
         case 'LS':
             return CarBrand.LAND_ROVER_CAR_BRAND;
@@ -82,9 +89,12 @@ const homologationByCar = (homologation: string | undefined) => {
         case 'TZ':
             return CarBrand.MAZDA_CAR_BRAND;
         case 'MO':
+        case 'MO A':
         case 'MO *':
         case 'MOE':
         case 'MO1':
+        case 'MO1B':
+        case 'MO1 B':
         case 'MO1 A':
         case 'MO2':
         case 'E MO':
@@ -92,6 +102,7 @@ const homologationByCar = (homologation: string | undefined) => {
         case 'MO-A':
         case 'MO-S': 
         case 'MOExtended':
+        case 'MO Elect':
         case '* MOExtended':   
             return CarBrand.MERCEDES_BENZ_CAR_BRAND;
         case 'MI':
@@ -109,15 +120,21 @@ const homologationByCar = (homologation: string | undefined) => {
         case 'N5':
         case 'N6': 
         case 'NAO':
+        case 'NDO':
+        case 'ND0':
+        case 'NCO':
+        case 'NC0':
         case 'NA0':
         case 'NA1':
         case 'NA5':
         case 'NB0':
         case 'NFO':
         case 'NF0':
+        case 'NE0':
         case 'PO':   
             return CarBrand.PORSCHE_CAR_BRAND;
         case 'T0':
+        case 'Т0 Elect':
         case 'T1':
         case 'T2':
         case 'T3':   
@@ -127,6 +144,7 @@ const homologationByCar = (homologation: string | undefined) => {
         case 'VW':
         case '(+)':
         case 'G':
+        case 'C+':
             return CarBrand.VOLKSWAGEN_CAR_BRAND;
         case 'VOL':
             return CarBrand.VOLVO_CAR_BRAND;
@@ -153,7 +171,8 @@ const homologationByCar = (homologation: string | undefined) => {
             return CarBrand.CITROEN_CAR_BRAND;
         case 'SE':    
             return CarBrand.SEAT_CAR_BRAND;
-        case 'SK':    
+        case 'SK': 
+        case 'KS':    
             return CarBrand.SKODA_CAR_BRAND;
         default:
             return null;

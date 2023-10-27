@@ -6,5 +6,11 @@ export enum TyreType {
     SPECTEHNIKA_TYPE = '/iconsTypeCar/bulldozer.png',
     MOTO_TYPE = '/iconsTypeCar/scooter.png',
     TRUCK_TYPE = '/iconsTypeCar/truck.png',
+    TRAILER_TRUCK_TYPE = '/iconsTypeCar/truck_trailer_64.png',
+    STEERING_TRUCK_TYPE = '/iconsTypeCar/truck_steer_64.png',
+    TRACKTION_TRUCK_TYPE = '/iconsTypeCar/truck_traction_64.png',
+    BICYCLE_TYPE = '/iconsTypeCar/bicycle_64.png',
+    INDUSTRIAL_TYPE = '/iconsTypeCar/asphalt_paver_64.png',
+    UNIVERSAL_TYPE = '/iconsTypeCar/truck_univer_60.png',
     NO_TYPE = '/iconsTypeCar/noTypeCar.png',
 };

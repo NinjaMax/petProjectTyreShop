@@ -117,14 +117,14 @@ const FilterCatalogTyres = observer((
             filter.setChipSeason(Array.from(
                 new Set([...filter.chipSeason])));
         }
-        if (e.target.name === 'Тип авто' && e.target.checked) {
+        if (e.target.name === 'Тип транспорту' && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setChipVehicleType(
                 Array.from(
                     new Set([...filter.chipVehicleType, e.target.value]))
             );     
-        } else if (e.target.name === 'Тип авто') {
+        } else if (e.target.name === 'Тип транспорту') {
             const cancelVehicleType = filter.chipVehicleType.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipVehicleTypeItem(cancelVehicleType);
@@ -322,7 +322,7 @@ const FilterCatalogTyres = observer((
                 new Set([...filter.chipSeason])));
             filter.setSeason(filter.chipSeason.join(','));
         }
-        if (e.target.getAttribute('data-name') === 'Тип авто') {
+        if (e.target.getAttribute('data-name') === 'Тип транспорту') {
             page.setLoadMore(0);
             page.setOffset(0);
             if (params.season === createStringUrl(filter.vehicle_type)) {
@@ -790,7 +790,7 @@ const FilterCatalogTyres = observer((
                   : null 
                 }               
                 <Accordion 
-                    titleName={'Тип авто'}
+                    titleName={'Тип транспорту'}
                     chipItem={filter.vehicle_type}
                     deleteChip={handleDeleteChange}
                     filterAction={filterVehicleTypeClick}
@@ -804,7 +804,7 @@ const FilterCatalogTyres = observer((
                         value={vehicleItem}
                         checked={filter._chipVehicleType.includes(vehicleItem)} 
                         onChange={handleChange}
-                        titleName={'Тип авто'}  
+                        titleName={'Тип транспорту'}  
                         titleCheckbox={vehicleItem} 
                         imageSrc={typeCar(vehicleItem)}/>
                         )) : null

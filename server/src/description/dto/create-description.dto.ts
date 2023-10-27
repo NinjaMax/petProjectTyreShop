@@ -75,6 +75,7 @@ export class CreateDescriptionDto {
 
   readonly id_cat: number; 
   readonly category: string;
+  readonly chapter: string;
   readonly id_euromark: number;
   readonly fuel_efficiency: string;
   readonly wet_traction: string;

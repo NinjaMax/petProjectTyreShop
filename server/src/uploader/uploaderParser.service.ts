@@ -52,10 +52,11 @@ export class UploaderPaprserService {
     try {
       let resultsWheel: any[] = [];
       fs.createReadStream(join(process.cwd(), path))
-        .pipe(csvParser({
-          separator: ';',
-          skipComments: true,
-        }))
+        .pipe(
+          csvParser({
+            separator: ';',
+            skipComments: true,
+          }))
         .on('data', (data: any) => {
           resultsWheel?.push(data);
         })

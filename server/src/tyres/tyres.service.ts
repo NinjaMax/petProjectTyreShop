@@ -275,19 +275,19 @@ export class TyresService {
     try {
       const cachedTyres = await this.redisService.get(
         width +
-          height +
-          diameter +
-          season +
-          brand +
-          price +
-          type +
-          speed_index +
-          load_index +
-          studded +
-          run_flat +
-          homologation +
-          reinforce +
-          sort,
+        height +
+        diameter +
+        season +
+        brand +
+        price +
+        type +
+        speed_index +
+        load_index +
+        studded +
+        run_flat +
+        homologation +
+        reinforce +
+        sort,
       );
       if (cachedTyres) {
         return cachedTyres;
@@ -447,37 +447,37 @@ export class TyresService {
         //await t.commit();
         await this.redisService.set(
           width +
-            height +
-            diameter +
-            season +
-            brand +
-            price +
-            type +
-            speed_index +
-            load_index +
-            studded +
-            run_flat +
-            homologation +
-            reinforce +
-            sort,
-          300,
+          height +
+          diameter +
+          season +
+          brand +
+          price +
+          type +
+          speed_index +
+          load_index +
+          studded +
+          run_flat +
+          homologation +
+          reinforce +
+          sort,
+          1200,
           JSON.stringify(tyresAllWithoutLimitC),
         );
         const setNewCachedTyresС = await this.redisService.get(
           width +
-            height +
-            diameter +
-            season +
-            brand +
-            price +
-            type +
-            speed_index +
-            load_index +
-            studded +
-            run_flat +
-            homologation +
-            reinforce +
-            sort,
+          height +
+          diameter +
+          season +
+          brand +
+          price +
+          type +
+          speed_index +
+          load_index +
+          studded +
+          run_flat +
+          homologation +
+          reinforce +
+          sort,
         );
         return setNewCachedTyresС;
       }
@@ -633,37 +633,37 @@ export class TyresService {
         //await t.commit();
         await this.redisService.set(
           width +
-            height +
-            diameter +
-            season +
-            brand +
-            price +
-            type +
-            speed_index +
-            load_index +
-            studded +
-            run_flat +
-            homologation +
-            reinforce +
-            sort,
-          300,
+          height +
+          diameter +
+          season +
+          brand +
+          price +
+          type +
+          speed_index +
+          load_index +
+          studded +
+          run_flat +
+          homologation +
+          reinforce +
+          sort,
+          1200,
           JSON.stringify(tyresAllWithoutLimitE),
         );
         const setNewCachedTyresE = await this.redisService.get(
           width +
-            height +
-            diameter +
-            season +
-            brand +
-            price +
-            type +
-            speed_index +
-            load_index +
-            studded +
-            run_flat +
-            homologation +
-            reinforce +
-            sort,
+          height +
+          diameter +
+          season +
+          brand +
+          price +
+          type +
+          speed_index +
+          load_index +
+          studded +
+          run_flat +
+          homologation +
+          reinforce +
+          sort,
         );
         return setNewCachedTyresE;
       }
@@ -819,37 +819,37 @@ export class TyresService {
         //await t.commit();
         await this.redisService.set(
           width +
-            height +
-            diameter +
-            season +
-            brand +
-            price +
-            type +
-            speed_index +
-            load_index +
-            studded +
-            run_flat +
-            homologation +
-            reinforce +
-            sort,
-          300,
+          height +
+          diameter +
+          season +
+          brand +
+          price +
+          type +
+          speed_index +
+          load_index +
+          studded +
+          run_flat +
+          homologation +
+          reinforce +
+          sort,
+          1200,
           JSON.stringify(tyresAllWithoutLimitO),
         );
         const setNewCachedTyresO = await this.redisService.get(
           width +
-            height +
-            diameter +
-            season +
-            brand +
-            price +
-            type +
-            speed_index +
-            load_index +
-            studded +
-            run_flat +
-            homologation +
-            reinforce +
-            sort,
+          height +
+          diameter +
+          season +
+          brand +
+          price +
+          type +
+          speed_index +
+          load_index +
+          studded +
+          run_flat +
+          homologation +
+          reinforce +
+          sort,
         );
         return setNewCachedTyresO;
       }
@@ -1005,37 +1005,37 @@ export class TyresService {
         //await t.commit();
         await this.redisService.set(
           width +
-            height +
-            diameter +
-            season +
-            brand +
-            price +
-            type +
-            speed_index +
-            load_index +
-            studded +
-            run_flat +
-            homologation +
-            reinforce +
-            sort,
-          300,
+          height +
+          diameter +
+          season +
+          brand +
+          price +
+          type +
+          speed_index +
+          load_index +
+          studded +
+          run_flat +
+          homologation +
+          reinforce +
+          sort,
+          1200,
           JSON.stringify(tyresAllWithoutLimitT),
         );
         const setNewCachedTyresT = await this.redisService.get(
           width +
-            height +
-            diameter +
-            season +
-            brand +
-            price +
-            type +
-            speed_index +
-            load_index +
-            studded +
-            run_flat +
-            homologation +
-            reinforce +
-            sort,
+          height +
+          diameter +
+          season +
+          brand +
+          price +
+          type +
+          speed_index +
+          load_index +
+          studded +
+          run_flat +
+          homologation +
+          reinforce +
+          sort,
         );
         return setNewCachedTyresT;
       }
@@ -1192,37 +1192,37 @@ export class TyresService {
         //await t.commit();
         await this.redisService.set(
           width +
-            height +
-            diameter +
-            season +
-            brand +
-            price +
-            type +
-            speed_index +
-            load_index +
-            studded +
-            run_flat +
-            homologation +
-            reinforce +
-            sort,
-          300,
+          height +
+          diameter +
+          season +
+          brand +
+          price +
+          type +
+          speed_index +
+          load_index +
+          studded +
+          run_flat +
+          homologation +
+          reinforce +
+          sort,
+          1200,
           JSON.stringify(tyresAllWithoutLimitR),
         );
         const setNewCachedTyresR = await this.redisService.get(
           width +
-            height +
-            diameter +
-            season +
-            brand +
-            price +
-            type +
-            speed_index +
-            load_index +
-            studded +
-            run_flat +
-            homologation +
-            reinforce +
-            sort,
+          height +
+          diameter +
+          season +
+          brand +
+          price +
+          type +
+          speed_index +
+          load_index +
+          studded +
+          run_flat +
+          homologation +
+          reinforce +
+          sort,
         );
         return setNewCachedTyresR;
       }

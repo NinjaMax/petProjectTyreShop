@@ -77,6 +77,7 @@ export class AddTyresToDbService {
       await this.categoryService.createCategoryFromPrice(
         +item['ID товара'],
         item['Категория товара'] ?? '',
+        item['Розділ OpenCart'] ?? '',
       );
 
       await this.propsBrandService.createTyreBrandFromPrice(

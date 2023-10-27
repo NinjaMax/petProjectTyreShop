@@ -136,7 +136,7 @@ import { RedisModule } from './redis/redis.module';
           bigNumberStrings: true,
         },
         pool: {
-          max: 45,
+          max: 50,
           min: 0,
           idle: 5000,
           acquire: 300000,

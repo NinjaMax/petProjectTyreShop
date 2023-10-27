@@ -23,12 +23,14 @@ export class CategorysService {
     }
   }
 
-  async createCategoryFromPrice(id: number, category: string) {
+  async createCategoryFromPrice(id: number, category: string, chapter: string) {
     try {
-      const [findCategory, created] = await this.categoryRepository.findOrCreate(
-       {where:{category: category}, defaults: {category: category}}
-      );
-      if(created || !created) {
+      const [findCategory, created] =
+        await this.categoryRepository.findOrCreate({
+          where: { category: category },
+          defaults: { category: category, chapter: chapter },
+        });
+      if (created || !created) {
         await findCategory.$add('tyres', id);
         //await findCategory.update()
         // await findCategory.save();
@@ -44,19 +46,20 @@ export class CategorysService {
   }
 
   async createCategoryWheelFromPrice(id: number, category: string) {
-
     try {
-      
-      const [findCategory, created] = await this.categoryRepository.findOrCreate(
-       {where:{category: category}, defaults: {category: category}}
-      );
-      
-      if(created || !created) {
+      const [findCategory, created] =
+        await this.categoryRepository.findOrCreate({
+          where: { category: category },
+          defaults: { category: category },
+        });
+      if (created || !created) {
         await findCategory.$add('wheels', id);
       }
-      
     } catch {
-      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 

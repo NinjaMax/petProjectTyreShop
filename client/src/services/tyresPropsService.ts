@@ -15,15 +15,33 @@ const typeCar = (type: string | undefined) => {
         case 'с/г':
         case 'с/х':
             return TyreType.SELHOZ_TYPE;
-        case 'спецтехника':
-        case 'спецтехніка':
-            return TyreType.SPECTEHNIKA_TYPE;
         case 'грузовой':
         case 'вантажний':
-            return TyreType.TRUCK_TYPE
+            return TyreType.TRUCK_TYPE;
+        case 'причіпна':
+        case 'прицепная':
+            return TyreType.TRAILER_TRUCK_TYPE;
+        case 'рульова':
+        case 'рулевая':
+            return TyreType.STEERING_TRUCK_TYPE;
+        case 'ведуча':
+        case 'ведущая':
+            return TyreType.TRACKTION_TRUCK_TYPE;
+        case 'універсальна':
+        case 'универсальная':
+            return TyreType.UNIVERSAL_TYPE;
+        case 'индустриальная':
+        case 'індустріальна':
+            return TyreType.INDUSTRIAL_TYPE;
+        case 'карьерная':
+        case `кар'єрна`:
+            return TyreType.SPECTEHNIKA_TYPE;
         case 'мото':
         //case 'всесезонна':
             return TyreType.MOTO_TYPE;
+        case 'вело':
+            //case 'всесезонна':
+            return TyreType.BICYCLE_TYPE;
         default:
             return TyreType.NO_TYPE;
     }

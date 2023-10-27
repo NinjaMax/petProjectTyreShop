@@ -30,6 +30,9 @@ export class Category extends Model<Category, CategoryConfigAttr> {
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   category: string;
 
+  @Column({ type: DataType.STRING, unique: true, allowNull: false })
+  chapter: string;
+
   @ForeignKey(() => Description)
   @Column({ type: DataType.INTEGER })
   id_description: number;

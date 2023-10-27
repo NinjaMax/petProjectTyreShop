@@ -4,7 +4,7 @@ import '../../css/PopularGoodsCss/PopularDiametrTyre.css';
 const PopularDiametrTyre = () => {
     return (
         <div className='popularDiametrTyre'> 
-            <a href='/tyres/w195/h65/r15'>
+            <a href='/tyres/litni/w195/h65/r15'>
                195/65 R15 літо
             </a>   
             <a href='/tyres/legkovantazhnii'>
