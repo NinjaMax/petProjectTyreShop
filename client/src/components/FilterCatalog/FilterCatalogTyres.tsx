@@ -12,6 +12,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { tyreSeasonCat, tyreVehicleTypeCat } from '../../services/tyresCatService';
 import { createStringUrl } from '../../services/stringUrl';
 import { homologationByCar } from '../../services/homologation';
+import { CATALOG_TYRES_ROUTE } from '../../utils/consts';
 
 interface IFilterCatTyres {
     handleChange?(args0: any): void;
@@ -34,9 +35,8 @@ const FilterCatalogTyres = observer((
     const [stateHomologation, setStateHomologation]=useState(false);
     const [stateRunFlat, setStateRunFlat]=useState(false);
     const [stateReinforced, setStateReinforced]=useState(false);
-
     const params = useParams<any>();
-    //const history = useHistory();
+    const history = useHistory();
 
     useEffect(() => {
         if(!filterState) {
@@ -221,20 +221,10 @@ const FilterCatalogTyres = observer((
         if (e.target.getAttribute('data-name') === 'Ширина') {
             page.setLoadMore(0);
             page.setOffset(0);
-            if (params.season?.slice(1, params.season?.length) === filter.width) {
-                params.season = undefined;
-            }
-            if (params.studded?.slice(1, params.studded?.length) === filter.width) {
-                params.studded = undefined;
-            }
-            if (params.type?.slice(1, params.type?.length) === filter.width) {
-                params.type = undefined;
-            }
-            if (params.brands?.slice(1, params.brands?.length) === filter.width) {
-                params.brands = undefined;
-            }
-            if (params.width?.slice(1, params.width?.length) === filter.width) {
-                params.width = undefined;   
+            for( let key in params) {
+                if('w' + filter.width === params[key]) {
+                    params[key] = undefined;
+                }
             }
             filter.setWidth(null);
             filter.removeChipWidthItem();
@@ -242,23 +232,10 @@ const FilterCatalogTyres = observer((
         if (e.target.getAttribute('data-name') === 'Профіль') {
             page.setLoadMore(0);
             page.setOffset(0);
-            if (params.season?.slice(1, params.season?.length) === filter.height) {
-                params.season = undefined;
-            }
-            if (params.studded?.slice(1, params.studded?.length) === filter.height) {
-                params.studded = undefined;
-            }
-            if (params.type?.slice(1, params.type?.length) === filter.height) {
-                params.type = undefined;
-            }
-            if (params.brands?.slice(1, params.brands?.length) === filter.height) {
-                params.brands = undefined;
-            }
-            if (params.width?.slice(1, params.width?.length) === filter.height) {
-                params.width = undefined;   
-            }
-            if (params.height?.slice(1, params.height?.length) === filter.height) {
-                params.height = undefined;   
+            for( let key in params) {
+                if('h' + filter.height === params[key]) {
+                    params[key] = undefined;
+                }
             }
             filter.setHeight(null);
             filter.removeChipHeightItem();
@@ -267,26 +244,10 @@ const FilterCatalogTyres = observer((
         if (e.target.getAttribute('data-name') === 'Діаметр') {
             page.setLoadMore(0);
             page.setOffset(0);
-            if (params.season?.slice(1, params.season?.length) === filter.diameter) {
-                params.season = undefined;
-            }
-            if (params.studded?.slice(1, params.studded?.length) === filter.diameter) {
-                params.studded = undefined;
-            }
-            if (params.type?.slice(1, params.type?.length) === filter.diameter) {
-                params.type = undefined;
-            }
-            if (params.brands?.slice(1, params.brands?.length) === filter.diameter) {
-                params.brands = undefined;
-            }
-            if (params.width?.slice(1, params.width?.length) === filter.diameter) {
-                params.width = undefined;   
-            }
-            if (params.height?.slice(1, params.height?.length) === filter.diameter) {
-                params.height = undefined;   
-            }
-            if (params.diameter?.slice(1, params.diameter?.length) === filter.diameter) {
-                params.diameter = undefined;   
+            for( let key in params) {
+                if('r' + filter.diameter === params[key]) {
+                    params[key] = undefined;
+                }
             }
             filter.setDiameter(null);
             filter.removeChipDiameterItem();
@@ -294,17 +255,10 @@ const FilterCatalogTyres = observer((
         if (e.target.getAttribute('data-name') === 'Бренд') {
             page.setLoadMore(0);
             page.setOffset(0);
-            if (params.season === createStringUrl(filter.brands)) {
-                params.season = undefined;
-            }
-            if (params.studded === createStringUrl(filter.brands)) {
-                params.studded = undefined;  
-            }
-            if (params.type === createStringUrl(filter.brands)) {
-                params.type = undefined;
-            }
-            if (params.brands === createStringUrl(filter.brands)) {
-                params.brands = undefined;
+            for( let key in params) {
+                if(createStringUrl(filter.brands) === params[key]) {
+                    params[key] = undefined;
+                }
             }
             filter.removeChipBrandsItem(e.target.getAttribute('data-index'));
             filter.setChipBrands(Array.from(
@@ -314,8 +268,10 @@ const FilterCatalogTyres = observer((
         if (e.target.getAttribute('data-name') === 'Сезон') {
             page.setLoadMore(0);
             page.setOffset(0);
-            if (params.season === createStringUrl(filter.season)) {
-              params.season = undefined;  
+            for( let key in params) {
+                if(createStringUrl(filter.season) === params[key]) {
+                    params[key] = undefined;
+                }
             }
             filter.removeChipSeasonItem(e.target.getAttribute('data-index'));
             filter.setChipSeason(Array.from(
@@ -325,14 +281,10 @@ const FilterCatalogTyres = observer((
         if (e.target.getAttribute('data-name') === 'Тип транспорту') {
             page.setLoadMore(0);
             page.setOffset(0);
-            if (params.season === createStringUrl(filter.vehicle_type)) {
-                params.season = undefined;  
-            }
-            if (params.studded === createStringUrl(filter.vehicle_type)) {
-                params.studded = undefined;  
-            }
-            if (params.type === createStringUrl(filter.vehicle_type)) {
-                params.type = undefined;  
+            for( let key in params) {
+                if(createStringUrl(filter.vehicle_type) === params[key]) {
+                    params[key] = undefined;
+                }
             }
             filter.removeChipVehicleTypeItem(e.target.getAttribute('data-index'));
             filter.setChipVehicleType(Array.from(
@@ -342,11 +294,10 @@ const FilterCatalogTyres = observer((
         if (e.target.getAttribute('data-name') === 'Шип / Не шип') {
             page.setLoadMore(0);
             page.setOffset(0);
-            if(params.season === createStringUrl(filter.vehicle_type)) {
-                params.season = undefined;  
-            }
-            if(params.studded === createStringUrl(filter.studded)) {
-                params.studded = undefined;  
+            for( let key in params) {
+                if(createStringUrl(filter.studded) === params[key]) {
+                    params[key] = undefined;
+                }
             }
             filter.removeChipStuddedItem(e.target.getAttribute('data-index'));
             filter.setChipStudded(Array.from(
@@ -356,32 +307,10 @@ const FilterCatalogTyres = observer((
         if (e.target.getAttribute('data-name') === 'Індекс швидкості') {
             page.setLoadMore(0);
             page.setOffset(0);
-            if (params.season?.slice(3, params.season?.length) === createStringUrl(filter.speed_index)) {
-                params.season = undefined;
-            }
-            if (params.studded?.slice(3, params.studded?.length) === createStringUrl(filter.speed_index)) {
-                params.studded = undefined;  
-            }
-            if (params.type?.slice(3, params.type?.length) === createStringUrl(filter.speed_index)) {
-                params.type = undefined;
-            }
-            if (params.brands?.slice(3, params.brands?.length) === createStringUrl(filter.speed_index)) {
-                params.brands = undefined;
-            }
-            if (params.width?.slice(3, params.width?.length) === createStringUrl(filter.speed_index)) {
-                params.width = undefined;   
-            }
-            if (params.height?.slice(3, params.height?.length) === createStringUrl(filter.speed_index)) {
-                params.height = undefined;   
-            }
-            if (params.diameter?.slice(3, params.diameter?.length) === createStringUrl(filter.speed_index)) {
-                params.diameter = undefined;   
-            }
-            if (params.loadindex?.slice(3, params.loadindex?.length) === createStringUrl(filter.speed_index)) {
-                params.loadindex = undefined;   
-            }
-            if (params.speedindex?.slice(3, params.speedindex?.length) === createStringUrl(filter.speed_index)) {
-                params.speedindex = undefined;   
+            for( let key in params) {
+                if('si-' + createStringUrl(filter.speed_index) === params[key]) {
+                    params[key] = undefined;
+                }
             }
             filter.removeChipSpeedIndexItem(e.target.getAttribute('data-index'));
             filter.setChipSpeedIndex(Array.from(
@@ -391,29 +320,10 @@ const FilterCatalogTyres = observer((
         if (e.target.getAttribute('data-name') === 'Індекс навантаження') {
             page.setLoadMore(0);
             page.setOffset(0);
-            if (params.season?.slice(3, params.season?.length) === createStringUrl(filter.load_index)) {
-                params.season = undefined;
-            }
-            if (params.studded?.slice(3, params.studded?.length) === createStringUrl(filter.load_index)) {
-                params.studded = undefined;  
-            }
-            if (params.type?.slice(3, params.type?.length) === createStringUrl(filter.load_index)) {
-                params.type = undefined;
-            }
-            if (params.brands?.slice(3, params.brands?.length) === createStringUrl(filter.load_index)) {
-                params.brands = undefined;
-            }
-            if (params.width?.slice(3, params.width?.length) === createStringUrl(filter.load_index)) {
-                params.width = undefined;   
-            }
-            if (params.height?.slice(3, params.height?.length) === createStringUrl(filter.load_index)) {
-                params.height = undefined;   
-            }
-            if (params.diameter?.slice(3, params.diameter?.length) === createStringUrl(filter.load_index)) {
-                params.diameter = undefined;   
-            }
-            if (params.loadindex?.slice(3, params.loadindex?.length) === createStringUrl(filter.load_index)) {
-                params.loadindex = undefined;   
+            for( let key in params) {
+                if('li-' + createStringUrl(filter.load_index) === params[key]) {
+                    params[key] = undefined;
+                }
             }
             filter.removeChipLoadIndexItem(e.target.getAttribute('data-index'));
             filter.setChipLoadIndex(Array.from(
@@ -423,38 +333,10 @@ const FilterCatalogTyres = observer((
         if (e.target.getAttribute('data-name') === 'Омологація') {
             page.setLoadMore(0);
             page.setOffset(0);
-            if (params.season?.slice(3, params.season?.length) === createStringUrl(filter.homologation)) {
-                params.season = undefined;
-            }
-            if (params.studded?.slice(3, params.studded?.length) === createStringUrl(filter.homologation)) {
-                params.studded = undefined;  
-            }
-            if (params.type?.slice(3, params.type?.length) === createStringUrl(filter.homologation)) {
-                params.type = undefined;
-            }
-            if (params.brands?.slice(3, params.brands?.length) === createStringUrl(filter.homologation)) {
-                params.brands = undefined;
-            }
-            if (params.width?.slice(3, params.width?.length) === createStringUrl(filter.homologation)) {
-                params.width = undefined;   
-            }
-            if (params.height?.slice(3, params.height?.length) === createStringUrl(filter.homologation)) {
-                params.height = undefined;   
-            }
-            if (params.diameter?.slice(3, params.diameter?.length) === createStringUrl(filter.homologation)) {
-                params.diameter = undefined;   
-            }
-            if (params.loadindex?.slice(3, params.loadindex?.length) === createStringUrl(filter.homologation)) {
-                params.loadindex = undefined;   
-            }
-            if (params.speedindex?.slice(3, params.speedindex?.length) === createStringUrl(filter.homologation)) {
-                params.speedindex = undefined;   
-            }
-            if (params.reinforced?.slice(3, params.reinforced?.length) === createStringUrl(filter.homologation)) {
-                params.reinforced = undefined;   
-            }
-            if (params.om?.slice(3, params.om?.length) === createStringUrl(filter.homologation)) {
-                params.om = undefined;   
+            for( let key in params) {
+                if('om-' + createStringUrl(filter.homologation) === params[key]) {
+                    params[key] = undefined;
+                }
             }
             filter.removeChipHomologationItem(e.target.getAttribute('data-index'));
             filter.setChipHomologation(Array.from(
@@ -464,6 +346,11 @@ const FilterCatalogTyres = observer((
         if (e.target.getAttribute('data-name') === 'Run Flat') {
             page.setLoadMore(0);
             page.setOffset(0);
+            for( let key in params) {
+                if(filter.run_flat === params[key]) {
+                    params[key] = undefined;
+                }
+            }
             filter.removeChipRunFlatItem(e.target.getAttribute('data-index'));
             filter.setChipRunFlat(Array.from(
                 new Set([...filter.chipRunFlat])));
@@ -472,41 +359,21 @@ const FilterCatalogTyres = observer((
         if (e.target.getAttribute('data-name') === 'Високонагруженість') {
             page.setLoadMore(0);
             page.setOffset(0);
-            if (params.season?.slice(3, params.season?.length) === createStringUrl(filter.reinforced)) {
-                params.season = undefined;
-            }
-            if (params.studded?.slice(3, params.studded?.length) === createStringUrl(filter.reinforced)) {
-                params.studded = undefined;  
-            }
-            if (params.type?.slice(3, params.type?.length) === createStringUrl(filter.reinforced)) {
-                params.type = undefined;
-            }
-            if (params.brands?.slice(3, params.brands?.length) === createStringUrl(filter.reinforced)) {
-                params.brands = undefined;
-            }
-            if (params.width?.slice(3, params.width?.length) === createStringUrl(filter.speed_index)) {
-                params.width = undefined;   
-            }
-            if (params.height?.slice(3, params.height?.length) === createStringUrl(filter.reinforced)) {
-                params.height = undefined;   
-            }
-            if (params.diameter?.slice(3, params.diameter?.length) === createStringUrl(filter.reinforced)) {
-                params.diameter = undefined;   
-            }
-            if (params.loadindex?.slice(3, params.loadindex?.length) === createStringUrl(filter.reinforced)) {
-                params.loadindex = undefined;   
-            }
-            if (params.speedindex?.slice(3, params.speedindex?.length) === createStringUrl(filter.reinforced)) {
-                params.speedindex = undefined;   
-            }
-            if (params.reinforced?.slice(3, params.reinforced?.length) === createStringUrl(filter.reinforced)) {
-                params.reinforced = undefined;   
+            for( let key in params) {
+                if('xl-' + createStringUrl(filter.reinforced) === params[key]) {
+                    params[key] = undefined;
+                }
             }
             filter.removeChipReinforcedItem(e.target.getAttribute('data-index'));
             filter.setChipReinforced(Array.from(
                 new Set([...filter.chipReinforced])));
             filter.setReinforced(filter.chipReinforced.join(','));
         }
+        const tyreCatalogPath: string | undefined = 
+          `${CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/${createStringUrl(filter.season)}` : '' }${filter.studded && !filter.studded.includes(',') ? `/${createStringUrl(filter.studded)}` : '' }${filter.vehicle_type && !filter.vehicle_type.includes(',') ? `/${createStringUrl(filter.vehicle_type)}` : ''}${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${filter.width }` : ''}${filter.height ? `/h${filter.height}` : ''}${filter.diameter ? `/r${filter.diameter}` : ''}${filter.load_index && !filter.load_index.includes(',') ? `/li-${createStringUrl(filter.load_index)}` : '' }${filter.speed_index && !filter.speed_index.includes(',') ? `/si-${createStringUrl(filter.speed_index)}` : '' }${filter.reinforced && !filter.reinforced.includes(',') ? `/xl-${createStringUrl(filter.reinforced)}` : '' }${filter.homologation && !filter.homologation.includes(',') ? `/om-${createStringUrl(filter.homologation)}` : '' }`;
+          history.push(
+            tyreCatalogPath, 
+          );
     }  
     const filterBrandAdd = () => {
         filter.setBrands(filter.chipBrands.join(','));

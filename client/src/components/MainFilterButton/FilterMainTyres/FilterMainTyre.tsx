@@ -23,7 +23,6 @@ const FilterMainTyre = observer((
     {filterState, filterOpenCloseAction}: IFilterMainTyres) => {
     const {filter, goodsTyre, page} = useContext<any | null>(Context);
     //const history = useHistory();
-    //const params = useParams<any>();
     //const [handleItem, setHandleItem] = useState();
 
     const [stateWidth, setStateWidth]=useState<boolean>(false);
@@ -111,7 +110,6 @@ const FilterMainTyre = observer((
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setHeight(null);
-
         }
         if (e.target.getAttribute('data-name') === 'Діаметр') {
             page.setLoadMore(0);

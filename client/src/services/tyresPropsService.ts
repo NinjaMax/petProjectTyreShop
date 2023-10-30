@@ -17,6 +17,7 @@ const typeCar = (type: string | undefined) => {
             return TyreType.SELHOZ_TYPE;
         case 'грузовой':
         case 'вантажний':
+        case 'вантажні шини':
             return TyreType.TRUCK_TYPE;
         case 'причіпна':
         case 'прицепная':

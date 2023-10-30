@@ -20,14 +20,13 @@ import { Description } from '../../description/entities/description.entity';
 export class Category extends Model<Category, CategoryConfigAttr> {
   @Column({
     type: DataType.BIGINT, 
-    unique: true, 
     allowNull: false, 
     primaryKey: true, 
     autoIncrement: true,
   })
   id_cat: number;
 
-  @Column({ type: DataType.STRING, unique: true, allowNull: false })
+  @Column({ type: DataType.STRING, allowNull: false })
   category: string;
 
   @Column({ type: DataType.STRING, unique: true, allowNull: false })

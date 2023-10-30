@@ -5,6 +5,5 @@ export enum TyreCatVehicles {
     SELHOZ_CAT_TYPE = 'с/г',
     SPECTEHNIKA_CAT_TYPE = 'спецтехніка',
     MOTO_CAT_TYPE = 'мото',
-    TRUCK_CAT_TYPE = 'вантажний',
-    
+    TRUCK_CAT_TYPE = 'вантажні шини',
 };
