@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../../css/TabsCss/TabMain.css';
 import PopularSizeTyre from '../popularGoods/PopularSizeTyre';
-import PopularDiametrTyre from '../popularGoods/PopularDiametrTyre';
+import PopularRequests from '../popularGoods/PopularRequests';
 import FilterMainTyre from '../mainFilterButton/filterMainTyres/FilterMainTyre';
 import FilterMainWheel from '../mainFilterButton/filterMainTyres/FilterMainWheel';
 

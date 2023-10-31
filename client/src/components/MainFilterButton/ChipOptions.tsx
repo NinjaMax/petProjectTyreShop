@@ -18,9 +18,10 @@ const ChipOptions =({props, chipName, clearFilter}: IChipOptions) => {
                 <div className='chipOptionsList'>
                     <div className='chipOptionsItem'>
                     {item} 
-                     <span 
+                    <span 
+                        data-chipname={item}
                         data-index={index}
-                         data-name={chipName}
+                        data-name={chipName}
                         className="closeChipBtn" 
                         onClick={clearFilter}>&times;
                     </span> 

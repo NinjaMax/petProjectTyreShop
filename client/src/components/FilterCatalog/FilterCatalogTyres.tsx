@@ -120,10 +120,27 @@ const FilterCatalogTyres = observer((
         if (e.target.name === 'Тип транспорту' && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
-            filter.setChipVehicleType(
-                Array.from(
-                    new Set([...filter.chipVehicleType, e.target.value]))
-            );     
+            if (e.target.value === 'вантажні шини') {
+                filter.setChipVehicleType(
+                    Array.from(
+                        new Set([...filter.chipVehicleType, 
+                            'вантажні шини','універсальна','рульова','ведуча','причіпна'
+                        ])
+                    )
+                ); } else if (filter.chipVehicleType.includes('вантажні шини')) {
+                filter.setChipVehicleType(
+                    Array.from(
+                        new Set([...filter.chipVehicleType, 
+                            e.target.value,'вантажні шини'
+                        ])
+                    )
+                ); 
+            } else {
+                filter.setChipVehicleType(
+                    Array.from(
+                        new Set([...filter.chipVehicleType, e.target.value]))
+                ); 
+            }    
         } else if (e.target.name === 'Тип транспорту') {
             const cancelVehicleType = filter.chipVehicleType.findIndex(
                 (item: string) => item === e.target.value);
@@ -215,6 +232,11 @@ const FilterCatalogTyres = observer((
             filter.setChipReinforced(Array.from(
                 new Set([...filter.chipReinforced])));
         }
+        const tyreCatalogPath: string | undefined = 
+          `${CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/${createStringUrl(filter.season)}` : '' }${filter.studded && !filter.studded.includes(',') ? `/${createStringUrl(filter.studded)}` : '' }${filter.vehicle_type && !filter.vehicle_type.includes(',') ? `/${createStringUrl(filter.vehicle_type)}` : ''}${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${filter.width }` : ''}${filter.height ? `/h${filter.height}` : ''}${filter.diameter ? `/r${filter.diameter}` : ''}${filter.load_index && !filter.load_index.includes(',') ? `/li-${createStringUrl(filter.load_index)}` : '' }${filter.speed_index && !filter.speed_index.includes(',') ? `/si-${createStringUrl(filter.speed_index)}` : '' }${filter.reinforced && !filter.reinforced.includes(',') ? `/xl-${createStringUrl(filter.reinforced)}` : '' }${filter.homologation && !filter.homologation.includes(',') ? `/om-${createStringUrl(filter.homologation)}` : '' }`;
+          history.push(
+            tyreCatalogPath, 
+          );
     } 
     
     const handleDeleteChange = (e: any) => {
@@ -286,7 +308,41 @@ const FilterCatalogTyres = observer((
                     params[key] = undefined;
                 }
             }
-            filter.removeChipVehicleTypeItem(e.target.getAttribute('data-index'));
+            const getChipIndex = filter.chipVehicleType.indexOf(e.target.getAttribute('data-chipname'))
+            //filter.removeChipVehicleTypeItem(e.target.getAttribute('data-index'));
+            filter.removeChipVehicleTypeItem(getChipIndex);
+            //if (!filter.chipVehicleType.includes('вантажні шини')) {
+            if (e.target.getAttribute('data-chipname') === 'вантажні шини') {
+                let getChipIndexUniver = filter.chipVehicleType.indexOf('універсальна');
+                if(getChipIndexUniver) { filter.removeChipVehicleTypeItem(getChipIndexUniver) };
+                let getChipIndexDriver = filter.chipVehicleType.indexOf('ведуча');
+                if(getChipIndexDriver) { filter.removeChipVehicleTypeItem(getChipIndexDriver) };
+                let getChipIndexTrailer = filter.chipVehicleType.indexOf('причіпна');
+                if(getChipIndexTrailer) { filter.removeChipVehicleTypeItem(getChipIndexTrailer) };
+                let getChipIndexSteer = filter.chipVehicleType.indexOf('рульова'); 
+                if(getChipIndexSteer) { filter.removeChipVehicleTypeItem(getChipIndexSteer) };
+            }
+            filter.setChipVehicleType(Array.from(
+                new Set([...filter.chipVehicleType])));
+            filter.setVehicleType(filter.chipVehicleType.join(','));
+        }
+        if (e.target.getAttribute('data-name') === 'Вид вісі') {
+            page.setLoadMore(0);
+            page.setOffset(0);
+            console.log('DATA_NAME: ', e.target.getAttribute('data-chipname'))
+            const getChipIndex = filter.chipVehicleType.indexOf(e.target.getAttribute('data-chipname'));
+
+            filter.removeChipVehicleTypeItem(getChipIndex);
+            if (!filter.chipVehicleType.includes('вантажні шини')) {
+                let getChipIndexUniver = filter.chipVehicleType.indexOf('універсальна');
+                if(getChipIndexUniver) { filter.removeChipVehicleTypeItem(getChipIndexUniver) };
+                let getChipIndexDriver = filter.chipVehicleType.indexOf('ведуча');
+                if(getChipIndexDriver) { filter.removeChipVehicleTypeItem(getChipIndexDriver) };
+                let getChipIndexTrailer = filter.chipVehicleType.indexOf('причіпна');
+                if(getChipIndexTrailer) { filter.removeChipVehicleTypeItem(getChipIndexTrailer) };
+                let getChipIndexSteer = filter.chipVehicleType.indexOf('рульова'); 
+                if(getChipIndexSteer) { filter.removeChipVehicleTypeItem(getChipIndexSteer) };
+            }
             filter.setChipVehicleType(Array.from(
                 new Set([...filter.chipVehicleType])));
             filter.setVehicleType(filter.chipVehicleType.join(','));
@@ -475,6 +531,9 @@ const FilterCatalogTyres = observer((
         setStateReinforced(!stateReinforced);
     }
 
+    console.log('CHIP_TYPE: ', filter._chipVehicleType)
+    console.log('FILTER_TYPE: ', filter.vehicle_type)
+
     return (
         <div className='filterCatalogTyres'>
             <div className='filterCatalogTyresHeader'>
@@ -658,25 +717,81 @@ const FilterCatalogTyres = observer((
                 }               
                 <Accordion 
                     titleName={'Тип транспорту'}
-                    chipItem={filter.vehicle_type}
+                    chipItem={filter.vehicle_type.split(',').filter(
+                        (items: string) =>
+                        items !== 'рульова' && 
+                        items !== 'ведуча' &&
+                        items !== 'причіпна' && 
+                        items !== 'універсальна'
+                        ).join(',')
+                    }
                     deleteChip={handleDeleteChange}
                     filterAction={filterVehicleTypeClick}
                     filterState={stateVehicleType}
                 >
                     { goodsTyre._vehicle_type ? 
-                        goodsTyre._vehicle_type.map(
-                            (vehicleItem: any, index: number) => (
+                        goodsTyre._vehicle_type.filter((typeItem: string) =>
+                            typeItem !== 'рульова' && 
+                            typeItem !== 'ведуча' && 
+                            typeItem !== 'причіпна' && 
+                            typeItem !== 'універсальна')  
+                            .map(
+                            (vehicleItem: string) => (
+                                
                     <CheckboxBtn 
                         key={vehicleItem}
                         value={vehicleItem}
                         checked={filter._chipVehicleType.includes(vehicleItem)} 
                         onChange={handleChange}
                         titleName={'Тип транспорту'}  
-                        titleCheckbox={vehicleItem} 
+                        titleCheckbox={ vehicleItem} 
                         imageSrc={typeCar(vehicleItem)}/>
                         )) : null
                     }
                 </Accordion>
+                {filter._chipVehicleType.includes('вантажні шини') ?
+                <Accordion 
+                    titleName={'Вид вісі'}
+                    chipItem={
+                        filter.vehicle_type.split(',').filter(
+                            (entity: string) => 
+                            entity !== 'вантажні шини' && 
+                            entity !== 'мото' &&
+                            entity !== 'легковий' &&
+                            entity !== 'позашляховик' &&
+                            entity !== 'с/г' &&
+                            entity !== 'індустріальна' &&
+                            entity !== 'легковантажний' &&
+                            entity !== 'вело' &&
+                            entity !== "кар'єрна" 
+                        ).join(',')
+                    }
+                    deleteChip={handleDeleteChange}
+                    filterAction={filterVehicleTypeClick}
+                    filterState={stateVehicleType}
+                >
+                    { goodsTyre._vehicle_type ? 
+                        goodsTyre._vehicle_type.filter( (typeItem: string) =>
+                            typeItem === 'рульова' || 
+                            typeItem === 'ведуча' ||
+                            typeItem === 'причіпна' || 
+                            typeItem === 'універсальна')  
+                            .map(
+                            (vehicleItem: string) => (
+                                
+                    <CheckboxBtn 
+                        key={vehicleItem}
+                        value={vehicleItem}
+                        checked={filter._chipVehicleType.includes(vehicleItem)} 
+                        onChange={handleChange}
+                        titleName={'Тип транспорту'}  
+                        titleCheckbox={ vehicleItem} 
+                        imageSrc={typeCar(vehicleItem)}/>
+                        )) : null
+                    }
+                </Accordion>
+                : null
+                }
                 { filter._chipSpeedIndex.length !== 0 && stateSpeedIndex ?
                   <button 
                     className='checkBoxBtnOn speedIndex'

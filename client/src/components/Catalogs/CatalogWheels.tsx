@@ -10,7 +10,7 @@ import { addGoodsToBasket, createBasket, getBasketById } from '../../restAPI/res
 import { Context } from '../../context/Context';
 import Card from '../cards/Card';
 import PopularSizeTyre from '../popularGoods/PopularSizeTyre';
-import PopularDiametrTyre from '../popularGoods/PopularDiametrTyre';
+import PopularRequests from '../popularGoods/PopularRequests';
 import { observer } from 'mobx-react-lite';
 
 const CatalogWheels = observer(() => {
@@ -108,7 +108,17 @@ const CatalogWheels = observer(() => {
         <h2>{`Диски ${filter.type && !filter.type.includes(',')  ? `${filter.type }` : ''} ${filter.brands && !filter.brands.includes(',') ? `${filter.brands}` : ''} ${filter.width ? `W${filter.width}` : ''} ${filter.diameter ? `R${filter.diameter}` : ''} ${filter.bolt_count && !filter.bolt_count.includes(',') ? `${filter.bolt_count}` : ''} ${filter.pcd && !filter.pcd.includes(',') ? `PCD${filter.pcd}` : ''} ${filter.et && !filter.et.includes(',') ? `ET${filter.et}` : ''} ${filter.dia && !filter.dia.includes(',') ? `DIA${filter.dia}` : ''}`}</h2>
             <div className='popularCatalogTyre'>
                 <div>Популярні розміри:<PopularSizeTyre/></div>
-                <div>Популярні запити:<PopularDiametrTyre/></div>
+                <div>Популярні запити:
+                    <PopularRequests
+                        entityLink={[
+                            { link: '/tyres/lіtnya/w195/h65/r15', title: '195/65 R15 літо'},
+                            { link: '/tyres/legkovantazhnii', title: ' шини для мікроавтобуса'},
+                            { link: '/tyres/zimova/w205/h55/r16', title: 'зимние шини 205/55 R16'},
+                            { link: '/tyres/goodyear/w215/h65/r16', title: 'шини Goodyear 215/65 R16'},
+                            { link: '/tyres/zimova/w195/h65/r15', title: '195/65 R15 зима'},
+                        ]}
+                    />
+                </div>
             </div> 
             <div className='sortBtnCatalog'>
                 <span>Сортування:</span>
