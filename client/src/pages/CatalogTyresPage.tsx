@@ -133,8 +133,8 @@ const CatalogTyresPage = observer(() => {
           let setRunFlatFilter: any[] | null  = [];
           let setStuddedFilter: any[] | null  = [];
 
-          let getTuckTyreId: any[] | null = [];
-          console.log(tyreFilterGoods);
+          //let getTuckTyreId: any[] | null = [];
+          //console.log(tyreFilterGoods);
           goodsTyre?.setTotalCount(tyreFilterGoods.rows.length);
 
           page.loadMore > 0  ? goodsTyre?.setTyres(
@@ -165,7 +165,7 @@ const CatalogTyresPage = observer(() => {
             //getTuckTyreId?.push({'ID': item.id, 'ID_CAT' : item.id_cat, 'TYPE' : item.vehicle_type.vehicle_type_ua})
             )
           });
-          setVehicleTypeFilter?.push('вантажні шини')
+          //setVehicleTypeFilter?.push('вантажні шини')
           // setVehicleTypeFilter.map((item: any) => 
           //   item === 'рульова' || item === 'ведуча' || item === 'причіпна' || item === 'універсальна' ? item ='вантажні шини' : item)
 
@@ -248,7 +248,7 @@ const CatalogTyresPage = observer(() => {
             )
           } else {
             goodsTyre?.setVehicleType(
-              Array.from(new Set(setVehicleTypeFilter))
+              Array.from(new Set([...setVehicleTypeFilter, 'вантажні шини']))
             )
           }
           if (filter.studded) {
@@ -322,8 +322,8 @@ const CatalogTyresPage = observer(() => {
             )
           }
 
-          const newAraay: any = Array.from(new Set(getTuckTyreId))
-          console.log('TYPE_TRUCK_FILTER: ', newAraay.filter((item: any) => item.ID_CAT === 6));
+          // const newAraay: any = Array.from(new Set(getTuckTyreId))
+          // console.log('TYPE_TRUCK_FILTER: ', newAraay.filter((item: any) => item.ID_CAT === 6));
           console.log('TYPE: ', Array.from(new Set(setVehicleTypeFilter)))
 
           setWidthFilter = null;
@@ -371,7 +371,7 @@ const CatalogTyresPage = observer(() => {
             filter.setVehicleType(tyreCatType);
             filter.setChipVehicleType(
               Array.from(new Set([...filter.chipVehicleType, tyreCatType]))
-            );  
+            );
           }
         }
         if (params[key] && !filter.brands && filter.chipBrands.length === 0) {
