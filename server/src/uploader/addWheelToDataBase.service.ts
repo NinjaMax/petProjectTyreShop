@@ -43,141 +43,145 @@ export class AddWheelsToDbService {
   ) {}
 
   async addWheelsToDb(item: ItemPriceWheelConfigAttr) {
-    try {
+    //try {
       await this.wheelsService.createWheelFromPrice(
-        +item.id,
-        item.id_sup,
-        item.full_name ?? '',
-        item.fullname_color_full ?? '',
-        item.fullname_hotline ?? '',
-        item.photo_url ?? '',
-        item.update_date,
+        +item['ID товара'],
+        String(item['Артикул товару у постачальника']).replace(/#NULL!/g, ''),
+        item['Полное название товара'] ?? '',
+        item['Полное название товара (+полное название цвета)'] ?? '',
+        item['Полное название товара (Hotline)'] ?? '',
+        item['Посилання на фото'] ?? '',
+        item['Дата обновления'],
       );
 
       await this.categoryService.createCategoryWheelFromPrice(
-        +item.id,
-        item.price_list_type ?? '',
+        +item['ID товара'],
+        item['Категорія товару'] ?? '',
+        'Диски',
+        
       );
 
       await this.supplierService.createSupplierFromPrice(
-        +item.provider_id,
-        String(item.provider) === 'undefined' ? '' : String(item.provider),
-        item.city ?? '',
-        item.city_ua ?? '',
+        +item['ID Постачальника'],
+        String(item['Поставщик']) === 'undefined'
+          ? ''
+          : String(item['Поставщик']),
+        item['Город'] ?? '',
+        item['Город (укр)'] ?? '',
       );
 
       await this.propsWheelBrandService.createWheelBrandFromPrice(
-        +item.id,
-        item.brand ?? '',
+        +item['ID товара'],
+        item['Бренд'] ?? '',
       );
 
       await this.propsWheelModelService.createWheelModelFromPrice(
-        +item.id,
-        item.model_id,
-        String(item.model) === 'undefined' ? '' : String(item.model),
+        +item['ID товара'],
+        item['ID Моделі'],
+        String(item['Модель']) === 'undefined' ? '' : String(item['Модель']),
       );
 
       await this.propsWheelWidthService.createWheelWidthFromPrice(
-        +item.id,
-        String(item.width).replace(/,/g, '.') === 'undefined'
+        +item['ID товара'],
+        String(item['Ширина диска']).replace(/,/g, '.') === 'undefined'
           ? ''
-          : String(item.width).replace(/,/g, '.'),
+          : String(item['Ширина диска']).replace(/,/g, '.'),
       );
 
       await this.propsWheelPcdService.createWheelPcdFromPrice(
-        item.id,
-        String(item.pcd).replace(/,/g, '.') === 'undefined'
+        +item['ID товара'],
+        String(item['PCD1']).replace(/,/g, '.') === 'undefined'
           ? ''
-          : String(item.pcd).replace(/,/g, '.'),
+          : String(item['PCD1']).replace(/,/g, '.'),
       );
 
       await this.propsWheelPcd2Service.createWheelPcd2FromPrice(
-        item.id,
-        String(item.pcd2).replace(/,/g, '.') === 'undefined'
+        +item['ID товара'],
+        String(item['PCD2']).replace(/,/g, '.') === 'undefined'
           ? ''
-          : String(item.pcd2).replace(/,/g, '.'),
+          : String(item['PCD2']).replace(/,/g, '.'),
       );
 
       await this.propsWheelBoltCountService.createWheelBoltCountFromPrice(
-        +item.id,
-        String(item.bolt_count).replace(/,/g, '.') === 'undefined'
+        +item['ID товара'],
+        String(item['Кріплення']).replace(/,/g, '.') === 'undefined'
           ? ''
-          : String(item.bolt_count).replace(/,/g, '.'),
+          : String(item['Кріплення']).replace(/,/g, '.'),
       );
 
       await this.propsWheelBoltCountPcdService.createWheelBoltCountPcdFromPrice(
-        +item.id,
-        String(item.bolt_count_pcd).replace(/,/g, '.') === 'undefined'
+        +item['ID товара'],
+        String(item['Кріплення+PCD']).replace(/,/g, '.') === 'undefined'
           ? ''
-          : String(item.bolt_count_pcd).replace(/,/g, '.'),
+          : String(item['Кріплення+PCD']).replace(/,/g, '.'),
       );
 
       await this.propsWheelColorService.createWheelColorFromPrice(
-        +item.id,
-        item.color_id === '' || item.color_id === 'undefined'
+        +item['ID товара'],
+        item['ID кольору'] === '' || item['ID кольору'] === 'undefined'
           ? '999'
-          : item.color_id,
-        item.color ?? '',
-        item.color_short ?? '',
+          : item['ID кольору'],
+        item['Колір'] ?? '',
+        item['Колір абревіатура'] ?? '',
       );
 
       await this.propsWheelDiameter.createWheelDiameterFromPrice(
-        item.id,
-        String(item.diameter).replace(/,/g, '.') === 'undefined'
+        +item['ID товара'],
+        String(item['Диаметр']).replace(/,/g, '.') === 'undefined'
           ? ''
-          : String(item.diameter).replace(/,/g, '.'),
+          : String(item['Диаметр']).replace(/,/g, '.'),
       );
 
       await this.propsWheelDiaService.createWheelDiaFromPrice(
-        item.id,
-        String(item.dia).replace(/,/g, '.') === 'undefined'
+        +item['ID товара'],
+        String(item['DIA']).replace(/,/g, '.') === 'undefined'
           ? ''
-          : String(item.dia).replace(/,/g, '.'),
+          : String(item['DIA']).replace(/,/g, '.'),
       );
 
       await this.propsWheelEtService.createWheelEtFromPrice(
-        item.id,
-        String(item.et).replace(/,/g, '.') === 'undefined'
+        +item['ID товара'],
+        String(item['ET']).replace(/,/g, '.') === 'undefined'
           ? ''
-          : String(item.et).replace(/,/g, '.'),
+          : String(item['ET']).replace(/,/g, '.'),
       );
 
       await this.propsWheelTypeService.createWheelTypeFromPrice(
-        +item.id,
-        item.type_id === '' || item.type_id === 'undefined'
-          ? '999'
-          : item.type_id,
-        item.type ?? '',
+        +item['ID товара'],
+        item['ID Типу диска'] === '' || item['ID Типу диска'] === 'undefined'
+        ? Math.floor(Math.random() + 1) + '999'
+          : item['ID Типу диска'],
+        item['Тип диска'] ?? '',
       );
 
       await this.propsWheelSizeDigitsService.createWheelSizeDigitsFromPrice(
-        item.id,
-        item.size_only_digits ?? '',
+        +item['ID товара'],
+        item['ID розміру'] ?? '',
       );
 
       await this.stockWheelService.createStockWheelFromPrice(
-        +item.id,
-        +item.in_stock,
-        +item.provider_id,
-        item.update_date,
+        +item['ID товара'],
+        +item['В наличии'],
+        +item['ID Постачальника'],
+        item['Дата обновления'],
       );
 
       await this.priceWheelService.createPriceWheelsFromPrice(
-        +item.id,
-        +item.user_price_wholesale,
-        +item.user_price,
-        +item.user_delivery_price,
-        +item.user_price_plus_user_delivery_price,
-        +item.provider_id,
-        item.update_date,
+        +item['ID товара'],
+        item['Моя оптовая цена (со скидкой)'] ?? 0,
+        item['Моя розничная цена'] ?? 0,
+        item['Моя ціна доставки'] ?? 0,
+        item['Моя розничная цена+доставка'] ?? 0,
+        +item['ID Постачальника'],
+        item['Дата обновления'],
       );
 
       return 'Price added to DATA BASE';
-    } catch (error) {
-      throw new HttpException(
-        'Data is incorrect and must be uniq',
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    // } catch (error) {
+    //   throw new HttpException(
+    //     'Data is incorrect and must be uniq',
+    //     HttpStatus.NOT_FOUND,
+    //   );
+    // }
   }
 }

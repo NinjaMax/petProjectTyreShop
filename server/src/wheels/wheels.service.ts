@@ -42,7 +42,7 @@ export class WheelsService {
 
   async createWheelFromPrice(
     id: number,
-    id_sup: number,
+    id_sup: string,
     full_name: string,
     full_name_color: string,
     full_name_hotline: string,
@@ -68,9 +68,9 @@ export class WheelsService {
         await wheelsIdFromPrice.update(
           {
             id_goods_sup: id_sup,
-            full_name: full_name,
-            full_name_color: full_name_color,
-            full_name_hotline: full_name_hotline,
+            // full_name: full_name,
+            // full_name_color: full_name_color,
+            // full_name_hotline: full_name_hotline,
             //photo_url: photo_url,
             update_date: update_date,
           },

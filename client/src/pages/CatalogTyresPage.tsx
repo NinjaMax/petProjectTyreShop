@@ -104,6 +104,7 @@ const CatalogTyresPage = observer(() => {
       let i:number = 0;
       while(taskLoad.length > i) {
         if(!isMounted && taskLoad[i] === getTyresWithoutOffset && location.pathname.includes('tyres')) {
+          console.time('GET_REQUEST_TYRE')
           let tyreFilterGoods: any = await taskLoad[i](
             filter.width ?? '',
             filter.height ?? '',
@@ -120,6 +121,7 @@ const CatalogTyresPage = observer(() => {
             filter.reinforced ?? '',
             filter.sort,
           );
+          console.timeEnd('GET_REQUEST_TYRE')
           let setWidthFilter: any[] | null = [];
           let setHightFilter: any[] | null  = [];
           let setDiameterFilter: any[] | null  = [];
@@ -133,16 +135,14 @@ const CatalogTyresPage = observer(() => {
           let setRunFlatFilter: any[] | null  = [];
           let setStuddedFilter: any[] | null  = [];
 
-          //let getTuckTyreId: any[] | null = [];
-          //console.log(tyreFilterGoods);
           goodsTyre?.setTotalCount(tyreFilterGoods.rows.length);
-
+          console.time('SET_TYRES')
           page.loadMore > 0  ? goodsTyre?.setTyres(
             [...goodsTyre._tyres, 
               ...tyreFilterGoods.rows.splice(page.offset, page.limit)] 
             ) : goodsTyre?.setTyres(
               tyreFilterGoods.rows.splice(page.offset, page.limit));
-
+          console.timeEnd('SET_TYRES')
           tyreFilterGoods.rows.map((item: any) => 
           { return (
             setWidthFilter?.push(item.width.width),
@@ -150,10 +150,6 @@ const CatalogTyresPage = observer(() => {
             setDiameterFilter?.push(item.diameter.diameter),
             setBrandFilter?.push(item.tyre_brand.brand),
             setSeasonFilter?.push(item.season.season_ua),
-            // item.id_cat === 6 ? 
-            // setVehicleTypeFilter?.push('вантажні шини')
-            //   : null,
-            //setVehicleTypeFilter?.push(item.id_cat === 6 ? 'вантажні шини' : item.vehicle_type.vehicle_type_ua),
             setVehicleTypeFilter?.push(item.vehicle_type.vehicle_type_ua),
             setSpeedIndexFilter?.push(item.speed_index.speed_index_with_desc),
             setLoadIndexFilter?.push(item.load_index.load_index_with_desc),
@@ -161,14 +157,8 @@ const CatalogTyresPage = observer(() => {
             setReinforcedFilter?.push(item.reinforce.reinforce),
             setRunFlatFilter?.push(item.run_flat.run_flat),
             setStuddedFilter?.push(item.studded.studded)
-            
-            //getTuckTyreId?.push({'ID': item.id, 'ID_CAT' : item.id_cat, 'TYPE' : item.vehicle_type.vehicle_type_ua})
             )
           });
-          //setVehicleTypeFilter?.push('вантажні шини')
-          // setVehicleTypeFilter.map((item: any) => 
-          //   item === 'рульова' || item === 'ведуча' || item === 'причіпна' || item === 'універсальна' ? item ='вантажні шини' : item)
-
           if (filter.width) {
             goodsTyre?.setWidth(
               Array.from(new Set(
@@ -322,10 +312,6 @@ const CatalogTyresPage = observer(() => {
             )
           }
 
-          // const newAraay: any = Array.from(new Set(getTuckTyreId))
-          // console.log('TYPE_TRUCK_FILTER: ', newAraay.filter((item: any) => item.ID_CAT === 6));
-          console.log('TYPE: ', Array.from(new Set(setVehicleTypeFilter)))
-
           setWidthFilter = null;
           setHightFilter = null;
           setDiameterFilter = null;
@@ -343,7 +329,6 @@ const CatalogTyresPage = observer(() => {
         task();
         await yieldToMain(); 
       }
-      
       for (let key in params) {
         if (params[key] && !filter.season && filter.chipSeason.length === 0 ) {
           const tyreCatSeason = tyreSeasonCat(params[key]);

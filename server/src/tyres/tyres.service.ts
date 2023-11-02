@@ -64,7 +64,7 @@ export class TyresService {
             id: id,
             id_goods_sup: id_sup,
             full_name: full_name,
-            photo_url: photo_url,
+            //photo_url: photo_url,
             update_date: update_date,
           },
         });

@@ -11,10 +11,10 @@ export class WheelColor extends Model<WheelColor, WheelPropsConfigAttr> {
     //@Column({type: DataType.INTEGER, unique: true, allowNull: true})
     //color_id: number;
    
-    @Column({type: DataType.STRING, unique: true, allowNull: true})
+    @Column({type: DataType.STRING, allowNull: true})
     color: string;
 
-    @Column({type: DataType.STRING, unique: true, allowNull: true})
+    @Column({type: DataType.STRING, allowNull: true})
     color_short: string;
 
     @HasMany(() => Wheel, 'id_color')

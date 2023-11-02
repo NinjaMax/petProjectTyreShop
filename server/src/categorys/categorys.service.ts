@@ -38,26 +38,27 @@ export class CategorysService {
       }
     } catch (error){
       console.log(error);
-      //  throw new HttpException(
-      //   'Data is incorrect and must be uniq', 
-      //   HttpStatus.NOT_FOUND,
-      //   error.message);
+       throw new HttpException(
+        'Data is incorrect and must be uniq', 
+        HttpStatus.NOT_FOUND,
+        error.message);
     }
   }
 
-  async createCategoryWheelFromPrice(id: number, category: string) {
+  async createCategoryWheelFromPrice(id: number, category: string, chapter: string) {
     try {
       const [findCategory, created] =
         await this.categoryRepository.findOrCreate({
-          where: { category: category },
-          defaults: { category: category },
+          where: { category: category, chapter: chapter },
+          defaults: { category: category, chapter: chapter },
         });
       if (created || !created) {
         await findCategory.$add('wheels', id);
       }
-    } catch {
+    } catch (error) {
       throw new HttpException(
-        'Data is incorrect and must be uniq',
+        `${error.message}` +
+        ' Data is incorrect and must be uniq',
         HttpStatus.NOT_FOUND,
       );
     }
