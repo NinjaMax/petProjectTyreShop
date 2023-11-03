@@ -17,7 +17,7 @@ const CatalogWheels = observer(() => {
   const [active, setActive] = useState(false);
   const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem[] | null>([]);
   const [goodsCat, setGoodsCat] = useState([]);
-  const {goodsTyre, goodsWheel, page, filter, customer} = useContext<any | null>(Context);
+  const { goodsWheel, page, filter, customer} = useContext<any | null>(Context);
   
   const checkOrders = async (
     item : ICheckOrderItem, 

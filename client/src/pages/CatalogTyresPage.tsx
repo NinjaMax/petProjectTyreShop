@@ -92,6 +92,76 @@ const CatalogTyresPage = observer(() => {
     };
   },[filter, history, location.pathname]);
 
+  useEffect(() => {
+    let isMountedReview = false;
+    const getWheelsPathUrl = async () => {
+      if(!isMountedReview && location.pathname.includes('wheels')) {
+        if (localStorage.getItem('filterWheelUrl')) {
+          const getMainFilterItemW = localStorage.getItem('filterWheelUrl')?.split('/');
+          if (getMainFilterItemW![0]) {
+            filter.setType(getMainFilterItemW![0]);
+            if (getMainFilterItemW![0]?.includes(',')) {
+              filter.setChipType(
+                Array.from(new Set([...getMainFilterItemW![0]?.split(',')]))
+              ); 
+            } else {
+              filter.setChipType(
+                Array.from(new Set([...filter.chipSeason, getMainFilterItemW![0]]))
+              ); 
+            }
+          }
+          if (getMainFilterItemW![1]) {
+            filter.setBrands(getMainFilterItemW![1]);
+            if (getMainFilterItemW![1]?.includes(',')) {
+              filter.setChipBrands(
+                Array.from(new Set([...getMainFilterItemW![1]?.split(',')]))
+              );
+            } else {
+              filter.setChipBrands(
+                Array.from(new Set([...filter.chipBrands, getMainFilterItemW![1]]))
+              );
+            }
+          }
+          if (getMainFilterItemW![2]) {
+            filter.setWidth(getMainFilterItemW![2]);
+            filter.setChipWidth(
+              Array.from(new Set([...filter.chipWidth, getMainFilterItemW![2]]))
+            );
+          }
+          if (getMainFilterItemW![3]) {
+            filter.setBoltCount(getMainFilterItemW![3]);
+            if (getMainFilterItemW![3]?.includes(',')) {
+              filter.setChipBoltCount(
+                Array.from(new Set([...getMainFilterItemW![3]?.split(',')]))
+              );
+            } else {
+              filter.setChipBoltCount(
+                Array.from(new Set([...filter.chipBoltCount, getMainFilterItemW![3]]))
+              );
+            }
+          }
+          if (getMainFilterItemW![4]) {
+            filter.setDiameter(getMainFilterItemW![4]);
+            filter.setChipDiameter(
+              Array.from(new Set([...filter.chipDiameter, getMainFilterItemW![4]]))
+            );
+          }
+          localStorage.removeItem('filterWheelUrl');
+        
+          const wheelCatalogPath: string | undefined = 
+          `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(getMainFilterItemW![0])}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(getMainFilterItemW![1])}` : ''}${filter.width ? `/w${createStringUrl(getMainFilterItemW![2])}` : ''}${filter.diameter ? `/r${createStringUrl(getMainFilterItemW![4])}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(getMainFilterItemW![3])}` : '' }`;
+          history.push(
+            wheelCatalogPath, 
+          );
+        }
+      }
+    };
+    getWheelsPathUrl();
+    return () => {
+      isMountedReview = true;
+    };
+  },[filter, history, location.pathname]);
+
   useEffect(() =>{
     let isMounted = false;
     const loadCatalogTyreTask = async() => {
@@ -477,111 +547,70 @@ const CatalogTyresPage = observer(() => {
     location.pathname,
   ]);
   
-  useEffect(() => {
-    let isMounted = false;
-    const createNewTyrePath = async() => {
-      if(!isMounted) {
-        // if (location.pathname.includes('tyres') && !params) {
-        //   const toStringUrlSeason: string | undefined = createStringUrl(
-        //     filter.season 
-        //   );
-        //   const toStringUrlStudded: string | undefined = createStringUrl(
-        //     filter.studded 
-        //   );
-        //   const toStringUrlBrand: string | undefined = createStringUrl( 
-        //     filter.brands
-        //   );
-        //   const toStringUrlTypeVehicle: string | undefined = createStringUrl( 
-        //     filter.vehicle_type
-        //   );
-        //   const toStringUrlWidth: string | undefined = createStringUrl(
-        //     filter.width
-        //   );
-        //   const toStringUrlHeight: string | undefined = createStringUrl(
-        //     filter.height
-        //   );
-        //   const toStringUrlDiameter: string | undefined = createStringUrl(
-        //     filter.diameter 
-        //   );
-        //   const toStringUrlLoadIndex: string | undefined = createStringUrl(
-        //     filter.load_index
-        //   );
-        //   const toStringUrlSpeedIndex: string | undefined = createStringUrl(
-        //     filter.speed_index
-        //   );
-        //   const toStringUrlReinforced: string | undefined = createStringUrl(
-        //     filter.reinforced
-        //   );
-        //   const toStringUrlOm: string | undefined = createStringUrl(
-        //     filter.homologation,
-        //   );
+  // useEffect(() => {
+  //   let isMounted = false;
+  //   const createNewTyrePath = async() => {
+  //     if(!isMounted) {
+  //       if (location.pathname.includes('wheels')) {
+  //         const toStringUrlTypeWheel: string | undefined = createStringUrl(
+  //           filter.type 
+  //         );
+  //         const toStringUrlBrand: string | undefined = createStringUrl( 
+  //           filter.brands
+  //         );
+  //         const toStringUrlWidth: string | undefined = createStringUrl(
+  //           filter.width
+  //         );
+  //         const toStringUrlDiameter: string | undefined = createStringUrl(
+  //           filter.diameter 
+  //         );
+  //         const toStringUrlBoltCount: string | undefined = createStringUrl(
+  //           filter.bolt_count
+  //         );
+  //         const toStringUrlPcd: string | undefined = createStringUrl(
+  //           filter.pcd
+  //         );
+  //         const toStringUrEt: string | undefined = createStringUrl(
+  //           filter.et
+  //         );
+  //         const toStringUrlDia: string | undefined = createStringUrl(
+  //           filter.dia,
+  //         );
 
-        //   const tyreCatalogPath: string | undefined = 
-        //   `${CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/${toStringUrlSeason}` : '' }${filter.studded && !filter.studded.includes(',') ? `/${toStringUrlStudded}` : '' }${filter.vehicle_type && !filter.vehicle_type.includes(',') ? `/${toStringUrlTypeVehicle}` : ''}${filter.brands && !filter.brands.includes(',') ? `/${toStringUrlBrand}` : ''}${filter.width ? `/w${toStringUrlWidth}` : ''}${filter.height ? `/h${toStringUrlHeight}` : ''}${filter.diameter ? `/r${toStringUrlDiameter}` : ''}${filter.load_index && !filter.load_index.includes(',') ? `/li-${toStringUrlLoadIndex}` : '' }${filter.speed_index && !filter.speed_index.includes(',') ? `/si-${toStringUrlSpeedIndex}` : '' }${filter.reinforced && !filter.reinforced.includes(',') ? `/xl-${toStringUrlReinforced}` : '' }${filter.homologation && !filter.homologation.includes(',') ? `/om-${toStringUrlOm}` : '' }`;
-        //   history.push(
-        //     tyreCatalogPath, 
-        //   );
-        // }
-        if (location.pathname.includes('wheels')) {
-          const toStringUrlTypeWheel: string | undefined = createStringUrl(
-            filter.type 
-          );
-          const toStringUrlBrand: string | undefined = createStringUrl( 
-            filter.brands
-          );
-          const toStringUrlWidth: string | undefined = createStringUrl(
-            filter.width
-          );
-          const toStringUrlDiameter: string | undefined = createStringUrl(
-            filter.diameter 
-          );
-          const toStringUrlBoltCount: string | undefined = createStringUrl(
-            filter.bolt_count
-          );
-          const toStringUrlPcd: string | undefined = createStringUrl(
-            filter.pcd
-          );
-          const toStringUrEt: string | undefined = createStringUrl(
-            filter.et
-          );
-          const toStringUrlDia: string | undefined = createStringUrl(
-            filter.dia,
-          );
-
-          const wheelCatalogPath: string | undefined = 
-          `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${toStringUrlTypeWheel}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${toStringUrlBrand}` : ''}${filter.width ? `/w${toStringUrlWidth}` : ''}${filter.diameter ? `/r${toStringUrlDiameter}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${toStringUrlBoltCount}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${toStringUrlPcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${toStringUrEt}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${toStringUrlDia}` : '' }`;
-          history.push(
-            wheelCatalogPath, 
-          );
-        }
-      }
-    };
-    createNewTyrePath();
-    return () => {
-      isMounted = true;
-    };
-  },[
-    params,
-    history, 
-    filter,
-    filter.brands, 
-    filter.diameter, 
-    filter.height, 
-    filter.season, 
-    filter.vehicle_type, 
-    filter.width, 
-    filter.studded, 
-    filter.load_index, 
-    filter.speed_index, 
-    filter.reinforced, 
-    filter.homologation, 
-    location.pathname, 
-    filter.type, 
-    filter.bolt_count, 
-    filter.pcd, 
-    filter.et, 
-    filter.dia
-  ]);
+  //         const wheelCatalogPath: string | undefined = 
+  //         `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${toStringUrlTypeWheel}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${toStringUrlBrand}` : ''}${filter.width ? `/w${toStringUrlWidth}` : ''}${filter.diameter ? `/r${toStringUrlDiameter}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${toStringUrlBoltCount}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${toStringUrlPcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${toStringUrEt}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${toStringUrlDia}` : '' }`;
+  //         history.push(
+  //           wheelCatalogPath, 
+  //         );
+  //       }
+  //     }
+  //   };
+  //   createNewTyrePath();
+  //   return () => {
+  //     isMounted = true;
+  //   };
+  // },[
+  //   params,
+  //   history, 
+  //   filter,
+  //   filter.brands, 
+  //   filter.diameter, 
+  //   filter.height, 
+  //   filter.season, 
+  //   filter.vehicle_type, 
+  //   filter.width, 
+  //   filter.studded, 
+  //   filter.load_index, 
+  //   filter.speed_index, 
+  //   filter.reinforced, 
+  //   filter.homologation, 
+  //   location.pathname, 
+  //   filter.type, 
+  //   filter.bolt_count, 
+  //   filter.pcd, 
+  //   filter.et, 
+  //   filter.dia
+  // ]);
 
 
   useEffect(() => {
@@ -610,75 +639,75 @@ const CatalogTyresPage = observer(() => {
         getWheelsWithoutOffset,
       ];
 
-      if (localStorage.getItem('filterWheelUrl')) {
-        const getMainFilterItemW = localStorage.getItem('filterWheelUrl')?.split('/');
-        if (getMainFilterItemW![0]) {
-          filter.setType(getMainFilterItemW![0]);
-          if (getMainFilterItemW![0]?.includes(',')) {
-            filter.setChipType(
-              Array.from(new Set([...getMainFilterItemW![0]?.split(',')]))
-            ); 
-          } else {
-            filter.setChipType(
-              Array.from(new Set([...filter.chipSeason, getMainFilterItemW![0]]))
-            ); 
-          }
-        }
-        if (getMainFilterItemW![1]) {
-          filter.setBrands(getMainFilterItemW![1]);
-          if (getMainFilterItemW![1]?.includes(',')) {
-            filter.setChipBrands(
-              Array.from(new Set([...getMainFilterItemW![1]?.split(',')]))
-            );
-          } else {
-            filter.setChipBrands(
-              Array.from(new Set([...filter.chipBrands, getMainFilterItemW![1]]))
-            );
-          }
-        }
-        if (getMainFilterItemW![2]) {
-          filter.setWidth(getMainFilterItemW![2]);
-          filter.setChipWidth(
-            Array.from(new Set([...filter.chipWidth, getMainFilterItemW![2]]))
-          );
-        }
-        if (getMainFilterItemW![3]) {
-          filter.setBoltCount(getMainFilterItemW![3]);
-          if (getMainFilterItemW![3]?.includes(',')) {
-            filter.setChipBoltCount(
-              Array.from(new Set([...getMainFilterItemW![3]?.split(',')]))
-            );
-          } else {
-            filter.setChipBoltCount(
-              Array.from(new Set([...filter.chipBoltCount, getMainFilterItemW![3]]))
-            );
-          }
-        }
-        if (getMainFilterItemW![4]) {
-          filter.setDiameter(getMainFilterItemW![4]);
-          filter.setChipDiameter(
-            Array.from(new Set([...filter.chipDiameter, getMainFilterItemW![4]]))
-          );
-        }
-        localStorage.removeItem('filterWheelUrl');
-      }
+      // if (localStorage.getItem('filterWheelUrl')) {
+      //   const getMainFilterItemW = localStorage.getItem('filterWheelUrl')?.split('/');
+      //   if (getMainFilterItemW![0]) {
+      //     filter.setType(getMainFilterItemW![0]);
+      //     if (getMainFilterItemW![0]?.includes(',')) {
+      //       filter.setChipType(
+      //         Array.from(new Set([...getMainFilterItemW![0]?.split(',')]))
+      //       ); 
+      //     } else {
+      //       filter.setChipType(
+      //         Array.from(new Set([...filter.chipSeason, getMainFilterItemW![0]]))
+      //       ); 
+      //     }
+      //   }
+      //   if (getMainFilterItemW![1]) {
+      //     filter.setBrands(getMainFilterItemW![1]);
+      //     if (getMainFilterItemW![1]?.includes(',')) {
+      //       filter.setChipBrands(
+      //         Array.from(new Set([...getMainFilterItemW![1]?.split(',')]))
+      //       );
+      //     } else {
+      //       filter.setChipBrands(
+      //         Array.from(new Set([...filter.chipBrands, getMainFilterItemW![1]]))
+      //       );
+      //     }
+      //   }
+      //   if (getMainFilterItemW![2]) {
+      //     filter.setWidth(getMainFilterItemW![2]);
+      //     filter.setChipWidth(
+      //       Array.from(new Set([...filter.chipWidth, getMainFilterItemW![2]]))
+      //     );
+      //   }
+      //   if (getMainFilterItemW![3]) {
+      //     filter.setBoltCount(getMainFilterItemW![3]);
+      //     if (getMainFilterItemW![3]?.includes(',')) {
+      //       filter.setChipBoltCount(
+      //         Array.from(new Set([...getMainFilterItemW![3]?.split(',')]))
+      //       );
+      //     } else {
+      //       filter.setChipBoltCount(
+      //         Array.from(new Set([...filter.chipBoltCount, getMainFilterItemW![3]]))
+      //       );
+      //     }
+      //   }
+      //   if (getMainFilterItemW![4]) {
+      //     filter.setDiameter(getMainFilterItemW![4]);
+      //     filter.setChipDiameter(
+      //       Array.from(new Set([...filter.chipDiameter, getMainFilterItemW![4]]))
+      //     );
+      //   }
+      //   localStorage.removeItem('filterWheelUrl');
+      // }
 
       let i:number = 0;
       while(taskLoad.length > i) {
         if (!isMounted && taskLoad[i] === getWheelsWithoutOffset && location.pathname.includes('wheels')) {
           let wheelFilterGoods: any = await taskLoad[i](
-            filter.width,
-            filter.diameter,
-            filter.bolt_count,
-            filter.bolt_count_pcd,
-            filter.brands,
-            filter.price,
-            filter.type,
-            filter.color,
-            filter.dia,
-            filter.et,
-            filter.pcd,
-            filter.pcd2,
+            filter.width ?? '',
+            filter.diameter ?? '',
+            filter.bolt_count ?? '',
+            filter.bolt_count_pcd ?? '',
+            filter.brands ?? '',
+            filter.price ?? '',
+            filter.type ?? '',
+            filter.color ?? '',
+            filter.dia ?? '',
+            filter.et ?? '',
+            filter.pcd ?? '',
+            filter.pcd2 ?? '',
             filter.sort,
           );
           let setWidthFilter:any[] | null  = [];
@@ -692,9 +721,10 @@ const CatalogTyresPage = observer(() => {
           let setPcdFilter :any[] | null  = [];
           let setPcd2Filter :any[] | null  = [];
           let setTypeFilter :any[] | null  = [];
-
-          goodsWheel?.setWheelsFilter(wheelFilterGoods);
-          goodsWheel._wheels_filter.map((item: any) => 
+          //console.log('WHEELS: ', wheelFilterGoods.rows)
+          goodsWheel?.setTotalCount(wheelFilterGoods.rows.length)
+          //goodsWheel?.setWheelsFilter(wheelFilterGoods);
+          wheelFilterGoods.rows.map((item: any) => 
           { return (
             setWidthFilter?.push(item.width.width),
             setDiameterFilter?.push(item.diameter.diameter),
@@ -711,9 +741,9 @@ const CatalogTyresPage = observer(() => {
           })
           page.loadMore > 0 ? goodsWheel?.setWheels(
             [...goodsWheel._wheels, 
-              ...wheelFilterGoods.splice(page.offset, page.limit)] 
+              ...wheelFilterGoods.rows.splice(page.offset, page.limit)] 
             ) : goodsWheel?.setWheels(
-              wheelFilterGoods.splice(page.offset, page.limit));
+              wheelFilterGoods.rows.splice(page.offset, page.limit));
 
           if (filter.width) {
             goodsWheel?.setWidth(
@@ -868,8 +898,9 @@ const CatalogTyresPage = observer(() => {
         task();
         await yieldToMain(); 
       }
-      if (params.type && !filter.type && filter.chipSeason.length === 0 ) {
-        const typeWheelCat = typeWheelsCat(params.type);
+    for (let key in params) {
+      if (params[key] && !filter.type && filter.chipSeason.length === 0 ) {
+        const typeWheelCat = typeWheelsCat(params[key]);
         if (typeWheelCat) {
           filter.setType(typeWheelCat);
           filter.setChipType(
@@ -877,10 +908,10 @@ const CatalogTyresPage = observer(() => {
           ); 
         }
       }
-      if (params.type && !filter.brands && filter.chipBrands.length === 0) {
+      if (params[key] && !filter.brands && filter.chipBrands.length === 0) {
         const findBrandsInType = goodsWheel._brands?.find(
           (brands:string) => 
-          createStringUrl(brands.toLocaleLowerCase()) === params.type);
+          createStringUrl(brands.toLocaleLowerCase()) === params[key]);
         if (findBrandsInType) {
           filter.setBrands(findBrandsInType);
           filter.setChipBrands(
@@ -888,20 +919,20 @@ const CatalogTyresPage = observer(() => {
           );
         }
       }
-      if (params.brands && !filter.brands && filter.chipBrands.length === 0) {
-        const findBrand = goodsWheel._brands?.find(
-          (brands:string) => 
-          createStringUrl(brands.toLocaleLowerCase()) === params.brands);
-        if (findBrand) {
-          filter.setBrands(findBrand);
-          filter.setChipBrands(
-            Array.from(new Set([...filter.chipBrands, findBrand]))
-          );
-        }
-      }
-      if (params.type?.includes('w') && !filter.width && filter.chipWidth.length === 0 ) {
+      // if (params[key] && !filter.brands && filter.chipBrands.length === 0) {
+      //   const findBrand = goodsWheel._brands?.find(
+      //     (brands:string) => 
+      //     createStringUrl(brands.toLocaleLowerCase()) === params[key]);
+      //   if (findBrand) {
+      //     filter.setBrands(findBrand);
+      //     filter.setChipBrands(
+      //       Array.from(new Set([...filter.chipBrands, findBrand]))
+      //     );
+      //   }
+      // }
+      if (params[key]?.includes('w') && !filter.width && filter.chipWidth.length === 0 ) {
         const findWidthInType = goodsWheel._width?.find(
-          (width:string) => width === params.type?.slice(1, params.type?.length)
+          (width:string) => width === params[key]?.slice(1, params[key]?.length)
         );
         if (findWidthInType) {
           filter.setWidth(findWidthInType);
@@ -910,32 +941,32 @@ const CatalogTyresPage = observer(() => {
           );
         }
       }
-      if (params.brands?.includes('w') && !filter.width && filter.chipWidth.length === 0 ) {
-        const findWidthInBrand = goodsWheel._width?.find(
-          (width:string) => width === params.brands?.slice(1, params.brands?.length)
-        );
-        if (findWidthInBrand) {
-          filter.setWidth(findWidthInBrand);
-          filter.setChipWidth(
-            Array.from(new Set([...filter.chipWidth, findWidthInBrand]))
-          );
-        }
-      }
-      if (params.width?.includes('w') && !filter.width && filter.chipWidth.length === 0 ) {
-        const findWidth = goodsWheel._width?.find(
-          (width:string) => width === params.width?.slice(1, params.width?.length)
-        );
-        if (findWidth) {
-          filter.setWidth(findWidth);
-          filter.setChipWidth(
-            Array.from(new Set([...filter.chipWidth, findWidth]))
-          );
-        }
-      }
-      if (params.type?.includes('r') && !filter.diameter && filter.chipDiameter.length === 0) {
+      // if (params[key]?.includes('w') && !filter.width && filter.chipWidth.length === 0 ) {
+      //   const findWidthInBrand = goodsWheel._width?.find(
+      //     (width:string) => width === params[key]?.slice(1, params[key]?.length)
+      //   );
+      //   if (findWidthInBrand) {
+      //     filter.setWidth(findWidthInBrand);
+      //     filter.setChipWidth(
+      //       Array.from(new Set([...filter.chipWidth, findWidthInBrand]))
+      //     );
+      //   }
+      // }
+      // if (params[key]?.includes('w') && !filter.width && filter.chipWidth.length === 0 ) {
+      //   const findWidth = goodsWheel._width?.find(
+      //     (width:string) => width === params[key]?.slice(1, params[key]?.length)
+      //   );
+      //   if (findWidth) {
+      //     filter.setWidth(findWidth);
+      //     filter.setChipWidth(
+      //       Array.from(new Set([...filter.chipWidth, findWidth]))
+      //     );
+      //   }
+      // }
+      if (params[key]?.includes('r') && !filter.diameter && filter.chipDiameter.length === 0) {
         const findDiameterInType = goodsWheel._diameter?.find(
           (diameter:string) => 
-          diameter === params.type?.slice(1, params.type?.length));
+          diameter === params[key]?.slice(1, params[key]?.length));
         if (findDiameterInType) {
           filter.setDiameter(findDiameterInType);
           filter.setChipDiameter(
@@ -943,42 +974,42 @@ const CatalogTyresPage = observer(() => {
           );
         }
       }
-      if (params.brands?.includes('r') && !filter.diameter && filter.chipDiameter.length === 0) {
-        const findDiameterInBrand = goodsWheel._diameter?.find(
-          (diameter:string) => 
-          diameter === params.brands?.slice(1, params.brands?.length));
-        if (findDiameterInBrand) {
-          filter.setDiameter(findDiameterInBrand);
-          filter.setChipDiameter(
-            Array.from(new Set([...filter.chipDiameter, findDiameterInBrand]))
-          );
-        }
-      }
-      if (params.width?.includes('r') && !filter.diameter && filter.chipDiameter.length === 0) {
-        const findDiameterInBrand = goodsWheel._diameter?.find(
-          (diameter:string) => 
-          diameter === params.width?.slice(1, params.width?.length));
-        if (findDiameterInBrand) {
-          filter.setDiameter(findDiameterInBrand);
-          filter.setChipDiameter(
-            Array.from(new Set([...filter.chipDiameter, findDiameterInBrand]))
-          );
-        }
-      }
-      if (params.diameter?.includes('r') && !filter.diameter && filter.chipDiameter.length === 0) {
-        const findDiameter = goodsWheel._diameter?.find(
-          (diameter:string) => 
-          diameter === params.diameter?.slice(1, params.diameter?.length));
-        if (findDiameter) {
-          filter.setDiameter(findDiameter);
-          filter.setChipDiameter(
-            Array.from(new Set([...filter.chipDiameter, findDiameter]))
-          );
-        }
-      }
-      if (params.type && !filter.bolt_count && filter.chipBoltCount.length === 0) {
+      // if (params[key]?.includes('r') && !filter.diameter && filter.chipDiameter.length === 0) {
+      //   const findDiameterInBrand = goodsWheel._diameter?.find(
+      //     (diameter:string) => 
+      //     diameter === params[key]?.slice(1, params[key]?.length));
+      //   if (findDiameterInBrand) {
+      //     filter.setDiameter(findDiameterInBrand);
+      //     filter.setChipDiameter(
+      //       Array.from(new Set([...filter.chipDiameter, findDiameterInBrand]))
+      //     );
+      //   }
+      // }
+      // if (params[key]?.includes('r') && !filter.diameter && filter.chipDiameter.length === 0) {
+      //   const findDiameterInBrand = goodsWheel._diameter?.find(
+      //     (diameter:string) => 
+      //     diameter === params[key]?.slice(1, params[key]?.length));
+      //   if (findDiameterInBrand) {
+      //     filter.setDiameter(findDiameterInBrand);
+      //     filter.setChipDiameter(
+      //       Array.from(new Set([...filter.chipDiameter, findDiameterInBrand]))
+      //     );
+      //   }
+      // }
+      // if (params[key]?.includes('r') && !filter.diameter && filter.chipDiameter.length === 0) {
+      //   const findDiameter = goodsWheel._diameter?.find(
+      //     (diameter:string) => 
+      //     diameter === params[key]?.slice(1, params[key]?.length));
+      //   if (findDiameter) {
+      //     filter.setDiameter(findDiameter);
+      //     filter.setChipDiameter(
+      //       Array.from(new Set([...filter.chipDiameter, findDiameter]))
+      //     );
+      //   }
+      // }
+      if (params[key] && !filter.bolt_count && filter.chipBoltCount.length === 0) {
         const findBoltInType = goodsWheel._bolt_count?.find(
-          (bolt_countItem:string) => bolt_countItem === params.type
+          (bolt_countItem:string) => bolt_countItem === params[key]
         );
         if (findBoltInType) {
           filter.setBoltCount(findBoltInType);
@@ -987,54 +1018,54 @@ const CatalogTyresPage = observer(() => {
           );
         }
       }
-      if (params.brands && !filter.bolt_count && filter.chipBoltCount.length === 0) {
-        const findBoltInBrand = goodsWheel._bolt_count?.find(
-          (bolt_countItem:string) => bolt_countItem === params.brands
-        );
-        if (findBoltInBrand) {
-          filter.setBoltCount(findBoltInBrand);
-          filter.setChipBoltCount(
-            Array.from(new Set([...filter.chipBoltCount, findBoltInBrand]))
-          );
-        }
-      }
-      if (params.width && !filter.bolt_count && filter.chipBoltCount.length === 0) {
-        const findBoltInWidth = goodsWheel._bolt_count?.find(
-          (bolt_countItem:string) => bolt_countItem === params.width
-        );
-        if (findBoltInWidth) {
-          filter.setBoltCount(findBoltInWidth);
-          filter.setChipBoltCount(
-            Array.from(new Set([...filter.chipBoltCount, findBoltInWidth]))
-          );
-        }
-      }
-      if (params.diameter && !filter.bolt_count && filter.chipBoltCount.length === 0) {
-        const findBoltInDiameter = goodsWheel._bolt_count?.find(
-          (bolt_countItem:string) => bolt_countItem === params.diameter
-        );
-        if (findBoltInDiameter) {
-          filter.setBoltCount(findBoltInDiameter);
-          filter.setChipBoltCount(
-            Array.from(new Set([...filter.chipBoltCount, findBoltInDiameter]))
-          );
-        }
-      }
-      if (params.boltcount && !filter.bolt_count && filter.chipBoltCount.length === 0) {
-        const findBoltCount = goodsWheel._bolt_count?.find(
-          (bolt_countItem:string) => bolt_countItem === params.boltcount
-        );
-        if (findBoltCount) {
-          filter.setBoltCount(findBoltCount);
-          filter.setChipBoltCount(
-            Array.from(new Set([...filter.chipBoltCount, findBoltCount]))
-          );
-        }
-      }
-      if (params.type?.includes('pcd') && !filter.pcd && filter.chipPcd.length === 0) {
+      // if (params[key] && !filter.bolt_count && filter.chipBoltCount.length === 0) {
+      //   const findBoltInBrand = goodsWheel._bolt_count?.find(
+      //     (bolt_countItem:string) => bolt_countItem === params[key]
+      //   );
+      //   if (findBoltInBrand) {
+      //     filter.setBoltCount(findBoltInBrand);
+      //     filter.setChipBoltCount(
+      //       Array.from(new Set([...filter.chipBoltCount, findBoltInBrand]))
+      //     );
+      //   }
+      // }
+      // if (params[key] && !filter.bolt_count && filter.chipBoltCount.length === 0) {
+      //   const findBoltInWidth = goodsWheel._bolt_count?.find(
+      //     (bolt_countItem:string) => bolt_countItem === params[key]
+      //   );
+      //   if (findBoltInWidth) {
+      //     filter.setBoltCount(findBoltInWidth);
+      //     filter.setChipBoltCount(
+      //       Array.from(new Set([...filter.chipBoltCount, findBoltInWidth]))
+      //     );
+      //   }
+      // }
+      // if (params[key] && !filter.bolt_count && filter.chipBoltCount.length === 0) {
+      //   const findBoltInDiameter = goodsWheel._bolt_count?.find(
+      //     (bolt_countItem:string) => bolt_countItem === params[key]
+      //   );
+      //   if (findBoltInDiameter) {
+      //     filter.setBoltCount(findBoltInDiameter);
+      //     filter.setChipBoltCount(
+      //       Array.from(new Set([...filter.chipBoltCount, findBoltInDiameter]))
+      //     );
+      //   }
+      // }
+      // if (params[key] && !filter.bolt_count && filter.chipBoltCount.length === 0) {
+      //   const findBoltCount = goodsWheel._bolt_count?.find(
+      //     (bolt_countItem:string) => bolt_countItem === params[key]
+      //   );
+      //   if (findBoltCount) {
+      //     filter.setBoltCount(findBoltCount);
+      //     filter.setChipBoltCount(
+      //       Array.from(new Set([...filter.chipBoltCount, findBoltCount]))
+      //     );
+      //   }
+      // }
+      if (params[key]?.includes('pcd') && !filter.pcd && filter.chipPcd.length === 0) {
         const findPcdInType = goodsWheel._pcd?.find(
           (pcdItem:string) => 
-          pcdItem === params.type?.slice(3, params.type?.length));
+          pcdItem === params[key]?.slice(3, params[key]?.length));
         if (findPcdInType) {
           filter.setPcd(findPcdInType);
           filter.setChipPcd(
@@ -1042,65 +1073,65 @@ const CatalogTyresPage = observer(() => {
           );
         }
       }
-      if (params.brands?.includes('pcd') && !filter.pcd && filter.chipPcd.length === 0) {
-        const findPcdBrand = goodsWheel._pcd?.find(
-          (pcdItem:string) => 
-          pcdItem === params.brands?.slice(3, params.brands?.length));
-        if (findPcdBrand) {
-          filter.setPcd(findPcdBrand);
-          filter.setChipPcd(
-            Array.from(new Set([...filter.chipPcd, findPcdBrand]))
-          );
-        }
-      }
-      if (params.width?.includes('pcd') && !filter.pcd && filter.chipPcd.length === 0) {
-        const findPcdInWidth = goodsWheel._pcd?.find(
-          (pcdItem:string) => 
-          pcdItem === params.width?.slice(3, params.width?.length));
-        if (findPcdInWidth) {
-          filter.setPcd(findPcdInWidth);
-          filter.setChipPcd(
-            Array.from(new Set([...filter.chipPcd, findPcdInWidth]))
-          );
-        }
-      }
-      if (params.diameter?.includes('pcd') && !filter.pcd && filter.chipPcd.length === 0) {
-        const findPcdInDiameter = goodsWheel._pcd?.find(
-          (pcdItem:string) => 
-          pcdItem === params.diameter?.slice(3, params.diameter?.length));
-        if (findPcdInDiameter) {
-          filter.setPcd(findPcdInDiameter);
-          filter.setChipPcd(
-            Array.from(new Set([...filter.chipPcd, findPcdInDiameter]))
-          );
-        }
-      }
-      if (params.boltcount?.includes('pcd') && !filter.pcd && filter.chipPcd.length === 0) {
-        const findPcdInBoltCount = goodsWheel._pcd?.find(
-          (pcdItem:string) => 
-          pcdItem === params.boltcount?.slice(3, params.boltcount?.length));
-        if (findPcdInBoltCount) {
-          filter.setPcd(findPcdInBoltCount);
-          filter.setChipPcd(
-            Array.from(new Set([...filter.chipPcd, findPcdInBoltCount]))
-          );
-        }
-      }
-      if (params.pcd?.includes('pcd') && !filter.pcd && filter.chipPcd.length === 0) {
-        const findPcd = goodsWheel._pcd?.find(
-          (pcdItem:string) => 
-          pcdItem === params.pcd?.slice(3, params.pcd?.length));
-        if (findPcd) {
-          filter.setPcd(findPcd);
-          filter.setChipPcd(
-            Array.from(new Set([...filter.chipPcd, findPcd]))
-          );
-        }
-      }
-      if (params.type?.includes('et') && !filter.et && filter.chipEt.length === 0) {
+      // if (params[key]?.includes('pcd') && !filter.pcd && filter.chipPcd.length === 0) {
+      //   const findPcdBrand = goodsWheel._pcd?.find(
+      //     (pcdItem:string) => 
+      //     pcdItem === params[key]?.slice(3, params[key]?.length));
+      //   if (findPcdBrand) {
+      //     filter.setPcd(findPcdBrand);
+      //     filter.setChipPcd(
+      //       Array.from(new Set([...filter.chipPcd, findPcdBrand]))
+      //     );
+      //   }
+      // }
+      // if (params[key]?.includes('pcd') && !filter.pcd && filter.chipPcd.length === 0) {
+      //   const findPcdInWidth = goodsWheel._pcd?.find(
+      //     (pcdItem:string) => 
+      //     pcdItem === params[key]?.slice(3, params[key]?.length));
+      //   if (findPcdInWidth) {
+      //     filter.setPcd(findPcdInWidth);
+      //     filter.setChipPcd(
+      //       Array.from(new Set([...filter.chipPcd, findPcdInWidth]))
+      //     );
+      //   }
+      // }
+      // if (params[key]?.includes('pcd') && !filter.pcd && filter.chipPcd.length === 0) {
+      //   const findPcdInDiameter = goodsWheel._pcd?.find(
+      //     (pcdItem:string) => 
+      //     pcdItem === params[key]?.slice(3, params[key]?.length));
+      //   if (findPcdInDiameter) {
+      //     filter.setPcd(findPcdInDiameter);
+      //     filter.setChipPcd(
+      //       Array.from(new Set([...filter.chipPcd, findPcdInDiameter]))
+      //     );
+      //   }
+      // }
+      // if (params[key]?.includes('pcd') && !filter.pcd && filter.chipPcd.length === 0) {
+      //   const findPcdInBoltCount = goodsWheel._pcd?.find(
+      //     (pcdItem:string) => 
+      //     pcdItem === params[key]?.slice(3, params[key]?.length));
+      //   if (findPcdInBoltCount) {
+      //     filter.setPcd(findPcdInBoltCount);
+      //     filter.setChipPcd(
+      //       Array.from(new Set([...filter.chipPcd, findPcdInBoltCount]))
+      //     );
+      //   }
+      // }
+      // if (params[key]?.includes('pcd') && !filter.pcd && filter.chipPcd.length === 0) {
+      //   const findPcd = goodsWheel._pcd?.find(
+      //     (pcdItem:string) => 
+      //     pcdItem === params[key]?.slice(3, params[key]?.length));
+      //   if (findPcd) {
+      //     filter.setPcd(findPcd);
+      //     filter.setChipPcd(
+      //       Array.from(new Set([...filter.chipPcd, findPcd]))
+      //     );
+      //   }
+      // }
+      if (params[key]?.includes('et') && !filter.et && filter.chipEt.length === 0) {
         const findEtInType = goodsWheel._et?.find(
           (etItem:string) => 
-          etItem === params.type?.slice(2, params.type?.length));
+          etItem === params[key]?.slice(2, params[key]?.length));
         if (findEtInType) {
           filter.setEt(findEtInType);
           filter.setChipEt(
@@ -1108,76 +1139,76 @@ const CatalogTyresPage = observer(() => {
           );
         }
       }
-      if (params.brands?.includes('et') && !filter.et && filter.chipEt.length === 0) {
-        const findEtBrand = goodsWheel._et?.find(
-          (etItem:string) => 
-          etItem === params.brands?.slice(2, params.brands?.length));
-        if (findEtBrand) {
-          filter.setEt(findEtBrand);
-          filter.setChipEt(
-            Array.from(new Set([...filter.chipEt, findEtBrand]))
-          );
-        }
-      }
-      if (params.width?.includes('et') && !filter.et && filter.chipEt.length === 0) {
-        const findEtInWidth = goodsWheel._et?.find(
-          (etItem:string) => 
-          etItem === params.width?.slice(2, params.width?.length));
-        if (findEtInWidth) {
-          filter.setEt(findEtInWidth);
-          filter.setChipEt(
-            Array.from(new Set([...filter.chipEt, findEtInWidth]))
-          );
-        }
-      }
-      if (params.diameter?.includes('et') && !filter.et && filter.chipEt.length === 0) {
-        const findEtDiameter = goodsWheel._et?.find(
-          (etItem:string) => 
-          etItem === params.diameter?.slice(2, params.diameter?.length));
-        if (findEtDiameter) {
-          filter.setEt(findEtDiameter);
-          filter.setChipEt(
-            Array.from(new Set([...filter.chipEt, findEtDiameter]))
-          );
-        }
-      }
-      if (params.boltcount?.includes('et') && !filter.et && filter.chipEt.length === 0) {
-        const findEtInBoltCount = goodsWheel._et?.find(
-          (etItem:string) => 
-          etItem === params.boltcount?.slice(2, params.boltcount?.length));
-        if (findEtInBoltCount) {
-          filter.setEt(findEtInBoltCount);
-          filter.setChipEt(
-            Array.from(new Set([...filter.chipEt, findEtInBoltCount]))
-          );
-        }
-      }
-      if (params.pcd?.includes('et') && !filter.et && filter.chipEt.length === 0) {
-        const findEtInPcd = goodsWheel._et?.find(
-          (etItem:string) => 
-          etItem === params.pcd?.slice(2, params.pcd?.length));
-        if (findEtInPcd) {
-          filter.setEt(findEtInPcd);
-          filter.setChipEt(
-            Array.from(new Set([...filter.chipEt, findEtInPcd]))
-          );
-        }
-      }
-      if (params.et?.includes('et') && !filter.et && filter.chipEt.length === 0) {
-        const findEt = goodsWheel._et?.find(
-          (etItem:string) => 
-          etItem === params.et?.slice(2, params.et?.length));
-        if (findEt) {
-          filter.setEt(findEt);
-          filter.setChipEt(
-            Array.from(new Set([...filter.chipEt, findEt]))
-          );
-        }
-      }
-      if (params.type?.includes('dia') && !filter.dia && filter.chipDia.length === 0) {
+      // if (params[key]?.includes('et') && !filter.et && filter.chipEt.length === 0) {
+      //   const findEtBrand = goodsWheel._et?.find(
+      //     (etItem:string) => 
+      //     etItem === params[key]?.slice(2, params[key]?.length));
+      //   if (findEtBrand) {
+      //     filter.setEt(findEtBrand);
+      //     filter.setChipEt(
+      //       Array.from(new Set([...filter.chipEt, findEtBrand]))
+      //     );
+      //   }
+      // }
+      // if (params[key]?.includes('et') && !filter.et && filter.chipEt.length === 0) {
+      //   const findEtInWidth = goodsWheel._et?.find(
+      //     (etItem:string) => 
+      //     etItem === params[key]?.slice(2, params[key]?.length));
+      //   if (findEtInWidth) {
+      //     filter.setEt(findEtInWidth);
+      //     filter.setChipEt(
+      //       Array.from(new Set([...filter.chipEt, findEtInWidth]))
+      //     );
+      //   }
+      // }
+      // if (params[key]?.includes('et') && !filter.et && filter.chipEt.length === 0) {
+      //   const findEtDiameter = goodsWheel._et?.find(
+      //     (etItem:string) => 
+      //     etItem === params[key]?.slice(2, params[key]?.length));
+      //   if (findEtDiameter) {
+      //     filter.setEt(findEtDiameter);
+      //     filter.setChipEt(
+      //       Array.from(new Set([...filter.chipEt, findEtDiameter]))
+      //     );
+      //   }
+      // }
+      // if (params[key]?.includes('et') && !filter.et && filter.chipEt.length === 0) {
+      //   const findEtInBoltCount = goodsWheel._et?.find(
+      //     (etItem:string) => 
+      //     etItem === params[key]?.slice(2, params[key]?.length));
+      //   if (findEtInBoltCount) {
+      //     filter.setEt(findEtInBoltCount);
+      //     filter.setChipEt(
+      //       Array.from(new Set([...filter.chipEt, findEtInBoltCount]))
+      //     );
+      //   }
+      // }
+      // if (params[key]?.includes('et') && !filter.et && filter.chipEt.length === 0) {
+      //   const findEtInPcd = goodsWheel._et?.find(
+      //     (etItem:string) => 
+      //     etItem === params[key]?.slice(2, params[key]?.length));
+      //   if (findEtInPcd) {
+      //     filter.setEt(findEtInPcd);
+      //     filter.setChipEt(
+      //       Array.from(new Set([...filter.chipEt, findEtInPcd]))
+      //     );
+      //   }
+      // }
+      // if (params[key]?.includes('et') && !filter.et && filter.chipEt.length === 0) {
+      //   const findEt = goodsWheel._et?.find(
+      //     (etItem:string) => 
+      //     etItem === params[key]?.slice(2, params[key]?.length));
+      //   if (findEt) {
+      //     filter.setEt(findEt);
+      //     filter.setChipEt(
+      //       Array.from(new Set([...filter.chipEt, findEt]))
+      //     );
+      //   }
+      // }
+      if (params[key]?.includes('dia') && !filter.dia && filter.chipDia.length === 0) {
         const findDiaInType = goodsWheel._dia?.find(
           (diaItem:string) => 
-          diaItem.toLocaleLowerCase() === params.type?.slice(3, params.type?.length));
+          diaItem.toLocaleLowerCase() === params[key]?.slice(3, params[key]?.length));
         if (findDiaInType) {
           filter.setDia(findDiaInType);
           filter.setChipDia(
@@ -1185,83 +1216,84 @@ const CatalogTyresPage = observer(() => {
           );
         }
       }
-      if (params.brands?.includes('dia') && !filter.dia && filter.chipDia.length === 0) {
-        const findDiaFromBrand = goodsWheel._dia?.find(
-          (diaItem:string) => 
-          diaItem.toLocaleLowerCase() === params.brands?.slice(3, params.brands?.length));
-        if (findDiaFromBrand) {
-          filter.setDia(findDiaFromBrand);
-          filter.setChipDia(
-            Array.from(new Set([...filter.chipDia, findDiaFromBrand]))
-          );
-        }
-      }
-      if (params.width?.includes('dia') && !filter.dia && filter.chipDia.length === 0) {
-        const findDiaFromWidth = goodsWheel._dia?.find(
-          (diaItem:string) => 
-          diaItem.toLocaleLowerCase() === params.width?.slice(3, params.width?.length));
-        if (findDiaFromWidth) {
-          filter.setDia(findDiaFromWidth);
-          filter.setChipDia(
-            Array.from(new Set([...filter.chipDia, findDiaFromWidth]))
-          );
-        }
-      }
-      if (params.diameter?.includes('dia') && !filter.dia && filter.chipDia.length === 0) {
-        const findDiaFromDiameter = goodsWheel._dia?.find(
-          (diaItem:string) => 
-          diaItem.toLocaleLowerCase() === params.diameter?.slice(3, params.diameter?.length));
-        if (findDiaFromDiameter) {
-          filter.setDia(findDiaFromDiameter);
-          filter.setChipDia(
-            Array.from(new Set([...filter.chipDia, findDiaFromDiameter]))
-          );
-        }
-      }
-      if (params.boltcount?.includes('dia') && !filter.dia && filter.chipDia.length === 0) {
-        const findDiaFromBolt = goodsWheel._dia?.find(
-          (diaItem:string) => 
-          diaItem.toLocaleLowerCase() === params.boltcount?.slice(3, params.boltcount?.length));
-        if (findDiaFromBolt) {
-          filter.setDia(findDiaFromBolt);
-          filter.setChipDia(
-            Array.from(new Set([...filter.chipDia, findDiaFromBolt]))
-          );
-        }
-      }
-      if (params.pcd?.includes('dia') && !filter.dia && filter.chipDia.length === 0) {
-        const findDiaFromPcd = goodsWheel._dia?.find(
-          (diaItem:string) => 
-          diaItem.toLocaleLowerCase() === params.pcd?.slice(3, params.pcd?.length));
-        if (findDiaFromPcd) {
-          filter.setDia(findDiaFromPcd);
-          filter.setChipDia(
-            Array.from(new Set([...filter.chipDia, findDiaFromPcd]))
-          );
-        }
-      }
-      if (params.et?.includes('dia') && !filter.dia && filter.chipDia.length === 0) {
-        const findDiaFromEt = goodsWheel._dia?.find(
-          (diaItem:string) => 
-          diaItem.toLocaleLowerCase() === params.et?.slice(3, params.et?.length));
-        if (findDiaFromEt) {
-          filter.setDia(findDiaFromEt);
-          filter.setChipDia(
-            Array.from(new Set([...filter.chipDia, findDiaFromEt]))
-          );
-        }
-      }
-      if (params.dia?.includes('dia') && !filter.dia && filter.chipDia.length === 0) {
-        const findDia = goodsWheel._dia?.find(
-          (diaItem:string) => 
-          diaItem.toLocaleLowerCase() === params.dia?.slice(3, params.dia?.length));
-        if (findDia) {
-          filter.setDia(findDia);
-          filter.setChipDia(
-            Array.from(new Set([...filter.chipDia, findDia]))
-          );
-        }
-      }
+      // if (params[key]?.includes('dia') && !filter.dia && filter.chipDia.length === 0) {
+      //   const findDiaFromBrand = goodsWheel._dia?.find(
+      //     (diaItem:string) => 
+      //     diaItem.toLocaleLowerCase() === params[key]?.slice(3, params[key]?.length));
+      //   if (findDiaFromBrand) {
+      //     filter.setDia(findDiaFromBrand);
+      //     filter.setChipDia(
+      //       Array.from(new Set([...filter.chipDia, findDiaFromBrand]))
+      //     );
+      //   }
+      // }
+      // if (params[key]?.includes('dia') && !filter.dia && filter.chipDia.length === 0) {
+      //   const findDiaFromWidth = goodsWheel._dia?.find(
+      //     (diaItem:string) => 
+      //     diaItem.toLocaleLowerCase() === params[key]?.slice(3, params[key]?.length));
+      //   if (findDiaFromWidth) {
+      //     filter.setDia(findDiaFromWidth);
+      //     filter.setChipDia(
+      //       Array.from(new Set([...filter.chipDia, findDiaFromWidth]))
+      //     );
+      //   }
+      // }
+      // if (params[key]?.includes('dia') && !filter.dia && filter.chipDia.length === 0) {
+      //   const findDiaFromDiameter = goodsWheel._dia?.find(
+      //     (diaItem:string) => 
+      //     diaItem.toLocaleLowerCase() === params[key]?.slice(3, params[key]?.length));
+      //   if (findDiaFromDiameter) {
+      //     filter.setDia(findDiaFromDiameter);
+      //     filter.setChipDia(
+      //       Array.from(new Set([...filter.chipDia, findDiaFromDiameter]))
+      //     );
+      //   }
+      // }
+      // if (params[key]?.includes('dia') && !filter.dia && filter.chipDia.length === 0) {
+      //   const findDiaFromBolt = goodsWheel._dia?.find(
+      //     (diaItem:string) => 
+      //     diaItem.toLocaleLowerCase() === params[key]?.slice(3, params[key]?.length));
+      //   if (findDiaFromBolt) {
+      //     filter.setDia(findDiaFromBolt);
+      //     filter.setChipDia(
+      //       Array.from(new Set([...filter.chipDia, findDiaFromBolt]))
+      //     );
+      //   }
+      // }
+      // if (params[key]?.includes('dia') && !filter.dia && filter.chipDia.length === 0) {
+      //   const findDiaFromPcd = goodsWheel._dia?.find(
+      //     (diaItem:string) => 
+      //     diaItem.toLocaleLowerCase() === params[key]?.slice(3, params[key]?.length));
+      //   if (findDiaFromPcd) {
+      //     filter.setDia(findDiaFromPcd);
+      //     filter.setChipDia(
+      //       Array.from(new Set([...filter.chipDia, findDiaFromPcd]))
+      //     );
+      //   }
+      // }
+      // if (params[key]?.includes('dia') && !filter.dia && filter.chipDia.length === 0) {
+      //   const findDiaFromEt = goodsWheel._dia?.find(
+      //     (diaItem:string) => 
+      //     diaItem.toLocaleLowerCase() === params[key]?.slice(3, params[key]?.length));
+      //   if (findDiaFromEt) {
+      //     filter.setDia(findDiaFromEt);
+      //     filter.setChipDia(
+      //       Array.from(new Set([...filter.chipDia, findDiaFromEt]))
+      //     );
+      //   }
+      // }
+      // if (params[key]?.includes('dia') && !filter.dia && filter.chipDia.length === 0) {
+      //   const findDia = goodsWheel._dia?.find(
+      //     (diaItem:string) => 
+      //     diaItem.toLocaleLowerCase() === params[key]?.slice(3, params[key]?.length));
+      //   if (findDia) {
+      //     filter.setDia(findDia);
+      //     filter.setChipDia(
+      //       Array.from(new Set([...filter.chipDia, findDia]))
+      //     );
+      //   }
+      // }
+    }
     }
     loadCatalogWheelTask();
     return () => {

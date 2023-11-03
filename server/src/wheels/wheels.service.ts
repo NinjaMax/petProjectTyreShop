@@ -19,13 +19,17 @@ import { WheelPcd } from '../properties/entities/wheels/wheel-pcd.model';
 import { WheelPcd2 } from '../properties/entities/wheels/wheel-pcd2.model';
 import { WheelBoltCountPcd } from '../properties/entities/wheels/wheel-boltCountPcd.model';
 import { WheelModel } from '../properties/entities/wheels/wheel-model.model';
-import { StockWheels } from 'src/stock/entities/stock-wheels.model';
-import { ReviewWheels } from 'src/reviews/entities/review-wheels.model';
-import { RatingWheels } from 'src/ratings/entities/rating-wheels.model';
+import { StockWheels } from '../stock/entities/stock-wheels.model';
+import { ReviewWheels } from '../reviews/entities/review-wheels.model';
+import { RatingWheels } from '../ratings/entities/rating-wheels.model';
+import { RedisService } from '../redis/redis.service';
 
 @Injectable()
 export class WheelsService {
-  constructor(@InjectModel(Wheel) private wheelRepository: typeof Wheel) {}
+  constructor(
+    @InjectModel(Wheel) private wheelRepository: typeof Wheel,
+    private readonly redisService: RedisService,
+  ) {}
 
   async createWheel(createWheelDto: CreateWheelDto) {
     try {
@@ -178,8 +182,28 @@ export class WheelsService {
     sort: string,
   ) {
     try {
+      const cachedTyres = await this.redisService.get(
+        'wheel' +
+        width +
+        diameter +
+        bolt_count +
+        bolt_count_pcd +
+        brand +
+        price +
+        type +
+        color +
+        dia +
+        et +
+        pcd +
+        pcd2 +
+        sort
+      );
+      if (cachedTyres) {
+        return cachedTyres;
+      }
       if (sort === 'ASC') {
-        const wheelsAllWithoutLimitC = await this.wheelRepository.findAll({
+        const wheelsAllWithoutLimitC =
+          await this.wheelRepository.findAndCountAll({
           include: [
             { model: RatingWheels },
             { model: ReviewWheels },
@@ -314,6 +338,24 @@ export class WheelsService {
             ['price', 'price', 'ASC NULLS LAST'],
           ],
         });
+        await this.redisService.set(
+          'wheel' +
+          width +
+          diameter +
+          bolt_count +
+          bolt_count_pcd +
+          brand +
+          price +
+          type +
+          color +
+          dia +
+          et +
+          pcd +
+          pcd2 +
+          sort,
+          1200,
+          JSON.stringify(wheelsAllWithoutLimitC),
+        );
         return wheelsAllWithoutLimitC;
       }
       if (sort === 'DESC') {
@@ -452,6 +494,24 @@ export class WheelsService {
             ['price', 'price', 'DESC'],
           ],
         });
+        await this.redisService.set(
+          'wheel' +
+          width +
+          diameter +
+          bolt_count +
+          bolt_count_pcd +
+          brand +
+          price +
+          type +
+          color +
+          dia +
+          et +
+          pcd +
+          pcd2 +
+          sort,
+          1200,
+          JSON.stringify(wheelsAllWithoutLimitE),
+        );
         return wheelsAllWithoutLimitE;
       }
       if (sort === 'oldPrice') {
@@ -590,6 +650,24 @@ export class WheelsService {
             ['price', 'old_price', 'ASC'],
           ],
         });
+        await this.redisService.set(
+          'wheel' +
+          width +
+          diameter +
+          bolt_count +
+          bolt_count_pcd +
+          brand +
+          price +
+          type +
+          color +
+          dia +
+          et +
+          pcd +
+          pcd2 +
+          sort,
+          1200,
+          JSON.stringify(wheelsAllWithoutLimitO),
+        );
         return wheelsAllWithoutLimitO;
       }
       if (sort === 'title') {
@@ -728,6 +806,24 @@ export class WheelsService {
             ['full_name', 'ASC'],
           ],
         });
+        await this.redisService.set(
+          'wheel' +
+          width +
+          diameter +
+          bolt_count +
+          bolt_count_pcd +
+          brand +
+          price +
+          type +
+          color +
+          dia +
+          et +
+          pcd +
+          pcd2 +
+          sort,
+          1200,
+          JSON.stringify(wheelsAllWithoutLimitT),
+        );
         return wheelsAllWithoutLimitT;
       }
       if (sort === 'rating') {
@@ -866,6 +962,24 @@ export class WheelsService {
             ['rating', 'rating_overall', 'ASC'],
           ],
         });
+        await this.redisService.set(
+          'wheel' +
+          width +
+          diameter +
+          bolt_count +
+          bolt_count_pcd +
+          brand +
+          price +
+          type +
+          color +
+          dia +
+          et +
+          pcd +
+          pcd2 +
+          sort,
+          1200,
+          JSON.stringify(wheelsAllWithoutLimitR),
+        );
         return wheelsAllWithoutLimitR;
       }
     } catch {

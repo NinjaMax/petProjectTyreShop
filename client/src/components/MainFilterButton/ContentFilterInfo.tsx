@@ -19,24 +19,28 @@ const ContentFilterInfo = ({infoMarking, width, setActive}: IContentInfo) => {
              <span 
                 className="closeContentInfoBtn" 
                 onClick={() => {setActive!(false)}}>&times;
-            </span>    
+            </span>  
+             {infoMarking === 'A' ? 
+             <div>
             <h5>Як дізнатися розмір шини?</h5>
             <h5>Маркування на боковині.</h5>
-            {infoMarking === 'A' ?
             <div>
-                
                 <img src={imgMarkerA} alt='infoFilterImg'/>
                 <div className='textMarker'>
                 <span>А. ШИРИНА ШИНИ</span>
                 <span>Ширина шини в міліметрах, виміряна від одніеї боковини до іншої.</span>   
                 </div>
              </div>
+             </div> 
             :null}
             {infoMarking === "B" ?
             <div>
+            <h5>Як дізнатися розмір шини?</h5>
+            <h5>Маркування на боковині.</h5>
+            <div>
                 <img src={imgMarkerB} alt='infoFilterImg'/>
                 <div className='textMarker'>
-                <span>В. СПІВВІДНОШЕННЯ СТОРІН</span>
+                <span>В. СПІВВІДНОШЕННЯ СТОРІН (Профіль або висота шини)</span>
                 <span>
                     Це співвідношення висоти шини до її ширини, виражене у відсотках.
                     Наприклад, якщо значення співвідношення сторін 55, це означає, 
@@ -44,9 +48,13 @@ const ContentFilterInfo = ({infoMarking, width, setActive}: IContentInfo) => {
                 </span>
                 </div>
             </div>
+            </div>
             :null}
 
             {infoMarking === "C" ?
+            <div>
+            <h5>Як дізнатися розмір шини?</h5>
+            <h5>Маркування на боковині.</h5>
             <div>
                 <img src={imgMarkerC} alt='infoFilterImg'/>
                 <div className='textMarker'>
@@ -54,8 +62,12 @@ const ContentFilterInfo = ({infoMarking, width, setActive}: IContentInfo) => {
                 <span>Діаметр (висота) диска в дюймах</span>    
                 </div>
             </div>
+            </div>
             :null}
             {infoMarking === "D" ?
+            <div>
+            <h5>Як дізнатися розмір шини?</h5>
+            <h5>Маркування на боковині.</h5>
             <div>
                 <img src={imgMarketD} alt='infoFilterImg'/>
                 <div className='textMarker'>
@@ -64,10 +76,14 @@ const ContentFilterInfo = ({infoMarking, width, setActive}: IContentInfo) => {
                     при якій зберігається розмір і геометрія плями контакту, 
                     а шина зберігає всі свої характеристики.
                 </span> 
-            </div>   
+                </div>   
+            </div>
             </div>
             :null}
-            {infoMarking === "E" ?
+            {infoMarking === "E" ? 
+            <div>
+            <h5>Як дізнатися розмір шини?</h5>
+            <h5>Маркування на боковині.</h5>
             <div>
                 <img src={imgMarketE} alt='infoFilterImg'/>
                 <div className='textMarker'>
@@ -80,6 +96,33 @@ const ContentFilterInfo = ({infoMarking, width, setActive}: IContentInfo) => {
                     можливостям вашого автомобіля.
                 </span>    
                 </div>
+            </div>
+            </div>
+            :null}
+            {infoMarking === "WheelWidth" ?
+            <div>
+            <h5>Як дізнатися розмір диску?</h5>
+            <div>
+                <img src={'./iconsWheelFilter/wheel_size_width.png'} alt='infoFilterImg'/>
+                <div className='textMarker'>
+                <span>Ширина Диску</span>
+                <span>
+                </span>    
+                </div>
+            </div>
+            </div>
+            :null}
+            {infoMarking === "WheelDiameter" ?
+            <div>
+            <h5>Як дізнатися розмір диску?</h5>
+            <div>
+                <img src={'./iconsWheelFilter/wheel_size_diameter.png'} alt='infoFilterImg'/>
+                <div className='textMarker'>
+                <span>Діаметр Диску</span>
+                <span>
+                </span>    
+                </div>
+            </div>
             </div>
             :null}
         </div>

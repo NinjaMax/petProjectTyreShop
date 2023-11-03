@@ -39,6 +39,7 @@
 }
 .panelAccordion {
     max-height:300px;
+    width: 247.4px;
     overflow-y: scroll;
     overflow-x:hidden;
 }

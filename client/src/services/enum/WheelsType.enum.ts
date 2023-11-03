@@ -1,6 +1,6 @@
 export enum WheelType {
-    STALNOI_TYPE = '/iconTypeWheel/tire_steel.png',
-    LEGKOSPLAV_TYPE = '/iconTypeWheel/tire_cast.png',
-    KOVANIY_TYPE = '/iconTypeWheel/tire_forged.png',
+    STALNOI_TYPE = '/iconTypeWheel/wheel_steel_64.png',
+    LEGKOSPLAV_TYPE = '/iconTypeWheel/wheel_alloy_48.png',
+    KOVANIY_TYPE = '/iconTypeWheel/wheel_kov_48.png',
     NO_TYPE = '/iconsTypeCar/noTypeCar.png',
 };

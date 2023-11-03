@@ -43,7 +43,7 @@ export class AddWheelsToDbService {
   ) {}
 
   async addWheelsToDb(item: ItemPriceWheelConfigAttr) {
-    //try {
+    try {
       await this.wheelsService.createWheelFromPrice(
         +item['ID товара'],
         String(item['Артикул товару у постачальника']).replace(/#NULL!/g, ''),
@@ -58,7 +58,6 @@ export class AddWheelsToDbService {
         +item['ID товара'],
         item['Категорія товару'] ?? '',
         'Диски',
-        
       );
 
       await this.supplierService.createSupplierFromPrice(
@@ -177,11 +176,11 @@ export class AddWheelsToDbService {
       );
 
       return 'Price added to DATA BASE';
-    // } catch (error) {
-    //   throw new HttpException(
-    //     'Data is incorrect and must be uniq',
-    //     HttpStatus.NOT_FOUND,
-    //   );
-    // }
+    } catch (error) {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 }
