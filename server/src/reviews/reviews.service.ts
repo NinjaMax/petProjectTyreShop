@@ -11,12 +11,12 @@ import { RatingsService } from '../ratings/ratings.service';
 import { TyresService } from '../tyres/tyres.service';
 import { ReviewWheels } from './entities/review-wheels.model';
 import { WheelsService } from '../wheels/wheels.service';
-import { PropsWheelBrandService } from 'src/properties/props-wheel-services/props-wheel-brand.service';
-import { PropsWheelModelService } from 'src/properties/props-wheel-services/props-wheel-model.service';
-import { Tyres } from 'src/tyres/entities/tyres.model';
-import { RatingTyres } from 'src/ratings/entities/rating-tyres.model';
-import { Wheel } from 'src/wheels/entities/wheel.model';
-import { RatingWheels } from 'src/ratings/entities/rating-wheels.model';
+import { PropsWheelBrandService } from '../properties/props-wheel-services/props-wheel-brand.service';
+import { PropsWheelModelService } from '../properties/props-wheel-services/props-wheel-model.service';
+import { Tyres } from '../tyres/entities/tyres.model';
+import { RatingTyres } from '../ratings/entities/rating-tyres.model';
+import { Wheel } from '../wheels/entities/wheel.model';
+import { RatingWheels } from '../ratings/entities/rating-wheels.model';
 
 @Injectable()
 export class ReviewsService {

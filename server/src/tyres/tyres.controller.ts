@@ -7,14 +7,11 @@ import {
   Param,
   Delete,
   Query,
-  UseInterceptors,
 } from '@nestjs/common';
-import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
 import { TyresService } from './tyres.service';
 import { CreateTyreDto } from './dto/create-tyre.dto';
 import { UpdateTyreDto } from './dto/update-tyre.dto';
 import { GetTyreDto } from './dto/get-tyre.dto';
-//import { CreateStockTyresDto } from '../stock/dto/create-stock_tyres.dto';
 
 @Controller('tyres')
 
@@ -33,10 +30,7 @@ export class TyresController {
   }
 
   @Get('/id')
-  findTyresById(
-    //@Body() getTyreDto: GetTyreDto,
-    @Query('id') id: string,
-  ) {
+  findTyresById(@Query('id') id: string) {
     return this.tyresService.findTyresByIdQuery(id);
   }
 
@@ -81,10 +75,6 @@ export class TyresController {
       reinforce,
     );
   }
-
-  //@UseInterceptors(CacheInterceptor)
-  //@CacheKey('tyre:')
-  //@CacheTTL(60)
   @Get('/no-offset')
   findTyresWithoutLimit(
     @Query('width') width: string,
@@ -124,11 +114,6 @@ export class TyresController {
   findTyresSeason(@Param('season') season: string) {
     return this.tyresService.findAllTyresBySeason(season);
   }
-
-  // @Get('/type/:type')
-  // findTyresType(@Param('type') type: string) {
-  //   return this.tyresService.findAllTyresByType(type);
-  // }
 
   @Get('/diameter/:diameter')
   findTyresDiameter(@Param('diameter') diameter: string) {
@@ -177,19 +162,6 @@ export class TyresController {
       reinforce,
     );
   };
-
-  // @Get('/brand')
-  // findAllTyresByBrand(@Query('brand') brand: string) {
-  //   return this.tyresService.findAllTyresByBrand(brand);
-  // };
-
-  // @Get('/brand-model')
-  // findAllTyresByBrandAndModel(
-  //   @Query('brand') brand: string,
-  //   @Query('model') model: string,
-  // ) {
-  //   return this.tyresService.findAllTyresByBrandModel(brand, model);
-  // };
 
   @Get('/params-brand-season')
   findAllTyresByBrandAndParamsAndSeason(

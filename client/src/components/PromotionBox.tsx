@@ -33,13 +33,11 @@ const PromotionBox = observer(({
         ratingModel: {avgRatingModel: number }
         ) => {
         try {
-            //console.log('ITEM: ', item)
             setActive(!active);
             if (!active) {
                 const basket: any = await createBasket(
                     customer.customer?.id,
                 );
-                //console.log('CREATE_BASKET_ID_BASKET: ', basket.data.id_basket);
                 if(basket?.status === 201) {
                     const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
                     const addTobasket: any = await addGoodsToBasket(
@@ -57,7 +55,6 @@ const PromotionBox = observer(({
                     item.reviews.length,
                     item.diameter.diameter,
                     ); 
-                    //console.log('ADD_BASK: ', addTobasket);
                     if (addTobasket?.status === 201) {
                         const updateBasketStorage = await getBasketById(basket.data.id_basket);
                         setCheckOrderItem(
@@ -67,8 +64,6 @@ const PromotionBox = observer(({
                             updateBasketStorage?.basket_storage.reduce(
                                 (sum: any, current: any) => (sum + current.quantity),0)
                         );
-                    //console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
-                    //console.log('ADD_TO_BASKET: ', addTobasket?.data); 
                     }  
                 }
             }
@@ -79,6 +74,7 @@ const PromotionBox = observer(({
     
     return (
         <div className='promotionBox'>
+            <div className='promotionBoxItem'>
             {itemsArray?.length !== 0 && prevBtn >= 0 ? 
                 itemsArray?.slice(prevBtn, nextBtn).map(
                 (item: any) =>
@@ -111,14 +107,34 @@ const PromotionBox = observer(({
                 )
                 : null  
             } 
+             {/* {itemsArray?.length !== 0 ? 
+                itemsArray?.slice(prevBtn, nextBtn).map(
+                (item: any) =>
+                <Fragment key={item.id}>
+                <Card 
+                    goods={item}
+                    typeCard={item.typeCard}
+                    optionsBox={false} 
+                    checkOrders={checkOrders}
+                    forOrder={false}
+                />
+                </Fragment>
+                )
+                : null  
+            }  */}
+            </div>
+            {itemsArray ?
             <ButtonPrevNext 
-                prevTop={155} 
-                prevBtnLeft={35}
-                nextTop={155}
-                nextBtnRight={35}
+                prevTop={-275} 
+                prevBtnLeft={-1}
+                nextTop={-275}
+                nextBtnRight={-94}
                 leftClickActive={prevButtonEvent}
                 rightClickActive={nextButtonEvent}
             />
+            : null
+            }
+
             <Modal active={active} setActive={setActive}>
                 <CheckOrder orderItem={checkOrderItem}/> 
             </Modal> 

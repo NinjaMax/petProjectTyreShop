@@ -13,6 +13,7 @@ import LoadMoreGoods from '../ux/LoadMoreGoods';
 import { ICheckOrderItem } from './types/CheckOrder.type';
 import { addGoodsToBasket, createBasket, getBasketById } from '../../restAPI/restGoodsApi';
 import { tyreBrandLogo } from '../../services/tyreBrandImg.service';
+import SpinnerCarRot from '../spinners/SpinnerCarRot';
 
 const CatalogTyres = observer(() => {
     const [active, setActive] = useState<boolean>(false);
@@ -180,6 +181,7 @@ const CatalogTyres = observer(() => {
                     }}
                     direction={"row"} />               
             </div>
+            {goodsTyre._tyres.length !== 0 ?
             <div className="rowCatalogTyres">
                 {goodsTyre._tyres ? goodsTyre._tyres?.map(
                     (goods: any) => (
@@ -198,8 +200,15 @@ const CatalogTyres = observer(() => {
                     <CheckOrder orderItem={checkOrderItem}/> 
                 </Modal> 
             </div> 
-            <LoadMoreGoods loadMore={loadMoreGoods}/>
-            <Pagination/>
+            : 
+            <div className='spinerCatalogGoodsLoad'>
+                <SpinnerCarRot/>
+            </div>
+            }
+            <div className='pagePagCatalog'>
+                <LoadMoreGoods loadMore={loadMoreGoods}/>
+                <Pagination/>   
+            </div>
         </div>
     );
 });

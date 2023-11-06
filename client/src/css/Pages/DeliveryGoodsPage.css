@@ -2,13 +2,13 @@
     display: grid;
     grid-template-columns: repeat(4, 24%);
     grid-template-areas: 
-                    "a a a a"
-                    "h h h h"
-                    "b c c c"
-                    "b g g g"
-                    "b d d d"
-                    "b e e e"
-                    "b f f f";
+                    "aDev aDev aDev aDev"
+                    "hDev hDev hDev hDev"
+                    "bDev cDev cDev cDev"
+                    "bDev gDev gDev gDev"
+                    "bDev dDev dDev dDev"
+                    "bDev eDev eDev eDev"
+                    "bDev fDev fDev fDev";
     grid-gap:5px;
     margin-left: 50px;
     margin-right: 50px;
@@ -16,47 +16,51 @@
     font-family: var(--main-font-family);
 }
 
-.a {
-    grid-area: a;
+.aDev {
+    grid-area: aDev;
 }
 
-.b {
-    grid-area: b;
+.bDev {
+    grid-area: bDev;
     /* border: rebeccapurple solid 3px; */
 }
 
-.c {
-    grid-area: c;
+.cDev {
+    grid-area: cDev;
     /* border: rebeccapurple solid 3px; */
 }
-.g {
-    grid-area: g;
+.gDev {
+    grid-area: gDev;
     /* border: rebeccapurple solid 3px; */
 }
 
-.d {
-    grid-area: d;
+.dDev {
+    grid-area: dDev;
     border-radius: 10px;
     display: flex; 
     flex-direction: row;
-    justify-content:flex-start;
+    justify-content:center;
     gap: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     /* border: rebeccapurple solid 3px; */
+    padding: 18px 18px 25px 18px;
 }
 
-.e {
-    grid-area: e;
+.eDev {
+    grid-area: eDev;
     /* border: rebeccapurple solid 3px; */
 }
 
-.f {
-    grid-area: f;
+.fDev {
+    grid-area: fDev;
+    display: flex; 
+    flex-direction: row;
+    justify-content:center;
     /* border: rebeccapurple solid 3px; */
 }
 
-.h {
-    grid-area: h;
+.hDev {
+    grid-area: hDev;
     display: flex;
     flex-direction: row;
     justify-content:space-between;
@@ -65,7 +69,7 @@
     margin-left: 75px;
     margin-right: 75px;
 }
-.h .deliveryGoodsPageHtitle {
+.hDev .deliveryGoodsPageHtitle {
     text-decoration: underline;
     color: blue;
     cursor: pointer;

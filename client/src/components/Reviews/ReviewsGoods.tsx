@@ -8,6 +8,7 @@ import ReviewsGoodsExtend from './ReviewsGoodsExtend';
 import { IReviewGoods } from './interfaces/ReviewGoods.interface';
 import { yieldToMain } from '../../restAPI/postTaskAdmin';
 import { likesTyreReview } from '../../restAPI/restGoodsApi';
+import { createStringUrl } from '../../services/stringUrl';
 
 interface IReviewsGoods {
     productFullName: string;
@@ -52,11 +53,9 @@ const ReviewsGoods = ({
                     likeChoose,
                     dislikeChoose
                 ); 
-                console.log('REVIEW: ', getLIkes.data);
                 setLikeReview(getLIkes.data.like_count);
                 setDislikeReview(getLIkes.data.dislike_count);
             }
-            
           }
           const task = taskThumbs.shift();
           task();
@@ -75,13 +74,10 @@ const ReviewsGoods = ({
         if (!thumbUp) {
             setLikeChoose(1);
             setDislikeChoose(0);
-
-            console.log('thumbUp: 1');
         }
         if (thumbUp) {
             setLikeChoose(-1);
             setDislikeChoose(0);
-            console.log('thumbUp: -1');
         }
         }, 1500);
     };
@@ -92,18 +88,14 @@ const ReviewsGoods = ({
         if (!thumbDown) {
             setDislikeChoose(1);
             setLikeChoose(0);
-            console.log('thumbDown: 1');
         }
         if (thumbDown) {
             setDislikeChoose(-1);
             setLikeChoose(0);
-            console.log('thumbDown: -1');
         }
         }, 1500);
     };
 
-    console.log('THUMB_UP: ', thumbUp);
-    console.log('THUMB_DOWN: ', thumbDown);
     return (
         <div className='reviewGoods'>   
             <div className="reviewsGoodsContainer">
@@ -139,7 +131,7 @@ const ReviewsGoods = ({
                     </div>
                     <div className='addedGoodsReview'>
                         <span>Відгук о товарі: </span> 
-                        <a href='/#'>
+                        <a href={createStringUrl(productFullName)}>
                         {productFullName}
                         </a>
                     </div>
@@ -173,7 +165,7 @@ const ReviewsGoods = ({
                     </div>: null}
                 </div>
                 {btnLeft & btnRight ?
-                <ButtonPrevNext prevBtnLeft={btnLeft} nextBtnRight={btnRight} prevTop={0} nextTop={0}/>
+                <ButtonPrevNext prevBtnLeft={btnLeft} nextBtnRight={btnRight} prevTop={20} nextTop={20}/>
                 :null} 
             </div>   
         </div>

@@ -23,7 +23,7 @@ const FilterMainWheel = observer((
 
     //const [handleItem, setHandleItem] = useState();
     const {filter, goodsWheel, page} = useContext<any | null>(Context);
-    const params = useParams<any>();
+    //const params = useParams<any>();
     const [stateWidth, setStateWidth]=useState(false);
     const [stateDiameter, setStateDiameter]=useState(false);
     const [stateBoltCount, setStateBoltCount]=useState(false);
@@ -519,7 +519,6 @@ const FilterMainWheel = observer((
     const pickUp = () => {
  
         localStorage.setItem('filterWheelUrl', `${filter.type}/${filter.brands}/${filter.width}/${filter.bolt_count}/${filter.diameter}`);
-
         document.location.assign('/wheels');
     };
     

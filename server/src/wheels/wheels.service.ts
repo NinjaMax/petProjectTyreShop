@@ -359,7 +359,7 @@ export class WheelsService {
         return wheelsAllWithoutLimitC;
       }
       if (sort === 'DESC') {
-        const wheelsAllWithoutLimitE = await this.wheelRepository.findAll({
+        const wheelsAllWithoutLimitE = await this.wheelRepository.findAndCountAll({
           include: [
             // { all: true },
             { model: RatingWheels },
@@ -515,7 +515,7 @@ export class WheelsService {
         return wheelsAllWithoutLimitE;
       }
       if (sort === 'oldPrice') {
-        const wheelsAllWithoutLimitO = await this.wheelRepository.findAll({
+        const wheelsAllWithoutLimitO = await this.wheelRepository.findAndCountAll({
           include: [
             // { all: true },
             { model: RatingWheels },
@@ -671,7 +671,7 @@ export class WheelsService {
         return wheelsAllWithoutLimitO;
       }
       if (sort === 'title') {
-        const wheelsAllWithoutLimitT = await this.wheelRepository.findAll({
+        const wheelsAllWithoutLimitT = await this.wheelRepository.findAndCountAll({
           include: [
             // { all: true },
             { model: RatingWheels },
@@ -827,7 +827,7 @@ export class WheelsService {
         return wheelsAllWithoutLimitT;
       }
       if (sort === 'rating') {
-        const wheelsAllWithoutLimitR = await this.wheelRepository.findAll({
+        const wheelsAllWithoutLimitR = await this.wheelRepository.findAndCountAll({
           include: [
             // { all: true },
             { model: RatingWheels },

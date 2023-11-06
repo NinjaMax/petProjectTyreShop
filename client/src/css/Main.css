@@ -24,3 +24,8 @@
     font-family: var(--main-font-family);
     text-decoration-color: #6666;
 }
+.mainReviewsBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

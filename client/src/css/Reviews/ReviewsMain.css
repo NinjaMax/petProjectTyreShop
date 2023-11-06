@@ -4,5 +4,7 @@
     align-items: center;
     justify-content:center;
     gap: 15px;
+    /* position: relative; */
+    width: 850px;
     /*max-width: 1000px;*/
 }

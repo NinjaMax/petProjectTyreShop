@@ -1,9 +1,10 @@
 .reviewGoods {
+  /* position: relative; */
   width:655px;
   /* height:355px; */
 }
 .reviewsGoodsContainer {
-  position: relative;
+  /* position: relative; */
   background-color: #ddd;
   font-family: var(--main-font-family);
   /* border: 0.1px solid #ccc; */

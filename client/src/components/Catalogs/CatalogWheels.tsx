@@ -12,11 +12,12 @@ import Card from '../cards/Card';
 import PopularSizeTyre from '../popularGoods/PopularSizeTyre';
 import PopularRequests from '../popularGoods/PopularRequests';
 import { observer } from 'mobx-react-lite';
+import SpinnerCarRot from '../spinners/SpinnerCarRot';
 
 const CatalogWheels = observer(() => {
   const [active, setActive] = useState(false);
   const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem[] | null>([]);
-  const [goodsCat, setGoodsCat] = useState([]);
+  //const [goodsCat, setGoodsCat] = useState([]);
   const { goodsWheel, page, filter, customer} = useContext<any | null>(Context);
   
   const checkOrders = async (
@@ -72,7 +73,6 @@ const CatalogWheels = observer(() => {
     page.setLoadMore(page.loadMore + 1);
     page.setOffset(page.offset + 9);
   };
-  //console.log('CHECK_ORDERS: ', checkOrderItem);
 
   const sortTyresGoods = (e: any) => {
     if (e.target.value === 'vidDeshevih') {
@@ -102,67 +102,69 @@ const CatalogWheels = observer(() => {
     }
   };
   
-  //console.log("GOODS_WHEELS: ", goodsWheel._wheels)
   return (
     <div>
         <h2>{`Диски ${filter.type && !filter.type.includes(',')  ? `${filter.type }` : ''} ${filter.brands && !filter.brands.includes(',') ? `${filter.brands}` : ''} ${filter.width ? `W${filter.width}` : ''} ${filter.diameter ? `R${filter.diameter}` : ''} ${filter.bolt_count && !filter.bolt_count.includes(',') ? `${filter.bolt_count}` : ''} ${filter.pcd && !filter.pcd.includes(',') ? `PCD${filter.pcd}` : ''} ${filter.et && !filter.et.includes(',') ? `ET${filter.et}` : ''} ${filter.dia && !filter.dia.includes(',') ? `DIA${filter.dia}` : ''}`}</h2>
-            <div className='popularCatalogTyre'>
-                <div>Популярні розміри:<PopularSizeTyre/></div>
-                <div>Популярні запити:
-                    <PopularRequests
-                        entityLink={[
-                            { link: '/tyres/lіtnya/w195/h65/r15', title: '195/65 R15 літо'},
-                            { link: '/tyres/legkovantazhnii', title: ' шини для мікроавтобуса'},
-                            { link: '/tyres/zimova/w205/h55/r16', title: 'зимние шини 205/55 R16'},
-                            { link: '/tyres/goodyear/w215/h65/r16', title: 'шини Goodyear 215/65 R16'},
-                            { link: '/tyres/zimova/w195/h65/r15', title: '195/65 R15 зима'},
+        <div className='popularCatalogTyre'>
+            <div>Популярні розміри:<PopularSizeTyre/></div>
+            <div>Популярні запити:
+                <PopularRequests
+                    entityLink={[
+                        { link: '/tyres/lіtnya/w195/h65/r15', title: '195/65 R15 літо'},
+                        { link: '/tyres/legkovantazhnii', title: ' шини для мікроавтобуса'},
+                        { link: '/tyres/zimova/w205/h55/r16', title: 'зимние шини 205/55 R16'},
+                        { link: '/tyres/goodyear/w215/h65/r16', title: 'шини Goodyear 215/65 R16'},
+                        { link: '/tyres/zimova/w195/h65/r15', title: '195/65 R15 зима'},
                         ]}
                     />
-                </div>
-            </div> 
-            <div className='sortBtnCatalog'>
-                <span>Сортування:</span>
-                <SelectRadio
-                    activeOptions={sortTyresGoods} 
-                    radioData={{ 
-                        value: "vidDeshevih", 
-                        radioName: "Від дешевих до дорогих",
-                        name: "sortTyreCatalog",
-                    }}
-                    direction={"row"} />
-                <SelectRadio 
-                    activeOptions={sortTyresGoods} 
-                    radioData={{ 
-                        value: "vidDorogih", 
-                        radioName: "Від дорогих до дешевих",
-                        name: "sortTyreCatalog",
-                    }}
-                    direction={"row"} />
-                <SelectRadio 
-                    activeOptions={sortTyresGoods} 
-                    radioData={{ 
-                        value: "poRatingu", 
-                        radioName: "рейтингу", 
-                        name: "sortTyreCatalog",
-                    }}
-                    direction={"row"} />
-                <SelectRadio 
-                    activeOptions={sortTyresGoods} 
-                    radioData={{ 
-                        value: "poNazvi", 
-                        radioName: "назві", 
-                        name: "sortTyreCatalog",
-                    }}
-                    direction={"row"} />
-                <SelectRadio 
-                    activeOptions={sortTyresGoods} 
-                    radioData={{ 
-                        value: "poAkcii",
-                        radioName: "акційній ціні",
-                        name: "sortTyreCatalog",
-                    }}
-                    direction={"row"} />               
             </div>
+        </div> 
+        <div className='sortBtnCatalog'>
+            <span>Сортування:</span>
+            <SelectRadio
+                activeOptions={sortTyresGoods} 
+                radioData={{ 
+                    value: "vidDeshevih", 
+                    radioName: "Від дешевих до дорогих",
+                    name: "sortTyreCatalog",
+                }}
+                direction={"row"} 
+            />
+            <SelectRadio 
+                activeOptions={sortTyresGoods} 
+                radioData={{ 
+                    value: "vidDorogih", 
+                    radioName: "Від дорогих до дешевих",
+                    name: "sortTyreCatalog",
+                }}
+                direction={"row"} />
+            <SelectRadio 
+                activeOptions={sortTyresGoods} 
+                radioData={{ 
+                    value: "poRatingu", 
+                    radioName: "рейтингу", 
+                    name: "sortTyreCatalog",
+                }}
+                direction={"row"} />
+            <SelectRadio 
+                activeOptions={sortTyresGoods} 
+                radioData={{ 
+                    value: "poNazvi", 
+                    radioName: "назві", 
+                    name: "sortTyreCatalog",
+                }}
+                direction={"row"} />
+            <SelectRadio 
+                activeOptions={sortTyresGoods} 
+                radioData={{ 
+                    value: "poAkcii",
+                    radioName: "акційній ціні",
+                    name: "sortTyreCatalog",
+                }}
+                direction={"row"} 
+            />               
+        </div>
+        {goodsWheel._wheels.length !== 0 ?
             <div className="rowCatalogTyres">
                 {goodsWheel._wheels ? goodsWheel._wheels?.map(
                     (goods: any) => (
@@ -181,8 +183,15 @@ const CatalogWheels = observer(() => {
                     <CheckOrder orderItem={checkOrderItem}/> 
                 </Modal> 
             </div> 
+        :
+        <div className='spinerCatalogGoodsLoad'>
+            <SpinnerCarRot/>
+        </div> 
+        }
+        <div className='pagePagCatalog'>
             <LoadMoreGoods loadMore={loadMoreGoods}/>
-            <Pagination/>
+            <Pagination/>   
+        </div>
     </div>
   )
 });

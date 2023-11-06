@@ -10,12 +10,13 @@ import { Context } from '../context/Context';
 import { createStringUrl } from '../services/stringUrl';
 import { CATALOG_TYRES_ROUTE, DELIVERY_GOODS_ROUTE } from '../utils/consts';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
-import { getTyresCountAll, getTyresReviewLimit, getTyresWithoutOffset } from '../restAPI/restGoodsApi';
+import { getTyresReviewLimit, getTyresWithoutOffset } from '../restAPI/restGoodsApi';
 import MapDelivery from '../components/maps/MapDelivery';
 import { getCityInRegionNovaPoshta, getWareHousesNovaPoshta } from '../restAPI/restNovaPoshtaAPI';
 import {regionDelivery, regionNovaPoshata} from '../services/regionServiceDelivery';
 import SpinnerCarRot from '../components/spinners/SpinnerCarRot';
 import { getCityInRegionDelivery, getWareHousesDelivery } from '../restAPI/restDeliveryAPI';
+import ButtonPrevNext from '../components/buttons/ButtonPrevNext';
 
 type ICityMarkerData = {
   Area: string,
@@ -78,7 +79,7 @@ const DeliveryGoodsPage = () => {
     const loadMaintask = async() => {
       const taskLoad: any[] = [
         getTyresWithoutOffset,  
-        getTyresCountAll,
+        //getTyresCountAll,
         getTyresReviewLimit,
       ];
 
@@ -115,8 +116,8 @@ const DeliveryGoodsPage = () => {
           let setRunFlatFilter: any[] = [];
           let setStuddedFilter: any[] = [];
         
-          goodsTyre?.setTyresFilter(tyreFilterGoods);
-          goodsTyre._tyres_filter.map((item: any) => 
+          goodsTyre?.setTotalCount(tyreFilterGoods.rows.length);
+          tyreFilterGoods.rows.map((item: any) => 
           { return (
             setWidthFilter.push(item.width.width),
             setHightFilter.push(item.height.height),
@@ -134,9 +135,9 @@ const DeliveryGoodsPage = () => {
           })
           page.loadMore > 0  ? goodsTyre?.setTyres(
             [...goodsTyre._tyres, 
-              ...tyreFilterGoods.splice(page.offset, page.limit)] 
+              ...tyreFilterGoods.rows.splice(page.offset, page.limit)] 
             ) : goodsTyre?.setTyres(
-              tyreFilterGoods.splice(page.offset, page.limit));
+              tyreFilterGoods.rows.splice(page.offset, page.limit));
 
           if (filter.width) {
             goodsTyre?.setWidth(
@@ -293,34 +294,16 @@ const DeliveryGoodsPage = () => {
             )
           }
         }
-        if(!isMounted && taskLoad[i] === getTyresCountAll) {
-          let tyreTotalCount: any = await taskLoad[i](
-            filter.width,
-            filter.height,
-            filter.diameter,
-            filter.season,
-            filter.brands,
-            filter.price,
-            filter.vehicle_type,
-            filter.speed_index,
-            filter.load_index,
-            filter.studded,
-            filter.run_flat,
-            filter.homologation,
-            filter.reinforced,
-          );
-          goodsTyre?.setTotalCount(tyreTotalCount);
-        }
-        if(!isMounted && taskLoad[i] === getTyresReviewLimit 
-          ) {
-          let getReviewTyres: any = await taskLoad[i](
-            1,
-            nextBtnReview
-          );
-          if (getReviewTyres) {
-            setReviewGoodsData(getReviewTyres);
-          }
-        }
+        // if(!isMounted && taskLoad[i] === getTyresReviewLimit 
+        //   ) {
+        //   let getReviewTyres: any = await taskLoad[i](
+        //     1,
+        //     nextBtnReview
+        //   );
+        //   if (getReviewTyres) {
+        //     setReviewGoodsData(getReviewTyres);
+        //   }
+        // }
         const task = taskLoad.shift();
         task();
         await yieldToMain(); 
@@ -450,73 +433,23 @@ const DeliveryGoodsPage = () => {
 
   useEffect(() => {
     let isMounted = false;
-    const createNewTyrePath = async() => {
+    const getTyresReview = async() => {
       if(!isMounted) {
-        if (filter.season || filter.studded || filter.vehicle_type || filter.brands || filter.width || filter.height || filter.diameter || filter.load_index || filter.speed_index || filter.reinforced || filter.homologation) {
-          const toStringUrlSeason: string | undefined = createStringUrl(
-            filter.season 
-          );
-          const toStringUrlStudded: string | undefined = createStringUrl(
-            filter.studded 
-          );
-          const toStringUrlBrand: string | undefined = createStringUrl( 
-            filter.brands
-          );
-          const toStringUrlTypeVehicle: string | undefined = createStringUrl( 
-            filter.vehicle_type
-          );
-          const toStringUrlWidth: string | undefined = createStringUrl(
-            filter.width
-          );
-          const toStringUrlHeight: string | undefined = createStringUrl(
-            filter.height
-          );
-          const toStringUrlDiameter: string | undefined = createStringUrl(
-            filter.diameter 
-          );
-          const toStringUrlLoadIndex: string | undefined = createStringUrl(
-            filter.load_index
-          );
-          const toStringUrlSpeedIndex: string | undefined = createStringUrl(
-            filter.speed_index
-          );
-          const toStringUrlReinforced: string | undefined = createStringUrl(
-            filter.reinforced
-          );
-          const toStringUrlOm: string | undefined = createStringUrl(
-            filter.homologation,
-          );
-
-          const tyreCatalogPath: string | undefined = 
-          `${CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/${toStringUrlSeason}` : '' }${filter.studded && !filter.studded.includes(',') ? `/${toStringUrlStudded}` : '' }${filter.vehicle_type && !filter.vehicle_type.includes(',') ? `/${toStringUrlTypeVehicle}` : ''}${filter.brands && !filter.brands.includes(',') ? `/${toStringUrlBrand}` : ''}${filter.width ? `/w${toStringUrlWidth}` : ''}${filter.height ? `/h${toStringUrlHeight}` : ''}${filter.diameter ? `/r${toStringUrlDiameter}` : ''}${filter.load_index && !filter.load_index.includes(',') ? `/li-${toStringUrlLoadIndex}` : '' }${filter.speed_index && !filter.speed_index.includes(',') ? `/si-${toStringUrlSpeedIndex}` : '' }${filter.reinforced && !filter.reinforced.includes(',') ? `/xl-${toStringUrlReinforced}` : '' }${filter.homologation && !filter.homologation.includes(',') ? `/om-${toStringUrlOm}` : '' }`; 
-          history.push(
-            tyreCatalogPath, 
-          );
+        let getReviewTyres: any = await getTyresReviewLimit(
+          String(1),
+          String(nextBtnReview)
+        );
+        if (getReviewTyres) {
+          setReviewGoodsData(getReviewTyres);
         }
       }
     };
-    createNewTyrePath();
+    getTyresReview();
     return () => {
       isMounted = true;
     };
-  },[
-    history, 
-    filter,
-    filter.brands, 
-    filter.diameter, 
-    filter.height, 
-    filter.season, 
-    filter.vehicle_type, 
-    filter.width, 
-    filter.studded, 
-    filter.load_index, 
-    filter.speed_index, 
-    filter.reinforced, 
-    filter.homologation, 
-    location.pathname, 
-    filter.type, 
-    filter.bolt_count, 
-  ]);
+  },[nextBtnReview]);
+
 
   const addDeliveryLink = (e: any) => {
     localStorage.setItem('regionData', e.currentTarget.getAttribute('data-region'));
@@ -569,13 +502,13 @@ const DeliveryGoodsPage = () => {
     <div className='deliveryGoodsPage'
     onClick={closeFilter}
     >
-      <div className='a'>
+      <div className='aDev'>
         <BreadCrumbs 
           route={['/','/delivery-pay', '/delivery']} 
           hrefTitle={['Інтернет-магазин SkyParts','Доставка оплата', `Доставка шин в ${cityRegion}`]}
         /> 
       </div>
-      <div className='h'>
+      <div className='hDev'>
         <h2>Купити шини {cityRegion}</h2> 
         {cityRegion && cityRegion === cityCenterRegion ?
         <span 
@@ -592,20 +525,20 @@ const DeliveryGoodsPage = () => {
           </span>
         }
       </div>
-      <div className='b'>
+      <div className='bDev'>
         <FilterCatalogTyres
           filterState={stateFilter} 
           setFilterAction={setStateFilter} 
         />
       </div>
-      <div className='c'>
+      <div className='cDev'>
         <CatalogTyres/>
       </div>
-      <div className='g'>
+      <div className='gDev'>
         <h3> Способи доставки шин в {cityRegion} </h3> 
       </div>
       {cityMarkerData && novaPoshtaWareHouseList ?
-      <div className='d'>
+      <div className='dDev'>
         { tabDelivery === 'Нова Пошта' ?
           <div className='deliveryGoodsMap'>
           <MapDelivery 
@@ -708,7 +641,7 @@ const DeliveryGoodsPage = () => {
       </div>
         : <SpinnerCarRot/>
       }
-      <div className='e'>
+      <div className='eDev'>
       {cityRegion && cityRegion === cityCenterRegion ?
         <h3>Доставка шин в інші міста {region}</h3> 
         : <h3>Доставка шин в інші областя України</h3>
@@ -1000,30 +933,30 @@ const DeliveryGoodsPage = () => {
       }
       </div>
       </div>
-      <div className='f'>
-      <ReviewsMain 
-        props={'Відгуки кліентів'} 
-        prevBtnAction={prevBtnReviewGoods} 
-        nextBtnAction={nextBtnReviewGoods}    
-        buttonPosition={{
-          prevBtnLeft: 450, 
-          prevTop: 395, 
-          nextBtnRight: 140,  
-          nextTop: 395, 
-        }}      
-      >
-        <div >
-        {reviewGoodsData?.length !== 0 ? 
-          reviewGoodsData?.map((item: any) =>
-          <div key={item.id_review_store + '_review'}>
-            <ReviewsGoods 
-              productFullName={item.tyres.full_name} 
-              rating={[item.rating]} 
-              reviewEntity={item} 
-              reviewExtend={false} 
-              btnLeft={undefined} 
-              btnRight={undefined}
-            />
+      <div className='fDev'>
+        <ReviewsMain 
+          props={'Відгуки кліентів'} 
+          prevBtnAction={prevBtnReviewGoods} 
+          nextBtnAction={nextBtnReviewGoods}    
+          buttonPosition={{
+            prevBtnLeft: reviewGoodsData?.length !== 0 ? -7 : undefined, 
+            prevTop: reviewGoodsData?.length !== 0 ? -110 : undefined, 
+            nextBtnRight: reviewGoodsData?.length !== 0 ? -95 : undefined,  
+            nextTop: reviewGoodsData?.length !== 0 ? -110 : undefined, 
+          }}      
+        >
+          <div >
+          {reviewGoodsData?.length !== 0 ? 
+            reviewGoodsData?.map((item: any) =>
+            <div key={item.id_review_store + '_review'}>
+              <ReviewsGoods 
+                productFullName={item?.tyres?.full_name} 
+                rating={[item.rating]} 
+                reviewEntity={item} 
+                reviewExtend={false} 
+                btnLeft={undefined} 
+                btnRight={undefined}
+              />
             </div>
             )
             : 
@@ -1033,8 +966,8 @@ const DeliveryGoodsPage = () => {
               </a>
             </div>
           }
-        </div>
-      </ReviewsMain>
+          </div>
+        </ReviewsMain>
       </div>
     </div>
   )

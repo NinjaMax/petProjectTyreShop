@@ -1,4 +1,3 @@
-
 .catalogTyres {
   font-family: var(--main-font-family);
 }
@@ -12,6 +11,7 @@ h1 {
 .rowCatalogTyres {
     display: flex;
     flex-direction:row;
+
     flex-wrap: wrap;
     /*gap: 3px;*/
 }
@@ -64,4 +64,19 @@ h1 {
   align-items:center;
   gap: 5px;
   font-family: var(--main-font-family);
+}
+
+.pagePagCatalog {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.spinerCatalogGoodsLoad {
+  width: 1050px;
+  height: 600px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }

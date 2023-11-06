@@ -15,17 +15,17 @@
   
   /* Position the "next button" to the right */
   .nextButton {
-    position: absolute;
-    right: calc(var(--positRight) * 1px);
-    top: calc(var(--positTopRight) * 1%);
+    position: relative;
+    right: calc(var(--positRight) * 1%);
+    top: calc(var(--positTopRight) * 1px);
     /*border-radius: 10px;*/
   }
   
   /* Position the "previous button" to the left */
   .prevButton {
-    position: absolute;
-    left: calc(var(--positLeft) * 1px);
-    top: calc(var(--positTopLeft) * 1%);;
+    position: relative;
+    left: calc(var(--positLeft) * 1%);
+    top: calc(var(--positTopLeft) * 1px);;
     /*border-radius: 3px 0 0 3px;*/
   }
   

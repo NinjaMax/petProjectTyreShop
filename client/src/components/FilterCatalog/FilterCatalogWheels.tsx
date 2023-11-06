@@ -7,9 +7,10 @@ import PriceRange from './PriceRange';
 import { Context } from '../../context/Context';
 import { observer } from 'mobx-react-lite';
 import FilterMainBtnWheel from '../mainFilterButton/FIlterMainBtnWheel';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { createStringUrl } from '../../services/stringUrl';
 import { typeWheels } from '../../services/wheelsProps.service';
+import { CATALOG_WHEELS_ROUTE } from '../../utils/consts';
 
 interface IFilterCatTyres {
     handleChange?(args0: any): void;
@@ -32,6 +33,7 @@ const FilterCatalogWheels = observer((
     const [statePcd2, setStatePcd2]=useState(false);
     const [stateBoltCountPcd, setStateBoltCountPcd]=useState(false);
     const params = useParams<any>();
+    const history = useHistory();
     
     useEffect(() => {
         if(!filterState) {
@@ -199,6 +201,11 @@ const FilterCatalogWheels = observer((
             filter.setChipBoltCountPcd(Array.from(
                 new Set([...filter.chipBoltCountPcd])));
         }
+        const wheelCatalogPath: string | undefined = 
+          `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(filter.type)}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${createStringUrl(filter.width)}` : ''}${filter.diameter ? `/r${createStringUrl(filter.diameter)}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(filter.bolt_count)}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${filter.pcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${filter.et}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${filter.dia}` : '' }`;
+          history.push(
+            wheelCatalogPath, 
+          );
     } 
     
     const handleDeleteChange  = (e: any) => {
@@ -326,38 +333,83 @@ const FilterCatalogWheels = observer((
                 new Set([...filter.chipBoltCountPcd])));
             filter.setBoltCountPcd(filter.chipBoltCountPcd.join(','));
         }
+        const wheelCatalogPath: string | undefined = 
+        `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(filter.type)}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${createStringUrl(filter.width)}` : ''}${filter.diameter ? `/r${createStringUrl(filter.diameter)}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(filter.bolt_count)}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${filter.pcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${filter.et}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${filter.dia}` : '' }`;
+        history.push(
+          wheelCatalogPath, 
+        );
     }  
     const filterBrandAdd = () => {
         filter.setBrands(filter.chipBrands.join(','));
         setStateBrand(!stateBrand);
+        const wheelCatalogPath: string | undefined = 
+        `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(filter.type)}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${createStringUrl(filter.width)}` : ''}${filter.diameter ? `/r${createStringUrl(filter.diameter)}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(filter.bolt_count)}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${filter.pcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${filter.et}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${filter.dia}` : '' }`;
+        history.push(
+          wheelCatalogPath, 
+        );
     }
     const filterBoltCountAdd = () => {
         filter.setBoltCount(filter.chipBoltCount.join(','));
         setStateBoltCount(!stateBoltCount);
+        const wheelCatalogPath: string | undefined = 
+        `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(filter.type)}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${createStringUrl(filter.width)}` : ''}${filter.diameter ? `/r${createStringUrl(filter.diameter)}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(filter.bolt_count)}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${filter.pcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${filter.et}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${filter.dia}` : '' }`;
+        history.push(
+          wheelCatalogPath, 
+        );
     }
     const filterTypeAdd = () => {
         filter.setType(filter.chipType.join(','));
         setStateType(!stateType);
+        const wheelCatalogPath: string | undefined = 
+        `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(filter.type)}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${createStringUrl(filter.width)}` : ''}${filter.diameter ? `/r${createStringUrl(filter.diameter)}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(filter.bolt_count)}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${filter.pcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${filter.et}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${filter.dia}` : '' }`;
+        history.push(
+          wheelCatalogPath, 
+        );
     }
     const filterColorAdd = () => {
         filter.setColor(filter.chipColor.join(','));
         setStateColor(!stateColor);
+        const wheelCatalogPath: string | undefined = 
+        `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(filter.type)}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${createStringUrl(filter.width)}` : ''}${filter.diameter ? `/r${createStringUrl(filter.diameter)}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(filter.bolt_count)}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${filter.pcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${filter.et}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${filter.dia}` : '' }`;
+        history.push(
+          wheelCatalogPath, 
+        );
     }
     const filterDiaAdd = () => {
         filter.setDia(filter.chipDia.join(','));
         setStateDia(!stateDia);
+        const wheelCatalogPath: string | undefined = 
+        `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(filter.type)}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${createStringUrl(filter.width)}` : ''}${filter.diameter ? `/r${createStringUrl(filter.diameter)}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(filter.bolt_count)}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${filter.pcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${filter.et}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${filter.dia}` : '' }`;
+        history.push(
+          wheelCatalogPath, 
+        );
     }
     const filterEtAdd = () => {
         filter.setEt(filter.chipEt.join(','));
         setStateEt(!stateEt);
+        const wheelCatalogPath: string | undefined = 
+        `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(filter.type)}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${createStringUrl(filter.width)}` : ''}${filter.diameter ? `/r${createStringUrl(filter.diameter)}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(filter.bolt_count)}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${filter.pcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${filter.et}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${filter.dia}` : '' }`;
+        history.push(
+          wheelCatalogPath, 
+        );
     }
     const filterPcdAdd = () => {
         filter.setPcd(filter.chipPcd.join(','));
         setStatePcd(!statePcd);
+        const wheelCatalogPath: string | undefined = 
+        `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(filter.type)}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${createStringUrl(filter.width)}` : ''}${filter.diameter ? `/r${createStringUrl(filter.diameter)}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(filter.bolt_count)}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${filter.pcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${filter.et}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${filter.dia}` : '' }`;
+        history.push(
+          wheelCatalogPath, 
+        );
     }
     const filterPcd2Add = () => {
         filter.setPcd2(filter.chipPcd2.join(','));
         setStatePcd2(!statePcd2);
+        const wheelCatalogPath: string | undefined = 
+        `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(filter.type)}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${createStringUrl(filter.width)}` : ''}${filter.diameter ? `/r${createStringUrl(filter.diameter)}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(filter.bolt_count)}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${filter.pcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${filter.et}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${filter.dia}` : '' }`;
+        history.push(
+          wheelCatalogPath, 
+        );
     }
     const filterBoltCountPcddAdd = () => {
         filter.setBoltCountPcd(filter.chipBoltCountPcd.join(','));

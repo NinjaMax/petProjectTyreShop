@@ -2,12 +2,11 @@ import React, { useContext, useState } from 'react';
 import '../css/Pagination.css';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../context/Context';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const Pagination = observer(() => {
-    const {page, goodsTyre} = useContext<any | null>(Context);
+    const {page, goodsTyre, goodsWheel} = useContext<any | null>(Context);
     const location = useLocation();
-    //const history = useHistory<any>();
     const [lastIndexPage, setLastIndexPage] = useState<number>(5);
     const [firstIndexPage, setFirstIndexPage] = useState<number>(0);
     
@@ -15,10 +14,9 @@ const Pagination = observer(() => {
         page.setLoadMore(0); 
         page.setPageItem(pageItem);
         page.setOffset((pageItem - 1) * 9);
-        console.log('OFFSET: ', page.offset);
-    }
+    }   
 
-    const pageCount = Math.ceil(goodsTyre.totalCount / page.limit);
+    const pageCount = Math.ceil(goodsTyre.totalCount !== 0 ? goodsTyre.totalCount : goodsWheel.totalCount !== 0 ? goodsWheel.totalCount :  0 / page.limit);
     const pages = []
 
     for (let i = 0; i < pageCount; i++) {
@@ -45,11 +43,6 @@ const Pagination = observer(() => {
         setLastIndexPage(prevLast => prevLast - 1);
     };
     
-    // console.log('PAGES: ', pages);
-    // console.log('TYRE_COUNT: ', goodsTyre.totalCount);
-    // console.log('PAGE_LIMIT: ', page.limit);
-    // console.log('PAGE_PAGEITEM: ', page.pageItem);
-
     return (
         <div className="pagination"
             onClick={(e: any) => e.stopPropagation()} 

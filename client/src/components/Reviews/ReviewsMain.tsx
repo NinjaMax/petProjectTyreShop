@@ -8,11 +8,11 @@ interface IReviewMain {
     children?: JSX.Element | JSX.Element [];
     prevBtnAction(arg0:any):void;
     nextBtnAction(arg0:any):void;
-    buttonPosition: {
-        prevBtnLeft: number, 
-        prevTop: number, 
-        nextBtnRight: number,  
-        nextTop: number, 
+    buttonPosition?: {
+        prevBtnLeft?: number, 
+        prevTop?: number, 
+        nextBtnRight?: number,  
+        nextTop?: number, 
     };
 }
 
@@ -29,16 +29,16 @@ const ReviewsMain = ({
            <div className='reviewsMain'>
                 {children}
             </div> 
+            <div className='reviewPrevNextBtn'>
             <ButtonPrevNext 
-                prevBtnLeft={buttonPosition.prevBtnLeft} 
-                prevTop={buttonPosition.prevTop} 
-                nextBtnRight={buttonPosition.nextBtnRight} 
-                nextTop={buttonPosition.prevTop}    
+                prevBtnLeft={buttonPosition?.prevBtnLeft} 
+                prevTop={buttonPosition?.prevTop} 
+                nextBtnRight={buttonPosition?.nextBtnRight} 
+                nextTop={buttonPosition?.prevTop}    
                 leftClickActive={prevBtnAction} 
                 rightClickActive={nextBtnAction}
             />
-            {/* <p/>
-            <span>Дивитися всі відгуки про магазин</span> */}
+            </div>
         </div>
         
     );
