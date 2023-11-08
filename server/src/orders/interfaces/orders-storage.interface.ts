@@ -10,4 +10,8 @@ export interface OrdersStorageConfigAttr {
   total: number;
   storage_index: number;
   order_index: number;
+  ref_diameter: string;
+  weight: string;
+  ref_weight: string;
+  category: string;
 }

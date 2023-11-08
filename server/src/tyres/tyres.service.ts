@@ -29,6 +29,7 @@ import { TyreCountry } from '../properties/entities/tyres/tyre-country.model';
 import { TyreYear } from '../properties/entities/tyres/tyre-year.model';
 import { TyreSizeDigits } from '../properties/entities/tyres/tyre-sizeDigits.model';
 import { RedisService } from '../redis/redis.service';
+import { Category } from '../categorys/entities/category.model';
 
 @Injectable()
 export class TyresService {
@@ -304,6 +305,7 @@ export class TyresService {
               { model: StockTyres },
               { model: TyreCountry },
               { model: TyreYear },
+              { model: Category},
               width
                 ? {
                     model: TyreWidth,
@@ -491,6 +493,7 @@ export class TyresService {
               { model: StockTyres },
               { model: TyreCountry },
               { model: TyreYear },
+              { model: Category},
               width
                 ? {
                     model: TyreWidth,
@@ -678,6 +681,7 @@ export class TyresService {
               { model: StockTyres },
               { model: TyreCountry },
               { model: TyreYear },
+              { model: Category},
               width
                 ? {
                     model: TyreWidth,
@@ -865,6 +869,7 @@ export class TyresService {
               { model: StockTyres },
               { model: TyreCountry },
               { model: TyreYear },
+              { model: Category},
               width
                 ? {
                     model: TyreWidth,
@@ -1052,6 +1057,7 @@ export class TyresService {
               { model: StockTyres },
               { model: TyreCountry },
               { model: TyreYear },
+              { model: Category},
               ,
               width
                 ? {

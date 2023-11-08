@@ -250,6 +250,8 @@ const CheckOrder = observer(({orderItem}:any) => {
     return (
         <div className='checkOrderContainer'>
                 <div className='checkOrderTitle'>Кошик</div>
+                { checkItems?.length !== 0 ?
+                <div>
                 <div className='checkOrder'>
                 {checkItems?.length !== 0 ?
                     checkItems?.map((item: any) =>
@@ -278,7 +280,10 @@ const CheckOrder = observer(({orderItem}:any) => {
                 <ButtonAction 
                     eventItem={goToBasket}
                     props={'Оформити замовлення'}
-                />    
+                />  
+                </div>
+                : <div className='checkOrderTitleNoGoods'>Немає товарів для замовлення</div>
+                }  
         </div>       
     );
 });

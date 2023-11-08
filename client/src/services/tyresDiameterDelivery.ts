@@ -3,6 +3,30 @@ import { TyreCargoDelivery } from "./enum/TyresCargoDelivery.enum";
 
 const tyresCarDiameterDelivery = (diameter: string | undefined) => {
     switch (diameter) {
+        case '1':
+            return TyreCarDelivery.REF_13_14;
+        case '2':
+            return TyreCarDelivery.REF_13_14;
+        case '3':
+            return TyreCarDelivery.REF_13_14;
+        case '4':
+            return TyreCarDelivery.REF_13_14;
+        case '5':
+            return TyreCarDelivery.REF_13_14;
+        case '6':
+            return TyreCarDelivery.REF_13_14;
+        case '7':
+            return TyreCarDelivery.REF_13_14;
+        case '8':
+            return TyreCarDelivery.REF_13_14;
+        case '9':
+            return TyreCarDelivery.REF_13_14;
+        case '10':
+            return TyreCarDelivery.REF_13_14;
+        case '11':
+            return TyreCarDelivery.REF_13_14;
+        case '12':
+            return TyreCarDelivery.REF_13_14;
         case '13':
             return TyreCarDelivery.REF_13_14;
         case '14':
@@ -21,14 +45,64 @@ const tyresCarDiameterDelivery = (diameter: string | undefined) => {
             return TyreCarDelivery.REF_19_5_22;
         case '21':
             return TyreCarDelivery.REF_19_5_22;
+        case '23':
+            return TyreCarDelivery.REF_19_5_22;
+        case '24':
+            return TyreCarDelivery.REF_19_5_22;
+        case '25':
+            return TyreCarDelivery.REF_19_5_22;
+        case '26':
+            return TyreCarDelivery.REF_19_5_22;
+        case '27':
+            return TyreCarDelivery.REF_19_5_22;
+        case '28':
+            return TyreCarDelivery.REF_19_5_22;
     }
 }
 
 const tyresCargoDiameterDelivery = (diameter: string | undefined) => {
     switch (diameter) {
+        case '1':
+            return TyreCargoDelivery.REF_15;
+        case '2':
+            return TyreCargoDelivery.REF_15;
+        case '3':
+            return TyreCargoDelivery.REF_15;
+        case '4':
+            return TyreCargoDelivery.REF_15;
+        case '5':
+            return TyreCargoDelivery.REF_15;
+        case '6':
+            return TyreCargoDelivery.REF_15;
+        case '7':
+            return TyreCargoDelivery.REF_15;
+        case '8':
+            return TyreCargoDelivery.REF_15;
+        case '9':
+            return TyreCargoDelivery.REF_15;
+        case '10':
+            return TyreCargoDelivery.REF_15;
+        case '11':
+            return TyreCargoDelivery.REF_15;
+        case '12':
+            return TyreCargoDelivery.REF_15;
+        case '13':
+            return TyreCargoDelivery.REF_15;
+        case '14':
+            return TyreCargoDelivery.REF_15;
+        case '14.5':
+            return TyreCargoDelivery.REF_15;
         case '15':
             return TyreCargoDelivery.REF_15;
+        case '15.3':
+            return TyreCargoDelivery.REF_15;
+        case '15.5':
+            return TyreCargoDelivery.REF_15;
         case '16':
+            return TyreCargoDelivery.REF_16;
+        case '16.1':
+            return TyreCargoDelivery.REF_16;
+        case '16.5':
             return TyreCargoDelivery.REF_16;
         case '17.5':
             return TyreCargoDelivery.REF_17_5;
@@ -38,17 +112,25 @@ const tyresCargoDiameterDelivery = (diameter: string | undefined) => {
             return TyreCargoDelivery.REF_20_22_5;
         case '22.5':
             return TyreCargoDelivery.REF_20_22_5;
+        case '23':
+            return TyreCargoDelivery.REF_25;
         case '24':
+            return TyreCargoDelivery.REF_25;
+        case '24.15':
             return TyreCargoDelivery.REF_25;
         case '25':
             return TyreCargoDelivery.REF_25;
         case '26':
+            return TyreCargoDelivery.REF_33;
+        case '26.5':
             return TyreCargoDelivery.REF_33;
         case '28':
             return TyreCargoDelivery.REF_33;
         case '29':
             return TyreCargoDelivery.REF_33;
         case '30':
+            return TyreCargoDelivery.REF_33;
+        case '30.5':
             return TyreCargoDelivery.REF_33;
         case '32':
             return TyreCargoDelivery.REF_33;
@@ -57,6 +139,42 @@ const tyresCargoDiameterDelivery = (diameter: string | undefined) => {
         case '34':
             return TyreCargoDelivery.REF_35;
         case '35':
+            return TyreCargoDelivery.REF_35;
+        case '36':
+            return TyreCargoDelivery.REF_35;
+        case '37':
+            return TyreCargoDelivery.REF_35;
+        case '38':
+            return TyreCargoDelivery.REF_35;
+        case '39':
+            return TyreCargoDelivery.REF_35;
+        case '42':
+            return TyreCargoDelivery.REF_35;
+        case '420':
+            return TyreCargoDelivery.REF_35;
+        case '457':
+            return TyreCargoDelivery.REF_35;
+        case '470':
+            return TyreCargoDelivery.REF_35;
+        case '490':
+            return TyreCargoDelivery.REF_35;
+        case '508':
+            return TyreCargoDelivery.REF_35;
+        case '533':
+            return TyreCargoDelivery.REF_35;
+        case '635':
+            return TyreCargoDelivery.REF_35;
+        case '44':
+            return TyreCargoDelivery.REF_35;
+        case '46':
+            return TyreCargoDelivery.REF_35;
+        case '48':
+            return TyreCargoDelivery.REF_35;
+        case '50':
+            return TyreCargoDelivery.REF_35;
+        case '52':
+            return TyreCargoDelivery.REF_35;
+        case '54':
             return TyreCargoDelivery.REF_35;
     }
 }

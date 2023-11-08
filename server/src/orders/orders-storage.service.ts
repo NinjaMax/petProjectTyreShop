@@ -17,7 +17,7 @@ export class OrdersStorageService {
   async createOrderStorage(createOrderDto: CreateOrderDto) {
     try {
       const orderStorage = await this.ordersStorageRepository.create(
-        createOrderDto,
+        createOrderDto
       );
 
       return orderStorage;
@@ -149,6 +149,9 @@ export class OrdersStorageService {
           category: updateOrderDto.category,
           id_order: updateOrderDto.id_order,
           id_storage: updateOrderDto.id_storage,
+          ref_diameter: updateOrderDto.ref_diameter,
+          weight: updateOrderDto.weight,
+          ref_weight: updateOrderDto.ref_weight,
         },
         { where: { id_order_storage: updateOrderDto.id_order_storage } },
       );

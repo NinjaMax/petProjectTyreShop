@@ -27,8 +27,11 @@ export interface IRestAdminApi {
     storage_index?: number;
     quantity?: number;
     //price: any;
-    
+    id_storage?: string | number;
     stateData?: [];
+    ref_diameter?: string;
+    weight?: string;
+    ref_weight?: string;
     // i: number;
     // length: number;
     //};

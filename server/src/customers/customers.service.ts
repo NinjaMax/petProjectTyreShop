@@ -29,6 +29,9 @@ export class CustomersService {
         phone: createCustomerDto.phone,
         full_name: createCustomerDto.full_name,
         picture: createCustomerDto.picture,
+        delivery_city_ref: createCustomerDto.delivery_city_ref,
+        delivery_dep: createCustomerDto.delivery_dep,
+        delivery_dep_ref: createCustomerDto.delivery_dep_ref
       });
 
       const contractCustomer = await this.contractService.createContract(
@@ -109,6 +112,9 @@ export class CustomersService {
           phone: getCustomerDto.phone,
           full_name: getCustomerDto.full_name,
           picture:  getCustomerDto.picture,
+          delivery_city_ref: getCustomerDto.delivery_city_ref,
+          delivery_dep: getCustomerDto.delivery_dep,
+          delivery_dep_ref: getCustomerDto.delivery_dep_ref,
         }
       });
       if (created) {
@@ -232,6 +238,9 @@ export class CustomersService {
             phone: updateCustomerDto.phone,
             password: updateCustomerDto.password,
             picture: updateCustomerDto.picture,
+            delivery_city_ref: updateCustomerDto.ref_city_delivery,
+            delivery_dep: updateCustomerDto.delivery_dep,
+            delivery_dep_ref: updateCustomerDto.delivery_dep_ref,
             //update_date : updateTyreDto.update_date
           },
           { where: { id_customer: customerId.id_customer } },

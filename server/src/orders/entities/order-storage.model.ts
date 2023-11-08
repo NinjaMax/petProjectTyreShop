@@ -85,6 +85,15 @@ export class Order_Storage extends Model<
   })
   total: number;
 
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  ref_diameter: string;
+
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  weight: string;
+
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  ref_weight: string;
+
   @BelongsTo(() => Orders, 'id_order')
   order: Orders;
 

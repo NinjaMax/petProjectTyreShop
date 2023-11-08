@@ -14,18 +14,18 @@ export class BasketStorageService {
   ) {}
 
   async createBasketStorage(createBasketDto: CreateBasketDto) {
-    // try {
+    try {
       const basketStorage = await this.basketStorageRepository.create(
         createBasketDto,
       );
 
       return basketStorage;
-    // } catch {
-    //   throw new HttpException(
-    //     'Data is incorrect and must be uniq',
-    //     HttpStatus.NOT_FOUND,
-    //   );
-    // }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async findAllBasketStorage() {

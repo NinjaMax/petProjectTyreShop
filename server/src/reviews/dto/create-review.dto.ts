@@ -102,4 +102,8 @@ export class CreateReviewDto {
   readonly loud_level: number;
   readonly id_review_store: number;
   readonly description: string;
+  readonly delivery_city_ref: string;
+  readonly delivery_dep: string;
+  readonly delivery_dep_ref: string;
+  readonly ref_city_delivery: string;
 }

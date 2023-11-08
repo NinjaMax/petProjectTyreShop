@@ -25,9 +25,10 @@
     left: 45%;
     margin-left: 70px;
     margin-right: 55px;
-    margin-bottom: 45px;
+    margin-bottom: 50px;
     margin-top: 15px;
     width: 90%;
+    height: 240px;
     text-align: center;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 8px;
@@ -130,7 +131,7 @@
     align-items: flex-start;
     gap: 5px;
     position: absolute;
-    top: 72%;
+    top: 76%;
     overflow-y: auto;
     max-height: 150px;
     border-radius: 8px;

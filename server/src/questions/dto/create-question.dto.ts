@@ -89,4 +89,8 @@ export class CreateQuestionDto {
   readonly loud_level: number;
   readonly address: string; 
   readonly delivery: string;
+  readonly delivery_city_ref: string;
+  readonly delivery_dep: string;
+  readonly delivery_dep_ref: string;
+  readonly ref_city_delivery: string;
 }

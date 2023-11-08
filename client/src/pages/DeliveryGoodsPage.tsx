@@ -294,16 +294,6 @@ const DeliveryGoodsPage = () => {
             )
           }
         }
-        // if(!isMounted && taskLoad[i] === getTyresReviewLimit 
-        //   ) {
-        //   let getReviewTyres: any = await taskLoad[i](
-        //     1,
-        //     nextBtnReview
-        //   );
-        //   if (getReviewTyres) {
-        //     setReviewGoodsData(getReviewTyres);
-        //   }
-        // }
         const task = taskLoad.shift();
         task();
         await yieldToMain(); 

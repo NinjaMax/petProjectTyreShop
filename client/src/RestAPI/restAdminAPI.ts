@@ -19,6 +19,27 @@ const createGoodsToOrder = async (
 })
 .catch(error => {
         console.log(error)
+}); 
+
+const createGoodsToOrderBasket = async (
+    item:IRestAdminApi, id_order: number) =>
+    await $hostPost.post('/orders/creategoods', {
+    id: +item?.id!,
+    full_name: item.full_name,
+    category: item.category,
+    order_index: id_order,
+    id_supplier: +item.id_supplier!,
+    storage_index: +item.id_storage!,
+    quantity: +item.quantity!,
+    price: +item.price!,
+    id_order_storage: item.id_order_storage ?? null,
+    ref_diameter: item.ref_diameter,
+    weight: item.weight,
+    ref_weight: item.ref_weight,
+    // delivery: 'Flintstone',
+})
+.catch(error => {
+        console.log(error)
 });  
 
 const createGoodsToOrderSup = async (
@@ -332,5 +353,6 @@ export {
     getCustomers,
     getSuppliers,
     getUsers,
-    addCommentsToOrder
+    addCommentsToOrder,
+    createGoodsToOrderBasket
 };

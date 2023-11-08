@@ -42,6 +42,7 @@ const CatalogTyres = observer(() => {
                     customer.customer?.id,
                 );
                 //console.log('CREATE_BASKET_ID_BASKET: ', basket.data.id_basket);
+                //console.log('ITEM_GOODS: ', item)
                 if(basket?.status === 201) {
                     const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
                     const addTobasket: any = await addGoodsToBasket(
@@ -59,7 +60,7 @@ const CatalogTyres = observer(() => {
                     item.reviews.length,
                     item.diameter.diameter,
                     ); 
-                    //console.log('ADD_BASK: ', addTobasket);
+                    console.log('ADD_BASK: ', addTobasket);
                     if (addTobasket?.status === 201) {
                         const updateBasketStorage = await getBasketById(basket.data.id_basket);
                         setCheckOrderItem(
@@ -69,8 +70,8 @@ const CatalogTyres = observer(() => {
                             updateBasketStorage?.basket_storage.reduce(
                                 (sum: any, current: any) => (sum + current.quantity),0)
                         );
-                    //console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
-                    //console.log('ADD_TO_BASKET: ', addTobasket?.data); 
+                    console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
+                    console.log('ADD_TO_BASKET: ', addTobasket?.data); 
                     }  
                 }
             }

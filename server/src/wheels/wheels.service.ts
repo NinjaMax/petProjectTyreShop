@@ -23,6 +23,7 @@ import { StockWheels } from '../stock/entities/stock-wheels.model';
 import { ReviewWheels } from '../reviews/entities/review-wheels.model';
 import { RatingWheels } from '../ratings/entities/rating-wheels.model';
 import { RedisService } from '../redis/redis.service';
+import { Category } from '../categorys/entities/category.model';
 
 @Injectable()
 export class WheelsService {
@@ -208,6 +209,7 @@ export class WheelsService {
             { model: RatingWheels },
             { model: ReviewWheels },
             { model: StockWheels },
+            { model: Category},
             // { all: true },
             width
               ? {
@@ -365,6 +367,7 @@ export class WheelsService {
             { model: RatingWheels },
             { model: ReviewWheels },
             { model: StockWheels },
+            { model: Category},
             width
               ? {
                   model: WheelWidth,
@@ -521,6 +524,7 @@ export class WheelsService {
             { model: RatingWheels },
             { model: ReviewWheels },
             { model: StockWheels },
+            { model: Category},
             width
               ? {
                   model: WheelWidth,
@@ -677,6 +681,7 @@ export class WheelsService {
             { model: RatingWheels },
             { model: ReviewWheels },
             { model: StockWheels },
+            { model: Category},
             width
               ? {
                   model: WheelWidth,
@@ -833,6 +838,7 @@ export class WheelsService {
             { model: RatingWheels },
             { model: ReviewWheels },
             { model: StockWheels },
+            { model: Category},
             width
               ? {
                   model: WheelWidth,

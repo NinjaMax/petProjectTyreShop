@@ -10,4 +10,7 @@ export interface CustomerConfigAttr {
   address: string;
   delivery: string;
   picture: string;
+  delivery_city_ref: string;
+  delivery_dep: string;
+  delivery_dep_ref: string;
 }

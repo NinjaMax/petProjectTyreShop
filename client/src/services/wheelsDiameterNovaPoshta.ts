@@ -2,6 +2,30 @@ import { WheelsTypeNovaPoshta } from "./enum/WheelsTypeNP.enum";
 
 const wheelsDiameter = (diameter: string | undefined) => {
     switch (diameter) {
+        case '1':
+            return WheelsTypeNovaPoshta.REF_13_14;
+        case '2':
+            return WheelsTypeNovaPoshta.REF_13_14;
+        case '3':
+            return WheelsTypeNovaPoshta.REF_13_14;
+        case '4':
+            return WheelsTypeNovaPoshta.REF_13_14;
+        case '5':
+            return WheelsTypeNovaPoshta.REF_13_14;
+        case '6':
+            return WheelsTypeNovaPoshta.REF_13_14;
+        case '7':
+            return WheelsTypeNovaPoshta.REF_13_14;
+        case '8':
+            return WheelsTypeNovaPoshta.REF_13_14;
+        case '9':
+            return WheelsTypeNovaPoshta.REF_13_14;
+        case '10':
+            return WheelsTypeNovaPoshta.REF_13_14;
+        case '11':
+            return WheelsTypeNovaPoshta.REF_13_14;
+        case '12':
+            return WheelsTypeNovaPoshta.REF_13_14;
         case '13':
             return WheelsTypeNovaPoshta.REF_13_14;
         case '14':
@@ -24,9 +48,57 @@ const wheelsDiameter = (diameter: string | undefined) => {
             return WheelsTypeNovaPoshta.REF_23;
         case '17.5':
             return WheelsTypeNovaPoshta.REF_17_5;
+        case '15.3':
+            return WheelsTypeNovaPoshta.REF_17_5;
         case '19.5':
             return WheelsTypeNovaPoshta.REF_19_5;
         case '22.5':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '22':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '24':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '26':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '28':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '42':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '43':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '67.1':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '29':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '26.5':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '30':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '30.5':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '32':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '33':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '34':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '35':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '36':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '38':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '44':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '46':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '48':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '50':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '52':
+            return WheelsTypeNovaPoshta.WEIGHT_22_5;
+        case '54':
             return WheelsTypeNovaPoshta.WEIGHT_22_5;
     }
 }

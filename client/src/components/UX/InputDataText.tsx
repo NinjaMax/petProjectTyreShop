@@ -24,7 +24,7 @@ const InputDataText = ({dataEmail, dataText, inputItem, inputText}: IinputDataTe
                 minLength={4} 
                 maxLength={+inputItem.max} 
                 data-size={inputItem.size} 
-                value={dataEmail ?? dataText ?? ''}
+                value={dataEmail ?? dataText ?? ' '}
                 required
                 autoComplete='true'
                 onChange={inputText}

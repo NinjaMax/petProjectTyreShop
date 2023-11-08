@@ -7,33 +7,17 @@ interface IinputDataTel {
     onAccept?: (arg: any, arg1: any) => void;
     refLabel?: {current:{className: string;}};
     dataTel?: any;
-    
-    // mask: {
-    //     masked: any; arg: any
-    //     };
 }
-
-//type IOnAccept =  {refLabel?: {current:{className: string;}};}
 
 const InputDataTel = ({onAccept, dataTel}: IinputDataTel) => {
 
     const refLabel = useRef<any>();
 
-    // const inputEvent: string = (e: any) => {
-    //     if(e.currentTarget.value.length > 4 && e.currentTarget.value.length <= 10 ) {
-    //         refLabel.current.className = 'inputDataTelLabelActive';
-    //     } else {
-    //         refLabel.current.className = 'inputDataTelLabel';
-    //     }
-
-    //   console.log('TEL_LENGTH_VALUE: ',e.currentTarget.value.length);
-    //   console.log('REF_LABEL: ', refLabel);
-    //}
-       
     return (
         <div>
             <IMaskInput 
                 className='inputDataTel'
+                name='telInput'
                 mask='+{38}(000)000-00-00'
                 radix="."
                 // defaultValue={String(dataTel)}

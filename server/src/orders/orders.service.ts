@@ -463,6 +463,10 @@ export class OrdersService {
             id_customer: updateOrderDto.id_customer,
             id_contract: updateOrderDto.id_contract,
             bonus_decrease: updateOrderDto.bonus_decrease,
+            delivery_city: updateOrderDto.city_delivery,
+            delivery_city_ref: updateOrderDto.ref_city_delivery,
+            delivery_city_depart: updateOrderDto.delivery_dep,
+            delivery_city_depart_ref: updateOrderDto.delivery_dep_ref
           },
           { where: { id_order: updateOrderDto.id_order } },
         );
