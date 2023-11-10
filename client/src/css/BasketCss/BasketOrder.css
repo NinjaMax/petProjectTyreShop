@@ -14,11 +14,6 @@
     margin-bottom: 45px;
     padding: 15px;
 }
-
-
-/* .noBasketGoods {
-    display: none;
-} */
 .noBasketGoods {
     display: inline-block;
     font-family: var(--main-font-family);
@@ -36,7 +31,6 @@
     padding: 40px;
     color: #444B54;
 }
-
 .basketOrderInputBonus {
     border: solid 2px #9999;
     border-radius: 10px;
@@ -46,28 +40,22 @@
     font-family: var(--main-font-family);
     margin: 3px;
 }
-
-
 .basketColmLeft {
     grid-column: 1/1;
-    /* border: 2px solid red; */
     display: flex;
     flex-direction: column;
     align-items:flex-start;
     gap: 5px;
     margin-left: 20px;
 }
-
 .basketColmRight {
     grid-column: 2/2;
-    /* border: 2px solid green; */
     overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items:flex-start;
     gap: 5px;
 }
-
 .basketColmRightListGoods {
     display: flex;
     flex-direction: column;
@@ -77,20 +65,11 @@
     width: 850px;
     max-height: 350px;
     overflow-y: auto;
-    
 }
 .basketColmRightListGoods .itemGoodsBasket {
     display:inline-flex;
 }
-/* .basketColmRightListGoods span {
-    vertical-align:middle;
-
-} */
-
 .basketColmRightClose {
-    /* content: "✖"; */
-    /* color: #6666; */
-    /* vertical-align: text-bottom; */
     text-align: center;
     position: relative;
     top: 34%;
@@ -105,7 +84,6 @@
 .basketColmRightClose::before {
     content: "✖";
     color: black;
-    /* vertical-align: text-bottom; */
 }
 .basketColmRightClose:hover {
     cursor: pointer;
@@ -113,18 +91,50 @@
 }
 .basketColmRightCheckbox {
     margin: 10px;
+    width: 300px;
+    position: relative;
 }
-/* .basketOrder i {
-    color: aqua;
-} */
-
+.basketColmRightCheckbox .tooltipBasketOrderDopGar {
+    visibility: hidden;
+    width: 120px;
+    background-color: #444;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size:small; 
+    font-weight: normal;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: -32%;
+    left: 75%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+/* Tooltip arrow */
+.basketColmRightCheckbox .tooltipBasketOrderDopGar::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #444 transparent transparent;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.basketColmRightCheckbox:hover .tooltipBasketOrderDopGar {
+    visibility: visible;
+    opacity: 1;
+    cursor: pointer;
+}
 .basketColmItemLeft {
     display: flex;
     flex-direction: column;
     align-items:flex-start;
     gap: 3px;
 }
-
 .basketCityList {
     display: flex;
     flex-direction: column;
@@ -139,26 +149,19 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     z-index: 99;
 }
-
 .basketCityList .basketCityListItem {
     cursor: pointer;
-    /* background-color: blueviolet; */
     width: 550px;
     border-radius: 6px;
     padding: 2px;
 }
 .basketCityList .basketCityListItem:hover {
-    /* cursor: pointer; */
     background-color: #ccc;
     animation: cubic-bezier(0.075, 0.82, 0.165, 1);
-    /* width: 550px;
-    border-radius: 6px;
-    padding: 2px; */
 }
 
 .basketCityList label {
     cursor: pointer;
-    /* background-color: red; */
     border-radius: 6px;
     padding: 2px;
 }
@@ -197,7 +200,6 @@
 
 .basketDepartList .basketDepartListItem {
     cursor: pointer;
-    /* background-color: blueviolet; */
     width: 540px;
     border-radius: 6px;
     padding: 2px;
@@ -243,8 +245,8 @@
     z-index: 9;
     /* appearance: none; */
     /* cursor: pointer; */
-  }
-  .basketDepartListDel .basketDepartListItem {
+}
+.basketDepartListDel .basketDepartListItem {
     cursor: pointer;
     /* background-color: blueviolet; */
     width: 540px;
@@ -266,36 +268,21 @@
     z-index: 9;
 }
 
-/* .basketDepartList option {
-    appearance: none;
-    cursor: pointer;
-    border-radius: 6px;
-    padding: 2px;
-    /* background-color: #ccc;
-    animation: cubic-bezier(0.075, 0.82, 0.165, 1); */
-    /* width: 550px;
-    border-radius: 6px;
-    padding: 2px; */
-/*} */
-
 .basketDepartList option:hover {
     cursor: pointer;
     background-color: #ccc;
     animation: cubic-bezier(0.075, 0.82, 0.165, 1);
-    
-    /* width: 550px;
-    border-radius: 6px;
-    padding: 2px; */
 }
 
-/* .basketDepartList select {
-    appearance: none;
-} */
 .basketColmItemRight {
     display: flex;
     flex-direction: column;
     align-items:flex-start;
     gap: 3px;
+}
+.basketColmItemRight #commentsOrder {
+    font-family: var(--main-font-family);
+    font-size: medium;
 }
 
 .commentsBasketOrder {
@@ -339,13 +326,11 @@
     color: #444B54;
     font-size:large;
 }
-
 .basketOrderSumGoods {
     display: inline-block;
     color: #444B54;
     font-size:larger;
 }
-
 .basketOrderComissionPrice {
     display: inline-block;
     color: #444B54;
@@ -357,8 +342,11 @@
     color: #444B54;
     font-size:large;
 }
+.basketOrderSkyBonus {
+    position: relative;
+}
 
-.basketOrderSkyBonus img{
+.basketOrderSkyBonus img {
     vertical-align:middle;
 }
 
@@ -366,6 +354,42 @@
     display: inline-block;
     color: #444B54;
     font-size:large;    
+}
+
+.basketOrderSkyBonus .tooltipBasketOrderSkyBonus {
+    visibility: hidden;
+    width: 120px;
+    background-color: #444;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size:small; 
+    font-weight: normal;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: -185%;
+    left: 105%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+/* Tooltip arrow */
+.basketOrderSkyBonus .tooltipBasketOrderSkyBonus::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #444 transparent transparent;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.basketOrderSkyBonus:hover .tooltipBasketOrderSkyBonus {
+    visibility: visible;
+    opacity: 1;
+    cursor: pointer;
 }
 
 .basketInputSearchCity {

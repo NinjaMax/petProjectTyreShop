@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import '../css/PromotionBox.css';
 import Card from './cards/Card';
 import ButtonPrevNext from './buttons/ButtonPrevNext';
@@ -70,29 +70,13 @@ const PromotionBox = observer(({
         } catch (error) {
             console.log('BASKET_ERROR: ',error);
         }
-      }
+    }
     
     return (
         <div className='promotionBox'>
             <div className='promotionBoxItem'>
-            {itemsArray?.length !== 0 && prevBtn >= 0 ? 
-                itemsArray?.slice(prevBtn, nextBtn).map(
-                (item: any) =>
-                <Fragment key={item.id}>
-                <Card 
-                    goods={item}
-                    typeCard={item.typeCard}
-                    optionsBox={false} 
-                    checkOrders={checkOrders}
-                    forOrder={false}
-                />
-                </Fragment>
-                )
-                : null  
-            } 
-            {itemsArray?.length !== 0 && prevBtn < 0? 
-                [...itemsArray!.slice(prevBtn, undefined), ...itemsArray!.slice(0, itemsArray!.length - prevBtn)]
-                .slice(0, 4)
+            {itemsArray?.length !== 0 && prevBtn <= itemsArray!.length - 4 && nextBtn <= itemsArray!.length? 
+                itemsArray!.slice(prevBtn, nextBtn)
                 .map(
                 (item: any) =>
                 <Fragment key={item.id}>
@@ -107,8 +91,9 @@ const PromotionBox = observer(({
                 )
                 : null  
             } 
-             {/* {itemsArray?.length !== 0 ? 
-                itemsArray?.slice(prevBtn, nextBtn).map(
+            {itemsArray?.length !== 0 && prevBtn > itemsArray!.length - 4 && nextBtn < itemsArray!.length - 6 ? 
+                [...itemsArray!.slice(prevBtn, itemsArray!.length), ...itemsArray!.slice(0, nextBtn + 1)]
+                .map(
                 (item: any) =>
                 <Fragment key={item.id}>
                 <Card 
@@ -121,7 +106,7 @@ const PromotionBox = observer(({
                 </Fragment>
                 )
                 : null  
-            }  */}
+            } 
             </div>
             {itemsArray ?
             <ButtonPrevNext 

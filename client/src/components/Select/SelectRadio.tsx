@@ -8,6 +8,7 @@ interface ISelectRadio {
     activeOptions?:(arg: any) => void; 
     children?: any;
     disabled?: boolean;
+    checked?: boolean;
 }
 
 const SelectRadio = ({
@@ -16,6 +17,7 @@ const SelectRadio = ({
         direction, 
         activeOptions,
         disabled, 
+        checked,
         children
     }: ISelectRadio) => {
 
@@ -37,6 +39,7 @@ const SelectRadio = ({
                         name={radioData.name} 
                         onChange={activeOptions}
                         disabled={disabled}
+                        checked={checked}
                     /> {radioData.radioName}            
                 </label>
             </div>

@@ -48,6 +48,7 @@ export class OrdersStorageService {
     try {
       const orderStorageAllLeader = await this.ordersStorageRepository.findAll({
         include: [{ all: true }],
+        limit: 10,
         attributes: [
           'id',
           'full_name',
@@ -60,7 +61,6 @@ export class OrdersStorageService {
           'Order_Storage.full_name',
         ],
         order: [['count_id', 'DESC']],
-        limit: 8,
       });
 
       return orderStorageAllLeader;

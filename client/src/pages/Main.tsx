@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import '../css/Main.css';
-//import { useParams } from 'react-router-dom';
 import Slider from '../components/Slider';
 import CategorySlide from '../components/CategorySlide';
 import TabProdMain from '../components/tabs/TabProdMain';
@@ -10,10 +9,9 @@ import TabMain from '../components/tabs/TabMain';
 import NewsMainBox from '../components/news/NewsMainBox';
 import ReviewStore from '../components/reviews/ReviewStore';
 import { Context } from '../context/Context';
-import { getAllArticlesLimit, getAllOrdersLeader, getAllStoreReviewLimit, getTyresById, getTyresCountAll, getTyresWithoutOffset, getWheelsById, getWheelsWithoutOffset } from '../restAPI/restGoodsApi';
+import { getAllArticlesLimit, getAllOrdersLeader, getAllStoreReviewLimit, getTyresById, getTyresWithoutOffset, getWheelsById, getWheelsWithoutOffset } from '../restAPI/restGoodsApi';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
-//import { tyreDiameterCat, tyreSeasonCat, tyreVehicleTypeCat } from '../services/tyresCatService';
 import BrandsListMain from '../components/BrandsListMain';
 import PromotionBox from '../components/PromotionBox';
 
@@ -27,24 +25,14 @@ const Main = observer(() => {
   const [prevBtnReview, setPrevBtnReview] = useState<number>(0);
   const [nextBtnReview, setNextBtnReview] = useState<number>(0);
   const [articlesAll, setArticlesAll] = useState<any[] | null>();
-  //const params = useParams<any>();
 
   useEffect(() =>{
     let isMounted = false;
     
     const loadMainTyreTask = async() => {
-      
-      //const taskLoad: any[] = [
-        //getTyresWithoutOffset,
-        //loadMainFilterTyreTask
-      //];
-      //let i:number = 0;
-      //while(taskLoad.length > i) {
-        //if(!isMounted && taskLoad[i] === getTyresWithoutOffset) {
-          if(!isMounted) {
+        if(!isMounted) {
           console.time('GET_REQUEST_FROM_DATA_BASE');
           let tyreFilterGoods: any = await getTyresWithoutOffset(
-          //let tyreFilterGoods: any = await taskLoad[i](
             filter.width,
             filter.height,
             filter.diameter,
@@ -60,8 +48,6 @@ const Main = observer(() => {
             filter.reinforced,
             filter.sort,
           );
-
-          //console.log('GET_TYRES: ', tyreFilterGoods.rows)
           console.timeEnd('GET_REQUEST_FROM_DATA_BASE');
 
           let setWidthFilter:any[] = [];
@@ -78,7 +64,6 @@ const Main = observer(() => {
           let setStuddedFilter :any[] = [];
           
           tyreFilterGoods.rows.map((item: any) =>
-          //goodsTyre._tyres_filter.map((item: any) => 
           { return (
             setWidthFilter.push(item.width.width),
             setHightFilter.push(item.height.height),
@@ -94,11 +79,6 @@ const Main = observer(() => {
             setStuddedFilter.push(item.studded.studded)
             )
           })
-          // page.loadMore > 0 ? goodsTyre?.setTyres(
-          //   [...goodsTyre._tyres, 
-          //     ...tyreFilterGoods.rows.slice(page.offset, page.limit)] 
-          //   ) : goodsTyre?.setTyres(
-          //     tyreFilterGoods.rows.slice(page.offset, page.limit));
 
           if (filter.width) {
             goodsTyre?.setWidth(
@@ -252,10 +232,6 @@ const Main = observer(() => {
               Array.from(new Set(setReinforcedFilter))
             )
           }
-        //}
-        // const task = taskLoad.shift();
-        // task();
-        // await yieldToMain(); 
     }
     }
     console.time('LOAD_MAIN_TYRE_TASK');
@@ -527,21 +503,23 @@ const Main = observer(() => {
   useEffect(() => {
     let isMountedLeader = false;
     const getLeadersOrder = async () => {
-      if (!isMountedLeader && (prevBtnLeader || nextBtnLeader)) {
+      //if (!isMountedLeader && (prevBtnLeader || nextBtnLeader)) {
+      if (!isMountedLeader) {
         let getOrdersLeader: any = await getAllOrdersLeader();
+        //console.log('GET_LEADERS: ', getOrdersLeader);
         getOrdersLeader.forEach( async(item: any) => {
           const getTyre = await getTyresById(item.id);
           const getWheel = await getWheelsById(item.id);
           if (getTyre) {
             getTyre.typeCard = 'tyre';
             setLeaderOrder(
-              oldLeader => [...oldLeader!, getTyre].slice(0,8)
+              oldLeader=> Array.from(new Set([...oldLeader!, getTyre]))
               );
           }
           if (getWheel) {
             getWheel.typeCard = 'wheel';
             setLeaderOrder(
-              oldLeader => [...oldLeader!, getWheel].slice(0,8));
+            oldLeader => Array.from(new Set([...oldLeader!, getWheel])));
           }
         });
       }
@@ -550,7 +528,7 @@ const Main = observer(() => {
     return () => {
       isMountedLeader = true;
     };
-  },[nextBtnLeader, prevBtnLeader]);
+  },[]);
 
   useEffect(() => {
     let isMountedReview = false;
@@ -578,20 +556,48 @@ const Main = observer(() => {
   };
 
   const prevBtnEvent = () => {
-    setPrevBtnLeader(oldPrevBtn => oldPrevBtn - 1);
-    setNextBtnLeader(oldNextBtn => oldNextBtn - 1);
-    if (prevBtnLeader === -8 && nextBtnLeader === -4) {
-      setPrevBtnLeader(-1);
-      setNextBtnLeader(3);
+    if (prevBtnLeader === 0 
+       && nextBtnLeader <= (leaderOrder!.length - 6)) {
+      setPrevBtnLeader(oldPrevBtn => leaderOrder!.length - oldPrevBtn);
+      setNextBtnLeader(oldNextBtn => oldNextBtn - 1);
+    }
+    if (prevBtnLeader > leaderOrder!.length - 4 
+      && nextBtnLeader <= (leaderOrder!.length - 6)) {
+      setPrevBtnLeader(oldPrevBtn => oldPrevBtn - 1);
+      setNextBtnLeader(oldNextBtn => oldNextBtn - 1);
+    }
+    if (prevBtnLeader === leaderOrder!.length - 3 
+      && nextBtnLeader === 0) {
+      setPrevBtnLeader(6);
+      setNextBtnLeader(leaderOrder!.length);
+    }
+    if (prevBtnLeader <= leaderOrder!.length - 4 
+      && nextBtnLeader <= leaderOrder!.length) {
+        setPrevBtnLeader(oldPrevBtn => oldPrevBtn - 1);
+        setNextBtnLeader(oldNextBtn => oldNextBtn - 1);
     }
   };
 
   const nextBtnEvent = () => {
-    setPrevBtnLeader(oldPrevBtn => oldPrevBtn + 1);
-    setNextBtnLeader(oldNextBtn => oldNextBtn + 1);
-    if (prevBtnLeader === 3 && nextBtnLeader === 7) {
-      setPrevBtnLeader(-4);
+     if (prevBtnLeader < leaderOrder!.length - 4 
+       && nextBtnLeader < leaderOrder!.length) {
+      setPrevBtnLeader(oldPrevBtn => oldPrevBtn + 1);
+      setNextBtnLeader(oldNextBtn => oldNextBtn + 1);
+     }
+    if (prevBtnLeader > leaderOrder!.length - 4 
+      && nextBtnLeader < leaderOrder!.length - 6) {
+      setPrevBtnLeader(oldPrevBtn => oldPrevBtn + 1);
+      setNextBtnLeader(oldNextBtn => oldNextBtn + 1);
+    }
+    if (prevBtnLeader === leaderOrder!.length - 4
+      && nextBtnLeader === leaderOrder!.length) {
+      setPrevBtnLeader(oldPrevBtn => oldPrevBtn + 1);
       setNextBtnLeader(0);
+    }
+    if (prevBtnLeader === leaderOrder!.length 
+      && nextBtnLeader === (leaderOrder!.length - 7)) {
+      setPrevBtnLeader(1);
+      setNextBtnLeader(5);
     }
   };
 

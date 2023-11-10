@@ -1,5 +1,5 @@
 export type IbasketData = {
-    name?: string,
+    name?: string | null,
     phone?: number | null,
     email?: string | null,
     address?: string | null,
