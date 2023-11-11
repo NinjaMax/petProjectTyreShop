@@ -5,19 +5,21 @@ import ButtonPrevNext from '../buttons/ButtonPrevNext';
 
 interface IReviewMain {
     props: string;
+    marginText?: number;
     children?: JSX.Element | JSX.Element [];
-    prevBtnAction(arg0:any):void;
-    nextBtnAction(arg0:any):void;
+    prevBtnAction?(arg0:any):void;
+    nextBtnAction?(arg0:any):void;
     buttonPosition?: {
         prevBtnLeft?: number, 
         prevTop?: number, 
-        nextBtnRight?: number,  
-        nextTop?: number, 
+        nextBtnRight?: number | null,  
+        nextTop?: number | null, 
     };
 }
 
 const ReviewsMain = ({
     props, 
+    marginText,
     children, 
     prevBtnAction, 
     nextBtnAction,
@@ -25,7 +27,8 @@ const ReviewsMain = ({
 }: IReviewMain) => {
     return (
         <div className='reviewBox'>
-           <div className='textReview'>{props}</div>
+           <div className='textReview' 
+           style={{'--mainReview-marginLeft': marginText} as React.CSSProperties}>{props}</div>
            <div className='reviewsMain'>
                 {children}
             </div> 

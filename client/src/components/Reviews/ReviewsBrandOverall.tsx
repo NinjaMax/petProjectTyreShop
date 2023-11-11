@@ -24,6 +24,7 @@ const ReviewsBrandOverall = ({
     brandName,
     typeGoods
 }: IReviewBrand) => {
+    console.log('RATING_BRAND_AVG: ',avgBrand)
     return (
         <div className="reviewsBrand">
             <div className='reviewBrandList'>
@@ -35,7 +36,7 @@ const ReviewsBrandOverall = ({
                     numScore={avgBrand ?? 0}
                     disabled={true}
                 /> 
-                <span>середня оцінка основана на {countReviewBrand} відгуках.</span>  
+                <span>середня оцінка на основі {countReviewBrand} відгуків.</span>  
             </div>
             {typeGoods ?
             <div className='reviewBrandList'>

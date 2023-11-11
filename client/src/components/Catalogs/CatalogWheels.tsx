@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../../css/Catalogs/CatalogTyres.css';
 import SelectRadio from '../select/SelectRadio';
 import Modal from '../modal/Modal';
@@ -6,20 +6,50 @@ import CheckOrder from '../modal/CheckOrder';
 import LoadMoreGoods from '../ux/LoadMoreGoods';
 import Pagination from '../Pagination';
 import { ICheckOrderItem } from './types/CheckOrder.type';
-import { addGoodsToBasket, createBasket, getBasketById } from '../../restAPI/restGoodsApi';
+import { addGoodsToBasket, createBasket, getBasketById, getWheelsBrandByName, getWheelsBrandRatingAvg } from '../../restAPI/restGoodsApi';
 import { Context } from '../../context/Context';
 import Card from '../cards/Card';
 import PopularSizeTyre from '../popularGoods/PopularSizeTyre';
 import PopularRequests from '../popularGoods/PopularRequests';
 import { observer } from 'mobx-react-lite';
 import SpinnerCarRot from '../spinners/SpinnerCarRot';
+import Rating from '../ux/Rating';
+
+type RatingBrandWheel = {
+    count: number,
+    rows: [
+        {avgRatingBrand: number}
+    ],
+};
+type DescWheelBrand = {
+    description: string,
+    id_brand?: number, 
+    id_description: number, 
+};
 
 const CatalogWheels = observer(() => {
   const [active, setActive] = useState(false);
   const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem[] | null>([]);
+  const [wheelBrandRating, setWheelBrandRating] = useState<RatingBrandWheel>();
   //const [goodsCat, setGoodsCat] = useState([]);
   const { goodsWheel, page, filter, customer} = useContext<any | null>(Context);
   
+    useEffect(() => {
+        let isMounted = false;
+        const getWheelBrandRatingAvg = async () => {
+            if (!isMounted && filter.brands && !filter.brands.includes(',')) {
+                const getWheelBrandName = await getWheelsBrandByName(filter.brands);
+                const getRatingWheelBrand = await getWheelsBrandRatingAvg(getWheelBrandName.id_brands);
+                setWheelBrandRating(getRatingWheelBrand);
+                //console.log('GET_RATING_BRAND: ', getRatingWheelBrand);
+            }
+        };
+        getWheelBrandRatingAvg();
+        return () => {
+            isMounted = true;
+        };
+    },[filter]);
+
   const checkOrders = async (
     item : ICheckOrderItem, 
     ratingModel: {avgRatingModel: number }
@@ -105,6 +135,18 @@ const CatalogWheels = observer(() => {
   return (
     <div>
         <h2>{`Диски ${filter.type && !filter.type.includes(',')  ? `${filter.type }` : ''} ${filter.brands && !filter.brands.includes(',') ? `${filter.brands}` : ''} ${filter.width ? `W${filter.width}` : ''} ${filter.diameter ? `R${filter.diameter}` : ''} ${filter.bolt_count && !filter.bolt_count.includes(',') ? `${filter.bolt_count}` : ''} ${filter.pcd && !filter.pcd.includes(',') ? `PCD${filter.pcd}` : ''} ${filter.et && !filter.et.includes(',') ? `ET${filter.et}` : ''} ${filter.dia && !filter.dia.includes(',') ? `DIA${filter.dia}` : ''}`}</h2>
+        { filter.brands && !filter.brands.includes(',') ?
+                <div>
+                    {/* <img src={tyreBrandLogo(filter.brands)} alt='tyreBrandLogo'/> */}
+                    <Rating 
+                        numScore={wheelBrandRating?.rows[0].avgRatingBrand}
+                        disabled={true}
+                    />
+                    <span>рейтинг на основі {wheelBrandRating?.count} відгуків</span>
+                </div> 
+                : null  
+            }
+        
         <div className='popularCatalogTyre'>
             <div>Популярні розміри:<PopularSizeTyre/></div>
             <div>Популярні запити:

@@ -993,13 +993,20 @@ const CatalogTyresPage = observer(() => {
         {location.pathname.includes('tyres') ?
           <ReviewsMain 
             props={'Відгуки кліентів'} 
+            marginText={-120}
             prevBtnAction={prevBtnReviewGoods} 
             nextBtnAction={nextBtnReviewGoods}    
             buttonPosition={{
-              prevBtnLeft:  goodsTyre._tyres.length !== 0 && reviewGoodsData?.length !== 0 ? -7 : undefined, 
-              prevTop:  goodsTyre._tyres.length !== 0 && reviewGoodsData?.length !== 0 ? -125 : undefined, 
-              nextBtnRight: goodsTyre._tyres.length !== 0 && reviewGoodsData?.length !== 0 ? -95 : undefined,  
-              nextTop: goodsTyre._tyres.length !== 0 && reviewGoodsData?.length !== 0 ? -125 : undefined, 
+              prevBtnLeft:  goodsTyre._tyres.length !== 0 && reviewGoodsData?.length !== 0 ? -7 
+              : reviewGoodsData?.length === 0 ? -7 
+              : undefined, 
+              prevTop:  goodsTyre._tyres.length !== 0 && reviewGoodsData?.length !== 0 ? -140
+              : reviewGoodsData?.length === 0 ? -40 
+              : undefined, 
+              nextBtnRight: goodsTyre._tyres.length !== 0 && reviewGoodsData?.length !== 0 ? -95 
+              : undefined,  
+              nextTop: goodsTyre._tyres.length !== 0 && reviewGoodsData?.length !== 0 ? -140 
+              : undefined, 
             }}      
           >
             <div >
@@ -1032,11 +1039,16 @@ const CatalogTyresPage = observer(() => {
           {location.pathname.includes('wheels') ?
           <ReviewsMain 
             props={'Відгуки кліентів'} 
+            marginText={-120}
             prevBtnAction={prevBtnReviewGoods} 
             nextBtnAction={nextBtnReviewGoods}    
             buttonPosition={{
-              prevBtnLeft: goodsWheel._wheels.length !== 0 && reviewGoodsData?.length !== 0 ? 450 : undefined, 
-              prevTop: goodsWheel._wheels.length !== 0 && reviewGoodsData?.length !== 0 ? 345 : undefined, 
+              prevBtnLeft: goodsWheel._wheels.length !== 0 ? 450
+              : reviewGoodsData?.length === 0 ? -7 
+              : undefined,  
+              prevTop: goodsWheel._wheels.length !== 0 ? 345 
+              : reviewGoodsData?.length === 0 ? -75 
+              : undefined,  
               nextBtnRight: goodsWheel._wheels.length !== 0 && reviewGoodsData?.length !== 0 ? 140 : undefined,  
               nextTop: goodsWheel._wheels.length !== 0 && reviewGoodsData?.length !== 0 ? 345 : undefined, 
             }}      

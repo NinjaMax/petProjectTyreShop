@@ -1,3 +1,6 @@
 export type IRatingBrandAvg = {
-    avgRatingBrand: number;
+    count?: number;
+    rows?: [
+        {avgRatingBrand?: number},
+    ];
 }

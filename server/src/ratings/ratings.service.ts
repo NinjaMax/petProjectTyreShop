@@ -6,7 +6,6 @@ import { UpdateRatingDto } from './dto/update-rating.dto';
 import { RatingTyres } from './entities/rating-tyres.model';
 import sequelize from 'sequelize';
 import { RatingWheels } from './entities/rating-wheels.model';
-
 @Injectable()
 export class RatingsService {
   constructor(
@@ -167,7 +166,7 @@ export class RatingsService {
 
   async findCountRatingByIdBrand(id_brand: number) {
     try {
-      const ratingAvgIdBrand = await this.ratingTyresRepository.findAll({
+      const ratingAvgIdBrand = await this.ratingTyresRepository.findAndCountAll({
         where: { id_brand: id_brand },
         attributes: [
           [

@@ -14,6 +14,7 @@ import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
 import BrandsListMain from '../components/BrandsListMain';
 import PromotionBox from '../components/PromotionBox';
+import ButtonPrevNext from '../components/buttons/ButtonPrevNext';
 
 const Main = observer(() => {
   const {goodsTyre, goodsWheel, filter} = useContext<any | null>(Context);
@@ -659,33 +660,37 @@ const Main = observer(() => {
       <Benefits/>
       <CategorySlide/>
       <div className='mainReviewsBox'>
-      <ReviewsMain 
-        props={'Відгуки про магазин'}
-        prevBtnAction={prevBtnReviewStore}
-        nextBtnAction={nextBtnReviewStore}
-        buttonPosition={{
-          prevBtnLeft: -5, 
-          prevTop: -75, 
-          nextBtnRight: -93,  
-          nextTop: -75, 
-        }}
-      >
-      <div >
-        {reviewStoreAll?.length !== 0 ? 
-         reviewStoreAll?.map((item: any) =>
-        <div key={item.id_review_store + '_review'}>
-          <ReviewStore storeData={item}/>
+        <ReviewsMain 
+          props={'Відгуки про магазин'}
+          marginText={-285}
+          prevBtnAction={undefined}
+          nextBtnAction={undefined}
+          buttonPosition={undefined}
+        >
+        <div >
+          {reviewStoreAll?.length !== 0 ? 
+          reviewStoreAll?.map((item: any) =>
+          <div key={item.id_review_store + '_review'}>
+            <ReviewStore storeData={item}/>
+          </div>
+          )
+          : 
+          <div className='mainAfterReviews' >
+            <a className='mainLinkReview'
+            href='/review'>Дивитися всі відгуки про магазин</a>
+          </div>
+          }
         </div>
-        )
-        : 
-        <div className='mainAfterReviews' >
-          <a className='mainLinkReview'
-           href='/review'>Дивитися всі відгуки про магазин</a>
-        </div>
-        }
+        </ReviewsMain>
       </div>
-      </ReviewsMain>
-      </div>
+      <ButtonPrevNext 
+        prevBtnLeft={20} 
+        prevTop={-155} 
+        nextBtnRight={-73} 
+        nextTop={-155}    
+        leftClickActive={prevBtnReviewStore} 
+        rightClickActive={nextBtnReviewStore}
+      />
       <NewsMainBox 
         isNewsPage={false}
         articlesArr={articlesAll}/>

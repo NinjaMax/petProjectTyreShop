@@ -220,18 +220,23 @@ const getTyresCountAll = async (
     return data;
 }
 
-// const getTyresBrand = async (
-//     brand: string,
-// ) => {
-//     const {data} = await $hostGet.get('tyres/brand',
-//     {params: {
-//         brand: brand,
-//     }
-//     })
-//     //localStorage.setItem('token', data.token)
-//     //console.log('GET_TYRES_BY_ID: ', data )
-//     return data;
-// }
+const getTyresBrandByName = async (
+    brand: string,
+) => {
+    const {data} = await $hostGet.get(
+        `properties/tyres/brandname/${brand}`,
+    )
+    return data;
+}
+
+const getWheelsBrandByName = async (
+    brand: string,
+) => {
+    const {data} = await $hostGet.get(
+        `properties/wheels/brandname/${brand}`,
+    )
+    return data;
+}
 
 const getTyresParamsByBrandAndSeason = async (
     params: string,
@@ -1080,5 +1085,11 @@ export {
     getAllArticlesLimit,
     getAllArticles,
     getArticlesId,
-    getArticlesImage
+    getArticlesImage,
+
+    //getTyresBrandNameRatingAvg,
+    //getWheelsBrandNameRatingAvg,
+
+    getTyresBrandByName,
+    getWheelsBrandByName
 }

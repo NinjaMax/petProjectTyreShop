@@ -24,43 +24,43 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
     const history = useHistory();
     const location = useLocation();
     
-    // useEffect(() => {
-    //     let isMounted = false;
-    //     const getRatingModel = async () => {
-    //       if (!isMounted && location.pathname.includes('tyres')) {
-    //         const getRating: any = await getTyresRatingAvgIdAndIdmodel(
-    //             +goods!.id,
-    //             goods?.id_model ?? 0
-    //         );
-    //         if(getRating) {
-    //          setRatingModel(getRating[0]);   
-    //         }
-    //       }
-    //     };
-    //     getRatingModel();
-    //     return () => {
-    //       isMounted = true;
-    //     };
-    //   },[goods, location.pathname]);
+    useEffect(() => {
+        let isMounted = false;
+        const getRatingModel = async () => {
+          if (!isMounted && location.pathname.includes('tyres')) {
+            const getRating: any = await getTyresRatingAvgIdAndIdmodel(
+                +goods!.id,
+                goods?.id_model ?? 0
+            );
+            if(getRating) {
+             setRatingModel(getRating[0]);   
+            }
+          }
+        };
+        getRatingModel();
+        return () => {
+          isMounted = true;
+        };
+      },[goods, location.pathname]);
 
-    //   useEffect(() => {
-    //     let isMounted = false;
-    //     const getRatingModel = async () => {
-    //       if (!isMounted && location.pathname.includes('wheels')) {
-    //         const getWheelRating: any = await getWheelsRatingAvgIdAndIdmodel(
-    //             +goods!.id ?? 0,
-    //             goods?.id_model ?? 0
-    //         );
-    //         if(getWheelRating) {
-    //          setRatingModel(getWheelRating[0]);   
-    //         }
-    //     }
-    //     };
-    //     getRatingModel();
-    //     return () => {
-    //       isMounted = true;
-    //     };
-    //   },[goods, location.pathname]);
+      useEffect(() => {
+        let isMounted = false;
+        const getRatingModel = async () => {
+          if (!isMounted && location.pathname.includes('wheels')) {
+            const getWheelRating: any = await getWheelsRatingAvgIdAndIdmodel(
+                +goods!.id ?? 0,
+                goods?.id_model ?? 0
+            );
+            if(getWheelRating) {
+             setRatingModel(getWheelRating[0]);   
+            }
+        }
+        };
+        getRatingModel();
+        return () => {
+          isMounted = true;
+        };
+      },[goods, location.pathname]);
     
     const addGoodsId = () => {
         const toStringUrl = createStringUrl(goods?.full_name);

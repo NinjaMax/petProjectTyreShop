@@ -18,7 +18,7 @@ const ReviewGoodsOverall = (
                     disabled={true}
                     />    
                 </RatingOptions>
-                <p> середня оцінка основана на { reviewCount ?? 0} відгуках.</p>
+                <p> середня оцінка на основі { reviewCount ?? 0} відгуків.</p>
             </div>
             { typeGoods ?
             <div className='ratingList'>

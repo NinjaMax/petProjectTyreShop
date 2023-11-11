@@ -5,6 +5,7 @@ import { CreatePropertyDto } from '../dto/create-property.dto';
 import { GetPropertyDto } from '../dto/get-property.dto';
 import { UpdatePropertyDto } from '../dto/update-property.dto';
 import { TyreBrand } from '../entities/tyres/tyre-brand.model';
+import { Description } from '../../description/entities/description.entity';
 
 @Injectable()
 export class PropsBrandService {
@@ -84,6 +85,21 @@ export class PropsBrandService {
       );
 
       return brandId;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async findTyreBrandByName(brand: string) {
+    try {
+      const brandByName = await this.tyreBrandRepository.findOne({
+        where: { brand: brand },
+        include: [{ model: Description }],
+      });
+      return brandByName;
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',

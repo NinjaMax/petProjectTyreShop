@@ -11,25 +11,47 @@ import { Context } from '../../context/Context';
 import { observer } from 'mobx-react-lite';
 import LoadMoreGoods from '../ux/LoadMoreGoods';
 import { ICheckOrderItem } from './types/CheckOrder.type';
-import { addGoodsToBasket, createBasket, getBasketById } from '../../restAPI/restGoodsApi';
+import { addGoodsToBasket, createBasket, getBasketById, getTyresBrandByName, getTyresBrandRatingAvg } from '../../restAPI/restGoodsApi';
 import { tyreBrandLogo } from '../../services/tyreBrandImg.service';
 import SpinnerCarRot from '../spinners/SpinnerCarRot';
+import Rating from '../ux/Rating';
+
+type RatingBrandTyre = {
+    count: number,
+    rows: [
+        {avgRatingBrand: number}
+    ],
+};
+type DescTyreBrand = {
+    description: string,
+    id_brand?: number, 
+    id_description: number, 
+};
 
 const CatalogTyres = observer(() => {
     const [active, setActive] = useState<boolean>(false);
     const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem[] | null>([]);
-    const [goodsCat, setGoodsCat] = useState([]);
+    const [tyreBrandDesc, setTyresBrandDesc] = useState<DescTyreBrand>();
+    const [tyreRatingAvr, setTyreRatingAvr] = useState<RatingBrandTyre>();
+    //const [goodsCat, setGoodsCat] = useState([]);
     const {goodsTyre, page, filter, customer} = useContext<any | null>(Context);
 
-    // useEffect(() => {
-    //     let isMounted = false;
-    //     if (!isMounted) {
-
-    //     }
-    //     return () => {
-    //         isMounted = true;
-    //       };
-    // },[]);
+    useEffect(() => {
+        let isMounted = false;
+        const getBrandTyreData = async () => {
+           if (!isMounted && filter.brands && !filter.brands.includes(',')) {
+                const getBrandsIdTyre = await getTyresBrandByName(filter.brands);
+                //console.log('GET_TYRE_BRAND: ', getBrandsIdTyre);
+                const getTyresRatingBrand = await getTyresBrandRatingAvg(getBrandsIdTyre.id_brand);
+                //console.log('GET_RATING_TYRE_BRAND: ', getTyresRatingBrand);
+                setTyreRatingAvr(getTyresRatingBrand);
+            } 
+        };
+        getBrandTyreData();
+        return () => {
+            isMounted = true;
+          };
+    },[filter.brands]);
 
     const checkOrders = async (
         item : ICheckOrderItem, 
@@ -60,7 +82,7 @@ const CatalogTyres = observer(() => {
                     item.reviews.length,
                     item.diameter.diameter,
                     ); 
-                    console.log('ADD_BASK: ', addTobasket);
+                    //console.log('ADD_BASK: ', addTobasket);
                     if (addTobasket?.status === 201) {
                         const updateBasketStorage = await getBasketById(basket.data.id_basket);
                         setCheckOrderItem(
@@ -70,8 +92,8 @@ const CatalogTyres = observer(() => {
                             updateBasketStorage?.basket_storage.reduce(
                                 (sum: any, current: any) => (sum + current.quantity),0)
                         );
-                    console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
-                    console.log('ADD_TO_BASKET: ', addTobasket?.data); 
+                    //console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
+                    //console.log('ADD_TO_BASKET: ', addTobasket?.data); 
                     }  
                 }
             }
@@ -123,7 +145,13 @@ const CatalogTyres = observer(() => {
             { filter.brands && !filter.brands.includes(',') ?
                 <div>
                     <img src={tyreBrandLogo(filter.brands)} alt='tyreBrandLogo'/>
-                </div> : null  
+                    <Rating 
+                        numScore={tyreRatingAvr?.rows[0].avgRatingBrand}
+                        disabled={true}
+                    />
+                    <span>рейтинг на основі {tyreRatingAvr?.count} відгуків</span>
+                </div> 
+                : null  
             }
             <div className='popularCatalogTyre'>
                 <div>Популярні розміри:<PopularSizeTyre/></div>

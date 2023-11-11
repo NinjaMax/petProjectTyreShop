@@ -31,6 +31,11 @@ export class PropertiesBrandController {
     return this.propertiesBrandService.findBrandById(getPropertyDto);
   }
 
+  @Get('tyres/brandname/:brand')
+  findTyreBrandName(@Param('brand') brand: string) {
+    return this.propertiesBrandService.findTyreBrandByName(brand);
+  }
+
   @Patch('/brand/update')
   update(@Body() updatePropertyDto: UpdatePropertyDto) {
     return this.propertiesBrandService.updateTyreBrand(updatePropertyDto);

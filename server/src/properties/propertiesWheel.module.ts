@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { TyresModule } from '../tyres/tyres.module';
 import { RatingsModule } from '../ratings/ratings.module';
-import { TyreModel } from './entities/tyres/tyre-model.model';
 import { WheelBoltCount } from './entities/wheels/wheel-boltCount.model';
 import { WheelBoltCountPcd } from './entities/wheels/wheel-boltCountPcd.model';
 import { WheelBrand } from './entities/wheels/wheel-brand.model';
@@ -32,11 +30,13 @@ import { PropsWheelWidthService } from './props-wheel-services/props-wheel-width
 import { WheelsModule } from '../wheels/wheels.module';
 import { PropertiesWheelModelController } from './props-wheels-controller/props-wheel-model-controller';
 import { PropertiesWheelDiameterController } from './props-wheels-controller/props-wheel-diameter-controller';
+import { PropertiesWheelBrandController } from './props-wheels-controller/props-wheel-brand-controller';
 
 @Module({
   controllers: [
     PropertiesWheelModelController,
     PropertiesWheelDiameterController,
+    PropertiesWheelBrandController,
   ],
   providers: [
     PropsWheelBoltCountService,

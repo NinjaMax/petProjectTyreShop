@@ -73,7 +73,7 @@ const GoodsPage = observer(() => {
   const [ratingSummerAvg, setRatingSummerAvg] = useState<IRatingSeasonAvg>();
   const [ratingWinterAvg, setRatingWinterAvg] = useState<IRatingSeasonAvg>();
   const [ratingAllSeasonAvg, setRatingAllSeasonAvg] = useState<IRatingSeasonAvg>();
-  const [reviewCountBrand, setReviewCountBrand] = useState<number>();
+  //const [reviewCountBrand, setReviewCountBrand] = useState<number>();
   const [reviewCountModel, setReviewCountModel] = useState<number>();
   const [createReview, setCreateReview] = useState<boolean>(false);
   const [dataReview, setDataReview] = useState<{} | null>(null);
@@ -173,13 +173,13 @@ const GoodsPage = observer(() => {
         const getRatingBrand: any = await taskProduct[i](
           goodsTyre._product.id_brand
         );
-        setRatingBrandAvg(getRatingBrand[0]);
+        setRatingBrandAvg(getRatingBrand);
       }
       if (!isMounted && taskProduct[i] === getWheelsBrandRatingAvg && goodsWheel._product.id_brand) {
         const getWheelRatingBrand: any = await taskProduct[i](
           goodsWheel._product.id_brand
         );
-        setRatingBrandAvg(getWheelRatingBrand[0]);
+        setRatingBrandAvg(getWheelRatingBrand);
       }
       if (!isMounted && taskProduct[i] === getTyresBrandRatingAvgSeason && goodsTyre._product.id_brand) {
         const getRatingSummer: any = await taskProduct[i](
@@ -195,14 +195,14 @@ const GoodsPage = observer(() => {
         setRatingWinterAvg(getRatingWinter[0]);
         setRatingAllSeasonAvg(getRatingAllSeason[0]);
       }
-      if (!isMounted && taskProduct[i] === getTyresCountReviewByBrand && goodsTyre._product.id_brand) {
-        const getCountBrand: any = await taskProduct[i](goodsTyre._product.id_brand);
-        setReviewCountBrand(getCountBrand);
-      }
-      if (!isMounted && taskProduct[i] === getWheelsCountReviewByBrand && goodsWheel._product.id_brand) {
-        const getCountWheelBrand: any = await taskProduct[i](goodsWheel._product.id_brand);
-        setReviewCountBrand(getCountWheelBrand);
-      }
+      // if (!isMounted && taskProduct[i] === getTyresCountReviewByBrand && goodsTyre._product.id_brand) {
+      //   const getCountBrand: any = await taskProduct[i](goodsTyre._product.id_brand);
+      //   setReviewCountBrand(getCountBrand);
+      // }
+      // if (!isMounted && taskProduct[i] === getWheelsCountReviewByBrand && goodsWheel._product.id_brand) {
+      //   const getCountWheelBrand: any = await taskProduct[i](goodsWheel._product.id_brand);
+      //   setReviewCountBrand(getCountWheelBrand);
+      // }
       if (!isMounted && taskProduct[i] === getTyresCountReviewByModel && goodsTyre._product.id_model) {
         const getCountModel: any = await taskProduct[i](goodsTyre._product.id_model);
         setReviewCountModel(getCountModel);
@@ -591,8 +591,8 @@ const GoodsPage = observer(() => {
                 brandName={goodsTyre?._product?.tyre_brand?.brand ??
                   goodsWheel?._product?.wheel_brand?.brand 
                 }
-                avgBrand={ratingBrandAvg?.avgRatingBrand} 
-                countReviewBrand={reviewCountBrand}
+                avgBrand={ ratingBrandAvg?.rows![0]?.avgRatingBrand} 
+                countReviewBrand={ratingBrandAvg?.count}
                 ratingSummer={ratingSummerAvg?.avgRatingBrandBySeason}
                 ratingWinter={ratingWinterAvg?.avgRatingBrandBySeason}
                 ratingAllseason={ratingAllSeasonAvg?.avgRatingBrandBySeason}

@@ -3,8 +3,5 @@
     font-weight: bold;
     font-family: var(--main-font-family);
     padding: 10px;
-    margin-left: -100px;
-}
-.reviewPrevNextBtn {
-   
+    margin-left: calc(var(--mainReview-marginLeft) * 1px);
 }
