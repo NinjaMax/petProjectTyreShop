@@ -26,18 +26,18 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
     
     useEffect(() => {
         let isMounted = false;
-        const getRatingModel = async () => {
+        const getRatingTyreModel = async () => {
           if (!isMounted && location.pathname.includes('tyres')) {
             const getRating: any = await getTyresRatingAvgIdAndIdmodel(
                 +goods!.id,
                 goods?.id_model ?? 0
             );
             if(getRating) {
-             setRatingModel(getRating[0]);   
+                setRatingModel(getRating[0]);   
             }
           }
         };
-        getRatingModel();
+        getRatingTyreModel();
         return () => {
           isMounted = true;
         };
@@ -45,18 +45,18 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
 
       useEffect(() => {
         let isMounted = false;
-        const getRatingModel = async () => {
+        const getRatingWheelModel = async () => {
           if (!isMounted && location.pathname.includes('wheels')) {
             const getWheelRating: any = await getWheelsRatingAvgIdAndIdmodel(
-                +goods!.id ?? 0,
+                +goods!.id,
                 goods?.id_model ?? 0
             );
             if(getWheelRating) {
-             setRatingModel(getWheelRating[0]);   
+                setRatingModel(getWheelRating[0]);   
             }
         }
         };
-        getRatingModel();
+        getRatingWheelModel();
         return () => {
           isMounted = true;
         };
@@ -65,11 +65,24 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
     const addGoodsId = () => {
         const toStringUrl = createStringUrl(goods?.full_name);
         localStorage.setItem('goodsId', JSON.stringify(goods?.id));
+        const getWached = JSON.parse(localStorage.getItem('you_watched')!);
+        if (getWached) {
+            const wachedArray:any[] = getWached.split(',');
+            wachedArray.push(goods?.id);
+            if (wachedArray.length > 3) {
+                wachedArray.shift();
+            }  
+            const watchedSet = Array.from(new Set (wachedArray));
+            const wachedToString = watchedSet.join(',');
+            localStorage.setItem('you_watched', JSON.stringify(wachedToString));   
+        } else {
+            localStorage.setItem('you_watched', JSON.stringify(goods?.id,));
+        }
         history.push(
             MAIN_ROUTE + `${toStringUrl}`
         );
     };
-  
+    //console.log('GOODS: ', goods);
     return (
         <div className="tyresCard">
             <div >

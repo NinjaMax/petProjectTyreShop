@@ -486,8 +486,6 @@ const DeliveryGoodsPage = () => {
     setTabDelivery(e.target.textContent);
   };
 
-  //console.log('DELIVERY: ', deliveryWareHouseList);
-
   return (
     <div className='deliveryGoodsPage'
     onClick={closeFilter}

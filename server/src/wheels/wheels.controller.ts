@@ -102,7 +102,7 @@ export class WheelsController {
   };
 
   @Get('/paramid/:id')
-  findTyresByParamId(@Param('id') id: string) {
+  findWheelsByParamId(@Param('id') id: string) {
     return this.wheelsService.findWheelsByIdParam(id);
   }
   

@@ -41,5 +41,5 @@ export enum TyreBrand {
     WANLI_LOGO = '/iconsBrand/wanli_logo_244_62.png',
     YOKOHAMA_LOGO = '/iconsBrand/yokohama_logo_401_62.png',
     
-    NO_TYPE = '/iconsTypeCar/noTypeCar.png',
+    NO_TYPE = '/iconsBrand/no_logo_empty_375_62.png',
 };

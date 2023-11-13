@@ -21,6 +21,7 @@ import { tyreBrandLogo } from '../../services/tyreBrandImg.service';
 import Modal from '../modal/Modal';
 import CheckOrder from '../modal/CheckOrder';
 import { ICheckOrderItem } from '../catalogs/types/CheckOrder.type';
+import { createStringUrl } from '../../services/stringUrl';
 
 const AllAboutProduct = observer(({
     goods, 
@@ -34,19 +35,21 @@ const AllAboutProduct = observer(({
     const [active, setActive] = useState<boolean>(false);
     // const param = useParams<any>();
     const {page, customer} = useContext<any>(Context);
-    // useEffect(() => {
-    //     if (0) {
 
-    //     }
-    // },[])
-    // console.log('PRODUCT_COUNTRY: ', goods?.country);
-    // console.log('PRODUCT_YEAR: ', goods?.year);
     const checkedGuards = (e: any) => {
         setGuardChecked(true);
         if (guardChecked) {
             setGuardChecked(false); 
         }
     };
+
+    const moveToAllSamples = () => {
+        document.documentElement.scrollTo({
+          top: 1340,
+          left: 0,
+          behavior: "smooth",
+        });
+      };
 
     const addToFavorites = async () => {
         try {
@@ -149,7 +152,6 @@ const AllAboutProduct = observer(({
                     </div> : null
                 }
                 <div className='productInfoRating'>
-                    
                     <Rating
                         id={goods?.id} 
                         numScore={avgRatingModel ?? 0}
@@ -189,20 +191,20 @@ const AllAboutProduct = observer(({
                 : null
                 }
                 <div className='productInfoProps'>
-                    {goods?.vehicle_type || goods?.season ?
+                {goods?.vehicle_type || goods?.season ?
                     <>
                     <PropsCardIcons 
                         type={goods?.vehicle_type}
                         season={goods?.season}
                     />
-                    <a href='/'>{goods?.vehicle_type?.vehicle_type_ua}</a>
-                    <a href='/'>{goods?.season?.season_ua}</a>
+                    <a href={`/tyres/${createStringUrl(goods?.vehicle_type?.vehicle_type_ua)}`}>{goods?.vehicle_type?.vehicle_type_ua}</a>
+                    <a href={`/tyres/${createStringUrl(goods?.season?.season_ua)}`}>{goods?.season?.season_ua}</a>
                     </>
                     :
                     <img src='iconsSeasons/noSeason.png' alt='noProd'/>
                     }
                 </div>
-                { !paramsModel ?
+                {!paramsModel ?
                 <>
                 <div className="productInfoCountry">
                     <FlagsIcon 
@@ -239,10 +241,10 @@ const AllAboutProduct = observer(({
                 </>
                 : 
                 <>
-                <a href='/'>
+                <a href={'/tyres/' + createStringUrl(goods?.tyre_brand?.brand)}>
                     Всі шини { goods?.tyre_brand?.brand}
                 </a>
-                <a href='/'>
+                <a href={`/tyres/${createStringUrl(goods?.season?.season_ua)}/${createStringUrl(goods?.tyre_brand?.brand)}`}>
                     Вся {goods?.season?.season_ua} шина { goods?.tyre_brand?.brand}
                 </a>
                 </>
@@ -306,7 +308,14 @@ const AllAboutProduct = observer(({
                     imageSrc={guardChecked ? './iconGuard/guard_64_b.png' : './iconGuard/guard_64_g.png'}/>   
                 </div>
                 </>
-                : null
+                : 
+                <div className='btnGoodsBox'>
+                    <ButtonAction 
+                        props={"ПОКАЗАТИ ВСІ ВАРІАНТИ"} 
+                        widthBtn={280} 
+                        eventItem={moveToAllSamples}
+                    />      
+                </div>
                 }
                 {!paramsModel ?     
                 <div className='additionalTools'>

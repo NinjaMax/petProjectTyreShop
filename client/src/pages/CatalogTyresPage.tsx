@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import '../css/CatalogTyresPage.css';
+import { observer } from 'mobx-react-lite';
 import CatalogTyres from '../components/catalogs/CatalogTyres';
 import FilterCatalogTyres from '../components/filterCatalog/FilterCatalogTyres';
 import ReviewsMain from '../components/reviews/ReviewsMain';
@@ -10,7 +11,6 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { getTyresReviewLimit, getTyresWithoutOffset, getWheelsReviewLimit, getWheelsWithoutOffset} from '../restAPI/restGoodsApi';
 import { Context } from '../context/Context';
-import { observer } from 'mobx-react-lite';
 import { tyreSeasonCat, tyreVehicleTypeCat } from '../services/tyresCatService';
 import CatalogWheels from '../components/catalogs/CatalogWheels';
 import FilterCatalogWheels from '../components/filterCatalog/FilterCatalogWheels';
@@ -202,7 +202,7 @@ const CatalogTyresPage = observer(() => {
           let setReinforcedFilter: any[] | null  = [];
           let setRunFlatFilter: any[] | null  = [];
           let setStuddedFilter: any[] | null  = [];
-
+          
           goodsTyre?.setTotalCount(tyreFilterGoods.rows.length);
           console.time('SET_TYRES')
           page.loadMore > 0  ? goodsTyre?.setTyres(

@@ -118,6 +118,7 @@ import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
 //import RedisStore from 'connect-redis';
 import { RedisModule } from './redis/redis.module';
+import { ViberApiModule } from './viber-api/viber-api.module';
 
 @Module({
   imports: [
@@ -282,6 +283,7 @@ import { RedisModule } from './redis/redis.module';
     AnswersModule,
     ArticlesModule,
     RedisModule,
+    ViberApiModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -16,7 +16,7 @@ const Pagination = observer(() => {
         page.setOffset((pageItem - 1) * 9);
     }   
 
-    const pageCount = Math.ceil(goodsTyre.totalCount !== 0 ? goodsTyre.totalCount : goodsWheel.totalCount !== 0 ? goodsWheel.totalCount :  0 / page.limit);
+    const pageCount = Math.ceil(goodsTyre.totalCount !== 0 ? goodsTyre.totalCount / page.limit: goodsWheel.totalCount !== 0 ? goodsWheel.totalCount / page.limit:  0 / page.limit);
     const pages = []
 
     for (let i = 0; i < pageCount; i++) {

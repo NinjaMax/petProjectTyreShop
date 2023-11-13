@@ -137,8 +137,6 @@ const CatalogTyres = observer(() => {
         }
     };
 
-    //console.log('GOODS_TYRES: ', goodsTyre._tyres)
-
     return (
         <div>
             <h2>{`Шини ${filter.season && !filter.season.includes(',') ? `${filter.season}` : ''} ${filter.studded && !filter.studded.includes(',') ? `${filter.studded}` : ''} ${filter.vehicle_type && !filter.vehicle_type.includes(',') ? `${filter.vehicle_type}` : ''} ${filter.brands && !filter.brands.includes(',') ? `${filter.brands}` : ''} ${filter.width ? `${filter.width}` : ''} ${filter.height ? `/${filter.height}` : ''} ${filter.diameter ? `R${filter.diameter}` : ''}`}</h2>
@@ -146,7 +144,7 @@ const CatalogTyres = observer(() => {
                 <div>
                     <img src={tyreBrandLogo(filter.brands)} alt='tyreBrandLogo'/>
                     <Rating 
-                        numScore={tyreRatingAvr?.rows[0].avgRatingBrand}
+                        numScore={tyreRatingAvr?.rows[0]?.avgRatingBrand ?? 0}
                         disabled={true}
                     />
                     <span>рейтинг на основі {tyreRatingAvr?.count} відгуків</span>

@@ -121,6 +121,9 @@ const tyreBrandLogo = (brand: string | undefined) => {
         case 'Yokohama':
         case 'yokohama':
             return TyreBrand.YOKOHAMA_LOGO;
+
+        default: 
+            return TyreBrand.NO_TYPE;
     }
 }
 

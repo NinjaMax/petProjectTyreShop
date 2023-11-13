@@ -6,8 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  Query,
-  Session,
   Res,
   Req,
 } from '@nestjs/common';
@@ -15,8 +13,6 @@ import { CustomersService } from './customers.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { GetCustomerDto } from './dto/get-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
-
-import { Cookies } from '../auth/decorators/cookies.decorator';
 import { Request, Response } from 'express';
 
 @Controller('customers')
