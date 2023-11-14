@@ -57,7 +57,12 @@ const PropsCardIcons = ({type, type_wheel, season, homologation}:IProps) => {
                 Тип транспорту: {type?.vehicle_type_ua}
                 </span>
             </div>
-            : null   
+            : 
+            <img 
+                className='noPropsCarImg' 
+                src='/iconFlags/empty_flag_48.png'
+                alt="flags"
+            />   
             }
             {type_wheel ?
             <div className='propsCardIcons'>
@@ -66,7 +71,7 @@ const PropsCardIcons = ({type, type_wheel, season, homologation}:IProps) => {
                 Тип диску: {type_wheel?.type} диск
                 </span>
             </div>
-            :null  
+            : null 
             }
             {season ?
             <div className='propsCardIcons'>
@@ -75,16 +80,26 @@ const PropsCardIcons = ({type, type_wheel, season, homologation}:IProps) => {
                 Сезон: {season?.season_ua} шина
                 </span>
             </div>
-            :null  
+            : 
+            <img 
+                className='noPropsCarImg' 
+                src='/iconFlags/empty_flag_48.png'
+                alt="flags"
+            />     
             }
-            {homologation?.homologation?.length !== 0 ?
+            {homologation?.homologation?.length !== 0 && !type_wheel ?
             <div className='propsCardIcons'>
                 <img className='propsCarImg' src={showHomologation} alt='homologation'/>
                 <span className="tooltipTextCardIconsHom">
                 Омологація-рекомендовані автовиробником для марки автомобіля.
                 </span>
             </div>
-            :null  
+            : 
+            <img 
+                className='noPropsCarImg' 
+                src='/iconFlags/empty_flag_48.png'
+                alt="flags"
+            />     
             }
         </div>
     );

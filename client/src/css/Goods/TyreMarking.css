@@ -1,11 +1,13 @@
-
+/* .tyreMarkingBox {
+    position: relative;
+} */
 #imgTyreMarking {
     width:300px;
 
 }
 
 .tyreMarkingFuelCount span {
-    position: absolute;
+    position: relative;
     top: 485px;
     right: 293px;
     font-size: 24px;
@@ -36,9 +38,9 @@
 }
 
 .tyreMarkingTyreSize span {
-    position: absolute;
-    top: 336px;
-    right: 220px;
+    position: relative;
+    bottom: 378px;
+    left: 20px;
     font-size: 15px;
     font-family: var(--main-font-family);
     font-weight: bold;
@@ -46,9 +48,9 @@
 }
 
 .tyreMarkingBrandName span {
-    position: absolute;
-    top: 306px;
-    right: 250px;
+    position: relative;
+    bottom: 383px;
+    left: 20px;
     font-size: 15px;
     font-family: var(--main-font-family);
     font-weight: bold;

@@ -4,9 +4,12 @@ import TyresCardList from '../cards/CardList';
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../../context/Context';
-import { getTyresAll, getWheelsAll} from '../../restAPI/restGoodsApi';
+import { addGoodsToBasket, createBasket, getBasketById, getTyresAll, getWheelsAll} from '../../restAPI/restGoodsApi';
 import { yieldToMain } from '../../restAPI/postTaskAdmin';
 import { SEARCH_ROUTE } from '../../utils/consts';
+import { ICheckOrderItem } from '../catalogs/types/CheckOrder.type';
+import Modal from '../modal/Modal';
+import CheckOrder from '../modal/CheckOrder';
 
 interface INavBarSearch {
     searchBtn: boolean; 
@@ -16,7 +19,7 @@ interface INavBarSearch {
 const NavBarSearch = observer((
         {searchBtn, clickSearchBtn}: INavBarSearch
     ) => {
-    const location = useLocation();
+    //const location = useLocation();
     const history = useHistory();
     const [inputSearchMod, setInputSearchMod] = useState('');
     const [tyreSearchMod, setTyreSearchMod] = useState<[] | null>(null);
@@ -24,10 +27,13 @@ const NavBarSearch = observer((
     const [oilSearchMod, setOilSearchMod] = useState<[] | null>(null);
     const [batterySearchMod, setBatterySearchMod] = useState<[] | null>(null);
     const [tabSearchMod, setTabSearchMod] = useState<string>('');
-    const [tabSearchModTyre, setTabSearchModTyre] = useState<[]>([]);
-    const [tabSearchModWheel, setTabSearchModWheel] = useState<[]>([]);
+    const [tabSearchModTyre, setTabSearchModTyre] = useState<[] | null>([]);
+    const [tabSearchModWheel, setTabSearchModWheel] = useState<[] | null>([]);
     const [tabSearchModOil, setTabSearchModOil] = useState<[]>([]);
     const [tabSearchModBattery, setTabSearchModBattery] = useState<[]>([]);
+    const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem[] | null>([]);
+    const [active, setActive] = useState<boolean>(false);
+    const {page, customer} = useContext<any>(Context);
     
     useEffect(() => {
         let isMounted = false;
@@ -59,7 +65,9 @@ const NavBarSearch = observer((
     },[]);
     
     useEffect(() => {
-        if(inputSearchMod.length !== 0) {
+        //let isMounted = false;
+        //const searchTask = async () => {
+        if ( inputSearchMod.length !== 0 ) {
             const newTyresSearch: any = tyreSearchMod?.filter((itemGoods:any) =>
             (itemGoods.id.toLowerCase().includes(inputSearchMod.toLowerCase()) ||    
             itemGoods.full_name.toLowerCase().includes(inputSearchMod.toLowerCase()) ||
@@ -68,8 +76,11 @@ const NavBarSearch = observer((
             if (newTyresSearch) {
                 setTabSearchModTyre(newTyresSearch);
             }  
-        } 
-        if(inputSearchMod.length !== 0) {
+            // else {
+            //     setTabSearchModTyre(null);
+            // }
+        }
+        if ( inputSearchMod.length !== 0 ) {
             const newWheelsSearch: any = wheelSearchMod?.filter((itemGoods:any) =>
             (itemGoods.id.toLowerCase().includes(inputSearchMod.toLowerCase()) ||    
             itemGoods.full_name_color.toLowerCase().includes(inputSearchMod.toLowerCase()) ||
@@ -78,18 +89,78 @@ const NavBarSearch = observer((
             if (newWheelsSearch) {
                 setTabSearchModWheel(newWheelsSearch);
             }  
+            // else {
+            //     setTabSearchModWheel(null);
+            // }
         } 
+        // if ( inputSearchMod.length === 0 ) {
+        //     setTabSearchModWheel([]);
+        //     setTabSearchModTyre([]);
+        // }
+        //};
         // else {
         //     setTabSearchModTyre(null);
         //     setTabSearchModWheel(null);
         //     setTabSearchModOil(null);
         //     setTabSearchModBattery(null);
         // }
+        //searchTask();
+        // return () => {
+        //     isMounted = true;
+        // };
     },[
         inputSearchMod, 
         tyreSearchMod, 
         wheelSearchMod
     ]);
+
+    const checkOrders = async (
+        item : any, 
+        avgRatingModel: number | undefined
+        ) => {
+        try {
+            setActive(!active);
+            if (!active) {
+                const basket: any = await createBasket(
+                    customer.customer?.id,
+                );
+                //console.log('CREATE_BASKET_ID_BASKET: ', basket.data.id_basket);
+                if(basket?.status === 201) {
+                    const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
+                    const addTobasket: any = await addGoodsToBasket(
+                    +item.id,
+                    item.id_cat,
+                    checkItem?.quantity ? checkItem?.quantity + 4 : 4,
+                    item.price[0].price,
+                    item.stock[0].id_supplier,
+                    item.stock[0].id_storage,
+                    item.category?.category,
+                    basket.data.id_basket,
+                    item.full_name,
+                    item.season?.season_ua,
+                    avgRatingModel,
+                    item.reviews.length,
+                    item.diameter.diameter,
+                    ); 
+                    //console.log('ADD_BASK: ', addTobasket);
+                    if (addTobasket?.status === 201) {
+                        const updateBasketStorage = await getBasketById(basket.data.id_basket);
+                        setCheckOrderItem(
+                            [...updateBasketStorage?.basket_storage]
+                        );
+                        page.setBasketCount(
+                            updateBasketStorage?.basket_storage.reduce(
+                                (sum: any, current: any) => (sum + current.quantity),0)
+                        );
+                    //console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
+                    //console.log('ADD_TO_BASKET: ', addTobasket?.data); 
+                    }  
+                }
+            }
+        } catch (error) {
+            console.log('BASKET_ERROR: ',error);
+        }
+    }
 
     const searchTabModChange = (e: any) => {
         if (e.target.title === 'Шини') {
@@ -202,24 +273,26 @@ const NavBarSearch = observer((
                     <p/>
                     <div className='outputDataItemsBox'>
                         {tabSearchModTyre && tabSearchMod === 'Шини' ? 
-                        tabSearchModTyre.splice(0, 9).map((goods: any) => (                    
+                        tabSearchModTyre.slice(0, 12).map((goods: any) => (                    
                         <div className='outputDataItemsList' key={goods.id}>
                             <TyresCardList
                                 key={goods.id}
                                 goods={goods}
                                 forOrder={false} 
+                                checkOrders={checkOrders}
                             />
                         </div>
                         ))
                         : null
                         }
                         {tabSearchModWheel && tabSearchMod === 'Диски' ? 
-                        tabSearchModWheel.map((goods: any) => (                    
-                        <div className='outputDataItemsList'>
+                        tabSearchModWheel.slice(0, 12).map((goods: any) => (                    
+                        <div className='outputDataItemsList' key={goods.id}>
                             <TyresCardList
                                 key={goods.id}
                                 goods={goods}
                                 forOrder={false} 
+                                checkOrders={checkOrders}
                             />
                         </div>
                         ))
@@ -227,11 +300,12 @@ const NavBarSearch = observer((
                         }
                         {tabSearchModBattery && tabSearchMod === 'Акб' ? 
                         tabSearchModBattery.map((goods: any) => (                    
-                        <div className='outputDataItemsList'>
+                        <div className='outputDataItemsList'  key={goods.id}>
                             <TyresCardList
                                 key={goods.id}
                                 goods={goods}
                                 forOrder={false} 
+                                checkOrders={checkOrders}
                             />
                         </div>
                         ))
@@ -239,17 +313,21 @@ const NavBarSearch = observer((
                         }
                         {tabSearchModOil && tabSearchMod === 'Масло' ? 
                         tabSearchModOil.map((goods: any) => (                    
-                        <div className='outputDataItemsList'>
+                        <div className='outputDataItemsList'  key={goods.id}>
                             <TyresCardList
                                 key={goods.id}
                                 goods={goods}
                                 forOrder={false} 
+                                checkOrders={checkOrders}
                             />
                         </div>
                         ))
                         : null
                         } 
                     </div>
+                    <Modal active={active} setActive={setActive}>
+                        <CheckOrder orderItem={checkOrderItem}/> 
+                    </Modal> 
                     <NavLink 
                         className='overlayLinkAll' 
                         to={`/search?q=${inputSearchMod}`} 

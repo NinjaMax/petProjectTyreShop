@@ -7,34 +7,44 @@ import tyres from '../../assets/autotyrespilotspotps2.png';
 // import ButtonAction from '../buttons/ButtonAction';
 import CountBtnOrder from '../ux/CountBtnOrder';
 import { ICard } from './interfaces/Card.interface';
-import { NavLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { IRatingAvg } from '../../pages/types/RatingModelAvg.type';
 import { MAIN_ROUTE } from '../../utils/consts';
-import { getTyresModelRatingAvg } from '../../restAPI/restGoodsApi';
-import { yieldToMain } from '../../restAPI/postTaskAdmin';
+import { getTyresRatingAvgIdAndIdmodel, getWheelsRatingAvgIdAndIdmodel } from '../../restAPI/restGoodsApi';
 import { createStringUrl } from '../../services/stringUrl';
-import { AsyncLocalStorage } from 'async_hooks';
+import ButtonAction from '../buttons/ButtonAction';
 
-const CardList = ({goods, forOrder, priceItem, countEvent}: ICard) => {
+const CardList = ({goods, forOrder, priceItem, countEvent, checkOrders}: ICard) => {
     const [ratingModel, setRatingModel] = useState<IRatingAvg>()
     const history = useHistory();
 
     useEffect(() => {
         let isMounted = false;
         const getRatingModel = async () => {
-          const taskProduct: any[] = [
-            getTyresModelRatingAvg,
-          ];
-        let i: number = 0; 
-        while (taskProduct.length > i) {
-          if (!isMounted && taskProduct[i] === getTyresModelRatingAvg && goods) {
-            const getRating: any = await taskProduct[i](goods?.id_model);
-            setRatingModel(getRating[0]);
-          }
-          const task = taskProduct.shift();
-          task();
-          await yieldToMain();
-        }
+        //   const taskProduct: any[] = [
+        //     getTyresModelRatingAvg,
+        //   ];
+        // let i: number = 0; 
+        // while (taskProduct.length > i) {
+          //if (!isMounted && taskProduct[i] === getTyresModelRatingAvg && goods) {
+            if (!isMounted && goods?.category.category === ('легковые шины' || 'грузовые шины')) {
+                const getRating: any = await getTyresRatingAvgIdAndIdmodel(
+                    +goods!.id,
+                    goods?.id_model ?? 0
+                );
+                setRatingModel(getRating[0]);
+            }
+            if (!isMounted && goods?.category.category === 'Диски') {
+                const getWheelRating: any = await getWheelsRatingAvgIdAndIdmodel(
+                    +goods!.id,
+                    goods?.id_model ?? 0
+                );
+                setRatingModel(getWheelRating[0]);
+            }
+        //   const task = taskProduct.shift();
+        //   task();
+        //   await yieldToMain();
+        //}
         };
         getRatingModel();
         return () => {
@@ -49,7 +59,7 @@ const CardList = ({goods, forOrder, priceItem, countEvent}: ICard) => {
             MAIN_ROUTE + `${toStringUrl}`
         );
     }
-
+    
     return (
         <div className="tyresCardList">
             <img id='imgTyresList' src={tyres} alt="tyres" />
@@ -79,6 +89,7 @@ const CardList = ({goods, forOrder, priceItem, countEvent}: ICard) => {
                         <PropsCardIcons
                             type={goods?.vehicle_type}
                             season={goods?.season}
+                            homologation={goods?.homologation}
                         />
                     </div>
                 :null}
@@ -116,6 +127,24 @@ const CardList = ({goods, forOrder, priceItem, countEvent}: ICard) => {
                     }
                     </div>
                 </div>
+                <div className='buttonBuyCardList'>
+                { goods?.price[0]?.price ?
+                    <ButtonAction 
+                        props={"КУПИТИ"} 
+                        widthBtn={160} 
+                        eventItem={() => {
+                            checkOrders!(goods, ratingModel)
+                        }}
+                    />
+                    : 
+                    <ButtonAction 
+                        props={"КУПИТИ"} 
+                        widthBtn={160} 
+                        eventItem={checkOrders}
+                        active={false}
+                    />
+                }
+                </div>
                 { forOrder ?
                         <div>
                             <CountBtnOrder
@@ -125,7 +154,7 @@ const CardList = ({goods, forOrder, priceItem, countEvent}: ICard) => {
                             />   
                         </div>
                     : null
-                    }               
+                }               
             </div>
         </div>
        

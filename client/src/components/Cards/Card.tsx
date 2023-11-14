@@ -27,7 +27,7 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
     useEffect(() => {
         let isMounted = false;
         const getRatingTyreModel = async () => {
-          if (!isMounted && location.pathname.includes('tyres')) {
+          if (!isMounted && (typeCard === 'tyre' || location.pathname.includes('tyres'))) {
             const getRating: any = await getTyresRatingAvgIdAndIdmodel(
                 +goods!.id,
                 goods?.id_model ?? 0
@@ -41,12 +41,12 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
         return () => {
           isMounted = true;
         };
-      },[goods, location.pathname]);
+      },[goods, location.pathname, typeCard]);
 
       useEffect(() => {
         let isMounted = false;
         const getRatingWheelModel = async () => {
-          if (!isMounted && location.pathname.includes('wheels')) {
+          if (!isMounted && (typeCard === 'wheel' || location.pathname.includes('wheels'))) {
             const getWheelRating: any = await getWheelsRatingAvgIdAndIdmodel(
                 +goods!.id,
                 goods?.id_model ?? 0
@@ -60,7 +60,7 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
         return () => {
           isMounted = true;
         };
-      },[goods, location.pathname]);
+      },[goods, location.pathname, typeCard]);
     
     const addGoodsId = () => {
         const toStringUrl = createStringUrl(goods?.full_name);
@@ -148,15 +148,14 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                         homologation={goods?.homologation}
                     />
                 </div>
-                {typeCard === 'tyre' ?
+                {/* {typeCard === 'tyre' ? */}
                 <div className="tyresCardCountry">
                     <FlagsIcon 
                         country={goods?.country} 
                         year={goods?.year}
                     />
                 </div>
-                : null
-                }
+
                 <div className='tyresCardBonus'>
                    <img src='/iconBonus/skyBonus_48_b.png' 
                     width={30}

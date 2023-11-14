@@ -5,7 +5,7 @@
     margin: auto;
     /*text-align:left;*/
     display: grid;
-    grid-template-columns: minmax(103px, 13%) minmax(315px 87%);
+    grid-template-columns:120px 620px;
     gap:5px;
     overflow:hidden;
     padding: 1em;
@@ -17,15 +17,22 @@
 }
 
 .tyresCardListBox {
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     justify-content:space-between;
     align-items:center;
-    flex-wrap: wrap;
-    /* margin: 0px 20px 0px 20px; */
-    gap: 5px;
+    flex-wrap: wrap; */
+    /* gap: 5px; */
+    display: grid;
+    grid-template-columns: 34% 34%, 31%;
+    grid-template-rows: 28px 40px 40px;
+    grid-template-areas: 
+    "nameCardList nameCardList nameCardList"
+    "ratingCardList codeCardList propsCardList"
+    "countryCardList priceCardList buttonCardList";
     grid-column: 2;
 }
+
 
  #imgTyresList {
     width: 100px;
@@ -76,20 +83,26 @@
 }
 
 .tyresCardCountryList {
+    grid-area: countryCardList;
     display: inline;
-    text-align: center;
+    text-align: justify;
+    vertical-align: middle;
 }
 
 .propsCardList {
+    grid-area: propsCardList;
     display: inline;
-    width: 100px;
-    text-align: center;
+    width: 120px;
+    max-height: 45px;
+    text-align: justify;
+    vertical-align: top;
 }
 .ratingTyresList {
+    grid-area: ratingCardList;
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items:center;
+    justify-content: flex-start;
+    align-items:flex-start;
     gap:5px;
     
 }
@@ -100,14 +113,21 @@
 }
 
 .tyresCardCodeList {
-    text-align: center;
+    grid-area: codeCardList;
+    text-align:justify;
     font-family: var(--main-font-family);
 }
 
 #nameCardList {
+    grid-area: nameCardList;
     text-decoration: none;
     font-family: var(--main-font-family);
 }
 .priceAndBtnCard {
+    grid-area: priceCardList;
     text-align: center;
+}
+
+.buttonBuyCardList {
+    grid-area: buttonCardList;
 }

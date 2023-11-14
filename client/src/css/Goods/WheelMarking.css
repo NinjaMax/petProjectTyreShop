@@ -7,16 +7,16 @@
 }
 
 .wheelMarkingWidth span {
-    position: absolute;
-    top: 240px;
-    right: 318px;
+    position: relative;
+    bottom: 245px;
+    left: 40px;
     font-size: 24px;
     font-family: var(--main-font-family);
     font-weight: bold;
     color: black;
     background-color: orange;
-    border-radius: 44%;
-    padding: 4px;
+    border-radius: 50px;
+    padding: 2px 14px 2px 14px;
 
 }
 
@@ -26,16 +26,16 @@
 }
 
 .wheelMarkingDiameter span {
-    position: absolute;
-    top: 240px;
-    right: 125px;
+    position: relative;
+    bottom: 277px;
+    left: 235px;
     font-size: 24px;
     font-family: var(--main-font-family);
     font-weight: bold;
     color: black;
     background-color: orange;
-    border-radius: 44%;
-    padding: 4px;
+    border-radius: 25px;
+    padding: 2px 8px 2px 8px;
 }
 .wheelMarkingDiameter:hover .tooltipWheelMarking {
     visibility: visible;

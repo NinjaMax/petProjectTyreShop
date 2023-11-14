@@ -120,7 +120,6 @@ const AllAboutProduct = observer(({
         }
     }
 
-
     return (
         <div className='allAboutProduct'>
             {goods?.tyre_brand ?

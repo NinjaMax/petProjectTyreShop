@@ -24,6 +24,7 @@ import { ReviewWheels } from '../reviews/entities/review-wheels.model';
 import { RatingWheels } from '../ratings/entities/rating-wheels.model';
 import { RedisService } from '../redis/redis.service';
 import { Category } from '../categorys/entities/category.model';
+import { WheelSizeDigits } from 'src/properties/entities/wheels/wheel-sizeDigits.model';
 
 @Injectable()
 export class WheelsService {
@@ -95,7 +96,15 @@ export class WheelsService {
   async findAllWheels() {
     try {
       const wheelsAll = await this.wheelRepository.findAll({
-        include: { all: true },
+        include: [
+          { model: RatingWheels },
+          { model: ReviewWheels },
+          { model: StockWheels },
+          { model: Category},
+          { model: PriceWheels },
+          { model: WheelType },
+          { model: WheelSizeDigits},
+        ],
       });
 
       return wheelsAll;
@@ -1000,7 +1009,13 @@ export class WheelsService {
     try {
       const wheelsAllByDiameter = await this.wheelRepository.findAll({
         include: [
-          { all: true },
+          { model: RatingWheels },
+          { model: ReviewWheels },
+          { model: StockWheels },
+          { model: Category},
+          { model: PriceWheels },
+          { model: WheelType },
+          { model: WheelSizeDigits},
           { model: WheelDiameter, where: { diameter: diameter } },
         ],
       });
@@ -1024,7 +1039,13 @@ export class WheelsService {
     try {
       const wheelsAllByBrandParams = await this.wheelRepository.findAll({
         include: [
-          { all: true },
+          { model: RatingWheels },
+          { model: ReviewWheels },
+          { model: StockWheels },
+          { model: Category},
+          { model: PriceWheels },
+          { model: WheelType },
+          { model: WheelSizeDigits},
           { model: WheelBrand, where: { brand: brand } },
           { model: WheelWidth, where: { width: width } },
           { model: WheelBoltCountPcd, where: { bolt_count_pcd: bolt_count_pcd } },
@@ -1046,7 +1067,13 @@ export class WheelsService {
     try {
       const wheelsAllByBrandModel = await this.wheelRepository.findAll({
         include: [
-          { all: true },
+          { model: RatingWheels },
+          { model: ReviewWheels },
+          { model: StockWheels },
+          { model: Category},
+          { model: PriceWheels },
+          { model: WheelType },
+          { model: WheelSizeDigits},
           { model: WheelBrand, where: { brand: brand } },
           { model: WheelModel, where: { model: model } },
         ],
@@ -1070,7 +1097,13 @@ export class WheelsService {
     try {
       const wheelsAllByParams = await this.wheelRepository.findAll({
         include: [
-          { all: true },
+          { model: RatingWheels },
+          { model: ReviewWheels },
+          { model: StockWheels },
+          { model: Category},
+          { model: PriceWheels },
+          { model: WheelType },
+          { model: WheelSizeDigits},
           { model: WheelWidth, where: { width: width } },
           { model: WheelBoltCountPcd, where: { bolt_count_pcd: bolt_count_pcd } },
           { model: WheelDia, where: { dia: dia } },
