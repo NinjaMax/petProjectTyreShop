@@ -186,7 +186,7 @@ const Admin = observer(() => {
 
     const sideBarItemChange = async (e: any) => {
         setSideBarItem(e.target.value);
-        console.log(e.target.value);
+        //console.log(e.target.value);
     }
 
     const showCommentOrder = async (e: any) => {

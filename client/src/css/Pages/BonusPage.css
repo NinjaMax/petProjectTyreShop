@@ -1,0 +1,7 @@
+.bonusContainer {
+    margin: 40px 100px 40px 100px;
+    font-family: var(--main-font-family);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 30px;
+}

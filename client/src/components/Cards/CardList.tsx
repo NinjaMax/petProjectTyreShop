@@ -128,7 +128,7 @@ const CardList = ({goods, forOrder, priceItem, countEvent, checkOrders}: ICard) 
                     </div>
                 </div>
                 <div className='buttonBuyCardList'>
-                { goods?.price[0]?.price ?
+                { goods?.price[0]?.price && !forOrder ?
                     <ButtonAction 
                         props={"КУПИТИ"} 
                         widthBtn={160} 

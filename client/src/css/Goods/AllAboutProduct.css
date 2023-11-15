@@ -108,6 +108,13 @@
     align-items: center;
     gap: 10px;
 }
+.productBonusReview {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
 .productInfoCountry {
     display: flex;
     flex-direction: row;
@@ -278,5 +285,48 @@
     /* font: var(--fa-font-regular); */
     width: 36px;
     height: 36px;
+    cursor: pointer;
+}
+.tyresCardBonusTextReview {
+    position: relative;
+    font-family: var(--main-font-family);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.tyresCardBonusTextReview .tooltipCardBonusText {
+    visibility: hidden;
+    width: 210px;
+    height: 210px;
+    background-color: #444;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size:small; 
+    font-weight: normal;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 115%;
+    left: -90%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+/* Tooltip arrow */
+.tyresCardBonusTextReview .tooltipCardBonusText::after {
+    content: " ";
+    position: absolute;
+    bottom: -4.5%;
+    right: 48%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color:#444 transparent transparent transparent; 
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.tyresCardBonusTextReview:hover .tooltipCardBonusText {
+    visibility: visible;
+    opacity: 1;
     cursor: pointer;
 }

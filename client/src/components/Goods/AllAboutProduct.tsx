@@ -224,17 +224,32 @@ const AllAboutProduct = observer(({
                         : null
                     }
                     <a href='/'>SKYBONUS</a>
-                    <img src='./iconBonus/skyBonus_48_b.png' 
+                    {goods?.price && goods?.price[0].price > 500 ? 
+                    <div className='productBonusReview'>
+                    <img 
+                        src='./iconBonus/skyBonus_48_b.png' 
                         width={30}
                         height={30}
                         alt='bonus'
                         title='Бонуси'
                     />
-                    {goods?.price ?
-                        <span className='tyresCardBonusText'>{`+${(goods?.price[0]?.price! * 0.015).toFixed()} бонусів`}</span> 
-                        : null
+                    <span className='tyresCardBonusText'>
+                        +100 бонусів
+                    </span>
+                    <span className='tyresCardBonusTextReview'> за відгук 
+                            <span className='tooltipCardBonusText'>
+                               <> Нараховуємо єдиноразово 100 бонусів за відгук.<br/> 
+                                Що треба зробити:<br/>
+                                -купити товар з позначкою "100 бонусів за відгук" на сайті skyparts.com.ua 
+                                <br/>
+                                -протягом 14 днів після отримання товару залишити відгук про товар <br/>
+                                -повідомити менеджера будь яким способом
+                                </>
+                            </span>
+                    </span>
+                    </div>
+                    : null
                     }
-                    <a href='/'> за відгук</a>
                     </>
                 </div>
                 </>

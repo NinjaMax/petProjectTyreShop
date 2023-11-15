@@ -8,6 +8,8 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     background-color: #ffff;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
     
 }
 .productPayDelBlock {
@@ -35,4 +37,482 @@
 
 .productPayDelBlock img {
     vertical-align:middle;
+}
+.productPayDelNovaPoshta {
+    position: relative;
+}
+
+.productPayDelNovaPoshta .tooltipProductPayDelNova {
+    visibility: hidden;
+    width: 120px;
+    background-color: #444;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size:small; 
+    font-weight: normal;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 1%;
+    left: 105%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+/* Tooltip arrow */
+.productPayDelNovaPoshta .tooltipProductPayDelNova::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #444 transparent transparent;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.productPayDelNovaPoshta:hover .tooltipProductPayDelNova {
+    visibility: visible;
+    opacity: 1;
+    cursor: pointer;
+}
+.productPayDelDelivery {
+    position: relative;
+}
+
+.productPayDelDelivery .tooltipProductPayDelDelivery {
+    visibility: hidden;
+    width: 120px;
+    background-color: #444;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size:small; 
+    font-weight: normal;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 1%;
+    left: 106%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+/* Tooltip arrow */
+.productPayDelDelivery .tooltipProductPayDelDelivery::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #444 transparent transparent;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.productPayDelDelivery:hover .tooltipProductPayDelDelivery {
+    visibility: visible;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.productPayDelPickUp {
+    position: relative;
+}
+
+.productPayDelPickUp .tooltipProductPayDelPickUp {
+    visibility: hidden;
+    width: 200px;
+    height: 85px;
+    background-color: #444;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size:small; 
+    font-weight: normal;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 2%;
+    left: 105%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+/* Tooltip arrow */
+.productPayDelPickUp .tooltipProductPayDelPickUp::after {
+    content: " ";
+    position: absolute;
+    top: 65%;
+    right: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #444 transparent transparent;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.productPayDelPickUp:hover .tooltipProductPayDelPickUp {
+    visibility: visible;
+    opacity: 1;
+    cursor: pointer;
+}
+.productPayDelCash {
+    position: relative;
+}
+
+.productPayDelCash .tooltipProductPayDelCash {
+    visibility: hidden;
+    width: 120px;
+    background-color: #444;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size:small; 
+    font-weight: normal;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: -2%;
+    left: 110%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+/* Tooltip arrow */
+.productPayDelCash .tooltipProductPayDelCash::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #444 transparent transparent;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.productPayDelCash:hover .tooltipProductPayDelCash {
+    visibility: visible;
+    opacity: 1;
+    cursor: pointer;
+}
+.productPayDelBank {
+    position: relative;
+}
+
+.productPayDelBank .tooltipProductPayDelBank {
+    visibility: hidden;
+    width: 150px;
+    height: 75px;
+    background-color: #444;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size:small; 
+    font-weight: normal;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: -12%;
+    left: 110%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+/* Tooltip arrow */
+.productPayDelBank .tooltipProductPayDelBank::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #444 transparent transparent;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.productPayDelBank:hover .tooltipProductPayDelBank {
+    visibility: visible;
+    opacity: 1;
+    cursor: pointer;
+}
+.productPayDelVisa {
+    position: relative;
+}
+
+.productPayDelVisa .tooltipProductPayDelVisaMaster {
+    visibility: hidden;
+    width: 120px;
+    height: 70px;
+    background-color: #444;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size:small; 
+    font-weight: normal;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: -5%;
+    left: 105%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+/* Tooltip arrow */
+.productPayDelVisa .tooltipProductPayDelVisaMaster::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #444 transparent transparent;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.productPayDelVisa:hover .tooltipProductPayDelVisaMaster {
+    visibility: visible;
+    opacity: 1;
+    cursor: pointer;
+}
+.productPayDelPrivat {
+    position: relative;
+}
+
+.productPayDelPrivat .tooltipProductPayDelPrivat {
+    visibility: hidden;
+    width: 120px;
+    height: 65px;
+    background-color: #444;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size:small; 
+    font-weight: normal;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: -2%;
+    left: 110%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+/* Tooltip arrow */
+.productPayDelPrivat .tooltipProductPayDelPrivat::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #444 transparent transparent;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.productPayDelPrivat:hover .tooltipProductPayDelPrivat {
+    visibility: visible;
+    opacity: 1;
+    cursor: pointer;
+}
+.productPayDelMono {
+    position: relative;
+}
+
+.productPayDelMono .tooltipProductPayDelMono {
+    visibility: hidden;
+    width: 120px;
+    height: 65px;
+    background-color: #444;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size:small; 
+    font-weight: normal;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: -2%;
+    left: 110%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+/* Tooltip arrow */
+.productPayDelMono .tooltipProductPayDelMono::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #444 transparent transparent;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.productPayDelMono:hover .tooltipProductPayDelMono {
+    visibility: visible;
+    opacity: 1;
+    cursor: pointer;
+}
+.productPayDelGaranty {
+    position: relative;
+}
+
+.productPayDelGaranty .tooltipProductPayDelGaranty {
+    visibility: hidden;
+    width: 120px;
+    height: 65px;
+    background-color: #444;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size:small; 
+    font-weight: normal;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: -2%;
+    left: 105%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+/* Tooltip arrow */
+.productPayDelGaranty .tooltipProductPayDelGaranty::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #444 transparent transparent;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.productPayDelGaranty:hover .tooltipProductPayDelGaranty {
+    visibility: visible;
+    opacity: 1;
+    cursor: pointer;
+}
+.productPayDelReturn {
+    position: relative;
+}
+
+.productPayDelReturn .tooltipProductPayDelReturn {
+    visibility: hidden;
+    width: 120px;
+    height: 85px;
+    background-color: #444;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size:small; 
+    font-weight: normal;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: -15%;
+    left: 103%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+/* Tooltip arrow */
+.productPayDelReturn .tooltipProductPayDelReturn::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #444 transparent transparent;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.productPayDelReturn:hover .tooltipProductPayDelReturn {
+    visibility: visible;
+    opacity: 1;
+    cursor: pointer;
+}
+.productPayDelBonus {
+    position: relative;
+}
+
+.productPayDelBonus .tooltipProductPayDelBonus {
+    visibility: hidden;
+    width: 120px;
+    height: 140px;
+    background-color: #444;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size:small; 
+    font-weight: normal;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: -70%;
+    left: -170%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+/* Tooltip arrow */
+.productPayDelBonus .tooltipProductPayDelBonus::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent #444  ;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.productPayDelBonus:hover .tooltipProductPayDelBonus {
+    visibility: visible;
+    opacity: 1;
+    cursor: pointer;
+}
+.productPayDeSertificate {
+    position: relative;
+}
+
+.productPayDeSertificate .tooltipProductPayDeSertificate {
+    visibility: hidden;
+    width: 120px;
+    height: 100px;
+    background-color: #444;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size:small; 
+    font-weight: normal;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: -2%;
+    left: 103%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+/* Tooltip arrow */
+.productPayDeSertificate .tooltipProductPayDeSertificate::after {
+    content: " ";
+    position: absolute;
+    top: 65%;
+    right: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #444 transparent transparent;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.productPayDeSertificate:hover .tooltipProductPayDeSertificate {
+    visibility: visible;
+    opacity: 1;
+    cursor: pointer;
 }

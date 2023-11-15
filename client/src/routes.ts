@@ -7,6 +7,8 @@ import { ADMIN_ROUTE, ADMIN_AUTH_ROUTE, BASKET_ROUTE, CATALOG_TYRES_ROUTE,
   DELIVERY_ROUTE,
   DELIVERY_GOODS_ROUTE,
   CAR_SELECT_ROUTE,
+  BONUS_ROUTE,
+  CUSTOMER_ROUTE,
 } from './utils/consts';
 import Admin from './pages/Admin';
 import AdminAuth from './components/auth/AdminAuth';
@@ -26,6 +28,10 @@ import DeliveryPage from './pages/DeliveryPage';
 import DeliveryGoodsPage from './pages/DeliveryGoodsPage';
 import CarSelect from './pages/CarSelect';
 import NewsItemPage from './pages/NewsItemPage';
+import BonusPage from './pages/BonusPage';
+import CustomerSettings from './pages/CustomerSettings';
+import CustomerSales from './pages/CustomerSales';
+import CustomerComments from './pages/CustomerComments';
 
 export const adminRoutes = [
   {
@@ -52,6 +58,26 @@ export const publicRoutes = [
     path: DELIVERY_ROUTE,
     exact: true,
     Component: DeliveryPage
+  },
+  {
+    path: BONUS_ROUTE,
+    exact: true,
+    Component: BonusPage
+  },
+  {
+    path: CUSTOMER_ROUTE + '/sales',
+    exact: true,
+    Component: CustomerSales
+  },
+  {
+    path: CUSTOMER_ROUTE + '/comments',
+    exact: true,
+    Component: CustomerComments
+  },
+  {
+    path: CUSTOMER_ROUTE + '/settings',
+    exact: true,
+    Component: CustomerSettings
   },
   {
     path: DELIVERY_GOODS_ROUTE + '/:region',

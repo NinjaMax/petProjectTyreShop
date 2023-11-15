@@ -73,6 +73,9 @@
 .authApproveSpan {
     padding: 6px;
 }
+.authApproveSpan a {
+    text-decoration: none;
+}
 
 .authApproveSpan:hover {
     background-color:#71C2FF;

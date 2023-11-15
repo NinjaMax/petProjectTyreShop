@@ -20,7 +20,7 @@ const AuthView = observer(({logOutUser}:IAuthView) => {
             <>
                 <img 
                     id='imgCustomerBonus'
-                    src='./iconBonus/skyBonus_48_b.png' 
+                    src='/iconBonus/skyBonus_48_b.png' 
                     width={35}
                     height={35}
                     alt='imgCusomerBonus'
@@ -52,10 +52,15 @@ const AuthView = observer(({logOutUser}:IAuthView) => {
                 </button>
                 <div className='authApprove'>
                     <div className='authApproveActive'>
-                    <span className='authApproveSpan'>Мої покупки</span>
-                    <span className='authApproveSpan'>Улюбленні товари</span>
-                    <span className='authApproveSpan'>Коментарі</span>
-                    <span className='authApproveSpan'>Налаштування</span>
+                    <span className='authApproveSpan'>
+                        <a href='/customer/sales'>Мої покупки</a> 
+                    </span>
+                    <span className='authApproveSpan'>
+                        <a href='/customer/comments'>Коментарі</a> 
+                        </span>
+                    <span className='authApproveSpan'>
+                       <a href='/customer/settings'>Налаштування</a> 
+                    </span>
                     <span className='authApproveSpan' onClick={logOutUser}>Вийти</span>
                     <i className='fa fa-caret-down'/>   
                     </div>

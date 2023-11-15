@@ -207,6 +207,7 @@ const NavBar = observer(() => {
     await logOut();
     customer.setIsAuth(false);
     customer.setUser({});
+    document.location.assign('/');
   }
 
   const signUpCustm = async (dataSignIn: any) => {

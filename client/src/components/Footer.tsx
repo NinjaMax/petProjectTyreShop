@@ -106,7 +106,7 @@ const Footer = () => {
             Покупцям
           </h4>
           <p>
-            <a href="/#" className="text-reset">Доставка і оплата</a>
+            <a href="/delivery-pay" className="text-reset">Доставка і оплата</a>
           </p>
           <p>
             <a href="/#" className="text-reset">Гарантія</a>
@@ -118,7 +118,7 @@ const Footer = () => {
             <a href="/contact" className="text-reset">Контакти</a>
           </p>
           <p>
-            <a href="/#" className="text-reset">Бонусна програма</a>
+            <a href="/bonus" className="text-reset">Бонусна програма</a>
           </p>
           <p>
             <a href="/news" className="text-reset">Статті</a>
