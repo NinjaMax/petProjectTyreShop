@@ -19,9 +19,9 @@ export class PriceWheelsController {
     return this.priceWheelsService.findAllWheels();
   }
 
-  @Get()
-  findPriceWheelsById(@Query() getPriceDto: GetPriceDto) {
-    return this.priceWheelsService.findPriceWheelsById(getPriceDto);
+  @Get('/idwheel')
+  findPriceWheelsById(@Query('id_wheel') id_wheel: string) {
+    return this.priceWheelsService.findAdminPriceWheelsById(+id_wheel);
   }
 
   @Patch('/update')

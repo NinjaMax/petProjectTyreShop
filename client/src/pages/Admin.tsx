@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import '../css/Admin.css';
 //import axios from 'axios';
-import { getTyres, 
+import { getTyresAdmin, 
         getStockTyres, 
         getPriceTyres, 
-        getWheels, 
+        getWheelsAdmin, 
         getStockWheel,
         getStorageAll,
         getPriceWheels,
@@ -14,7 +14,8 @@ import { getTyres,
         getCommentOrderSupData,
         getSuppliers,
         getOrderSupData,
-        getUsers} from '../restAPI/restAdminAPI';
+        getUsers
+    } from '../restAPI/restAdminAPI';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../context/Context';
@@ -94,7 +95,7 @@ const Admin = observer(() => {
   
     useEffect(()=> {
         let isMounted = false;
-            const postTask = async() => {
+            const postTask = async () => {
                 const tasks:any[] = [
                     //addGoodsToOrder,
                     //createGoodsToOrder,
@@ -102,13 +103,13 @@ const Admin = observer(() => {
                     getUsers,
                     getOrderSupData,
                     getSuppliers,
-                    getTyres,
-                    getStockTyres,
-                    getPriceTyres,
-                    getWheels,
-                    getStockWheel,
-                    getPriceWheels,
-                    getStorageAll,
+                    getTyresAdmin,
+                    //getStockTyres,
+                    //getPriceTyres,
+                    getWheelsAdmin,
+                    //getStockWheel,
+                    //getPriceWheels,
+                    //getStorageAll,
                     getCommentOrderData,
                     getOrderData,
                     getCustomers
@@ -116,34 +117,34 @@ const Admin = observer(() => {
                 let i: number = 0;
                 while(tasks.length > i) {
                 //for (let i = 0; tasks.length > i; i++) {
-                    if(!isMounted && tasks[i] === getTyres) {    
+                    if(!isMounted && tasks[i] === getTyresAdmin) {    
                         let resultTyre: any = await tasks[i]();
                         setTyreData(resultTyre?.data);
                     }
-                    if(!isMounted && tasks[i] === getStockTyres) {
-                        let resultStockTyre: any = await tasks[i]();
-                        setTyreStockData(resultStockTyre?.data);
-                    } 
-                    if(!isMounted && tasks[i] === getPriceTyres) {   
-                        let resultPriceTyre: any = await tasks[i]();
-                        setTyrePriceData(resultPriceTyre?.data);
-                    } 
-                    if(!isMounted && tasks[i] === getWheels) {   
+                    // if(!isMounted && tasks[i] === getStockTyres) {
+                    //     let resultStockTyre: any = await tasks[i]();
+                    //     setTyreStockData(resultStockTyre?.data);
+                    // } 
+                    // if(!isMounted && tasks[i] === getPriceTyres) {   
+                    //     let resultPriceTyre: any = await tasks[i]();
+                    //     setTyrePriceData(resultPriceTyre?.data);
+                    // } 
+                    if(!isMounted && tasks[i] === getWheelsAdmin) {   
                         let resultWheels: any = await tasks[i]();
                         setWheelData(resultWheels?.data);
                     } 
-                    if(!isMounted && tasks[i] === getStockWheel) {
-                        let resultStockWheel: any = await tasks[i]();
-                        setWheelStockData(resultStockWheel?.data);
-                    } 
-                    if(!isMounted && tasks[i] === getStorageAll) {
-                        let resultStorage: any = await tasks[i]();
-                        setStorageAll(resultStorage?.data);
-                    } 
-                    if(!isMounted && tasks[i] === getPriceWheels) {
-                        let resultPriceWheel: any = await tasks[i]();
-                        setWheelPriceData(resultPriceWheel?.data);
-                    } 
+                    // if(!isMounted && tasks[i] === getStockWheel) {
+                    //     let resultStockWheel: any = await tasks[i]();
+                    //     setWheelStockData(resultStockWheel?.data);
+                    // } 
+                    // if(!isMounted && tasks[i] === getStorageAll) {
+                    //     let resultStorage: any = await tasks[i]();
+                    //     setStorageAll(resultStorage?.data);
+                    // } 
+                    // if(!isMounted && tasks[i] === getPriceWheels) {
+                    //     let resultPriceWheel: any = await tasks[i]();
+                    //     setWheelPriceData(resultPriceWheel?.data);
+                    // } 
                     if(!isMounted && tasks[i] === getOrderData) {
                         let resultOrder: any = await tasks[i]();
                         setOrderAllData(resultOrder?.data);
@@ -237,8 +238,7 @@ const Admin = observer(() => {
                 : null}
                 {sideBarItem === 'catalog' ?
                     <AdminGoodsContent
-                        props={[tyreData, tyreStockData, tyrePriceData,
-                            wheelData, wheelPriceData, wheelStockData]}
+                        props={[tyreData, wheelData]}
                         customer={customers}
                         comments={commentOrder}
                         storage={storageAll}

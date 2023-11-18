@@ -19,9 +19,9 @@ export class StockWheelsController {
     return this.stockWheelsService.findAllStock();
   }
 
-  @Get()
-  findOne(@Query() getStockDto : GetStockDto) {
-    return this.stockWheelsService.findStockWheelById(getStockDto);
+  @Get('/idwheel')
+  findOne(@Query('id_wheel') id_wheel: string) {
+    return this.stockWheelsService.findAdminStockWheelByIdWheel(+id_wheel);
   }
 
   @Patch('/update')

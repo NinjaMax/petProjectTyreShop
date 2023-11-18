@@ -119,13 +119,13 @@
 .admGoodsTable {
     width: 100%;
     height: 345px;
-    overflow-y: auto;  
+    /* overflow-y: auto;   */
 }
 
-.admGoodsTable thead th {
+/* .admGoodsTable thead th {
     position: sticky; 
     top: 0px;
-}
+} */
 
 .closeAdmGoods {
     margin: 4px;
@@ -284,3 +284,5 @@
 .btnAdminSearch:hover {
     background-color: #bbb;
 }*/
+
+

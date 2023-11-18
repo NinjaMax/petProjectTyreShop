@@ -185,11 +185,21 @@ await $hostPost.delete('/ordersup/remove/ordersupstorage', value
     error)
 });
 
-const getTyres = async () => 
-await $hostGet.get('/tyres')
+const getTyresAdmin = async () => 
+await $hostGet.get('/tyres/all-admin')
 .catch(error => {
     console.log(error)
 });
+
+// const getTyresById = async (id:string) => 
+// await $hostGet.get('/tyres/id', {
+//     params: {
+//         id: id
+//     }
+// })
+// .catch(error => {
+//     console.log(error)
+// });
 
 const getStockTyres = async () => 
 await $hostGet.get('/stock/tyres/all')
@@ -197,14 +207,34 @@ await $hostGet.get('/stock/tyres/all')
     console.log(error)
 });
 
+const getAdminStockTyresByIdtyre = async (id: string) => {
+    const {data}: any = await $hostGet.get('/stock/tyres/idtyre', { 
+        params: { id_tyre: id}
+    })
+    .catch(error => {
+        console.log(error)
+    });
+    return data;
+};
+
 const getPriceTyres = async () => 
 await $hostGet.get('/price/tyres/all')
 .catch(error => {
     console.log(error)
 });
 
-const getWheels = async () =>
-await $hostGet.get('/wheels')
+const getAdminPriceTyresById = async (id: string) => {
+    const {data}: any = await $hostGet.get('/price/tyres/idtyre', { 
+        params: { id_tyre: id}
+    })
+    .catch(error => {
+        console.log(error)
+    });
+    return data
+};
+
+const getWheelsAdmin = async () =>
+await $hostGet.get('/wheels/all-admin')
 .catch((error) => {
     console.log(error)
 });
@@ -215,11 +245,28 @@ await $hostGet.get('/stock/wheels/all')
     console.log(error)
 });
 
+const getAdminStockWheelByIdWheel = async (id: string) => {
+    const {data}: any = await $hostGet.get('/stock/wheels/idwheel', 
+    {params: {id_wheel: id}})
+    .catch(error => {
+        console.log(error)
+    });
+    return data;
+};
+
 const getPriceWheels = async () =>
 await $hostGet.get('/price/wheels/all')
 .catch(error => {
     console.log(error)
 });
+
+const getAdminPriceWheelsById = async (id: string) => {
+    const {data}: any = await $hostGet.get('/price/wheels/idwheel', {params: {id_wheel: id}})
+    .catch(error => {
+        console.log(error)
+    });
+    return data;
+};
 
 const getStorageAll = async () => 
 await $hostGet.get('/storage/all')
@@ -340,13 +387,17 @@ export {
     updateOrderSup,
     updateOrderStorage,
     getCommentOrderSupData,
-    getTyres, 
+    getTyresAdmin, 
     getStockTyres, 
+    getAdminStockTyresByIdtyre,
     getPriceTyres,
-    getWheels,
+    getAdminPriceTyresById,
+    getWheelsAdmin,
     getStockWheel,
+    getAdminStockWheelByIdWheel,
     getStorageAll,
     getPriceWheels,
+    getAdminPriceWheelsById,
     getCommentOrderData,
     getOrderData,
     getOrderSupData,

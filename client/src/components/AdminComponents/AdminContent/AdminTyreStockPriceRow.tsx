@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react';
 import { IAdmTyreStockPriceRow } from './interfaces/AdminTyreRow.interface';
 import { IStockTyreRow } from './types/StockTyreRow.type';
+import { TyreStockPriceRow } from './types/TyreRowStockPrice.type';
 
 // type IPriceTyreRow = {
 //     id: number;
@@ -10,20 +11,22 @@ import { IStockTyreRow } from './types/StockTyreRow.type';
 // }
 
 const AdminTyreStockPriceRow = (
-    {stockTyres, priceTyres}: IAdmTyreStockPriceRow
+    {stockTyres, priceTyres}: TyreStockPriceRow
     ) => {
+        console.log('PRICE_TYRE_DATA: ', priceTyres);
+        console.log('STOCK_TYRE_DATA: ', stockTyres);
     return (
         <>
-        {stockTyres?.length !==0 || priceTyres?.length !==0 ? 
+        { priceTyres ? 
             priceTyres?.map((
-                item: IStockTyreRow,
+                item: any,
                 index: number) => (
         <tr key={'tyrerow ' + item?.id}>
             {stockTyres ?
                 <Fragment key={'stt' + stockTyres[index]?.id} >
                     <td >{stockTyres[index]?.storage.storage ?? ''}</td>
                     <td >{
-                    new Date(stockTyres[index]?.update_date).toLocaleString() ?? ''
+                    new Date(stockTyres[index].update_date).toLocaleString() ?? ''
                     }</td>
                     <td >{stockTyres[index]?.supplier.name ?? ''}</td>
                     <td >{stockTyres[index]?.supplier.city_ua ?? ''}</td>
@@ -37,19 +40,19 @@ const AdminTyreStockPriceRow = (
             {priceTyres ? 
                 <Fragment key={'tp' + priceTyres[index]?.id}>
                     <td >{priceTyres[
-                        priceTyres.findIndex((entity:{id_storage: number}) => entity.id_storage === stockTyres![index]?.id_storage)
+                        priceTyres.findIndex((entity: any) => entity.id_supplier === stockTyres![index]?.id_supplier)
                         ]?.price_wholesale ?? ''}</td>
                     <td >{priceTyres[
-                        priceTyres.findIndex((entity:{id_storage: number}) => entity.id_storage === stockTyres![index]?.id_storage)
+                        priceTyres.findIndex((entity: any) => entity.id_supplier === stockTyres![index]?.id_supplier)
                         ]?.price ?? ''}</td>
                     <td >{priceTyres[
-                        priceTyres.findIndex((entity:{id_storage: number}) => entity.id_storage === stockTyres![index]?.id_storage)
+                        priceTyres.findIndex((entity: any) => entity.id_supplier === stockTyres![index]?.id_supplier)
                         ]?.price_plus_delivery ?? ''}</td>
                 </Fragment> 
                : <td>Покищо немає данних. Очікуємо...</td>
             }  
           </tr> ))
-          : <tr>Покищо немає данних...</tr>
+          : <tr>{'Покищо немає данних...'}</tr>
         }
         </>
     );

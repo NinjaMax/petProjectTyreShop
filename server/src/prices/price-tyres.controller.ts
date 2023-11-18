@@ -19,9 +19,9 @@ export class PriceTyresController {
     return this.pricesService.findAllTyres();
   }
 
-  @Get()
-  findPriceTyresById(@Query() getPriceDto: GetPriceDto) {
-    return this.pricesService.findPriceTyresById(getPriceDto);
+  @Get('/idtyre')
+  findPriceTyresById(@Query('id_tyre') id_tyre: string) {
+    return this.pricesService.findAdminPriceTyresById(+id_tyre);
   }
 
   @Patch('/update')

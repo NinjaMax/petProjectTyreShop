@@ -29,9 +29,9 @@ export class StockTyresController {
     return this.stockTyresService.findAllStock();
   }
 
-  @Get()
-  findStockTyreById(@Query() getStockDto: GetStockDto) {
-    return this.stockTyresService.findStockTyreById(getStockDto); 
+  @Get('/idtyre')
+  findStockTyreById(@Query('id_tyre') id_tyre: string) {
+    return this.stockTyresService.findAdminStockTyreByIdtyre(+id_tyre); 
   }
 
   @Get(':id')

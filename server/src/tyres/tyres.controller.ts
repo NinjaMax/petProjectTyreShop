@@ -29,6 +29,11 @@ export class TyresController {
     return this.tyresService.findAllTyres();
   }
 
+  @Get('/all-admin')
+  findAllAdminTyres() {
+    return this.tyresService.findAllTyresAdmin();
+  }
+
   @Get('/id')
   findTyresById(@Query('id') id: string) {
     return this.tyresService.findTyresByIdQuery(id);

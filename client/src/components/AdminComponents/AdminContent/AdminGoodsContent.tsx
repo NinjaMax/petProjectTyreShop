@@ -12,6 +12,8 @@ import AdminWheelStockPriceRow from './AdminWheelStockPriceRow';
 import { IGoodsContent } from './interfaces/GoodsContent.interface';
 import { TyreContent } from './types/TyreContent.type';
 import { IWheelContentItem } from './types/WheelContent.type';
+import { getTyresById } from '../../../restAPI/restGoodsApi';
+import { getAdminStockTyresByIdtyre, getAdminPriceTyresById } from '../../../restAPI/restAdminAPI';
 //import { sortTyres } from '../../sortService/sortAdminGoods';
 
 const AdminGoodsContent = (
@@ -30,8 +32,8 @@ const AdminGoodsContent = (
     // const [itemIdBattery, setItemIdBattery] = useState();
     const [itemId, setItemId] = useState<[]>([]);
     const [addGoods, setAddGoods] = useState<boolean>(false);
-    const [stockTyre, setStockTyre] = useState<any[]>();
-    const [priceTyre, setPriceTyre] = useState<any[]>();
+    const [stockTyre, setStockTyre] = useState<any>();
+    const [priceTyre, setPriceTyre] = useState<any>();
     const [stockWheel, setStockWheel] = useState<{}[]>();
     const [priceWheel, setPriceWheel] = useState<{}[]>();
     // const [stockOil, setStockOil] = useState([]);
@@ -69,16 +71,34 @@ const AdminGoodsContent = (
         }
     },[wheelData, valueWheel]);
 
-    const showStockPriceTyre = (e: { currentTarget: { getAttribute: (arg0: string) => any; }; }) => {
-        let stockByIdTyre: any[] | undefined = tyreStockData?.filter(
-            (item:{id_tyre:number}) => item.id_tyre === Number(e.currentTarget.getAttribute("data-value"))
-        );
-        setStockTyre(stockByIdTyre);
+    const showStockPriceTyre = async (e: any) => {
+        // let stockByIdTyre: any[] | undefined = tyreStockData?.filter(
+        //     (item:{id_tyre:number}) => item.id_tyre === Number(e.currentTarget.getAttribute("data-value"))
+        // );
+        // setStockTyre(stockByIdTyre);
 
-        let priceByIdTyre: any[] | undefined = tyrePriceData?.filter(
-            (item:{id_tyre:number}) => item.id_tyre === Number(e.currentTarget.getAttribute("data-value"))
-        );
-        setPriceTyre(priceByIdTyre);
+        // let priceByIdTyre: any[] | undefined = tyrePriceData?.filter(
+        //     (item:{id_tyre:number}) => item.id_tyre === Number(e.currentTarget.getAttribute("data-value"))
+        // );
+        //console.log('GET_TYRE: ', e.currentTarget.getAttribute("data-value"))
+        try {
+            //if (e.currentTarget?.getAttribute("data-value").length !== 0) {
+                let stockByIdTyre = await getAdminStockTyresByIdtyre(e.currentTarget?.getAttribute("data-value") ?? 0);
+                let priceByIdTyre = await getAdminPriceTyresById(e.currentTarget?.getAttribute("data-value") ?? 0);
+               
+                if (priceByIdTyre) {
+                   setPriceTyre(priceByIdTyre);  
+                }
+                console.log('GET_ID_TYRE: ', e.currentTarget?.getAttribute("data-value"))
+                // console.log('GET_STOCK: ', stockByIdTyre)
+                if (stockByIdTyre) {
+                  setStockTyre(stockByIdTyre);  
+                }
+            //}
+        } catch (error) {
+            console.log('GET_TYRE_STOCK_ERROR: ', error);
+        }
+        
     };
 
     const showStockPriceWheel = (e: { currentTarget: { getAttribute: (arg0: string) => any; }; }) => {
@@ -340,7 +360,7 @@ const AdminGoodsContent = (
                     addTyreToOrder={addToOrder}
                     sortTyres={sortTyreContent}
                     value={valueSort}
-                    />
+                />
                 : null
             }
             { chooseCat === 'Диски' ?
@@ -383,7 +403,8 @@ const AdminGoodsContent = (
                     {chooseCat === 'Шини'? 
                         <AdminTyreStockPriceRow 
                         stockTyres={stockTyre} 
-                        priceTyres={priceTyre}/>
+                        priceTyres={priceTyre}
+                        />
                     :   null
                     } 
                     {chooseCat === 'Диски'?

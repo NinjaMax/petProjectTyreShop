@@ -1,4 +1,3 @@
-
 .headerTyreTable {
     font-size: 14px;
     font-family: var(--main-font-family);
@@ -10,9 +9,16 @@
     width: 100%;
     border-collapse: collapse;
     font-size: 14px;
-    
+    /* overflow-y: auto; */
 }
-.admListTyreTable tr, .admTyreTable th {
+/* .admListTyreTable tr, .admTyreTable th {
+    border: 1px solid #ddd;
+    padding: 8px 5px;
+} */
+/* .admListTyreTable tr {
+    overflow-y: auto;
+} */
+.admListTyreTable tr, th {
     border: 1px solid #ddd;
     padding: 8px 5px;
 }
@@ -29,14 +35,21 @@
     margin-left: 3px;
 }
 
-.admListTyreTable tr:nth-child(even) {
-    background-color: #f2f2f2;
+.admListTyreTable tbody {
+    /* overflow-y: auto;  */
+    /* height: 295px; */
+    /* display: flex;
+    flex-direction: row; */
+    width: 100%;
 }
+/* .admListTyreTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+} */
 
-.admTyreTable tr:hover {
+/* .admTyreTable tr:hover {
     background-color: #ddd;
     cursor: pointer;
-}
+} */
 
 .admListTyreTable td {
     padding: 5px; 
@@ -45,7 +58,7 @@
 .admTyreTable {
     width: 100%;
     height: 345px;
-    overflow-y: auto;  
+    /* overflow-y: auto; */
 }
 
 .admTyreTable thead th {
@@ -118,6 +131,64 @@
     clear: both;
 }
 
+.admTyreTableColmId {
+    /* overflow: hidden !important; */
+    /* width: 60px; */
+    /* overflow-x: hidden; */
+    /* display: flex;
+    flex-direction: column;
+    gap: 10px; */
+    /* display: grid;
+    grid-template-columns: repeat(8 * 60px); */
+}
+/* .admTyreTableColmId tr {
+    width: 500px;
+} */
+/* .admTyreTableColmId th {
+    border: 1px solid #ddd;
+    padding: 8px 5px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    color: #444;
+} */
+
+.admTyreGridItem {
+    vertical-align:middle;
+    /* display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    align-items: flex-start;
+    gap: 10px; */
+    display: grid;
+    grid-template-columns: 80px 445px 110px 90px 50px 100px 80px 100px 125px;
+    grid-column-gap: 15px;
+
+}
+
+.admTyreGridItem .admTyreGridItemBtn {
+    display: flex;
+    flex-direction: row;
+}
+.admTyreTableColmId tr {
+    /* display: flex;
+    flex-direction: row;
+    gap: 10px; */
+    border: 1px solid #ddd;
+    padding: 8px 5px;
+} 
+.admTyreTableColmId .admTyreGridItem:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+.admTyreGridItemF .admTyreGridItemB {
+    vertical-align:text-bottom;
+}
+.admTyreGridItemB:hover + .admTyreGridItemF{
+    background-color: #ddd;
+    cursor: pointer;
+}
 /*.admHeaderCatalog {
     display: flex;
     flex-direction: row;
@@ -152,3 +223,23 @@
     font-size: 10px;
 }
 */
+
+.admTyreTableHeader {
+    display: flex;
+    flex-direction: column;
+
+    position: sticky; 
+    top: 0px;
+}
+
+.admTyreGridItemHeader {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: #444;
+
+    border: 1px solid #ddd;
+    padding: 8px 5px;
+
+}

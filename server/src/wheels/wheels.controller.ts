@@ -27,6 +27,11 @@ export class WheelsController {
     return this.wheelsService.findAllWheels();
   }
 
+  @Get('/all-admin')
+  findAllAdmin() {
+    return this.wheelsService.findAllWheelsAdmin();
+  }
+
   @Get('/id')
   findOne(@Query('id') id: string) {
     return this.wheelsService.findWheelByIdQuery(id);

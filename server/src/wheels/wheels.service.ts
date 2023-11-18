@@ -116,6 +116,27 @@ export class WheelsService {
     }
   }
 
+  async findAllWheelsAdmin() {
+    try {
+      const wheelsAllAdmin = await this.wheelRepository.findAll({
+        include: [
+          { model: Category},
+          { model: WheelType },
+          { model: WheelColor },
+          { model: WheelBrand},
+          { model: WheelSizeDigits},
+        ],
+      });
+
+      return wheelsAllAdmin;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
   async findWheelById(getWheelDto: GetWheelDto) {
     try {
       const wheelById = await this.wheelRepository.findByPk(getWheelDto.id, {
