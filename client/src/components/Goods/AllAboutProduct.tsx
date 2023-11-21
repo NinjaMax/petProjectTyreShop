@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import '../../css/Goods/AllAboutProduct.css';
-import productImage from '../../assets/autotyrespilotspotps2.png';
+import productImage from './tyre/autotyrespilotspotps2.png';
 import wheelProduct from '../../assets/vossen_cvt_gloss_graphite-16325-a.png';
 import heartImg from '../../assets/icons/heart_64BlueClear.png';
 import scaleImg from '../../assets/icons/scales50.png';
@@ -124,13 +124,13 @@ const AllAboutProduct = observer(({
         <div className='allAboutProduct'>
             {goods?.tyre_brand ?
              <div className='allProductImgBox'>
-                <img id='productImgGoods' src={productImage} alt='productImg'/>   
+                <img id='productImgGoods' src={'/tyre/autotyrespilotspotps2.png'} alt='productImg'/>   
             </div>
             : null   
             }
             {goods?.wheel_brand ?
              <div className='allProductImgBox'>
-                <img id='productImgGoods' src={wheelProduct} alt='productImg'/>   
+                <img id='productImgGoods' src={'/disk/vossen_cvt_gloss_graphite-16325-a.png'} alt='productImg'/>   
             </div>  
             : null 
             }

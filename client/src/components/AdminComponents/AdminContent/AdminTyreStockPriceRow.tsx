@@ -1,6 +1,4 @@
 import React, {Fragment} from 'react';
-import { IAdmTyreStockPriceRow } from './interfaces/AdminTyreRow.interface';
-import { IStockTyreRow } from './types/StockTyreRow.type';
 import { TyreStockPriceRow } from './types/TyreRowStockPrice.type';
 
 // type IPriceTyreRow = {
@@ -13,8 +11,7 @@ import { TyreStockPriceRow } from './types/TyreRowStockPrice.type';
 const AdminTyreStockPriceRow = (
     {stockTyres, priceTyres}: TyreStockPriceRow
     ) => {
-        console.log('PRICE_TYRE_DATA: ', priceTyres);
-        console.log('STOCK_TYRE_DATA: ', stockTyres);
+
     return (
         <>
         { priceTyres ? 
@@ -52,7 +49,7 @@ const AdminTyreStockPriceRow = (
                : <td>Покищо немає данних. Очікуємо...</td>
             }  
           </tr> ))
-          : <tr>{'Покищо немає данних...'}</tr>
+          : <tr><td>{'Покищо немає данних...'}</td></tr>
         }
         </>
     );

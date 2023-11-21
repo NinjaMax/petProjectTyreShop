@@ -13,13 +13,12 @@ import { IGoodsContent } from './interfaces/GoodsContent.interface';
 import { TyreContent } from './types/TyreContent.type';
 import { IWheelContentItem } from './types/WheelContent.type';
 import { getTyresById } from '../../../restAPI/restGoodsApi';
-import { getAdminStockTyresByIdtyre, getAdminPriceTyresById } from '../../../restAPI/restAdminAPI';
+import { getAdminStockTyresByIdtyre, getAdminPriceTyresById, getAdminStockWheelByIdWheel, getAdminPriceWheelsById } from '../../../restAPI/restAdminAPI';
 //import { sortTyres } from '../../sortService/sortAdminGoods';
 
 const AdminGoodsContent = (
     {showComment, comments, props, customer, storage}:IGoodsContent) => {
-    const [tyreData, tyreStockData, tyrePriceData,
-        wheelData, wheelPriceData, wheelStockData] = props;
+    const [tyreData, wheelData] = props;
     const [chooseCat, setChooseCat] = useState<string>('Шини');
     // const [tyreData, setTyreData] = useState(null);
     // const [wheelData, setWheelData] = useState(null);
@@ -46,6 +45,9 @@ const AdminGoodsContent = (
     const [changedTyresData, setChangedTyresData] = useState<any[] | null>(tyreData);
     const [changedWheelsData, setChangedWheelsData] = useState<any[] | null>(wheelData);
     const [isSearch, setIsSearch] = useState(false);
+    const [active, setActive] = useState(false);
+    const [imageValue, setImageValue] = useState<string[]>();
+
     
     useEffect(() => {
         if(valueTyre.length !== 0) {
@@ -72,45 +74,52 @@ const AdminGoodsContent = (
     },[wheelData, valueWheel]);
 
     const showStockPriceTyre = async (e: any) => {
-        // let stockByIdTyre: any[] | undefined = tyreStockData?.filter(
-        //     (item:{id_tyre:number}) => item.id_tyre === Number(e.currentTarget.getAttribute("data-value"))
-        // );
-        // setStockTyre(stockByIdTyre);
-
-        // let priceByIdTyre: any[] | undefined = tyrePriceData?.filter(
-        //     (item:{id_tyre:number}) => item.id_tyre === Number(e.currentTarget.getAttribute("data-value"))
-        // );
-        //console.log('GET_TYRE: ', e.currentTarget.getAttribute("data-value"))
         try {
-            //if (e.currentTarget?.getAttribute("data-value").length !== 0) {
-                let stockByIdTyre = await getAdminStockTyresByIdtyre(e.currentTarget?.getAttribute("data-value") ?? 0);
-                let priceByIdTyre = await getAdminPriceTyresById(e.currentTarget?.getAttribute("data-value") ?? 0);
+            const getTyreRowId: string = e.currentTarget?.getAttribute("data-value");
+            let stockByIdTyre = await getAdminStockTyresByIdtyre(getTyreRowId ?? 0);
+            let priceByIdTyre = await getAdminPriceTyresById(getTyreRowId ?? 0);
                
-                if (priceByIdTyre) {
-                   setPriceTyre(priceByIdTyre);  
-                }
-                console.log('GET_ID_TYRE: ', e.currentTarget?.getAttribute("data-value"))
-                // console.log('GET_STOCK: ', stockByIdTyre)
-                if (stockByIdTyre) {
-                  setStockTyre(stockByIdTyre);  
-                }
-            //}
+            if (priceByIdTyre) {
+               setPriceTyre(priceByIdTyre);  
+            }
+            if (stockByIdTyre) {
+              setStockTyre(stockByIdTyre);  
+            }
         } catch (error) {
             console.log('GET_TYRE_STOCK_ERROR: ', error);
         }
-        
     };
 
-    const showStockPriceWheel = (e: { currentTarget: { getAttribute: (arg0: string) => any; }; }) => {
-        const stockByIdWheel: {}[] | undefined = wheelStockData?.filter(
-            (item:{id_wheel:number}) => item.id_wheel === Number(e.currentTarget.getAttribute("data-value"))
-        );
-        setStockWheel(stockByIdWheel);
+    const showStockPriceWheel = async (e: { currentTarget: { getAttribute: (arg0: string) => any; }; }) => {
+        try {
+            const getWheelRowId: string = e.currentTarget?.getAttribute("data-value");
+            let stockByIdWheel = await getAdminStockWheelByIdWheel(getWheelRowId ?? 0);
+            let priceByIdTWheel = await getAdminPriceWheelsById(getWheelRowId ?? 0);
+            if (stockByIdWheel) {
+                setStockWheel(stockByIdWheel);  
+            }
+            if (priceByIdTWheel) {
+                setPriceWheel(priceByIdTWheel);
+            }
+        } catch (error) {
+            console.log('WHEEL_STOCK_PRICE_ERROR: ', error);
+        }
+    };
 
-        const priceByIdWheel: {}[] | undefined = wheelPriceData?.filter(
-            (item:{id_wheel:number}) => item.id_wheel === Number(e.currentTarget.getAttribute("data-value"))
-        );
-        setPriceWheel(priceByIdWheel);
+    const showPicturesTyre =(e: any) => {
+        const getTyreImage: string[] = e.currentTarget?.value.split(',');
+        if (getTyreImage) {
+            setActive(!active);
+            setImageValue(getTyreImage);
+        }
+    };
+
+    const showPicturesWheel =(e: any) => {
+        const getTyreImage: string[] = e.currentTarget?.value.split(',');
+        if (getTyreImage) {
+            setActive(!active);
+            setImageValue(getTyreImage);
+        }
     };
 
     const addToOrder = (e: { currentTarget: { value: string; }; }) => {
@@ -148,6 +157,7 @@ const AdminGoodsContent = (
         }
     }
     const sortTyreContent = (e: any) => { 
+        console.log('SORT: ', e.target.textContent)
         if (e.target.textContent === 'Код') {
             const sortByCode: any = 
             changedTyresData?.sort(
@@ -359,7 +369,10 @@ const AdminGoodsContent = (
                     showRowData={showStockPriceTyre}
                     addTyreToOrder={addToOrder}
                     sortTyres={sortTyreContent}
-                    value={valueSort}
+                    showRowImage={showPicturesTyre}
+                    value={imageValue}
+                    activeShowImage={active}
+                    setActiveShowImage={setActive}
                 />
                 : null
             }
@@ -369,7 +382,10 @@ const AdminGoodsContent = (
                     showRowData={showStockPriceWheel}
                     addWheelToOrder={addToOrder}
                     sortWheels={sortWheelContent}
-                    value={valueSort}
+                    showRowImage={showPicturesWheel}
+                    activeShowImage={active}
+                    setActiveShowImage={setActive}
+                    value={imageValue}
                     />
                 : null
             }

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import '../../css/CardsCss/TyreCardSmall.css';
 import ButtonAction from '../buttons/ButtonAction';
-import tyres from '../../assets/autotyrespilotspotps2.png';
+//import tyres from '../../assets/autotyrespilotspotps2.png';
 import Rating from '../ux/Rating';
 import { createStringUrl } from '../../services/stringUrl';
 import { useHistory } from 'react-router-dom';
@@ -53,7 +53,7 @@ const CardSmall = ({product, rating, checkOrders}:IProductSmall) => {
                         onClick={addGoodsId} 
                         href={'/' + createStringUrl(product?.full_name)}
                     >
-                        <img id='imgTyresSmall' src={tyres} alt="tyreSmall" />
+                        <img id='imgTyresSmall' src={'/tyre/autotyrespilotspotps2.png'} alt="tyreSmall" />
                     </a>
                     : null
                 }
@@ -63,7 +63,7 @@ const CardSmall = ({product, rating, checkOrders}:IProductSmall) => {
                         onClick={addGoodsId} 
                         href={'/' + createStringUrl(product?.full_name)}
                     >
-                        <img id='imgTyresSmall' src={tyres} alt="tyreSmall" />
+                        <img id='imgTyresSmall' src={'/tyre/autotyrespilotspotps2.png'} alt="tyreSmall" />
                     </a>
                     : null
                 }

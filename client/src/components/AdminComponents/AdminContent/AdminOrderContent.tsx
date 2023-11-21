@@ -257,20 +257,20 @@ const AdminOrderContent = (
                         <td>{items.id_order}</td>
                         <td>{new Date(items.createdAt).toLocaleString()}</td>
                         <td>{new Date(items.updatedAt).toLocaleString()}</td>
-                        <td>{items.customer.full_name}</td>
+                        <td>{items?.customer.full_name}</td>
                         <td>{items?.storage}</td>
                         <td>{items?.order_storage?.reduce(
                                 (sum:any, current:any) => 
                                 sum + current.total, 0)}
                         </td>
-                        <td>{items.status}</td>
-                        <td>{items.order_view}</td>
-                        <td>{items.delivery}</td>
-                        <td>{items.status_delivery}</td>
-                        <td>{items.pay_view}</td>
-                        <td>{items.status_pay}</td>
-                        <td>{items.user.name}</td>
-                        <td>{items.notes}</td>
+                        <td>{items?.status}</td>
+                        <td>{items?.order_view}</td>
+                        <td>{items?.delivery}</td>
+                        <td>{items?.status_delivery}</td>
+                        <td>{items?.pay_view}</td>
+                        <td>{items?.status_pay}</td>
+                        <td>{items?.user?.name}</td>
+                        <td>{items?.notes}</td>
                         <td>
                             <button className='basketAdmGoods'
                                 value={items.id_order}

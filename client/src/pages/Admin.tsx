@@ -2,12 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import '../css/Admin.css';
 //import axios from 'axios';
 import { getTyresAdmin, 
-        getStockTyres, 
-        getPriceTyres, 
         getWheelsAdmin, 
-        getStockWheel,
-        getStorageAll,
-        getPriceWheels,
         getCommentOrderData,
         getOrderData,
         getCustomers, 
@@ -117,7 +112,7 @@ const Admin = observer(() => {
                 let i: number = 0;
                 while(tasks.length > i) {
                 //for (let i = 0; tasks.length > i; i++) {
-                    if(!isMounted && tasks[i] === getTyresAdmin) {    
+                    if (!isMounted && tasks[i] === getTyresAdmin) {    
                         let resultTyre: any = await tasks[i]();
                         setTyreData(resultTyre?.data);
                     }
@@ -129,7 +124,7 @@ const Admin = observer(() => {
                     //     let resultPriceTyre: any = await tasks[i]();
                     //     setTyrePriceData(resultPriceTyre?.data);
                     // } 
-                    if(!isMounted && tasks[i] === getWheelsAdmin) {   
+                    if (!isMounted && tasks[i] === getWheelsAdmin) {   
                         let resultWheels: any = await tasks[i]();
                         setWheelData(resultWheels?.data);
                     } 
@@ -145,31 +140,31 @@ const Admin = observer(() => {
                     //     let resultPriceWheel: any = await tasks[i]();
                     //     setWheelPriceData(resultPriceWheel?.data);
                     // } 
-                    if(!isMounted && tasks[i] === getOrderData) {
+                    if (!isMounted && tasks[i] === getOrderData) {
                         let resultOrder: any = await tasks[i]();
                         setOrderAllData(resultOrder?.data);
                     }
-                    if(!isMounted && tasks[i] === getOrderSupData) {
+                    if (!isMounted && tasks[i] === getOrderSupData) {
                         let resultOrderSup: any = await tasks[i]();
                         setOrderSupAllData(resultOrderSup?.data);
                     } 
-                    if(!isMounted && tasks[i] === getCustomers) {
+                    if (!isMounted && tasks[i] === getCustomers) {
                         let resultCustomers: any = await tasks[i]();
                         setCustomers(resultCustomers?.data);
                     }
-                    if(!isMounted && tasks[i] === getUsers) {
+                    if (!isMounted && tasks[i] === getUsers) {
                         let resultUsers: any = await tasks[i]();
                         setUsers(resultUsers?.data);
                     }  
-                    if(!isMounted && tasks[i] === getSuppliers) {
+                    if (!isMounted && tasks[i] === getSuppliers) {
                         let resultSuppliers: any = await tasks[i]();
                         setSuppliers(resultSuppliers?.data);
                     }
-                    if(!isMounted && tasks[i] === getCommentOrderData) {
+                    if (!isMounted && tasks[i] === getCommentOrderData) {
                         let resultComOrder: any = await tasks[i](commentByOrder);
                         setCommentOrder(resultComOrder?.data);  
                     }
-                    if(!isMounted && tasks[i] === getCommentOrderSupData) {
+                    if (!isMounted && tasks[i] === getCommentOrderSupData) {
                         let resultComOrderSup: any = await tasks[i](commentByOrderSup);
                         setCommentOrderSup(resultComOrderSup?.data);
                     }

@@ -4,7 +4,7 @@ import FlagsIcon from './FlagsIcon';
 import PropsCardIcons from './PropsCardIcons';
 import Rating from '../ux/Rating';
 import OptionsTyreBox from './OptionsTyreBox';
-import tyres from '../../assets/autotyrespilotspotps2.png';
+//import tyres from '../../assets/autotyrespilotspotps2.png';
 import wheels from '../../assets/vossen_cvt_gloss_graphite-16325-a.png';
 import ButtonAction from '../buttons/ButtonAction';
 import { ICard } from './interfaces/Card.interface';
@@ -92,7 +92,7 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                     onClick={addGoodsId} 
                     href={'/' + createStringUrl(goods?.full_name)}
                 >
-                 <img id='imgTyres' src={tyres} alt="imgCards" /> 
+                 <img id='imgTyres' src={'/tyre/autotyrespilotspotps2.png'} alt="imgCards" /> 
                 </a>
                  : null  
                 }
@@ -102,7 +102,7 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                     onClick={addGoodsId} 
                     href={'/' + createStringUrl(goods?.full_name)}
                 >
-                    <img id='imgTyres' src={wheels} alt="imgCards" /> 
+                    <img id='imgTyres' src={'/disk/vossen_cvt_gloss_graphite-16325-a.png'} alt="imgCards" /> 
                 </a>
                  : null  
                 }

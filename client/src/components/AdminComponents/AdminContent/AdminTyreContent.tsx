@@ -1,17 +1,20 @@
 import React from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminTyreContent.css';
-import { TyreContent } from './types/TyreContent.type';
 import { ITyreContent } from './interfaces/TyreContent.interface';
 import { FixedSizeList  as List } from 'react-window';
+import SpinnerCarRot from '../../spinners/SpinnerCarRot';
+import Modal from '../../modal/Modal';
 
-const AdminTyreContent = (
-    {props, showRowData, addTyreToOrder, sortTyres, value}: ITyreContent) => {
-    // const [newProps, setNewProps] = useState<any[] | null>(props);
-
-    const arrColumnHeader = ['Назва товару', 'Бренд', 'Сезон', 'Рік Виробн', 'Країна поход', 'Тип транс'];
-    // useEffect(() => {
-    //     setNewProps(props);
-    // },[props, value])
+const AdminTyreContent = ({
+    props, 
+    showRowData, 
+    addTyreToOrder, 
+    sortTyres,
+    showRowImage,
+    activeShowImage,
+    setActiveShowImage,
+    value
+}: ITyreContent) => {
 
     const tableTyreRow = ({index, style}: any) => (
         <div className='admTyreGridItem' style={style}
@@ -37,9 +40,13 @@ const AdminTyreContent = (
                 <button className='editAdmTyre'>
                     <i className="fas fa-edit"></i>
                 </button>
-                {/* <button className='closeAdmTyre'>
-                    <i className="fa fa-remove"></i>
-                </button>                   */}
+                <button 
+                    className='eyeAdmTyre'
+                    value={`/tyre/autotyrespilotspotps2.png,${props![index].full_name}`}
+                    onClick={showRowImage}
+                >   
+                    <i className="fas fa-eye"></i>
+                </button>                  
             </div>
         </div>
     );
@@ -51,28 +58,37 @@ const AdminTyreContent = (
                 <table className='admListTyreTable'>
                 <thead>
                     <tr className='headerTyreTable'>
-                        <th onClick={sortTyres}>Код 
+                        <th className='headerTyreTableCode'
+                            onClick={sortTyres}>Код 
                            <i className="fas fa-sort"></i>
                         </th>
-                        <th>Назва товару
+                        <th className='headerTyreTableName'
+                            onClick={sortTyres}
+                            >Назва товару
                             <i className="fas fa-sort"></i>
                         </th>
-                        <th onClick={sortTyres}>Бренд
+                        <th className='headerTyreTableBrand'
+                            onClick={sortTyres}>Бренд
                             <i className="fas fa-sort"></i>
                         </th>
-                        <th onClick={sortTyres}>Сезон
+                        <th className='headerTyreTableSeason'
+                            onClick={sortTyres}>Сезон
                             <i className="fas fa-sort"></i>
                         </th>
-                        <th onClick={sortTyres}>Рік Виробн.
+                        <th className='headerTyreTableYear'
+                            onClick={sortTyres}>Рік
                             <i className="fas fa-sort"></i>
                         </th>
-                        <th onClick={sortTyres}>Країна поход.
+                        <th className='headerTyreTableCounty'
+                            onClick={sortTyres}>Країна
                             <i className="fas fa-sort"></i>
                         </th>
-                        <th onClick={sortTyres}>Категорія
+                        <th className='headerTyreTableCat'
+                            onClick={sortTyres}>Категорія
                             <i className="fas fa-sort"></i>
                         </th>
-                        <th onClick={sortTyres}>Тип транс
+                        <th className='headerTyreTableType'
+                            onClick={sortTyres}>Тип транс
                             <i className="fas fa-sort"></i>
                         </th>
                         <th>Опції</th> 
@@ -89,8 +105,25 @@ const AdminTyreContent = (
                     {tableTyreRow}
                 </List>
             </div>
-            : null
+            : <SpinnerCarRot/>
             }
+            <Modal 
+                active={activeShowImage} 
+                setActive={setActiveShowImage} 
+            >
+            {value ?
+            <>
+            <img 
+                src={value![0]} 
+                alt='tyreRowImage'
+                width={200}
+                height={200}
+            /><br/> 
+            <span>{value![1]}</span>
+            </>
+            : <span>Немає фото</span>
+            }  
+            </Modal>
         </div>
     );
 };

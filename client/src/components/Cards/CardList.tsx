@@ -3,7 +3,7 @@ import '../../css/CardsCss/TyresCardList.css';
 import FlagsIcon from './FlagsIcon';
 import PropsCardIcons from './PropsCardIcons';
 import Rating from '../ux/Rating';
-import tyres from '../../assets/autotyrespilotspotps2.png';
+//import tyres from '../../assets/autotyrespilotspotps2.png';
 // import ButtonAction from '../buttons/ButtonAction';
 import CountBtnOrder from '../ux/CountBtnOrder';
 import { ICard } from './interfaces/Card.interface';
@@ -62,7 +62,7 @@ const CardList = ({goods, forOrder, priceItem, countEvent, checkOrders}: ICard) 
     
     return (
         <div className="tyresCardList">
-            <img id='imgTyresList' src={tyres} alt="tyres" />
+            <img id='imgTyresList' src={'/tyre/autotyrespilotspotps2.png'} alt="tyres" />
             <div className='tyresCardListBox'>    
                 <a  id='nameCardList' 
                     onClick={addGoodsId} 
