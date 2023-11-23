@@ -14,6 +14,7 @@
     flex-wrap:wrap;
     margin: 0px;
     gap: 3px;
+    width: 100%;
 }
 
 .admFormOrderData {
@@ -48,9 +49,29 @@
     margin-bottom: 3px; /* Bottom margin */
     resize: vertical /* Allow the us*/
 }
+.admFormOrderDeliveryCity {
+    width: 150px; /* Full width */
+    padding: 10px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 3px; /* Add a top margin */
+    margin-bottom: 3px; /* Bottom margin */
+    resize: vertical /* Allow the us*/
+}
+.admFormOrderDeliveryCityDep {
+    width: 120px; /* Full width */
+    padding: 10px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 3px; /* Add a top margin */
+    margin-bottom: 3px; /* Bottom margin */
+    resize: vertical /* Allow the us*/
+}
 
 .admFormOrderContract {
-    width: 200px; /* Full width */
+    width: 85px; /* Full width */
     padding: 10px; /* Some padding */ 
     border: 1px solid #ccc; /* Gray border */
     border-radius: 4px; /* Rounded borders */
@@ -124,7 +145,7 @@
 }
 
 .admFormOrderDelivery {
-    width: 135px; /* Full width */
+    width: 120px; /* Full width */
     padding: 10px; /* Some padding */ 
     border: 1px solid #ccc; /* Gray border */
     border-radius: 4px; /* Rounded borders */
@@ -376,4 +397,148 @@
     padding: 5px; 
 }
 
+.orderCityList {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    position: absolute;
+    top: 145px;
+    right: 15px;
+    overflow-y: auto;
+    max-height: 150px;
+    border-radius: 8px;
+    background-color: #ffff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    z-index: 99;
+}
+.orderCityList .orderCityListItem {
+    cursor: pointer;
+    width: 420px;
+    border-radius: 6px;
+    padding: 2px;
+}
+.orderCityList .orderCityListItem:hover {
+    background-color: #ccc;
+    animation: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.orderCityList label {
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 2px;
+}
+
+.orderCityList input {
+    appearance: none;
+}
+
+.orderDepartList {
+    /* content: "▼"; */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    position: absolute;
+    font-family: var(--main-font-family);
+    top: 145px;
+    right: 18px;
+    overflow-y: auto;
+    max-height: 150px;
+    border-radius: solid #9999 6px;
+    background-color: #ffff;
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
+    appearance: none;
+    border-radius: 10px;
+}
+.orderDepartList::after {
+    content: "▼";
+    font-size: 1rem;
+    top: 0.5px;
+    right: 5px;
+    position: absolute;
+    z-index: 9;
+    /* appearance: none; */
+    /* cursor: pointer; */
+  }
+
+.orderDepartList .orderDepartListItem {
+    cursor: pointer;
+    width: 540px;
+    border-radius: 6px;
+    padding: 2px;
+}
+
+.orderSelectDepart {
+    appearance: none;
+    cursor: pointer;
+    width: 400px;
+    /* max-height: 150px; */
+    font-family: var(--main-font-family);
+    color: #444B54;
+    font-size:16px;
+    border-radius: 10px;
+    border-color: #9999;
+    border-style: solid;
+    border-width: 2px;
+    padding: 3px;
+    z-index: 9;
+}
+.orderSelectDepart option {
+    width: 400px !important;
+}
+
+.orderDepartListDel {
+    /* content: "▼"; */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    position: absolute;
+    font-family: var(--main-font-family);
+    top: 145px;
+    overflow-y: auto;
+    max-height: 150px;
+    border-radius: solid #9999 6px;
+    background-color: #ffff;
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
+    appearance: none;
+}
+.orderDepartListDel::after {
+    content: "▼";
+    font-size: 1rem;
+    top: 0.5px;
+    right: 5px;
+    position: absolute;
+    z-index: 9;
+    /* appearance: none; */
+    /* cursor: pointer; */
+}
+.orderDepartListDel .orderDepartListItem {
+    cursor: pointer;
+    /* background-color: blueviolet; */
+    width: 540px;
+    border-radius: 6px;
+    padding: 2px;
+}
+.orderSelectDepartDel {
+    appearance: none;
+    cursor: pointer;
+    width: 480px;
+    font-family: var(--main-font-family);
+    color: #444B54;
+    font-size:16px;
+    border-radius: 10px;
+    border-color: #9999;
+    border-style: solid;
+    border-width: 2px;
+    padding: 3px;
+    z-index: 9;
+}
+
+.orderDepartList option:hover {
+    cursor: pointer;
+    background-color: #ccc;
+    animation: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
 /* Add a background color and some padding around the form */

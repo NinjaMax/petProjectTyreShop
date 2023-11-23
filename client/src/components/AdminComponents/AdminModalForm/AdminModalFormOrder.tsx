@@ -16,7 +16,6 @@ import {
     responseForm,
     updateOrder,
     updateOrderStorage} from '../../../restAPI/restAdminAPI';
-//import { yieldToMain } from '../../../restAPI/yieldMain';
 import AdminComment from '../adminContent/AdminComment';
 import AdminModalCustmCreate from '../adminModalForm/AdminModalCustmCreate';
 import AdminModalCustomers from '../adminModalForm/AdminModalCustomers';
@@ -30,190 +29,13 @@ import { IModalFormOrder } from './types/FormOrders.type';
 import { StateReducer, ActionReducer, ActionType } from './types/OrderReducer.type';
 import { reducer } from './reducer/goodsReducer';
 import { createInitialState } from './reducer/initialState';
-
-// interface IFormOrder {
-//     props: [[] | null, ...any[][]] | [[] | null, ...null[]];
-//     goodsId?: {};
-//     comments?: [] | null;
-//     customer: [] | null;
-//     setActive(arg0: any):void;
-//     storages: [any] | null;
-//     ordersData?: DataGoods | null;
-//     showComment(arg0: any):void;
-// }
-
-// type IModalFormOrder = {
-//     full_name?: string;
-//     name?: string;
-//     contract: [{id_contract: number, name: string}];
-//     id_contract?: number,
-//     id_customer?: number;
-//     addCustomer?: {
-//         full_name: string,
-//         contract: [],
-//         id_customer: number
-//     };
-//     map(arg0: any, ...arg: any[]): any;
-// }
-
-// // type ICreateInitial ={
-// //     createInitialState():void;
-// // }
-
-// type CreateGoods = {
-//     id?: number | string;
-//     full_name?: string;
-//     //category?: {category: {category:string}};
-//     category?: { category: string; };
-//     order_index?: number;
-//     //createGoodsToOrder(arg0: {}, id_order: number): void;
-//     id_supplier?: number;
-//     // storage_index?: {price: {id_storage?: number}};
-//     id_order_storage?: number;
-//     storage_index?: number;
-//     //id_supplier: number;
-//     quantity?: number;
-//     //quantity: number;
-//     //id: any;
-//     //id_order: number;
-
-//     price?: {
-//         quantity: number;
-//         id_storage: number | string;
-//         id_supplier: number | string; 
-//         price: number;
-//     };
-//     ////////
-//     //itemGoods:[];
-//     // i:number;
-//     //stateData?: [];
-//     // length: number;
-//     // state?: [];
-//     // forEach(arg0: (itemGoods?: {}) => Promise<void | any>): unknown;
-//     // push(arg0: { price: any; }): unknown;
-//     // splice(itemIndex: number, arg1: number): unknown;
-//     // map(arg0: any, ...arg: any[]): any;
-//     ////////
-// }
-
-// type DataGoods = {
-//     id_order: number;
-//     delivery: string;
-//     delivery_ttn: string;
-//     id_contract: number | string;
-//     id_customer: number;
-//     notes: string;
-//     order_view: string;
-//     organisation: string;
-//     pay_view: string;
-//     status: string;
-//     status_delivery: string;
-//     status_pay: string;
-//     storage: string;
-//     createdAt: Date;
-//     updatedAt: Date;
-//     id_user: number;
-//     total: number;
-//     customer:{full_name: string;}
-//     [Symbol.iterator](): any;
-//     order_storage: any[];
-//     comments: any[];
-//     reduce(arg0: any, ...arg: any[]): any;
-//     user:{name: string; role: string; id_user: number;}
-//     // id_order_storage: number;
-//     // id: number;
-//     // id_supplier: number;
-//     // order_index: number;
-//     // storage_index: number;
-//     // quantity: number;
-//     // price: number;
-// }
-
-// enum ActionType {
-//     ADDTYRE = 'addTyreToOrder',
-//     ADDWHEEL = 'addWheelToOrder',
-//     DELETEITEM = 'deleteItemFromOrder',
-//     EDITITEM = 'editItemFromOrder',
-// }
-
-// interface ICreateInitial {   
-//     ordersData: DataGoods | undefined;
-//     goodsId:  {} | undefined | any; 
-//     //[Symbol.iterator](): any;
-// }  
-
-// type ActionReducer = 
-//     | { type: ActionType.ADDTYRE, addTyre:any, indexPrice: string}
-//     | { type: ActionType.ADDWHEEL, addWheel:any, indexPrice: string}
-//     | { type: ActionType.DELETEITEM, deleteItem: any}
-//     | { type: ActionType.EDITITEM, editItem: any};
-
-// type StateReducer = {
-//     [index: number]: any;
-//     i?:number;
-//     //stateData?: any[];
-//     length: number;
-//     state?: any[];
-//     //newStateData?:[];
-//     forEach(arg0: (itemGoods: {}) => Promise<void |any>): unknown;
-//     forEach(arg0: any, ...arg: any[]): any;
-//     push(arg0: { price: any; }): unknown;
-//     splice(itemIndex: number, arg1: number): any;
-//     map(arg0: any, ...arg: any[]): any;
-//     slice(arg0?: number, arg1?: number): any;
-//     [Symbol.iterator](): any;
-//     reduce(arg0: any, ...arg: any[]): any;
-// }
-
-// function reducer (state: StateReducer, action: ActionReducer) {
-//     switch (action.type) {
-//         case 'addTyreToOrder': {
-//             if (action.addTyre) {
-//                 state?.push({...action.addTyre, 
-//                     "price":{...(action.addTyre.price[action.indexPrice] as object),
-//                        "quantity": "4"},  
-//                 });
-//             }
-//             return state;
-//         }
-//         case 'addWheelToOrder': {
-//             if (action.addWheel) {
-//                 state.push({...action.addWheel, 
-//                     "price":{...(action.addWheel.price[action.indexPrice] as object),
-//                         "quantity": "4"}, 
-//                 }); 
-//             }
-//             return state;
-//         }
-//         case 'deleteItemFromOrder': {
-//             if (state.length > 0) {
-//                 state.splice(action.deleteItem, 1); 
-//             }
-//             return state;
-//         }
-//         case 'editItemFromOrder': { 
-//             return [...action.editItem];
-//         }
-//         default: {
-//             throw Error('Unknown action: ' + action.type);
-//         } 
-//     }
-    
-// }
-
-// function createInitialState (goodsId: any | undefined, ordersData?: DataGoods | null) {        
-//     let initialState = [];
-//     if (goodsId) {
-//         initialState.push({...goodsId, 
-//             "price":{...goodsId.price[0],
-//                "quantity": "4"},  
-//         });
-//     } 
-//     if (ordersData) {
-//         initialState.push(...ordersData.order_storage);
-//     }
-//     return initialState;    
-// };
+import { IDapertmentDelivery } from '../../basket/types/DepartmentDelivery.type';
+import { IDepart } from '../../basket/types/DaprtNP.type';
+import { ICityDel } from '../../basket/types/CityDelivery.type';
+import { ICity } from '../../basket/types/CityNP.type';
+import { getCityNovaPoshta, getWareHousesNovaPoshta } from '../../../restAPI/restNovaPoshtaAPI';
+import { getCityDelivery, getWareHousesDelivery } from '../../../restAPI/restDeliveryAPI';
+import { IDapertmentNP } from '../../basket/types/DepartmentType.type';
 
 const AdminFormOrder = observer((
     { props, 
@@ -243,27 +65,159 @@ const AdminFormOrder = observer((
     const [newComment, setNewComment] = useState<string | undefined>();
     const [addNewCommit, setAddNewCommit] = useState();
     const [updateBtn, setUpdateBtn] = useState<string | null>(null); 
-    
+    const [cityList, setCityList] = useState<ICity[] | null>();
+    const [cityListDelivery, setCityListDelivery] = useState<any[] | null>();
+    const [departListNovaPoshta, setDepartListNovaPoshta] = useState<IDepart[]>();
+    const [departListDelivery, setDepartListDelivery] = useState<IDepart[]>();
+    const [cityListActive, setCityListActive] = useState<boolean>(false);
+    const [inputCity, setInputCity] = useState<string>();
+    const [chooseCity, setChooseCity] = useState<string>();
+    const [dataDepartmentNP, setDataDepartmentNP] = useState<IDapertmentNP>();
+    const [dataDepartmentDelivery, setDataDepartmentDelivery] = useState<IDapertmentDelivery>();
+    const [delivery, setDelivery] = useState<string>();
+    const [dataDepartment, setDataDepartment] = useState<{
+        delivery_dep: string, 
+        delivery_dep_ref: string,
+    }>();
+
     useEffect(() => {
         register("id_customer", {required: 'Це необхідні дані'});
         register("id_user", {required: 'Це необхідні дані'});
         setValue("id_user", user._user?.sub.id_user);
         setValue("id_customer", addCustomer?.id_customer,
         { shouldValidate: true })
-      }, [register, setValue, addCustomer?.id_customer, user])
+    }, [register, setValue, addCustomer?.id_customer, user]);
     
     useEffect(() => {
         register('id_contract', {required: 'Це необхідні дані'})
         setValue("id_contract", addCustomer?.contract[0]?.id_contract,
         { shouldValidate: true })
-      }, [register, setValue, addCustomer?.contract])
+    }, [register, setValue, addCustomer?.contract]);
+
+    useEffect(() => {
+        if (delivery === "Нова Пошта") {
+            register("delivery_city", {required: 'Це необхідні дані'})
+            register("delivery_city_ref")
+            setValue("delivery_city", dataDepartmentNP?.MainDescription,
+            { shouldValidate: true })
+            setValue("delivery_city_ref", dataDepartmentNP?.DeliveryCity)
+        }
+        if (delivery === "Делівері")
+        register("delivery_city", {required: 'Це необхідні дані'})
+        register("delivery_city_ref")
+        setValue("delivery_city", dataDepartmentDelivery?.name,
+        { shouldValidate: true })
+        setValue("delivery_city_ref", dataDepartmentDelivery?.id)
+    }, [
+        register, 
+        setValue,
+        dataDepartmentDelivery?.id, 
+        dataDepartmentDelivery?.name, 
+        dataDepartmentNP?.DeliveryCity, 
+        dataDepartmentNP?.MainDescription, 
+        delivery,
+    ]);
+
+    useEffect(() => {
+        register("delivery_city_depart")
+        register("delivery_city_depart_ref")
+        setValue("delivery_city_depart", dataDepartment?.delivery_dep,
+        { shouldValidate: true })
+        setValue("delivery_city_depart_ref", dataDepartment?.delivery_dep_ref,
+        { shouldValidate: true })
+    }, [
+        dataDepartment?.delivery_dep, 
+        dataDepartment?.delivery_dep_ref, 
+        register, 
+        setValue
+    ]);
 
     useEffect(() => {
         if (ordersData) {
             setDisableBtn(true);
             setDisableBtnOk(true);
         }
-    },[ordersData])
+    },[ordersData]);
+
+    useEffect(() => {
+        let isMounted = false;
+        const deliveryOrder = async () => {
+            if (!isMounted && chooseCity) {
+                const getCity: any = await getCityNovaPoshta(chooseCity);
+                if (getCity?.success) {
+                    setCityList([...getCity?.data[0].Addresses]); 
+                } 
+            }
+            if (!isMounted && chooseCity) {
+                const getCity: any = await getCityDelivery(chooseCity);
+                if (getCity?.data) {
+                    setCityListDelivery([...getCity?.data]); 
+                } 
+            }
+            if (!isMounted && dataDepartmentNP?.MainDescription && dataDepartmentNP?.DeliveryCity) {
+                const getDapartNP: any = await getWareHousesNovaPoshta(dataDepartmentNP);
+                if (getDapartNP?.success) {
+                    setDepartListNovaPoshta([...getDapartNP?.data]);
+                }
+            }
+            if (!isMounted && dataDepartmentDelivery?.id) {
+                const getDapartDelivery: any = await getWareHousesDelivery(dataDepartmentDelivery.id);
+                if (getDapartDelivery?.data) {
+                    setDepartListDelivery([...getDapartDelivery?.data]);
+                }
+            }
+        };
+        deliveryOrder();
+        return () => {
+          isMounted = true;
+        };
+    },[dataDepartmentNP, dataDepartmentDelivery, inputCity, chooseCity]);
+
+    const cityChooseActive = async (e: any) => {
+        setChooseCity(e.target.textContent);
+        setDataDepartmentNP({
+            address: e.target.textContent,
+            MainDescription: e.currentTarget.getAttribute('data-city'),
+            DeliveryCity: e.currentTarget.getAttribute('data-delivery'),
+        });
+        setDataDepartmentDelivery({
+            address: e.target.textContent,
+            name: e.currentTarget.getAttribute('data-city'),
+            id: e.currentTarget.getAttribute('data-delivery'),
+        });
+        setCityListActive(false);
+    };
+
+    const cityInputActive = (e: any) => {
+        setInputCity(e.currentTarget.value);
+        setChooseCity(e.currentTarget.value);
+        setCityListActive(true);
+        setDataDepartmentDelivery(undefined);
+        setDepartListDelivery(undefined);
+        setDataDepartmentNP(undefined);
+        setDepartListNovaPoshta(undefined);
+        setDataDepartment(undefined);
+    };
+
+    const chooseDelivery = (e: any) => {
+        console.log('chooseDelivery', e.currentTarget.value);
+        setDelivery(e.currentTarget.value);
+    };
+
+    const chooseDepartEvent = async (e: any) => {
+        let departData = e.target.value.split('//');
+        setDataDepartment(
+            {
+                delivery_dep: departData[1],
+                delivery_dep_ref: departData[0], 
+            }
+        );
+    };
+
+    const cancelCityList = () => {
+        setInputCity('');
+        setCityListActive(false); 
+    };
 
     const onChangeInput = useCallback(
         (e: any, id: number, indexItem: number) => {
@@ -291,13 +245,13 @@ const AdminFormOrder = observer((
         setOpenCustomers(!openCustomers);
     };    
     //const actions = useMemo(() => ({
-    const addCustToOrder = async (valueCust: number) => {
-            //console.log(valueCust);
+    const addCustToOrder = async (e: any) => {
         const findCustomer = customer!.find(
-                (items:{id_customer:number}) => items?.id_customer === +valueCust
+                (items:{id_customer:number}) => items?.id_customer === +e.currentTarget.getAttribute('data-value')
         );
         if (findCustomer) {
             setAddCustomer(findCustomer);  
+            setOpenCustomers(!openCustomers);
         }
     }
 
@@ -433,7 +387,8 @@ const AdminFormOrder = observer((
             console.log(error)
         }    
     }
-    console.log(errors);
+
+    //console.log(errors);
     
     return (
         <div >
@@ -441,7 +396,8 @@ const AdminFormOrder = observer((
             <div className="containerAdmOrderForm"
                 //onSubmit={e => e.stopPropagation()}
                 //onSubmit={e => e.preventDefault()}
-                >
+                onClick={cancelCityList}
+            >
             <form 
                 onSubmit={handleSubmit(onSubmit)}
             >
@@ -482,7 +438,7 @@ const AdminFormOrder = observer((
                                 </option>
                                 :
                                 <>
-                                <option value={"ФОП Гайворонський"}>ФОП Гайворонський</option>
+                                <option value={"ФОП Шемендюк К.В."}>ФОП Шемендюк К.В.</option>
                                 <option value={"фл Гайворонський Н. М"}>фл Гайворонський Н. М</option>
                                 <option value={"ТОВ Скай-Партс"}>ТОВ Скай-Партс</option>
                                 </>
@@ -496,7 +452,7 @@ const AdminFormOrder = observer((
                             name="storage"
                             >
                             {ordersData ?
-                                <option data-value={ordersData.storage}>
+                                <option data-value={ordersData?.storage}>
                                     {ordersData?.storage}
                                 </option>
                                 :
@@ -515,7 +471,7 @@ const AdminFormOrder = observer((
                             name="order_view"
                             >
                             {ordersData ?
-                                <option data-value={ordersData.order_view}>
+                                <option data-value={ordersData?.order_view}>
                                     {ordersData?.order_view}
                                 </option>
                                 :
@@ -535,7 +491,7 @@ const AdminFormOrder = observer((
                             name="status_order"
                             >
                             {ordersData ?
-                                <option data-value={ordersData.status}>
+                                <option data-value={ordersData?.status}>
                                     {ordersData?.status}
                                 </option>
                                 :
@@ -558,7 +514,7 @@ const AdminFormOrder = observer((
                                 name="customer" 
                                 maxLength={45}
                                 placeholder="Ім'я або назва.."
-                                value={addCustomer?.full_name ?? ordersData?.customer?.full_name ?? ''}
+                                value={addCustomer?.name ?? ordersData?.customer?.name ?? ''}
                                 readOnly={true}
                                 //onChange={() => setAddCustomer(addCustomer)}
                             />
@@ -592,9 +548,11 @@ const AdminFormOrder = observer((
                                 >
                                     {entity.name} {entity.id_contract} 
                                 </option>
-                                )) : <option data-value={ordersData?.id_contract}>
-                                        {ordersData?.id_contract}
-                                    </option>
+                                )) 
+                                : 
+                                <option data-value={ordersData?.id_contract}>
+                                    {ordersData?.id_contract}
+                                </option>
                             } 
                         </select>
                     </div>
@@ -604,6 +562,7 @@ const AdminFormOrder = observer((
                         <select className="admFormOrderDelivery" 
                             {...register('delivery', {required: 'Це необхідні дані'})}
                             name="delivery"
+                            onChange={chooseDelivery}
                             >
                             {ordersData ?
                                 <option data-value={ordersData.delivery}>
@@ -614,23 +573,134 @@ const AdminFormOrder = observer((
                                     <option value="Самовивіз">Самовивіз</option>
                                     <option value="Своя Доставка">Своя Доставка</option>
                                     <option value="Нова Пошта">Нова Пошта</option>
-                                    <option value="Укр Пошта">Укр Пошта</option>
                                     <option value="Делівері">Делівері</option>
                                 </>
                             }    
                         </select>    
                     </div>
                     <div>
-                        <label htmlFor="order_ttn">ТТН </label>
-                        <input className="admFormOrderTtn"
-                            type="text"  
+                    <label htmlFor="delivery_city">Місто </label>
+                        <input className="admFormOrderDeliveryCity"
+                            type="search"  
                             maxLength={45}
-                            placeholder="ТТН замовлення.."
-                            {...register('delivery_ttn')}
-                            name="delivery_ttn"
-                            defaultValue={ordersData?.delivery_ttn ?? ''}
+                            placeholder="Місто.."
+                            {...register('delivery_city')}
+                            name="delivery_city"
+                            onChange={cityInputActive}
+                            defaultValue={ordersData?.delivery_city ?? ''}
                         />  
                     </div>
+                    <div 
+                        className='orderCityList' 
+                        onClick={(e:any) => e.stopPropagation()}       
+                    > 
+                    {cityListActive && delivery !== "Делівері" ?
+                        cityListActive && cityList?.map((city: ICity) =>
+                        <div className='orderCityListItem'
+                            data-delivery={city.DeliveryCity}
+                            data-city={city.MainDescription}
+                            onClick={cityChooseActive}
+                            key={city.Present}>
+                        <label htmlFor={city.Present}>
+                            <input 
+                                id={city.Present}
+                                value={city.Present}
+                                type='radio'
+                                name='city_list'
+                            />
+                            {city.Present}
+                        </label>    
+                        </div>
+                        )
+                        : null
+                    }
+                    {cityListActive && delivery === "Делівері" ?
+                        cityListActive && cityListDelivery?.map((city: ICityDel) =>
+                        <div className='orderCityListItem'
+                            data-delivery={city.id}
+                            data-city={city.name}
+                            onClick={cityChooseActive}
+                            key={city.id}>
+                        <label htmlFor={city.name}>
+                            <input 
+                                id={city.id}
+                                value={city.name}
+                                type='radio'
+                                name='city_list'
+                            />
+                            {city.name + ', ' + city.districtName + ', ' + city.regionName}
+                        </label>    
+                        </div>
+                        )
+                        : null
+                    }
+                    </div>   
+                    <div>
+                    <label htmlFor="delivery_city_dep">віддл </label>
+                        <input className="admFormOrderDeliveryCityDep"
+                            type="search"  
+                            maxLength={45}
+                            placeholder="Відділення.."
+                            {...register('delivery_city_depart')}
+                            name="delivery_city_depart"
+                            defaultValue={ordersData?.delivery_city_depart ?? ''}
+                        />  
+                    </div> 
+                    {delivery === "Нова Пошта" && chooseCity && !cityListActive && !dataDepartment ?    
+                        <div 
+                            className='orderDepartList' 
+                            onClick={(e:any) => e.stopPropagation()}       
+                        > 
+                            <select 
+                                id='delivery_city_dep'
+                                className='orderSelectDepart'
+                                onChange={chooseDepartEvent}
+                            >
+                                <option value=''>
+                                    --віберіть відділення--
+                                </option>
+                        {chooseCity && departListNovaPoshta?.map((depart: IDepart) =>
+                                <option 
+                                    style={{"width": "400px"}}
+                                    key={depart?.SiteKey}
+                                    label={depart?.Description}
+                                    value={`${depart?.Ref}//${depart?.Description}//${depart?.CityRef}`}
+                                >
+                                {depart?.Description}
+                                </option>
+                            )
+                        }
+                        </select>    
+                        </div>
+                    : null} 
+                    {delivery === "Делівері" && chooseCity && !cityListActive && !dataDepartment?    
+                        <div 
+                            className='orderDepartList' 
+                            onClick={(e:any) => e.stopPropagation()}       
+                        > 
+                            <select 
+                                id='delivery_city_dep'
+                                className='orderSelectDepart'
+                                onChange={chooseDepartEvent}
+                            >
+                                <option value=''>
+                                    --віберіть відділення--
+                                </option>
+                            {chooseCity && departListDelivery?.map(
+                                (depart: IDapertmentDelivery) =>
+                                <option 
+                                    className='orderSelectDepartItem'
+                                    key={depart?.id}
+                                    label={depart?.name + ', ' + depart?.address}
+                                    value={`${depart?.id}//${depart?.name + ', ' + depart?.address}//${depart?.CityId}`}
+                                >
+                                {depart?.name + ', ' + depart?.address}
+                                </option>
+                            )
+                            }
+                            </select>    
+                        </div>
+                    : null}       
                     <div>
                         <label htmlFor="status">Статус дост </label>
                         <select className="admFormOrderStatusDel" 
@@ -706,7 +776,18 @@ const AdminFormOrder = observer((
                             </>
                         }
                         </select>    
-                    </div>   
+                    </div> 
+                    <div>
+                        <label htmlFor="order_ttn">ТТН </label>
+                        <input className="admFormOrderTtn"
+                            type="text"  
+                            maxLength={45}
+                            placeholder="ТТН замовлення.."
+                            {...register('delivery_ttn')}
+                            name="delivery_ttn"
+                            defaultValue={ordersData?.delivery_ttn ?? ''}
+                        />  
+                    </div>
                 </div>
                 <div className='admFormOrderTableBox'
                     //onInput={(e) => e.stopPropagation()}
@@ -772,7 +853,7 @@ const AdminFormOrder = observer((
                                 />
                            
                             </td>
-                            <td >{item?.total ?? item.price.price * item.price.quantity}</td>
+                            <td >{item?.total ?? item?.price?.price * item?.price?.quantity}</td>
                             <td >
                                 <select className="admFormOrderStorage" name="storage_index"
                                     //{...register('storage_index', {required: 'Це необхідні дані'})}
@@ -845,7 +926,7 @@ const AdminFormOrder = observer((
                         
                         //placeholder="Введіть коментар.."    
                         //name="subject" 
-                        placeholder="Пишить коментар.."
+                        placeholder="Напишіть коментар.."
                         >        
                         </textarea>
                     </div>
@@ -858,10 +939,7 @@ const AdminFormOrder = observer((
                         // } */}
                     </div>  
                 </div>
-                <div className='admOrderFormGrp'
-                        //onClick={(e) => e.stopPropagation()}
-                        //onClickCapture={e=>e.stopPropagation()}
-                     >
+                <div className='admOrderFormGrp'>
                     <div onClick={(e) => e.stopPropagation()}>
                         <button className={!disableBtnOk ? 'admFormOrderBtnOk' : 'admFormOrderBtnOkDsb'}
                             disabled={disableBtnOk}
@@ -870,15 +948,11 @@ const AdminFormOrder = observer((
                         </button>
                     </div>
                     <div 
-                        //onClick={(e) => e.stopPropagation()}
                         onClick={(e)=>e.preventDefault()}
                         >
                         <button className={!disableBtn ? 'admFormOrderBtnSave' : 'admFormOrderBtnSaveDsb'}
                             disabled={disableBtn} 
-                            //type="button"
-                            //type="submit"
                             onClick={handleSubmit(onSubmit)}
-                            //onClickCapture={e=>e.stopPropagation()}
                             >
                             {updateBtn ?? 'Зберегти'}
                         </button>
@@ -886,9 +960,9 @@ const AdminFormOrder = observer((
                     <div onClick={(e) => e.stopPropagation()}>
                         <button className='admFormOrderBtn' onClick={setActive}>Відмінити</button>
                     </div>
-                    <span>id: {ordersData?.user.id_user ?? user._user?.sub.id_user}</span>
-                    <span>користувач: {ordersData?.user.name ?? user._user?.sub.name}</span>
-                    <span>посада: {ordersData?.user.role ?? user._user?.sub?.role}</span>
+                    <span>id: {ordersData?.user?.id_user ?? user._user?.sub?.id_user ?? ''}</span>
+                    <span>користувач: {ordersData?.user?.name ?? user?._user?.sub?.name ?? ''}</span>
+                    <span>посада: {ordersData?.user?.role ?? user._user?.sub?.role ?? ''}</span>
                     <span>
                         Сума замовлення: {orderSum ? orderSum : orderDataSum}
                     </span>

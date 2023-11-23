@@ -180,14 +180,6 @@
     cursor: pointer;
 }
 
-/* .admWheelGridItemF .admWheelGridItemB {
-    vertical-align:text-bottom;
-}
-.admWheelGridItemB:hover + .admWheelGridItemF{
-    background-color: #ddd;
-    cursor: pointer;
-} */
-
 .admWheelTableHeader {
     display: flex;
     flex-direction: column;
@@ -196,13 +188,3 @@
     top: 0px;
 }
 
-/* .admWheelGridItemHeader {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #4CAF50;
-    color: #444;
-    border: 1px solid #ddd;
-    padding: 8px 5px;
-
-} */

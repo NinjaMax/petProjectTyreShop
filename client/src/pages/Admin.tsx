@@ -181,15 +181,17 @@ const Admin = observer(() => {
     },[commentByOrder, commentByOrderSup])
 
     const sideBarItemChange = async (e: any) => {
-        setSideBarItem(e.target.value);
+        if (e.target?.value) {
+            setSideBarItem(e.target.value);  
+        }
         //console.log(e.target.value);
     }
 
     const showCommentOrder = async (e: any) => {
-        if (e.target.value) {
+        if (e.target?.value) {
             setCommentByOrder(+e.target.value);
         } 
-        if (e.target.value === '0') {
+        if (e.target?.value === '0') {
             setCommentByOrder(0); 
         }
         if (e.currentTarget?.getAttribute('data-value')){
@@ -201,10 +203,10 @@ const Admin = observer(() => {
     }
 
     const showCommentOrderSup = async (e: any) => {
-        if (e.target.value) {
+        if (e.target?.value) {
             setCommentByOrderSup(+e.target.value);
         } 
-        if (e.target.value === '0') {
+        if (e.target?.value === '0') {
             setCommentByOrderSup(0); 
         }
         if (e.currentTarget?.getAttribute('data-value')){
@@ -216,6 +218,8 @@ const Admin = observer(() => {
     }
     // console.log('USERS: ', users);
     // console.log('CUSTOMERS: ',customers);
+    //console.log('ORDERS: ', orderAllData);
+
     return (
         <div className='adminPageMain'>
             <div className='profileAdmin'>
@@ -238,7 +242,7 @@ const Admin = observer(() => {
                         comments={commentOrder}
                         storage={storageAll}
                         showComment={showCommentOrder}  
-                        />
+                    />
                 : null}
                 {sideBarItem === 'zamovlenia' ?
                     <AdminOrderContent 

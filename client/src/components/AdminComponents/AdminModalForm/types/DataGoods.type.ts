@@ -2,6 +2,8 @@ export type DataGoods = {
     id_order?: number;
     id_order_sup?: number;
     delivery: string;
+    delivery_city: string;
+    delivery_city_depart: string;
     delivery_ttn: string;
     id_contract: number | string;
     id_customer: number;
@@ -18,8 +20,14 @@ export type DataGoods = {
     updatedAt: Date;
     id_user: number;
     total: number;
-    customer?:{full_name: string;}
-    supplier?:{full_name: string;}
+    customer?:{
+        full_name: string;
+        name: string;
+    }
+    supplier?:{
+        full_name: string;
+        name: string;
+    }
     [Symbol.iterator](): any;
     order_storage?: any[];
     order_sup_storage?: any[];

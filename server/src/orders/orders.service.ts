@@ -471,11 +471,6 @@ export class OrdersService {
           { where: { id_order: updateOrderDto.id_order } },
         );
 
-        // const orderAfterUpdate = await this.ordersRepository.findByPk(
-        //   updateOrderDto.id_order,
-        //   { include: { all: true } },
-        // );
-        // updateOrder.reload();
         return updateOrder;
       }
     } catch {
@@ -487,24 +482,24 @@ export class OrdersService {
   }
 
   async tyreStockUpdateOrder(createOrderDto: CreateOrderDto) {
-    //try {
-    const orderIdTyreUpdate = await this.ordersRepository.findByPk(
-      createOrderDto.id_order ?? createOrderDto.order_index,
-      { include: { all: true } },
+    try {
+      const orderIdTyreUpdate = await this.ordersRepository.findByPk(
+        createOrderDto.id_order ?? createOrderDto.order_index,
+        { include: { all: true } },
       );
 
-    const tyreStockUpdate = await this.stockTyresService.findStockTyreById(
-      createOrderDto,
+      const tyreStockUpdate = await this.stockTyresService.findStockTyreById(
+        createOrderDto,
       );
       // const storageStorageTyreUpdate =
       //   await this.storageService.findStorageById(createOrderDto);
       // const orderStorageIdOilUpdate =
       //   await this.ordersStorageService.removeOrderStorageById(createOrderDto);
 
-    let stockTyreExistsUpdate = null;
+      let stockTyreExistsUpdate = null;
       //let newReserveOilUpdate = 0;
 
-    if (tyreStockUpdate) {
+      if (tyreStockUpdate) {
         // if (
         //   oilStock.remainder < createOrderDto.quantity &&
         //   oilStock.stock !== 0
@@ -527,30 +522,30 @@ export class OrdersService {
         // }
       }
 
-    if (stockTyreExistsUpdate) {
-      await stockTyreExistsUpdate.decrement('reserve', {
-        by: createOrderDto.reserve,
-      });
+      if (stockTyreExistsUpdate) {
+        await stockTyreExistsUpdate.decrement('reserve', {
+          by: createOrderDto.reserve,
+        });
 
-      //   await orderStorageIdOilUpdate.increment('reserve', {
-      //   by: newReserveOilUpdate || createOrderDto.quantity,
-      // });
-      //const orderStorageIdTyreUpdate =
+        //   await orderStorageIdOilUpdate.increment('reserve', {
+        //   by: newReserveOilUpdate || createOrderDto.quantity,
+        // });
+        //const orderStorageIdTyreUpdate =
         await this.ordersStorageService.removeOrderStorageById(createOrderDto);
       }
       // await orderIdTyreUpdate.$remove('order_storage', orderStorageIdOilUpdate);
       // await storageStorageTyreUpdate.$remove('order_storage', orderStorageIdOilUpdate);
       
-    //oilStock = null;
+      //oilStock = null;
       await orderIdTyreUpdate.reload();
       return orderIdTyreUpdate;
 
-    // } catch {
-    //   throw new HttpException(
-    //     'Data is incorrect and must be uniq',
-    //     HttpStatus.NOT_FOUND,
-    //   );
-    // }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async wheelStockUpdateOrder(createOrderDto: CreateOrderDto) {

@@ -22,8 +22,8 @@ const createGoodsToOrder = async (
 }); 
 
 const createGoodsToOrderBasket = async (
-    item:IRestAdminApi, id_order: number) =>
-    await $hostPost.post('/orders/creategoods', {
+    item:IRestAdminApi, id_order: number) => {
+    const {data} = await $hostPost.post('/orders/creategoods', {
     id: +item?.id!,
     full_name: item.full_name,
     category: item.category,
@@ -37,10 +37,10 @@ const createGoodsToOrderBasket = async (
     weight: item.weight,
     ref_weight: item.ref_weight,
     // delivery: 'Flintstone',
-})
-.catch(error => {
-        console.log(error)
-});  
+    })
+
+    return data;
+};
 
 const createGoodsToOrderSup = async (
     item: IRestAdminApi, id_order_sup: number) =>

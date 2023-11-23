@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminModalCustomers.css';
+import { FixedSizeList  as List } from 'react-window';
 
 interface IModalCustomers {
-    allCustomer: [] | null | undefined;
+    allCustomer: any[] | null | undefined;
     addCustomer(arg0: any): void;
 }
 
@@ -16,35 +17,79 @@ type IAllCustomer = {
 }
 
 const AdminModalCustomers = ({allCustomer, addCustomer}: IModalCustomers) => {
+    const [filterCustomer, setFilterCustomer] = useState<any[] | null | undefined>(allCustomer);
+    const [filterCustmValue, setFilterCustmValue] = useState<string>();
+
+    useEffect(() => {
+        if (filterCustmValue) {
+            const newCustomerList = allCustomer?.filter(
+            (customer: any) => {
+            return customer.name.toLowerCase().includes(filterCustmValue.toLowerCase()) || 
+            customer.id_customer === +filterCustmValue!
+            });
+            setFilterCustomer(newCustomerList); 
+        } else {
+            setFilterCustomer(allCustomer); 
+        }
+    },[allCustomer, filterCustmValue]);
+
+    const findCustomer = (e: any) => {
+        setFilterCustmValue(e.currentTarget.value);
+    };
+
+    const tableCustomerRow = ({index, style}: any) => (
+        <div className='admCustomersGridItem' style={style}
+            onDoubleClick={addCustomer} 
+            data-value={filterCustomer![index].id_customer}
+        >
+            <div>{filterCustomer![index].id_customer}</div>
+            <div>{filterCustomer![index].name}</div>
+            <div>{filterCustomer![index].phone}</div>
+            <div>{filterCustomer![index].contract[0].name ?? ''}</div>
+            <div>{filterCustomer![index].contract[0].id_contract ?? ''}</div>
+        </div>    
+    );
 
     return (
-        <div>
-            <input type="text" className="admInpModalCustm" placeholder="Search for names.."/>
+        <div className='admModalCustmBox'>
+            <input type="text" className="admInpModalCustm" placeholder="Пошук клієнта.."
+                onChange={findCustomer}
+            />
             <table className="admModalCustmTable">
                 <thead>
                     <tr className="admModalHeaderCustm">
-                        <th>id</th>
-                        <th>Ім'я / Назва</th>
-                        <th>Контракт</th>
-                        <th>id контракту</th>
+                        <th className='headerAdmModalCustmBoxId'>
+                            id
+                        </th>
+                        <th className='headerAdmModalCustmBoxName'>
+                            Ім'я / Назва
+                        </th>
+                        <th className='headerAdmModalCustmBoxPhone'>
+                            Телефон
+                        </th>
+                        <th className='headerAdmModalCustmBoxContract'>
+                            Контракт
+                        </th>
+                        <th className='headerAdmModalCustmBoxIdContr'>
+                            id контракту
+                        </th>
                     </tr>   
                 </thead>
                 <tbody>
-                    {allCustomer ? 
-                        allCustomer?.map((entity:IAllCustomer) => (
-                        <tr key={'cus' + entity.id_customer} 
-                            onDoubleClick={e => addCustomer(e.currentTarget.getAttribute("data-value"))} 
-                            data-value={entity.id_customer}>
-                            <td >{entity.id_customer}</td>
-                            <td >{entity.full_name}</td>
-                            <td >{entity.contract[0].name}</td>
-                            <td >{entity.contract[0].id_contract}</td>
-                        </tr>
-                        )) 
-                        : <tr><td>Очікуемо покупців....</td></tr> 
-                    }
                 </tbody>     
             </table>
+            {filterCustomer ? 
+            <List
+                className="admCustomerTableColmId"
+                itemCount={filterCustomer?.length}
+                itemSize={65}
+                height={295}
+                width={800}
+            >
+                {tableCustomerRow}
+            </List>
+            : <span>Очікуемо покупців....</span> 
+            }
         </div>
     );
 };

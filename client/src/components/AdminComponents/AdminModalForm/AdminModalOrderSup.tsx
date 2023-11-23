@@ -234,7 +234,7 @@ const AdminModalOrderSup = observer((
         }    
     }   
     console.log(errors);
-
+    console.log('ORDER_DATA_FOR: ', orderSupData);
     return (
         <div>
         Замовлення Постачальника

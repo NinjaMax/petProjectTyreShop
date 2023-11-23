@@ -1,3 +1,23 @@
+.admModalCustmBox {
+    max-height: 500px;
+}
+
+.headerAdmModalCustmBoxId {
+    width: 40px;
+}
+.headerAdmModalCustmBoxName {
+    width: 200px;
+}
+.headerAdmModalCustmBoxPhone {
+    width: 200px;
+}
+.headerAdmModalCustmBoxContract {
+    width: 200px;
+}
+.headerAdmModalCustmBoxIdContr {
+    width: 50px;
+}
+
 .admInpModalCustm {
     /*background-image: url('/css/searchicon.png'); /* Add a search icon to input */
     background-position: 10px 12px; /* Position the search icon */
@@ -7,6 +27,7 @@
     padding: 12px 20px 12px 40px; /* Add some padding */
     border: 1px solid #ddd; /* Add a grey border */
     margin-bottom: 12px; /* Add some space below the input */
+    border-radius: 15px;
 }
 
 .admModalCustmTable {
@@ -15,7 +36,11 @@
     border: 1px solid #ddd; /* Add a grey border */
     font-size: 18px; /* Increase font-size */
 }
-
+.admModalCustmTable .admModalCustmTableData {
+    width: 100%;
+    max-height: 450px;
+    overflow-x: auto;
+}
 .admModalCustmTable th, .admModalCustmTable td {
     text-align: left; /* Left-align text */
     padding: 12px; /* Add padding */
@@ -26,7 +51,35 @@
     border-bottom: 1px solid #ddd;
 }
 
-.admModalCustmTable tr.admModalHeaderCustm, .admModalCustmTable tr:hover {
+/* .admModalCustmTable tr.admModalHeaderCustm, .admModalCustmTable tr:hover {
     /* Add a grey background color to the table header and on hover */
-    background-color: #f1f1f1;
+    /*background-color: #f1f1f1;
+/*} */
+
+.admCustomersGridItem {
+    vertical-align:middle;
+    display: grid;
+    grid-template-columns: 50px 200px 180px 200px 50px;
+    grid-column-gap: 15px;
 }
+
+/* .admCustomersGridItem .admWheelGridItemBtn {
+    display: flex;
+    flex-direction: row;
+} */
+/* .admWheelTableColmId tr {
+    border: 1px solid #ddd;
+    padding: 8px 5px;
+}  */
+.admCustomerTableColmId .admCustomersGridItem:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+/* .admWheelTableHeader {
+    display: flex;
+    flex-direction: column;
+
+    position: sticky; 
+    top: 0px;
+} */

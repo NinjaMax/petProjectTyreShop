@@ -29,7 +29,7 @@ export class CustomersService {
         phone: createCustomerDto.phone,
         full_name: createCustomerDto.full_name,
         picture: createCustomerDto.picture,
-        delivery_city_ref: createCustomerDto.delivery_city_ref,
+        delivery_city_ref: createCustomerDto.ref_city_delivery,
         delivery_dep: createCustomerDto.delivery_dep,
         delivery_dep_ref: createCustomerDto.delivery_dep_ref
       });
@@ -112,7 +112,7 @@ export class CustomersService {
           phone: getCustomerDto.phone,
           full_name: getCustomerDto.full_name,
           picture:  getCustomerDto.picture,
-          delivery_city_ref: getCustomerDto.delivery_city_ref,
+          delivery_city_ref: getCustomerDto.ref_city_delivery,
           delivery_dep: getCustomerDto.delivery_dep,
           delivery_dep_ref: getCustomerDto.delivery_dep_ref,
         }

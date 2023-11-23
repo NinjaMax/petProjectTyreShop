@@ -18,7 +18,7 @@ import { wheelsDiameter } from '../../services/wheelsDiameterNovaPoshta';
 import { Context } from '../../context/Context';
 import { observer } from 'mobx-react-lite';
 import CheckboxBtn from '../select/CheckboxBtn';
-import { createGoodsToOrderBasket, responseForm } from '../../restAPI/restAdminAPI';
+import { addGoodsToOrder, createGoodsToOrderBasket, responseForm } from '../../restAPI/restAdminAPI';
 import { CreateGoods } from '../adminComponents/adminModalForm/types/CreateGoods.type';
 import ErrorsNotif from '../notifications/ErrorsNotif';
 import SuccessNotif from '../notifications/SuccessNotif';
@@ -678,7 +678,7 @@ const BasketOrder = observer(() => {
 
     const useNewBonusActive = (e: any) => {
         if (e.target.value.length === 0) {
-           setBonusUser(customer.customer?.contract[0].bonus); 
+            setBonusUser(customer.customer?.contract[0].bonus); 
         } else {
             setBonusUser(e.target.value);  
         }
@@ -818,7 +818,8 @@ const BasketOrder = observer(() => {
                         ...updateBasketData?.data,
                     });
                     basketData?.basket_storage?.forEach( async(item: CreateGoods):Promise<any> => {
-                        await createGoodsToOrderBasket(item, createOrder?.data?.id_order!); 
+                        let goodsToOrder = await createGoodsToOrderBasket(item, createOrder?.data?.id_order!); 
+                        await addGoodsToOrder(goodsToOrder);
                     });
                     if(createOrder?.data?.id_order) {
                         setGetIdOrder(createOrder.data.id_order);
