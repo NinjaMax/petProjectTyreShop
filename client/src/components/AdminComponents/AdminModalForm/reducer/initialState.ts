@@ -8,7 +8,7 @@ export function createInitialState (
     let initialState = [];
     if (goodsId) {
         initialState.push({...goodsId, 
-            "price":{...goodsId.price[0],
+            "price":{...goodsId?.price![0],
                "quantity": "4"},  
         });
     } 

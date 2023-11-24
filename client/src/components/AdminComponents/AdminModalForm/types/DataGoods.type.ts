@@ -2,6 +2,10 @@ export type DataGoods = {
     id_order?: number;
     id_order_sup?: number;
     delivery: string;
+    delivery_cost?: number;
+    dop_garanty?: number;
+    total_cost?: number;
+    commission_cost?: number;
     delivery_city: string;
     delivery_city_depart: string;
     delivery_ttn: string;

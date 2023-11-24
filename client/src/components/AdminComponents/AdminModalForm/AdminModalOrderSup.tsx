@@ -686,9 +686,9 @@ const AdminModalOrderSup = observer((
                 <div onClick={(e) => e.stopPropagation()}>
                     <button className='admFormOrderBtn' onClick={setActive}>Відмінити</button>
                 </div>
-                <span>id: {orderSupData?.user.id_user ?? user._user?.sub.id_user}</span>
-                <span>користувач: {orderSupData?.user.name ?? user._user?.sub.name}</span>
-                <span>посада: {orderSupData?.user.role ?? user._user?.sub?.role}</span>
+                <span>id: {orderSupData?.user?.id_user ?? user._user?.sub.id_user ?? ''}</span>
+                <span>користувач: {orderSupData?.user?.name ?? user._user?.sub.name ?? ''}</span>
+                <span>посада: {orderSupData?.user?.role ?? user._user?.sub?.role ?? ''}</span>
                 <span>
                     Сума замовлення: {orderSum ? orderSum : orderDataSum}
                 </span>

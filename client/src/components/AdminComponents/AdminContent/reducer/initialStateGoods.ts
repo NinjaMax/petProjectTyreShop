@@ -1,9 +1,8 @@
-
 export function createInitialState (
-    goodsTyreData: any | undefined,
-    goodsWheelData?: any | undefined
+    goodsTyreData: any | undefined | null,
+    goodsWheelData: any | undefined | null,
     ) {        
-    let initialState = [];
+    let initialState: any[] = [];
     if (goodsTyreData) {
         initialState.push(...goodsTyreData);
     } 

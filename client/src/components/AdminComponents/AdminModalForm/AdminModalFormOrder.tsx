@@ -13,6 +13,8 @@ import {
     addCommentsToOrder,
     addGoodsToOrder, 
     createGoodsToOrder, 
+    getAdminPriceTyresById, 
+    getAdminPriceWheelsById, 
     responseForm,
     updateOrder,
     updateOrderStorage} from '../../../restAPI/restAdminAPI';
@@ -61,7 +63,7 @@ const AdminFormOrder = observer((
     const {register, handleSubmit, setValue, formState: {errors}} = useForm();    
     const [state, dispatch] = useReducer<Reducer<StateReducer, ActionReducer>>(
         reducer, createInitialState(goodsId, ordersData)
-        );
+    );
     const [newComment, setNewComment] = useState<string | undefined>();
     const [addNewCommit, setAddNewCommit] = useState();
     const [updateBtn, setUpdateBtn] = useState<string | null>(null); 
@@ -75,6 +77,7 @@ const AdminFormOrder = observer((
     const [dataDepartmentNP, setDataDepartmentNP] = useState<IDapertmentNP>();
     const [dataDepartmentDelivery, setDataDepartmentDelivery] = useState<IDapertmentDelivery>();
     const [delivery, setDelivery] = useState<string>();
+    const [purchaseGoods, setPurchaseGoods] = useState<any[]>([]);
     const [dataDepartment, setDataDepartment] = useState<{
         delivery_dep: string, 
         delivery_dep_ref: string,
@@ -102,12 +105,13 @@ const AdminFormOrder = observer((
             { shouldValidate: true })
             setValue("delivery_city_ref", dataDepartmentNP?.DeliveryCity)
         }
-        if (delivery === "Делівері")
-        register("delivery_city", {required: 'Це необхідні дані'})
-        register("delivery_city_ref")
-        setValue("delivery_city", dataDepartmentDelivery?.name,
-        { shouldValidate: true })
-        setValue("delivery_city_ref", dataDepartmentDelivery?.id)
+        if (delivery === "Делівері") {
+            register("delivery_city", {required: 'Це необхідні дані'})
+            register("delivery_city_ref")
+            setValue("delivery_city", dataDepartmentDelivery?.name,
+            { shouldValidate: true })
+            setValue("delivery_city_ref", dataDepartmentDelivery?.id)
+        }
     }, [
         register, 
         setValue,
@@ -138,6 +142,34 @@ const AdminFormOrder = observer((
             setDisableBtnOk(true);
         }
     },[ordersData]);
+
+    useEffect(() => {
+        let isMounted = false;
+        const calcPurchase = async () => {
+            if (!isMounted && ordersData?.order_storage) {
+            ordersData?.order_storage?.forEach(async (orderData: any) => {
+                let priceByIdTyre = await getAdminPriceTyresById(orderData.id ?? 0);
+                let priceByIdTWheel = await getAdminPriceWheelsById(orderData.id ?? 0);
+                let priceTyreOnSup = priceByIdTyre?.find((tyre: any) => tyre.id_supplier === orderData.id_supplier);
+                let priceWheelOnSup = priceByIdTWheel?.find((tyre: any) => tyre.id_supplier === orderData.id_supplier);
+                if (priceTyreOnSup) {
+                    setPurchaseGoods(oldPurchase => 
+                        [...oldPurchase!, priceTyreOnSup.price_wholesale * orderData.quantity]
+                    );
+                }
+                if (priceWheelOnSup) {
+                    setPurchaseGoods(oldPurchase => 
+                        [...oldPurchase!, priceTyreOnSup.price_wholesale * orderData.quantity]
+                    );
+                }
+            });
+            }
+        };
+        calcPurchase();
+        return () => {
+            isMounted = true;
+        };
+    },[ordersData?.order_storage]);
 
     useEffect(() => {
         let isMounted = false;
@@ -387,9 +419,10 @@ const AdminFormOrder = observer((
             console.log(error)
         }    
     }
-
+    console.log('GOODS_ID: ', goodsId);
     //console.log(errors);
-    
+    console.log('ORDER_DATA: ', ordersData)
+    console.log('PURCHASE_PRICE: ', purchaseGoods);
     return (
         <div >
             Замовлення Покупця
@@ -556,7 +589,6 @@ const AdminFormOrder = observer((
                             } 
                         </select>
                     </div>
-
                     <div>
                         <label htmlFor="pereviznik">Перевізник </label>
                         <select className="admFormOrderDelivery" 
@@ -636,7 +668,7 @@ const AdminFormOrder = observer((
                     }
                     </div>   
                     <div>
-                    <label htmlFor="delivery_city_dep">віддл </label>
+                    <label htmlFor="delivery_city_depart">віддл </label>
                         <input className="admFormOrderDeliveryCityDep"
                             type="search"  
                             maxLength={45}
@@ -656,20 +688,28 @@ const AdminFormOrder = observer((
                                 className='orderSelectDepart'
                                 onChange={chooseDepartEvent}
                             >
+                            {ordersData ?   
+                                <option data-value={ordersData?.delivery_city}>
+                                    {ordersData?.delivery_city}
+                                </option> 
+                                :
+                            <>
                                 <option value=''>
                                     --віберіть відділення--
                                 </option>
-                        {chooseCity && departListNovaPoshta?.map((depart: IDepart) =>
-                                <option 
-                                    style={{"width": "400px"}}
-                                    key={depart?.SiteKey}
-                                    label={depart?.Description}
-                                    value={`${depart?.Ref}//${depart?.Description}//${depart?.CityRef}`}
-                                >
+                            {chooseCity && departListNovaPoshta?.map((depart: IDepart) =>
+                            <option 
+                                style={{"width": "400px"}}
+                                key={depart?.SiteKey}
+                                label={depart?.Description}
+                                value={`${depart?.Ref}//${depart?.Description}//${depart?.CityRef}`}
+                            >
                                 {depart?.Description}
-                                </option>
+                            </option>
                             )
-                        }
+                            }
+                            </>
+                            }
                         </select>    
                         </div>
                     : null} 
@@ -683,6 +723,12 @@ const AdminFormOrder = observer((
                                 className='orderSelectDepart'
                                 onChange={chooseDepartEvent}
                             >
+                            {ordersData ?   
+                                <option data-value={ordersData?.delivery_city_depart}>
+                                    {ordersData?.delivery_city_depart}
+                                </option> 
+                                :
+                            <>
                                 <option value=''>
                                     --віберіть відділення--
                                 </option>
@@ -698,6 +744,8 @@ const AdminFormOrder = observer((
                                 </option>
                             )
                             }
+                            </>
+                            }
                             </select>    
                         </div>
                     : null}       
@@ -706,8 +754,8 @@ const AdminFormOrder = observer((
                         <select className="admFormOrderStatusDel" 
                             {...register('status_delivery', {required: 'Це необхідні дані'})}
                             name="status_delivery"
-                            >
-                                {ordersData ?
+                        >
+                            {ordersData ?
                                 <option data-value={ordersData.status_delivery}>
                                     {ordersData?.status_delivery}
                                 </option>
@@ -722,8 +770,7 @@ const AdminFormOrder = observer((
                                 <option value="Повернення ТТН">Повернення ТТН</option>
                                 <option value="Відміна">Відміна</option>
                                 </>
-                                }
-                            
+                            }    
                         </select>    
                     </div>
                     <div 
@@ -823,7 +870,7 @@ const AdminFormOrder = observer((
                         <tr key={item.id + index} 
                             onInput={(e) => e.stopPropagation()}
                             //onClick={(e)=>e.preventDefault()}
-                            >
+                        >
                             <td >{item.id}</td>
                             <td >{item.full_name}</td>
                             <td >{item.category?.category ?? item?.category}</td>
@@ -831,27 +878,26 @@ const AdminFormOrder = observer((
                                 onInput={(e) => e.stopPropagation()}
                             >
                                 <input 
-                                id={'quantity'+ item.id}
-                                type="text"
-                                name="quantity"
-                                value={item.price?.quantity ?? item?.quantity}
-                                onInput={(e) => onChangeInput(e, item.id, index)}
-                                placeholder="Введіть цифри"
+                                    id={'quantity'+ item.id}
+                                    type="text"
+                                    name="quantity"
+                                    value={item.price?.quantity ?? item?.quantity}
+                                    onInput={(e) => onChangeInput(e, item.id, index)}
+                                    placeholder="Введіть цифри"
                                 />
                             </td>
                             <td >{item?.reserve ?? 0}</td>
                             <td  
                                 onInput={(e) => e.stopPropagation()}
-                                >
+                            >
                                 <input 
-                                id={'price' + item.id}
-                                type="text"
-                                name="price"
-                                value={item.price?.price ?? item?.price}
-                                onInput={(e) => onChangeInput(e, item.id, index)}
-                                placeholder="Введіть цифри" 
+                                    id={'price' + item.id}
+                                    type="text"
+                                    name="price"
+                                    value={item.price?.price ?? item?.price}
+                                    onInput={(e) => onChangeInput(e, item.id, index)}
+                                    placeholder="Введіть цифри" 
                                 />
-                           
                             </td>
                             <td >{item?.total ?? item?.price?.price * item?.price?.quantity}</td>
                             <td >
@@ -892,7 +938,6 @@ const AdminFormOrder = observer((
                         <tr>
                             <td>Очікуємо товари......</td>
                         </tr>
-                      
                         }   
                     </tbody>
                 </table>
@@ -904,7 +949,40 @@ const AdminFormOrder = observer((
                         name="notes"
                         value={ordersData?.notes}
                         placeholder="Пишить нотатку..">
-                    </textarea>  
+                    </textarea> 
+                    <label htmlFor="deliveryOrder">Доставка </label>
+                    <input  className="admFormOrderDeliveryCost"
+                        type="text"
+                        {...register('delivery_cost')}
+                        name="deliveryOrder" 
+                        maxLength={45}
+                        placeholder="Сума доставки.."
+                        defaultValue={addCustomer?.name ?? ordersData?.customer?.name ?? ''}
+                        //readOnly={true}
+                        //onChange={() => setAddCustomer(addCustomer)}
+                    />
+                    <label htmlFor="dopGaranty">Доп. гар </label>
+                    <input  className="admFormOrderDopGarCost"
+                        type="text"
+                        {...register('dop_garanty')}
+                        name="dopGaranty" 
+                        maxLength={45}
+                        placeholder="Доп гар.."
+                        defaultValue={addCustomer?.name ?? ordersData?.customer?.name ?? ''}
+                        //readOnly={true}
+                        //onChange={() => setAddCustomer(addCustomer)}
+                    />
+                    <label htmlFor="dopGaranty">Бонуси(-) </label>
+                    <input  className="admFormOrderBonus"
+                        type="text"
+                        {...register('bonus_decrease')}
+                        name="dopGaranty" 
+                        maxLength={45}
+                        placeholder="Бонуси.."
+                        defaultValue={addCustomer?.name ?? ordersData?.customer?.name ?? ''}
+                        //readOnly={true}
+                        //onChange={() => setAddCustomer(addCustomer)}
+                    />
                 </div>
                 <div className='admFormOrderCommit'
                     onClick={(e)=>e.preventDefault()}
@@ -923,7 +1001,6 @@ const AdminFormOrder = observer((
                         value={newComment}
                         //data-order={ordersData?.id_order}
                         onChange={e =>setNewComment(e.target.value)}
-                        
                         //placeholder="Введіть коментар.."    
                         //name="subject" 
                         placeholder="Напишіть коментар.."
@@ -963,9 +1040,30 @@ const AdminFormOrder = observer((
                     <span>id: {ordersData?.user?.id_user ?? user._user?.sub?.id_user ?? ''}</span>
                     <span>користувач: {ordersData?.user?.name ?? user?._user?.sub?.name ?? ''}</span>
                     <span>посада: {ordersData?.user?.role ?? user._user?.sub?.role ?? ''}</span>
+                    <span>комісія платіж сістеми: {ordersData?.commission_cost ?? orderSum * 0.015 ?? orderDataSum * 0.015 ?? 0}</span>
                     <span>
-                        Сума замовлення: {orderSum ? orderSum : orderDataSum}
+                        Сума товарів: {orderSum ? orderSum : orderDataSum}
                     </span>
+                    <span>
+                        Сума замовлення: {ordersData?.total_cost ?? orderSum + (orderSum * 0.015)}
+                    </span>
+                    {purchaseGoods.length !== 0 && user._user?.sub?.role === 'admin' ?
+                    <>
+                        <span className='admFormOrderProfit'>
+                            сума закупівлі: {purchaseGoods?.reduce((sum:any, current:any) => sum + current)}
+                        </span>
+                        <span className='admFormOrderProfit'>
+                            заробіток: {orderSum ? orderSum : orderDataSum - purchaseGoods?.reduce((sum:any, current:any) => sum + current)}
+                        </span>
+                        <span className='admFormOrderProfit'>націнка {((orderSum ? orderSum : orderDataSum / purchaseGoods?.reduce(
+                            (sum:any, current:any) => sum + current) - 1) * 100).toFixed(1)}%
+                        </span>
+                        <span className='admFormOrderProfit'>
+                            доставка: {ordersData?.delivery_cost}
+                        </span>
+                    </>
+                        : null
+                    }
                 </div>
             </form>
         </div>

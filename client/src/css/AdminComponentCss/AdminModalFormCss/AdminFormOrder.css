@@ -108,9 +108,40 @@
     gap: 8px;
     margin-left: 10px;
 }
+.admFormOrderDeliveryCost {
+    width: 60px;
+    padding: 10px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 3px; /* Add a top margin */
+    margin-bottom: 3px; /* Bottom margin */
+    resize: vertical /* Allow the user*/
+}
+
+.admFormOrderDopGarCost {
+    width: 60px;
+    padding: 10px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 3px; /* Add a top margin */
+    margin-bottom: 3px; /* Bottom margin */
+    resize: vertical /* Allow the user*/
+}
+.admFormOrderBonus {
+    width: 60px;
+    padding: 10px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 3px; /* Add a top margin */
+    margin-bottom: 3px; /* Bottom margin */
+    resize: vertical /* Allow the user*/
+}
 
 .admFormOrderNotesText {
-    width: 90%; /* Full width */
+    width: 50%; /* Full width */
     height: 30px;
     padding: 12px; /* Some padding */ 
     border: 1px solid #ccc; /* Gray border */
@@ -235,7 +266,7 @@
 .admOrderFormGrp {
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    gap: 10px;
 }
 
 .admFormOrderBtnAdd {
@@ -345,17 +376,10 @@
     /*: 4px 0px 4px 0px;*/
 }
 
-/*.admFormOrderTableTh th {
-    position: sticky;
-}*/
-
 .admFormOrderTable {
     width: 100%;
-    /*height: 100px;*/
     border-collapse: collapse;
-    font-size: 12px;
-    /*overflow-y: auto;*/
-    
+    font-size: 12px;  
 }
 .admFormOrderTable tr, .admFormOrderTable th {
     border: 1px solid #ddd;
@@ -372,12 +396,10 @@
     text-align: left;
     background-color: #4CAF50;
     color: #444;
-    /*position:sticky;*/
 }
 
 .admFormOrderTable tbody {
     height: 12px;
-    /*overflow-y: auto;*/
 }
 
 .admFormOrderTable i {
@@ -447,7 +469,6 @@
     max-height: 150px;
     border-radius: solid #9999 6px;
     background-color: #ffff;
-    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
     appearance: none;
     border-radius: 10px;
 }
@@ -458,8 +479,6 @@
     right: 5px;
     position: absolute;
     z-index: 9;
-    /* appearance: none; */
-    /* cursor: pointer; */
   }
 
 .orderDepartList .orderDepartListItem {
@@ -473,7 +492,6 @@
     appearance: none;
     cursor: pointer;
     width: 400px;
-    /* max-height: 150px; */
     font-family: var(--main-font-family);
     color: #444B54;
     font-size:16px;
@@ -501,7 +519,6 @@
     max-height: 150px;
     border-radius: solid #9999 6px;
     background-color: #ffff;
-    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
     appearance: none;
 }
 .orderDepartListDel::after {
@@ -511,12 +528,9 @@
     right: 5px;
     position: absolute;
     z-index: 9;
-    /* appearance: none; */
-    /* cursor: pointer; */
 }
 .orderDepartListDel .orderDepartListItem {
     cursor: pointer;
-    /* background-color: blueviolet; */
     width: 540px;
     border-radius: 6px;
     padding: 2px;
@@ -540,5 +554,9 @@
     cursor: pointer;
     background-color: #ccc;
     animation: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+.admFormOrderProfit {
+    font-size: small;
+    font-style: italic;
 }
 /* Add a background color and some padding around the form */

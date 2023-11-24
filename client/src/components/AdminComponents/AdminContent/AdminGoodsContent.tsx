@@ -78,7 +78,7 @@ const AdminGoodsContent = (
             const getTyreRowId: string = e.currentTarget?.getAttribute("data-value");
             let stockByIdTyre = await getAdminStockTyresByIdtyre(getTyreRowId ?? 0);
             let priceByIdTyre = await getAdminPriceTyresById(getTyreRowId ?? 0);
-               
+            //console.log('PRICE_TYRE: ', priceByIdTyre);
             if (priceByIdTyre) {
                setPriceTyre(priceByIdTyre);  
             }
@@ -122,17 +122,26 @@ const AdminGoodsContent = (
         }
     };
 
-    const addToOrder = (e: { currentTarget: { value: string; }; }) => {
-        setAddGoods(!addGoods);
-        let itemTyre = tyreData?.find((item:{id:string}) => item.id === e.currentTarget?.value);
-        let itemWheel = wheelData?.find((item:{id:string}) => item.id === e.currentTarget?.value);
+    const addToOrder = async (e: { currentTarget: { value: string; }; }) => {
+        //try {
+        let itemTyre: any = tyreData?.find((item:{id:string}) => item.id === e.currentTarget?.value);
+        let itemWheel: any = wheelData?.find((item:{id:string}) => item.id === e.currentTarget?.value);
+        
+        let priceByIdTyre = await getAdminPriceTyresById(e.currentTarget?.value ?? 0);
+        let priceByIdTWheel = await getAdminPriceWheelsById(e.currentTarget?.value ?? 0);
 
         if(itemTyre) {
+            itemTyre!.price = priceByIdTyre;
             setItemId(itemTyre);
         }   
         if(itemWheel) {
+            itemWheel!.price = priceByIdTWheel;
             setItemId(itemWheel);    
         }  
+        setAddGoods(!addGoods);
+        // } catch (error) {
+            // console.log('ADD_TO_ORDER: ', error);
+        //}
     }
 
     const itemClickHandler = (e: any) => {

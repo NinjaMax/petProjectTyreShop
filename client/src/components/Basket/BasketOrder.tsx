@@ -211,7 +211,7 @@ const BasketOrder = observer(() => {
         taskGetSupplier.shift();
         };
         dataSupplier = null;
-    }
+    };
 
     useEffect(() => {
         let isMounted = false;
