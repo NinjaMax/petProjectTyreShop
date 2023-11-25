@@ -559,4 +559,18 @@
     font-size: small;
     font-style: italic;
 }
+.admFormOrderUserInfo {
+    font-size: small;
+}
+.admFormOrderEstimate {
+    font-size: small;
+    font-weight: bold;
+}
+.admFormOrderEstimateOverall {
+    margin-top: -2px;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration:underline;
+}
+
 /* Add a background color and some padding around the form */

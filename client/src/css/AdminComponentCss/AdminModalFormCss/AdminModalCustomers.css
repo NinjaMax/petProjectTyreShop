@@ -6,16 +6,22 @@
     width: 40px;
 }
 .headerAdmModalCustmBoxName {
-    width: 200px;
+    width: 180px;
 }
 .headerAdmModalCustmBoxPhone {
-    width: 200px;
+    width: 160px;
 }
 .headerAdmModalCustmBoxContract {
     width: 200px;
 }
 .headerAdmModalCustmBoxIdContr {
-    width: 50px;
+    width: 40px;
+}
+.headerAdmModalCustmBoxBonus {
+    width: 20px;
+}
+.headerAdmModalCustmBoxBalance {
+    width: 20px;
 }
 
 .admInpModalCustm {
@@ -59,8 +65,8 @@
 .admCustomersGridItem {
     vertical-align:middle;
     display: grid;
-    grid-template-columns: 50px 200px 180px 200px 50px;
-    grid-column-gap: 15px;
+    grid-template-columns: 40px 180px 150px 180px 80px 80px 50px;
+    grid-column-gap: 10px;
 }
 
 /* .admCustomersGridItem .admWheelGridItemBtn {

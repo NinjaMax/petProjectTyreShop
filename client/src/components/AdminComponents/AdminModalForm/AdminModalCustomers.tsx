@@ -47,6 +47,8 @@ const AdminModalCustomers = ({allCustomer, addCustomer}: IModalCustomers) => {
             <div>{filterCustomer![index].phone}</div>
             <div>{filterCustomer![index].contract[0].name ?? ''}</div>
             <div>{filterCustomer![index].contract[0].id_contract ?? ''}</div>
+            <div>{filterCustomer![index].contract[0].bonus ?? ''}</div>
+            <div>{filterCustomer![index].contract[0].balance ?? ''}</div>
         </div>    
     );
 
@@ -71,7 +73,13 @@ const AdminModalCustomers = ({allCustomer, addCustomer}: IModalCustomers) => {
                             Контракт
                         </th>
                         <th className='headerAdmModalCustmBoxIdContr'>
-                            id контракту
+                            id контр
+                        </th>
+                        <th className='headerAdmModalCustmBoxBonus'>
+                            Бонуси
+                        </th>
+                        <th className='headerAdmModalCustmBoxBalance'>
+                            Баланс
                         </th>
                     </tr>   
                 </thead>
@@ -84,7 +92,7 @@ const AdminModalCustomers = ({allCustomer, addCustomer}: IModalCustomers) => {
                 itemCount={filterCustomer?.length}
                 itemSize={65}
                 height={295}
-                width={800}
+                width={850}
             >
                 {tableCustomerRow}
             </List>

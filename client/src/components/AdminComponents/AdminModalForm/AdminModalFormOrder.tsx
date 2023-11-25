@@ -60,7 +60,7 @@ const AdminFormOrder = observer((
     const [disableBtn, setDisableBtn] = useState<boolean>(false);
     const [disableBtnOk, setDisableBtnOk] = useState<boolean>(false);
     const [orderStorage, setOrderStorage] = useState<any[]>([]);
-    const {register, handleSubmit, setValue, formState: {errors}} = useForm();    
+    const {register, handleSubmit, setValue, getValues, formState: {errors}} = useForm();    
     const [state, dispatch] = useReducer<Reducer<StateReducer, ActionReducer>>(
         reducer, createInitialState(goodsId, ordersData)
     );
@@ -99,27 +99,38 @@ const AdminFormOrder = observer((
 
     useEffect(() => {
         if (delivery === "Нова Пошта") {
-            register("delivery_city", {required: 'Це необхідні дані'})
-            register("delivery_city_ref")
+            register("delivery_city", {required: 'Це необхідні дані'});
+            register("delivery_city_ref");
             setValue("delivery_city", dataDepartmentNP?.MainDescription,
-            { shouldValidate: true })
-            setValue("delivery_city_ref", dataDepartmentNP?.DeliveryCity)
+            { shouldValidate: true });
+            setValue("delivery_city_ref", dataDepartmentNP?.DeliveryCity);
+            const payMethod = getValues('pay_view');
+            if (payMethod === "Б/г рахунок" || "Б/г карта") {
+                register("commission_cost");
+                setValue("commission_cost", state?.reduce((sum:any, current:any) => 
+                sum + (current.price.price * current.price.quantity), 0) * 0.015);
+            }
         }
         if (delivery === "Делівері") {
-            register("delivery_city", {required: 'Це необхідні дані'})
-            register("delivery_city_ref")
+            register("delivery_city", {required: 'Це необхідні дані'});
+            register("delivery_city_ref");
             setValue("delivery_city", dataDepartmentDelivery?.name,
-            { shouldValidate: true })
-            setValue("delivery_city_ref", dataDepartmentDelivery?.id)
+            { shouldValidate: true });
+            setValue("delivery_city_ref", dataDepartmentDelivery?.id);
+            register("commission_cost");
+                setValue("commission_cost", state?.reduce((sum:any, current:any) => 
+                sum + (current.price.price * current.price.quantity), 0) * 0.015);
         }
     }, [
         register, 
-        setValue,
+        setValue, 
+        getValues,
+        state, 
         dataDepartmentDelivery?.id, 
         dataDepartmentDelivery?.name, 
         dataDepartmentNP?.DeliveryCity, 
         dataDepartmentNP?.MainDescription, 
-        delivery,
+        delivery
     ]);
 
     useEffect(() => {
@@ -232,7 +243,7 @@ const AdminFormOrder = observer((
     };
 
     const chooseDelivery = (e: any) => {
-        console.log('chooseDelivery', e.currentTarget.value);
+        //console.log('chooseDelivery', e.currentTarget.value);
         setDelivery(e.currentTarget.value);
     };
 
@@ -418,17 +429,17 @@ const AdminFormOrder = observer((
         } catch (error) {
             console.log(error)
         }    
-    }
+    };
+
     console.log('GOODS_ID: ', goodsId);
     //console.log(errors);
-    console.log('ORDER_DATA: ', ordersData)
+    console.log('ORDER_DATA: ', ordersData);
     console.log('PURCHASE_PRICE: ', purchaseGoods);
+
     return (
         <div >
             Замовлення Покупця
             <div className="containerAdmOrderForm"
-                //onSubmit={e => e.stopPropagation()}
-                //onSubmit={e => e.preventDefault()}
                 onClick={cancelCityList}
             >
             <form 
@@ -453,8 +464,7 @@ const AdminFormOrder = observer((
                         <input className="admFormOrderId"
                             type="text"
                             name="firstname"
-                            value={orderId ?? ordersData?.id_order ?? ''} 
-                            //defaultValue=''
+                            value={orderId ?? ordersData?.id_order ?? ''}
                             placeholder="id замовлення"
                             readOnly={true}
                         />  
@@ -551,16 +561,12 @@ const AdminFormOrder = observer((
                                 readOnly={true}
                                 //onChange={() => setAddCustomer(addCustomer)}
                             />
-                            <div 
-                            //onClick={(e)=>e.preventDefault()}
-                            >
+                            <div>
                                 <button onClick={openCustomerForm} className='admFormSearchCustm'>
                                     <i className="fas fa-search"></i>    
                                 </button> 
                             </div>
-                            <div 
-                            //onClick={(e)=>e.preventDefault()}
-                            >
+                            <div>
                                 <button onClick={activeCustomer}
                                     className='admFormAddCustm'>
                                     <i className="fas fa-plus"></i>    
@@ -571,7 +577,6 @@ const AdminFormOrder = observer((
                     <div>
                         <label htmlFor="fname"> Контракт </label>
                         <select className="admFormOrderContract" name="id_contract"
-                            //autoFocus={true}
                             defaultValue={addCustomer?.contract[0]?.id_contract}
                             >
                            {addCustomer ? addCustomer?.contract?.map(
@@ -616,7 +621,7 @@ const AdminFormOrder = observer((
                             type="search"  
                             maxLength={45}
                             placeholder="Місто.."
-                            {...register('delivery_city')}
+                            //{...register('delivery_city')}
                             name="delivery_city"
                             onChange={cityInputActive}
                             defaultValue={ordersData?.delivery_city ?? ''}
@@ -673,9 +678,9 @@ const AdminFormOrder = observer((
                             type="search"  
                             maxLength={45}
                             placeholder="Відділення.."
-                            {...register('delivery_city_depart')}
+                            //{...register('delivery_city_depart')}
                             name="delivery_city_depart"
-                            defaultValue={ordersData?.delivery_city_depart ?? ''}
+                            value={ordersData?.delivery_city_depart ?? ''}
                         />  
                     </div> 
                     {delivery === "Нова Пошта" && chooseCity && !cityListActive && !dataDepartment ?    
@@ -688,15 +693,9 @@ const AdminFormOrder = observer((
                                 className='orderSelectDepart'
                                 onChange={chooseDepartEvent}
                             >
-                            {ordersData ?   
-                                <option data-value={ordersData?.delivery_city}>
-                                    {ordersData?.delivery_city}
-                                </option> 
-                                :
-                            <>
-                                <option value=''>
-                                    --віберіть відділення--
-                                </option>
+                            <option value=''>
+                                --віберіть відділення--
+                            </option>
                             {chooseCity && departListNovaPoshta?.map((depart: IDepart) =>
                             <option 
                                 style={{"width": "400px"}}
@@ -707,8 +706,6 @@ const AdminFormOrder = observer((
                                 {depart?.Description}
                             </option>
                             )
-                            }
-                            </>
                             }
                         </select>    
                         </div>
@@ -723,15 +720,9 @@ const AdminFormOrder = observer((
                                 className='orderSelectDepart'
                                 onChange={chooseDepartEvent}
                             >
-                            {ordersData ?   
-                                <option data-value={ordersData?.delivery_city_depart}>
-                                    {ordersData?.delivery_city_depart}
-                                </option> 
-                                :
-                            <>
-                                <option value=''>
-                                    --віберіть відділення--
-                                </option>
+                            <option value=''>
+                                --віберіть відділення--
+                            </option>
                             {chooseCity && departListDelivery?.map(
                                 (depart: IDapertmentDelivery) =>
                                 <option 
@@ -743,8 +734,6 @@ const AdminFormOrder = observer((
                                 {depart?.name + ', ' + depart?.address}
                                 </option>
                             )
-                            }
-                            </>
                             }
                             </select>    
                         </div>
@@ -837,9 +826,8 @@ const AdminFormOrder = observer((
                     </div>
                 </div>
                 <div className='admFormOrderTableBox'
-                    //onInput={(e) => e.stopPropagation()}
                     onClick={(e)=>e.preventDefault()}
-                    >   
+                >   
                 <table className='admFormOrderTable'>
                     <thead className='admFormOrderTableTh'>
                         <tr>
@@ -869,7 +857,6 @@ const AdminFormOrder = observer((
                             ) =>(
                         <tr key={item.id + index} 
                             onInput={(e) => e.stopPropagation()}
-                            //onClick={(e)=>e.preventDefault()}
                         >
                             <td >{item.id}</td>
                             <td >{item.full_name}</td>
@@ -901,31 +888,21 @@ const AdminFormOrder = observer((
                             </td>
                             <td >{item?.total ?? item?.price?.price * item?.price?.quantity}</td>
                             <td >
-                                <select className="admFormOrderStorage" name="storage_index"
-                                    //{...register('storage_index', {required: 'Це необхідні дані'})}
-                                    >
+                                <select className="admFormOrderStorage" name="storage_index">
                                     <option value={1}>Склад Поставщик</option>
                                     <option value={2}>Склад Основний</option>
                                     <option value={3}>Склад Монтаж</option>
                                 </select>  
                             </td> 
-                            <td 
-                                //onClick={e =>e.stopPropagation()}
-                                //onClick={(e)=>e.preventDefault()}
-                                //onClickCapture={e => e.preventDefault()}
-                            >
+                            <td>
                                 <div 
-                                    //onClick={(e) => e.target.addEventListener("click", deleteItem, false)}
-                                    //onClickCapture={e=>e.stopPropagation()}
                                     onClick={e=>e.stopPropagation()}
-                                    //onClick={(e)=>e.preventDefault()}
                                 >
                                 <button className='closeAdmGoods' 
                                     key={'deleteBtn' + item.id}
                                     value={index}
                                     disabled={disableBtn}
                                     onClick={e => deleteItem(+e.currentTarget.value)}
-                                    //onClickCapture={e=>e.stopPropagation()}
                                     >
                                     <i className="fa fa-remove"></i>
                                 </button>
@@ -957,9 +934,7 @@ const AdminFormOrder = observer((
                         name="deliveryOrder" 
                         maxLength={45}
                         placeholder="Сума доставки.."
-                        defaultValue={addCustomer?.name ?? ordersData?.customer?.name ?? ''}
-                        //readOnly={true}
-                        //onChange={() => setAddCustomer(addCustomer)}
+                        defaultValue={ordersData?.delivery_cost ?? ''}
                     />
                     <label htmlFor="dopGaranty">Доп. гар </label>
                     <input  className="admFormOrderDopGarCost"
@@ -968,9 +943,7 @@ const AdminFormOrder = observer((
                         name="dopGaranty" 
                         maxLength={45}
                         placeholder="Доп гар.."
-                        defaultValue={addCustomer?.name ?? ordersData?.customer?.name ?? ''}
-                        //readOnly={true}
-                        //onChange={() => setAddCustomer(addCustomer)}
+                        defaultValue={ordersData?.dop_garanty ?? ''}
                     />
                     <label htmlFor="dopGaranty">Бонуси(-) </label>
                     <input  className="admFormOrderBonus"
@@ -979,30 +952,22 @@ const AdminFormOrder = observer((
                         name="dopGaranty" 
                         maxLength={45}
                         placeholder="Бонуси.."
-                        defaultValue={addCustomer?.name ?? ordersData?.customer?.name ?? ''}
-                        //readOnly={true}
-                        //onChange={() => setAddCustomer(addCustomer)}
+                        defaultValue={ordersData?.bonus_decrease ?? ''}
                     />
                 </div>
                 <div className='admFormOrderCommit'
                     onClick={(e)=>e.preventDefault()}
-                    //onClick={(e) => e.stopPropagation()}
                     >
                     <div className='admFormOrderAddCommit'>
                     <button className='admFormOrderBtnAdd'
                         value={orderId ?? ordersData?.id_order}
-                        onClick={(e) => addComment(e)}
-                        //onInput={(e) => showComment(e)}
-                        //data-order={ordersData?.id_order}
+                        onClick={addComment}
                         >Додати коментар
                     </button>
                         <textarea 
                         className='admOrderCommitText'
                         value={newComment}
-                        //data-order={ordersData?.id_order}
                         onChange={e =>setNewComment(e.target.value)}
-                        //placeholder="Введіть коментар.."    
-                        //name="subject" 
                         placeholder="Напишіть коментар.."
                         >        
                         </textarea>
@@ -1037,14 +1002,24 @@ const AdminFormOrder = observer((
                     <div onClick={(e) => e.stopPropagation()}>
                         <button className='admFormOrderBtn' onClick={setActive}>Відмінити</button>
                     </div>
-                    <span>id: {ordersData?.user?.id_user ?? user._user?.sub?.id_user ?? ''}</span>
-                    <span>користувач: {ordersData?.user?.name ?? user?._user?.sub?.name ?? ''}</span>
-                    <span>посада: {ordersData?.user?.role ?? user._user?.sub?.role ?? ''}</span>
-                    <span>комісія платіж сістеми: {ordersData?.commission_cost ?? orderSum * 0.015 ?? orderDataSum * 0.015 ?? 0}</span>
-                    <span>
+                    <span className='admFormOrderUserInfo'>id: {ordersData?.user?.id_user ?? user._user?.sub?.id_user ?? ''}</span>
+                    <span className='admFormOrderUserInfo'>користувач: {ordersData?.user?.name ?? user?._user?.sub?.name ?? ''}</span>
+                    <span className='admFormOrderUserInfo'>посада: {ordersData?.user?.role ?? user._user?.sub?.role ?? ''}</span>
+                    <span className='admFormOrderEstimate'>
+                        доп гарант: {ordersData?.dop_garanty}
+                    </span>
+                    <span className='admFormOrderEstimate'>
+                        бонус (мінус): {ordersData?.bonus_decrease ?? 0}
+                    </span>
+                    <span className='admFormOrderEstimate'>
+                        доставка (загалом): {ordersData?.delivery_cost ?? 0}
+                    </span>
+                    <span className='admFormOrderEstimate'>
+                        комісія банку: {ordersData?.commission_cost ?? 0}</span>
+                    <span className='admFormOrderEstimate'>
                         Сума товарів: {orderSum ? orderSum : orderDataSum}
                     </span>
-                    <span>
+                    <span className='admFormOrderEstimateOverall'>
                         Сума замовлення: {ordersData?.total_cost ?? orderSum + (orderSum * 0.015)}
                     </span>
                     {purchaseGoods.length !== 0 && user._user?.sub?.role === 'admin' ?
@@ -1053,14 +1028,13 @@ const AdminFormOrder = observer((
                             сума закупівлі: {purchaseGoods?.reduce((sum:any, current:any) => sum + current)}
                         </span>
                         <span className='admFormOrderProfit'>
-                            заробіток: {orderSum ? orderSum : orderDataSum - purchaseGoods?.reduce((sum:any, current:any) => sum + current)}
-                        </span>
-                        <span className='admFormOrderProfit'>націнка {((orderSum ? orderSum : orderDataSum / purchaseGoods?.reduce(
-                            (sum:any, current:any) => sum + current) - 1) * 100).toFixed(1)}%
+                            заробіток загалом: {orderSum ? orderSum : orderDataSum - purchaseGoods?.reduce((sum:any, current:any) => sum + current)}
                         </span>
                         <span className='admFormOrderProfit'>
-                            доставка: {ordersData?.delivery_cost}
+                            націнка загалом: {((orderSum ? orderSum : orderDataSum / purchaseGoods?.reduce(
+                            (sum:any, current:any) => sum + current) - 1) * 100).toFixed(1)}%
                         </span>
+
                     </>
                         : null
                     }
