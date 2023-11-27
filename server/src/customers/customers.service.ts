@@ -168,6 +168,21 @@ export class CustomersService {
     }
   }
 
+  async findCustomerByIdParams(id_customer: number) {
+    try {
+      const customerId = await this.customersRepository.findByPk(id_customer, 
+        { include: { all: true }}
+      );
+
+      return customerId;
+    } catch {
+      throw new HttpException(
+        'Data ID is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
   async findCustomerByPhone(getCustomerDto: GetCustomerDto) {
     try {
       const customerByPhone = await this.customersRepository.findOne({

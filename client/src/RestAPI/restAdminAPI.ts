@@ -312,6 +312,14 @@ await $hostGet.get('/customers/all')
     console.log(error)
 });
 
+const getCustomersById = async (id: string) => {
+const {data}: any = await $hostGet.get(`/customers/by-id/${id}`)
+    .catch(error => {
+        console.log(error)
+    });
+    return data;
+};
+
 const getSuppliers = async () => 
 await $hostGet.get('/suppliers/all')
 .catch(error => {
@@ -400,5 +408,6 @@ export {
     getSuppliers,
     getUsers,
     addCommentsToOrder,
-    createGoodsToOrderBasket
+    createGoodsToOrderBasket,
+    getCustomersById
 };

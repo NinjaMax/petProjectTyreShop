@@ -19,6 +19,7 @@ export type IOrdersItem = {
     total: number;
     total_cost: number;
     quantity?: number;
+    disableBtns?: boolean;
     delivery_ttn: string;
     delivery_city: string;
     delivery_city_depart: string;

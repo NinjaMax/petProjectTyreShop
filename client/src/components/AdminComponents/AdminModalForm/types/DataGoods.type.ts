@@ -7,6 +7,7 @@ export type DataGoods = {
     total_cost?: number;
     commission_cost?: number;
     bonus_decrease?: number;
+    disableBtns?: boolean;
     delivery_city: string;
     delivery_city_depart: string;
     delivery_ttn: string;

@@ -42,6 +42,11 @@ export class CustomersController {
     return this.customersService.findCustomerByEmail(getCustomerDto);
   }
 
+  @Get('/by-id/:id')
+  findCustomerIdBy(@Param('id') id: string) {
+    return this.customersService.findCustomerByIdParams(+id);
+  }
+
   @Post('/add-comparison')
   addToComparison(
     @Body() comparison: any,

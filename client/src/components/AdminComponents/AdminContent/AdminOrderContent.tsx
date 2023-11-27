@@ -41,13 +41,11 @@ const AdminOrderContent = (
     }
 
     const activeFormOrderSup = (e: any) => {
-        //console.log('VALUE_SUP: ', +e.currentTarget.value)
         const valueId = e.currentTarget.value;
         const orderInfoSup = orders?.find(
             (item:{id_order: number}) => 
                 item.id_order === valueId
             );
-        console.log('FILTER_ORDER: ', orderInfoSup)
         if(orderInfoSup) {
             setOrderData(orderInfoSup);
             setActiveOrderSup(!activeOrderSup);
@@ -55,12 +53,21 @@ const AdminOrderContent = (
     }
 
     const showOrderData = async (e: any) => {
-        const orderInfo = orders?.find(
+        let orderInfo: any;
+        if ( e.currentTarget.getAttribute("data-name") === 'orderShow') {
+            orderInfo = orders?.find(
             (item:{id_order: number}) => 
-                item.id_order === e.currentTarget.getAttribute("data-value") || 
-                e.target.value
-            );
+                item.id_order === e.currentTarget.getAttribute("data-value")
+            );  
+        }
+        if (e.currentTarget.name === 'editOrder') {
+            orderInfo = orders?.find(
+            (item:{id_order: number}) => 
+                item.id_order === e.currentTarget.value
+            );  
+        }   
         if(orderInfo) {
+            e.currentTarget.name === 'editOrder' ? orderInfo.disableBtns = false : orderInfo.disableBtns = true;
             setOrderData(orderInfo);
             setActiveOrder(!activeOrder);
             showComment(e);
@@ -87,6 +94,7 @@ const AdminOrderContent = (
             <div className='admOrderGridItem' style={style}
                 onClick={showComment}
                 onDoubleClick={showOrderData}
+                data-name='orderShow'
                 data-value={filteredOrder![index].id_order}>
                 <div>{filteredOrder![index].id_order}</div>
                 <div>{new Date(filteredOrder![index].createdAt).toLocaleString()}</div>
@@ -113,6 +121,7 @@ const AdminOrderContent = (
                         <i className="fas fa-truck-loading"></i>
                     </button>
                     <button className='editAdmGoods'
+                        name='editOrder'
                         value={filteredOrder![index].id_order}
                         onClick={showOrderData}>
                         <i className="fas fa-edit"></i>
