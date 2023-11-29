@@ -8,7 +8,7 @@ export interface IFormOrder {
     supplier?:[] | null;
     setActive(arg0: any):void;
     storages: [any] | null;
-    ordersData?: DataGoods | null;
+    getOrdersData?: DataGoods | null;
     orderSupData?: DataGoods | null;
     showComment(arg0: any):void;
 }

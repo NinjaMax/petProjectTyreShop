@@ -26,7 +26,7 @@ export interface IRestAdminApi {
     //order_index: any;
     storage_index?: number;
     quantity?: number;
-    //price: any;
+    total?: number;
     id_storage?: string | number;
     stateData?: [];
     ref_diameter?: string;

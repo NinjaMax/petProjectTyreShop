@@ -9,7 +9,9 @@ export type DataGoods = {
     bonus_decrease?: number;
     disableBtns?: boolean;
     delivery_city: string;
+    delivery_city_ref?: string;
     delivery_city_depart: string;
+    delivery_city_depart_ref?: string;
     delivery_ttn: string;
     id_contract: number | string;
     id_customer: number;

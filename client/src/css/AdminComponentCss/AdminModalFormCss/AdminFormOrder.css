@@ -120,7 +120,7 @@
 }
 
 .admFormOrderDopGarCost {
-    width: 60px;
+    width: 30px;
     padding: 10px; /* Some padding */ 
     border: 1px solid #ccc; /* Gray border */
     border-radius: 4px; /* Rounded borders */
@@ -128,6 +128,9 @@
     margin-top: 3px; /* Add a top margin */
     margin-bottom: 3px; /* Bottom margin */
     resize: vertical /* Allow the user*/
+}
+.admFormOrderDopGarCost:hover {
+    cursor: pointer;
 }
 .admFormOrderBonus {
     width: 60px;
@@ -266,6 +269,7 @@
 .admOrderFormGrp {
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
     gap: 10px;
 }
 
@@ -571,6 +575,10 @@
     font-size: 15px;
     font-weight: bold;
     text-decoration:underline;
+}
+
+.admFormOrderNotesDopGar {
+    vertical-align: bottom;
 }
 
 /* Add a background color and some padding around the form */

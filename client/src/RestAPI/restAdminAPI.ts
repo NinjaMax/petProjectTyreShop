@@ -4,22 +4,29 @@ import { $hostGet, $hostPost, $hostPostUpload } from "./index";
 import { IRestAdminApi } from "./interfaces/restAdmin.interface";
 
 const createGoodsToOrder = async (
-    item:IRestAdminApi, id_order: number) =>
+    item:IRestAdminApi, id_order: number) => 
     await $hostPost.post('/orders/creategoods', {
     id: +item?.id!,
     full_name: item.full_name,
-    category: item.category?.category,
     order_index: id_order,
-    id_supplier: +item.price?.id_supplier!,
-    storage_index: +item.price?.id_storage!,
-    quantity: +item.price?.quantity!,
-    price: +item.price?.price!,
+    storage_index: item.storage_index,
+    quantity: item.quantity,
+    price: item.price,
+    total: item?.total,
+    id_supplier: item.id_supplier,
+    category: item.category,
+    id_order: id_order,
+    id_storage: item.id_storage,
+    ref_diameter: item.ref_diameter,
+    weight: item.weight,
+    ref_weight: item.ref_weight,
     id_order_storage: item.id_order_storage ?? null,
     // delivery: 'Flintstone',
 })
 .catch(error => {
-        console.log(error)
+    console.log(error)
 }); 
+
 
 const createGoodsToOrderBasket = async (
     item:IRestAdminApi, id_order: number) => {
@@ -78,6 +85,13 @@ await $hostPost.patch('/orders/update', {
     pay_view: data.pay_view,
     status_pay: data.status_pay,
     dop_garanty: data.dop_garanty,
+    delivery_cost: +data.delivery_cost,
+    delivery_city: data.delivery_city,
+    delivery_city_ref: data.delivery_city_ref,
+    delivery_city_depart: data.delivery_city_depart,
+    delivery_city_depart_ref: data.delivery_city_depart_ref,
+    total_cost: data.total_cost,
+    bonus_decrease: data.bonus_decrease, 
     id_customer: data.id_customer,
     id_contract: data.id_contract,
 }).catch(error => {

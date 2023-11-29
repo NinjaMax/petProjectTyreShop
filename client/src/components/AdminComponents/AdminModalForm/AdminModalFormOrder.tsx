@@ -38,6 +38,7 @@ import { ICity } from '../../basket/types/CityNP.type';
 import { getCityNovaPoshta, getWareHousesNovaPoshta } from '../../../restAPI/restNovaPoshtaAPI';
 import { getCityDelivery, getWareHousesDelivery } from '../../../restAPI/restDeliveryAPI';
 import { IDapertmentNP } from '../../basket/types/DepartmentType.type';
+import CheckboxBtn from '../../select/CheckboxBtn';
 
 const AdminFormOrder = observer((
     { props, 
@@ -46,12 +47,13 @@ const AdminFormOrder = observer((
         setActive, 
         customer, 
         storages, 
-        ordersData,
+        getOrdersData,
         showComment,
     }:IFormOrder
     ) => {
     const {user} = useContext<any | null>(Context);
     const [tyreDatas, wheelDatas] = props;
+    const [ordersData, setOrdersData ] = useState<any | null>(getOrdersData);
     const [orderId, setOrderId] = useState<number | null | undefined>(null);
     const [addGoods, setAddGoods] = useState<boolean>(false);
     const [createCustomer, setCreateCustomer] = useState<boolean>(false);
@@ -62,7 +64,7 @@ const AdminFormOrder = observer((
     const [orderStorage, setOrderStorage] = useState<any[] | undefined>([]);
     const {register, handleSubmit, setValue, getValues, formState: {errors}} = useForm();    
     const [state, dispatch] = useReducer<Reducer<StateReducer, ActionReducer>>(
-        reducer, createInitialState(goodsId, ordersData)
+        reducer, createInitialState(goodsId, getOrdersData)
     );
     const [newComment, setNewComment] = useState<string | undefined>();
     const [addNewCommit, setAddNewCommit] = useState();
@@ -79,8 +81,8 @@ const AdminFormOrder = observer((
     const [delivery, setDelivery] = useState<string>();
     const [purchaseGoods, setPurchaseGoods] = useState<any[]>([]);
     const [dataDepartment, setDataDepartment] = useState<{
-        delivery_dep: string, 
-        delivery_dep_ref: string,
+        delivery_dep?: string, 
+        delivery_dep_ref?: string,
     }>();
 
     useEffect(() => {
@@ -88,9 +90,9 @@ const AdminFormOrder = observer((
         register("id_user", {required: 'Це необхідні дані'});
         register('id_contract', {required: 'Це необхідні дані'})
         setValue("id_user", user._user?.sub.id_user);
-        setValue("id_customer", addCustomer?.id_customer ?? ordersData?.id_customer,
+        setValue("id_customer", addCustomer?.id_customer! ?? ordersData?.id_customer,
         { shouldValidate: true })
-        setValue("id_contract", addCustomer?.contract[0]?.id_contract ?? ordersData?.id_contract,
+        setValue("id_contract", addCustomer?.contract[0]?.id_contract! ?? ordersData?.id_contract,
         { shouldValidate: true })
     }, [
         register, 
@@ -106,9 +108,9 @@ const AdminFormOrder = observer((
         if (delivery === "Нова Пошта") {
             register("delivery_city", {required: 'Це необхідні дані'});
             register("delivery_city_ref");
-            setValue("delivery_city", dataDepartmentNP?.MainDescription,
+            setValue("delivery_city", dataDepartmentNP!.MainDescription,
             { shouldValidate: true });
-            setValue("delivery_city_ref", dataDepartmentNP?.DeliveryCity);
+            setValue("delivery_city_ref", dataDepartmentNP!.DeliveryCity);
             const payMethod = getValues('pay_view');
             if (payMethod === "Б/г рахунок" || "Б/г карта") {
                 register("commission_cost");
@@ -119,9 +121,9 @@ const AdminFormOrder = observer((
         if (delivery === "Делівері") {
             register("delivery_city", {required: 'Це необхідні дані'});
             register("delivery_city_ref");
-            setValue("delivery_city", dataDepartmentDelivery?.name,
+            setValue("delivery_city", dataDepartmentDelivery?.name!,
             { shouldValidate: true });
-            setValue("delivery_city_ref", dataDepartmentDelivery?.id);
+            setValue("delivery_city_ref", dataDepartmentDelivery?.id!);
             register("commission_cost");
                 setValue("commission_cost", state?.reduce((sum:any, current:any) => 
                 sum + (current.price.price * current.price.quantity), 0) * 0.015);
@@ -133,21 +135,21 @@ const AdminFormOrder = observer((
         state, 
         dataDepartmentDelivery?.id, 
         dataDepartmentDelivery?.name, 
-        dataDepartmentNP?.DeliveryCity, 
-        dataDepartmentNP?.MainDescription, 
+        dataDepartmentNP, 
         delivery
     ]);
 
     useEffect(() => {
         register("delivery_city_depart")
         register("delivery_city_depart_ref")
-        setValue("delivery_city_depart", dataDepartment?.delivery_dep,
+        setValue("delivery_city_depart", dataDepartment?.delivery_dep! ?? ordersData?.delivery_city_depart,
         { shouldValidate: true })
-        setValue("delivery_city_depart_ref", dataDepartment?.delivery_dep_ref,
+        setValue("delivery_city_depart_ref", dataDepartment?.delivery_dep_ref! ?? ordersData?.delivery_city_depart_ref,
         { shouldValidate: true })
-    }, [
-        dataDepartment?.delivery_dep, 
-        dataDepartment?.delivery_dep_ref, 
+    }, [ 
+        dataDepartment, 
+        ordersData?.delivery_city_depart, 
+        ordersData?.delivery_city_depart_ref, 
         register, 
         setValue
     ]);
@@ -276,17 +278,18 @@ const AdminFormOrder = observer((
         let {name, value} = e.target;
         dispatch({type: ActionType.EDITITEM, 
             editItem: state.map(
-                (item: {id: number; price:{price: number}}, index: number) => {
+                (item: any, index: number) => {
                     return (
                         item.id === id && index === indexItem ?
-                        {...item, price: {...item.price, [name]: value ?? '0'}}
+                        {...item, [name]: value ?? '0',
+                        total: name === 'price' ? 
+                        value * item?.quantity :                        
+                        value * item?.price,
+                        }
                         : item
-                        )}
+                    )}
             )
         });
-        if (name === 'price' && value !== indexItem ) {
-            console.log('CHANGE_PRICE: ', name, value);  
-        }
     },[state])
     console.log('STATE: ', state)
     const addGoodsForm = () => {
@@ -359,45 +362,55 @@ const AdminFormOrder = observer((
             }
             if(orderId && state.length > 0 && disableBtnOk === false) {
                 orderStorage?.forEach(async(itemsOrd: any,): Promise<any> => {
-                    await updateOrderStorage(itemsOrd);
+                    //await updateOrderStorage(itemsOrd);
                 });
                 orderStorage?.splice(0, orderStorage.length);
                 state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
                     let resultOrder: any = await createGoodsToOrder(itemGoods, orderId);
-                    setOrderStorage(oldOrdStor => [...oldOrdStor!, resultOrder?.data]);  
+                    console.log('UPDATE_ORDER_STORAGE: ', resultOrder.data);
+                    setOrderStorage(oldOrdStor => [...oldOrdStor!, resultOrder.data]);  
                 });  
-                await updateOrder(data, orderId);    
-                alert(`Замовлення збереженно, id ${orderId} товари оновлені.`);
+                const newOrderDatas = await updateOrder(data, orderId);  
+                setOrdersData(newOrderDatas);
+                console.log('NEW_ORDER_DATA_ORDER: ', newOrderDatas?.data)  
+                alert(`Замовлення id ${orderId} збереженно,  товари оновлені.`);
             
             } 
             if(orderId && state.length === 0){
                 alert("Товари не додані");
             }
             if (orderId && state.length !== 0 && disableBtnOk === true){
-                const newStorage = () => {
+                //const newStorage = () => {
                 orderStorage?.forEach(async(itemsOrd: any, index: any): Promise<any> => {
-                    await updateOrderStorage(itemsOrd);
-                    if (itemsOrd.id && state[index].id && itemsOrd.price !== state[index].price.price) {
+                    //await updateOrderStorage(itemsOrd);
+                    if (itemsOrd.id && state[index].id && itemsOrd.price !== state[index].price) {
                         await addCommentsToOrder(
                             user._user?.sub.id_user, orderId, 
-                            `Змінено ціну ${itemsOrd.price} => ${state[index].price.price}`
+                            `Змінено ціну ${itemsOrd.price} => ${state[index].price}`
                         ); 
                     }
                 });
                 orderStorage?.splice(0, orderStorage.length);
                 state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
                     let resultOrder: any = await createGoodsToOrder(itemGoods, orderId);
-                    setOrderStorage(oldOrdStor => [...oldOrdStor!, resultOrder?.data]);
+                    console.log('UPDATE_ORDER_STORAGE: ', resultOrder.data);
+                    setOrderStorage(oldOrdStor => [...oldOrdStor!, resultOrder.data]);
                 });
-                }
-                newStorage();
+                //}
+                //newStorage();
                 setDisableBtnOk(!disableBtnOk);
-                await updateOrder(data, orderId);
+                console.log('UDATE_DATA_ORDER: ', data);
+                const newOrderData = await updateOrder(data, orderId);
+                setOrdersData(newOrderData);
+                console.log('NEW_ORDER_DATA_ORDER: ', newOrderData?.data)
                 alert(`Товари до замовлення id ${orderId}, оновлено.`);
-            }
+            } 
+            // else {
+            //    alert('Помилка! Перевірте данні або оновіть сторінку') 
+            // }
             //e.stopPropagation();
         } catch (error){
-            alert(errors.message)
+            alert('Помилка! Перевірте данні або оновіть сторінку');
             console.log('ERROR_ORDER: ', error);
         }    
     }    
@@ -452,9 +465,10 @@ const AdminFormOrder = observer((
             console.log(error)
         }    
     };
-    console.log('COMMENT: ', newComment);
-    console.log('GOODS_ID: ', goodsId);
-    console.log('ORDER_ID: ', orderId);
+    //console.log('COMMENT: ', newComment);
+    //console.log('GOODS_ID: ', goodsId);
+    //console.log('ORDER_ID: ', orderId);
+    console.log('GET_DOP_GAR: ', getValues('dop_garanty'))
     console.log(errors);
     console.log('ORDERS_STORAGE : ', orderStorage);
     console.log('ORDER_DATA: ', ordersData);
@@ -498,18 +512,16 @@ const AdminFormOrder = observer((
                         <select className="admFormOrderOrganiz" 
                             {...register('organisation',)}
                             name="organisation"
+                            onChange={(e) => setValue('organisation', e.target.value)} 
+                        >
+                            <option value={"ФОП Шемендюк К.В."}
+                                 selected={ordersData?.organisation === 'ФОП Шемендюк К.В.' ? true: false}
                             >
-                            {ordersData ?
-                                <option data-value={ordersData.organisation}>
-                                    {ordersData?.organisation}
-                                </option>
-                                :
-                                <>
-                                <option value={"ФОП Шемендюк К.В."}>ФОП Шемендюк К.В.</option>
-                                <option value={"фл Гайворонський Н. М"}>фл Гайворонський Н. М</option>
-                                <option value={"ТОВ Скай-Партс"}>ТОВ Скай-Партс</option>
-                                </>
-                            }
+                                ФОП Шемендюк К.В.
+                            </option>
+                            <option value={"ТОВ Скай-Партс"}
+                                 selected={ordersData?.organisation === 'ТОВ Скай-Партс' ? true: false}
+                            >ТОВ Скай-Партс</option>
                         </select>  
                     </div>
                     <div>
@@ -517,6 +529,7 @@ const AdminFormOrder = observer((
                         <select className="admFormOrderStorage" 
                             {...register('storage', {required: 'Це необхідні дані'})}
                             name="storage"
+                            onChange={(e) => setValue('storage', e.target.value)}
                         >
                             <option value={'Склад Поставщик'}
                                 selected={ordersData?.storage === 'Склад Поставщик' ? true: false}
@@ -540,6 +553,7 @@ const AdminFormOrder = observer((
                         <select className="admFormOrderView" 
                             {...register('order_view', {required: 'Це необхідні дані'})}
                             name="order_view"
+                            onChange={(e) => setValue('order_view', e.target.value)}
                             >
                                 <option 
                                     value="Сайт" 
@@ -567,40 +581,51 @@ const AdminFormOrder = observer((
                         </select>  
                     </div>
                     <div>
-                        <label htmlFor="statusOrder">Статус </label>
+                        <label htmlFor="status_order">Статус </label>
                         <select className="admFormOrderStatus" 
                             {...register('status', {required: 'Це необхідні дані'})}
                             name="status_order"
-                        >
+                            onChange={(e) => setValue('status', e.target.value)}
+                        >   
                             <option value="Новий"
                                 selected={ordersData?.status === "Новий" ? true: false}
                             >
                                 Новий
                             </option>
-                            <option value="Продаж"
-                                selected={ordersData?.status === "Продаж" ? true: false}
+                            <option value="Уточнення"
+                                selected={ordersData?.status === "Уточнення" ? true: false}
                             >
-                                Продаж
+                                Уточнення 
                             </option>
-                            <option value="Обробка"
-                                selected={ordersData?.status === "Обробка" ? true: false}
+                            <option value="Підтвердження"
+                                selected={ordersData?.status === "Підтвердження" ? true: false}
                             >
-                                Обробка
+                                Підтвердження
                             </option>
-                            <option value="Виконання"
-                                selected={ordersData?.status === "Виконання" ? true: false}
+                            <option value="На Відгрузку"
+                                selected={ordersData?.status === "На Відгрузку" ? true: false}
                             >
-                                Виконання
+                                На Відгрузку
                             </option>
-                            <option value="Відміна"
-                                selected={ordersData?.status === "Відміна" ? true: false}
+                            <option value="Відвантажено"
+                                selected={ordersData?.status === "Відвантажено" ? true: false}
                             >
-                                Відміна
+                                Відвантажено
                             </option>
+                            <option value="Завершено"
+                                selected={ordersData?.status ===  "Завершено" ? true: false}
+                            >
+                                Завершено
+                            </option> 
                             <option value="Повернення"
                                 selected={ordersData?.status ===  "Повернення" ? true: false}
                             >
                                 Повернення
+                            </option> 
+                            <option value="Відміна"
+                                selected={ordersData?.status ===  "Відміна" ? true: false}
+                            >
+                                Відміна
                             </option> 
                         </select>    
                     </div>
@@ -616,12 +641,16 @@ const AdminFormOrder = observer((
                                 readOnly={true}
                                 //onChange={() => setAddCustomer(addCustomer)}
                             />
-                            <div>
+                            <div
+                                onClick={(e)=>e.preventDefault()}
+                            >
                                 <button onClick={openCustomerForm} className='admFormSearchCustm'>
                                     <i className="fas fa-search"></i>    
                                 </button> 
                             </div>
-                            <div>
+                            <div
+                                onClick={(e)=>e.preventDefault()}
+                            >
                                 <button onClick={activeCustomer}
                                     className='admFormAddCustm'>
                                     <i className="fas fa-plus"></i>    
@@ -808,21 +837,12 @@ const AdminFormOrder = observer((
                         <select className="admFormOrderStatusDel" 
                             {...register('status_delivery', {required: 'Це необхідні дані'})}
                             name="status_delivery"
+                            onChange={(e) => setValue('status_delivery', e.target.value)}
                         >
                             <option value="Новий"
                                 selected={ordersData?.status_delivery ===  "Новий" ? true: false}
                             >
                                 Новий
-                            </option>
-                            <option value="Самовивіз"
-                                selected={ordersData?.status_delivery ===  "Самовивіз" ? true: false}
-                            >
-                                Самовивіз
-                            </option>
-                            <option value="Обробляеться"
-                                selected={ordersData?.status_delivery ===  "Обробляеться" ? true: false}
-                            >
-                                Обробляеться
                             </option>
                             <option value="Очікує ТТН"
                                 selected={ordersData?.status_delivery ===  "Очікує ТТН" ? true: false}
@@ -833,16 +853,6 @@ const AdminFormOrder = observer((
                                 selected={ordersData?.status_delivery ===  "Доставляеться" ? true: false}
                             >
                                 Доставляеться
-                            </option>
-                            <option value="Отримано ТТН"
-                                selected={ordersData?.status_delivery ===  "Отримано ТТН" ? true: false}
-                            >
-                                Отримано ТТН
-                            </option>
-                            <option value="Повернення ТТН"
-                                selected={ordersData?.status_delivery ===  "Повернення ТТН" ? true: false}
-                            >
-                                Повернення ТТН
                             </option>
                             <option value="Відміна"
                                 selected={ordersData?.status_delivery ===  "Відміна" ? true: false}
@@ -861,6 +871,7 @@ const AdminFormOrder = observer((
                         <select className="admFormOrderViewPay" 
                             {...register('pay_view', {required: 'Це необхідні дані'})}
                             name="pay_view"
+                            onChange={(e) => setValue('pay_view', e.target.value)}
                         >
                             <option value="Новий"
                                 selected={ordersData?.pay_view ===  "Новий" ? true: false}
@@ -877,15 +888,15 @@ const AdminFormOrder = observer((
                             >
                                 Б/г рахунок
                             </option>
-                            <option value="Б/г карта"
-                                selected={ordersData?.pay_view ===  "Б/г карта" ? true: false}
+                            <option value="Карткою (VISA / MASTERCARD)"
+                                selected={ordersData?.pay_view ===  "Карткою (VISA / MASTERCARD)" ? true: false}
                             >
-                                Б/г карта
+                                Карткою (VISA / MASTERCARD)
                             </option>
-                            <option value="Наложка"
-                                selected={ordersData?.pay_view ===  "Наложка" ? true: false}
+                            <option value="Зворотній платіж (Післяплата)"
+                                selected={ordersData?.pay_view ===  "Зворотній платіж (Післяплата)" ? true: false}
                             >
-                                Наложка
+                                Зворотній платіж (Післяплата)
                             </option>
                              <option value="Відміна"
                                 selected={ordersData?.pay_view ===  "Відміна" ? true: false}
@@ -904,6 +915,7 @@ const AdminFormOrder = observer((
                         <select className="admFormOrderStatusPay" 
                             {...register('status_pay', {required: 'Це необхідні дані'})}
                             name="status_pay"
+                            onChange={(e) => setValue('status_pay', e.target.value)}
                         >
                             <option value="Новий"
                                 selected={ordersData?.status_pay ===  "Новий" ? true: false}
@@ -919,11 +931,6 @@ const AdminFormOrder = observer((
                                 selected={ordersData?.status_pay ===  "Оплачено" ? true: false}
                             >
                                 Оплачено
-                            </option>
-                            <option value="Виконання"
-                                selected={ordersData?.status_pay ===  "Виконання" ? true: false}
-                            >
-                                Виконання
                             </option>
                             <option value="Відміна"
                                 selected={ordersData?.status_pay ===  "Відміна" ? true: false}
@@ -979,8 +986,8 @@ const AdminFormOrder = observer((
                                 total: number; 
                                 reserve: number;
                                 full_name:string, 
-                                category:{category:string}, 
-                                price:{price:number; quantity: number}}, 
+                                category:string, 
+                                price:number;}, 
                                 index:number
                             ) =>(
                         <tr key={item.id + index} 
@@ -988,7 +995,7 @@ const AdminFormOrder = observer((
                         >
                             <td >{item.id}</td>
                             <td >{item.full_name}</td>
-                            <td >{item.category?.category ?? item?.category}</td>
+                            <td >{item?.category}</td>
                             <td 
                                 onInput={(e) => e.stopPropagation()}
                             >
@@ -996,7 +1003,7 @@ const AdminFormOrder = observer((
                                     id={'quantity'+ item.id}
                                     type="text"
                                     name="quantity"
-                                    value={item.price?.quantity ?? item?.quantity}
+                                    value={item?.quantity ?? 0}
                                     onInput={(e) => onChangeInput(e, item.id, index)}
                                     placeholder="Введіть цифри"
                                 />
@@ -1009,12 +1016,12 @@ const AdminFormOrder = observer((
                                     id={'price' + item.id}
                                     type="text"
                                     name="price"
-                                    value={item.price?.price ?? item?.price}
+                                    value={item?.price ?? 0}
                                     onInput={(e) => onChangeInput(e, item.id, index)}
                                     placeholder="Введіть цифри" 
                                 />
                             </td>
-                            <td >{item?.total ?? item?.price?.price * item?.price?.quantity}</td>
+                            <td >{item?.price * item?.quantity}</td>
                             <td >
                                 <select className="admFormOrderStorage" name="storage_index">
                                     <option value={1}>Склад Поставщик</option>
@@ -1063,15 +1070,7 @@ const AdminFormOrder = observer((
                         maxLength={45}
                         placeholder="Сума доставки.."
                         defaultValue={ordersData?.delivery_cost ?? ''}
-                    />
-                    <label htmlFor="dopGaranty">Доп. гар </label>
-                    <input  className="admFormOrderDopGarCost"
-                        type="text"
-                        {...register('dop_garanty')}
-                        name="dopGaranty" 
-                        maxLength={45}
-                        placeholder="Доп гар.."
-                        defaultValue={ordersData?.dop_garanty ?? ''}
+                        onChange={(e) => setValue('delivery_cost', e.target.value)}
                     />
                     <label htmlFor="dopGaranty">Бонуси(-) </label>
                     <input  className="admFormOrderBonus"
@@ -1081,7 +1080,34 @@ const AdminFormOrder = observer((
                         maxLength={45}
                         placeholder="Бонуси.."
                         defaultValue={ordersData?.bonus_decrease ?? ''}
+                        onChange={(e) => setValue('bonus_decrease', 
+                            +e.target.value - addCustomer?.contract[0]?.bonus! && 
+                            +e.target.value <= addCustomer?.contract[0]?.bonus! ? 
+                            addCustomer?.contract[0]?.bonus! : 
+                            +e.target.value - (+e.target.value - addCustomer?.contract[0]?.bonus!)
+                            )
+                        }
                     />
+                    <div className='admFormOrderNotesDopGar'>
+                    <label htmlFor="dopGaranty">Доп. гар </label>
+                    <input  className="admFormOrderDopGarCost"
+                        type="checkbox"
+                        {...register('dop_garanty')}
+                        name="dopGaranty" 
+                        maxLength={45}
+                        placeholder="Доп гар.."
+                        checked={getValues('dop_garanty') || ordersData?.dop_garanty ? true : false}
+                        //defaultChecked={ordersData?.dop_garanty || getValues('dop_garanty') ? true : false}
+                        onChange={() => setValue('dop_garanty', orderSum * 0.1)}
+                    />
+                      {/* <CheckboxBtn 
+                        {...register('dop_garanty')}
+                        value={''} 
+                        titleCheckbox={'Доп гар'} 
+                        //checked={ordersData?.dop_garanty ? true : false}
+                        onChange={() => setValue('dop_garanty', orderSum * 0.1)}
+                        />   */}
+                    </div>
                 </div>
                 <div className='admFormOrderCommit'
                     onClick={(e)=>e.preventDefault()}
@@ -1121,11 +1147,11 @@ const AdminFormOrder = observer((
                     </div>
                     <div 
                         //onClick={(e)=>e.preventDefault()}
-                        >
+                    >
                         <button className={!disableBtn ? 'admFormOrderBtnSave' : 'admFormOrderBtnSaveDsb'}
                             disabled={disableBtn} 
                             onClick={handleSubmit(onSubmit)}
-                            >
+                        >
                             {updateBtn ?? 'Зберегти'}
                         </button>
                     </div>

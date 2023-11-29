@@ -370,7 +370,7 @@ const AdminOrderContent = (
                         customer={customer} 
                         props={props}
                         storages={storage}
-                        ordersData={orderData}
+                        getOrdersData={orderData}
                         comments={comments}
                         showComment={showComment}
                     />

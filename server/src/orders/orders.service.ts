@@ -141,10 +141,9 @@ export class OrdersService {
         await this.ordersStorageService.findOrderStorageOne(createOrderDto);
 
       if (findGoodsToOrder) {
-        const updateOrderStor =
-          await this.ordersStorageService.updateOrderStorage(createOrderDto);
-
-        return updateOrderStor;
+        await this.ordersStorageService.updateOrderStorage(createOrderDto);
+        await findGoodsToOrder.reload();
+        return findGoodsToOrder;
       } else {
         const orderStorage = await this.ordersStorageService.createOrderStorage(
           createOrderDto,
@@ -445,7 +444,7 @@ export class OrdersService {
       );
 
       if (ordersId) {
-        const updateOrder = await this.ordersRepository.update(
+        await this.ordersRepository.update(
           {
             id: updateOrderDto.id,
             id_user: updateOrderDto.id_user,
@@ -456,13 +455,15 @@ export class OrdersService {
             delivery: updateOrderDto.delivery,
             status_delivery: updateOrderDto.status_delivery,
             delivery_ttn: updateOrderDto.delivery_ttn,
+            delivery_cost: +updateOrderDto.delivery_cost,
             status: updateOrderDto.status,
             pay_view: updateOrderDto.pay_view,
             status_pay: updateOrderDto.status_pay,
             dop_garanty: updateOrderDto.dop_garanty,
             id_customer: updateOrderDto.id_customer,
             id_contract: updateOrderDto.id_contract,
-            bonus_decrease: updateOrderDto.bonus_decrease,
+            bonus_decrease: +updateOrderDto.bonus_decrease,
+            total_cost: updateOrderDto.total_cost,
             delivery_city: updateOrderDto.city_delivery,
             delivery_city_ref: updateOrderDto.ref_city_delivery,
             delivery_city_depart: updateOrderDto.delivery_dep,
@@ -470,8 +471,8 @@ export class OrdersService {
           },
           { where: { id_order: updateOrderDto.id_order } },
         );
-
-        return updateOrder;
+        await ordersId.reload();
+        return ordersId;
       }
     } catch {
       throw new HttpException(

@@ -141,10 +141,12 @@ export class OrdersStorageService {
       const orderStorageUpdate = await this.ordersStorageRepository.update(
         {
           id: updateOrderDto.id,
+          full_name: updateOrderDto.full_name,
           order_index: updateOrderDto.order_index,
           storage_index: updateOrderDto.storage_index,
           quantity: updateOrderDto.quantity,
           price: updateOrderDto.price,
+          total: updateOrderDto.total,
           id_supplier: updateOrderDto.id_supplier,
           category: updateOrderDto.category,
           id_order: updateOrderDto.id_order,
