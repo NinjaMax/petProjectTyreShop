@@ -437,7 +437,7 @@ export class OrdersService {
   }
 
   async updateOrder(updateOrderDto: UpdateOrderDto) {
-    try {
+    //try {
       const ordersId = await this.ordersRepository.findByPk(
         updateOrderDto.id_order,
         { include: { all: true } },
@@ -474,12 +474,12 @@ export class OrdersService {
         await ordersId.reload();
         return ordersId;
       }
-    } catch {
-      throw new HttpException(
-        'Data is incorrect or Not Found',
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    // } catch {
+    //   throw new HttpException(
+    //     'Data is incorrect or Not Found',
+    //     HttpStatus.NOT_FOUND,
+    //   );
+    // }
   }
 
   async tyreStockUpdateOrder(createOrderDto: CreateOrderDto) {

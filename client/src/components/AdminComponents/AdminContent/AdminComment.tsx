@@ -24,9 +24,9 @@ const AdminComment = ({newCommit, comments}:any) => {
                 <div key={index + 1} className="containerAdmComment">
                     <img src={item.user?.picture ?? "../../../assets/icons/customer64.png"} 
                     alt="Avatar"/>
-                    <span className="timeAdmCommitLeft">{item.user?.name}:</span>
-                    <span className="timeAdmCommitLeft">{" " + new Date(item.createdAt).toLocaleString()}:</span>
-                    <span> {" " + item.comments} </span>
+                    <span className="timeAdmCommitLeft">{item.user?.name} ({item.user?.role}):</span>
+                    <span className="timeAdmCommitLeft">&nbsp;{new Date(item.createdAt).toLocaleString()}:</span>
+                    <span>&nbsp;{item.comments} </span>
                 </div>
                 )
             })

@@ -29,6 +29,16 @@
     color: #444;
 }
 
+.admOrderCommitTableId {
+    width: 50px;
+}
+.admOrderCommitTableUser {
+    width: 200px;
+}
+.admOrderCommitTableDate {
+    width: 150px;
+}
+
 .admOrderCommitTable tr:nth-child(even) {
     background-color: #f2f2f2;
 }

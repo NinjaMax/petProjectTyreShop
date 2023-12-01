@@ -8,13 +8,13 @@
     padding: 12px 20px 12px 40px; /* Add some padding */
     border: 1px solid #ddd; /* Add a grey border */
     margin-bottom: 12px; /* Add some space below the input */
+    border-radius: 10px;
     
 }
 
 .admModalGoodsBox {
-    width: 820px;
-    height: 400px;
-    
+    width: 950px;
+    height: 400px;   
 }
 
 .admModalGoodsHeader {
@@ -23,7 +23,6 @@
     justify-content: flex-start;
     margin-top: 5px;
     margin-bottom: 15px;
-
 }
 
 .admChooseLabelMod {
@@ -56,7 +55,7 @@
 .admModalGoodsTableBox {
     width: 100%;
     height: 300px;
-    overflow-y: auto;
+    /* overflow-y: auto; */
 }
 
 .admModalGoodsTable th, .admModalGoodsTable td {
@@ -85,4 +84,50 @@
 .admModalGoodsTable tr.admModalHeaderGoods, .admModalGoodsTable tr:hover {
     /* Add a grey background color to the table header and on hover */
     background-color: #f1f1f1;
+}
+
+.admModalGoodsGridItem {
+    vertical-align:middle;
+    display: grid;
+    grid-template-columns: 75px 350px 100px 80px 50px 140px 50px;
+    grid-column-gap: 10px;
+}
+/* .admModalGoodsTableColmId {
+    overflow: hidden;
+} */
+.admModalGoodsGridItem:nth-child(even) {
+    background-color: #f2f2f2;
+}
+.admModalGoodsGridItem .admOrderGridItemBtn {
+    display: flex;
+    flex-direction: row;
+}
+.admModalGoodsTableColmId tr {
+    border: 1px solid #ddd;
+    padding: 8px 5px;
+} 
+.admModalGoodsTableColmId .admModalGoodsGridItem:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+.admModalGoodsGridItemId {
+    width: 65px;
+}
+.admModalGoodsGridItemName {
+    width: 390px;
+}
+.admModalGoodsGridItemCat {
+    width: 30px;
+}
+.admModalGoodsGridItemPrice {
+    width: 80px;
+}
+.admModalGoodsGridItemStock {
+    width: 20px;
+}
+.admModalGoodsGridItemStor {
+    width: 150px;
+}
+.admModalGoodsGridItemStockId {
+    width: 100px;
 }

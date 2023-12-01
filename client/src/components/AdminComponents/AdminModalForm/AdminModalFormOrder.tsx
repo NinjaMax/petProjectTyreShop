@@ -38,7 +38,6 @@ import { ICity } from '../../basket/types/CityNP.type';
 import { getCityNovaPoshta, getWareHousesNovaPoshta } from '../../../restAPI/restNovaPoshtaAPI';
 import { getCityDelivery, getWareHousesDelivery } from '../../../restAPI/restDeliveryAPI';
 import { IDapertmentNP } from '../../basket/types/DepartmentType.type';
-import CheckboxBtn from '../../select/CheckboxBtn';
 
 const AdminFormOrder = observer((
     { props, 
@@ -85,6 +84,33 @@ const AdminFormOrder = observer((
         delivery_dep_ref?: string,
     }>();
 
+    const orderSum = state?.reduce((sum:any, current:any) => 
+        sum + (current.price * current.quantity), 0
+    );
+
+    useEffect(() => {
+        if (ordersData) {
+            setOrderId(ordersData?.id_order);
+            setOrderStorage(ordersData?.order_storage);
+            setUpdateBtn('Оновити');
+            if (ordersData.disableBtns) {
+                setDisableBtn(true);
+                setDisableBtnOk(true); 
+            }
+        }
+    },[ordersData, state]);
+
+    useEffect(() => {
+        register("total_cost")
+        setValue("total_cost", (Number(ordersData?.delivery_cost ?? 0) + Number(ordersData?.commission_cost ?? 0) + Number(ordersData?.dop_garanty ?? 0) + orderSum) - Number(ordersData?.bonus_decrease ?? 0));
+        setValue("dop_garanty", ordersData?.dop_garanty ?? 0);
+    }, [
+        orderSum,
+        ordersData,
+        register, 
+        setValue
+    ]);
+
     useEffect(() => {
         register("id_customer", {required: 'Це необхідні дані'});
         register("id_user", {required: 'Це необхідні дані'});
@@ -128,6 +154,13 @@ const AdminFormOrder = observer((
                 setValue("commission_cost", state?.reduce((sum:any, current:any) => 
                 sum + (current.price.price * current.price.quantity), 0) * 0.015);
         }
+        if (!delivery) {
+            register("delivery_city");
+            register("delivery_city_ref");
+            setValue("delivery_city", ordersData?.delivery_city,
+            { shouldValidate: true });
+            setValue("delivery_city_ref", ordersData?.delivery_city_ref);
+        }
     }, [
         register, 
         setValue, 
@@ -136,7 +169,8 @@ const AdminFormOrder = observer((
         dataDepartmentDelivery?.id, 
         dataDepartmentDelivery?.name, 
         dataDepartmentNP, 
-        delivery
+        delivery,
+        ordersData
     ]);
 
     useEffect(() => {
@@ -155,35 +189,22 @@ const AdminFormOrder = observer((
     ]);
 
     useEffect(() => {
-        if (ordersData) {
-            setOrderId(ordersData?.id_order);
-            setOrderStorage(ordersData?.order_storage);
-            setUpdateBtn('Оновити');
-            if (ordersData.disableBtns) {
-                setDisableBtn(true);
-                setDisableBtnOk(true); 
-            }
-        }
-    },[ordersData]);
-
-    useEffect(() => {
         let isMounted = false;
-        const calcPurchase = async () => {
-            if (!isMounted && ordersData?.order_storage) {
-            ordersData?.order_storage?.forEach(async (orderData: any) => {
+        let arrPurchase: number[] | null = [];
+        const calcPurchase = async () => {  
+            if (!isMounted && orderStorage) { 
+                orderStorage?.forEach(async (orderData: any, index: number) => {
                 let priceByIdTyre = await getAdminPriceTyresById(orderData.id ?? 0);
                 let priceByIdTWheel = await getAdminPriceWheelsById(orderData.id ?? 0);
-                let priceTyreOnSup = priceByIdTyre?.find((tyre: any) => tyre.id_supplier === orderData.id_supplier);
-                let priceWheelOnSup = priceByIdTWheel?.find((tyre: any) => tyre.id_supplier === orderData.id_supplier);
+                let priceTyreOnSup = priceByIdTyre?.find((tyre: any) => tyre.id_supplier === state[index].id_supplier);
+                let priceWheelOnSup = priceByIdTWheel?.find((tyre: any) => tyre.id_supplier === state[index].id_supplier);
                 if (priceTyreOnSup) {
-                    setPurchaseGoods(oldPurchase => 
-                        [...oldPurchase!, priceTyreOnSup.price_wholesale * orderData.quantity]
-                    );
+                    arrPurchase?.push(priceTyreOnSup.price_wholesale * state[index].quantity);
+                    setPurchaseGoods([...arrPurchase!]);
                 }
                 if (priceWheelOnSup) {
-                    setPurchaseGoods(oldPurchase => 
-                        [...oldPurchase!, priceTyreOnSup.price_wholesale * orderData.quantity]
-                    );
+                    arrPurchase?.push(priceWheelOnSup.price_wholesale * state[index].quantity);
+                    setPurchaseGoods([...arrPurchase!]);
                 }
             });
             }
@@ -192,7 +213,7 @@ const AdminFormOrder = observer((
         return () => {
             isMounted = true;
         };
-    },[ordersData?.order_storage]);
+    },[orderStorage, state]);
 
     useEffect(() => {
         let isMounted = false;
@@ -289,9 +310,9 @@ const AdminFormOrder = observer((
                         : item
                     )}
             )
-        });
-    },[state])
-    console.log('STATE: ', state)
+        }); 
+    },[state]);
+
     const addGoodsForm = () => {
         setAddGoods(!addGoods);
     };
@@ -312,12 +333,12 @@ const AdminFormOrder = observer((
             setAddCustomer(findCustomer);  
             setOpenCustomers(!openCustomers);
         }
-    }
+    };
 
     const addGoodsToList = async (value:string) => {
         const newArr = value.split(',');
         let [idValue, indexValue] = newArr;
-
+        const addTyres: any = tyreDatas?.find((item:{id:string}) => item?.id === idValue);
         dispatch({type: ActionType.ADDTYRE, 
             addTyre: tyreDatas?.find((item:{id:string}) => item?.id === idValue),
             indexPrice: indexValue,
@@ -326,17 +347,32 @@ const AdminFormOrder = observer((
         dispatch({type: ActionType.ADDWHEEL, 
             addWheel: wheelDatas?.find((item:{id:string}) => item?.id === idValue),
             indexPrice: indexValue,
-        });            
-    }
-    //}),[tyreDatas, wheelDatas, customer])
+        });
+        if (addTyres) {
+            setOrderStorage(oldOrdStor => [...oldOrdStor!, 
+                {...addTyres, 
+                    "price": addTyres.price[indexValue].price,
+                    "id_tyre": addTyres.price[indexValue].id_tyre,
+                    "price_wholesale": addTyres.price[indexValue].price_wholesale,
+                    "old_price": addTyres.price[indexValue].old_price,
+                    "id_supplier": addTyres.price[indexValue].id_supplier,
+                    "id_storage": addTyres.price[indexValue].id_storage,
+                    "delivery_price": addTyres.price[indexValue].delivery_price,
+                    "price_plus_delivery": addTyres.price[indexValue].price_plus_delivery,
+                    "update_date": addTyres.price[indexValue].update_date,
+                    "category": addTyres.category.category,
+                    "quantity": "4",
+                }
+            ]);
+        }
+        setAddGoods(!addGoods);         
+    };
 
     const deleteItem = async (itemIndex: number) => {
-            //e.preventDefault();
-            //e.stopPropagation();
         dispatch({type: ActionType.DELETEITEM, 
             deleteItem: itemIndex,
         });
-    } 
+    }; 
     //GOOD PERFORM
     const onSubmit = async (data:{}, e: any) => {
         //e.preventDefault();
@@ -345,13 +381,16 @@ const AdminFormOrder = observer((
             if (!orderId && state.length === 0) {
                let resultForm: any = await responseForm(data);
                 setOrderId(+resultForm.data.id_order);
+                setOrdersData(resultForm.data);
                 alert(`Замовлення створено, id ${resultForm.data.id_order},
                     але товари не додані.`
                 ); 
             }
             if(!orderId && state.length > 0) {
                 let resultForm: any = await responseForm(data);
+                orderStorage?.splice(0, orderStorage.length);
                 setOrderId(+resultForm.data.id_order);
+                setOrdersData(resultForm.data);
                 state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
                     let resultOrder: any = await createGoodsToOrder(itemGoods, resultForm.data.id_order!);
                     setOrderStorage(oldOrdStor => [...oldOrdStor!, resultOrder.data]);
@@ -371,7 +410,7 @@ const AdminFormOrder = observer((
                     setOrderStorage(oldOrdStor => [...oldOrdStor!, resultOrder.data]);  
                 });  
                 const newOrderDatas = await updateOrder(data, orderId);  
-                setOrdersData(newOrderDatas);
+                setOrdersData(newOrderDatas?.data);
                 console.log('NEW_ORDER_DATA_ORDER: ', newOrderDatas?.data)  
                 alert(`Замовлення id ${orderId} збереженно,  товари оновлені.`);
             
@@ -384,10 +423,11 @@ const AdminFormOrder = observer((
                 orderStorage?.forEach(async(itemsOrd: any, index: any): Promise<any> => {
                     //await updateOrderStorage(itemsOrd);
                     if (itemsOrd.id && state[index].id && itemsOrd.price !== state[index].price) {
-                        await addCommentsToOrder(
+                        const addCommitTo: any = await addCommentsToOrder(
                             user._user?.sub.id_user, orderId, 
                             `Змінено ціну ${itemsOrd.price} => ${state[index].price}`
-                        ); 
+                        );
+                        setAddNewCommit(addCommitTo?.data); 
                     }
                 });
                 orderStorage?.splice(0, orderStorage.length);
@@ -401,7 +441,7 @@ const AdminFormOrder = observer((
                 setDisableBtnOk(!disableBtnOk);
                 console.log('UDATE_DATA_ORDER: ', data);
                 const newOrderData = await updateOrder(data, orderId);
-                setOrdersData(newOrderData);
+                setOrdersData(newOrderData?.data);
                 console.log('NEW_ORDER_DATA_ORDER: ', newOrderData?.data)
                 alert(`Товари до замовлення id ${orderId}, оновлено.`);
             } 
@@ -435,13 +475,63 @@ const AdminFormOrder = observer((
         }      
     };
 
-    const orderSum = state?.reduce((sum:any, current:any) => 
-        sum + (current.price * current.quantity), 0
-    );
-    // const orderDataSum = ordersData?.order_storage?.reduce(
-    //     (sum:any, current:any) => 
-    //     sum + current.total, 0
-    // );
+    const setDopGarantyOrder = () => {
+        if (!getValues('dop_garanty')) {
+            setValue('dop_garanty', (orderSum * 0.1).toFixed() ?? 0);
+            setValue('total_cost', (Number(ordersData?.delivery_cost ?? 0) + Number(ordersData?.commission_cost ?? 0) + orderSum * 0.1 + orderSum ?? 0).toFixed() - Number(ordersData?.bonus_decrease ?? 0));
+            setOrdersData({
+                ...ordersData, 
+                dop_garanty: (orderSum * 0.1).toFixed(),
+                total_cost: 
+                (ordersData?.delivery_cost + ordersData?.commission_cost + orderSum * 0.1 + orderSum).toFixed() - ordersData?.bonus_decrease,
+            });
+            console.log('GET_DOP_GAR: ', getValues('dop_garanty')) 
+        } else {
+            setValue('dop_garanty', null); 
+            setValue('total_cost', (Number(ordersData?.delivery_cost ?? 0) + Number(ordersData?.commission_cost ?? 0) + 0 + orderSum ?? 0) - Number(ordersData?.bonus_decrease ?? 0));
+            setOrdersData({...ordersData, dop_garanty: null,
+                total_cost: 
+                (ordersData?.delivery_cost + ordersData?.commission_cost + 0 + orderSum) - ordersData?.bonus_decrease,
+            });
+            console.log('GET_DOP_GAR: ', getValues('dop_garanty'))
+        }
+    };
+
+    const setBonusDecreaseOrder = (e: any) => {
+        if (+e.target.value <= addCustomer?.contract[0]?.bonus!) {
+            setValue('bonus_decrease', +e.target.value); 
+            setValue('total_cost', (Number(ordersData?.delivery_cost ?? 0) + Number(ordersData?.commission_cost ?? 0) + Number(ordersData?.dop_garanty ?? 0) + orderSum ?? 0) - +e.target.value);
+            setOrdersData({...ordersData, bonus_decrease: +e.target.value,
+                total_cost: 
+                (ordersData?.delivery_cost + ordersData?.commission_cost + ordersData?.dop_garanty + orderSum) - +e.target.value,
+            });
+        }
+        if (+e.target.value > addCustomer?.contract[0]?.bonus!) {
+            setValue('bonus_decrease', +e.target.value - (+e.target.value - addCustomer?.contract[0]?.bonus!));
+            setValue('total_cost', (Number(ordersData?.delivery_cost ?? 0) + Number(ordersData?.commission_cost ?? 0) + Number(ordersData?.dop_garanty ?? 0) + orderSum) - +e.target.value - (+e.target.value - addCustomer?.contract[0]?.bonus!)); 
+            setOrdersData({...ordersData, bonus_decrease: +e.target.value - (+e.target.value - addCustomer?.contract[0]?.bonus!),
+                total_cost: 
+                (ordersData?.delivery_cost + ordersData?.commission_cost + ordersData?.dop_garanty + orderSum) - +e.target.value - (+e.target.value - addCustomer?.contract[0]?.bonus!),
+            }); 
+        }
+        if (!addCustomer?.contract[0]?.bonus! && !ordersData?.bonus_decrease) {
+            setValue('bonus_decrease', 0); 
+            setValue('total_cost', (Number(ordersData?.delivery_cost ?? 0) + Number(ordersData?.commission_cost ?? 0) + Number(ordersData?.dop_garanty ?? 0) + orderSum) - 0);
+            setOrdersData({...ordersData, bonus_decrease: 0,
+                total_cost: 
+                (ordersData?.delivery_cost + ordersData?.commission_cost + ordersData?.dop_garanty + orderSum) - 0,
+            });
+        }
+    };
+
+    const setDeliveryCostOrder = (e: any) => {
+        setValue('delivery_cost', +e.target.value);
+        setValue('total_cost', (+e.target.value + Number(ordersData?.commission_cost ?? 0) + Number(ordersData?.dop_garanty ?? 0) + orderSum) - Number(ordersData?.bonus_decrease ?? 0));
+        setOrdersData({...ordersData, delivery_cost: +e.target.value,
+            total_cost: 
+            (+e.target.value + ordersData?.commission_cost + ordersData?.dop_garanty + orderSum) - ordersData?.bonus_decrease,
+        });
+    };
 
     const addComment = async(e: any) => {
         try {
@@ -468,7 +558,9 @@ const AdminFormOrder = observer((
     //console.log('COMMENT: ', newComment);
     //console.log('GOODS_ID: ', goodsId);
     //console.log('ORDER_ID: ', orderId);
-    console.log('GET_DOP_GAR: ', getValues('dop_garanty'))
+    //console.log('GET_DOP_GAR: ', getValues('dop_garanty'));
+    console.log('TOTAL_COST: ', getValues('delivery_cost'));
+    console.log('STATE: ', state);
     console.log(errors);
     console.log('ORDERS_STORAGE : ', orderStorage);
     console.log('ORDER_DATA: ', ordersData);
@@ -485,8 +577,9 @@ const AdminFormOrder = observer((
             >
                 <div className='admFormDataOrder'>
                     <div>
-                        <label htmlFor="date">Дата</label>
+                        <label htmlFor="order_date">Дата</label>
                         <input className="admFormOrderData" 
+                            id='order_date'
                             type="text"
                             //type="datetime-local"
                             name="order_date" 
@@ -498,84 +591,71 @@ const AdminFormOrder = observer((
                         />  
                     </div>
                     <div>
-                        <label htmlFor="fname">id </label>
+                        <label htmlFor="id_order">id </label>
                         <input className="admFormOrderId"
+                            id='id_order'
                             type="text"
-                            name="firstname"
+                            name="id_order"
                             value={orderId ?? ordersData?.id_order ?? ''}
                             placeholder="id замовлення"
                             readOnly={true}
                         />  
                     </div>
                     <div>
-                        <label htmlFor="organization">Організація </label>
+                        <label htmlFor="organisationOrder">Організація </label>
                         <select className="admFormOrderOrganiz" 
+                            id='organisationOrder'
                             {...register('organisation',)}
-                            name="organisation"
+                            name="organisationOrder"
+                            defaultValue={ordersData?.organisation ?? ''}
                             onChange={(e) => setValue('organisation', e.target.value)} 
                         >
-                            <option value={"ФОП Шемендюк К.В."}
-                                 selected={ordersData?.organisation === 'ФОП Шемендюк К.В.' ? true: false}
-                            >
+                            <option value={"ФОП Шемендюк К.В."}>
                                 ФОП Шемендюк К.В.
                             </option>
-                            <option value={"ТОВ Скай-Партс"}
-                                 selected={ordersData?.organisation === 'ТОВ Скай-Партс' ? true: false}
-                            >ТОВ Скай-Партс</option>
+                            <option value={"ТОВ Скай-Партс"}>
+                                ТОВ Скай-Партс</option>
                         </select>  
                     </div>
                     <div>
-                        <label htmlFor="storage">Склад </label>
+                        <label htmlFor="storageOrder">Склад </label>
                         <select className="admFormOrderStorage" 
                             {...register('storage', {required: 'Це необхідні дані'})}
-                            name="storage"
+                            id='storageOrder'
+                            name="storageOrder"
+                            defaultValue={ordersData?.storage ?? ''}
                             onChange={(e) => setValue('storage', e.target.value)}
                         >
-                            <option value={'Склад Поставщик'}
-                                selected={ordersData?.storage === 'Склад Поставщик' ? true: false}
-                            >
+                            <option value={'Склад Поставщик'}>
                                 Склад Поставщик
                             </option>
-                            <option value={'Склад Основний'}
-                                selected={ordersData?.storage === 'Склад Основний' ? true: false}
-                            >
+                            <option value={'Склад Основний'}>
                                 Склад Основний
                             </option>
-                            <option value={'Склад Монтаж'}
-                                selected={ordersData?.storage === 'Склад Монтаж' ? true: false}
-                            >
+                            <option value={'Склад Монтаж'}>
                                 Склад Монтаж
                             </option>
                         </select>  
                     </div>
                     <div>
-                        <label htmlFor="orderView">Вид </label>
+                        <label htmlFor="order_view">Вид </label>
                         <select className="admFormOrderView" 
                             {...register('order_view', {required: 'Це необхідні дані'})}
+                            id='order_view'
                             name="order_view"
+                            defaultValue={ordersData?.order_view ?? ''}
                             onChange={(e) => setValue('order_view', e.target.value)}
                             >
-                                <option 
-                                    value="Сайт" 
-                                    selected={ordersData?.order_view === "Сайт" ? true: false}
-                                >
+                                <option value="Сайт">
                                     Сайт
                                 </option>
-                                <option value="Роздріб"
-                                    selected={ordersData?.order_view === "Роздріб" ? true: false}
-                                >
+                                <option value="Роздріб">
                                     Роздріб
                                 </option>
-                                <option 
-                                    value="Опт"
-                                    selected={ordersData?.order_view === "Опт" ? true: false}
-                                >
+                                <option value="Опт">
                                     Опт
                                 </option>
-                                <option 
-                                    value="Інше"
-                                    selected={ordersData?.order_view === "Інше" ? true: false}
-                                >
+                                <option value="Інше">
                                     Інше
                                 </option>
                         </select>  
@@ -584,57 +664,44 @@ const AdminFormOrder = observer((
                         <label htmlFor="status_order">Статус </label>
                         <select className="admFormOrderStatus" 
                             {...register('status', {required: 'Це необхідні дані'})}
+                            id='status_order'
                             name="status_order"
+                            defaultValue={ordersData?.status ?? ''}
                             onChange={(e) => setValue('status', e.target.value)}
                         >   
-                            <option value="Новий"
-                                selected={ordersData?.status === "Новий" ? true: false}
-                            >
+                            <option value="Новий">
                                 Новий
                             </option>
-                            <option value="Уточнення"
-                                selected={ordersData?.status === "Уточнення" ? true: false}
-                            >
+                            <option value="Уточнення">
                                 Уточнення 
                             </option>
-                            <option value="Підтвердження"
-                                selected={ordersData?.status === "Підтвердження" ? true: false}
-                            >
+                            <option value="Підтвердження">
                                 Підтвердження
                             </option>
-                            <option value="На Відгрузку"
-                                selected={ordersData?.status === "На Відгрузку" ? true: false}
-                            >
+                            <option value="На Відгрузку">
                                 На Відгрузку
                             </option>
-                            <option value="Відвантажено"
-                                selected={ordersData?.status === "Відвантажено" ? true: false}
-                            >
+                            <option value="Відвантажено">
                                 Відвантажено
                             </option>
-                            <option value="Завершено"
-                                selected={ordersData?.status ===  "Завершено" ? true: false}
-                            >
+                            <option value="Завершено">
                                 Завершено
                             </option> 
-                            <option value="Повернення"
-                                selected={ordersData?.status ===  "Повернення" ? true: false}
-                            >
+                            <option value="Повернення">
                                 Повернення
                             </option> 
-                            <option value="Відміна"
-                                selected={ordersData?.status ===  "Відміна" ? true: false}
-                            >
+                            <option value="Відміна">
                                 Відміна
                             </option> 
                         </select>    
                     </div>
                     <div>
                         <div className='admFormOrderCustm'>
-                            <label htmlFor="lname">Покупець </label>
+                            <label htmlFor="customerOrder">Покупець </label>
                             <input  className="admFormOrderName"
+                                id='customerOrder'
                                 type="text"
-                                name="customer" 
+                                name="customerOrder" 
                                 maxLength={45}
                                 placeholder="Ім'я або назва.."
                                 value={addCustomer?.name ?? ordersData?.customer?.name ?? ''}
@@ -659,9 +726,11 @@ const AdminFormOrder = observer((
                         </div>    
                     </div>
                     <div>
-                        <label htmlFor="fname"> Контракт </label>
-                        <select className="admFormOrderContract" name="id_contract"
-                            defaultValue={addCustomer?.contract[0]?.id_contract}
+                        <label htmlFor="id_contractOrder"> Контракт </label>
+                        <select className="admFormOrderContract" 
+                            id='id_contractOrder'
+                            name="id_contractOrder"
+                            defaultValue={addCustomer?.contract[0]?.id_contract ?? ordersData?.id_contract}
                             >
                            {addCustomer ? addCustomer?.contract?.map(
                             (entity:{name: string; id_contract:number;}, index:number)=> (  
@@ -679,42 +748,37 @@ const AdminFormOrder = observer((
                         </select>
                     </div>
                     <div>
-                        <label htmlFor="pereviznik">Перевізник </label>
+                        <label htmlFor="deliveryOrder">Перевізник </label>
                         <select className="admFormOrderDelivery" 
                             {...register('delivery', {required: 'Це необхідні дані'})}
-                            name="delivery"
+                            id='deliveryOrder'
+                            name="deliveryOrder"
+                            defaultValue={ordersData?.delivery ?? ''}
                             onChange={chooseDelivery}
                         >
-                            <option value="Самовивіз"
-                                selected={ordersData?.delivery ===  "Самовивіз" ? true: false}
-                            >
+                            <option value="Самовивіз">
                                 Самовивіз
                             </option>
-                            <option value="Своя Доставка"
-                                selected={ordersData?.delivery ===  "Своя Доставка" ? true: false}
-                            >
+                            <option value="Своя Доставка">
                                 Своя Доставка
                             </option>
-                            <option value="Нова Пошта"
-                                selected={ordersData?.delivery ===  "Нова Пошта" ? true: false}
-                            >
+                            <option value="Нова Пошта">
                                 Нова Пошта
                             </option>
-                            <option value="Делівері"
-                                selected={ordersData?.delivery ===  "Делівері" ? true: false}
-                            >
+                            <option value="Делівері">
                                 Делівері
                             </option>
                         </select>    
                     </div>
                     <div>
-                    <label htmlFor="delivery_city">Місто </label>
+                    <label htmlFor="deliveryCityOrder">Місто </label>
                         <input className="admFormOrderDeliveryCity"
+                            id='deliveryCityOrder'
                             type="search"  
                             maxLength={45}
                             placeholder="Місто.."
                             //{...register('delivery_city')}
-                            name="delivery_city"
+                            name="deliveryCityOrder"
                             onChange={cityInputActive}
                             defaultValue={ordersData?.delivery_city ?? ''}
                         />  
@@ -735,7 +799,7 @@ const AdminFormOrder = observer((
                                 id={city.Present}
                                 value={city.Present}
                                 type='radio'
-                                name='city_list'
+                                name={city.Present}
                                 readOnly={true}
                             />
                             {city.Present}
@@ -751,12 +815,12 @@ const AdminFormOrder = observer((
                             data-city={city.name}
                             onClick={cityChooseActive}
                             key={city.id}>
-                        <label htmlFor={city.name}>
+                        <label htmlFor={city.id}>
                             <input 
                                 id={city.id}
                                 value={city.name}
                                 type='radio'
-                                name='city_list'
+                                name={city.name}
                                 readOnly={true}
                             />
                             {city.name + ', ' + city.districtName + ', ' + city.regionName}
@@ -769,6 +833,7 @@ const AdminFormOrder = observer((
                     <div>
                     <label htmlFor="delivery_city_depart">віддл </label>
                         <input className="admFormOrderDeliveryCityDep"
+                            id='delivery_city_depart'
                             type="search"  
                             maxLength={45}
                             placeholder="Відділення.."
@@ -833,30 +898,24 @@ const AdminFormOrder = observer((
                         </div>
                     : null}       
                     <div>
-                        <label htmlFor="status">Статус дост </label>
+                        <label htmlFor="status_delivery">Статус дост </label>
                         <select className="admFormOrderStatusDel" 
                             {...register('status_delivery', {required: 'Це необхідні дані'})}
+                            id='status_delivery'
                             name="status_delivery"
+                            defaultValue={ordersData?.status_delivery ?? ''}
                             onChange={(e) => setValue('status_delivery', e.target.value)}
                         >
-                            <option value="Новий"
-                                selected={ordersData?.status_delivery ===  "Новий" ? true: false}
-                            >
+                            <option value="Новий">
                                 Новий
                             </option>
-                            <option value="Очікує ТТН"
-                                selected={ordersData?.status_delivery ===  "Очікує ТТН" ? true: false}
-                            >
+                            <option value="Очікує ТТН">
                                 Очікує ТТН
                             </option>
-                            <option value="Доставляеться"
-                                selected={ordersData?.status_delivery ===  "Доставляеться" ? true: false}
-                            >
+                            <option value="Доставляеться">
                                 Доставляеться
                             </option>
-                            <option value="Відміна"
-                                selected={ordersData?.status_delivery ===  "Відміна" ? true: false}
-                            >
+                            <option value="Відміна">
                                 Відміна
                             </option> 
                         </select>    
@@ -867,95 +926,74 @@ const AdminFormOrder = observer((
                         <button onClick={addGoodsForm} className='admFormOrderBtnAdd'>Додати товар</button>  
                     </div>
                     <div>
-                        <label htmlFor="pay_view">Вид оплати </label>
+                        <label htmlFor="pay_viewOrder">Вид оплати </label>
                         <select className="admFormOrderViewPay" 
                             {...register('pay_view', {required: 'Це необхідні дані'})}
-                            name="pay_view"
+                            id='pay_viewOrder'
+                            name="pay_viewOrder"
+                            defaultValue={ordersData?.pay_view ?? ''}
                             onChange={(e) => setValue('pay_view', e.target.value)}
                         >
-                            <option value="Новий"
-                                selected={ordersData?.pay_view ===  "Новий" ? true: false}
-                            >
+                            <option value="Новий">
                                 Новий
                             </option>
-                            <option value="Готівка"
-                                selected={ordersData?.pay_view ===  "Готівка" ? true: false}
-                            >
+                            <option value="Готівка">
                                 Готівка
                             </option>
-                            <option value="Б/г рахунок"
-                                selected={ordersData?.pay_view ===  "Б/г рахунок" ? true: false}
-                            >
+                            <option value="Б/г рахунок">
                                 Б/г рахунок
                             </option>
-                            <option value="Карткою (VISA / MASTERCARD)"
-                                selected={ordersData?.pay_view ===  "Карткою (VISA / MASTERCARD)" ? true: false}
-                            >
+                            <option value="Карткою (VISA / MASTERCARD)">
                                 Карткою (VISA / MASTERCARD)
                             </option>
-                            <option value="Зворотній платіж (Післяплата)"
-                                selected={ordersData?.pay_view ===  "Зворотній платіж (Післяплата)" ? true: false}
-                            >
+                            <option value="Зворотній платіж (Післяплата)">
                                 Зворотній платіж (Післяплата)
                             </option>
-                             <option value="Відміна"
-                                selected={ordersData?.pay_view ===  "Відміна" ? true: false}
-                            >
+                            <option value="Відміна">
                                 Відміна
                             </option>
-                            <option value="Повернення"
-                                selected={ordersData?.pay_view ===  "Повернення" ? true: false}
-                            >
+                            <option value="Повернення">
                                 Повернення
                             </option>
                         </select>    
                     </div>
                     <div>
-                    <label htmlFor="status_pay">Статус оплати </label>
+                    <label htmlFor="status_pay_order">Статус оплати </label>
                         <select className="admFormOrderStatusPay" 
                             {...register('status_pay', {required: 'Це необхідні дані'})}
-                            name="status_pay"
+                            id='status_pay_order'
+                            name="status_pay_order"
+                            defaultValue={ordersData?.status_pay ?? ''}
                             onChange={(e) => setValue('status_pay', e.target.value)}
                         >
-                            <option value="Новий"
-                                selected={ordersData?.status_pay ===  "Новий" ? true: false}
-                            >
+                            <option value="Новий">
                                 Новий
                             </option>
-                            <option value="Очікує Оплату"
-                                selected={ordersData?.status_pay ===  "Очікує Оплату" ? true: false}
-                            >
+                            <option value="Очікує Оплату">
                                 Очікує Оплату
                             </option>
-                            <option value="Оплачено"
-                                selected={ordersData?.status_pay ===  "Оплачено" ? true: false}
-                            >
+                            <option value="Оплачено">
                                 Оплачено
                             </option>
-                            <option value="Відміна"
-                                selected={ordersData?.status_pay ===  "Відміна" ? true: false}
-                            >
+                            <option value="Відміна">
                                 Відміна
                             </option>
-                            <option value="Повернення"
-                                selected={ordersData?.status_pay ===  "Повернення" ? true: false}
-                            >
+                            <option value="Повернення">
                                 Повернення</option>
-                            <option value="Наложка Отримана"
-                                selected={ordersData?.status_pay ===  "Наложка Отримана" ? true: false}
-                            >
+                            <option value="Наложка Отримана">
                                 Наложка Отримана
                             </option>
                         </select>    
                     </div> 
                     <div>
-                        <label htmlFor="order_ttn">ТТН </label>
+                        <label htmlFor="delivery_ttn_order">ТТН </label>
                         <input className="admFormOrderTtn"
+                            id='delivery_ttn_order'
                             type="text"  
                             maxLength={45}
                             placeholder="ТТН замовлення.."
                             {...register('delivery_ttn')}
-                            name="delivery_ttn"
+                            name="delivery_ttn_order"
                             defaultValue={ordersData?.delivery_ttn ?? ''}
                         />  
                     </div>
@@ -1055,58 +1093,49 @@ const AdminFormOrder = observer((
                 </table>
                 </div>
                 <div className='admFormOrderNotes'>
-                    <label htmlFor="notes">Нотатки</label>
+                    <label htmlFor="notesOrder">Нотатки</label>
                     <textarea className="admFormOrderNotesText"  
                         {...register('notes')}
-                        name="notes"
+                        id="notesOrder"
+                        name="notesOrder"
                         value={ordersData?.notes}
                         placeholder="Пишить нотатку..">
                     </textarea> 
-                    <label htmlFor="deliveryOrder">Доставка </label>
+                    <label htmlFor="deliveryOrderCost">Доставка </label>
                     <input  className="admFormOrderDeliveryCost"
+                        id='deliveryOrderCost'
                         type="text"
                         {...register('delivery_cost')}
-                        name="deliveryOrder" 
+                        name="deliveryOrderCost" 
                         maxLength={45}
                         placeholder="Сума доставки.."
-                        defaultValue={ordersData?.delivery_cost ?? ''}
-                        onChange={(e) => setValue('delivery_cost', e.target.value)}
+                        defaultValue={ordersData?.delivery_cost ?? 0}
+                        onChange={setDeliveryCostOrder}
                     />
-                    <label htmlFor="dopGaranty">Бонуси(-) </label>
+                    <label htmlFor="bonusOrder">Бонуси(-) </label>
                     <input  className="admFormOrderBonus"
+                        id='bonusOrder'
                         type="text"
                         {...register('bonus_decrease')}
-                        name="dopGaranty" 
+                        name="bonusOrder" 
                         maxLength={45}
                         placeholder="Бонуси.."
-                        defaultValue={ordersData?.bonus_decrease ?? ''}
-                        onChange={(e) => setValue('bonus_decrease', 
-                            +e.target.value - addCustomer?.contract[0]?.bonus! && 
-                            +e.target.value <= addCustomer?.contract[0]?.bonus! ? 
-                            addCustomer?.contract[0]?.bonus! : 
-                            +e.target.value - (+e.target.value - addCustomer?.contract[0]?.bonus!)
-                            )
-                        }
+                        defaultValue={ordersData?.bonus_decrease ?? 0}
+                        onChange={setBonusDecreaseOrder}
                     />
                     <div className='admFormOrderNotesDopGar'>
                     <label htmlFor="dopGaranty">Доп. гар </label>
                     <input  className="admFormOrderDopGarCost"
+                        id='dopGaranty'
                         type="checkbox"
                         {...register('dop_garanty')}
                         name="dopGaranty" 
                         maxLength={45}
                         placeholder="Доп гар.."
-                        checked={getValues('dop_garanty') || ordersData?.dop_garanty ? true : false}
-                        //defaultChecked={ordersData?.dop_garanty || getValues('dop_garanty') ? true : false}
-                        onChange={() => setValue('dop_garanty', orderSum * 0.1)}
+                        //defaultValue={ordersData?.dop_garanty ?? 0}
+                        defaultChecked={ordersData?.dop_garanty}
+                        onChange={setDopGarantyOrder}
                     />
-                      {/* <CheckboxBtn 
-                        {...register('dop_garanty')}
-                        value={''} 
-                        titleCheckbox={'Доп гар'} 
-                        //checked={ordersData?.dop_garanty ? true : false}
-                        onChange={() => setValue('dop_garanty', orderSum * 0.1)}
-                        />   */}
                     </div>
                 </div>
                 <div className='admFormOrderCommit'
@@ -1119,6 +1148,7 @@ const AdminFormOrder = observer((
                         >Додати коментар
                     </button>
                         <textarea 
+                        name='commentsOrder'
                         className='admOrderCommitText'
                         value={newComment}
                         onChange={e =>setNewComment(e.target.value)}
@@ -1136,18 +1166,14 @@ const AdminFormOrder = observer((
                     </div>  
                 </div>
                 <div className='admOrderFormGrp'>
-                    <div 
-                        //onClick={(e) => e.stopPropagation()}
-                    >
+                    <div>
                         <button className={!disableBtnOk ? 'admFormOrderBtnOk' : 'admFormOrderBtnOkDsb'}
                             disabled={disableBtnOk}
                             onClick={onSubmitOrder}>
                             Ok
                         </button>
                     </div>
-                    <div 
-                        //onClick={(e)=>e.preventDefault()}
-                    >
+                    <div>
                         <button className={!disableBtn ? 'admFormOrderBtnSave' : 'admFormOrderBtnSaveDsb'}
                             disabled={disableBtn} 
                             onClick={handleSubmit(onSubmit)}
@@ -1164,21 +1190,21 @@ const AdminFormOrder = observer((
                     <span className='admFormOrderUserInfo'>користувач: {ordersData?.user?.name ?? user?._user?.sub?.name ?? ''}</span>
                     <span className='admFormOrderUserInfo'>посада: {ordersData?.user?.role ?? user._user?.sub?.role ?? ''}</span>
                     <span className='admFormOrderEstimate'>
-                        доп гарант: {ordersData?.dop_garanty}
+                        доп гарант: {ordersData?.dop_garanty ?? getValues('dop_garanty') ?? 0}
                     </span>
                     <span className='admFormOrderEstimate'>
-                        бонус (мінус): {ordersData?.bonus_decrease ?? 0}
+                        бонус (мінус): {ordersData?.bonus_decrease ?? getValues('bonus_decrease') ?? 0}
                     </span>
                     <span className='admFormOrderEstimate'>
-                        доставка (загалом): {ordersData?.delivery_cost ?? 0}
+                        доставка (загалом): {ordersData?.delivery_cost ?? getValues('delivery_cost') ?? 0}
                     </span>
                     <span className='admFormOrderEstimate'>
-                        комісія банку: {ordersData?.commission_cost ?? 0}</span>
+                        комісія банку: {ordersData?.commission_cost ?? getValues('commission_cost') ?? 0}</span>
                     <span className='admFormOrderEstimate'>
                         Сума товарів: {orderSum}
                     </span>
                     <span className='admFormOrderEstimateOverall'>
-                        Сума замовлення: {ordersData?.total_cost ?? orderSum + (orderSum * 0.015)}
+                        Сума замовлення: {getValues('total_cost') ?? ordersData?.total_cost ?? 0}
                     </span>
                     {purchaseGoods.length !== 0 && user._user?.sub?.role === 'admin' ?
                     <>
@@ -1186,11 +1212,11 @@ const AdminFormOrder = observer((
                             сума закупівлі: {purchaseGoods?.reduce((sum:any, current:any) => sum + current)}
                         </span>
                         <span className='admFormOrderProfit'>
-                            заробіток загалом: { orderSum - purchaseGoods?.reduce((sum:any, current:any) => sum + current)}
+                            заробіток загалом: {orderSum - purchaseGoods?.reduce((sum:any, current:any) => sum + current)}
                         </span>
                         <span className='admFormOrderProfit'>
                             націнка загалом: {((orderSum / purchaseGoods?.reduce(
-                            (sum:any, current:any) => sum + current) - 1) * 100).toFixed(1)}%
+                            (sum:any, current:any) => sum + current) - 1) * 100).toFixed(1) ?? '0'}%
                         </span>
 
                     </>

@@ -9,7 +9,8 @@ import { getTyresAdmin,
         getCommentOrderSupData,
         getSuppliers,
         getOrderSupData,
-        getUsers
+        getUsers,
+        getStorageAll
     } from '../restAPI/restAdminAPI';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
@@ -104,8 +105,8 @@ const Admin = observer(() => {
                     getWheelsAdmin,
                     //getStockWheel,
                     //getPriceWheels,
-                    //getStorageAll,
-                    getCommentOrderData,
+                    getStorageAll,
+                    //getCommentOrderData,
                     getOrderData,
                     getCustomers
                 ]
@@ -132,10 +133,10 @@ const Admin = observer(() => {
                     //     let resultStockWheel: any = await tasks[i]();
                     //     setWheelStockData(resultStockWheel?.data);
                     // } 
-                    // if(!isMounted && tasks[i] === getStorageAll) {
-                    //     let resultStorage: any = await tasks[i]();
-                    //     setStorageAll(resultStorage?.data);
-                    // } 
+                    if(!isMounted && tasks[i] === getStorageAll) {
+                        let resultStorage: any = await tasks[i]();
+                        setStorageAll(resultStorage?.data);
+                    } 
                     // if(!isMounted && tasks[i] === getPriceWheels) {
                     //     let resultPriceWheel: any = await tasks[i]();
                     //     setWheelPriceData(resultPriceWheel?.data);
@@ -160,14 +161,15 @@ const Admin = observer(() => {
                         let resultSuppliers: any = await tasks[i]();
                         setSuppliers(resultSuppliers?.data);
                     }
-                    if (!isMounted && tasks[i] === getCommentOrderData) {
-                        let resultComOrder: any = await tasks[i](commentByOrder);
-                        setCommentOrder(resultComOrder?.data);  
-                    }
-                    if (!isMounted && tasks[i] === getCommentOrderSupData) {
-                        let resultComOrderSup: any = await tasks[i](commentByOrderSup);
-                        setCommentOrderSup(resultComOrderSup?.data);
-                    }
+                    // if (!isMounted && tasks[i] === getCommentOrderData) {
+                    //     let resultComOrder: any = await tasks[i](commentByOrder);
+                    //     console.log('COMMENT_DATA: ', resultComOrder?.data);
+                    //     setCommentOrder(resultComOrder?.data);  
+                    // }
+                    // if (!isMounted && tasks[i] === getCommentOrderSupData) {
+                    //     let resultComOrderSup: any = await tasks[i](commentByOrderSup);
+                    //     setCommentOrderSup(resultComOrderSup?.data);
+                    // }
                     const task = tasks.shift();
                     // Run the task:
                     task();
@@ -178,7 +180,7 @@ const Admin = observer(() => {
         return () => {
             isMounted = true;
         };
-    },[commentByOrder, commentByOrderSup])
+    },[])
 
     const sideBarItemChange = async (e: any) => {
         if (e.target?.value) {
@@ -188,33 +190,27 @@ const Admin = observer(() => {
     }
 
     const showCommentOrder = async (e: any) => {
-        if (e.target?.value) {
-            setCommentByOrder(+e.target.value);
-        } 
-        if (e.target?.value === '0') {
-            setCommentByOrder(0); 
-        }
         if (e.currentTarget?.getAttribute('data-value')){
-            setCommentByOrder(+e.currentTarget?.getAttribute('data-value'));
+            //setCommentByOrder(+e.currentTarget?.getAttribute('data-value'));
+            const resultComOrder = await getCommentOrderData(+e.currentTarget?.getAttribute('data-value'));
+            if (resultComOrder?.data?.length !== 0) {
+                console.log('COMMENT_DATA: ', resultComOrder?.data);
+                setCommentOrder(resultComOrder?.data);  
+            } else {
+                setCommentOrder(null);  
+            }
         } 
-        if (e.currentTarget?.getAttribute('data-value') === '0') {
-            setCommentByOrder(0); 
-        }
     }
 
     const showCommentOrderSup = async (e: any) => {
-        if (e.target?.value) {
-            setCommentByOrderSup(+e.target.value);
-        } 
-        if (e.target?.value === '0') {
-            setCommentByOrderSup(0); 
-        }
         if (e.currentTarget?.getAttribute('data-value')){
-            setCommentByOrderSup(+e.currentTarget?.getAttribute('data-value'));
+            let resultComOrderSup: any = await getCommentOrderSupData(e.currentTarget?.getAttribute('data-value'));
+            if (resultComOrderSup?.data?.length !== 0) {
+                setCommentOrderSup(resultComOrderSup?.data);
+            } else {
+                setCommentOrderSup(null);
+            }
         } 
-        if (e.currentTarget?.getAttribute('data-value') === '0') {
-            setCommentByOrderSup(0); 
-        }
     }
     // console.log('USERS: ', users);
     // console.log('CUSTOMERS: ',customers);
@@ -246,8 +242,7 @@ const Admin = observer(() => {
                 : null}
                 {sideBarItem === 'zamovlenia' ?
                     <AdminOrderContent 
-                        props={[tyreData, tyreStockData, tyrePriceData,
-                            wheelData, wheelPriceData, wheelStockData]}
+                        props={[tyreData,wheelData]}
                         showComment={showCommentOrder}
                         orders={orderAllData}
                         customer={customers} 

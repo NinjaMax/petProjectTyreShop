@@ -100,10 +100,10 @@ export class WheelsService {
           { model: RatingWheels },
           { model: ReviewWheels },
           { model: StockWheels },
-          { model: Category},
+          { model: Category },
           { model: PriceWheels },
           { model: WheelType },
-          { model: WheelSizeDigits},
+          { model: WheelSizeDigits },
         ],
       });
 
@@ -120,11 +120,13 @@ export class WheelsService {
     try {
       const wheelsAllAdmin = await this.wheelRepository.findAll({
         include: [
-          { model: Category},
+          { model: Category },
           { model: WheelType },
           { model: WheelColor },
-          { model: WheelBrand},
-          { model: WheelSizeDigits},
+          { model: WheelBrand },
+          { model: WheelSizeDigits },
+          { model: PriceWheels },
+          { model: StockWheels }
         ],
       });
 

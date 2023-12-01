@@ -25,7 +25,8 @@ const AdminModalCustomers = ({allCustomer, addCustomer}: IModalCustomers) => {
             const newCustomerList = allCustomer?.filter(
             (customer: any) => {
             return customer.name.toLowerCase().includes(filterCustmValue.toLowerCase()) || 
-            customer.id_customer === +filterCustmValue!
+            customer.id_customer === +filterCustmValue! || 
+            customer.phone.includes(+filterCustmValue)
             });
             setFilterCustomer(newCustomerList); 
         } else {

@@ -84,14 +84,14 @@ await $hostPost.patch('/orders/update', {
     status: data.status,
     pay_view: data.pay_view,
     status_pay: data.status_pay,
-    dop_garanty: data.dop_garanty,
+    dop_garanty: +data.dop_garanty,
     delivery_cost: +data.delivery_cost,
     delivery_city: data.delivery_city,
     delivery_city_ref: data.delivery_city_ref,
     delivery_city_depart: data.delivery_city_depart,
     delivery_city_depart_ref: data.delivery_city_depart_ref,
     total_cost: data.total_cost,
-    bonus_decrease: data.bonus_decrease, 
+    bonus_decrease: +data.bonus_decrease, 
     id_customer: data.id_customer,
     id_contract: data.id_contract,
 }).catch(error => {
@@ -282,16 +282,16 @@ const getAdminPriceWheelsById = async (id: string) => {
     return data;
 };
 
-// const getStorageAll = async () => 
-// await $hostGet.get('/storage/all')
-// .catch(error => {
-//     console.log(error)
-// });
+const getStorageAll = async () => 
+await $hostGet.get('/storage/all')
+.catch(error => {
+    console.log(error)
+});
 
 const getCommentOrderData = async (orderId: number) =>
 await $hostGet.get('/comments/byorderid', {params: {id_order: orderId ?? 0}})
 .catch(error => {
-    console.log('ORDERID: ', orderId)
+    //console.log('ORDERID: ', orderId)
     console.log(error)
 });
 
@@ -423,5 +423,6 @@ export {
     getUsers,
     addCommentsToOrder,
     createGoodsToOrderBasket,
-    getCustomersById
+    getCustomersById,
+    getStorageAll
 };

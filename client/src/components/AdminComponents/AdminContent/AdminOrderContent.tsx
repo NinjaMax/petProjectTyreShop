@@ -342,9 +342,9 @@ const AdminOrderContent = (
                 <table className='admOrderCommitTable'>
                 <thead>
                     <tr>
-                        <th>Замовлення</th>
-                        <th>Користувач</th>
-                        <th>Дата</th>
+                        <th className='admOrderCommitTableId'>Замовлення</th>
+                        <th className='admOrderCommitTableUser'>Користувач</th>
+                        <th className='admOrderCommitTableDate'>Дата cтворення</th>
                         <th>Коментар</th>
                     </tr>  
                 </thead>
@@ -353,7 +353,7 @@ const AdminOrderContent = (
                         (value: IComments, index: number) => (
                     <tr key={value.user.name + index}>
                         <td>{value.id_order}</td>
-                        <td>{value.user.name}</td>
+                        <td>{value.user.name} ({value.user.role})</td>
                         <td>{new Date(value.createdAt).toLocaleString()}</td>
                         <td>{value.comments}</td>
                     </tr>

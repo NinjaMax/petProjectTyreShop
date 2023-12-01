@@ -7,6 +7,7 @@ import { Comments } from './entities/comment.model';
 import { OrdersSuppliersService } from '../orders-suppliers/orders-suppliers.service';
 import { OrdersService } from '../orders/orders.service';
 import { UsersService } from '../users/users.service';
+import { Users } from 'src/users/entities/users.model';
 
 @Injectable()
 export class CommentsService {
@@ -105,7 +106,8 @@ export class CommentsService {
       if (getCommentDto.id_order !== 0) {
         const commentByOrderId = await this.commentsRepository.findAll({
           where: { id_order: getCommentDto.id_order },
-          include: { all: true },
+          include: [{ model: Users }],
+          order: [['createdAt', 'DESC']],
         });
         return commentByOrderId;
       } else {
