@@ -38,6 +38,7 @@ import { ICity } from '../../basket/types/CityNP.type';
 import { getCityNovaPoshta, getWareHousesNovaPoshta } from '../../../restAPI/restNovaPoshtaAPI';
 import { getCityDelivery, getWareHousesDelivery } from '../../../restAPI/restDeliveryAPI';
 import { IDapertmentNP } from '../../basket/types/DepartmentType.type';
+import { type } from 'os';
 
 const AdminFormOrder = observer((
     { props, 
@@ -61,7 +62,7 @@ const AdminFormOrder = observer((
     const [disableBtn, setDisableBtn] = useState<boolean>(false);
     const [disableBtnOk, setDisableBtnOk] = useState<boolean>(true);
     const [orderStorage, setOrderStorage] = useState<any[] | undefined>([]);
-    const {register, handleSubmit, setValue, getValues, formState: {errors}} = useForm();    
+    const {register, handleSubmit, setValue, getValues, setError, formState: {errors}} = useForm();    
     const [state, dispatch] = useReducer<Reducer<StateReducer, ActionReducer>>(
         reducer, createInitialState(goodsId, getOrdersData)
     );
@@ -100,6 +101,12 @@ const AdminFormOrder = observer((
         }
     },[ordersData, state]);
 
+    // useEffect(() => {
+    //     if (errors) {
+    //         setError('root.random', {type: 'random', message: "custom message"});
+    //     }
+    // },[errors, setError])
+
     useEffect(() => {
         register("total_cost")
         setValue("total_cost", (Number(ordersData?.delivery_cost ?? 0) + Number(ordersData?.commission_cost ?? 0) + Number(ordersData?.dop_garanty ?? 0) + orderSum) - Number(ordersData?.bonus_decrease ?? 0));
@@ -112,21 +119,24 @@ const AdminFormOrder = observer((
     ]);
 
     useEffect(() => {
-        register("id_customer", {required: 'Це необхідні дані'});
+        //register("id_customer", {required: 'Це необхідні дані'});
         register("id_user", {required: 'Це необхідні дані'});
-        register('id_contract', {required: 'Це необхідні дані'})
+        //register('id_contract', {required: 'Це необхідні дані'})
         setValue("id_user", user._user?.sub.id_user);
-        setValue("id_customer", addCustomer?.id_customer! ?? ordersData?.id_customer,
-        { shouldValidate: true })
-        setValue("id_contract", addCustomer?.contract[0]?.id_contract! ?? ordersData?.id_contract,
-        { shouldValidate: true })
+        if (addCustomer) {
+           setValue("id_customer", addCustomer?.id_customer! ?? ordersData?.id_customer,
+            { shouldValidate: true }) 
+            setValue("id_contract", addCustomer?.contract[0]?.id_contract! ?? ordersData?.id_contract,
+            { shouldValidate: true })
+        }
     }, [
         register, 
         setValue, 
-        addCustomer?.id_customer, 
+        getValues,
+        addCustomer, 
         user, 
         ordersData?.id_customer, 
-        addCustomer?.contract, 
+        //addCustomer?.contract, 
         ordersData?.id_contract
     ]);
     
@@ -157,9 +167,9 @@ const AdminFormOrder = observer((
         if (!delivery) {
             register("delivery_city");
             register("delivery_city_ref");
-            setValue("delivery_city", ordersData?.delivery_city,
+            setValue("delivery_city", ordersData?.delivery_city ?? null,
             { shouldValidate: true });
-            setValue("delivery_city_ref", ordersData?.delivery_city_ref);
+            setValue("delivery_city_ref", ordersData?.delivery_city_ref ?? null);
         }
     }, [
         register, 
@@ -176,9 +186,9 @@ const AdminFormOrder = observer((
     useEffect(() => {
         register("delivery_city_depart")
         register("delivery_city_depart_ref")
-        setValue("delivery_city_depart", dataDepartment?.delivery_dep! ?? ordersData?.delivery_city_depart,
+        setValue("delivery_city_depart", dataDepartment?.delivery_dep! ?? ordersData?.delivery_city_depart ?? null,
         { shouldValidate: true })
-        setValue("delivery_city_depart_ref", dataDepartment?.delivery_dep_ref! ?? ordersData?.delivery_city_depart_ref,
+        setValue("delivery_city_depart_ref", dataDepartment?.delivery_dep_ref! ?? ordersData?.delivery_city_depart_ref ?? null,
         { shouldValidate: true })
     }, [ 
         dataDepartment, 
@@ -332,6 +342,15 @@ const AdminFormOrder = observer((
         if (findCustomer) {
             setAddCustomer(findCustomer);  
             setOpenCustomers(!openCustomers);
+            //if (!getValues("id_customer")) {
+                // setValue("id_customer", addCustomer?.id_customer! ?? ordersData?.id_customer,
+                //  { shouldValidate: true }) 
+             //}
+             //if (!getValues("id_contract")) {
+                //  setValue("id_contract", addCustomer?.contract[0]?.id_contract! ?? ordersData?.id_contract,
+                //  { shouldValidate: true })
+             //}
+            
         }
     };
 
@@ -378,39 +397,66 @@ const AdminFormOrder = observer((
         //e.preventDefault();
         console.log('CREATE ORDER: ', data);
         try {
+            //if (!errors.id_contract || !errors.id_customer) {
             if (!orderId && state.length === 0) {
                let resultForm: any = await responseForm(data);
                 setOrderId(+resultForm.data.id_order);
                 setOrdersData(resultForm.data);
+                console.log('GET_ORDER_DATA: ', resultForm);
                 alert(`Замовлення створено, id ${resultForm.data.id_order},
                     але товари не додані.`
                 ); 
             }
             if(!orderId && state.length > 0) {
+                let orderStorageArr: any[] | null= [];
                 let resultForm: any = await responseForm(data);
+                orderStorage?.forEach(async(itemsOrd: any, index: any): Promise<any> => {
+                    //await updateOrderStorage(itemsOrd);
+                    if (itemsOrd.id && state[index].id && itemsOrd.price !== state[index].price) {
+                        const addCommitTo: any = await addCommentsToOrder(
+                            user._user?.sub.id_user, +resultForm.data.id_order, 
+                            `Змінено ціну поз (${index + 1}): ${itemsOrd.price} => ${state[index].price}`
+                        );
+                        setAddNewCommit(addCommitTo?.data); 
+                    }
+                });
                 orderStorage?.splice(0, orderStorage.length);
                 setOrderId(+resultForm.data.id_order);
                 setOrdersData(resultForm.data);
+                console.log('GET_ORDER_DATA: ', resultForm);
                 state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
-                    let resultOrder: any = await createGoodsToOrder(itemGoods, resultForm.data.id_order!);
-                    setOrderStorage(oldOrdStor => [...oldOrdStor!, resultOrder.data]);
-                })
+                    let resultOrder: any = await createGoodsToOrder(itemGoods, +resultForm.data.id_order!);
+                    //setOrderStorage([...resultOrder?.data?.order_storage]);
+                    orderStorageArr?.push(resultOrder.data);
+                    console.log('PUT_ORDER_DATA: ', resultOrder.data)
+                });
                 setUpdateBtn('Оновити');
+                setOrderStorage([...orderStorageArr]);
+                setDisableBtnOk(!disableBtnOk);
+                orderStorageArr = null;
                 alert(`Замовлення створено, id ${resultForm.data.id_order}. 
                     Для підкріплення товарів до замовлення треба натиснути ОК.`);
             }
             if(orderId && state.length > 0 && disableBtnOk === false) {
-                orderStorage?.forEach(async(itemsOrd: any,): Promise<any> => {
+                orderStorage?.forEach(async(itemsOrd: any, index: any): Promise<any> => {
                     //await updateOrderStorage(itemsOrd);
+                    if (itemsOrd.id && state[index].id && itemsOrd.price !== state[index].price) {
+                        const addCommitTo: any = await addCommentsToOrder(
+                            user._user?.sub.id_user, orderId, 
+                            `Змінено ціну поз (${index + 1}): ${itemsOrd.price} => ${state[index].price}`
+                        );
+                        setAddNewCommit(addCommitTo?.data); 
+                    }
                 });
                 orderStorage?.splice(0, orderStorage.length);
                 state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
                     let resultOrder: any = await createGoodsToOrder(itemGoods, orderId);
                     console.log('UPDATE_ORDER_STORAGE: ', resultOrder.data);
-                    setOrderStorage(oldOrdStor => [...oldOrdStor!, resultOrder.data]);  
+                    
                 });  
                 const newOrderDatas = await updateOrder(data, orderId);  
                 setOrdersData(newOrderDatas?.data);
+                setOrderStorage([...newOrderDatas?.data?.order_storage]);  
                 console.log('NEW_ORDER_DATA_ORDER: ', newOrderDatas?.data)  
                 alert(`Замовлення id ${orderId} збереженно,  товари оновлені.`);
             
@@ -425,7 +471,7 @@ const AdminFormOrder = observer((
                     if (itemsOrd.id && state[index].id && itemsOrd.price !== state[index].price) {
                         const addCommitTo: any = await addCommentsToOrder(
                             user._user?.sub.id_user, orderId, 
-                            `Змінено ціну ${itemsOrd.price} => ${state[index].price}`
+                            `Змінено ціну поз (${index + 1}): ${itemsOrd.price} => ${state[index].price}`
                         );
                         setAddNewCommit(addCommitTo?.data); 
                     }
@@ -434,7 +480,7 @@ const AdminFormOrder = observer((
                 state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
                     let resultOrder: any = await createGoodsToOrder(itemGoods, orderId);
                     console.log('UPDATE_ORDER_STORAGE: ', resultOrder.data);
-                    setOrderStorage(oldOrdStor => [...oldOrdStor!, resultOrder.data]);
+                   
                 });
                 //}
                 //newStorage();
@@ -442,11 +488,13 @@ const AdminFormOrder = observer((
                 console.log('UDATE_DATA_ORDER: ', data);
                 const newOrderData = await updateOrder(data, orderId);
                 setOrdersData(newOrderData?.data);
+                setOrderStorage([...newOrderData?.data?.order_storage]);
                 console.log('NEW_ORDER_DATA_ORDER: ', newOrderData?.data)
                 alert(`Товари до замовлення id ${orderId}, оновлено.`);
             } 
-            // else {
-            //    alert('Помилка! Перевірте данні або оновіть сторінку') 
+
+            // } else {
+            //     alert('Помилка! Перевірте всі необхідні данні або оновіть сторінку') 
             // }
             //e.stopPropagation();
         } catch (error){
@@ -454,7 +502,7 @@ const AdminFormOrder = observer((
             console.log('ERROR_ORDER: ', error);
         }    
     }    
-    //GOOD PERFORM
+
     const onSubmitOrder = async () => {
         try {
             if(orderId && orderStorage?.length !== 0) {
@@ -503,7 +551,7 @@ const AdminFormOrder = observer((
             setValue('total_cost', (Number(ordersData?.delivery_cost ?? 0) + Number(ordersData?.commission_cost ?? 0) + Number(ordersData?.dop_garanty ?? 0) + orderSum ?? 0) - +e.target.value);
             setOrdersData({...ordersData, bonus_decrease: +e.target.value,
                 total_cost: 
-                (ordersData?.delivery_cost + ordersData?.commission_cost + ordersData?.dop_garanty + orderSum) - +e.target.value,
+                (Number(ordersData?.delivery_cost ?? 0) + Number(ordersData?.commission_cost ?? 0) + Number(ordersData?.dop_garanty ?? 0) + orderSum ?? 0) - +e.target.value,
             });
         }
         if (+e.target.value > addCustomer?.contract[0]?.bonus!) {
@@ -511,7 +559,7 @@ const AdminFormOrder = observer((
             setValue('total_cost', (Number(ordersData?.delivery_cost ?? 0) + Number(ordersData?.commission_cost ?? 0) + Number(ordersData?.dop_garanty ?? 0) + orderSum) - +e.target.value - (+e.target.value - addCustomer?.contract[0]?.bonus!)); 
             setOrdersData({...ordersData, bonus_decrease: +e.target.value - (+e.target.value - addCustomer?.contract[0]?.bonus!),
                 total_cost: 
-                (ordersData?.delivery_cost + ordersData?.commission_cost + ordersData?.dop_garanty + orderSum) - +e.target.value - (+e.target.value - addCustomer?.contract[0]?.bonus!),
+                (Number(ordersData?.delivery_cost ?? 0) + Number(ordersData?.commission_cost ?? 0) + Number(ordersData?.dop_garanty ?? 0) + orderSum) - +e.target.value - (+e.target.value - addCustomer?.contract[0]?.bonus!),
             }); 
         }
         if (!addCustomer?.contract[0]?.bonus! && !ordersData?.bonus_decrease) {
@@ -519,7 +567,7 @@ const AdminFormOrder = observer((
             setValue('total_cost', (Number(ordersData?.delivery_cost ?? 0) + Number(ordersData?.commission_cost ?? 0) + Number(ordersData?.dop_garanty ?? 0) + orderSum) - 0);
             setOrdersData({...ordersData, bonus_decrease: 0,
                 total_cost: 
-                (ordersData?.delivery_cost + ordersData?.commission_cost + ordersData?.dop_garanty + orderSum) - 0,
+                (Number(ordersData?.delivery_cost ?? 0) + Number(ordersData?.commission_cost ?? 0) + Number(ordersData?.dop_garanty ?? 0) + orderSum) - 0,
             });
         }
     };
@@ -529,7 +577,7 @@ const AdminFormOrder = observer((
         setValue('total_cost', (+e.target.value + Number(ordersData?.commission_cost ?? 0) + Number(ordersData?.dop_garanty ?? 0) + orderSum) - Number(ordersData?.bonus_decrease ?? 0));
         setOrdersData({...ordersData, delivery_cost: +e.target.value,
             total_cost: 
-            (+e.target.value + ordersData?.commission_cost + ordersData?.dop_garanty + orderSum) - ordersData?.bonus_decrease,
+            (+e.target.value + Number(ordersData?.commission_cost ?? 0) + Number(ordersData?.dop_garanty ?? 0) + orderSum) - Number(ordersData?.bonus_decrease ?? 0),
         });
     };
 
@@ -561,7 +609,7 @@ const AdminFormOrder = observer((
     //console.log('GET_DOP_GAR: ', getValues('dop_garanty'));
     console.log('TOTAL_COST: ', getValues('delivery_cost'));
     console.log('STATE: ', state);
-    console.log(errors);
+    console.log('ERRORS_FORM: ', errors);
     console.log('ORDERS_STORAGE : ', orderStorage);
     console.log('ORDER_DATA: ', ordersData);
     console.log('PURCHASE_PRICE: ', purchaseGoods);
@@ -701,6 +749,7 @@ const AdminFormOrder = observer((
                             <input  className="admFormOrderName"
                                 id='customerOrder'
                                 type="text"
+                                {...register("id_customer", {required: 'Це необхідні дані'})}
                                 name="customerOrder" 
                                 maxLength={45}
                                 placeholder="Ім'я або назва.."
@@ -728,6 +777,7 @@ const AdminFormOrder = observer((
                     <div>
                         <label htmlFor="id_contractOrder"> Контракт </label>
                         <select className="admFormOrderContract" 
+                            {...register('id_contract', {required: 'Це необхідні дані'})}
                             id='id_contractOrder'
                             name="id_contractOrder"
                             defaultValue={addCustomer?.contract[0]?.id_contract ?? ordersData?.id_contract}
@@ -1245,6 +1295,10 @@ const AdminFormOrder = observer((
                         storageGoods={storages}
                     />
                 </ModalAdmin> : null
+            }
+            {errors.id_contract || errors.id_customer ?
+                <span style={{'color': 'red'}}>Помилка! Не заповнені всі дані (покупця).</span> 
+                : null
             }
         </div>
     );

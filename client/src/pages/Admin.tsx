@@ -199,8 +199,10 @@ const Admin = observer(() => {
             } else {
                 setCommentOrder(null);  
             }
-        } 
-    }
+        } else {
+            setCommentOrder(null); 
+        }
+    };
 
     const showCommentOrderSup = async (e: any) => {
         if (e.currentTarget?.getAttribute('data-value')){

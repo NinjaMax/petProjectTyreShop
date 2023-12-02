@@ -35,22 +35,24 @@ export class OrdersService {
     try {
       const basket = await this.basketService.findBasketById(createOrderDto);
       if (createOrderDto.id_contract && createOrderDto.id_customer) {
-        const order = await this.ordersRepository.create(createOrderDto);
+        const orderCustomer = await this.ordersRepository.create(createOrderDto);
         if (basket) {
           const orderId: Orders = await this.ordersRepository.findByPk(
-            order.id_order,
+            orderCustomer.id_order,
           );
           await basket.$set('order', orderId.id_order);
           basket.order = orderId;
   
           return orderId;
+        } else {
+          return orderCustomer;
         }
       } else {
         const customer = await this.customerService.findOrCreateCustomer(
           createOrderDto
         );
         //if(customer) {
-          const order = await this.ordersRepository.create({
+          const orderNew = await this.ordersRepository.create({
             ...createOrderDto,
             delivery_city: createOrderDto.city_delivery,
             delivery_city_ref: createOrderDto.ref_city_delivery,
@@ -64,19 +66,19 @@ export class OrdersService {
             id_customer: customer.id_customer,
             id_contract: customer.contract[0].id_contract,
           });
-          order.reload();
+          //order.reload();
         //} 
         
         if (basket) {
           const orderNewId: Orders = await this.ordersRepository.findByPk(
-          order.id_order,
+          orderNew.id_order,
         );
           await basket.$set('order', orderNewId.id_order);
           basket.order = orderNewId;
 
           return orderNewId;
         } else {
-          return order;
+          return orderNew;
         }
       }
       

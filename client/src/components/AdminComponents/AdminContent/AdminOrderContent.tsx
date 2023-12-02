@@ -36,8 +36,8 @@ const AdminOrderContent = (
         if (orderData) {
             setOrderData(null);
         }
+        showComment(0);
         setActiveOrder(!activeOrder);
-        showComment(e);
     }
 
     const activeFormOrderSup = (e: any) => {
