@@ -163,20 +163,42 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                     alt='bonus'
                     title='Бонуси'
                     />
-                <span className='tyresCardBonusText'>{`+${(goods?.price[0]?.price! * 0.015).toFixed()} бонусів`}</span> 
+                <span className='tyresCardBonusText'>{`+${(goods?.price[0]?.price! * 0.01).toFixed()} бонусів`}</span> 
                 </div>
-                
-                {goods?.price ? goods?.price.map((item: any) => (
+
+                {goods?.price && goods.price.find((entity: any) => entity.id_storage === 2) ? 
+                    goods?.price.map((item: any) => (
                     <Fragment key={item.id}>
-                    {item.price ?
+                    {item.price && !item.old_price && item.id_storage === 2 ?
+                    <div className="tyresCardPrice">
+                        {item.price} &#8372;
+                    </div> 
+                    :
+                        null
+                    }
+                    {item.price && item.old_price && item.id_storage === 2 ?
+                    <div className="tyresCardPrice">
+                    <div className="tyresCardOldPrice">
+                        {item.old_price} &#8372;
+                    </div>    
+                    <div >
+                        {item.price} &#8372;
+                    </div> 
+                    </div>
+                    : null
+                    } 
+                    </Fragment>
+                  ))
+                  : 
+                    goods?.price.map((item: any) => (
+                    <Fragment key={item.id}>
+                    {item.price && item.price.id_storage !== 2 ?
                     <div className="tyresCardPrice">
                         {item.price} &#8372;
                     </div> :
-                    <div className="tyresCardPrice">
-                        немає в наявності
-                    </div>  
+                        null
                     }
-                    {item.old_price ?
+                    {item.old_price && item.price.id_storage !== 2 ?
                     <div className="tyresCardOldPrice">
                         {item.old_price} &#8372;
                     </div> 
@@ -184,24 +206,32 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                     } 
                     </Fragment>
                   ))
-                  : <div className="tyresCardPrice">
+                }
+                {goods?.price.reduce((sum: any, current: any) => sum + current.price, 0) === 0 ? 
+                    <div className="tyresCardPrice">
                         немає в наявності
-                    </div> 
+                    </div>
+                    : null 
                 }
                 { goods?.price[0].price ?
                     <ButtonAction 
                         props={"КУПИТИ"} 
                         widthBtn={260} 
                         eventItem={() => {
-                            checkOrders!(goods, ratingModel)
+                            checkOrders!(
+                                goods, 
+                                ratingModel,
+                                goods?.price.find((entity: any) => entity.id_storage === 2) ?
+                                2 : 1  
+                            )
                         }}
                     />
                     : 
                     <ButtonAction 
-                        props={"КУПИТИ"} 
+                        props={"НЕМАЄ В НАЯВНОСТІ"} 
                         widthBtn={260} 
                         eventItem={checkOrders}
-                        active={false}
+                        active={true}
                     />
                 }
                 <p/>    

@@ -16,7 +16,7 @@ export class BasketService {
   ){}
 
   async createBasket(createBasketDto: CreateBasketDto, session: string) {
-    try {
+    //try {
       const basketBySessionId = await this.basketRepository.findOne({
         where: { session_id: session ?? '', checkedIn: false },
         include: [Basket_Storage],
@@ -73,12 +73,12 @@ export class BasketService {
         });
         return basketNew;
       }
-    } catch {
-      throw new HttpException(
-        'Data is incorrect and must be uniq',
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    // } catch {
+    //   throw new HttpException(
+    //     'Data is incorrect and must be uniq',
+    //     HttpStatus.NOT_FOUND,
+    //   );
+    // }
   }
 
   async findAllbasket() {

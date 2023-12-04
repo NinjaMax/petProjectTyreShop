@@ -27,9 +27,7 @@ export class SuppliersController {
   }
 
   @Get('/byid/:id')
-  findOneById(
-    @Param('id') id: number
-  ) {
+  findOneById(@Param('id') id: number) {
     return this.suppliersService.findSupplierByIdParam(id);
   }
 

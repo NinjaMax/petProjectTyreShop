@@ -99,11 +99,9 @@ export class SuppliersService {
 
   async findSupplierByIdParam(id: number) {
     try {
-      const supplierByIdParam = await this.suppliersRepository.findByPk(
-        id,{
-          include: { model: Contract },
-        },
-      );
+      const supplierByIdParam = await this.suppliersRepository.findByPk(id, {
+        include: [{ model: Contract }],
+      });
       return supplierByIdParam;
     } catch {
       throw new HttpException(
@@ -117,7 +115,7 @@ export class SuppliersService {
     try {
       const supplierByIdPrice = await this.suppliersRepository.findByPk(
         id_supplier, {
-          include: { all: true}
+          include: [{ model: Contract }],
         },
       );
       return supplierByIdPrice;
@@ -147,7 +145,7 @@ export class SuppliersService {
     try {
       const supplierId = await this.suppliersRepository.findByPk(
         updateSupplierDto.id_supplier,
-        { include: { all: true } },
+        { include: [{ model: Contract }] },
       );
       if (supplierId) {
         await this.suppliersRepository.update(
@@ -162,7 +160,7 @@ export class SuppliersService {
         );
         const updateSupplier = await this.suppliersRepository.findByPk(
           updateSupplierDto.id_supplier,
-          { include: { all: true } },
+          { include: [{ model: Contract }] },
         );
         return updateSupplier; 
       }

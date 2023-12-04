@@ -38,7 +38,6 @@ import { ICity } from '../../basket/types/CityNP.type';
 import { getCityNovaPoshta, getWareHousesNovaPoshta } from '../../../restAPI/restNovaPoshtaAPI';
 import { getCityDelivery, getWareHousesDelivery } from '../../../restAPI/restDeliveryAPI';
 import { IDapertmentNP } from '../../basket/types/DepartmentType.type';
-import { type } from 'os';
 
 const AdminFormOrder = observer((
     { props, 

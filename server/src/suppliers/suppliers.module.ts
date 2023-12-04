@@ -8,14 +8,14 @@ import { StockTyres } from '../stock/entities/stock-tyres.model';
 import { AuthModule } from '../auth/auth.module';
 import { ContractModule } from '../contract/contract.module';
 
-
 @Module({
   controllers: [SuppliersController],
   providers: [SuppliersService],
   imports: [ 
-    SequelizeModule.forFeature([Supplier, StockTyres, Tyres ]),
-    ContractModule, AuthModule
+    SequelizeModule.forFeature([Supplier, StockTyres, Tyres]),
+    ContractModule,
+    AuthModule,
   ],
-  exports:[SuppliersService],
+  exports: [SuppliersService],
 })
 export class SuppliersModule {}

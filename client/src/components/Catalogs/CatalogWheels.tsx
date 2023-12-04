@@ -6,7 +6,7 @@ import CheckOrder from '../modal/CheckOrder';
 import LoadMoreGoods from '../ux/LoadMoreGoods';
 import Pagination from '../Pagination';
 import { ICheckOrderItem } from './types/CheckOrder.type';
-import { addGoodsToBasket, createBasket, getBasketById, getWheelsBrandByName, getWheelsBrandRatingAvg } from '../../restAPI/restGoodsApi';
+import { addGoodsToBasket, createBasket, getBasketById, getStorageByIdParam, getWheelsBrandByName, getWheelsBrandRatingAvg } from '../../restAPI/restGoodsApi';
 import { Context } from '../../context/Context';
 import Card from '../cards/Card';
 import PopularSizeTyre from '../popularGoods/PopularSizeTyre';
@@ -52,15 +52,21 @@ const CatalogWheels = observer(() => {
 
   const checkOrders = async (
     item : ICheckOrderItem, 
-    ratingModel: {avgRatingModel: number }
+    ratingModel: {avgRatingModel: number },
+    storageItem: number,
     ) => {
-    try {
+    //try {
         setActive(!active);
         if (!active) {
+            console.log("STORAGE_ITEM", storageItem);
+            const getStorage = await getStorageByIdParam(storageItem);
             const basket: any = await createBasket(
-                customer.customer?.id,
+                customer.customer?.id, 
+                getStorage.storage
             );
-            //console.log('CREATE_BASKET_ID_BASKET: ', basket.data.id_basket);
+            console.log('GET_STORAGE: ', getStorage);
+            console.log('ITEM: ', item);
+            console.log('CREATE_BASKET_ID_BASKET: ', basket?.data);
             if(basket?.status === 201) {
                 const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
                 const addTobasket: any = await addGoodsToBasket(
@@ -88,14 +94,14 @@ const CatalogWheels = observer(() => {
                         updateBasketStorage?.basket_storage.reduce(
                             (sum: any, current: any) => (sum + current.quantity),0)
                     );
-                //console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
-                //console.log('ADD_TO_BASKET: ', addTobasket?.data); 
+                console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
+                console.log('ADD_TO_BASKET: ', addTobasket?.data); 
                 }  
             }
         }
-    } catch (error) {
-        console.log('BASKET_ERROR: ',error);
-    }
+    // } catch (error) {
+    //     console.log('BASKET_ERROR: ',error);
+    // }
   }
 
   const loadMoreGoods = (e: any) => {

@@ -44,11 +44,11 @@ const Footer = () => {
           <i className="fab fa-telegram"></i>
           </a>
         </div>
-        <div className='footerSocialSectionItem'>
+        {/* <div className='footerSocialSectionItem'>
           <h5>
           <a title="Wheel fitment and tire size guide and knowledge base" href="https://www.wheel-size.com">Wheel-Size.com</a>
           </h5>
-        </div>
+        </div> */}
       </section>
       <section className="">
         <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">

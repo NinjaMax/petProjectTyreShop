@@ -8,21 +8,23 @@ import { Storage } from './entities/storage.model';
 @Injectable()
 export class StorageService {
 
-  constructor(@InjectModel(Storage) private storageRepository: typeof Storage,
-    ) {}
+  constructor(
+    @InjectModel(Storage) private storageRepository: typeof Storage,
+  ) {}
 
   async createStorage(createStorageDto: CreateStorageDto) {
 
     try {
-      
       const storage = await this.storageRepository.create(createStorageDto);
 
       return storage;
 
     } catch {
 
-      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
@@ -44,7 +46,6 @@ export class StorageService {
   async findAllStorageStock() {
 
     try {
-      
       const storageAllStock = await this.storageRepository.findAll(
         {where: {stock_tyres: {include: {all: true}},
         stock_wheels: {include: {all: true}},
@@ -56,38 +57,58 @@ export class StorageService {
 
     } catch {
 
-      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
   async findStorageById(getStorageDto: GetStorageDto) {
-
     try {
-      
-      const storageById = await this.storageRepository.findByPk(getStorageDto.id_storage, {include: {all: true}});
-
+      const storageById = await this.storageRepository.findByPk(
+        getStorageDto.id_storage,
+        { include: { all: true } },
+      );
       return storageById;
 
     } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
 
-      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
+  async findStorageByIdParam(id_storage: number) {
+    try {
+      const storageByIdParam = await this.storageRepository.findByPk(
+        id_storage
+      );
+      return storageByIdParam;
 
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
   async findStorageByIdOrder(getStorageDto: GetStorageDto) {
-
     try {
-      
-      const storageByIdOrder = await this.storageRepository.findByPk(getStorageDto.id_storage);
+      const storageByIdOrder = await this.storageRepository.findByPk(
+        getStorageDto.id_storage,
+      );
 
       return storageByIdOrder;
 
     } catch {
 
-      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
@@ -96,17 +117,19 @@ export class StorageService {
   }
 
   async removeStorage(getStorageDto: GetStorageDto) {
-
     try {
-      
-      const storageRemove = await this.storageRepository.destroy({where: {id_storage: getStorageDto.id_storage}});
+      const storageRemove = await this.storageRepository.destroy({
+        where: { id_storage: getStorageDto.id_storage },
+      });
 
       return storageRemove;
 
     } catch {
 
-      throw new HttpException('Data is incorrect and must be uniq', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 }

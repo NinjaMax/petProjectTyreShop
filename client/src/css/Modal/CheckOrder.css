@@ -17,7 +17,7 @@
 .checkOrder {
     display: flex;
     max-height: 350px;
-    width: 860px;
+    width: 865px;
     overflow-y: auto;
     flex-direction: column;
     justify-content:flex-start;

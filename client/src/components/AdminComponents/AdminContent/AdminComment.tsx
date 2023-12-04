@@ -5,13 +5,13 @@ const AdminComment = ({newCommit, comments}:any) => {
     const [commentNew, setCommentNew] = useState<any[] | null>(comments);
 
     useEffect(() => {
-        if(comments && newCommit) {
+        if(commentNew && newCommit) {
             setCommentNew(oldComments => [ ...oldComments!, newCommit]);   
         } 
         if (!comments && newCommit) {
             setCommentNew([newCommit]);
         }   
-    },[comments, newCommit])
+    },[commentNew, comments, newCommit])
 
     useEffect(() => {
         if (comments) {

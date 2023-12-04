@@ -27,6 +27,10 @@ export class StorageController {
   findOne(@Body() getStorageDto: GetStorageDto) {
     return this.storageService.findStorageById(getStorageDto);
   }
+  @Get('/idparam/:id_storage')
+  findOneStorage(@Param('id_storage') id_storage: string) {
+    return this.storageService.findStorageByIdParam(+id_storage);
+  }
 
   @Patch(':id')
   update(@Param() id: string, @Body() updateStorageDto: UpdateStorageDto) {

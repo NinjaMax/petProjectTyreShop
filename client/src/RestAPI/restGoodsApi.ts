@@ -138,6 +138,13 @@ const clearFavorites = async () => {
     //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
+
+const getStorageByIdParam = async (id_storage:number) => {
+    const {data} = await $hostGet.get(`storage/idparam/${id_storage ?? '0'}`,
+     //{params: {id: id}}
+    )
+    return data;
+}
     
 const getTyresAll = async () => {
     const {data} = await $hostGet.get('tyres')
@@ -1086,7 +1093,7 @@ export {
     getAllArticles,
     getArticlesId,
     getArticlesImage,
-
+    getStorageByIdParam,
     //getTyresBrandNameRatingAvg,
     //getWheelsBrandNameRatingAvg,
 
