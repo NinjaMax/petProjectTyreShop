@@ -31,8 +31,12 @@
   .modelSectionItemsLines {
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
       align-items: center;
+      justify-content: flex-start;
       gap: 5px;
+      height: 90px;
+      width: 600px;
   }
   
   .titleModelSectionSelect {
@@ -91,6 +95,7 @@
   .modelSectionItemsBox {
     overflow-y: scroll;
     max-height: 500px;
+    width: 1000px;
     display: flex;
     flex-direction:column;
     justify-content: flex-start;

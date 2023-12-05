@@ -4,7 +4,7 @@ import TyresCardList from '../cards/CardList';
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../../context/Context';
-import { addGoodsToBasket, createBasket, getBasketById, getTyresAll, getWheelsAll} from '../../restAPI/restGoodsApi';
+import { addGoodsToBasket, createBasket, getBasketById, getStorageByIdParam, getTyresAll, getWheelsAll} from '../../restAPI/restGoodsApi';
 import { yieldToMain } from '../../restAPI/postTaskAdmin';
 import { SEARCH_ROUTE } from '../../utils/consts';
 import { ICheckOrderItem } from '../catalogs/types/CheckOrder.type';
@@ -116,14 +116,19 @@ const NavBarSearch = observer((
 
     const checkOrders = async (
         item : any, 
-        avgRatingModel: number | undefined
+        avgRatingModel: number | undefined,
+        storageItem: number,
+        priceStockIndex: number,
         ) => {
         try {
             setActive(!active);
             if (!active) {
-                const basket: any = await createBasket(
-                    customer.customer?.id,
-                );
+                console.log('ITEM_GOODS: ', item)
+                const getStorageTyre = await getStorageByIdParam(storageItem);
+                const basket: any = await createBasket({
+                    id_customer: customer.customer?.id, 
+                    storage: getStorageTyre.storage
+                });
                 //console.log('CREATE_BASKET_ID_BASKET: ', basket.data.id_basket);
                 if(basket?.status === 201) {
                     const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
@@ -131,9 +136,9 @@ const NavBarSearch = observer((
                     +item.id,
                     item.id_cat,
                     checkItem?.quantity ? checkItem?.quantity + 4 : 4,
-                    item.price[0].price,
-                    item.stock[0].id_supplier,
-                    item.stock[0].id_storage,
+                    item.price[priceStockIndex].price,
+                    item.stock[priceStockIndex].id_supplier,
+                    item.stock[priceStockIndex].id_storage,
                     item.category?.category,
                     basket.data.id_basket,
                     item.full_name,

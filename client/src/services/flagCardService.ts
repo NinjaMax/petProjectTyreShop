@@ -91,6 +91,7 @@ const chooseFlag = (flagState: string | undefined) => {
             return IconFlag.SERBIA_FLAG;
         case 'Словакія':
         case 'Словакия':
+        case 'Словаччина':
             return IconFlag.SLOVAKIA_FLAG;
         case 'Словения':
         case 'Словенія':

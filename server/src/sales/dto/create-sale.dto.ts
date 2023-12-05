@@ -34,4 +34,5 @@ export class CreateSaleDto {
   readonly dop_garanty: number;
   readonly commission_cost: number;
   readonly total_cost: number;
+  readonly mix_store: string;
 }

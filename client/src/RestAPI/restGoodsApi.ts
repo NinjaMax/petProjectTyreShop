@@ -400,6 +400,7 @@ const getAllWheelsDiametersByBrand = async (
 }
 
 const createBasket = async (
+    data: {
     name?: string,
     phone?: bigint,
     email?: string,
@@ -415,23 +416,24 @@ const createBasket = async (
     dop_garanty?: string,
     checkedIn?: boolean,
     id_customer?: number,
+    }
 ) =>
 await $hostPost.post('/basket', {
-    name: name,
-    phone: phone,
-    email: email,
-    address: address,
-    notes: notes,
-    storage: storage,
-    delivery: delivery,
-    delivery_dep: delivery_dep,
-    delivery_dep_ref: delivery_dep_ref,
-    city_delivery: city_delivery,
-    ref_city_delivery: ref_city_delivery,
-    pay_view: pay_view,
-    dop_garanty: dop_garanty,
-    checkedIn: checkedIn,
-    id_customer: id_customer ?? null,
+    name: data.name,
+    phone: data.phone,
+    email: data.email,
+    address: data.address,
+    notes: data.notes,
+    storage: data.storage,
+    delivery: data.delivery,
+    delivery_dep: data.delivery_dep,
+    delivery_dep_ref: data.delivery_dep_ref,
+    city_delivery: data.city_delivery,
+    ref_city_delivery: data.ref_city_delivery,
+    pay_view: data.pay_view,
+    dop_garanty: data.dop_garanty,
+    checkedIn: data.checkedIn,
+    id_customer: data.id_customer ?? null,
 })
 .catch(error => {
     console.log(error)

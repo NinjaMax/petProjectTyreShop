@@ -5,14 +5,15 @@ import { CreatePropertyDto } from '../dto/create-property.dto';
 import { GetPropertyDto } from '../dto/get-property.dto';
 import { UpdatePropertyDto } from '../dto/update-property.dto';
 import { TyreDiameter } from '../entities/tyres/tyre-diameter.model';
-import { PriceTyres } from 'src/prices/entities/price-tyres.model';
-import { RatingTyres } from 'src/ratings/entities/rating-tyres.model';
-import { ReviewTyres } from 'src/reviews/entities/review-tyres.model';
-import { Tyres } from 'src/tyres/entities/tyres.model';
+import { PriceTyres } from '../../prices/entities/price-tyres.model';
+import { RatingTyres } from '../../ratings/entities/rating-tyres.model';
+import { ReviewTyres } from '../../reviews/entities/review-tyres.model';
+import { Tyres } from '../../tyres/entities/tyres.model';
 import { TyreCountry } from '../entities/tyres/tyre-country.model';
 import { TyreSeason } from '../entities/tyres/tyre-season.model';
 import { TyreVehicleType } from '../entities/tyres/tyre-vehicleType.model';
 import { TyreYear } from '../entities/tyres/tyre-year.model';
+import { StockTyres } from '../../stock/entities/stock-tyres.model';
 
 @Injectable()
 export class PropsTyrDiametrService {
@@ -119,6 +120,7 @@ export class PropsTyrDiametrService {
               where: { id_model: model },
               include: [
                 PriceTyres,
+                StockTyres,
                 ReviewTyres,
                 RatingTyres,
                 TyreSeason,

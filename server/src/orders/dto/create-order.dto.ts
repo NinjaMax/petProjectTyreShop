@@ -10,6 +10,7 @@ export class CreateOrderDto {
   readonly quantity: number;
   readonly total: number;
   readonly notes: string;
+  readonly mix_store: string;
   readonly id_storage: number;
   readonly storage: string;
   readonly price_wholesale: number;

@@ -50,4 +50,5 @@ export class CreateCommentDto {
   readonly pay_view: string;
   readonly status_pay: string;
   readonly category: string;
+  readonly mix_store: string;
 }

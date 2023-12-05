@@ -12,6 +12,7 @@ export class GetOrdersDto {
   readonly quantity: number;
   readonly reserve: number;
   readonly notes: string;
+  readonly mix_store: string;
   readonly status: string;
   //readonly price_wholesale: number;
   readonly id_basket: number;

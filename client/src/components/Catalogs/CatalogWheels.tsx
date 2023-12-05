@@ -50,32 +50,34 @@ const CatalogWheels = observer(() => {
         };
     },[filter]);
 
-  const checkOrders = async (
-    item : ICheckOrderItem, 
-    ratingModel: {avgRatingModel: number },
-    storageItem: number,
+    const checkOrders = async (
+        item : ICheckOrderItem, 
+        ratingModel: {avgRatingModel: number },
+        storageItem: number,
+        priceStockIndex: number,
     ) => {
-    //try {
+    try {
         setActive(!active);
         if (!active) {
-            console.log("STORAGE_ITEM", storageItem);
+            // console.log("STORAGE_ITEM", storageItem);
+            // console.log("PRICE_STOCK_ITEM", priceStockIndex);
             const getStorage = await getStorageByIdParam(storageItem);
-            const basket: any = await createBasket(
-                customer.customer?.id, 
-                getStorage.storage
-            );
-            console.log('GET_STORAGE: ', getStorage);
-            console.log('ITEM: ', item);
-            console.log('CREATE_BASKET_ID_BASKET: ', basket?.data);
+            const basket: any = await createBasket({
+                id_customer: customer.customer?.id, 
+                storage: getStorage.storage
+            });
+            // console.log('GET_STORAGE: ', getStorage);
+            // console.log('ITEM: ', item);
+            // console.log('CREATE_BASKET_ID_BASKET: ', basket?.data);
             if(basket?.status === 201) {
                 const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
                 const addTobasket: any = await addGoodsToBasket(
                 +item.id,
                 item.id_cat,
                 checkItem?.quantity ? checkItem?.quantity + 4 : 4,
-                item.price[0].price,
-                item.stock[0].id_supplier,
-                item.stock[0].id_storage,
+                item.price[priceStockIndex].price,
+                item.stock[priceStockIndex].id_supplier,
+                item.stock[priceStockIndex].id_storage,
                 item.category?.category,
                 basket.data.id_basket,
                 item.full_name,
@@ -94,14 +96,14 @@ const CatalogWheels = observer(() => {
                         updateBasketStorage?.basket_storage.reduce(
                             (sum: any, current: any) => (sum + current.quantity),0)
                     );
-                console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
-                console.log('ADD_TO_BASKET: ', addTobasket?.data); 
+                // console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
+                // console.log('ADD_TO_BASKET: ', addTobasket?.data); 
                 }  
             }
         }
-    // } catch (error) {
-    //     console.log('BASKET_ERROR: ',error);
-    // }
+    } catch (error) {
+        console.log('BASKET_ERROR: ', error);
+    }
   }
 
   const loadMoreGoods = (e: any) => {
@@ -216,14 +218,14 @@ const CatalogWheels = observer(() => {
             <div className="rowCatalogTyres">
                 {goodsWheel._wheels ? goodsWheel._wheels?.map(
                     (goods: any) => (
-                 <Card
+                <Card
                     key={goods.id}
                     goods={goods}
                     optionsBox={true} 
                     checkOrders={checkOrders} 
                     forOrder={false}
                     typeCard={'wheel'}
-                    />
+                />
                 ))   
                 : null
                 }

@@ -27,14 +27,14 @@ const CardList = ({goods, forOrder, priceItem, countEvent, checkOrders}: ICard) 
         // let i: number = 0; 
         // while (taskProduct.length > i) {
           //if (!isMounted && taskProduct[i] === getTyresModelRatingAvg && goods) {
-            if (!isMounted && goods?.category.category === ('легковые шины' || 'грузовые шины')) {
+            if (!isMounted && goods?.category?.category === ('легковые шины' || 'грузовые шины')) {
                 const getRating: any = await getTyresRatingAvgIdAndIdmodel(
                     +goods!.id,
                     goods?.id_model ?? 0
                 );
                 setRatingModel(getRating[0]);
             }
-            if (!isMounted && goods?.category.category === 'Диски') {
+            if (!isMounted && goods?.category?.category === 'Диски') {
                 const getWheelRating: any = await getWheelsRatingAvgIdAndIdmodel(
                     +goods!.id,
                     goods?.id_model ?? 0
@@ -50,18 +50,22 @@ const CardList = ({goods, forOrder, priceItem, countEvent, checkOrders}: ICard) 
         return () => {
           isMounted = true;
         };
-      },[goods, goods?.id_model]);
-    
+    },[goods, goods?.id_model]);
+     
     const addGoodsId = () => {
         const toStringUrl = createStringUrl(goods?.full_name);
         localStorage.setItem('goodsId', JSON.stringify(goods?.id));
         history.push(
             MAIN_ROUTE + `${toStringUrl}`
         );
-    }
+    };
+
     
     return (
-        <div className="tyresCardList">
+        <div className="tyresCardList"
+            onClick={() => console.log('CLICK_CARD_LIST')}
+            //onClick={(e: any) => e.stopPropagation()}
+        >
             <img id='imgTyresList' src={'/tyre/autotyrespilotspotps2.png'} alt="tyres" />
             <div className='tyresCardListBox'>    
                 <a  id='nameCardList' 
@@ -101,50 +105,91 @@ const CardList = ({goods, forOrder, priceItem, countEvent, checkOrders}: ICard) 
                         />
                     </div>
                 :null}
+                { goods?.price && !priceItem ?
                 <div className='priceAndBtnCard'>      
                     <div className="tyresCardPriceList">
-                    {goods?.price && !priceItem ? goods?.price.map((item: any) => (
+                    {goods?.price && goods?.price.find((entity: any) => entity.id_storage === 2) ? 
+                    goods?.price.map((item: any) => (
                     <Fragment key={item.id}>
-                    {item.price ?
+                    {item.price && !item.old_price && item.id_storage === 2 ?
                     <div className="tyresCardPriceItem" >
                         {item.price} &#8372;
                     </div> :
-                    <div className="tyresCardPriceItem">
-                        немає в наявності
-                    </div>  
+                    null
                     }
-                    {item.old_price ?
+                    {item.price && item.old_price && item.id_storage === 2 ?
+                    <div className="tyresCardPriceItem" >
                     <div className="tyresCardOldPriceItem" >
                         {item.old_price} &#8372;
                     </div> 
+                    <div>
+                        {item.price} &#8372;
+                    </div>
+                    </div>
                     : null
                     } 
                     </Fragment>
-                    ))
-                  : <div className="tyresCardPriceItem">
-                       {priceItem ?? 'немає в наявності'}
-                    </div> 
+                    )) 
+                  :  
+                    goods?.price.map((item: any) => (
+                    <Fragment key={item.id}>
+                    {item.price && item.price.id_storage !== 2 ?
+                        <div className="tyresCardPriceItem">
+                            {item.price} &#8372;
+                        </div> 
+                        : null
+                    }
+                    {item.old_price && item.price.id_storage !== 2 ?
+                        <div className="tyresCardOldPriceItem">
+                            {item.old_price} &#8372;
+                        </div> 
+                        : null
+                    } 
+                    </Fragment>
+                      ))
+                    }
+                    {goods?.price?.reduce((sum: any, current: any) => sum + current.price, 0) === 0 ? 
+                        <div className="tyresCardPriceItem">
+                            немає в наявності
+                        </div>
+                        : null 
                     }
                     </div>
-                </div>
+                </div> 
+                : 
+                    <div className="tyresCardPriceItem">
+                        {priceItem ?? 0} &#8372;
+                    </div> 
+                }
+                { !priceItem && !forOrder ?
                 <div className='buttonBuyCardList'>
-                { goods?.price[0]?.price && !forOrder ?
+                {goods?.price?.reduce((sum: any, current: any) => sum + current.price, 0) ?
                     <ButtonAction 
                         props={"КУПИТИ"} 
                         widthBtn={160} 
                         eventItem={() => {
-                            checkOrders!(goods, ratingModel)
+                            checkOrders!(
+                                goods, 
+                                ratingModel,
+                                goods?.price?.find((entity: any) => entity.id_storage === 2) ?
+                                2 : 1,
+                                goods?.price?.find((entity: any) => entity.id_storage === 2) ?
+                                goods?.price?.findIndex((entity: any) => entity.id_storage === 2) :
+                                goods?.price?.findIndex((entity: any) => entity.id_storage === 1)
+                            )
                         }}
                     />
                     : 
                     <ButtonAction 
-                        props={"КУПИТИ"} 
+                        props={"НЕМАЄ"} 
                         widthBtn={160} 
                         eventItem={checkOrders}
-                        active={false}
+                        active={true}
                     />
                 }
-                </div>
+                </div> :
+                null
+                }
                 { forOrder ?
                         <div>
                             <CountBtnOrder

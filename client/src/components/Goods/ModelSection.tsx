@@ -4,10 +4,11 @@ import TyresCardList from '../cards/CardList';
 
 type IModalSection ={
     modelGoods?:any[] | null,
-    modelName?:string
+    modelName?:string,
+    checkOrders?(arg0: any, ...arg:any[]): Promise<void | undefined>;
 };
 
-const ModelSection = ({modelGoods, modelName}: IModalSection) => {
+const ModelSection = ({modelGoods, modelName, checkOrders}: IModalSection) => {
    
     const [tabSearchMod, setTabSearchMod] = useState<string| null | undefined>();
     const [tabIndexModel, setTabIndexModel] = useState<string>('0');
@@ -22,7 +23,7 @@ const ModelSection = ({modelGoods, modelName}: IModalSection) => {
     const searchTabModChange = (e: any) => {
         setTabSearchMod(e.target.title);
         setTabIndexModel(e.currentTarget.getAttribute('data-index'));
-    }
+    };
 
     //console.log('MODEL_GOODS: ', modelGoods);
 
@@ -34,7 +35,7 @@ const ModelSection = ({modelGoods, modelName}: IModalSection) => {
             </div>
                 <div className='modelSectionItemsLines'>
                     {modelGoods?.length !== 0 ? 
-                        modelGoods?.map((diameter: any, index: number) => 
+                        modelGoods?.sort((a: any, b: any) => a.diameter - b.diameter).map((diameter: any, index: number) => 
                         <div className='modelSectionItems'
                             key={diameter.id_diameter}
                             data-index={index}
@@ -69,9 +70,9 @@ const ModelSection = ({modelGoods, modelName}: IModalSection) => {
                             className='modelSectionItemsList' 
                             key={goods.id}>
                             <TyresCardList
-                                key={goods.id}
                                 goods={goods}
                                 forOrder={false} 
+                                checkOrders={checkOrders}
                             />
                         </div>
                         ))
@@ -86,6 +87,7 @@ const ModelSection = ({modelGoods, modelName}: IModalSection) => {
                                 key={goods.id}
                                 goods={goods}
                                 forOrder={false} 
+                                checkOrders={checkOrders}
                             />
                         </div>
                         ))

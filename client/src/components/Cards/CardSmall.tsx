@@ -17,7 +17,9 @@ interface IProductSmall {
             price: number;
             delivery_price: number;
             price_plus_delivery: number;
-        }];
+            id_storage: number,
+            id_supplier: number,
+        },];
         tyre_brand: {
             id_brand: number; 
             brand: string;
@@ -43,7 +45,9 @@ const CardSmall = ({product, rating, checkOrders}:IProductSmall) => {
             MAIN_ROUTE + `${toStringUrl}`
         );
     };
-
+    
+    const restStock: number = product?.price ? product?.price?.reduce((sum: any, current: any) => sum + current.price, 0) : null; 
+    
     return (
         <div className='tyreCardSmall'>
             <div>
@@ -93,17 +97,40 @@ const CardSmall = ({product, rating, checkOrders}:IProductSmall) => {
                     nameRating='Карта товара'
                 />   
                 </div>
-                {product?.price ? product?.price.map((item: any) => (
+                {product?.price ?
+                <>
+                {product?.price && product?.price?.find((entity: any) => entity.id_storage === 2) ? 
+                    product?.price?.map((item: any) => (
                     <Fragment key={item.id}>
-                    {item.price ?
+                    {item?.price && !item?.old_price && item.id_storage === 2 ?
                     <div className="tyresCardPriceSmall">
                         {item.price} &#8372;
                     </div> :
-                    <div className="tyresCardPriceSmall">
-                        немає в наявності
-                    </div>  
+                    null
                     }
-                    {item.old_price ?
+                    {item?.price && item?.old_price && item.id_storage === 2 ?
+                    <div className="tyresCardPriceSmall">
+                    <div className="tyresCardOldPrice">
+                        {item.old_price} &#8372;
+                    </div> 
+                    <div >
+                        {item.price} &#8372;
+                    </div>
+                    </div>
+                    : null
+                    } 
+                    </Fragment>
+                  ))
+                  : 
+                  product?.price.map((item: any) => (
+                    <Fragment key={item.id}>
+                    {item.price && item.price.id_storage !== 2 ?
+                    <div className="tyresCardPriceSmall">
+                        {item.price} &#8372;
+                    </div> :
+                        null
+                    }
+                    {item.old_price && item.price.id_storage !== 2 ?
                     <div className="tyresCardOldPrice">
                         {item.old_price} &#8372;
                     </div> 
@@ -111,22 +138,36 @@ const CardSmall = ({product, rating, checkOrders}:IProductSmall) => {
                     } 
                     </Fragment>
                   ))
-                  : <div className="tyresCardPriceSmall">
-                        немає в наявності
-                    </div> 
                 }
-                {product?.price ?
+                {restStock === 0 ? 
+                    <div className="tyresCardPriceSmall">
+                        немає в наявності
+                    </div>
+                    : null 
+                }
+                </>
+                : null
+                }
+                {restStock ?
                     <ButtonAction 
                         props={"КУПИТИ"} 
                         widthBtn={180} 
-                        eventItem={() => checkOrders!(product, rating)}
+                        eventItem={() => checkOrders!(
+                            product, 
+                            rating,
+                            product?.price.find((entity: any) => entity.id_storage === 2) ?
+                            2 : 1,
+                            product?.price.find((entity: any) => entity.id_storage === 2) ?
+                            product?.price.findIndex((entity: any) => entity.id_storage === 2) :
+                            product?.price.findIndex((entity: any) => entity.id_storage === 1)
+                        )}
                     />
                     : 
                     <ButtonAction 
-                        props={"КУПИТИ"} 
+                        props={"НЕМАЄ"} 
                         widthBtn={180} 
                         eventItem={checkOrders}
-                        active={false}
+                        active={true}
                     />
                 }
                 <p/>    

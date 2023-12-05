@@ -10,6 +10,7 @@ import { PriceWheels } from '../../prices/entities/price-wheels.model';
 import { ReviewWheels } from '../../reviews/entities/review-wheels.model';
 import { RatingWheels } from '../../ratings/entities/rating-wheels.model';
 import { WheelType } from '../entities/wheels/wheel-type.model';
+import { StockWheels } from '../../stock/entities/stock-wheels.model';
 @Injectable()
 export class PropsWheelDiameterService {
   constructor(
@@ -148,6 +149,7 @@ export class PropsWheelDiameterService {
               where: { id_model: model },
               include: [
                 PriceWheels,
+                StockWheels,
                 ReviewWheels,
                 RatingWheels,
                 WheelDiameter,

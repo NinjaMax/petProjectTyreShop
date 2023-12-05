@@ -130,10 +130,21 @@
 }
 
 .productInfoPrice {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
     text-align: center;
     font-size: 24px;
     font-family: var(--main-font-family);
     font-weight: bold;
+}
+.productInfoOldPrice {
+    font-size: 24px;
+    font-family: var(--main-font-family);
+    font-weight: bold;
+    text-decoration: line-through;
+    text-decoration-color: red;
 }
 
 .productInfoRatingLink {

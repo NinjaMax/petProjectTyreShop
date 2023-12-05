@@ -4,9 +4,10 @@ import TyresCardList from '../cards/CardList';
 
 type ISimilarGoods ={
     similarGoodsList?: any[] | null;
+    checkOrders?(arg0: any, ...arg:any[]): Promise<void | undefined>;
 };
 
-const SimilarGoods = ({similarGoodsList}: ISimilarGoods) => {
+const SimilarGoods = ({similarGoodsList, checkOrders}: ISimilarGoods) => {
     
 
     return (
@@ -19,7 +20,7 @@ const SimilarGoods = ({similarGoodsList}: ISimilarGoods) => {
                 <TyresCardList 
                     goods={item} 
                     forOrder={false}
-
+                    checkOrders={checkOrders}
                 />
             </div>
             ))  

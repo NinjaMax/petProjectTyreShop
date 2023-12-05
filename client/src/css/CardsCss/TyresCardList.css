@@ -54,6 +54,10 @@
 }
 
 .tyresCardPriceItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
     color: #444B54;
     font-family: var(--main-font-family);
     font-size: 20px;

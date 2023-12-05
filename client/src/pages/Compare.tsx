@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import '../css/Pages/Compare.css';
-import { addGoodsToBasket, clearCompare, createBasket, getBasketById, getCompare, getTyresById, getTyresModelRatingAvg, getWheelsById, getWheelsModelRatingAvg } from '../restAPI/restGoodsApi';
+import { addGoodsToBasket, clearCompare, createBasket, getBasketById, getCompare, getStorageByIdParam, getTyresById, getTyresModelRatingAvg, getWheelsById, getWheelsModelRatingAvg } from '../restAPI/restGoodsApi';
 import TyresCardList from '../components/cards/CardList';
 import { Context } from '../context/Context';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
@@ -43,16 +43,16 @@ const Compare = observer(() => {
                 if(Array.isArray(curFavorites)){
                     curFavorites.forEach(async (element: string) => {      
                     let newTyresCompare: any = await getTyresById(element);
-                    console.log("TYRES_COMPARE: ", newTyresCompare);
+                   //console.log("TYRES_COMPARE: ", newTyresCompare);
                     if(newTyresCompare) {
                         let compareRatingModel = await getTyresModelRatingAvg(newTyresCompare.id_model);
                         
-                        console.log("COMPARE_RATING: ", compareRatingModel);
+                        //console.log("COMPARE_RATING: ", compareRatingModel);
                         newTyresCompare.ratingAvg = compareRatingModel[0];
                         setCompareTyres(oldCompare => [...oldCompare!, newTyresCompare]);
                     }
                     let newWheelsCompare: any = await getWheelsById(element);
-                    console.log("WHEELS_COMPARE: ", newWheelsCompare);
+                    //console.log("WHEELS_COMPARE: ", newWheelsCompare);
                     if(newWheelsCompare){
                        let compareWheelRatingModel = await getWheelsModelRatingAvg(newWheelsCompare.id_model);
                         newWheelsCompare.ratingAvg = compareWheelRatingModel[0];
@@ -97,14 +97,18 @@ const Compare = observer(() => {
 
     const checkOrders = async (
         item : ICheckOrderItem, 
-        ratingModel: {avgRatingModel: number }
+        ratingModel: {avgRatingModel: number },
+        storageItem: number,
+        priceStockIndex: number,
         ) => {
         try {
             setActive(!active);
             if (!active) {
-                const basket: any = await createBasket(
-                    customer.customer?.id,
-                );
+                const getStorageComp = await getStorageByIdParam(storageItem);
+                const basket: any = await createBasket({
+                    id_customer: customer.customer?.id, 
+                    storage: getStorageComp.storage
+                });
                 //console.log('CREATE_BASKET_ID_BASKET: ', basket.data.id_basket);
                 if(basket?.status === 201) {
                     const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
@@ -112,9 +116,9 @@ const Compare = observer(() => {
                     +item.id,
                     item.id_cat,
                     checkItem?.quantity ? checkItem?.quantity + 4 : 4,
-                    item.price[0].price,
-                    item.stock[0].id_supplier,
-                    item.stock[0].id_storage,
+                    item.price[priceStockIndex].price,
+                    item.stock[priceStockIndex].id_supplier,
+                    item.stock[priceStockIndex].id_storage,
                     item.category?.category,
                     basket.data.id_basket,
                     item.full_name,
@@ -165,9 +169,11 @@ const Compare = observer(() => {
                             'titleCompareSearch' }
                             onClick={searchTabModChange}
                         >Шини 
+                            {compareTyres ?
                             <span className='countCompareSearch'>
                                 {compareTyres?.length}
-                            </span>
+                            </span>  : null
+                            }
                         </span>
                         </div>
                         : null
@@ -181,9 +187,11 @@ const Compare = observer(() => {
                              'titleCompareSearch' }
                             onClick={searchTabModChange}
                         >Диски 
+                        {compareWheels ?
                             <span className='countCompareSearch'>
                             {compareWheels?.length}
-                            </span>
+                            </span> : null
+                        }
                         </span>
                         </div>
                         : null
@@ -459,6 +467,7 @@ const Compare = observer(() => {
                                         key={goods.id}
                                         goods={goods}
                                         forOrder={false} 
+                                        checkOrders={checkOrders}
                                     />
                                 <p/>
                                 <div className='outputDataCompareItemsBoxRating'>
@@ -494,6 +503,7 @@ const Compare = observer(() => {
                                         key={goods.id}
                                         goods={goods}
                                         forOrder={false} 
+                                        checkOrders={checkOrders}
                                     />
                                 </div>
                                 ))

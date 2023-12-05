@@ -107,6 +107,7 @@ export class TyresService {
           { model: TyreSizeDigits },
           { model: TyreBrand },
           { model: Category},
+          { model: TyreDiameter },
           //{ all: true },
         ],
       });

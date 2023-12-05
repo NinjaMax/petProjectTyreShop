@@ -3,14 +3,17 @@ import '../css/Pages/Search.css';
 import Pagination from '../components/Pagination';
 import LoadMoreGoods from '../components/ux/LoadMoreGoods';
 import { useHistory, useLocation } from 'react-router-dom';
-import { getTyresAll, getWheelsAll } from '../restAPI/restGoodsApi';
+import { addGoodsToBasket, createBasket, getBasketById, getStorageByIdParam, getTyresAll, getWheelsAll } from '../restAPI/restGoodsApi';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import Card from '../components/cards/Card';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../context/Context';
+import { ICheckOrderItem } from '../components/catalogs/types/CheckOrder.type';
+import Modal from '../components/modal/Modal';
+import CheckOrder from '../components/modal/CheckOrder';
 
 const Search = observer(() => {
-    const {page, goodsTyre, goodsWheel} = useContext<any | null>(Context);
+    const {page, customer, goodsTyre, goodsWheel} = useContext<any | null>(Context);
     const [inputTextSearch, setInputTextSearch] = useState<string>('');
     const [inputSearch, setInputSearch] = useState<string | null>('');
     const [tyreSearch, setTyreSearch] = useState<[] | null>(null);
@@ -22,6 +25,8 @@ const Search = observer(() => {
     const [tabSearchWheel, setTabSearchWheel] = useState<any[]>([]);
     const [tabSearchOil, setTabSearchOil] = useState<any[]>([]);
     const [tabSearchBattery, setTabSearchBattery] = useState<any[]>([]);
+    const [active, setActive] = useState(false);
+    const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem[] | null>([]);
     const history = useHistory();
 
     function useQuery() {
@@ -150,7 +155,63 @@ const Search = observer(() => {
         setTabSearch('');
         setInputSearch(inputTextSearch);
         setInputTextSearch('');
+    };
+
+    const checkOrders = async (
+        item : ICheckOrderItem, 
+        ratingModel: {avgRatingModel: number },
+        storageItem: number,
+        priceStockIndex: number,
+    ) => {
+    try {
+        setActive(!active);
+        if (!active) {
+            // console.log("STORAGE_ITEM", storageItem);
+            // console.log("PRICE_STOCK_ITEM", priceStockIndex);
+            const getStorage = await getStorageByIdParam(storageItem);
+            const basket: any = await createBasket({
+                id_customer: customer.customer?.id, 
+                storage: getStorage.storage
+            });
+            // console.log('GET_STORAGE: ', getStorage);
+            // console.log('ITEM: ', item);
+            // console.log('CREATE_BASKET_ID_BASKET: ', basket?.data);
+            if(basket?.status === 201) {
+                const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
+                const addTobasket: any = await addGoodsToBasket(
+                +item.id,
+                item.id_cat,
+                checkItem?.quantity ? checkItem?.quantity + 4 : 4,
+                item.price[priceStockIndex].price,
+                item.stock[priceStockIndex].id_supplier,
+                item.stock[priceStockIndex].id_storage,
+                item.category?.category,
+                basket.data.id_basket,
+                item.full_name,
+                item.season?.season_ua ?? null,
+                ratingModel?.avgRatingModel,
+                item.reviews.length,
+                item.diameter.diameter,
+                ); 
+                //console.log('ADD_BASK: ', addTobasket);
+                if (addTobasket?.status === 201) {
+                    const updateBasketStorage = await getBasketById(basket.data.id_basket);
+                    setCheckOrderItem(
+                        [...updateBasketStorage?.basket_storage]
+                    );
+                    page.setBasketCount(
+                        updateBasketStorage?.basket_storage.reduce(
+                            (sum: any, current: any) => (sum + current.quantity),0)
+                    );
+                // console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
+                // console.log('ADD_TO_BASKET: ', addTobasket?.data); 
+                }  
+            }
+        }
+    } catch (error) {
+        console.log('BASKET_ERROR: ', error);
     }
+  }
 
     return (
     <div className='searchContainer'>
@@ -251,6 +312,7 @@ const Search = observer(() => {
                         goods={goods}
                         forOrder={false} 
                         typeCard={'tyre'}
+                        checkOrders={checkOrders}
                     />
                 </div>
                 ))
@@ -266,6 +328,7 @@ const Search = observer(() => {
                         goods={goods}
                         forOrder={false} 
                         typeCard={'wheel'}
+                        checkOrders={checkOrders}
                     />
                 </div>
                 ))
@@ -280,6 +343,7 @@ const Search = observer(() => {
                         key={goods.id}
                         goods={goods}
                         forOrder={false} 
+                        checkOrders={checkOrders}
                     />
                 </div>
                 ))
@@ -294,6 +358,7 @@ const Search = observer(() => {
                         key={goods.id}
                         goods={goods}
                         forOrder={false} 
+                        checkOrders={checkOrders}
                     />
                 </div>
                 ))
@@ -323,6 +388,9 @@ const Search = observer(() => {
                 }
             </span>
             }
+            <Modal active={active} setActive={setActive}>
+                <CheckOrder orderItem={checkOrderItem}/> 
+            </Modal> 
     </div>
   )
 })

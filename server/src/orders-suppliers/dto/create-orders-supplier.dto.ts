@@ -38,4 +38,5 @@ export class CreateOrdersSupplierDto {
   readonly commission_cost: number;
   readonly bonus_decrease: number;
   readonly total_cost: number;
+  readonly mix_store: string;
 }

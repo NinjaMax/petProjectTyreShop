@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import '../../css/Goods/AllAboutProduct.css';
-import productImage from './tyre/autotyrespilotspotps2.png';
-import wheelProduct from '../../assets/vossen_cvt_gloss_graphite-16325-a.png';
-import heartImg from '../../assets/icons/heart_64BlueClear.png';
-import scaleImg from '../../assets/icons/scales50.png';
+// import productImage from './tyre/autotyrespilotspotps2.png';
+// import wheelProduct from '../../assets/vossen_cvt_gloss_graphite-16325-a.png';
+// import heartImg from '../../assets/icons/heart_64BlueClear.png';
+// import scaleImg from '../../assets/icons/scales50.png';
 import ButtonAction from '../buttons/ButtonAction';
 import Rating from '../ux/Rating';
 import PropsCardIcons from '../cards/PropsCardIcons';
@@ -11,11 +11,11 @@ import FlagsIcon from '../cards/FlagsIcon';
 import CheckboxBtn from '../select/CheckboxBtn';
 import TyreMarking from './TyreMarking';
 import SocialMediaLinks from '../socialMedia/SocialMediaLinks';
-import { useParams } from 'react-router-dom';
+//import { useParams } from 'react-router-dom';
 import { Context } from '../../context/Context';
 import { ICard } from '../cards/interfaces/Card.interface';
 import { observer } from 'mobx-react-lite';
-import { addGoodsToBasket, createBasket, getBasketById, getCompareGoods, getFavoritesGoods } from '../../restAPI/restGoodsApi';
+import { addGoodsToBasket, createBasket, getBasketById, getCompareGoods, getFavoritesGoods, getStorageByIdParam } from '../../restAPI/restGoodsApi';
 import WheelMarking from './WheelMarking';
 import { tyreBrandLogo } from '../../services/tyreBrandImg.service';
 import Modal from '../modal/Modal';
@@ -49,7 +49,15 @@ const AllAboutProduct = observer(({
           left: 0,
           behavior: "smooth",
         });
-      };
+    };
+
+    const moveToSimilarGoods = () => {
+        document.documentElement.scrollTo({
+          top: 1300,
+          left: 0,
+          behavior: "smooth",
+        });
+    };
 
     const addToFavorites = async () => {
         try {
@@ -74,14 +82,18 @@ const AllAboutProduct = observer(({
     };
     const checkOrders = async (
         item : any, 
-        avgRatingModel: number | undefined
+        avgRatingModel: number,
+        storageItem: number,
+        priceStockIndex: number,
         ) => {
         try {
             setActive(!active);
             if (!active) {
-                const basket: any = await createBasket(
-                    customer.customer?.id,
-                );
+                const getStorageProd = await getStorageByIdParam(storageItem);
+                const basket: any = await createBasket({
+                    id_customer: customer.customer?.id, 
+                    storage: getStorageProd.storage
+                });
                 //console.log('CREATE_BASKET_ID_BASKET: ', basket.data.id_basket);
                 if(basket?.status === 201) {
                     const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
@@ -89,9 +101,9 @@ const AllAboutProduct = observer(({
                     +item.id,
                     item.id_cat,
                     checkItem?.quantity ? checkItem?.quantity + 4 : 4,
-                    item.price[0].price,
-                    item.stock[0].id_supplier,
-                    item.stock[0].id_storage,
+                    item.price[priceStockIndex].price,
+                    item.stock[priceStockIndex].id_supplier,
+                    item.stock[priceStockIndex].id_storage,
                     item.category?.category,
                     basket.data.id_basket,
                     item.full_name,
@@ -220,7 +232,7 @@ const AllAboutProduct = observer(({
                         title='Бонуси'
                     />
                     {goods?.price ?
-                        <span className='tyresCardBonusText'>{`+${(goods?.price[0]?.price! * 0.015).toFixed()} бонусів`}</span> 
+                        <span className='tyresCardBonusText'>{`+${(goods?.price[0]?.price! * 0.01).toFixed()} бонусів`}</span> 
                         : null
                     }
                     <a href='/'>SKYBONUS</a>
@@ -263,13 +275,53 @@ const AllAboutProduct = observer(({
                 </a>
                 </>
                 }
-                {!paramsModel && goods?.price ? goods?.price.map((item: any) =>(
-                    <div className="productInfoPrice" key={item.id}>
+                {!paramsModel ?
+                <>
+                {goods?.price && goods.price.find((entity: any) => entity.id_storage === 2) ? 
+                goods?.price?.map((item: any) =>(
+                <Fragment key={item.id}>
+                {item.price && !item.old_price && item.id_storage === 2 ?
+                    <div className="productInfoPrice">
+                        {item.price} &#8372;
+                    </div>
+                    : null
+                }
+                {item.price && item.old_price && item.id_storage === 2 ?
+                    <div className="productInfoPrice">
+                    <div className="productInfoOldPrice">
+                        {item.old_price} &#8372;
+                    </div>    
+                    <div >
                         {item.price} &#8372;
                     </div> 
-                    )) : 
+                    </div>
+                    : null
+                } 
+                    </Fragment>
+                )) : 
+                    goods?.price?.map((item: any) => (
+                    <Fragment key={item.id}>
+                    {item.price && item.price.id_storage !== 2 ?
+                    <div className="productInfoPrice">
+                        {item.price} &#8372;
+                    </div> :
+                        null
+                    }
+                    {item.old_price && item.price.id_storage !== 2 ?
+                    <div className="productInfoOldPrice">
+                        {item.old_price} &#8372;
+                    </div> 
+                    : null
+                    } 
+                    </Fragment>
+                  ))
+                }
+                </>
+                :null
+                }
+                {paramsModel ?
                 <div className="productInfoPrice">
-                {paramsModelPrice && paramsModelPrice[0]?.tyres ? 
+                {paramsModel && paramsModelPrice && paramsModelPrice[0]?.tyres && goods?.price[0].price ? 
                     <span>{'від ' + 
                     paramsModelPrice[0]?.tyres[0]?.price[0]?.price
                     //paramsModelPrice[0]?.wheels[0]?.price[0]?.price 
@@ -285,26 +337,49 @@ const AllAboutProduct = observer(({
                     &#8372;
                     </span>
                     :
-                    'немає в наявності'
+                    null
                 }
-                {/* {paramsModelPrice && paramsModelPrice[0]?.wheels ? 
-                    <span>{'від ' + 
-                    //paramsModelPrice[0]?.tyres[0]?.price[0]?.price ?? 
-                    paramsModelPrice[0]?.wheels[0]?.price[0]?.price
-                    } 
-                     &#8372;</span>
-                    : 'немає в наявності'
-                } */}
                 </div> 
+                : null
+                }
+                {goods?.price?.reduce((sum: any, current: any) => sum + current.price, 0) === 0 ? 
+                    <div className="productInfoPrice">
+                        немає в наявності
+                    </div>
+                    : null 
                 }
                 {!paramsModel ?
                 <>
                 <div className='btnGoodsBox'>
+                    {goods?.price?.reduce((sum: any, current: any) => sum + current.price, 0) ?
                     <ButtonAction 
                         props={"КУПИТИ"} 
                         widthBtn={280} 
-                        eventItem={() => checkOrders(goods, avgRatingModel)}
-                    />      
+                        eventItem={() => checkOrders(
+                            goods, 
+                            avgRatingModel ?? 0,
+                            goods?.price.find((entity: any) => entity.id_storage === 2) ?
+                            2 : 1,
+                            goods!.price.find((entity: any) => entity.id_storage === 2) ?
+                            goods!.price.findIndex((entity: any) => entity.id_storage === 2) :
+                            goods!.price.findIndex((entity: any) => entity.id_storage === 1)
+                        )}
+                    /> :
+                    <div>
+                    <ButtonAction 
+                        props={"НЕМАЄ В НАЯВНОСТІ"} 
+                        widthBtn={280} 
+                        //eventItem={''}
+                        active={true}
+                    />
+                    <p/>
+                    <ButtonAction 
+                        props={"ПОКАЗАТИ СХОЖІ ТОВАРИ"} 
+                        widthBtn={280} 
+                        eventItem={moveToSimilarGoods}
+                    /> 
+                    </div>
+                    }     
                 </div>
                 <div className='btnGoodsBoxTwo'>
                     <input type="tel" placeholder='+38(номер телефона)'/>

@@ -82,6 +82,8 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
             MAIN_ROUTE + `${toStringUrl}`
         );
     };
+
+    const restStockCard: number = goods?.price?.reduce((sum: any, current: any) => sum + current.price, 0); 
     //console.log('GOODS: ', goods);
     return (
         <div className="tyresCard">
@@ -207,13 +209,13 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                     </Fragment>
                   ))
                 }
-                {goods?.price.reduce((sum: any, current: any) => sum + current.price, 0) === 0 ? 
+                {restStockCard === 0 ? 
                     <div className="tyresCardPrice">
                         немає в наявності
                     </div>
                     : null 
                 }
-                { goods?.price[0].price ?
+                { restStockCard ?
                     <ButtonAction 
                         props={"КУПИТИ"} 
                         widthBtn={260} 
@@ -222,7 +224,10 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                                 goods, 
                                 ratingModel,
                                 goods?.price.find((entity: any) => entity.id_storage === 2) ?
-                                2 : 1  
+                                2 : 1,
+                                goods?.price.find((entity: any) => entity.id_storage === 2) ?
+                                goods?.price.findIndex((entity: any) => entity.id_storage === 2) :
+                                goods?.price.findIndex((entity: any) => entity.id_storage === 1)
                             )
                         }}
                     />

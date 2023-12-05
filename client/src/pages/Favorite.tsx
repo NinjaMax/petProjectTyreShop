@@ -3,17 +3,24 @@ import '../css/Pages/Favorite.css';
 import CardList from '../components/cards/CardList';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { 
+    addGoodsToBasket,
     clearFavorites, 
+    createBasket, 
+    getBasketById, 
     getFavorites, 
+    getStorageByIdParam, 
     getTyresById, 
     getWheelsById
 } from '../restAPI/restGoodsApi';
 import { Context } from '../context/Context';
+import { ICheckOrderItem } from '../components/catalogs/types/CheckOrder.type';
+import Modal from '../components/modal/Modal';
+import CheckOrder from '../components/modal/CheckOrder';
 
 const Favorite = () => {
     // const location = useLocation();
     // const history = useHistory();
-    const {page} = useContext<any | null>(Context);
+    const {page, customer} = useContext<any | null>(Context);
     const [getFavoriteList, setGetFavoriteList] = useState<any[]>([]);
     const [tyreSearchMod, setTyreSearchMod] = useState<[] | null>(null);
     const [wheelSearchMod, setWheelSearchMod] = useState<[] | null>(null);
@@ -25,6 +32,8 @@ const Favorite = () => {
     const [tabSearchModWheel, setTabSearchModWheel] = useState<[]>([]);
     const [tabSearchModOil, setTabSearchModOil] = useState<[]>([]);
     const [tabSearchModBattery, setTabSearchModBattery] = useState<[]>([]);
+    const [active, setActive] = useState(false);
+    const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem[] | null>([]);
 
     useEffect(() => {
         let isMounted = false;
@@ -82,7 +91,63 @@ const Favorite = () => {
         } catch (error) {
             console.log(error);
         }
+    };
+
+    const checkOrders = async (
+        item : ICheckOrderItem, 
+        ratingModel: {avgRatingModel: number },
+        storageItem: number,
+        priceStockIndex: number,
+    ) => {
+    try {
+        setActive(!active);
+        if (!active) {
+            // console.log("STORAGE_ITEM", storageItem);
+            // console.log("PRICE_STOCK_ITEM", priceStockIndex);
+            const getStorage = await getStorageByIdParam(storageItem);
+            const basket: any = await createBasket({
+                id_customer: customer.customer?.id, 
+                storage: getStorage.storage
+            });
+            // console.log('GET_STORAGE: ', getStorage);
+            // console.log('ITEM: ', item);
+            // console.log('CREATE_BASKET_ID_BASKET: ', basket?.data);
+            if(basket?.status === 201) {
+                const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
+                const addTobasket: any = await addGoodsToBasket(
+                +item.id,
+                item.id_cat,
+                checkItem?.quantity ? checkItem?.quantity + 4 : 4,
+                item.price[priceStockIndex].price,
+                item.stock[priceStockIndex].id_supplier,
+                item.stock[priceStockIndex].id_storage,
+                item.category?.category,
+                basket.data.id_basket,
+                item.full_name,
+                item.season?.season_ua ?? null,
+                ratingModel?.avgRatingModel,
+                item.reviews.length,
+                item.diameter.diameter,
+                ); 
+                //console.log('ADD_BASK: ', addTobasket);
+                if (addTobasket?.status === 201) {
+                    const updateBasketStorage = await getBasketById(basket.data.id_basket);
+                    setCheckOrderItem(
+                        [...updateBasketStorage?.basket_storage]
+                    );
+                    page.setBasketCount(
+                        updateBasketStorage?.basket_storage.reduce(
+                            (sum: any, current: any) => (sum + current.quantity),0)
+                    );
+                // console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
+                // console.log('ADD_TO_BASKET: ', addTobasket?.data); 
+                }  
+            }
+        }
+    } catch (error) {
+        console.log('BASKET_ERROR: ', error);
     }
+  }
 
   return (
     <div className="overlayFavoriteActive">
@@ -105,9 +170,11 @@ const Favorite = () => {
                             'titleFavoriteSearch' }
                             onClick={searchTabModChange}
                         >Шини 
+                        {favoriteTyres ?
                             <span className='countFavoriteSearch'>
                                 {favoriteTyres?.length}
-                            </span>
+                            </span> : null
+                        }
                         </span>
                         </div>
                         : null
@@ -121,9 +188,11 @@ const Favorite = () => {
                              'titleFavoriteSearch' }
                             onClick={searchTabModChange}
                         >Диски 
+                        {favoriteWheels ?
                             <span className='countFavoriteSearch'>
-                            {favoriteWheels?.length}
-                            </span>
+                                {favoriteWheels?.length}
+                            </span> : null
+                        }
                         </span>
                         </div>
                         : null
@@ -177,6 +246,7 @@ const Favorite = () => {
                                 key={goods.id}
                                 goods={goods}
                                 forOrder={false} 
+                                checkOrders={checkOrders}
                             />
                         </div>
                         ))
@@ -191,6 +261,7 @@ const Favorite = () => {
                                 key={goods.id}
                                 goods={goods}
                                 forOrder={false} 
+                                checkOrders={checkOrders}
                             />
                         </div>
                         ))
@@ -205,6 +276,7 @@ const Favorite = () => {
                                 key={goods.id}
                                 goods={goods}
                                 forOrder={false} 
+                                checkOrders={checkOrders}
                             />
                         </div>
                         ))
@@ -219,12 +291,16 @@ const Favorite = () => {
                                 key={goods.id}
                                 goods={goods}
                                 forOrder={false} 
+                                checkOrders={checkOrders}
                             />
                         </div>
                         ))
                         : null
                         } 
                     </div>
+                    <Modal active={active} setActive={setActive}>
+                        <CheckOrder orderItem={checkOrderItem}/> 
+                    </Modal> 
                 </div>
             : <div className='noFavoritesGoods'>НЕ ДОДАНО ОБРАНИХ ТОВАРІВ.</div>
             }

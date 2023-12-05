@@ -17,6 +17,8 @@ import YouWatched from '../components/goods/YouWatched';
 import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
 import { GOODS_ROUTE, NOT_FOUND_ROUTE } from '../utils/consts';
 import { 
+  addGoodsToBasket,
+  createBasket,
   createTyreReview, 
   createWheelReview, 
   getAllTyresDiametersByModel, 
@@ -24,6 +26,8 @@ import {
   getAllTyresParamsByModel, 
   getAllWheelsDiametersByBrand, 
   getAllWheelsModelByBrand, 
+  getBasketById, 
+  getStorageByIdParam, 
   getTyresBrandRatingAvg, 
   getTyresBrandRatingAvgSeason,  
   getTyresByIdParam, 
@@ -58,6 +62,8 @@ import { FormValues } from '../components/reviews/types/ReviewTyreCreate.type';
 import ModelSection from '../components/goods/ModelSection';
 import Question from '../components/question/Questions';
 import PropertiesWheelGoods from '../components/goods/PropertiesWheelGoods';
+import { ICheckOrderItem } from '../components/catalogs/types/CheckOrder.type';
+import CheckOrder from '../components/modal/CheckOrder';
 
 type ILikeTyreType = {
   id_review: number;
@@ -87,6 +93,8 @@ const GoodsPage = observer(() => {
   const [changeTabGoods, setChangeTabGoods] = useState<string>("vseProTovar");
   const [allDiametersModel, setAllDiametersModel] = useState<any[] | null>();
   const [paramsModel, setParamsModel] = useState<boolean>(false);
+  const [active, setActive] = useState(false);
+  const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem[] | null>([]);
   const history =  useHistory();
   const params = useParams<any>();
   const location = useLocation();
@@ -459,6 +467,66 @@ const GoodsPage = observer(() => {
   const submitDataReview = (data: FormValues) => {
     setDataReview(data);
   };
+
+  const checkOrders = async (
+    item : ICheckOrderItem, 
+    ratingModel: {avgRatingModel: number },
+    storageItem: number,
+    priceStockIndex: number,
+    ) => {
+    //try {
+        setActive(!active);
+        if (!active) {
+            console.log('ITEM: ', item);
+            console.log("RATING_ITEM", ratingModel);
+            console.log("STORAGE_ITEM", storageItem);
+            console.log("PRICE_STOCK_INDEX", priceStockIndex);
+            const getStorage = await getStorageByIdParam(storageItem);
+            const basket: any = await createBasket({
+                id_customer: customer.customer?.id, 
+                storage: getStorage.storage
+            });
+            console.log('GET_STORAGE: ', getStorage);
+            
+            console.log('CREATE_BASKET_ID_BASKET: ', basket?.data);
+            if(basket?.status === 201) {
+                const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
+                const addTobasket: any = await addGoodsToBasket(
+                +item.id,
+                item.id_cat,
+                checkItem?.quantity ? checkItem?.quantity + 4 : 4,
+                item.price[priceStockIndex]?.price,
+                item.stock[priceStockIndex]?.id_supplier ?? item.price[priceStockIndex].id_supplier,
+                item.stock[priceStockIndex]?.id_storage ?? item.price[priceStockIndex].id_supplier,
+                item.category?.category,
+                basket.data.id_basket,
+                item.full_name,
+                item.season?.season_ua ?? null,
+                ratingModel?.avgRatingModel ?? 0,
+                item.reviews.length,
+                item.diameter.diameter,
+                ); 
+                //console.log('ADD_BASK: ', addTobasket);
+                if (addTobasket?.status === 201) {
+                    const updateBasketStorage = await getBasketById(basket.data.id_basket);
+                    setCheckOrderItem(
+                        [...updateBasketStorage?.basket_storage]
+                    );
+                    page.setBasketCount(
+                        updateBasketStorage?.basket_storage.reduce(
+                            (sum: any, current: any) => (sum + current.quantity),0)
+                    );
+                // console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
+                // console.log('ADD_TO_BASKET: ', addTobasket?.data); 
+                }  
+            }
+        }
+    // } catch (error) {
+    //     console.log('BASKET_ERROR: ',error);
+    // }
+  }
+
+
   // console.log('LIKE_REVIEW: ', likeReview);
   //console.log("DATA_REVIEW: ", dataReview);
   //console.log('MATCH_URL_PARAMS: ', match?.params.goodsItem);
@@ -471,7 +539,7 @@ const GoodsPage = observer(() => {
   // console.log('LOCALSORAGE_GOODS_ID: ',JSON.parse(localStorage.getItem('goodsId')!));
   // console.log('THUMB_UP:', thumbUp);
   // console.log('THUMB_DOWN:', thumbDown);
-
+//console.log('GOODS_TYRE_PRODUCT: ', goodsTyre.product)
   //console.log("PARAMS: ", params);
 
   return (
@@ -657,15 +725,22 @@ const GoodsPage = observer(() => {
         <ModelSection 
           modelGoods={allDiametersModel}
           modelName={goodsTyre?._product?.tyre_model?.model ?? goodsWheel?._product?.wheel_model?.model}
+          checkOrders={checkOrders}
         /> 
         : null
       }
       </div>
       <div className={paramsModel ? 'similarGoodsModelNone' : 'similarGoodsModel'}>
-        <SimilarGoods similarGoodsList={similarBrandGoods}/>
+        <SimilarGoods 
+          similarGoodsList={similarBrandGoods}
+          checkOrders={checkOrders}
+        />
       </div>
       <div className={paramsModel ? 'similarGoodsNone' : 'similarGoods'}>
-        <SimilarGoods similarGoodsList={similarGoods}/>
+        <SimilarGoods 
+          similarGoodsList={similarGoods}
+          checkOrders={checkOrders}
+        />
       </div>
       {goodsTyre?.model ?
       <div className={paramsModel ? 'allSizeModelNone' : 'allSizeModel'}>
@@ -682,19 +757,25 @@ const GoodsPage = observer(() => {
         />
       </div>
       <div className= {paramsModel ? 'youWatchedModel' : 'youWatched'}>
-        <YouWatched/>
+        <YouWatched
+          checkOrders={checkOrders}
+        />
       </div>
       <div className={changeTabGoods==="vseProTovar" ? "smallCardOne":"smallCardNext"}>
         {goodsTyre._product && !paramsModel ?
           <TyreCardSmall 
-          rating={ratingIdAndIdModelAvg}
-          product={goodsTyre._product}/>
+            rating={ratingIdAndIdModelAvg}
+            product={goodsTyre._product}
+            checkOrders={checkOrders}
+          />
         : null 
         }
         {goodsWheel._product && !paramsModel ?
           <TyreCardSmall 
-          rating={ratingIdAndIdModelAvg}
-            product={goodsWheel._product}/>
+            rating={ratingIdAndIdModelAvg}
+            product={goodsWheel._product}
+            checkOrders={checkOrders}
+          />
         : null 
         }
       </div>
@@ -703,6 +784,9 @@ const GoodsPage = observer(() => {
           <ReviewCreate 
             onSubmitReviewTyre={submitDataReview}
           />
+        </Modal> 
+        <Modal active={active} setActive={setActive}>
+          <CheckOrder orderItem={checkOrderItem}/> 
         </Modal> 
       </div>  
     </div>

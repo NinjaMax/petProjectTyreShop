@@ -77,17 +77,13 @@ export class PropsWheelDiaService {
   }
 
   async findAllWheelDia() {
-
     try {
-
       const wheelAllDia = await this.wheelDiaRepository.findAll({include: {all: true}});
 
       return wheelAllDia;
 
     } catch {
-
       throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
-
     }
     
   }
@@ -99,17 +95,13 @@ export class PropsWheelDiaService {
       return diaId;
 
     } catch {
-
       throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
-
     }
 
   }
 
   async updateWheelDia( updatePropertyDto: UpdatePropertyDto) {
-
     try {
-
       const diaWheelId = await this.wheelDiaRepository.findByPk(updatePropertyDto.id_dia, {include: {all: true}});
 
       if(diaWheelId) {

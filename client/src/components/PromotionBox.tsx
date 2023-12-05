@@ -6,7 +6,7 @@ import Modal from './modal/Modal';
 import CheckOrder from './modal/CheckOrder';
 import { ICheckOrderItem } from './catalogs/types/CheckOrder.type';
 import { Context } from '../context/Context';
-import { addGoodsToBasket, createBasket, getBasketById } from '../restAPI/restGoodsApi';
+import { addGoodsToBasket, createBasket, getBasketById, getStorageByIdParam } from '../restAPI/restGoodsApi';
 import { observer } from 'mobx-react-lite';
 
 type IPromoBox = {
@@ -30,23 +30,27 @@ const PromotionBox = observer(({
     
     const checkOrders = async (
         item : ICheckOrderItem, 
-        ratingModel: {avgRatingModel: number }
+        ratingModel: {avgRatingModel: number },
+        storageItem: number,
+        priceStockIndex: number,
         ) => {
         try {
             setActive(!active);
             if (!active) {
-                const basket: any = await createBasket(
-                    customer.customer?.id,
-                );
+                const getStoragePromo = await getStorageByIdParam(storageItem);
+                const basket: any = await createBasket({
+                    id_customer: customer.customer?.id, 
+                    storage: getStoragePromo.storage
+                });
                 if(basket?.status === 201) {
                     const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
                     const addTobasket: any = await addGoodsToBasket(
                     +item.id,
                     item.id_cat,
                     checkItem?.quantity ? checkItem?.quantity + 4 : 4,
-                    item.price[0].price,
-                    item.stock[0].id_supplier,
-                    item.stock[0].id_storage,
+                    item.price[priceStockIndex].price,
+                    item.stock[priceStockIndex].id_supplier,
+                    item.stock[priceStockIndex].id_storage,
                     item.category?.category,
                     basket.data.id_basket,
                     item.full_name,

@@ -113,6 +113,9 @@ export class Orders extends Model<Orders, OrdersConfigAttr> {
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
   notes: string;
 
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  mix_store: string;
+
   @ForeignKey(() => Customer)
   @Column({ type: DataType.INTEGER, allowNull: true })
   id_customer: number;

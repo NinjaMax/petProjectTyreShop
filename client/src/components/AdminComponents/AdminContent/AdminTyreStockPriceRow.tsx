@@ -23,7 +23,7 @@ const AdminTyreStockPriceRow = (
                 <Fragment key={'stt' + stockTyres[index]?.id} >
                     <td >{stockTyres[index]?.storage.storage ?? ''}</td>
                     <td >{
-                    new Date(stockTyres[index].update_date).toLocaleString() ?? ''
+                    new Date(stockTyres[index]?.update_date).toLocaleString() ?? ''
                     }</td>
                     <td >{stockTyres[index]?.supplier.name ?? ''}</td>
                     <td >{stockTyres[index]?.supplier.city_ua ?? ''}</td>
