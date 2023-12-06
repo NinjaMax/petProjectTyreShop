@@ -123,25 +123,25 @@ const AdminGoodsContent = (
     };
 
     const addToOrder = async (e: { currentTarget: { value: string; }; }) => {
-        //try {
-        let itemTyre: any = tyreData?.find((item:{id:string}) => item.id === e.currentTarget?.value);
-        let itemWheel: any = wheelData?.find((item:{id:string}) => item.id === e.currentTarget?.value);
+        try {
+            let itemTyre: any = tyreData?.find((item:{id:string}) => item.id === e.currentTarget?.value);
+            let itemWheel: any = wheelData?.find((item:{id:string}) => item.id === e.currentTarget?.value);
         
-        let priceByIdTyre = await getAdminPriceTyresById(e.currentTarget?.value ?? 0);
-        let priceByIdTWheel = await getAdminPriceWheelsById(e.currentTarget?.value ?? 0);
+            let priceByIdTyre = await getAdminPriceTyresById(e.currentTarget?.value ?? 0);
+            let priceByIdTWheel = await getAdminPriceWheelsById(e.currentTarget?.value ?? 0);
 
-        if(itemTyre) {
-            itemTyre!.price = priceByIdTyre;
-            setItemId(itemTyre);
-        }   
-        if(itemWheel) {
-            itemWheel!.price = priceByIdTWheel;
-            setItemId(itemWheel);    
-        }  
-        setAddGoods(!addGoods);
-        // } catch (error) {
-            // console.log('ADD_TO_ORDER: ', error);
-        //}
+            if (itemTyre) {
+                itemTyre!.price = priceByIdTyre;
+                setItemId(itemTyre);
+            }   
+            if (itemWheel) {
+                itemWheel!.price = priceByIdTWheel;
+                setItemId(itemWheel);    
+            }  
+            setAddGoods(!addGoods);
+        } catch (error) {
+            console.log('ADD_TO_ORDER: ', error);
+        }
     }
 
     const itemClickHandler = (e: any) => {

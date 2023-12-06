@@ -16,6 +16,7 @@ export type IOrdersItem = {
     status_pay: string;
     id_user: number;
     notes: string;
+    mix_store: string | null;
     total: number;
     total_cost: number;
     quantity?: number;

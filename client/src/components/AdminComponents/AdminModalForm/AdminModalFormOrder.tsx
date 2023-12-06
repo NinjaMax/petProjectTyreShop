@@ -140,6 +140,10 @@ const AdminFormOrder = observer((
     ]);
     
     useEffect(() => {
+        register("mix_store");
+        setValue("mix_store", state.find((item: any) => item.id_storage === 1) &&
+        state.find((item: any) => item.id_storage === 2) ? '+' : null
+        );
         if (delivery === "Нова Пошта") {
             register("delivery_city", {required: 'Це необхідні дані'});
             register("delivery_city_ref");
@@ -357,6 +361,7 @@ const AdminFormOrder = observer((
         const newArr = value.split(',');
         let [idValue, indexValue] = newArr;
         const addTyres: any = tyreDatas?.find((item:{id:string}) => item?.id === idValue);
+        const addWheels: any = wheelDatas?.find((item:{id:string}) => item?.id === idValue);
         dispatch({type: ActionType.ADDTYRE, 
             addTyre: tyreDatas?.find((item:{id:string}) => item?.id === idValue),
             indexPrice: indexValue,
@@ -383,6 +388,24 @@ const AdminFormOrder = observer((
                 }
             ]);
         }
+        if (addWheels) {
+            setOrderStorage(oldOrdStor => [...oldOrdStor!, 
+                {...addWheels, 
+                    "price": addWheels.price[indexValue].price,
+                    "id_tyre": addWheels.price[indexValue].id_tyre,
+                    "price_wholesale": addWheels.price[indexValue].price_wholesale,
+                    "old_price": addWheels.price[indexValue].old_price,
+                    "id_supplier": addWheels.price[indexValue].id_supplier,
+                    "id_storage": addWheels.price[indexValue].id_storage,
+                    "delivery_price": addWheels.price[indexValue].delivery_price,
+                    "price_plus_delivery": addWheels.price[indexValue].price_plus_delivery,
+                    "update_date": addWheels.price[indexValue].update_date,
+                    "category": addWheels.category.category,
+                    "quantity": "4",
+                }
+            ]);
+        }
+
         setAddGoods(!addGoods);         
     };
 
@@ -606,12 +629,12 @@ const AdminFormOrder = observer((
     //console.log('GOODS_ID: ', goodsId);
     //console.log('ORDER_ID: ', orderId);
     //console.log('GET_DOP_GAR: ', getValues('dop_garanty'));
-    console.log('TOTAL_COST: ', getValues('delivery_cost'));
-    console.log('STATE: ', state);
-    console.log('ERRORS_FORM: ', errors);
-    console.log('ORDERS_STORAGE : ', orderStorage);
-    console.log('ORDER_DATA: ', ordersData);
-    console.log('PURCHASE_PRICE: ', purchaseGoods);
+    // console.log('TOTAL_COST: ', getValues('delivery_cost'));
+    // console.log('STATE: ', state);
+    // console.log('ERRORS_FORM: ', errors);
+    // console.log('ORDERS_STORAGE : ', orderStorage);
+    // console.log('ORDER_DATA: ', ordersData);
+    // console.log('PURCHASE_PRICE: ', purchaseGoods);
 
     return (
         <div >
@@ -673,14 +696,17 @@ const AdminFormOrder = observer((
                             defaultValue={ordersData?.storage ?? ''}
                             onChange={(e) => setValue('storage', e.target.value)}
                         >
-                            <option value={'Склад Поставщик'}>
-                                Склад Поставщик
+                            <option value={'Постачальник'}>
+                                Постачальник
                             </option>
-                            <option value={'Склад Основний'}>
-                                Склад Основний
+                            <option value={'Основний Харків'}>
+                                Основний Харків
                             </option>
-                            <option value={'Склад Монтаж'}>
-                                Склад Монтаж
+                            <option value={'Основний Харків-1'}>
+                                Основний Харків-1
+                            </option>
+                            <option value={'Віддалений Дніпро-1'}>
+                                Віддалений Дніпро-1
                             </option>
                         </select>  
                     </div>
@@ -1074,7 +1100,9 @@ const AdminFormOrder = observer((
                                 reserve: number;
                                 full_name:string, 
                                 category:string, 
-                                price:number;}, 
+                                price:number,
+                                id_storage: number,
+                                }, 
                                 index:number
                             ) =>(
                         <tr key={item.id + index} 
@@ -1110,10 +1138,22 @@ const AdminFormOrder = observer((
                             </td>
                             <td >{item?.price * item?.quantity}</td>
                             <td >
-                                <select className="admFormOrderStorage" name="storage_index">
-                                    <option value={1}>Склад Поставщик</option>
-                                    <option value={2}>Склад Основний</option>
-                                    <option value={3}>Склад Монтаж</option>
+                                <select className="admFormOrderStorage" 
+                                    name="storage_index"
+                                    defaultValue={item.id_storage === 1 ? 
+                                        'Постачальник' :
+                                        item.id_storage === 2 ?
+                                        'Основний Харків' :
+                                        item.id_storage === 3 ?
+                                        'Основний Харків-1' :
+                                        item.id_storage === 4 ?
+                                        'Віддалений Дніпро-1' : ''
+                                    }
+                                >
+                                    <option value={'Постачальник'}>Постачальник</option>
+                                    <option value={'Основний Харків'}>Основний Харків</option>
+                                    <option value={'Основний Харків-1'}>Основний Харків-1</option>
+                                    <option value={'Віддалений Дніпро-1'}>Віддалений Дніпро-1</option>
                                 </select>  
                             </td> 
                             <td>

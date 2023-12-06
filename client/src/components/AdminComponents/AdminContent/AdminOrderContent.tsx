@@ -90,50 +90,6 @@ const AdminOrderContent = (
         }
     };
 
-    const orderRowTable = ({index, style}: any) => (
-            <div className='admOrderGridItem' style={style}
-                onClick={showComment}
-                onDoubleClick={showOrderData}
-                data-name='orderShow'
-                data-value={filteredOrder![index].id_order}>
-                <div>{filteredOrder![index].id_order}</div>
-                <div>{new Date(filteredOrder![index].createdAt).toLocaleString()}</div>
-                <div>{new Date(filteredOrder![index].updatedAt).toLocaleString()}</div>
-                <div>{filteredOrder![index]?.customer.name}</div>
-                <div>{filteredOrder![index]?.storage}</div>
-                <div>{filteredOrder![index]?.total_cost}</div>
-                {/* <td>{items?.order_storage?.reduce(
-                        (sum:any, current:any) => 
-                        sum + current.total, 0)}
-                </td> */}
-                <div>{filteredOrder![index]?.status}</div>
-                <div>{filteredOrder![index]?.order_view}</div>
-                <div>{filteredOrder![index]?.delivery}</div>
-                <div>{filteredOrder![index]?.status_delivery}</div>
-                <div>{filteredOrder![index]?.pay_view}</div>
-                <div>{filteredOrder![index]?.status_pay}</div>
-                <div>{filteredOrder![index]?.user?.name}</div>
-                <div>{filteredOrder![index]?.notes}</div>
-                <div>
-                    <button className='basketAdmGoods'
-                        value={filteredOrder![index].id_order}
-                        onClick={activeFormOrderSup}>
-                        <i className="fas fa-truck-loading"></i>
-                    </button>
-                    <button className='editAdmGoods'
-                        name='editOrder'
-                        value={filteredOrder![index].id_order}
-                        onClick={showOrderData}>
-                        <i className="fas fa-edit"></i>
-                    </button>
-                    <button className='closeAdmGoods'
-                        value={filteredOrder![index].id_order}>
-                        <i className="fa fa-remove"></i>
-                    </button>                  
-                </div>
-            </div>    
-    );
-
     const sortOrder = (e: any) => {
         if (e.target.textContent === 'Код') {
             const sortByCode: any = 
@@ -148,13 +104,13 @@ const AdminOrderContent = (
             (+(new Date(a.createdAt).toLocaleString())) - (+(new Date(b.createdAt).toLocaleString())));
             setFilteredOrder(sortByDate);
         }
-        if (e.target.textContent === 'Дата оновлення') {
-            const sortByDateUpdate: any = 
-            filteredOrder?.sort(
-            (a:any, b:any) => 
-            (+(new Date(a.updatedAt).toLocaleString())) - (+(new Date(b.updatedAt).toLocaleString())));
-            setFilteredOrder(sortByDateUpdate);
-        }
+        // if (e.target.textContent === 'Дата оновлення') {
+        //     const sortByDateUpdate: any = 
+        //     filteredOrder?.sort(
+        //     (a:any, b:any) => 
+        //     (+(new Date(a.updatedAt).toLocaleString())) - (+(new Date(b.updatedAt).toLocaleString())));
+        //     setFilteredOrder(sortByDateUpdate);
+        // }
         if (e.target.textContent === 'Покупець') {
             const sortByCustomer: any = 
             filteredOrder?.sort(
@@ -172,9 +128,19 @@ const AdminOrderContent = (
                 a.storage.toLowerCase().localeCompare(
                     b.storage.toLowerCase()
                 )
-        )
+            )
             setFilteredOrder(sortByStorage)
-        }  
+        } 
+        if (e.target.textContent === 'М Скл') {
+            const sortByStorageMix: any = 
+            filteredOrder?.sort(
+                (a:any, b:any) => 
+                a.mix_store.toLowerCase().localeCompare(
+                    b.mix_store.toLowerCase()
+                )
+            )
+            setFilteredOrder(sortByStorageMix)
+        }   
         if (e.target.textContent === 'Статус') { 
             const sortByStatus: any = 
             filteredOrder?.sort(
@@ -247,6 +213,46 @@ const AdminOrderContent = (
         }
     }
 
+    const orderRowTable = ({index, style}: any) => (
+        <div className='admOrderGridItem' style={style}
+            onClick={showComment}
+            onDoubleClick={showOrderData}
+            data-name='orderShow'
+            data-value={filteredOrder![index].id_order}>
+            <div>{filteredOrder![index].id_order}</div>
+            <div>{new Date(filteredOrder![index].createdAt).toLocaleString()}</div>
+            <div>{filteredOrder![index]?.customer.name}</div>
+            <div>{filteredOrder![index]?.storage}</div>
+            <div>{filteredOrder![index]?.mix_store}</div>
+            <div>{filteredOrder![index]?.total_cost}</div>
+            <div>{filteredOrder![index]?.status}</div>
+            <div>{filteredOrder![index]?.order_view}</div>
+            <div>{filteredOrder![index]?.delivery}</div>
+            <div>{filteredOrder![index]?.status_delivery}</div>
+            <div>{filteredOrder![index]?.pay_view}</div>
+            <div>{filteredOrder![index]?.status_pay}</div>
+            <div>{filteredOrder![index]?.user?.name}</div>
+            <div>{filteredOrder![index]?.notes}</div>
+            <div>
+                <button className='basketAdmGoods'
+                    value={filteredOrder![index].id_order}
+                    onClick={activeFormOrderSup}>
+                    <i className="fas fa-truck-loading"></i>
+                </button>
+                <button className='editAdmGoods'
+                    name='editOrder'
+                    value={filteredOrder![index].id_order}
+                    onClick={showOrderData}>
+                    <i className="fas fa-edit"></i>
+                </button>
+                <button className='closeAdmGoods'
+                    value={filteredOrder![index].id_order}>
+                    <i className="fa fa-remove"></i>
+                </button>                  
+            </div>
+        </div>    
+    );
+
     return (
         <div  onClick={inputCancelHandler}>
             <div className="admOrderContent">
@@ -299,12 +305,14 @@ const AdminOrderContent = (
                             onClick={sortOrder}>Код</th>
                         <th className='headerOrderTableDate' 
                             onClick={sortOrder}>Дата</th>
-                        <th className='headerOrderTableDateUpdate' 
-                            onClick={sortOrder}>Дата оновлення</th>
+                        {/* <th className='headerOrderTableDateUpdate' 
+                            onClick={sortOrder}>Дата оновлення</th> */}
                         <th className='headerOrderTableCustm' 
                             onClick={sortOrder}>Покупець</th>
                         <th className='headerOrderTableStorage' 
                             onClick={sortOrder}>Склад</th>
+                        <th className='headerOrderTableStorageMix' 
+                            onClick={sortOrder}>M Скл</th>
                         <th className='headerOrderTableCost' 
                             onClick={sortOrder}>Сума</th>
                         <th className='headerOrderTableStatus' 

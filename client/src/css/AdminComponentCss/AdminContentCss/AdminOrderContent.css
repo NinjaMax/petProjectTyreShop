@@ -79,14 +79,14 @@
 .headerOrderTableDate {
     width: 85px;
 }
-.headerOrderTableDateUpdate {
-    width: 80px;
-}
 .headerOrderTableCustm {
-    width: 80px;
+    width: 95px;
 }
 .headerOrderTableStorage {
-    width: 80px;
+    width: 110px;
+}
+.headerOrderTableStorageMix {
+    width: 20px;
 }
 .headerOrderTableCost {
     width: 65px;
@@ -95,7 +95,7 @@
     width: 70px;
 }
 .headerOrderTableType {
-    width: 70px;
+    width: 60px;
 }
 .headerOrderTableDelivery {
     width: 90px;
@@ -135,6 +135,10 @@
     text-align: left;
     background-color: #4CAF50;
     color: #444;
+}
+
+.admListOrdersTable th:hover{
+    background-color: #2caf30 
 }
 
 .admListOrdersTable i {
@@ -322,7 +326,7 @@
 .admOrderGridItem {
     vertical-align:middle;
     display: grid;
-    grid-template-columns: 50px 80px 80px 80px 80px 60px 75px 65px 85px 90px 100px 60px 55px 100px 100px;
+    grid-template-columns: 50px 85px 90px 120px 20px 65px 75px 55px 90px 80px 110px 55px 60px 110px 110px;
     grid-column-gap: 10px;
 }
 .admOrderGridItem:nth-child(even) {

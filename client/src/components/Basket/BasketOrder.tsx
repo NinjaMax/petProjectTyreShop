@@ -73,6 +73,7 @@ const BasketOrder = observer(() => {
                     setBasketData({
                         ...getBasket,
                         id_customer: customer.id_customer,
+                        //name: '',
                     });
                     setGoodsBasket([...getBasket?.basket_storage.sort(
                         (a: any, b: any) => (+b.id_basket_storage) - (+a.id_basket_storage)
@@ -95,6 +96,7 @@ const BasketOrder = observer(() => {
         redeliveryCost?: string
         )  => {
         let dataSupplier: CalcNovaPoshta | null = {};
+        let dataSupCity: any[] | null = [];
         let taskGetSupplier: any[] | null = [
         ...goodsBasket!
         ];
@@ -104,6 +106,7 @@ const BasketOrder = observer(() => {
         let getCitySup: any = await getSupplierById(
             taskGetSupplier[i]?.id_supplier
         );
+        dataSupCity.push(getCitySup.city_ua);
         let citySupNovaPoshta = await getCityNovaPoshta(getCitySup.city_ua);
         let citySupDelivery = await getCityDelivery(getCitySup.city_ua ?? 'Київ');
         if (depart?.delivery === 'Нова Пошта') {
@@ -175,6 +178,12 @@ const BasketOrder = observer(() => {
             ref_weight: dataSupplier.goodsDescription,
             id_basket_storage: taskGetSupplier[i].id_basket_storage,
         });
+        console.log('DATA_SUP_CITY: ', dataSupCity);
+        if (dataSupCity.includes('Харків') && depart?.address?.includes('м. Харків')) {
+            setTakeOut(true); 
+        } else {
+            setTakeOut(false); 
+        }
         if (taskGetSupplier[i] && dataSupplier && depart?.delivery === 'Нова Пошта') {
             let getCalcNovaPoshta = await getCalcPriceNovaPoshta(dataSupplier);
             if (getCalcNovaPoshta.success === true) {
@@ -185,11 +194,11 @@ const BasketOrder = observer(() => {
                     ]}
                 );
             } 
-            if (getCitySup.city_ua === 'Харків' && depart?.address?.includes('м. Київ')) {
-                setTakeOut(true); 
-            } else {
-                setTakeOut(false); 
-            }
+            // if (dataSupCity.includes('Харків') && depart?.address?.includes('м. Харків')) {
+            //     setTakeOut(true); 
+            // } else {
+            //     setTakeOut(false); 
+            // }
         }
         if (taskGetSupplier[i] && dataSupplier && depart?.delivery === 'Делівері') {
             let getCalcDelivery = await getCalcPriceDelivery(dataSupplier);
@@ -202,15 +211,16 @@ const BasketOrder = observer(() => {
                 }
                 );
             }             
-            if (getCitySup.city_ua === 'Харків' && depart?.address?.includes('м. Київ')) {
-                setTakeOut(true); 
-            } else {
-                setTakeOut(false); 
-            }
+            // if (dataSupCity.includes('Харків') && depart?.address?.includes('м. Харків')) {
+            //     setTakeOut(true); 
+            // } else {
+            //     setTakeOut(false); 
+            // }
         }
         taskGetSupplier.shift();
         };
         dataSupplier = null;
+        //dataSupCity = null;
     };
 
     useEffect(() => {
@@ -273,6 +283,7 @@ const BasketOrder = observer(() => {
             }
             });
             setPayMethod('Карткою (VISA / MASTERCARD)');
+            setCommitionPay((Number((sumGoods! * 0.015).toFixed())));
         }
         if (!isMounted && costNovaPoshta && delivery === 'Нова Пошта') {
             setDeliverySum(Number(
@@ -335,7 +346,7 @@ const BasketOrder = observer(() => {
             );
             setBasketData(prevData => { return {
                 ...prevData,
-                commission_cost: null,
+                commission_cost: commisionPay,
                 delivery_cost: deliverySum,
                 bonus_decrease: bonusUser,
                 dop_garanty: dopGarantySum,
@@ -350,7 +361,7 @@ const BasketOrder = observer(() => {
             );
             setBasketData(prevData => { return {
                 ...prevData,
-                commission_cost: null,
+                commission_cost: commisionPay,
                 delivery_cost: deliverySum,
                 bonus_decrease: bonusUser,
                 dop_garanty: dopGarantySum,
@@ -365,7 +376,7 @@ const BasketOrder = observer(() => {
             );
             setBasketData(prevData => { return {
                 ...prevData,
-                commission_cost: null,
+                commission_cost: commisionPay,
                 delivery_cost: deliverySum,
                 bonus_decrease: bonusUser,
                 dop_garanty: dopGarantySum,
@@ -548,7 +559,9 @@ const BasketOrder = observer(() => {
             if (updateBasketDelivery?.status === 200) {
                 setBasketData({...updateBasketDelivery?.data})  
             }
-            basketSupplierGoods(updateBasketDelivery?.data, updateBasketDelivery?.data.pay_view);
+            if (e.currentTarget.getAttribute('data-select') !== "Самовивіз") {
+                basketSupplierGoods(updateBasketDelivery?.data, updateBasketDelivery?.data.pay_view);
+            }
         } catch (error) {
             console.log('RADIO_DELIVERY_ERROR: ', error);
         }
@@ -573,7 +586,9 @@ const BasketOrder = observer(() => {
                 if (updateBasketPay?.status === 200) {
                 setBasketData({...updateBasketPay?.data});  
                 }
-                basketSupplierGoods(updateBasketPay?.data, updateBasketPay?.data.pay_view);
+                if (delivery !== "Самовивіз") {
+                    basketSupplierGoods(updateBasketPay?.data, updateBasketPay?.data.pay_view);
+                }
             } else {
                 setCommitionPay(null);
                 const updateBasketPay = await updateBasket(
@@ -585,7 +600,9 @@ const BasketOrder = observer(() => {
                 if (updateBasketPay?.status === 200) {
                     setBasketData({...updateBasketPay?.data});  
                 }
-                basketSupplierGoods(updateBasketPay?.data, updateBasketPay?.data.pay_view);
+                if (delivery !== "Самовивіз") {
+                   basketSupplierGoods(updateBasketPay?.data, updateBasketPay?.data.pay_view); 
+                }
             }
         } catch (error) {
             console.log('RADIO_PAYMENT_ERROR: ', error);
@@ -816,6 +833,8 @@ const BasketOrder = observer(() => {
                 if (updateBasketData?.status === 200) {
                     const createOrder: any = await responseForm({
                         ...updateBasketData?.data,
+                        mix_store: goodsBasket?.find(basket => basket.id_storage === 1) &&
+                        goodsBasket?.find(basket => basket.id_storage === 2) ? '+' : null,
                     });
                     basketData?.basket_storage?.forEach( async(item: CreateGoods):Promise<any> => {
                         let goodsToOrder = await createGoodsToOrderBasket(item, createOrder?.data?.id_order!); 
@@ -842,6 +861,9 @@ const BasketOrder = observer(() => {
             console.log(error);
         }
     };
+
+    console.log('BASKET_DATA: ', basketData);
+    console.log('DELIVERY_DATA: ', delivery);
 
     return (
         <div>

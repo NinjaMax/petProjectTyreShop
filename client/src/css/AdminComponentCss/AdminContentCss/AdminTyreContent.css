@@ -178,6 +178,25 @@
     cursor: pointer;
 }
 
+.admTyreGridItemMainStorage {
+    vertical-align:middle;
+    display: grid;
+    grid-template-columns: 80px 445px 110px 90px 45px 100px 78px 100px 125px;
+    grid-column-gap: 15px;
+    background-color:powderblue;
+}
+.admTyreGridItemMainStorage .admTyreGridItemBtn {
+    display: flex;
+    flex-direction: row;
+}
+.admTyreTableColmId tr {
+    border: 1px solid #ddd;
+    padding: 8px 5px;
+} 
+.admTyreTableColmId .admTyreGridItemMainStorage:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
 /* .admTyreGridItemF .admTyreGridItemB {
     vertical-align:text-bottom;
 } */

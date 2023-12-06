@@ -17,7 +17,12 @@ const AdminTyreContent = ({
 }: ITyreContent) => {
 
     const tableTyreRow = ({index, style}: any) => (
-        <div className='admTyreGridItem' style={style}
+        <div className={
+            props![index].stock.find((entity: any) => entity.id_storage === 2) ?
+            'admTyreGridItemMainStorage' :
+            'admTyreGridItem'
+            } 
+            style={style}
             onClick={showRowData} 
             data-value={props![index].id}
         >

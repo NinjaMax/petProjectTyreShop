@@ -26,4 +26,5 @@ export type StateReducer = {
     slice(arg0?: number, arg1?: number): any;
     [Symbol.iterator](): any;
     reduce(arg0: any, ...arg: any[]): any;
+    find(arg0: any, ...arg: any[]): any;
 }
