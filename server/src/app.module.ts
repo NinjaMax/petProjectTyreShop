@@ -1,6 +1,4 @@
 import { CacheStore, Module } from '@nestjs/common';
-import { RedisClientOptions, createClient } from 'redis';
-import { CacheModule } from '@nestjs/cache-manager';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { TyresModule } from './tyres/tyres.module';
 import { SuppliersModule } from './suppliers/suppliers.module';
@@ -116,9 +114,9 @@ import { ReviewWheels } from './reviews/entities/review-wheels.model';
 import { RatingWheels } from './ratings/entities/rating-wheels.model';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
-//import RedisStore from 'connect-redis';
 import { RedisModule } from './redis/redis.module';
 import { ViberApiModule } from './viber-api/viber-api.module';
+import { TelegramApiModule } from './telegram-api/telegram-api.module';
 
 @Module({
   imports: [
@@ -226,27 +224,6 @@ import { ViberApiModule } from './viber-api/viber-api.module';
       }),
       inject: [ConfigService],
     }),
-    // CacheModule.registerAsync<RedisClientOptions>({
-    //   imports: [ConfigModule.register({ folder: './config' })],
-    //   useFactory: async (configService: ConfigService) => {
-    //     const store = createClient({
-    //       socket: {
-    //         host: configService.get('REDIS_HOST'),
-    //         port: +configService.get('REDIS_PORT'), 
-    //       },
-    //     });
-
-    //     await store.connect().catch(console.error);
-    //     const redisStore = new RedisStore({
-    //       client: store,
-    //       prefix: 'tyre:', 
-    //       ttl: 300,
-    //     });
-    //     return { store: redisStore as unknown as CacheStore };
-    //   },
-    //   isGlobal: true,
-    //   inject: [ConfigService],
-    // }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
@@ -284,6 +261,7 @@ import { ViberApiModule } from './viber-api/viber-api.module';
     ArticlesModule,
     RedisModule,
     ViberApiModule,
+    TelegramApiModule,
   ],
   controllers: [AppController],
   providers: [AppService],
