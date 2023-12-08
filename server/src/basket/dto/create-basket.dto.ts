@@ -3,6 +3,7 @@ export class CreateBasketDto {
   readonly id_cat: number;
   readonly goods: string;
   readonly price: number;
+  readonly price_wholesale: number;
   readonly quantity: number;
   readonly total: number;
   readonly notes: string;

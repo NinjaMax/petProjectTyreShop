@@ -10,7 +10,7 @@ interface IinputDataTex {
     };
     inputText(arg0:any):void;
     dataEmail?: string | null;
-    dataText?: string | null;
+    dataText?: string;
 }
 
 const InputDataText = ({dataEmail, dataText, inputItem, inputText}: IinputDataTex) => {

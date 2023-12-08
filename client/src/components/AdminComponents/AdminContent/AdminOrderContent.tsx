@@ -41,13 +41,15 @@ const AdminOrderContent = (
     }
 
     const activeFormOrderSup = (e: any) => {
-        const valueId = e.currentTarget.value;
+        const valueId = e.currentTarget?.value;
         const orderInfoSup = orders?.find(
             (item:{id_order: number}) => 
                 item.id_order === valueId
             );
         if(orderInfoSup) {
             setOrderData(orderInfoSup);
+            setActiveOrderSup(!activeOrderSup);
+        } else {
             setActiveOrderSup(!activeOrderSup);
         }
     }
@@ -391,7 +393,7 @@ const AdminOrderContent = (
                     storages={storage}
                     //supplier={supplier}
                     comments={comments}
-                    setActive={setActiveOrderSup}
+                    setActive={activeFormOrderSup}
                     orderSupData={orderData}
                     showComment={showComment}
                     props={props}

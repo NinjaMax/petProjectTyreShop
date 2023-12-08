@@ -16,7 +16,6 @@ export function reducer (state: StateReducer, action: ActionReducer) {
                     "update_date": action.addTyre.price[+action.indexPrice].update_date,
                     "category": action.addTyre.category.category,
                     "quantity": "4",
-                
                 });
             }
             return state;

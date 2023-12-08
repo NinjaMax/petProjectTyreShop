@@ -151,7 +151,7 @@ const AdminFormOrder = observer((
             { shouldValidate: true });
             setValue("delivery_city_ref", dataDepartmentNP!.DeliveryCity);
             const payMethod = getValues('pay_view');
-            if (payMethod === "Б/г рахунок" || "Б/г карта") {
+            if (payMethod === "Безготівковий розрахунок" || "Карта/Терминал (LiqPay)") {
                 register("commission_cost");
                 setValue("commission_cost", state?.reduce((sum:any, current:any) => 
                 sum + (current.price.price * current.price.quantity), 0) * 0.015);
@@ -1015,11 +1015,11 @@ const AdminFormOrder = observer((
                             <option value="Готівка">
                                 Готівка
                             </option>
-                            <option value="Б/г рахунок">
-                                Б/г рахунок
+                            <option value="Безготівковий розрахунок">
+                                Безготівковий розрахунок
                             </option>
-                            <option value="Карткою (VISA / MASTERCARD)">
-                                Карткою (VISA / MASTERCARD)
+                            <option value="Карта/Терминал (LiqPay)">
+                                Карта/Терминал (LiqPay)
                             </option>
                             <option value="Зворотній платіж (Післяплата)">
                                 Зворотній платіж (Післяплата)

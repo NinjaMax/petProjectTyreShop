@@ -227,7 +227,7 @@ export class OrdersService {
     const wheelStock = await this.stockWheelsService.findStockWheelById(
       createOrderDto,
     );
-    const storageStorageWheel = await this.storageService.findStorageById(
+    const storageStorageWheel = await this.storageService.findStorageByIdOrder(
       createOrderDto,
     );
     const orderStorageIdWheel =

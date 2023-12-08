@@ -1,5 +1,6 @@
 export class GetBasketDto {
   readonly price: number;
+  readonly price_wholesale: number;
   readonly quantity: number;
   readonly total: number;
   readonly notes: string;

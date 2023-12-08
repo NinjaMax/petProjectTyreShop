@@ -31,9 +31,9 @@ const Main = observer(() => {
     let isMounted = false;
     
     const loadMainTyreTask = async() => {
-        if(!isMounted) {
-          console.time('GET_REQUEST_FROM_DATA_BASE');
-          let tyreFilterGoods: any = await getTyresWithoutOffset(
+      if(!isMounted) {
+        console.time('GET_REQUEST_FROM_DATA_BASE');
+        let tyreFilterGoods: any = await getTyresWithoutOffset(
             filter.width,
             filter.height,
             filter.diameter,
@@ -51,33 +51,33 @@ const Main = observer(() => {
           );
           console.timeEnd('GET_REQUEST_FROM_DATA_BASE');
 
-          let setWidthFilter:any[] = [];
-          let setHightFilter:any[] = [];
-          let setDiameterFilter:any[] = [];
-          let setBrandFilter:any[] = [];
-          let setSeasonFilter :any[] = [];
-          let setVehicleTypeFilter :any[] = [];
-          let setSpeedIndexFilter :any[] = [];
-          let setLoadIndexFilter: any[] = [];
-          let setHomologationFilter :any[] = [];
-          let setReinforcedFilter :any[] = [];
-          let setRunFlatFilter :any[] = [];
-          let setStuddedFilter :any[] = [];
+          let setWidthFilter:any[] | null = [];
+          let setHightFilter:any[] | null = [];
+          let setDiameterFilter:any[] | null = [];
+          let setBrandFilter:any[] | null = [];
+          let setSeasonFilter :any[] | null = [];
+          let setVehicleTypeFilter :any[] | null = [];
+          let setSpeedIndexFilter :any[] | null = [];
+          let setLoadIndexFilter: any[] | null = [];
+          let setHomologationFilter :any[] | null = [];
+          let setReinforcedFilter :any[] | null = [];
+          let setRunFlatFilter :any[] | null = [];
+          let setStuddedFilter :any[] | null = [];
           
           tyreFilterGoods.rows.map((item: any) =>
           { return (
-            setWidthFilter.push(item.width.width),
-            setHightFilter.push(item.height.height),
-            setDiameterFilter.push(item.diameter.diameter),
-            setBrandFilter.push(item.tyre_brand.brand),
-            setSeasonFilter.push(item.season.season_ua),
-            setVehicleTypeFilter.push(item.vehicle_type.vehicle_type_ua),
-            setSpeedIndexFilter.push(item.speed_index.speed_index_with_desc),
-            setLoadIndexFilter.push(item.load_index.load_index_with_desc),
-            setHomologationFilter.push(item.homologation.homologation),
-            setReinforcedFilter.push(item.reinforce.reinforce),
-            setRunFlatFilter.push(item.run_flat.run_flat),
-            setStuddedFilter.push(item.studded.studded)
+            setWidthFilter?.push(item.width.width),
+            setHightFilter?.push(item.height.height),
+            setDiameterFilter?.push(item.diameter.diameter),
+            setBrandFilter?.push(item.tyre_brand.brand),
+            setSeasonFilter?.push(item.season.season_ua),
+            setVehicleTypeFilter?.push(item.vehicle_type.vehicle_type_ua),
+            setSpeedIndexFilter?.push(item.speed_index.speed_index_with_desc),
+            setLoadIndexFilter?.push(item.load_index.load_index_with_desc),
+            setHomologationFilter?.push(item.homologation.homologation),
+            setReinforcedFilter?.push(item.reinforce.reinforce),
+            setRunFlatFilter?.push(item.run_flat.run_flat),
+            setStuddedFilter?.push(item.studded.studded)
             )
           })
 
@@ -233,6 +233,18 @@ const Main = observer(() => {
               Array.from(new Set(setReinforcedFilter))
             )
           }
+          setWidthFilter = null;
+          setHightFilter = null;
+          setDiameterFilter = null;
+          setBrandFilter = null;
+          setSeasonFilter =  null;
+          setVehicleTypeFilter = null;
+          setSpeedIndexFilter = null;
+          setLoadIndexFilter = null;
+          setHomologationFilter = null;
+          setReinforcedFilter = null;
+          setRunFlatFilter = null;
+          setStuddedFilter = null;
     }
     }
     console.time('LOAD_MAIN_TYRE_TASK');
@@ -285,31 +297,31 @@ const Main = observer(() => {
             filter.pcd2,
             filter.sort,
           );
-          let setWidthFilter:any[] = [];
-          let setDiameterFilter:any[] = [];
-          let setBrandFilter:any[] = [];
-          let setBoltCountFilter :any[] = [];
-          let setBoltCountPcdFilter :any[] = [];
-          let setColorFilter :any[] = [];
-          let setDiaFilter: any[] = [];
-          let setEtFilter :any[] = [];
-          let setPcdFilter :any[] = [];
-          let setPcd2Filter :any[] = [];
-          let setTypeFilter :any[] = [];
+          let setWidthFilter:any[] | null = [];
+          let setDiameterFilter:any[] | null = [];
+          let setBrandFilter:any[] | null = [];
+          let setBoltCountFilter :any[] | null = [];
+          let setBoltCountPcdFilter :any[] | null = [];
+          let setColorFilter :any[] | null = [];
+          let setDiaFilter: any[] | null = [];
+          let setEtFilter :any[] | null = [];
+          let setPcdFilter :any[] | null = [];
+          let setPcd2Filter :any[] | null = [];
+          let setTypeFilter :any[] | null = [];
 
           wheelFilterGoods.rows.map((item: any) => 
           { return (
-            setWidthFilter.push(item.width.width),
-            setDiameterFilter.push(item.diameter.diameter),
-            setBrandFilter.push(item.wheel_brand.brand),
-            setBoltCountFilter.push(item.bolt_count.bolt_count),
-            setBoltCountPcdFilter.push(item.bolt_count_pcd.bolt_count_pcd),
-            setColorFilter.push(item.color.color),
-            setDiaFilter.push(item.dia.dia),
-            setEtFilter.push(item.et.et),
-            setPcdFilter.push(item.pcd.pcd),
-            setPcd2Filter.push(item.pcd2.pcd2),
-            setTypeFilter.push(item.type.type)
+            setWidthFilter?.push(item.width.width),
+            setDiameterFilter?.push(item.diameter.diameter),
+            setBrandFilter?.push(item.wheel_brand.brand),
+            setBoltCountFilter?.push(item.bolt_count.bolt_count),
+            setBoltCountPcdFilter?.push(item.bolt_count_pcd.bolt_count_pcd),
+            setColorFilter?.push(item.color.color),
+            setDiaFilter?.push(item.dia.dia),
+            setEtFilter?.push(item.et.et),
+            setPcdFilter?.push(item.pcd.pcd),
+            setPcd2Filter?.push(item.pcd2.pcd2),
+            setTypeFilter?.push(item.type.type)
             )
           })
 
@@ -450,11 +462,22 @@ const Main = observer(() => {
               Array.from(new Set(setTypeFilter))
             )
           }
+          setWidthFilter = null;
+          setDiameterFilter = null;
+          setBrandFilter = null;
+          setBoltCountFilter = null;
+          setBoltCountPcdFilter = null;
+          setColorFilter = null;
+          setDiaFilter = null;
+          setEtFilter = null;
+          setPcdFilter = null;
+          setPcd2Filter = null;
+          setTypeFilter = null;
         }
         const task = taskLoad.shift();
         task();
         await yieldToMain(); 
-    }
+      }
     }
     loadMainWheelTask();
     return () => {

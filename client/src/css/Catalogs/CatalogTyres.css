@@ -3,19 +3,19 @@
 }
 
 h1 {
-    font-size: 50px;
-    font-family: var(--main-font-family);
-    word-break: break-all;
+  font-size: 50px;
+  font-family: var(--main-font-family);
+  word-break: break-all;
 }
 
 .rowCatalogTyres {
-    display: flex;
-    flex-direction:row;
-
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction:row;
+  justify-content:left;
+  align-items: center;
+  flex-wrap: wrap;
     /*gap: 3px;*/
 }
-
 
 /* Style the buttons */
 .btnCatalog {
@@ -38,23 +38,23 @@ h1 {
 }
 
 .btnContainerCatalogTyres {
-    display: flex;
-    justify-content: space-around;
-    align-items:baseline;
-    gap: 3px;
+  display: flex;
+  justify-content: space-around;
+  align-items:baseline;
+  gap: 3px;
 }
 
 .popularCatalogTyre {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
     /*justify-content:center;*/
     /*align-items:flex-start;*/
-    margin: 3px;
+  margin: 3px;
 }
 
 .popularCatalogTyre .span {
-    width: fit-content;
+  width: fit-content;
 }
 
 .sortBtnCatalog {

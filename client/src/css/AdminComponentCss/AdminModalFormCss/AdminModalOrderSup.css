@@ -239,5 +239,18 @@
 .admFormOrderSupTable td {
     padding: 5px; 
 }
-
+.admFormOrderSupProfit {
+    font-size: small;
+    font-style: italic;
+}
+.admFormOrderSupEstimate {
+    font-size: small;
+    font-weight: bold;
+}
+.admFormOrderSupEstimateOverall {
+    margin-top: -2px;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration:underline;
+}
 /* Add a background color and some padding around the form */

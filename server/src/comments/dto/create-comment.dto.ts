@@ -10,6 +10,7 @@ export class CreateCommentDto {
   readonly id_cat: number;
   readonly goods: string;
   readonly price: number;
+  readonly price_wholesale: number;
   readonly total: number;
   readonly quantity: number;
   readonly reserve: number;
@@ -51,4 +52,5 @@ export class CreateCommentDto {
   readonly status_pay: string;
   readonly category: string;
   readonly mix_store: string;
+  readonly total_purchase_cost: number;
 }

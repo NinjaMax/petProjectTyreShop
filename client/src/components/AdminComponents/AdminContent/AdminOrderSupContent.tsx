@@ -213,7 +213,7 @@ const AdminOrderSupContent = (
                                 className='inputOrderSupContentItem'
                                 onClick={itemClickHandler}
                             >
-                            {`${item.id_order_sup}: ${item.supplier.full_name}`}
+                            {`${item.id_order_sup}: ${item.supplier.name}`}
                             </li>
                             ) 
                             })  
@@ -253,7 +253,7 @@ const AdminOrderSupContent = (
                         <td>{items.id_order_sup}</td>
                         <td>{new Date(items.createdAt).toLocaleString()}</td>
                         <td>{new Date(items.updatedAt).toLocaleString()}</td>
-                        <td>{items.supplier.full_name}</td>
+                        <td>{items.supplier.name}</td>
                         <td>{items?.storage}</td>
                         <td>{items?.order_storage?.reduce(
                                 (sum:any, current:any) => 

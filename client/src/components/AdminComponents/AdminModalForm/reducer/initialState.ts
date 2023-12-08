@@ -8,16 +8,17 @@ export function createInitialState (
     let initialState = [];
     if (goodsId) {
         initialState.push({...goodsId, 
-            "price": goodsId?.price![0],
-            "id_wheel": goodsId?.price![0],
-            "price_wholesale": goodsId?.price![0],
-            "old_price": goodsId?.price![0],
-            "id_supplier": goodsId?.price![0],
-            "id_storage": goodsId?.price![0],
-            "delivery_price": goodsId?.price![0],
-            "price_plus_delivery": goodsId?.price![0],
-            "update_date": goodsId?.price![0],   
-            "category": goodsId?.price![0], 
+            "price": goodsId?.price![0].price,
+            "id_tyre": goodsId?.price![0].id_tyre,
+            "id_wheel": goodsId?.price![0].id_wheel,
+            "price_wholesale": goodsId?.price![0].price_wholesale,
+            "old_price": goodsId?.price![0].old_price,
+            "id_supplier": goodsId?.price![0].id_supplier,
+            "id_storage": goodsId?.price![0].id_storage,
+            "delivery_price": goodsId?.price![0].delivery_price,
+            "price_plus_delivery": goodsId?.price![0].price_plus_delivery,
+            "update_date": goodsId?.price![0].update_date,   
+            "category": goodsId?.category?.category, 
             "quantity": "4",  
         });
     } 

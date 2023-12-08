@@ -10,6 +10,7 @@ export class CreateSaleDto {
   readonly delivery: string;
   readonly quantity: number;
   readonly price: number;
+  readonly price_wholesale: number;
   readonly total: number;
   readonly id_customer: number;
   readonly id_sales_storage: number;

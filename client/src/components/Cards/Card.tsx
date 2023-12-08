@@ -120,7 +120,7 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                     : null
                 }
                 {typeCard === 'wheel' ?
-                    goods?.full_name_color
+                    goods?.full_name
                     : null
                 }
                 </a>

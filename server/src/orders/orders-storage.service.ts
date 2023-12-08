@@ -145,6 +145,7 @@ export class OrdersStorageService {
           order_index: updateOrderDto.order_index,
           storage_index: updateOrderDto.storage_index,
           quantity: updateOrderDto.quantity,
+          price_wholesale: updateOrderDto.price_wholesale,
           price: updateOrderDto.price,
           total: updateOrderDto.total,
           id_supplier: updateOrderDto.id_supplier,

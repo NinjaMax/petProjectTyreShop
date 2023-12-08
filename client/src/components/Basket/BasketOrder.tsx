@@ -279,10 +279,10 @@ const BasketOrder = observer(() => {
             
             setBasketData(prevData => { return {
                 ...prevData,
-                pay_view: 'Карткою (VISA / MASTERCARD)',
+                pay_view: 'Карта/Терминал (LiqPay)',
             }
             });
-            setPayMethod('Карткою (VISA / MASTERCARD)');
+            setPayMethod('Карта/Терминал (LiqPay)');
             setCommitionPay((Number((sumGoods! * 0.015).toFixed())));
         }
         if (!isMounted && costNovaPoshta && delivery === 'Нова Пошта') {
@@ -416,7 +416,7 @@ const BasketOrder = observer(() => {
             });
         };
         if (!isMounted && delivery === 'Нова Пошта' && 
-        (payMethod === 'Карткою (VISA / MASTERCARD)' || payMethod === 'Безготівковий розрахунок')) {
+        (payMethod === 'Карта/Терминал (LiqPay)' || payMethod === 'Безготівковий розрахунок')) {
             setSumOverall(
                 [Number(sumGoods), Number(deliverySum), Number(commisionPay)]
             );
@@ -432,7 +432,7 @@ const BasketOrder = observer(() => {
             });
         };
         if (!isMounted && delivery === 'Делівері' && 
-        (payMethod === 'Карткою (VISA / MASTERCARD)' || payMethod === 'Безготівковий розрахунок')) {
+        (payMethod === 'Карта/Терминал (LiqPay)' || payMethod === 'Безготівковий розрахунок')) {
             setSumOverall(
                 [Number(sumGoods), Number(deliverySum), Number(commisionPay)]
             );
@@ -447,7 +447,7 @@ const BasketOrder = observer(() => {
             }
             });
         };
-        if (!isMounted && !delivery  && (payMethod === 'Карткою (VISA / MASTERCARD)' || payMethod === 'Безготівковий розрахунок')) {
+        if (!isMounted && !delivery  && (payMethod === 'Карта/Терминал (LiqPay)' || payMethod === 'Безготівковий розрахунок')) {
             setSumOverall(
                 [Number(sumGoods), Number(deliverySum), Number(commisionPay)]
             );
@@ -463,7 +463,7 @@ const BasketOrder = observer(() => {
             });
         };
         if (!isMounted && delivery === 'Нова Пошта' && dopGarantySum &&
-        (payMethod === 'Карткою (VISA / MASTERCARD)' || payMethod === 'Безготівковий розрахунок')) {
+        (payMethod === 'Карта/Терминал (LiqPay)' || payMethod === 'Безготівковий розрахунок')) {
             setSumOverall(
                 [Number(sumGoods), Number(deliverySum), Number(commisionPay), Number(dopGarantySum)]
             );
@@ -480,7 +480,7 @@ const BasketOrder = observer(() => {
             );
         };
         if (!isMounted && delivery === 'Делівері' && dopGarantySum &&
-        (payMethod === 'Карткою (VISA / MASTERCARD)' || payMethod === 'Безготівковий розрахунок')) {
+        (payMethod === 'Карта/Терминал (LiqPay)' || payMethod === 'Безготівковий розрахунок')) {
             setSumOverall(
                 [Number(sumGoods), Number(deliverySum), Number(commisionPay), Number(dopGarantySum)]
             );
@@ -528,6 +528,7 @@ const BasketOrder = observer(() => {
        
     const checkedRadioDelivery = async (e: any) => {
         try {
+            const deliverySelect = e.currentTarget.getAttribute('data-select');
             setCostNovaPoshta([]);
             setCostDelivery([]);
             if (delivery === 'Делівері' || delivery === 'Нова Пошта') {
@@ -540,26 +541,30 @@ const BasketOrder = observer(() => {
             }
             setDeliverySum(null);
             setPayMethod(null);
-            setDelivery(e.currentTarget.getAttribute('data-select'));
-            if (e.currentTarget.getAttribute('data-select') === "Делівері" && !delivery) {
+            setDelivery(deliverySelect);
+            if (deliverySelect === "Делівері" && !delivery) {
                 setChooseCity(' ');
                 setInputCity(' ');
             }
             const updateBasketDelivery = await updateBasket(
                 {...basketData,
-                    pay_view: e.currentTarget.getAttribute('data-select') === "Делівері" ?
-                    'Карткою (VISA / MASTERCARD)'
-                    : e.currentTarget.getAttribute('data-select') === "Нова Пошта" ? 
+                    pay_view: deliverySelect === "Делівері" ?
+                    'Карта/Терминал (LiqPay)'
+                    : deliverySelect === "Нова Пошта" ? 
                     'Зворотній платіж (Післяплата)'
                     : null,
-                    delivery: e.currentTarget.getAttribute('data-select'),
+                    delivery: deliverySelect,
                     id_basket: basketData?.id_basket, 
                 }
             );
             if (updateBasketDelivery?.status === 200) {
                 setBasketData({...updateBasketDelivery?.data})  
             }
-            if (e.currentTarget.getAttribute('data-select') !== "Самовивіз") {
+            console.log('CHOOSE_DELIVERY: ', deliverySelect);
+            // if (deliverySelect === "Нова Пошта" || 
+            //     deliverySelect === "Делівері") {
+            if (deliverySelect !== "Самовивіз") {
+                console.log('CALCULATE_DELIVERY')
                 basketSupplierGoods(updateBasketDelivery?.data, updateBasketDelivery?.data.pay_view);
             }
         } catch (error) {
@@ -1109,7 +1114,7 @@ const BasketOrder = observer(() => {
                     <SelectRadio 
                         radioData={{
                             value: "cardVisaMaster", 
-                            radioName: "Карткою (VISA / MASTERCARD)",
+                            radioName: "Карта/Терминал (LiqPay)",
                             name: "pay",
                         }} 
                         addOptions={""}
@@ -1118,10 +1123,10 @@ const BasketOrder = observer(() => {
                             delivery &&
                             chooseCity ? false :true
                         }
-                        checked={payMethod === "Карткою (VISA / MASTERCARD)" ? true : false}
+                        checked={payMethod === "Карта/Терминал (LiqPay)" ? true : false}
                         activeOptions={checkedRadioPayment}
                     >
-                        <img src={payMethod === "Карткою (VISA / MASTERCARD)" ? 
+                        <img src={payMethod === "Карта/Терминал (LiqPay)" ? 
                         './iconPayment/credit_card_48_b.png' : './iconPayment/credit_card_48_g.png'} 
                         width={35}
                         height={35}
@@ -1277,7 +1282,7 @@ const BasketOrder = observer(() => {
                         </span>
                         : null
                     }
-                    {commisionPay && (payMethod === "Безготівковий розрахунок" || payMethod === "Карткою (VISA / MASTERCARD)" ) ?
+                    {commisionPay && (payMethod === "Безготівковий розрахунок" || payMethod === "Карта/Терминал (LiqPay)" ) ?
                         <span>Комісія платіжної системи: {} 
                             <span className='basketOrderComissionPrice'>
                             {commisionPay}&#8372;

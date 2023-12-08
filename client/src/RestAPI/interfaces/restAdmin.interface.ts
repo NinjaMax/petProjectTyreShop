@@ -2,19 +2,9 @@ export interface IRestAdminApi {
     //itemGoods: {
     id?: string | number;
     full_name?: string;
-    category?: { category: string; };
-    price?: { 
-        id_supplier: string | number;
-        id_storage: string | number;
-        quantity: number;
-        price: number; 
-    };
-    price_wholesale?: { 
-        id_supplier: string | number;
-        id_storage: string | number;
-        quantity: number;
-        price_wholesale: number; 
-    };
+    category?: { category: string; }; 
+    price?: any;
+    price_wholesale?: any; 
     order_index?: number;
     order_sup_index?: number;
     //id_order: number;
@@ -23,7 +13,7 @@ export interface IRestAdminApi {
     id_order_sup_storage?: number;
     //id: any;
     id_supplier?:number;
-    //order_index: any;
+    // order_index: number;
     storage_index?: number;
     quantity?: number;
     total?: number;

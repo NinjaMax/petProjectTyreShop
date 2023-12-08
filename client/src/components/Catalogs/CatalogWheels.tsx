@@ -75,6 +75,7 @@ const CatalogWheels = observer(() => {
                 +item.id,
                 item.id_cat,
                 checkItem?.quantity ? checkItem?.quantity + 4 : 4,
+                item.price[priceStockIndex].price_wholesale,
                 item.price[priceStockIndex].price,
                 item.stock[priceStockIndex].id_supplier,
                 item.stock[priceStockIndex].id_storage,
@@ -139,6 +140,8 @@ const CatalogWheels = observer(() => {
         filter.setSort('oldPrice');
     }
   };
+
+  //console.log('GOODS_WHEEL: ', goodsWheel._wheels);
   
   return (
     <div>
@@ -147,7 +150,7 @@ const CatalogWheels = observer(() => {
                 <div>
                     {/* <img src={tyreBrandLogo(filter.brands)} alt='tyreBrandLogo'/> */}
                     <Rating 
-                        numScore={wheelBrandRating?.rows[0].avgRatingBrand}
+                        numScore={wheelBrandRating?.rows[0]?.avgRatingBrand ?? 0}
                         disabled={true}
                     />
                     <span>рейтинг на основі {wheelBrandRating?.count} відгуків</span>

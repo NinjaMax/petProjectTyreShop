@@ -76,6 +76,18 @@ export class OrdersSupplier extends Model<OrdersSupplier, OrdersSupConfigAttr> {
     })
     notes: string;
 
+    @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+    delivery_cost: number;
+  
+    @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+    commission_cost: number;
+  
+    @Column({ type: DataType.INTEGER, allowNull: true })
+    total_purchase_cost: number;
+  
+    @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+    total_cost: number;
+
     @ForeignKey(() => Users)
     @Column({type: DataType.INTEGER})
     id_user: number;

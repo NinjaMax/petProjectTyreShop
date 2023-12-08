@@ -2,6 +2,7 @@ export class CreatePaynmentDto {
   readonly id_paynment: number;
   readonly type_paynment: string;
   readonly price: number;
+  readonly price_wholesale: number;
   readonly notes: string;
   readonly status: string;
   readonly id_order_storage: number;
@@ -51,4 +52,5 @@ export class CreatePaynmentDto {
   readonly bonus_decrease: number;
   readonly total_cost: number;
   readonly mix_store: string;
+  readonly total_purchase_cost: number;
 }

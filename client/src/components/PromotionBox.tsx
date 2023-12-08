@@ -48,6 +48,7 @@ const PromotionBox = observer(({
                     +item.id,
                     item.id_cat,
                     checkItem?.quantity ? checkItem?.quantity + 4 : 4,
+                    item.price[priceStockIndex].price_wholesale,
                     item.price[priceStockIndex].price,
                     item.stock[priceStockIndex].id_supplier,
                     item.stock[priceStockIndex].id_storage,

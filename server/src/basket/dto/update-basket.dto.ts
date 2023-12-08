@@ -3,6 +3,7 @@ import { CreateBasketDto } from './create-basket.dto';
 
 export class UpdateBasketDto extends PartialType(CreateBasketDto) {
   readonly price: number;
+  readonly price_wholesale: number;
   readonly quantity: number;
   readonly total: number;
   readonly notes: string;

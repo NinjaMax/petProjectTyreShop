@@ -75,6 +75,9 @@ export class Basket_Storage extends Model<
   })
   price: number;
 
+  @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+  price_wholesale: number;
+
   @Column({
     type: DataType.BIGINT,
     unique: false,

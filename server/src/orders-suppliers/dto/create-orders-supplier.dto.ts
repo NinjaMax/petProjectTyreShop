@@ -6,6 +6,7 @@ export class CreateOrdersSupplierDto {
   readonly id_oil: number;
   readonly id_battery: number;
   readonly price: number;
+  readonly price_wholesale: number;
   readonly notes: string;
   readonly total: number;
   readonly id: number;
@@ -39,4 +40,5 @@ export class CreateOrdersSupplierDto {
   readonly bonus_decrease: number;
   readonly total_cost: number;
   readonly mix_store: string;
+  readonly total_purchase_cost: number;
 }

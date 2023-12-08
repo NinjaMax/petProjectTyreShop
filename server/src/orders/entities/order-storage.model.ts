@@ -61,6 +61,9 @@ export class Order_Storage extends Model<
   })
   reserve: number;
 
+  @Column({type: DataType.INTEGER, unique: false, allowNull: true})
+  price_wholesale: number;
+
   @Column({
     type: DataType.INTEGER,
     unique: false,

@@ -4,6 +4,7 @@ export interface OrdersStorageConfigAttr {
   id_storage: number;
   id_supplier: number;
   id_order_storage: number;
+  price_wholesale: number;
   price: number;
   reserve: number;
   quantity: number;
