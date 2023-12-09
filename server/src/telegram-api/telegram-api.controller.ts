@@ -9,17 +9,17 @@ export class TelegramApiController {
 
   @Post('/send-message')
   async create(@Body() createTelegramApiDto: CreateTelegramApiDto) {
-    return this.telegramApiService.createMessage(createTelegramApiDto);
+    return this.telegramApiService.sendMessage(createTelegramApiDto);
   }
 
-  @Get()
-  findAll() {
-    return this.telegramApiService.findAll();
+  @Get('/all')
+  async findAll() {
+    return this.telegramApiService.getAllDialogs();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.telegramApiService.findOne(+id);
+  @Get('/gethistory/:id')
+  async findOne(@Param('id') id: string) {
+    return this.telegramApiService.getMessagesByUser(id);
   }
 
   @Patch(':id')
