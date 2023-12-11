@@ -4,6 +4,7 @@ export interface IAdminOrder {
     showComment(arg0: any):void;
     orders: [] | null;
     customer: [] | null;
+    suppliers?: [] | null;
     storage:[any] | null;
     stockByIdTyre?: []; 
     tyreStockData?:[];

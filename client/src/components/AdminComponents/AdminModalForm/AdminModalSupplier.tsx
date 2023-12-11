@@ -1,100 +1,95 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminModalSupplier.css';
+import { FixedSizeList  as List } from 'react-window';
 
 const AdminModalSupplier = ({allsupplier, addSupplier}:any) => {
-    return (
-        <div>
-            Створити постачальника
-            <div className="containerAdmSupplierForm">
-            <form action="">
-                <div className='admFormDataSupplier'>
-                    <div >
-                        <div className='admFormSupplierCustm'>
-                            <label htmlFor="lname">І'мя або Назва </label>
-                            <input type="text" 
-                                className="admFormSupplierName" 
-                                name="lastname" 
-                                maxLength={45}
-                                placeholder="Ім'я або назва.."
-                            />        
-                        </div>    
-                    </div>
-                    <div>
-                        <label htmlFor="fname">Повне ім'я / назва </label>
-                        <input type="text" 
-                            className="admFormSupplierId" 
-                            name="firstname" 
-                            maxLength={45}
-                            placeholder="Контракт покупця.."
-                        />  
-                    </div>
-                    <div>
-                        <label htmlFor="fname">телефон </label>
-                        <input type="text" 
-                            className="admFormSupplierId" 
-                            name="firstname" 
-                            maxLength={45}
-                            placeholder="Контракт покупця.."
-                        />  
-                    </div>
-                    <div>
-                        <label htmlFor="fname">email </label>
-                        <input type="text" 
-                            className="admFormSupplierId" 
-                            name="firstname" 
-                            maxLength={45}
-                            placeholder="Контракт покупця.."
-                        />  
-                    </div>
-                    <div>
-                        <label htmlFor="fname">Адреса </label>
-                        <input type="text" 
-                            className="admFormSupplierId" 
-                            name="firstname" 
-                            maxLength={45}
-                            placeholder="Контракт покупця.."
-                        />  
-                    </div>
-                    <div>
-                        <label htmlFor="sklad">Роль </label>
-                            <select className="admFormSupplierStorage" name="Pereviznik">
-                            <option value="1">Покупець</option>
-                            <option value="2">Покупець Оптовий</option>
-                        </select>  
-                    </div>
-                    <div>
-                        <label htmlFor="pereviznik">Перевізник </label>
-                            <select className="admFormSupplierDelivery" name="Pereviznik">
-                            <option value="NovaPoshta">Нова Пошта</option>
-                            <option value="UkrPoshta">Укр Пошта</option>
-                            <option value="Delivary">Делівері</option>
-                        </select>    
-                    </div>   
-                </div>
-                <label htmlFor="subject">Нотатки</label>
-                <textarea className="admFormSupplierNotes" name="subject" 
-                    placeholder="Пишить нотатку..">
-                </textarea>
-                <div className='admFormSupplierCommit'
-                    onClick={(e)=>e.preventDefault()}>
-                    <div className='admFormSupplierAddCommit'>
-                    <button onClick={() => console.log('Add Commit')} 
-                        className='admFormSupplierBtnAdd'>Додати коментар
-                    </button>
-                        <textarea  name="subject" className='admSupplierCommitText'
-                        placeholder="Пишить коментар.."></textarea>
-                    </div>
-                    <div className='admFormSupplierCommitChat'>
+    const [filterSupplier, setFilterSupplier] = useState<any[] | null | undefined>(allsupplier);
+    const [filterSupplierValue, setFilterSupplierValue] = useState<string>();
 
-                    </div>  
-                </div>
-                <div className='admSupplierFormGrp'>
-                    <input type="submit" className='admFormSupplierBtnOk' value="Ok"/>
-                    <input type="submit" className='admFormSupplierBtnSave' value="Зберегти"/>
-                    <button className='admSupplierBtn'>Відмінити</button> 
-                </div>
-            </form>
-            </div>
+    useEffect(() => {
+        if (filterSupplierValue) {
+            const newSupplierList = allsupplier?.filter(
+            (supplier: any) => {
+            return supplier.name.toLowerCase().includes(filterSupplierValue.toLowerCase()) || 
+            supplier.id_supplier === +filterSupplierValue! 
+            //|| 
+            //supplier.phone.includes(+filterSupplierValue)
+            });
+            setFilterSupplier(newSupplierList); 
+        } else {
+            setFilterSupplier(allsupplier); 
+        }
+    },[allsupplier, filterSupplierValue]);
+
+    const findSupplier = (e: any) => {
+        setFilterSupplierValue(e.currentTarget.value);
+    };
+
+    const tableCustomerRow = ({index, style}: any) => (
+        <div className='admSuppliersGridItem' style={style}
+            onDoubleClick={addSupplier} 
+            data-value={filterSupplier![index].id_supplier}
+        >
+            <div>{filterSupplier![index]?.id_supplier}</div>
+            <div>{filterSupplier![index]?.name}</div>
+            <div>{filterSupplier![index]?.phone}</div>
+            <div>{filterSupplier![index]?.city}</div>
+            <div>{filterSupplier![index]?.address}</div>
+            <div>{filterSupplier![index]?.contract[0]?.name ?? ''}</div>
+            <div>{filterSupplier![index]?.contract[0]?.id_contract ?? ''}</div>
+            <div>{filterSupplier![index]?.contract[0]?.balance ?? ''}</div>
+        </div>    
+    );
+
+    return (
+        <div className='admModalSuppliersBox'>
+            <input type="text" className="admInpModalSuppliers" placeholder="Пошук клієнта.."
+                onChange={findSupplier}
+            />
+            <table className="admModalSuppliersTable">
+                <thead>
+                    <tr className="admModalHeaderSuppliers">
+                        <th className='headerAdmModalSuppliersBoxId'>
+                            id
+                        </th>
+                        <th className='headerAdmModalSuppliersBoxName'>
+                            Ім'я / Назва
+                        </th>
+                        <th className='headerAdmModalSuppliersBoxPhone'>
+                            Телефон
+                        </th>
+                        <th className='headerAdmModalSuppliersBoxCity'>
+                            Місто
+                        </th>
+                        <th className='headerAdmModalSuppliersBoxSupTel'>
+                            Снаб Тел
+                        </th>
+                        <th className='headerAdmModalSuppliersBoxContract'>
+                            Контракт
+                        </th>
+                        <th className='headerAdmModalSuppliersBoxIdContr'>
+                            id кон
+                        </th>
+                        <th className='headerAdmModalSuppliersBoxBalance'>
+                            Баланс
+                        </th>
+                    </tr>   
+                </thead>
+                <tbody>
+                </tbody>     
+            </table>
+            {filterSupplier ? 
+            <List
+                className="admSuppliersTableColmId"
+                itemCount={filterSupplier?.length}
+                itemSize={85}
+                height={295}
+                width={895}
+            >
+                {tableCustomerRow}
+            </List>
+            : <span>Очікуемо покупців....</span> 
+            }
         </div>
     );
 };

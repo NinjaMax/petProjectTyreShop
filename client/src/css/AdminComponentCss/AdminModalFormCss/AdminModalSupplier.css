@@ -1,237 +1,106 @@
-.admFormSupplierData {
-    width: 122px; /* Full width */
-    padding: 12px; /* Some padding */ 
-    border: 1px solid #ccc; /* Gray border */
-    border-radius: 4px; /* Rounded borders */
-    box-sizing: border-box; /* Make sure that padding and width stays in place */
-    margin-top: 6px; /* Add a top margin */
-    margin-bottom: 16px; /* Bottom margin */
-    resize: vertical /* Allow the us*/
+.admModalSuppliersBox {
+    max-height: 500px;
 }
 
-.admFormSupplierId {
-    width: 100px; /* Full width */
-    padding: 12px; /* Some padding */ 
-    border: 1px solid #ccc; /* Gray border */
-    border-radius: 4px; /* Rounded borders */
-    box-sizing: border-box; /* Make sure that padding and width stays in place */
-    margin-top: 6px; /* Add a top margin */
-    margin-bottom: 16px; /* Bottom margin */
-    resize: vertical /* Allow the us*/
+.headerAdmModalSuppliersBoxId {
+    width: 45px;
 }
 
-.admFormSupplierCustm {
-    width: 330px;
-    display: flex;
-    flex-direction: row;
-    align-items:baseline;
-
-}
-.admFormSupplierName {
-    width: 250px; /* Full width */
-    padding: 12px; /* Some padding */ 
-    border: 1px solid #ccc; /* Gray border */
-    border-radius: 4px; /* Rounded borders */
-    box-sizing: border-box; /* Make sure that padding and width stays in place */
-    margin-top: 6px; /* Add a top margin */
-    margin-bottom: 16px; /* Bottom margin */
-    resize: vertical /* Allow the user to vert*/
+.headerAdmModalSuppliersBoxName {
+    width: 135px;
 }
 
-.admFormSupplierNotes {
-    width: 650px; /* Full width */
-    padding: 12px; /* Some padding */ 
-    border: 1px solid #ccc; /* Gray border */
-    border-radius: 4px; /* Rounded borders */
-    box-sizing: border-box; /* Make sure that padding and width stays in place */
-    margin-top: 6px; /* Add a top margin */
-    margin-bottom: 16px; /* Bottom margin */
-    resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+.headerAdmModalSuppliersBoxPhone {
+    width: 100px;
 }
 
-.admFormSupplierCommit {
-    margin: 10px;
+.headerAdmModalSuppliersBoxCity {
+    width: 100px;
 }
 
-.admFormSupplierCommitChat {
-    padding-bottom: 5px;
-    padding-top: 8px;
+.headerAdmModalSuppliersBoxSupTel {
+    width: 100px;
 }
 
-.admFormSupplierAddCommit {
-    display: flex;
-    flex-direction: row;
-    align-items:center;
-    gap: 8px;
+.headerAdmModalSuppliersBoxContract {
+    width: 80px;
 }
 
-.admSupplierCommitText {
-    width: 80%;
+.headerAdmModalSuppliersBoxIdContr {
+    width: 40px;
 }
 
-.admFormSupplierDelivery {
-    width: 140px; /* Full width */
-    padding: 12px; /* Some padding */ 
-    border: 1px solid #ccc; /* Gray border */
-    border-radius: 4px; /* Rounded borders */
-    box-sizing: border-box; /* Make sure that padding and width stays in place */
-    margin-top: 6px; /* Add a top margin */
-    margin-bottom: 16px; /* Bottom margin */
-    resize: vertical /* Allow the user*/
+.headerAdmModalSuppliersBoxBalance {
+    width: 80px;
 }
 
-.admFormSupplierStorage {
-    width: 170px; /* Full width */
-    padding: 12px; /* Some padding */ 
-    border: 1px solid #ccc; /* Gray border */
-    border-radius: 4px; /* Rounded borders */
-    box-sizing: border-box; /* Make sure that padding and width stays in place */
-    margin-top: 6px; /* Add a top margin */
-    margin-bottom: 16px; /* Bottom margin */
-    resize: vertical /* Allow the user*/
+.admInpModalSuppliers {
+    /*background-image: url('/css/searchicon.png'); /* Add a search icon to input */
+    background-position: 10px 12px; /* Position the search icon */
+    background-repeat: no-repeat; /* Do not repeat the icon image */
+    width: 100%; /* Full-width */
+    font-size: 16px; /* Increase font-size */
+    padding: 12px 20px 12px 40px; /* Add some padding */
+    border: 1px solid #ddd; /* Add a grey border */
+    margin-bottom: 12px; /* Add some space below the input */
+    border-radius: 15px;
 }
 
-.admFormSupplierStatus {
-    width: 140px; /* Full width */
-    padding: 12px; /* Some padding */ 
-    border: 1px solid #ccc; /* Gray border */
-    border-radius: 4px; /* Rounded borders */
-    box-sizing: border-box; /* Make sure that padding and width stays in place */
-    margin-top: 6px; /* Add a top margin */
-    margin-bottom: 16px; /* Bottom margin */
-    resize: vertical /* Allow the user to vert*/
+.admModalSuppliersTable {
+    border-collapse: collapse; /* Collapse borders */
+    width: 100%; /* Full-width */
+    border: 1px solid #ddd; /* Add a grey border */
+    font-size: 18px; /* Increase font-size */
+}
+.admModalSuppliersTable .admModalSuppliersTableData {
+    width: 95%;
+    max-height: 450px;
+    overflow-x: auto;
 }
 
-.admSupplierFormGrp {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-}
-
-.admFormSupplierBtnAdd {
-    height: 40px;
+.admModalHeaderSuppliers {
+    font-size: small;
     background-color: #4CAF50;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+}
+.admModalSuppliersTable th, .admModalSuppliersTable td {
+    text-align: left; /* Left-align text */
+    padding: 12px; /* Add padding */
+}
+
+.admModalSuppliersTable tr {
+    /* Add a bottom border to all table rows */
+    border-bottom: 1px solid #ddd;
+}
+
+/* .admModalCustmTable tr.admModalHeaderCustm, .admModalCustmTable tr:hover {
+    /* Add a grey background color to the table header and on hover */
+    /*background-color: #f1f1f1;
+/*} */
+
+.admSuppliersGridItem {
     vertical-align:middle;
+    display: grid;
+    grid-template-columns: 55px 175px 115px 145px 100px 115px 55px 80px;
+    grid-column-gap: 5px;
 }
 
-.admFormSupplierBtnAdd:hover {
-    background-color: #2caf30;
-}
-
-.admFormSupplierBtn {
-    background-color: #ff003f;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.admFormSupplierBtnSave {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.admFormSupplierBtnSave:hover {
-    background-color: #2caf30;
-}
-
-.admFormSupplierBtnOk {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.admFormSupplierBtnOk:hover {
-    background-color: #2caf30;
-}
-
-.admFormDataSupplier {
+/* .admCustomersGridItem .admWheelGridItemBtn {
     display: flex;
     flex-direction: row;
-    align-items:baseline;
-    flex-wrap:wrap;
-    gap: 8px;
-}
-.admFormSearchCustm {
-    margin-left: 3px;
-    width: 30px;
-    height: 30px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.admFormAddCustm {
-    margin-left: 3px;
-    width: 30px;
-    height: 30px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color:#4CAF58;
-}
-
-.admFormSearchCustm:hover {
-    background-color:#ccc;
-}
-
-.admFormAddCustm:hover {
-    background-color:#4CAF50;
-}
-
-.admFormSupplierTable {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 12px;
-    
-}
-.admFormSupplierTable tr, .admFormSupplierTable th {
+} */
+/* .admWheelTableColmId tr {
     border: 1px solid #ddd;
     padding: 8px 5px;
-}
-
-.admFormSupplierTable th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #4CAF50;
-    color: #444;
-}
-
-.admFormSupplierTable i {
-    margin-left: 3px;
-}
-
-.admFormSupplierTable tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-.admFormSupplierTable tr:hover {
+}  */
+.admSuppliersTableColmId .admSuppliersGridItem:hover {
     background-color: #ddd;
     cursor: pointer;
 }
 
-.admFormSupplierTable td {
-    padding: 5px; 
-}
+/* .admWheelTableHeader {
+    display: flex;
+    flex-direction: column;
 
-/* Add a background color and some padding around the form */
-.containerAdmSupplierForm {
-    width: 1100px;
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
-}
+    position: sticky; 
+    top: 0px;
+} */

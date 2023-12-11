@@ -1,5 +1,5 @@
 import React, { Reducer, useCallback, useContext, useEffect, useReducer, useState } from 'react';
-import '../../../css/AdminComponentCss/AdminModalFormCss/AdminFormOrder.css';
+import '../../../css/AdminComponentCss/AdminModalFormCss/AdminModalOrderSup.css';
 import { useForm } from 'react-hook-form';
 import { Context } from '../../../context/Context';
 import { IFormOrder } from './interfaces/FormOrders.interface';
@@ -28,14 +28,14 @@ const AdminModalOrderSup = observer((
     }: IFormOrder) => {
     const {user} = useContext<any | null>(Context);
     const [tyreDatas, wheelDatas] = props;
-    const [orderSupId, setOrderSupId] = useState<number | null>(null);
+    const [orderSupId, setOrderSupId] = useState<number | null | undefined>(null);
     const [addGoods, setAddGoods] = useState<boolean>(false);
     const [createSupplier, setCreateSupplier] = useState<boolean>(false);
     const [openSupplier, setOpenSupplier] = useState<boolean>(false);
     const [addSupplier, setAddSupplier] = useState<IModalFormOrder | undefined>(undefined);
     const [disableBtn, setDisableBtn] = useState<boolean>(false);
     const [disableBtnOk, setDisableBtnOk] = useState<boolean>(false);
-    const [orderSupStorage, setOrderSupStorage] = useState<any[]>([]);
+    const [orderSupStorage, setOrderSupStorage] = useState<any[] | undefined>([]);
     const {register, handleSubmit, setValue, getValues, formState: {errors}} = useForm();    
     const [state, dispatch] = useReducer<Reducer<StateReducer, ActionReducer>>(
         reducer, createInitialState(goodsId, orderSupData)
@@ -45,6 +45,43 @@ const AdminModalOrderSup = observer((
     const [updateBtn, setUpdateBtn] = useState<string | null>(null); 
     const [purchaseGoods, setPurchaseGoods] = useState<any[]>([]);
     
+    const orderSum = state?.reduce((sum:any, current:any) => 
+        sum + (+current.price * current.quantity), 0
+    );
+
+    useEffect(() => {
+        if (orderSupData && supplier) {
+            setOrderSupId(orderSupData?.id_order_sup);
+            setOrderSupStorage(orderSupData?.order_sup_storage ?? orderSupData?.order_storage);
+            setUpdateBtn('Оновити');
+            console.log('SUPPLIER: ', supplier)
+            const supplierFound = supplier!.find(
+                (items: any) => 
+                +items?.id_supplier === orderSupData?.order_storage![0]?.id_supplier
+            );
+            if (supplierFound) {
+                setAddSupplier(supplierFound);
+            }
+              
+            if (orderSupData.disableBtns) {
+                setDisableBtn(true);
+                setDisableBtnOk(true); 
+            }
+        }
+    },[orderSupData, supplier])
+    
+    // useEffect(() => {
+    //     if (ordersData) {
+    //         setOrderId(ordersData?.id_order);
+    //         setOrderStorage(ordersData?.order_storage);
+    //         setUpdateBtn('Оновити');
+    //         if (ordersData.disableBtns) {
+    //             setDisableBtn(true);
+    //             setDisableBtnOk(true); 
+    //         }
+    //     }
+    // },[ordersData, state]);
+
     useEffect(() => {
         register("id_supplier", {required: 'Це необхідні дані'});
         register("id_user", {required: 'Це необхідні дані'});
@@ -57,7 +94,7 @@ const AdminModalOrderSup = observer((
         register('id_contract', {required: 'Це необхідні дані'})
         setValue("id_contract", addSupplier?.contract[0]?.id_contract,
         { shouldValidate: true })
-      }, [register, setValue, addSupplier?.contract])
+    }, [register, setValue, addSupplier?.contract])
     
     useEffect(() => {
         let isMounted = false;
@@ -86,13 +123,6 @@ const AdminModalOrderSup = observer((
         };
     },[orderSupStorage, state]);
 
-    useEffect(() => {
-        if (orderSupData) {
-            setDisableBtn(true);
-            setDisableBtnOk(true);
-        }
-    },[orderSupData])
-
     const onChangeInput = useCallback(
         (e: any, id: number, indexItem: number) => {
         let {name, value} = e.target;
@@ -120,7 +150,7 @@ const AdminModalOrderSup = observer((
     const activeCustomer = () => {
         setCreateSupplier(!createSupplier);
     };
-    const openCustomerForm = () => {
+    const openSupplierForm = () => {
         setOpenSupplier(!openSupplier);
     };  
     
@@ -174,7 +204,7 @@ const AdminModalOrderSup = observer((
                 setOrderSupId(+resultForm.data.id_order_sup);
                 state.forEach(async (itemGoods: any): Promise<any> => {
                     let resultOrderSup: any = await createGoodsToOrderSup(itemGoods, resultForm.data.id_order_sup!);
-                    setOrderSupStorage(oldOrdStor => [...oldOrdStor, resultOrderSup.data]);
+                    setOrderSupStorage(oldOrdStor => [...oldOrdStor!, resultOrderSup.data]);
                 })
                 setUpdateBtn('Оновити');
                 alert(`Замовлення створено, id ${resultForm.data.id_order_sup}. 
@@ -184,10 +214,10 @@ const AdminModalOrderSup = observer((
                 orderSupStorage?.forEach(async(itemsOrd): Promise<any> => {
                     await deleteGoodsFromOrderSup(itemsOrd);
                 });
-                orderSupStorage.splice(0, orderSupStorage.length);
+                orderSupStorage?.splice(0, orderSupStorage.length);
                 state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
                     let resultOrder: any = await createGoodsToOrderSup(itemGoods, orderSupId);
-                 setOrderSupStorage(oldOrdStor => [...oldOrdStor, resultOrder?.data]);  
+                 setOrderSupStorage(oldOrdStor => [...oldOrdStor!, resultOrder?.data]);  
                 });  
                 await updateOrderSup(data, orderSupId);    
                 alert(`Замовлення збереженно, id ${orderSupId} товари оновлені.`);
@@ -198,13 +228,13 @@ const AdminModalOrderSup = observer((
             }
             if (orderSupId && state.length !== 0 && disableBtnOk === true){
                 const newStorage = () => {
-                orderSupStorage.forEach(async(itemsOrd): Promise<any> => {
+                orderSupStorage?.forEach(async(itemsOrd): Promise<any> => {
                     await deleteGoodsFromOrderSup(itemsOrd);
                 });
-                orderSupStorage.splice(0, orderSupStorage.length);
+                orderSupStorage?.splice(0, orderSupStorage.length);
                 state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
                     let resultOrder: any = await createGoodsToOrderSup(itemGoods, orderSupId);
-                    setOrderSupStorage(oldOrdStor => [...oldOrdStor, resultOrder?.data]);
+                    setOrderSupStorage(oldOrdStor => [...oldOrdStor!, resultOrder?.data]);
                 });
                 }
                 newStorage();
@@ -220,7 +250,7 @@ const AdminModalOrderSup = observer((
     //GOOD PERFORM
     const onSubmitOrderSup = async () => {
         try {
-            if(orderSupId && orderSupStorage.length !== 0) {
+            if(orderSupId && orderSupStorage?.length !== 0) {
                 orderSupStorage?.forEach(async(itemsOrd): Promise<any> => {
                     let resOrd: any = await addGoodsToOrderSup(itemsOrd);
                     console.log('ON_SUBMIT_GOODS_TO_ORDER: ', resOrd.data);
@@ -238,13 +268,11 @@ const AdminModalOrderSup = observer((
         }      
     };
 
-    const orderSum = state?.reduce((sum:any, current:any) => 
-        sum + (current.price.price * current.price.quantity), 0
-    );
-    const orderDataSum = orderSupData?.order_sup_storage?.reduce(
-        (sum:any, current:any) => 
-        sum + current.total, 0
-    );
+
+    // const orderDataSum = orderSupData?.order_sup_storage?.reduce(
+    //     (sum:any, current:any) => 
+    //     sum + current.total, 0
+    // );
 
     const addComment = async(e: any) => {
         try {
@@ -271,18 +299,21 @@ const AdminModalOrderSup = observer((
     console.log('GOODSID: ', goodsId);
     console.log('ORDER_DATA_FOR: ', orderSupData);
     console.log('STATE_SUP: ', state);
+    console.log('ORDER_SUP_SUM: ', orderSum);
+    console.log('ORDER_STOR_SUP: ', orderSupStorage);
+    console.log('PURCHASE_SUP: ', purchaseGoods);
 
     return (
-        <div>
+    <div>
         Замовлення Постачальника
-        <div className="containerAdmOrderForm"
+    <div className="containerAdmOrderSupForm"
             //onSubmit={e => e.stopPropagation()}
             //onSubmit={e => e.preventDefault()}
             >
         <form 
             onSubmit={handleSubmit(onSubmit)}
         >
-            <div className='admFormDataOrder'>
+            <div className='admFormDataOrderSup'>
                 <div>
                     <label htmlFor="date">Дата</label>
                     <input className="admFormOrderData" 
@@ -388,21 +419,22 @@ const AdminModalOrderSup = observer((
                     </select>    
                 </div>
                 <div>
-                    <div className='admFormOrderCustm'>
+                    <div className='admFormOrderSupCustm'>
                         <label htmlFor="lname">Постачальник </label>
                         <input  className="admFormOrderName"
                             type="text"
                             name="supplier" 
                             maxLength={45}
                             placeholder="Ім'я або назва.."
-                            value={addSupplier?.full_name ?? orderSupData?.customer?.full_name ?? ''}
+                            value={addSupplier?.name ?? orderSupData?.supplier?.name ?? ''}
                             readOnly={true}
                             //onChange={() => setAddCustomer(addSupplier)}
                         />
                         <div 
                         //onClick={(e)=>e.preventDefault()}
                         >
-                            <button onClick={openCustomerForm} className='admFormSearchCustm'>
+                            <button onClick={openSupplierForm} 
+                                className='admFormSearchSupplier'>
                                 <i className="fas fa-search"></i>    
                             </button> 
                         </div>
@@ -438,7 +470,7 @@ const AdminModalOrderSup = observer((
 
                 <div>
                     <label htmlFor="pereviznik">Перевізник </label>
-                    <select className="admFormOrderDelivery" 
+                    <select className="admFormOrderSupDelivery" 
                         {...register('delivery', {required: 'Це необхідні дані'})}
                         name="delivery"
                         >
@@ -545,17 +577,17 @@ const AdminModalOrderSup = observer((
                     </select>    
                 </div>   
             </div>
-            <div className='admFormOrderTableBox'
+            <div className='admFormOrderSupTableBox'
                 //onInput={(e) => e.stopPropagation()}
                 onClick={(e)=>e.preventDefault()}
                 >   
-            <table className='admFormOrderTable'>
-                <thead className='admFormOrderTableTh'>
+            <table className='admFormOrderSupTable'>
+                <thead className='admFormOrderSupTableTh'>
                     <tr>
                         <th>id</th>
                         <th>Товар</th>
                         <th>Категорія</th>
-                        <th>Кількість</th>
+                        <th className='admFormOrderSupTableThQ'>Кількість</th>
                         <th>Резерв</th>
                         <th>Ціна Закуп</th>
                         <th>Ціна</th>
@@ -593,6 +625,7 @@ const AdminModalOrderSup = observer((
                             onInput={(e) => e.stopPropagation()}
                         >
                             <input 
+                            className='admFormOrderSupTableTdQ'
                             id={'quantity'+ item.id}
                             type="text"
                             name="quantity"
@@ -606,6 +639,7 @@ const AdminModalOrderSup = observer((
                             onInput={(e) => e.stopPropagation()}
                         >
                             <input 
+                            className='admFormOrderSupTableTdPw'
                             id={'price_wholesale' + item.id}
                             type="text"
                             name="price_wholesale"
@@ -619,6 +653,7 @@ const AdminModalOrderSup = observer((
                             onInput={(e) => e.stopPropagation()}
                         >
                             <input 
+                            className='admFormOrderSupTableTdP'
                             id={'price' + item.id}
                             type="text"
                             name="price"
@@ -628,8 +663,8 @@ const AdminModalOrderSup = observer((
                             />
                        
                         </td>
-                        <td >{item?.total ?? item.price_wholesale * item.quantity}</td>
-                        <td >{item?.total ?? item.price * item.quantity}</td>
+                        <td >{item.price_wholesale * item.quantity}</td>
+                        <td >{item.price * item.quantity}</td>
                         <td >
                             <select className="admFormOrderStorage" 
                                 name="storage_index"
@@ -692,6 +727,17 @@ const AdminModalOrderSup = observer((
                     value={orderSupData?.notes}
                     placeholder="Пишить нотатку..">
                 </textarea>  
+                <label htmlFor="deliveryOrderCost">Доставка </label>
+                <input  className="admFormOrderDeliveryCost"
+                    id='deliveryOrderCost'
+                    type="text"
+                    {...register('delivery_cost')}
+                    name="deliveryOrderCost" 
+                    maxLength={45}
+                    placeholder="Сума доставки.."
+                    defaultValue={orderSupData?.delivery_cost ?? 0}
+                        //onChange={setDeliveryCostOrder}
+                />
             </div>
             <div className='admFormOrderCommit'
                 onClick={(e)=>e.preventDefault()}
@@ -758,12 +804,6 @@ const AdminModalOrderSup = observer((
                 <span>користувач: {orderSupData?.user?.name ?? user._user?.sub.name ?? ''}</span>
                 <span>посада: {orderSupData?.user?.role ?? user._user?.sub?.role ?? ''}</span>
                     <span className='admFormOrderSupEstimate'>
-                        доп гарант: {orderSupData?.dop_garanty ?? getValues('dop_garanty') ?? 0}
-                    </span>
-                    <span className='admFormOrderSupEstimate'>
-                        бонус (мінус): {orderSupData?.bonus_decrease ?? getValues('bonus_decrease') ?? 0}
-                    </span>
-                    <span className='admFormOrderSupEstimate'>
                         доставка (загалом): {orderSupData?.delivery_cost ?? getValues('delivery_cost') ?? 0}
                     </span>
                     <span className='admFormOrderSupEstimate'>
@@ -774,9 +814,6 @@ const AdminModalOrderSup = observer((
                     <span className='admFormOrderSupEstimateOverall'>
                         Сума замовлення: {getValues('total_cost') ?? orderSupData?.total_cost ?? 0}
                     </span>
-                <span>
-                    Сума замовлення: {orderSum ? orderSum : orderDataSum}
-                </span>
                 {purchaseGoods.length !== 0 && user._user?.sub?.role === 'admin' ?
                     <>
                         <span className='admFormOrderSupProfit'>
@@ -795,13 +832,15 @@ const AdminModalOrderSup = observer((
                     }
             </div>
         </form>
-    </div>
-        {openSupplier ?
-            <ModalAdmin active={openSupplier} setActive={setOpenSupplier} >
+        </div>
+        {/* <div className='admFormOrderSupModalBox'> */}
+        {openSupplier ? 
+            <ModalAdmin active={openSupplier} setActive={setOpenSupplier}>
                 <AdminModalSupplier 
                     allsupplier={supplier}
                     addSupplier={addSupplierToOrderSup}/>
-            </ModalAdmin> : null  
+            </ModalAdmin> 
+            : null  
         }
         {createSupplier ?
             <ModalAdmin active={createSupplier} setActive={setCreateSupplier}>
@@ -821,6 +860,7 @@ const AdminModalOrderSup = observer((
             <span style={{'color': 'red'}}>Помилка! Не заповнені корректно всі дані.</span> 
             : null
         }
+        {/* </div> */}
     </div>
     );
 });

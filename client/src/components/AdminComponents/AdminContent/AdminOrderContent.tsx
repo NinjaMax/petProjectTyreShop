@@ -11,7 +11,7 @@ import { FixedSizeList  as List } from 'react-window';
 import SpinnerCarRot from '../../spinners/SpinnerCarRot';
 
 const AdminOrderContent = (
-    {props, orders, customer, comments, showComment, storage}:IAdminOrder
+    {props, orders, customer, comments, showComment, storage, suppliers}:IAdminOrder
     ) => {
     const [activeOrder, setActiveOrder] = useState(false);
     const [activeOrderSup, setActiveOrderSup] = useState(false);
@@ -391,7 +391,7 @@ const AdminOrderContent = (
                 <ModalAdmin active={activeOrderSup} setActive={activeFormOrderSup}>
                     <AdminModalOrderSup 
                     storages={storage}
-                    //supplier={supplier}
+                    supplier={suppliers}
                     comments={comments}
                     setActive={activeFormOrderSup}
                     orderSupData={orderData}

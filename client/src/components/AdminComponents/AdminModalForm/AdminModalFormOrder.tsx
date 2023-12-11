@@ -98,7 +98,7 @@ const AdminFormOrder = observer((
                 setDisableBtnOk(true); 
             }
         }
-    },[ordersData, state]);
+    },[ordersData]);
 
     // useEffect(() => {
     //     if (errors) {

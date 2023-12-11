@@ -18,8 +18,10 @@ export class TelegramApiService {
   async sendMessage(createTelegramApiDto: CreateTelegramApiDto) {
     await this.telegram.connect();
     const buttonYes = this.telegram.buildReplyMarkup(
-      [Button.inline('Так', Buffer.from('Актуально')),
-      Button.inline('Ні', Buffer.from('Не Актуально'))]
+      [
+        Button.inline('Так', Buffer.from('Актуально')),
+        Button.inline('Ні', Buffer.from('Не Актуально')),
+      ]
     );
     const buttonNo = this.telegram.buildReplyMarkup(
       Button.inline('Ні', Buffer.from('Не Актуально'))

@@ -250,6 +250,7 @@ const Admin = observer(() => {
                         customer={customers} 
                         comments={commentOrder}
                         storage={storageAll}
+                        suppliers={suppliers} 
                     />
                 : null}
                 {sideBarItem === 'prodagi' ?
