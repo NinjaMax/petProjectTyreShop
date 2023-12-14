@@ -17,7 +17,7 @@ export class CreateCommentDto {
   readonly notes: string;
   readonly status: string;
   readonly id_basket: number;
-
+  readonly order_sup_index: number;
   readonly id_tyre: number;
   readonly id_wheel: number;
   readonly id_oil: number;

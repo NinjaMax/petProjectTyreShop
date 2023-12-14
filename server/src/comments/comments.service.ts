@@ -19,7 +19,7 @@ export class CommentsService {
   ) {}
 
   async createComment(createCommentDto: CreateCommentDto) {
-    try {
+    //try {
       const user = await this.usersService.findUserById(createCommentDto);
       const order = await this.ordersService.findOrderById(createCommentDto);
       const orderSup = await this.orderSuppliersService.findOrderSupById(
@@ -50,7 +50,7 @@ export class CommentsService {
         await user.$add('comments', [commentOrderSup.id_comment]);
         await orderSup.$add('comments', [commentOrderSup.id_comment]);
         user.comments.push(commentOrderSup);
-        order.comments.push(commentOrderSup);
+        orderSup.comments.push(commentOrderSup);
         const findCommentOrderSup = await this.commentsRepository.findByPk(
           commentOrderSup.id_comment,
           { include: { all: true } },
@@ -62,12 +62,12 @@ export class CommentsService {
         `Data user "User ID or Order ID" is incorrect or not found`,
         HttpStatus.NOT_FOUND,
       );
-    } catch {
-      throw new HttpException(
-        'Data is incorrect and must be uniq',
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    // } catch {
+    //   throw new HttpException(
+    //     'Data is incorrect and must be uniq',
+    //     HttpStatus.NOT_FOUND,
+    //   );
+    // }
   }
 
   async findAllComments() {

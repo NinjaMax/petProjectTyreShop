@@ -19,7 +19,7 @@ export class CreatePaynmentDto {
   readonly quantity: number;
   readonly reserve: number;
   readonly id_basket: number;
-
+  readonly order_sup_index: number;
   readonly id_tyre: number;
   readonly id_wheel: number;
   readonly id_oil: number;
@@ -53,4 +53,5 @@ export class CreatePaynmentDto {
   readonly total_cost: number;
   readonly mix_store: string;
   readonly total_purchase_cost: number;
+  readonly full_name: string;
 }

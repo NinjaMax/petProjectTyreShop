@@ -13,7 +13,7 @@ export type CreateGoods = {
     quantity?: number;
     //quantity: number;
     //id: any;
-    //id_order: number;
+    id_order: number;
 
     price?: {
         quantity: number;

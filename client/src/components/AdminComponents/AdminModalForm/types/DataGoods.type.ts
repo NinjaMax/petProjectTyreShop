@@ -38,7 +38,7 @@ export type DataGoods = {
     }
     [Symbol.iterator](): any;
     order_storage?: any[];
-    order_sup_storage?: any[];
+    orders_sup_storage?: any[];
     comments: any[];
     reduce(arg0: any, ...arg: any[]): any;
     user:{name: string; role: string; id_user: number;}

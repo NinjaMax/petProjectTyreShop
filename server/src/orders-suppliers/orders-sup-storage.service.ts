@@ -35,33 +35,53 @@ export class OrdersSupStorageService {
   }
 
   async createOrderSupStorageNew(
-    id: number,
-    id_order: number,
-    id_supplier: number,
-    quantity: number,
-    price: number,
-    storage_index: number
-  ) {
-    try {
-      const orderSup = await this.ordersSupStorageRepository.create(
-        { id, id_order, id_supplier, quantity, price, storage_index },
-        {
-          fields: [
-            'id',
-            'id_order',
-            'id_supplier',
-            'quantity',
-            'price',
-            'storage_index',
-          ],
-        });
-      return orderSup;
-    } catch {
-      throw new HttpException(
-        'Data is incorrect and must be uniq',
-        HttpStatus.NOT_FOUND,
-      );
+  {
+    id,
+    id_order,
+    id_supplier,
+    quantity,
+    price,
+    storage_index,
+    price_wholesale,
+    total,
+    id_storage,
+    id_order_sup,
+    order_sup_index,
     }
+  ) {
+    //try {
+      const orderSup = await this.ordersSupStorageRepository.create(
+        { 
+          id, 
+          id_order, 
+          id_supplier, 
+          quantity, 
+          price, 
+          storage_index,
+          price_wholesale,
+          total,
+          id_storage,
+          id_order_sup,
+          order_sup_index,
+        },
+        // {
+        //   fields: [
+        //     'id',
+        //     'id_order',
+        //     'id_supplier',
+        //     'quantity',
+        //     'price',
+        //     'storage_index',
+        //   ],
+        // }
+        );
+      return orderSup;
+    // } catch {
+    //   throw new HttpException(
+    //     'Data is incorrect and must be uniq',
+    //     HttpStatus.NOT_FOUND,
+    //   );
+    // }
   }
 
   async findAllOrdersSupStorage() {
@@ -79,34 +99,34 @@ export class OrdersSupStorageService {
   }
 
   async findAllOrdersSupStorageByOrd(getOrdersSupDto: GetOrdersSuppliersDto) {
-    try { 
+    //try { 
       const orderSupAllByOrder = await this.ordersSupStorageRepository.findAll({
         where: { id_order: getOrdersSupDto.id_order }
       });
 
       return orderSupAllByOrder;
-    } catch {
-      throw new HttpException(
-        'Data is incorrect and must be uniq',
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    // } catch {
+    //   throw new HttpException(
+    //     'Data is incorrect and must be uniq',
+    //     HttpStatus.NOT_FOUND,
+    //   );
+    // }
   }
 
   async findOrdersSupStorageByOrdSup(getOrdersSupDto: GetOrdersSuppliersDto) {
-    try {
+    //try {
       const orderSupAllByOrderSup =
         await this.ordersSupStorageRepository.findOne({
           where: { order_sup_index: getOrdersSupDto.id_order_sup }
       });
       return orderSupAllByOrderSup;
 
-    } catch {
-      throw new HttpException(
-        'Data is incorrect and must be uniq',
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    // } catch {
+    //   throw new HttpException(
+    //     'Data is incorrect and must be uniq',
+    //     HttpStatus.NOT_FOUND,
+    //   );
+    // }
   }
 
   async findAllOrdersSupStorageByOrdSup(
@@ -115,7 +135,12 @@ export class OrdersSupStorageService {
     try { 
       const orderSupAllByOrderSup = 
         await this.ordersSupStorageRepository.findAll({
-          where: { id_order_sup: getOrdersSupDto.id_order_sup },
+          where: { 
+            [Op.or]:[
+              {id_order_sup: getOrdersSupDto.id_order_sup},
+              {order_sup_index: getOrdersSupDto.order_sup_index} 
+            ]
+          },
         });
       return orderSupAllByOrderSup;
     } catch {

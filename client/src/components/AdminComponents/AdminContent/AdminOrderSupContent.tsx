@@ -6,6 +6,9 @@ import AdminModalOrderSup from '../adminModalForm/AdminModalOrderSup';
 import { IOrderSupContent } from './interfaces/AdminOrderSup.interface';
 import { IOrdersSupItem } from './types/OrderSupItem.type';
 import { IComments } from './types/Comment.type';
+import { FixedSizeList  as List } from 'react-window';
+import SpinnerCarRot from '../../spinners/SpinnerCarRot';
+import { addGoodsOrderSupToStock } from '../../../restAPI/restAdminAPI';
 
 const AdminOrderSupContent = (
     {
@@ -35,20 +38,47 @@ const AdminOrderSupContent = (
         }
     },[ordersSup, value]);
 
-    const activeFormOrderSup = async(e:any) => {
+    const activeFormOrderSup = async (e:any) => {
         if (orderSupData) {
             setOrderSupData(null);
         }
-        setActiveOrderSup(!activeOrderSup);
         showComment(e);
-    }
+        setActiveOrderSup(!activeOrderSup);
+    };
+
+    const addStockOrderSupGoods = async (e: any) => {
+        //let orderSup: any;
+        const dataSupValue = e.currentTarget.getAttribute("data-value");
+        const orderSupInfo: any = ordersSup?.find(
+            (item:{id_order_sup: number}) => 
+                item.id_order_sup === dataSupValue || 
+                e.target.value
+            );
+        orderSupInfo?.forEach( async (element: any): Promise<any> => {
+            await addGoodsOrderSupToStock(element);
+        });
+    };
+
     
     const showOrderSupData = async (e: any) => {
-        const orderSupInfo = ordersSup?.find(
-            (item:{id_order: number}) => 
-                item.id_order === e.currentTarget.getAttribute("data-value") || 
-                e.target.value);
+        let orderSupInfo: any;
+        const dataSupName = e.currentTarget.getAttribute("data-name");
+        const dataSupValue = e.currentTarget.getAttribute("data-value");
+        if (dataSupName === 'orderSupShow') {
+            orderSupInfo = ordersSup?.find(
+            (item:{id_order_sup: number}) => 
+                item.id_order_sup === dataSupValue || 
+                e.target.value
+            );
+        }
+        if (e.currentTarget.name === 'editSupOrder') {
+            orderSupInfo = ordersSup?.find(
+            (item:{id_order_sup: number}) => 
+                item.id_order_sup === e.currentTarget.value
+            );  
+        }  
         if(orderSupInfo) {
+            e.currentTarget.name === 'editOrder' ? orderSupInfo.disableBtns = false : orderSupInfo.disableBtns = true;
             setOrderSupData(orderSupInfo);
             setActiveOrderSup(!activeOrderSup);
             showComment(e);
@@ -184,6 +214,51 @@ const AdminOrderSupContent = (
         }
     }
 
+    const orderSupRowTable = ({index, style}: any) => (
+        <div className='admOrderSupGridItem' style={style}
+            onClick={showComment}
+            onDoubleClick={showOrderSupData}
+            data-name='orderSupShow'
+            data-value={filterOrderSup![index].id_order_sup}>
+            <div>{filterOrderSup![index].id_order_sup}</div>
+            <div>{new Date(filterOrderSup![index].createdAt).toLocaleString()}</div>
+            <div>{filterOrderSup![index]?.supplier.name}</div>
+            <div>{filterOrderSup![index].id_order}</div>
+            <div>{filterOrderSup![index]?.storage}</div>
+            <div>{filterOrderSup![index]?.total_purchase_cost}</div>
+            <div>{filterOrderSup![index]?.status}</div>
+            <div>{filterOrderSup![index]?.order_view}</div>
+            <div>{filterOrderSup![index]?.delivery}</div>
+            <div>{filterOrderSup![index]?.status_delivery}</div>
+            <div>{filterOrderSup![index]?.pay_view}</div>
+            <div>{filterOrderSup![index]?.status_pay}</div>
+            <div>{filterOrderSup![index]?.user?.name}</div>
+            <div>{filterOrderSup![index]?.notes}</div>
+            <div>
+                <button className='basketAdmGoods'
+                    value={filterOrderSup![index].id_order}
+                    onClick={addStockOrderSupGoods}>
+                    <i className="fas fa-warehouse"></i>
+                </button>
+                <button className='basketAdmGoods'
+                    value={filterOrderSup![index].id_order}
+                    onClick={() => console.log('SOME_FUNCTION')}>
+                    <i className="fas fa-truck-loading"></i>
+                </button>
+                <button className='editAdmGoods'
+                    name='editSupOrder'
+                    value={filterOrderSup![index].id_order}
+                    onClick={showOrderSupData}>
+                    <i className="fas fa-edit"></i>
+                </button>
+                <button className='closeAdmGoods'
+                    value={filterOrderSup![index].id_order}>
+                    <i className="fa fa-remove"></i>
+                </button>                  
+            </div>
+        </div>    
+    );
+
     return (
         <div  onClick={inputCancelHandler}>
         <div className="admOrderSupContent">
@@ -222,74 +297,58 @@ const AdminOrderSupContent = (
                     </ul>
             <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
         </div>
+        {filterOrderSup ? 
         <div className='admOrdersSupTable'>
         <table className='admListOrdersSupTable'>
             <thead>
                 <tr className='headerOrderSupTable'>
-                    <th onClick={sortOrderSup}>Тип</th>
-                    <th onClick={sortOrderSup}>Код</th>
-                    <th onClick={sortOrderSup}>Дата</th>
-                    <th onClick={sortOrderSup}>Дата оновлення</th>
-                    <th onClick={sortOrderSup}>Поcтачальник</th>
-                    <th onClick={sortOrderSup}>Склад</th>
-                    <th>Сума</th>
-                    <th onClick={sortOrderSup}>Статус</th>
-                    <th onClick={sortOrderSup}>Тип замовлення</th>
-                    <th onClick={sortOrderSup}>Статус Доставки</th>
-                    <th onClick={sortOrderSup}>Перевізник</th>
-                    <th onClick={sortOrderSup}>Статус Оплати</th>
-                    <th onClick={sortOrderSup}>Тип оплати</th>
-                    <th onClick={sortOrderSup}>Користувач</th>
-                    <th onClick={sortOrderSup}>Коментар</th>
-                    <th onClick={sortOrderSup}>Опції</th>
+                    <th className='headerOrderSupTableCode'
+                        onClick={sortOrderSup}>Код</th>
+                    <th className='headerOrderSupTableDate'
+                        onClick={sortOrderSup}>Дата</th>
+                    <th className='headerOrderSupTableSupplier'
+                        onClick={sortOrderSup}>Поcтачальник</th>
+                    <th className='headerOrderSupTableCodeOrder'
+                        onClick={sortOrderSup}>Зам пок</th>
+                    <th className='headerOrderSupTableStorage'
+                        onClick={sortOrderSup}>Склад</th>
+                    <th className='headerOrderSupTableCost'
+                        >Сума закупу</th>
+                    <th className='headerOrderSupTableStatus'
+                        onClick={sortOrderSup}>Статус</th>
+                    <th className='headerOrderSupTableType'
+                        onClick={sortOrderSup}>Тип замовл</th>
+                    <th className='headerOrderSupTableDelivery'
+                        onClick={sortOrderSup}>Перевізник</th>
+                    <th className='headerOrderSupTableStatusDel'
+                        onClick={sortOrderSup}>Статус Доставки</th>
+                    <th className='headerOrderSupTablePayType'
+                        onClick={sortOrderSup}>Тип оплати</th>    
+                    <th className='headerOrderSupTablePayStatus'
+                        onClick={sortOrderSup}>Статус Оплати</th>
+                    <th className='headerOrderSupTableUser'
+                        onClick={sortOrderSup}>Користувач</th>
+                    <th className='headerOrderSupTableNotes'
+                        onClick={sortOrderSup}>Коментар</th>
+                    <th className='headerOrderSupTableOption'
+                        onClick={sortOrderSup}>Опції</th>
                 </tr>
             </thead>    
             <tbody>
-            {filterOrderSup ? filterOrderSup.map((items: IOrdersSupItem) => (
-                    <tr key={'orSup' + items.id_order_sup}
-                        onClick={e => showComment(e)}
-                        onDoubleClick={e => showOrderSupData(e)}
-                        data-value={items.id_order_sup}>
-                        <td>{items.id_order_sup}</td>
-                        <td>{new Date(items.createdAt).toLocaleString()}</td>
-                        <td>{new Date(items.updatedAt).toLocaleString()}</td>
-                        <td>{items.supplier.name}</td>
-                        <td>{items?.storage}</td>
-                        <td>{items?.order_storage?.reduce(
-                                (sum:any, current:any) => 
-                                sum + current.total, 0)}
-                        </td>
-                        <td>{items.status}</td>
-                        <td>{items.order_view}</td>
-                        <td>{items.delivery}</td>
-                        <td>{items.status_delivery}</td>
-                        <td>{items.pay_view}</td>
-                        <td>{items.status_pay}</td>
-                        <td>{items.user.name}</td>
-                        <td>{items.notes}</td>
-                        <td>
-                            <button className='basketAdmGoods'
-                                value={items.id_order_sup}
-                                onClick={activeFormOrderSup}>
-                                <i className="fas fa-truck-loading"></i>
-                            </button>
-                            <button className='editAdmGoods'
-                                value={items.id_order_sup}
-                                onClick={(e) => showOrderSupData(e)}>
-                                <i className="fas fa-edit"></i>
-                            </button>
-                            <button className='closeAdmGoods'
-                                value={items.id_order_sup}>
-                                <i className="fa fa-remove"></i>
-                            </button>                  
-                        </td>
-                    </tr>
-                    ))
-                    : <tr><td>Очікуемо замовлення......</td></tr>
-                    }              
             </tbody>
-            </table>       
-            </div>
+            </table>
+            <List
+                className="admOrderSupTableColmId"
+                itemCount={filterOrderSup!.length}
+                itemSize={65}
+                height={330}
+                width={1320}
+            >
+                {orderSupRowTable}
+            </List>       
+            </div> :
+            <SpinnerCarRot/>
+            }
             <div className='admOrderCommitGroup'>
                 <table className='admOrderCommitTable'>
                 <thead>
@@ -322,7 +381,7 @@ const AdminOrderSupContent = (
                     supplier={supplier}
                     comments={comments}
                     setActive={setActiveOrderSup}
-                    orderSupData={orderSupData}
+                    getOrdersSupData={orderSupData}
                     showComment={showComment}
                     props={props}
                 />

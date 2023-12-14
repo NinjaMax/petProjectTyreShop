@@ -60,12 +60,12 @@ const createGoodsToOrderSup = async (
     {
     id: +item?.id!,
     full_name: item.full_name,
-    category: item.category?.category,
+    category: item.category,
     order_sup_index: id_order_sup,
     id_supplier: +item?.id_supplier!,
     storage_index: +item?.id_storage!,
     quantity: +item?.quantity!,
-    //price_wholesale: +item?.price_wholesale,
+    id_order: +item.id_order,
     price: +item?.price!,
     price_wholesale: +item.price_wholesale!,
     id_order_storage_sup: item.id_order_storage ?? null,
@@ -106,10 +106,15 @@ await $hostPost.patch('/orders/update', {
 
 const updateOrderSup = async (data: any, id_order_sup: number) => 
 await $hostPost.patch('/ordersup/update', {
-    id_order: id_order_sup,
+    id_order: data.id_order,
+    id_order_sup: id_order_sup,
     id_user: data.number,
     notes: data.notes,
     organisation: data.organisation,
+    total_cost: data.total_cost,
+    total_purchase_cost: data.total_purchase_cost,
+    delivery_cost: data.delivery_cost,
+    commission_cost: data.commission_cost,
     storage: data.storage,
     order_view: data.order_view,
     delivery: data.delivery,
@@ -159,18 +164,30 @@ await $hostPost.post('/orders/add', {
     error)
 });
 
-const addGoodsToOrderSup = async (value: IRestAdminApi) => 
-await $hostPost.post('/ordersup/add', 
+const requestToSupplier = async (item: { textMesssage: string,
+    userReceiver: string}) => 
+await $hostPost.post('/telegram-api/send-message', 
 {
-    id_order_sup_storage: value?.id_order_sup_storage,
-    id: value.id,
-    id_supplier: value.id_supplier,
-    id_order: value.order_sup_index,
-    id_storage: value.storage_index,
-    quantity: value.quantity,
-    price: value.price,
-    price_wholesale: value.price_wholesale
+    textMesssage: item?.textMesssage,
+    userReceiver: item.userReceiver,
 }
+)
+.catch(error => {
+    console.log(error)
+});
+
+const addGoodsToOrderSup = async (value: IRestAdminApi) => 
+await $hostPost.post('/ordersup/add', value
+// {
+//     id_order_sup_storage: value?.id_order_sup_storage,
+//     id: value.id,
+//     id_supplier: value.id_supplier,
+//     id_order: value.order_sup_index,
+//     id_storage: value.storage_index,
+//     quantity: value.quantity,
+//     price: value.price,
+//     price_wholesale: value.price_wholesale,
+// }
 )
 .catch(error => {
     console.log(
@@ -347,17 +364,22 @@ await $hostGet.get('/suppliers/all')
 });
 
 const addCommentsToOrder = async (
-    id_user: number,
-    id_order: number | null | undefined, 
-    comments: string | undefined) => 
+    item : {
+        id_user: number,
+        comments: string | undefined,
+        id_order?: number | null,
+        id_order_sup?: number | null, 
+    }
+    ) => 
 await $hostPost.post('/comments', {
-    id_order: id_order,
-    id_user: id_user,
-    comments: comments,
+    id_user: item.id_user,
+    comments: item.comments,
+    id_order: item.id_order,
+    id_order_sup: item.id_order_sup,
 })
 .catch(error => {
     console.log(
-    'Заказ не створено (не існує), або не вірно вказані дані',
+    'Коментар не створено, помилка або не вірно вказані дані',
     error)
 });
 
@@ -430,5 +452,6 @@ export {
     addCommentsToOrder,
     createGoodsToOrderBasket,
     getCustomersById,
-    getStorageAll
+    getStorageAll,
+    requestToSupplier
 };

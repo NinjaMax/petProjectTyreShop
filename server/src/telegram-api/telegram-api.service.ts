@@ -16,28 +16,52 @@ export class TelegramApiService {
   ) {}
 
   async sendMessage(createTelegramApiDto: CreateTelegramApiDto) {
+    // const dateNow = new Date(Date.now());
+    // const startDate = new Date().setHours(9);
+
+    // if (
+    //   dateNow.getDay() !== 6 &&
+    //   dateNow.getDay() !== 7 &&
+    //   dateNow.getHours() < 18 &&
+    //   dateNow.getHours() > 9
+    // ) {
+    //   return {
+    //     message: createTelegramApiDto.textMesssage,
+    //     client: createTelegramApiDto.userReceiver,
+    //     date: dateNow.getDay(),
+    //     time: dateNow.getHours(),
+    //   }
+    // } else {
+    //   return `не робочій час!! залишилось 
+    //   ${(24 - dateNow.getHours()) + 9} год 
+    //   ${new Date().setMilliseconds((24 - dateNow.getHours()) + 9)} мілісекунд.
+    //   start в ${startDate} 
+    //   до відправки запиту.`
+    // }
+    
     await this.telegram.connect();
-    const buttonYes = this.telegram.buildReplyMarkup(
-      [
-        Button.inline('Так', Buffer.from('Актуально')),
-        Button.inline('Ні', Buffer.from('Не Актуально')),
-      ]
-    );
-    const buttonNo = this.telegram.buildReplyMarkup(
-      Button.inline('Ні', Buffer.from('Не Актуально'))
-    );
+    // const buttonYes = this.telegram.buildReplyMarkup(
+    //   [
+    //     Button.inline('Так', Buffer.from('Актуально')),
+    //     Button.inline('Ні', Buffer.from('Не Актуально')),
+    //   ]
+    // );
+    // const buttonNo = this.telegram.buildReplyMarkup(
+    //   Button.inline('Ні', Buffer.from('Не Актуально'))
+    // );
     const result = await this.telegram.sendMessage(
       createTelegramApiDto.userReceiver, 
       { 
         message: createTelegramApiDto.textMesssage,
-        buttons: 
+        //buttons: 
         //[
-          buttonYes
+          //buttonYes
           //Button.inline('Так', Buffer.from('Актуально')),
           //Button.inline('Ні', Buffer.from('Не Актуально')),
         //]
       }
     )
+
     // const result = await this.telegram.invoke(
     //   new Api.messages.SendMessage({
     //     peer: createTelegramApiDto.userReceiver,
@@ -64,9 +88,11 @@ export class TelegramApiService {
     //console.log('TELTEGRAM_MESSAGE: ', result);
 
     if (result) {
-      return 'ПОВІДОМЛЕННЯ ВІДПРАВЛЕНО';
+      return true;
+      //return 'ПОВІДОМЛЕННЯ ВІДПРАВЛЕНО';
     } else {
-      return 'ПОМИЛКА';
+      return false;
+      //return 'ПОМИЛКА';
     }
   }
 

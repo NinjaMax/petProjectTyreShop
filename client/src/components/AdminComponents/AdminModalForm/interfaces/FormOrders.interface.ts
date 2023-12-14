@@ -9,6 +9,6 @@ export interface IFormOrder {
     setActive(arg0: any):void;
     storages: [any] | null;
     getOrdersData?: DataGoods | null;
-    orderSupData?: DataGoods | null;
+    getOrdersSupData?: DataGoods | null;
     showComment(arg0: any):void;
 }

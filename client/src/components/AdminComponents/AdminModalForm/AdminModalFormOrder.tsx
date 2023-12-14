@@ -392,7 +392,7 @@ const AdminFormOrder = observer((
             setOrderStorage(oldOrdStor => [...oldOrdStor!, 
                 {...addWheels, 
                     "price": addWheels.price[indexValue].price,
-                    "id_tyre": addWheels.price[indexValue].id_tyre,
+                    "id_wheel": addWheels.price[indexValue].id_wheel,
                     "price_wholesale": addWheels.price[indexValue].price_wholesale,
                     "old_price": addWheels.price[indexValue].old_price,
                     "id_supplier": addWheels.price[indexValue].id_supplier,
@@ -435,10 +435,12 @@ const AdminFormOrder = observer((
                 orderStorage?.forEach(async(itemsOrd: any, index: any): Promise<any> => {
                     //await updateOrderStorage(itemsOrd);
                     if (itemsOrd.id && state[index].id && itemsOrd.price !== state[index].price) {
-                        const addCommitTo: any = await addCommentsToOrder(
-                            user._user?.sub.id_user, +resultForm.data.id_order, 
-                            `Змінено ціну поз (${index + 1}): ${itemsOrd.price} => ${state[index].price}`
-                        );
+                        const addCommitTo: any = await addCommentsToOrder({
+                            id_user: user._user?.sub.id_user,
+                            comments: `Змінено ціну поз (${index + 1}): ${itemsOrd.price} => ${state[index].price}`,
+                            id_order: +resultForm.data.id_order,
+                            id_order_sup: null
+                        });
                         setAddNewCommit(addCommitTo?.data); 
                     }
                 });
@@ -463,10 +465,12 @@ const AdminFormOrder = observer((
                 orderStorage?.forEach(async(itemsOrd: any, index: any): Promise<any> => {
                     //await updateOrderStorage(itemsOrd);
                     if (itemsOrd.id && state[index].id && itemsOrd.price !== state[index].price) {
-                        const addCommitTo: any = await addCommentsToOrder(
-                            user._user?.sub.id_user, orderId, 
-                            `Змінено ціну поз (${index + 1}): ${itemsOrd.price} => ${state[index].price}`
-                        );
+                        const addCommitTo: any = await addCommentsToOrder({
+                            id_user: user._user?.sub.id_user,
+                            comments: `Змінено ціну поз (${index + 1}): ${itemsOrd.price} => ${state[index].price}`,
+                            id_order: orderId,
+                            id_order_sup: null 
+                        });
                         setAddNewCommit(addCommitTo?.data); 
                     }
                 });
@@ -491,10 +495,12 @@ const AdminFormOrder = observer((
                 orderStorage?.forEach(async(itemsOrd: any, index: any): Promise<any> => {
                     //await updateOrderStorage(itemsOrd);
                     if (itemsOrd.id && state[index].id && itemsOrd.price !== state[index].price) {
-                        const addCommitTo: any = await addCommentsToOrder(
-                            user._user?.sub.id_user, orderId, 
-                            `Змінено ціну поз (${index + 1}): ${itemsOrd.price} => ${state[index].price}`
-                        );
+                        const addCommitTo: any = await addCommentsToOrder({
+                            id_user: user._user?.sub.id_user,
+                            comments: `Змінено ціну поз (${index + 1}): ${itemsOrd.price} => ${state[index].price}`,
+                            id_order: orderId,
+                            id_order_sup: null
+                        });
                         setAddNewCommit(addCommitTo?.data); 
                     }
                 });
@@ -606,11 +612,12 @@ const AdminFormOrder = observer((
     const addComment = async(e: any) => {
         try {
             if (newComment) {
-                const addCommit: any = await addCommentsToOrder(
-                    user._user?.sub.id_user, 
-                    orderId ?? ordersData?.id_order, 
-                    newComment
-                ); 
+                const addCommit: any = await addCommentsToOrder({
+                    id_user: user._user?.sub.id_user, 
+                    comments: newComment,
+                    id_order: orderId ?? ordersData?.id_order,
+                    id_order_sup: null
+                }); 
                 if (addCommit.data.status === '200' || '201') {
                     alert('Коментар додано');
                     showComment(e);
@@ -1187,7 +1194,7 @@ const AdminFormOrder = observer((
                         {...register('notes')}
                         id="notesOrder"
                         name="notesOrder"
-                        value={ordersData?.notes}
+                        value={ordersData?.notes ?? ''}
                         placeholder="Пишить нотатку..">
                     </textarea> 
                     <label htmlFor="deliveryOrderCost">Доставка </label>

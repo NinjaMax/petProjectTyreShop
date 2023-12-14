@@ -32,7 +32,7 @@ const AdminOrderContent = (
         }
     },[orders, value])
 
-    const activeFormOrder = async(e:any) => {
+    const activeFormOrder = async (e:any) => {
         if (orderData) {
             setOrderData(null);
         }
@@ -56,10 +56,12 @@ const AdminOrderContent = (
 
     const showOrderData = async (e: any) => {
         let orderInfo: any;
-        if ( e.currentTarget.getAttribute("data-name") === 'orderShow') {
+        const dataName = e.currentTarget.getAttribute("data-name");
+        const dataValue = e.currentTarget.getAttribute("data-value");
+        if ( dataName === 'orderShow') {
             orderInfo = orders?.find(
             (item:{id_order: number}) => 
-                item.id_order === e.currentTarget.getAttribute("data-value")
+                item.id_order === dataValue
             );  
         }
         if (e.currentTarget.name === 'editOrder') {
@@ -244,9 +246,17 @@ const AdminOrderContent = (
                 <button className='editAdmGoods'
                     name='editOrder'
                     value={filteredOrder![index].id_order}
+                    //</div>onClick={showOrderData}
+                >
+                    <i className="fas fa-clipboard-check"></i>
+                </button>
+                <button className='editAdmGoods'
+                    name='editOrder'
+                    value={filteredOrder![index].id_order}
                     onClick={showOrderData}>
                     <i className="fas fa-edit"></i>
                 </button>
+
                 <button className='closeAdmGoods'
                     value={filteredOrder![index].id_order}>
                     <i className="fa fa-remove"></i>
@@ -394,7 +404,7 @@ const AdminOrderContent = (
                     supplier={suppliers}
                     comments={comments}
                     setActive={activeFormOrderSup}
-                    orderSupData={orderData}
+                    getOrdersSupData={orderData}
                     showComment={showComment}
                     props={props}
                     />

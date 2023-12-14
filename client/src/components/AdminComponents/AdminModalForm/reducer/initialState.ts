@@ -22,11 +22,14 @@ export function createInitialState (
             "quantity": "4",  
         });
     } 
-    if (ordersData) {
+    if (ordersData?.order_storage) {
         initialState.push(...ordersData.order_storage ?? []);
     }
+    if (ordersData?.orders_sup_storage) {
+        initialState.push(...ordersData.orders_sup_storage ?? []);
+    }
     if (ordersSupData) {
-        initialState.push(...ordersSupData.order_sup_storage ?? []);
+        initialState.push(...ordersSupData.orders_sup_storage ?? []);
     }
 
     return initialState;    

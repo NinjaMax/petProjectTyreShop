@@ -2,12 +2,13 @@ export interface IRestAdminApi {
     //itemGoods: {
     id?: string | number;
     full_name?: string;
-    category?: { category: string; }; 
+    //category?: { category: string; }; 
+    category?: any;
     price?: any;
     price_wholesale?: any; 
     order_index?: number;
     order_sup_index?: number;
-    //id_order: number;
+    id_order: number;
     //createGoodsToOrder(arg0: any, id_order: number): void;
     id_order_storage?: number;
     id_order_sup_storage?: number;

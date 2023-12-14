@@ -8,10 +8,10 @@ export class GetOrdersSuppliersDto {
   readonly price_wholesale: number;
   readonly notes: string;
   readonly total: number;
-
+  readonly full_name: string;
   readonly id_order: number;
   readonly id_basket: number;
-
+  readonly order_sup_index: number;
   readonly reserve: number;
   readonly quantity: number;
   readonly id_order_sup_storage: number;

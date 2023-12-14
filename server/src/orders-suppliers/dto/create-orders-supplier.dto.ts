@@ -41,4 +41,5 @@ export class CreateOrdersSupplierDto {
   readonly total_cost: number;
   readonly mix_store: string;
   readonly total_purchase_cost: number;
+  readonly full_name: string;
 }

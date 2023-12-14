@@ -21,6 +21,59 @@
     top: 0px;
 }
 
+.headerOrderTable {
+    font-size: 12px;
+    font-family: var(--main-font-family);
+    font-weight: bold;
+}
+
+.headerOrderSupTableCode {
+    width: 60px;
+}
+.headerOrderSupTableDate {
+    width: 85px;
+}
+.headerOrderSupTableSupplier {
+    width: 95px;
+}
+.headerOrderSupTableCodeOrder {
+    width: 50px;
+}
+.headerOrderSupTableStorage {
+    width: 120px;
+}
+
+.headerOrderSupTableCost {
+    width: 70px;
+}
+.headerOrderSupTableStatus {
+    width: 105px;
+}
+.headerOrderSupTableType {
+    width: 60px;
+}
+.headerOrderSupTableDelivery {
+    width: 60px;
+}
+.headerOrderSupTableStatusDel {
+    width: 90px;
+}
+.headerOrderSupTablePayType {
+    width: 105px;
+}
+.headerOrderSupTablePayStatus {
+    width: 75px;
+}
+.headerOrderSupTableUser {
+    width: 35px;
+}
+.headerOrderSupTableNotes {
+    width: 100px;
+}
+.headerOrderSupTableOption {
+    width: 105px;
+}
+
 .admOrderSupCommitTable th {
     padding-top: 12px;
     padding-bottom: 12px;
@@ -228,6 +281,28 @@
     background-color: #ddd;
     cursor: pointer;
     transition:cubic-bezier(1, 0, 0, 1) .3s all;
+}
+
+.admOrderSupGridItem {
+    vertical-align:middle;
+    display: grid;
+    grid-template-columns: 50px 85px 90px 40px 115px 60px 85px 55px 70px 80px 100px 75px 60px 90px 100px;
+    grid-column-gap: 10px;
+}
+.admOrderSupGridItem:nth-child(even) {
+    background-color: #f2f2f2;
+}
+.admOrderSupGridItem .admOrderSupGridItemBtn {
+    display: flex;
+    flex-direction: row;
+}
+.admOrderSupTableColmId tr {
+    border: 1px solid #ddd;
+    padding: 8px 5px;
+} 
+.admOrderSupTableColmId .admOrderSupGridItem:hover {
+    background-color: #ddd;
+    cursor: pointer;
 }
 
 .admChooseCat {

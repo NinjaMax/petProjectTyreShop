@@ -9,6 +9,7 @@ import { AuthModule } from '../auth/auth.module';
 import { ContractModule } from '../contract/contract.module';
 import { OrdersModule } from '../orders/orders.module';
 import { StockModule } from '../stock/stock.module';
+import { SuppliersModule } from 'src/suppliers/suppliers.module';
 
 
 @Module({
@@ -16,8 +17,12 @@ import { StockModule } from '../stock/stock.module';
   providers: [OrdersSuppliersService, OrdersSupStorageService],
   imports: [
     SequelizeModule.forFeature([OrdersSupplier, OrdersSupStorage]),
-    OrdersModule, StockModule, ContractModule, AuthModule
+    OrdersModule, 
+    StockModule, 
+    ContractModule, 
+    AuthModule,
+    SuppliersModule
   ],
-  exports:[OrdersSuppliersService, OrdersSupStorageService],
+  exports: [OrdersSuppliersService, OrdersSupStorageService],
 })
 export class OrdersSuppliersModule {}
