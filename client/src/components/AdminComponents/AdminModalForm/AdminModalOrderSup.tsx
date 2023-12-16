@@ -55,7 +55,7 @@ const AdminModalOrderSup = observer((
         if (orderSupData && supplier && !addSupplier) {
             let supplierFound: any;
             setOrderSupId(orderSupData?.id_order_sup);
-            setOrderSupStorage(orderSupData?.order_sup_storage ?? orderSupData?.order_storage);
+            setOrderSupStorage(orderSupData?.orders_sup_storage ?? orderSupData?.order_storage);
             if (orderSupData?.id_order_sup) {
                setUpdateBtn('Оновити'); 
             }
@@ -66,10 +66,10 @@ const AdminModalOrderSup = observer((
                     +items?.id_supplier === orderSupData?.order_storage![0]?.id_supplier
                 );
             }
-            if (orderSupData?.order_sup_storage) {
+            if (orderSupData?.orders_sup_storage) {
                 supplierFound = supplier!.find(
                     (items: any) => 
-                    +items?.id_supplier === orderSupData?.order_sup_storage![0]?.id_supplier
+                    +items?.id_supplier === orderSupData?.orders_sup_storage![0]?.id_supplier
                 );
             }
             // const supplierFoundOrderSup = supplier!.find(
@@ -99,18 +99,17 @@ const AdminModalOrderSup = observer((
     // },[ordersData, state]);
 
     useEffect(() => {
-        register("id_supplier", {required: 'Це необхідні дані'});
         register("id_user", {required: 'Це необхідні дані'});
         setValue("id_user", user._user?.sub.id_user);
-        setValue("id_supplier", addSupplier?.id_supplier,
-        { shouldValidate: true })
-      }, [register, setValue, addSupplier?.id_supplier, user])
+        if (addSupplier) {
+            setValue("id_supplier", addSupplier?.id_supplier,
+            { shouldValidate: true });
+            setValue("id_contract", addSupplier?.contract[0]?.id_contract,
+            { shouldValidate: true })
+        }
+        
+    }, [register, setValue, addSupplier, user])
     
-    useEffect(() => {
-        register('id_contract', {required: 'Це необхідні дані'})
-        setValue("id_contract", addSupplier?.contract[0]?.id_contract,
-        { shouldValidate: true })
-    }, [register, setValue, addSupplier?.contract])
     
     useEffect(() => {
         let isMounted = false;
@@ -179,13 +178,14 @@ const AdminModalOrderSup = observer((
         setOpenSupplier(!openSupplier);
     };  
     
-    const addSupplierToOrderSup = async (valueCust: number) => {
+    const addSupplierToOrderSup = async (e: any) => {
         //console.log(valueCust);
         const findSupplier = supplier!.find(
-            (items:{id_supplier:number}) => items?.id_supplier === +valueCust
+            (items:{id_supplier:number}) => +items?.id_supplier === +e.currentTarget.getAttribute('data-value')
         );
         if (findSupplier) {
             setAddSupplier(findSupplier);  
+            setOpenSupplier(!openSupplier);
         }
     }
 
@@ -280,7 +280,7 @@ const AdminModalOrderSup = observer((
             }
             if(orderSupId && state.length > 0 && disableBtnOk === false) {
                 orderSupStorage?.forEach(async(itemsOrd): Promise<any> => {
-                    await deleteGoodsFromOrderSup(itemsOrd);
+                    //await deleteGoodsFromOrderSup(itemsOrd);
                 });
                 orderSupStorage?.splice(0, orderSupStorage.length);
                 state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
@@ -299,7 +299,7 @@ const AdminModalOrderSup = observer((
             if (orderSupId && state.length !== 0 && disableBtnOk === true){
                 const newStorage = () => {
                 orderSupStorage?.forEach(async(itemsOrd): Promise<any> => {
-                    await deleteGoodsFromOrderSup(itemsOrd);
+                    //await deleteGoodsFromOrderSup(itemsOrd);
                 });
                 orderSupStorage?.splice(0, orderSupStorage.length);
                 state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
@@ -353,7 +353,6 @@ const AdminModalOrderSup = observer((
                         userReceiver: addSupplier!.address,
                     });
                     if (sendReqSupTyre) {
-                        //setRequestSupplier(!requestSupplier);
                         const newDataSupReq = await updateOrderSup(
                             {...orderSupData,
                                 status: 'Уточнення',
@@ -364,7 +363,7 @@ const AdminModalOrderSup = observer((
                         alert(`Заявка №${orderSupId}, уточнення відправлено постачальнику.`);
                         const addCommitReq: any = await addCommentsToOrder({
                             id_user: user._user?.sub.id_user, 
-                            comments: `Заявка №${orderSupId}, позиція: ${getPositionTyre.full_name} - ${state[0].quantity}/од., ${getPositionTyre.country.country_manufacturer_ua ?? ''} ${getPositionTyre.year.manufacture_year ?? ''} ціна: ${state[0].price_wholesale} грн. Уточнення відправлено`,
+                            comments: `Заявка №${orderSupId}, позиція: ${getPositionTyre.full_name} - ${state[0].quantity}/од., ${getPositionTyre.country.country_manufacturer_ua ?? ''} ${getPositionTyre.year.manufacture_year ?? ''} ціна(зак): ${state[0].price_wholesale} грн. Уточнення відправлено`,
                             id_order: null,
                             id_order_sup: orderSupId,
                         }); 
@@ -392,7 +391,6 @@ const AdminModalOrderSup = observer((
                         userReceiver: addSupplier!.address,
                     });
                     if (sendReqSupWheel) {
-                        //setRequestSupplier(!requestSupplier);
                         const newDataSupReqW = await updateOrderSup(
                             {...orderSupData,
                                 status: 'Уточнення',
@@ -404,7 +402,7 @@ const AdminModalOrderSup = observer((
 
                         const addCommitReqW: any = await addCommentsToOrder({
                             id_user: user._user?.sub.id_user,
-                            comments: `Заявка №${orderSupId}, позиція: ${getPositionTyre.full_name} - ${state[0].quantity}/од., ціна: ${state[0].price_wholesale} грн. Уточнення відправлено`,
+                            comments: `Заявка №${orderSupId}, позиція: ${getPositionTyre.full_name} - ${state[0].quantity}/од., ціна(зак): ${state[0].price_wholesale} грн. Уточнення відправлено`,
                             id_order: null,
                             id_order_sup: orderSupId,
                         }); 
@@ -462,7 +460,7 @@ const AdminModalOrderSup = observer((
     console.log('ORDER_DATA_FOR: ', orderSupData);
     console.log('STATE_SUP: ', state);
     console.log('ORDER_SUP_SUM: ', orderSum);
-    console.log('ORDER_STOR_SUP: ', orderSupStorage);
+    console.log('ORDER_SUP_STORAGE: ', orderSupStorage);
     console.log('PURCHASE_SUP: ', purchaseGoods);
     console.log('SUPPLIERS_SUP: ', addSupplier);
     console.log('COMMENTS_ADD_SUP: ', addNewCommit);
@@ -561,7 +559,8 @@ const AdminModalOrderSup = observer((
                             <option value="Відвантажено">Відвантажено</option>
                             <option value="Завершено">Завершено</option>
                             <option value="Відміна">Відміна</option>
-                            <option value="Повернення">Повернення</option>    
+                            <option value="Повернення">Повернення</option> 
+                            <option value="На Складі">На Складі</option>    
                     </select>    
                 </div>
                 <div>
@@ -569,6 +568,7 @@ const AdminModalOrderSup = observer((
                         <label htmlFor="lname">Постачальник </label>
                         <input  className="admFormOrderName"
                             type="text"
+                            {...register("id_supplier", {required: 'Це необхідні дані'})}
                             name="supplier" 
                             maxLength={45}
                             placeholder="Ім'я або назва.."
@@ -598,16 +598,17 @@ const AdminModalOrderSup = observer((
                 </div>
                 <div>
                     <label htmlFor="fname"> Контракт </label>
-                    <select className="admFormOrderContract" name="id_contract"
-                        //autoFocus={true}
+                    <select className="admFormOrderContract" 
+                        {...register('id_contract', {required: 'Це необхідні дані'})}
+                        name="id_contract"
                         defaultValue={addSupplier?.contract[0]?.id_contract}
                         >
                        {addSupplier ? addSupplier?.contract?.map(
-                        (entity:{name: string; id_contract:number;}, index:number)=> (  
+                        (entity:{name: string; id_contract:number; balance: number;}, index:number)=> (  
                             <option key={'contract' + index} 
                             value={entity.id_contract}
                             >
-                                {entity.name} {entity.id_contract} 
+                                {entity.name} контр{entity.id_contract} баланс {entity.balance} 
                             </option>
                             )) :
                                 <option data-value={orderSupData?.id_contract}>

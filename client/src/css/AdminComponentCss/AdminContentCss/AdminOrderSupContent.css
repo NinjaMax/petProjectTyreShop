@@ -47,7 +47,7 @@
     width: 70px;
 }
 .headerOrderSupTableStatus {
-    width: 105px;
+    width: 115px;
 }
 .headerOrderSupTableType {
     width: 60px;
@@ -71,7 +71,7 @@
     width: 100px;
 }
 .headerOrderSupTableOption {
-    width: 105px;
+    width: 98px;
 }
 
 .admOrderSupCommitTable th {
@@ -286,7 +286,7 @@
 .admOrderSupGridItem {
     vertical-align:middle;
     display: grid;
-    grid-template-columns: 50px 85px 90px 40px 115px 60px 85px 55px 70px 80px 100px 75px 60px 90px 100px;
+    grid-template-columns: 50px 85px 90px 40px 115px 60px 105px 55px 70px 80px 100px 75px 60px 90px 100px;
     grid-column-gap: 10px;
 }
 .admOrderSupGridItem:nth-child(even) {

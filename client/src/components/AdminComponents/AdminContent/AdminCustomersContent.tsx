@@ -6,7 +6,7 @@ import AdminModalCustmCreate from '../adminModalForm/AdminModalCustmCreate';
 import { ICustomerItem } from './types/CustomerItem.type';
 
 interface ICustomer {
-    customers: [] | null;
+    customers: any[] | null;
 }
 
 const AdminCustomersContent = ({customers}: ICustomer) => {
@@ -18,8 +18,9 @@ const AdminCustomersContent = ({customers}: ICustomer) => {
     useEffect(() => {
         if(value.length !== 0) {
             const filteredCustomerData: any = customers?.filter((customerItem: any) => {
-                return customerItem.id_customer.toLowerCase().includes(+value.toLowerCase()) ||
-                customerItem.full_name.toLowerCase().includes(value.toLowerCase())  
+                return customerItem?.id_customer.toString().toLowerCase().includes(value.toLowerCase()) ||
+                customerItem?.name.toLowerCase().includes(value.toLowerCase()) ||
+                customerItem?.phone.toLowerCase().includes(+value.toLowerCase())
             })
             setFilteredCustomer(filteredCustomerData);
         } else {
@@ -132,7 +133,7 @@ const AdminCustomersContent = ({customers}: ICustomer) => {
                 <input 
                     className='inputAdminCustomers' 
                     type="text" 
-                    id="myInput"
+                    id="myInputCustomer"
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                     onClick={inputHandler} 

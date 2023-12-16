@@ -14,7 +14,6 @@ export class CreateSaleDto {
   readonly total: number;
   readonly id_customer: number;
   readonly id_sales_storage: number;
-
   readonly notes: string;
   readonly id_basket: number;
   readonly id_order_storage: number;
@@ -25,7 +24,6 @@ export class CreateSaleDto {
   readonly reserve: number;
   readonly remainder: number;
   readonly update_date: Date;
-
   readonly id_contract: number;
   readonly name: string;
   readonly balance: number;

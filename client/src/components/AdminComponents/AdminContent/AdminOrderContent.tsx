@@ -9,6 +9,7 @@ import { IAdminOrder } from './interfaces/AdminOrder.interface';
 import { IOrdersItem } from './types/OrderItem.type';
 import { FixedSizeList  as List } from 'react-window';
 import SpinnerCarRot from '../../spinners/SpinnerCarRot';
+import { addGoodsToSaleOrder, createToSaleOrder } from '../../../restAPI/restAdminAPI';
 
 const AdminOrderContent = (
     {props, orders, customer, comments, showComment, storage, suppliers}:IAdminOrder
@@ -19,12 +20,15 @@ const AdminOrderContent = (
     const [filteredOrder, setFilteredOrder] = useState< any[] | null>(orders);
     const [value, setValue] = useState('');
     const [isSearch, setIsSearch] = useState(true);
-
+    console.log('ORDERS: ', orders)
     useEffect(() => {
         if(value.length !== 0) {
             const filteredOrderData: any = orders?.filter((orderItem: any) => {
-                return orderItem.id_order === +value.toLowerCase() ||
-                orderItem.customer.full_name.toLowerCase().includes(value.toLowerCase())  
+                return orderItem.id_order.toLowerCase().includes(+value.toLowerCase()) ||
+                orderItem.customer.name.toLowerCase().includes(value.toLowerCase()) ||
+                orderItem.delivery.toLowerCase().includes(value.toLowerCase()) || 
+                orderItem.status.toLowerCase().includes(value.toLowerCase()) ||
+                orderItem.storage.toLowerCase().includes(value.toLowerCase())
             })
             setFilteredOrder(filteredOrderData);
         } else {
@@ -75,6 +79,30 @@ const AdminOrderContent = (
             setOrderData(orderInfo);
             setActiveOrder(!activeOrder);
             showComment(e);
+        }
+    };
+
+    const createSaleOrder = async (e: any) => {
+        try {
+            const orderInfoForSale: any = orders?.find(
+                (item:{id_order: number}) => 
+                    item.id_order === e.currentTarget.value
+                );
+            if (orderInfoForSale) {
+                await createToSaleOrder(orderInfoForSale);
+                orderInfoForSale.order_storage.forEach( async (orderInfo: any): Promise<any> => {
+                    await addGoodsToSaleOrder({
+                        ...orderInfo,
+                        id_sale: orderInfo.id_sale,
+                    });
+                })
+                alert('Продаж проведено.');
+            } else {
+                alert('Помилка. Данні не знайдені.')
+            }
+
+        } catch (error) {
+            console.log('ERROO_CREATE_SALE: ', error);
         }
     };
 
@@ -246,7 +274,7 @@ const AdminOrderContent = (
                 <button className='editAdmGoods'
                     name='editOrder'
                     value={filteredOrder![index].id_order}
-                    //</div>onClick={showOrderData}
+                    onClick={createSaleOrder}
                 >
                     <i className="fas fa-clipboard-check"></i>
                 </button>

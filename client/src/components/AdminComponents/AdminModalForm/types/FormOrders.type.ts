@@ -1,7 +1,7 @@
 export type IModalFormOrder = {
     full_name?: string;
     name?: string;
-    contract: [{id_contract: number, name: string, bonus: number}];
+    contract: [{id_contract: number, name: string, bonus: number, balance: number}];
     id_contract?: number;
     id_customer?: number;
     id_supplier?: number;

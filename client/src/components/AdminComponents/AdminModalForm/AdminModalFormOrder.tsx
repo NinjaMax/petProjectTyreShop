@@ -100,12 +100,6 @@ const AdminFormOrder = observer((
         }
     },[ordersData]);
 
-    // useEffect(() => {
-    //     if (errors) {
-    //         setError('root.random', {type: 'random', message: "custom message"});
-    //     }
-    // },[errors, setError])
-
     useEffect(() => {
         register("total_cost")
         setValue("total_cost", (Number(ordersData?.delivery_cost ?? 0) + Number(ordersData?.commission_cost ?? 0) + Number(ordersData?.dop_garanty ?? 0) + orderSum) - Number(ordersData?.bonus_decrease ?? 0));
@@ -118,12 +112,10 @@ const AdminFormOrder = observer((
     ]);
 
     useEffect(() => {
-        //register("id_customer", {required: 'Це необхідні дані'});
         register("id_user", {required: 'Це необхідні дані'});
-        //register('id_contract', {required: 'Це необхідні дані'})
         setValue("id_user", user._user?.sub.id_user);
         if (addCustomer) {
-           setValue("id_customer", addCustomer?.id_customer! ?? ordersData?.id_customer,
+            setValue("id_customer", addCustomer?.id_customer! ?? ordersData?.id_customer,
             { shouldValidate: true }) 
             setValue("id_contract", addCustomer?.contract[0]?.id_contract! ?? ordersData?.id_contract,
             { shouldValidate: true })
@@ -135,7 +127,6 @@ const AdminFormOrder = observer((
         addCustomer, 
         user, 
         ordersData?.id_customer, 
-        //addCustomer?.contract, 
         ordersData?.id_contract
     ]);
     

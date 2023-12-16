@@ -35,22 +35,18 @@ export class StockTyresService {
         const supplier = await this.suppliersService.findSupplierById(
           createStockDto,
         );
-
         await storage.$add('stock_tyres', [stockCreate.id]);
         storage.stock_tyres.push(stockCreate);
-
         await tyres.$add('stock', [createStockDto.id]);
-
         await supplier.$add('stock_tyres', [createStockDto.id_supplier]);
-
         tyres.stock.push(stockCreate);
-
         supplier.stock_tyres.push(stockCreate);
 
         return tyres;
+      } else {
+        return null;
       }
-
-      throw new HttpException('Data not found', HttpStatus.NOT_FOUND);
+      //throw new HttpException('Data not found', HttpStatus.NOT_FOUND);
     } catch {
       throw new HttpException(
         'Data is incorrect and must be uniq',
@@ -212,6 +208,22 @@ export class StockTyresService {
   async findStockTyreByIdForSale(id_tyre: number) {
     try {
       const stockTyreId = await this.stockTyresRepository.findByPk(id_tyre, {
+        include: { all: true },
+      });
+
+      return stockTyreId;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async findStockTyreByIdToAddStock(id_tyre: number, id_supplier: number) {
+    try {
+      const stockTyreId = await this.stockTyresRepository.findOne({
+        where: { id_tyre: id_tyre, id_supplier: id_supplier },
         include: { all: true },
       });
 

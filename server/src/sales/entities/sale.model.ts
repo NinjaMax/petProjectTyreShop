@@ -29,7 +29,6 @@ export class Sales extends Model<Sales, SalesConfigAttr> {
     type: DataType.STRING,
     unique: false,
     allowNull: false,
-    defaultValue: 'NEW',
   })
   status: string;
 
@@ -39,6 +38,12 @@ export class Sales extends Model<Sales, SalesConfigAttr> {
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
   delivery: string;
 
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+  id_customer: number;
+
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+  id_contract: number;
+
   @ForeignKey(() => Orders)
   @Column({ type: DataType.INTEGER })
   id_order: number;
@@ -47,7 +52,7 @@ export class Sales extends Model<Sales, SalesConfigAttr> {
   @Column({ type: DataType.INTEGER })
   id_user: number;
 
-  @Column({ type: DataType.INTEGER })
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
   bonus_decrease: number;
 
   @BelongsTo(() => Users, 'id_user')

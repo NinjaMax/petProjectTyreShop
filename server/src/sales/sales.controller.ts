@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { SalesService } from './sales.service';
 import { CreateSaleDto } from './dto/create-sale.dto';
 import { GetSaleDto } from './dto/get-sale.dto';
@@ -9,12 +17,12 @@ export class SalesController {
   constructor(private readonly salesService: SalesService) {}
 
   @Post()
-  createSale(@Body() createSaleDto: CreateSaleDto) {
+  async createSale(@Body() createSaleDto: CreateSaleDto) {
     return this.salesService.createSale(createSaleDto);
   }
 
   @Post('/add')
-  addGoodsSale(@Body() createSaleDto: CreateSaleDto) {
+  async addGoodsSale(@Body() createSaleDto: CreateSaleDto) {
     return this.salesService.addGoodsSale(createSaleDto);
   }
 

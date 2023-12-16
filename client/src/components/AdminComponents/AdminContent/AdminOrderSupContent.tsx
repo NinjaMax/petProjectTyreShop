@@ -8,7 +8,7 @@ import { IOrdersSupItem } from './types/OrderSupItem.type';
 import { IComments } from './types/Comment.type';
 import { FixedSizeList  as List } from 'react-window';
 import SpinnerCarRot from '../../spinners/SpinnerCarRot';
-import { addGoodsOrderSupToStock } from '../../../restAPI/restAdminAPI';
+import { addGoodsOrderSupToStock, updateOrder, updateOrderSup } from '../../../restAPI/restAdminAPI';
 
 const AdminOrderSupContent = (
     {
@@ -42,23 +42,43 @@ const AdminOrderSupContent = (
         if (orderSupData) {
             setOrderSupData(null);
         }
-        showComment(e);
+        //showComment(e);
         setActiveOrderSup(!activeOrderSup);
     };
 
     const addStockOrderSupGoods = async (e: any) => {
-        //let orderSup: any;
-        const dataSupValue = e.currentTarget.getAttribute("data-value");
-        const orderSupInfo: any = ordersSup?.find(
-            (item:{id_order_sup: number}) => 
-                item.id_order_sup === dataSupValue || 
-                e.target.value
-            );
-        orderSupInfo?.forEach( async (element: any): Promise<any> => {
-            await addGoodsOrderSupToStock(element);
-        });
+        try {
+            const orderSupInfo: any = ordersSup?.find(
+                (item:{id_order_sup: number}) => 
+                    item.id_order_sup === e.currentTarget.value
+                );
+                //console.log('OrderSupInfo', orderSupInfo);
+            if (orderSupInfo) {
+                orderSupInfo?.orders_sup_storage?.forEach( async (element: any): Promise<any> => {
+                    await addGoodsOrderSupToStock({...element, id_contract: orderSupInfo?.id_contract});
+                });
+                await updateOrderSup(
+                    {
+                        status: orderSupInfo?.storage === 'Постачальник' ? 'Відвантажено' : 'На Складі',
+                    }, 
+                    orderSupInfo?.id_order_sup
+                );
+                if (orderSupInfo.id_order && orderSupInfo?.storage === 'Постачальник') {
+                    await updateOrder(
+                        {
+                            status:'Відвантажено',
+                        }, 
+                        orderSupInfo?.id_order
+                    );
+                }
+                alert('Перевірте. Товари добавлені на склад.')
+            } else {
+                alert('Помилка. Данні не знайдені.')
+            }
+        } catch (error) {
+            console.log('ADDED_GOODS_ERROR: ', error);
+        }
     };
-
     
     const showOrderSupData = async (e: any) => {
         let orderSupInfo: any;
@@ -78,7 +98,7 @@ const AdminOrderSupContent = (
             );  
         }  
         if(orderSupInfo) {
-            e.currentTarget.name === 'editOrder' ? orderSupInfo.disableBtns = false : orderSupInfo.disableBtns = true;
+            e.currentTarget.name === 'editSupOrder' ? orderSupInfo.disableBtns = false : orderSupInfo.disableBtns = true;
             setOrderSupData(orderSupInfo);
             setActiveOrderSup(!activeOrderSup);
             showComment(e);
@@ -236,23 +256,23 @@ const AdminOrderSupContent = (
             <div>{filterOrderSup![index]?.notes}</div>
             <div>
                 <button className='basketAdmGoods'
-                    value={filterOrderSup![index].id_order}
+                    value={filterOrderSup![index].id_order_sup}
                     onClick={addStockOrderSupGoods}>
                     <i className="fas fa-warehouse"></i>
                 </button>
                 <button className='basketAdmGoods'
-                    value={filterOrderSup![index].id_order}
+                    value={filterOrderSup![index].id_order_sup}
                     onClick={() => console.log('SOME_FUNCTION')}>
                     <i className="fas fa-truck-loading"></i>
                 </button>
                 <button className='editAdmGoods'
                     name='editSupOrder'
-                    value={filterOrderSup![index].id_order}
+                    value={filterOrderSup![index].id_order_sup}
                     onClick={showOrderSupData}>
                     <i className="fas fa-edit"></i>
                 </button>
                 <button className='closeAdmGoods'
-                    value={filterOrderSup![index].id_order}>
+                    value={filterOrderSup![index].id_order_sup}>
                     <i className="fa fa-remove"></i>
                 </button>                  
             </div>
@@ -265,7 +285,7 @@ const AdminOrderSupContent = (
             <span>Замовлення Постачальника:</span>
             <div className='admOrderSupHeader'>
                 <button className='admOrderSupAddOrderBtn'
-                    onClick={(e) => activeFormOrderSup(e)}
+                    onClick={activeFormOrderSup}
                     value={'0'} 
                 >Додати замовлення постачальника
                 </button>
@@ -342,7 +362,7 @@ const AdminOrderSupContent = (
                 itemCount={filterOrderSup!.length}
                 itemSize={65}
                 height={330}
-                width={1320}
+                width={1315}
             >
                 {orderSupRowTable}
             </List>       
@@ -380,7 +400,7 @@ const AdminOrderSupContent = (
                     storages={storage}
                     supplier={supplier}
                     comments={comments}
-                    setActive={setActiveOrderSup}
+                    setActive={activeFormOrderSup}
                     getOrdersSupData={orderSupData}
                     showComment={showComment}
                     props={props}

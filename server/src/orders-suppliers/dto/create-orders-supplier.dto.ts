@@ -18,6 +18,8 @@ export class CreateOrdersSupplierDto {
   readonly quantity: number;
   readonly order_index: number;
   readonly storage_index: number;
+  readonly id_storage: number;
+  readonly id_supplier: number;
   readonly id_order_sup_storage: number;
   readonly id_order_sup: number;
   readonly order_sup_index: number;
@@ -42,4 +44,10 @@ export class CreateOrdersSupplierDto {
   readonly mix_store: string;
   readonly total_purchase_cost: number;
   readonly full_name: string;
+  readonly stock: number;
+  readonly remainder: number;
+  readonly update_date: Date;
+  readonly city: string;
+  readonly phone: bigint;
+  readonly email: string;
 }

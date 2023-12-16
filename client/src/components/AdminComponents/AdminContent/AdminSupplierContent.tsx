@@ -128,7 +128,7 @@ const AdminSupplierContent = ({suppliers}:any) => {
             <input 
                 className='inputAdminSupplier' 
                 type="text" 
-                id="myInput"
+                id="myInputSupplier"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 onClick={inputHandler} 

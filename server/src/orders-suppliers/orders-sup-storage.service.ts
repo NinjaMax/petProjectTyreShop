@@ -153,7 +153,10 @@ export class OrdersSupStorageService {
 
   async findOrderSupStorageById(getOrdersSupDto: GetOrdersSuppliersDto) {
     try {   
-      const orderSupId = await this.ordersSupStorageRepository.findByPk(getOrdersSupDto.id_order_sup, {include: {all: true}});
+      const orderSupId = await this.ordersSupStorageRepository.findByPk(
+        getOrdersSupDto.id_order_sup_storage,
+        { include: { all: true } },
+      );
       return orderSupId;
     } catch {
       throw new HttpException(
@@ -170,6 +173,8 @@ export class OrdersSupStorageService {
       const orderStorageUpdate = await this.ordersSupStorageRepository.update(
         {
           id: updateOrdersSupplierDto.id,
+          full_name: updateOrdersSupplierDto.full_name,
+          category: updateOrdersSupplierDto.category,
           order_sup_index: updateOrdersSupplierDto.order_sup_index,
           storage_index: updateOrdersSupplierDto.storage_index,
           id_order_sup: updateOrdersSupplierDto.id_order_sup,

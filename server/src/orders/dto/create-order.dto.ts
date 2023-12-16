@@ -43,7 +43,7 @@ export class CreateOrderDto {
   readonly pay_view: string;
   readonly status_pay: string;
   readonly category: string;
-
+  readonly city: string;
   readonly id_goods: number;
   readonly id_cat: number;
   readonly goods: string;

@@ -37,7 +37,7 @@ const AdminModalSupplier = ({allsupplier, addSupplier}:any) => {
             <div>{filterSupplier![index]?.address}</div>
             <div>{filterSupplier![index]?.contract[0]?.name ?? ''}</div>
             <div>{filterSupplier![index]?.contract[0]?.id_contract ?? ''}</div>
-            <div>{filterSupplier![index]?.contract[0]?.balance ?? ''}</div>
+            <div>{filterSupplier![index]?.contract?.reduce((sum: any, current: any) => sum + current.balance, 0) ?? ''}</div>
         </div>    
     );
 

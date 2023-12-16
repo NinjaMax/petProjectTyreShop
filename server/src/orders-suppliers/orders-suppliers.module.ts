@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { OrdersSuppliersService } from './orders-suppliers.service';
 import { OrdersSuppliersController } from './orders-suppliers.controller';
@@ -9,16 +9,18 @@ import { AuthModule } from '../auth/auth.module';
 import { ContractModule } from '../contract/contract.module';
 import { OrdersModule } from '../orders/orders.module';
 import { StockModule } from '../stock/stock.module';
-import { SuppliersModule } from 'src/suppliers/suppliers.module';
-
+import { SuppliersModule } from '../suppliers/suppliers.module';
+import { PricesModule } from '../prices/prices.module';
 
 @Module({
   controllers: [OrdersSuppliersController],
   providers: [OrdersSuppliersService, OrdersSupStorageService],
   imports: [
     SequelizeModule.forFeature([OrdersSupplier, OrdersSupStorage]),
-    OrdersModule, 
+    //OrdersModule,
+    forwardRef(() => OrdersModule),
     StockModule, 
+    PricesModule,
     ContractModule, 
     AuthModule,
     SuppliersModule

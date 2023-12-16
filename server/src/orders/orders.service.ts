@@ -1,5 +1,5 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { MESSAGES } from '@nestjs/core/constants';
+import { Injectable, HttpException, HttpStatus, Inject, forwardRef } from '@nestjs/common';
+//import { MESSAGES } from '@nestjs/core/constants';
 import { InjectModel } from '@nestjs/sequelize';
 //import { TyresService } from 'src/tyres/tyres.service';
 import { CreateOrderDto } from './dto/create-order.dto';
@@ -15,11 +15,14 @@ import { StockTyresService } from '../stock/stock-tyres.service';
 import { StockWheelsService } from '../stock/stock-wheels.service';
 import { StorageService } from '../storage/storage.service';
 import { CustomersService } from '../customers/customers.service';
+import { SuppliersService } from '../suppliers/suppliers.service';
+import { OrdersSuppliersService } from '../orders-suppliers/orders-suppliers.service';
 
 @Injectable()
 export class OrdersService {
   constructor(
     @InjectModel(Orders) private ordersRepository: typeof Orders,
+    
     private basketService: BasketService,
     private stockTyresService: StockTyresService,
     private stockWheelsService: StockWheelsService,
@@ -27,8 +30,11 @@ export class OrdersService {
     private stockOilsService: StockOilsService,
     //private priceTyreService: PriceTyresService,
     private customerService: CustomersService,
+    private supplierService: SuppliersService,
     private storageService: StorageService,
     private ordersStorageService: OrdersStorageService,
+    @Inject(forwardRef(() => OrdersSuppliersService))
+    private ordersSupplierService: OrdersSuppliersService,
   ) {}
 
   async createOrder(createOrderDto: CreateOrderDto) {
@@ -416,7 +422,9 @@ export class OrdersService {
     const oilStock = await this.stockOilsService.findStockOilById(
       createOrderDto,
     );
-
+    const getSupplier = await this.supplierService.findSupplierById(
+      createOrderDto
+    );
     if (tyreStock) {
       const orderAddTyre = await this.tyreStockOrder(createOrderDto);
       return orderAddTyre;
@@ -435,6 +443,14 @@ export class OrdersService {
     if (oilStock) {
       const orderAddOil = await this.oilStockOrder(createOrderDto);
       return orderAddOil;
+    }
+    if (createOrderDto.id_basket && getSupplier.address) {
+      const getOrdersId = await this.ordersRepository.findByPk(
+        createOrderDto.id_order,
+        { include: { all: true } },
+      );
+
+
     }
   }
 

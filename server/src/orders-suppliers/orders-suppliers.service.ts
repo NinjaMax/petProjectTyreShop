@@ -14,15 +14,23 @@ import { StockTyresService } from '../stock/stock-tyres.service';
 import { StockWheelsService } from '../stock/stock-wheels.service';
 import { SuppliersService } from '../suppliers/suppliers.service';
 import { OrdersSupStorage } from './entities/orders-sup-storage.model';
+import { PriceTyresService } from '../prices/price-tyres.service';
+import { PriceWheelsService } from '../prices/price-wheels.service';
+import { PriceBatteryService } from '../prices/price-batteries.service';
+import { PriceOilsService } from '../prices/price-oils.service';
 
 @Injectable()
 export class OrdersSuppliersService {
   constructor(
     @InjectModel(OrdersSupplier) 
     private ordersSupRepository: typeof OrdersSupplier,
-    private ordersService: OrdersService,
+    //private ordersService: OrdersService,
     private ordersSupStorageService: OrdersSupStorageService,
     private ordersStorageService: OrdersStorageService,
+    private priceTyresService: PriceTyresService,
+    private priceWheelsService: PriceWheelsService,
+    private priceBatteryService: PriceBatteryService,
+    private priceOilService: PriceOilsService,
     private stockTyresService: StockTyresService,
     private stockBatteriesService: StockBatteriesService,
     private stockOilsService: StockOilsService,
@@ -117,11 +125,23 @@ export class OrdersSuppliersService {
 
   async createOrderSupGoods(createOrdersSupplierDto: CreateOrdersSupplierDto){
     try {
-      const orderSupStorGoods =
-        await this.ordersSupStorageService.createOrderSupStorage(
+      const findOrderSupStorageGoods =
+        await this.ordersSupStorageService.findOrderSupStorageById(
           createOrdersSupplierDto,
         );
-      return orderSupStorGoods;
+      if (findOrderSupStorageGoods) {
+        await this.ordersSupStorageService.updateOrderSupStorage(
+          createOrdersSupplierDto,
+        );
+        await findOrderSupStorageGoods.reload();
+        return findOrderSupStorageGoods;
+      } else {
+        const orderSupStorGoods =
+          await this.ordersSupStorageService.createOrderSupStorage(
+            createOrdersSupplierDto,
+          );
+        return orderSupStorGoods;
+      };
     } catch (error) {
       throw new HttpException(
         `Data is incorrect and must be uniq ${error.message}`,
@@ -173,8 +193,9 @@ export class OrdersSuppliersService {
 
       for (let i = 0; i < goodsOrderSup.length; i++) {
         const tyresStock =
-          await this.stockTyresService.findStockTyreByIdForSale(
+          await this.stockTyresService.findStockTyreByIdToAddStock(
             goodsOrderSup[i].id,
+            goodsOrderSup[i].id_supplier,
           );
         const batteryStock =
           await this.stockBatteriesService.findStockBatteryByIdForSale(
@@ -195,11 +216,17 @@ export class OrdersSuppliersService {
           await contractSupplier.decrement('balance', {
             by: goodsOrderSup[i].price_wholesale * goodsOrderSup[i].quantity
           });
-          goodsOrderSup[i].id_storage = null;
+          //goodsOrderSup[i].id_storage = null;
           goodsOrderSup[i].save();
           await tyresStock.reload();
           await contractSupplier.reload();
           return tyresStock;
+        } else if (!tyresStock) {
+          const createNewTyreStock =
+            await this.stockTyresService.createStockTyre(
+              createOrdersSupplierDto,
+            );
+          return createNewTyreStock;
         }
 
         if (batteryStock) {

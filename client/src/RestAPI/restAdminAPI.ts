@@ -68,7 +68,7 @@ const createGoodsToOrderSup = async (
     id_order: +item.id_order,
     price: +item?.price!,
     price_wholesale: +item.price_wholesale!,
-    id_order_storage_sup: item.id_order_storage ?? null,
+    id_order_sup_storage: +item?.id_order_sup_storage! ?? null,
     // delivery: 'Flintstone',
     }
 )
@@ -142,6 +142,18 @@ await $hostPost.post('/orders', data)
     console.log(error);
 });
 
+const createToSaleOrder = async (data: any) => 
+await $hostPost.post('/sales', data)
+.catch(error => {
+    console.log(error);
+});
+
+const addGoodsToSaleOrder = async (data: any) => 
+await $hostPost.post('/sales/add', data)
+.catch(error => {
+    console.log(error);
+});
+
 const createOrderSupForm = async (data: any) => 
 await $hostPost.post('/ordersup', data)
 .catch(error => {
@@ -209,7 +221,7 @@ await $hostPost.post('/ordersup/add/stock', value
 )
 .catch(error => {
     console.log(
-    'Не вистачає залишків, або не вірно вказані дані',
+    'Не виконано, не вірно вказані дані або інша помилка.',
     error)
 });
 
@@ -453,5 +465,7 @@ export {
     createGoodsToOrderBasket,
     getCustomersById,
     getStorageAll,
-    requestToSupplier
+    requestToSupplier,
+    createToSaleOrder,
+    addGoodsToSaleOrder
 };

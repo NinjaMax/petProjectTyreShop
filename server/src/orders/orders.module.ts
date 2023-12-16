@@ -13,6 +13,10 @@ import { StorageModule } from '../storage/storage.module';
 import { TyresModule } from '../tyres/tyres.module';
 import { UsersModule } from '../users/users.module';
 import { CustomersModule } from '../customers/customers.module';
+import { SuppliersModule } from '../suppliers/suppliers.module';
+import { OrdersSuppliersModule } from '../orders-suppliers/orders-suppliers.module';
+import { OrdersSuppliersService } from 'src/orders-suppliers/orders-suppliers.service';
+import { OrdersSupplier } from '../orders-suppliers/entities/orders-supplier.model';
 
 @Module({
   controllers: [OrdersController],
@@ -27,6 +31,9 @@ import { CustomersModule } from '../customers/customers.module';
     StorageModule,
     AuthModule,
     CustomersModule,
+    SuppliersModule,
+    //OrdersSuppliersModule,
+    forwardRef(() => OrdersSuppliersModule),
   ],
   exports: [OrdersService, OrdersStorageService],
 })

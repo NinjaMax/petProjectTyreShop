@@ -19,10 +19,9 @@ export class Service extends Model<Service, ServicesConfigAttr> {
     @Column({type: DataType.STRING, unique: false, allowNull: true})
     notes: string;
 
-    @HasMany(() => Orders, 'id_basket')
+    @HasMany(() => Orders, 'id_service')
     orders: Orders[];
 
-    @HasMany(() => Sales, 'id_basket')
+    @HasMany(() => Sales, 'id_service')
     sales: Sales[];
-    
 }

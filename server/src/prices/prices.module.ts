@@ -16,17 +16,44 @@ import { StorageModule } from '../storage/storage.module';
 import { SuppliersModule } from '../suppliers/suppliers.module';
 import { TyresModule } from '../tyres/tyres.module';
 import { WheelsModule } from '../wheels/wheels.module';
+import { PriceBatteryService } from './price-batteries.service';
+import { PriceOilsService } from './price-oils.service';
+import { PriceBatteriesController } from './price-batteries.controller';
+import { PriceOilsController } from './price-oils.controller';
 
 @Module({
-  controllers: [PriceTyresController, PriceWheelsController],
-  providers: [PriceTyresService, PriceWheelsService],
-  imports: [ 
-    SequelizeModule.forFeature([ PriceTyres, PriceWheels, PriceOil, 
-      PriceBatteries]),
-    TyresModule, WheelsModule, OilsModule, BatteriesModule, 
-    SuppliersModule, StorageModule, AuthModule
+  controllers: [
+    PriceTyresController,
+    PriceWheelsController,
+    PriceBatteriesController,
+    PriceOilsController,
   ],
-  exports: [PriceTyresService, PriceWheelsService]
-
+  providers: [
+    PriceTyresService,
+    PriceWheelsService,
+    PriceBatteryService,
+    PriceOilsService,
+  ],
+  imports: [ 
+    SequelizeModule.forFeature([
+      PriceTyres,
+      PriceWheels,
+      PriceOil,
+      PriceBatteries,
+    ]),
+    TyresModule,
+    WheelsModule,
+    OilsModule,
+    BatteriesModule,
+    SuppliersModule,
+    StorageModule,
+    AuthModule,
+  ],
+  exports: [
+    PriceTyresService,
+    PriceWheelsService,
+    PriceBatteryService,
+    PriceOilsService,
+  ]
 })
 export class PricesModule {}
