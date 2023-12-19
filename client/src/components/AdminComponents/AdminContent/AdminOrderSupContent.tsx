@@ -242,7 +242,7 @@ const AdminOrderSupContent = (
             data-value={filterOrderSup![index].id_order_sup}>
             <div>{filterOrderSup![index].id_order_sup}</div>
             <div>{new Date(filterOrderSup![index].createdAt).toLocaleString()}</div>
-            <div>{filterOrderSup![index]?.supplier.name}</div>
+            <div>{filterOrderSup![index]?.supplier?.name}</div>
             <div>{filterOrderSup![index].id_order}</div>
             <div>{filterOrderSup![index]?.storage}</div>
             <div>{filterOrderSup![index]?.total_purchase_cost}</div>
@@ -258,7 +258,9 @@ const AdminOrderSupContent = (
                 <button className='basketAdmGoods'
                     value={filterOrderSup![index].id_order_sup}
                     onClick={addStockOrderSupGoods}>
-                    <i className="fas fa-warehouse"></i>
+                    <i className="fas fa-warehouse"
+                        title='Додати на склад'
+                    ></i>
                 </button>
                 <button className='basketAdmGoods'
                     value={filterOrderSup![index].id_order_sup}
@@ -269,11 +271,15 @@ const AdminOrderSupContent = (
                     name='editSupOrder'
                     value={filterOrderSup![index].id_order_sup}
                     onClick={showOrderSupData}>
-                    <i className="fas fa-edit"></i>
+                    <i className="fas fa-edit"
+                        title='Редагувати'
+                    ></i>
                 </button>
                 <button className='closeAdmGoods'
                     value={filterOrderSup![index].id_order_sup}>
-                    <i className="fa fa-remove"></i>
+                    <i className="fa fa-remove"
+                        title='Видалити'
+                    ></i>
                 </button>                  
             </div>
         </div>    

@@ -1,12 +1,15 @@
-import { Injectable, HttpException, HttpStatus, Inject, forwardRef } from '@nestjs/common';
-//import { MESSAGES } from '@nestjs/core/constants';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  Inject,
+  forwardRef,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-//import { TyresService } from 'src/tyres/tyres.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { GetOrdersDto } from './dto/get-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { Orders } from './entities/order.model';
-//import { OrdersConfigAttr } from './interfaces/orders.interface';
 import { OrdersStorageService } from './orders-storage.service';
 import { BasketService } from '../basket/basket.service';
 import { StockBatteriesService } from '../stock/stock-batteries.service';
@@ -17,38 +20,59 @@ import { StorageService } from '../storage/storage.service';
 import { CustomersService } from '../customers/customers.service';
 import { SuppliersService } from '../suppliers/suppliers.service';
 import { OrdersSuppliersService } from '../orders-suppliers/orders-suppliers.service';
+import { CommentsService } from '../comments/comments.service';
+import { TelegramApiService } from '../telegram-api/telegram-api.service';
+import { TyresService } from '../tyres/tyres.service';
 
 @Injectable()
 export class OrdersService {
   constructor(
     @InjectModel(Orders) private ordersRepository: typeof Orders,
-    
     private basketService: BasketService,
+    private tyresService: TyresService,
     private stockTyresService: StockTyresService,
     private stockWheelsService: StockWheelsService,
     private stockBatteriesService: StockBatteriesService,
     private stockOilsService: StockOilsService,
-    //private priceTyreService: PriceTyresService,
     private customerService: CustomersService,
     private supplierService: SuppliersService,
     private storageService: StorageService,
     private ordersStorageService: OrdersStorageService,
+    @Inject(forwardRef(() => CommentsService))
+    private commentsService: CommentsService,
+    private telegramService: TelegramApiService,
     @Inject(forwardRef(() => OrdersSuppliersService))
     private ordersSupplierService: OrdersSuppliersService,
   ) {}
 
   async createOrder(createOrderDto: CreateOrderDto) {
-    try {
+    //try {
       const basket = await this.basketService.findBasketById(createOrderDto);
       if (createOrderDto.id_contract && createOrderDto.id_customer) {
-        const orderCustomer = await this.ordersRepository.create(createOrderDto);
+        const orderCustomer = await this.ordersRepository.create(
+          createOrderDto,
+        );
         if (basket) {
           const orderId: Orders = await this.ordersRepository.findByPk(
             orderCustomer.id_order,
           );
           await basket.$set('order', orderId.id_order);
           basket.order = orderId;
-  
+          if (basket && orderId.storage === 'Постачальник') {
+            const orderSupNew = await this.ordersSupplierService.createOrderSup({
+                ...createOrderDto,
+                id_order: orderId.id_order,
+              },
+            );
+            await this.commentsService.createCommentNew({
+              id_user: 1,
+              comments: `Замовлення постачальника №${orderSupNew.id_order_sup} створено. (автоматично)`,
+              id_order: orderId.id_order,
+              id_order_sup: null,
+            });
+          }
+          await orderId.reload();
+
           return orderId;
         } else {
           return orderCustomer;
@@ -77,23 +101,40 @@ export class OrdersService {
         
         if (basket) {
           const orderNewId: Orders = await this.ordersRepository.findByPk(
-          orderNew.id_order,
-        );
+            orderNew.id_order,
+          );
           await basket.$set('order', orderNewId.id_order);
           basket.order = orderNewId;
-
+          if (basket && orderNewId.storage === 'Постачальник') {
+            const orderSupNew = await this.ordersSupplierService.createOrderSup({
+                ...createOrderDto,
+                organisation: orderNewId.organisation,
+                order_view: orderNewId.order_view,
+                status_delivery: orderNewId.status_delivery,
+                status: orderNewId.status,
+                status_pay: orderNewId.status_pay,
+                id_order: orderNewId.id_order,
+              },
+            );
+            await this.commentsService.createCommentNew({
+              id_user: 1,
+              comments: `Замовлення постачальника №${orderSupNew.id_order_sup} створено. (автоматично)`,
+              id_order: orderNewId.id_order,
+              id_order_sup: null,
+            });
+          }
+          await orderNewId.reload();
           return orderNewId;
         } else {
           return orderNew;
         }
       }
-      
-    } catch {
-      throw new HttpException(
-        'Data is incorrect and must be uniq',
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    // } catch {
+    //   throw new HttpException(
+    //     'Data is incorrect and must be uniq',
+    //     HttpStatus.NOT_FOUND,
+    //   );
+    // }
   }
 
   async findAllOrders() {
@@ -384,7 +425,6 @@ export class OrdersService {
         );
       }
     }
-
     if (stockOilExists) {
       await stockOilExists.increment('reserve', {
         by: newReserveOil || createOrderDto.quantity,
@@ -425,13 +465,188 @@ export class OrdersService {
     const getSupplier = await this.supplierService.findSupplierById(
       createOrderDto
     );
+    const tyreIfExist = await this.tyresService.findTyresById(createOrderDto);
+    const getOrder = await this.ordersRepository.findByPk(
+      createOrderDto.id_order
+    );
     if (tyreStock) {
       const orderAddTyre = await this.tyreStockOrder(createOrderDto);
+      //console.log('ORDER_ADD_STOCK: ', tyreStock);
+      if (
+        getOrder.id_basket &&
+        getOrder.storage === 'Постачальник' &&
+        getSupplier.address
+      ) {
+        console.log('WITH_ADDRESS //--------------------------' );
+        const orderAllSupByIdOrder =
+          await this.ordersSupplierService.findOrderSupByIdOrder(
+            createOrderDto,
+          );
+        const createGoodsOrderSup =
+          await this.ordersSupplierService.createOrderSupGoods({
+            ...createOrderDto,
+            storage_index: createOrderDto?.id_storage,
+            price_wholesale: createOrderDto.price_wholesale,
+            order_sup_index: +orderAllSupByIdOrder[0].id_order_sup,
+            id_order_sup: orderAllSupByIdOrder[0].id_order_sup,
+          });
+        await this.ordersSupplierService.addGoodsToOrderSup({
+          ...createOrderDto,
+          order_sup_index: +orderAllSupByIdOrder[0].id_order_sup,
+          id_order_sup: +orderAllSupByIdOrder[0].id_order_sup,
+          id_order_sup_storage: createGoodsOrderSup.id_order_sup_storage,
+        });
+        const requestSup = await this.telegramService.sendMessage({
+          textMesssage: `Заявка №${orderAllSupByIdOrder[0].id_order_sup}, цікавить позиція: ${createOrderDto.full_name} - ${createOrderDto.quantity}/од., ${tyreIfExist.country.country_manufacturer_ua ?? ''} ${tyreIfExist.year.manufacture_year ?? ''} ціна: ${createOrderDto.price_wholesale} грн. Актуально? Є в наявності?`,
+          userReceiver: getSupplier.address,
+        });
+        if (requestSup) {
+          await this.commentsService.createCommentNew({
+            id_user: 1,
+            comments: `Заявка №${orderAllSupByIdOrder[0].id_order_sup}, позиція: ${createOrderDto.full_name} - ${createOrderDto.quantity}/од., ${tyreIfExist.country.country_manufacturer_ua ?? ''} ${tyreIfExist.year.manufacture_year ?? ''} ціна: ${createOrderDto.price} грн. Уточнення відправлено (автоматично)`,
+            id_order: createOrderDto.id_order,
+            id_order_sup: null,
+          });
+          await this.commentsService.createCommentNew({
+            id_user: 1,
+            comments: `Заявка №${orderAllSupByIdOrder[0].id_order_sup}, позиція: ${createOrderDto.full_name} - ${createOrderDto.quantity}/од., ${tyreIfExist.country.country_manufacturer_ua ?? ''} ${tyreIfExist.year.manufacture_year ?? ''} ціна: ${createOrderDto.price_wholesale} грн. ${getSupplier.name}. Уточнення відправлено (автоматично)`,
+            id_order: null,
+            id_order_sup: orderAllSupByIdOrder[0].id_order_sup,
+          });
+          await this.ordersRepository.update(
+            { status: 'Уточнення' },
+            { where: {id_order: createOrderDto.id_order}},
+          );
+          await this.ordersSupplierService.updateOrderSupOne({
+            id_supplier: getSupplier.id_supplier,
+            id_contract: getSupplier.contract[0].id_contract,
+            status:'Уточнення',
+            id_order_sup: orderAllSupByIdOrder[0].id_order_sup,
+          });
+        }
+      }
+      if (getOrder.id_basket && 
+          getOrder.storage === 'Постачальник' &&
+          !getSupplier.address
+        ) {
+        console.log('NO_ADDRESS: //-----------------------//')
+        const orderAllSupByIdOrder =
+          await this.ordersSupplierService.findOrderSupByIdOrder(createOrderDto);
+        //console.log('ORDER_ALL_SUPBY_ID_ORDER: ', orderAllSupByIdOrder);
+        //console.log('ORDER_DTO: ', createOrderDto);
+        const createGoodsOrderSup =
+          await this.ordersSupplierService.createOrderSupGoods({
+            ...createOrderDto,
+            storage_index: createOrderDto?.id_storage,
+            price_wholesale: createOrderDto.price_wholesale,
+            order_sup_index: +orderAllSupByIdOrder[0].id_order_sup,
+            id_order_sup: +orderAllSupByIdOrder[0].id_order_sup,
+          });
+          //console.log('CREATE_SUP_GOODS: ', createGoodsOrderSup);
+        const addGoodsSup = await this.ordersSupplierService.addGoodsToOrderSup({
+          ...createOrderDto,
+          id: +createOrderDto.id,
+          id_supplier: +createOrderDto?.id_supplier,
+          full_name: createOrderDto.full_name,
+          category: createOrderDto.category,
+          //id_storage:+createOrderDto?.id_storage,
+          storage_index: +createOrderDto?.id_storage,
+          price_wholesale: +createOrderDto.price_wholesale,
+          order_sup_index: +orderAllSupByIdOrder[0].id_order_sup,
+          id_order_sup: +orderAllSupByIdOrder[0].id_order_sup,
+          id_order_sup_storage: createGoodsOrderSup.id_order_sup_storage,
+        });
+        //console.log('ADDED_SUP_GOODS: ', createGoodsOrderSup);
+        await orderAllSupByIdOrder[0].reload();
+        await this.ordersSupplierService.updateOrderSupOne({
+          id_supplier: getSupplier.id_supplier,
+          id_contract: getSupplier.contract[0].id_contract,
+          status:'Уточнення',
+          total_purchase_cost: orderAllSupByIdOrder[0]?.orders_sup_storage.reduce((sum: any, current: any) => sum + (current.price_wholesale * current.quantity),0),
+          id_order_sup: orderAllSupByIdOrder[0]?.id_order_sup,
+        });
+      }
+      
       return orderAddTyre;
     }
 
     if (wheelStock) {
       const orderAddWheel = await this.wheelStockOrder(createOrderDto);
+      if (
+        getOrder.id_basket &&
+        getOrder.storage === 'Постачальник' &&
+        getSupplier.address
+      ) {
+        console.log('WITH_ADDRESS //--------------//')
+        const orderAllSupByIdOrder =
+          await this.ordersSupplierService.findOrderSupByIdOrder(createOrderDto);
+        const createGoodsOrderSup =
+          await this.ordersSupplierService.createOrderSupGoods({
+            ...createOrderDto,
+            storage_index: +createOrderDto?.id_storage,
+            id_order_sup: orderAllSupByIdOrder[0].id_order_sup,
+          });
+        await this.ordersSupplierService.addGoodsToOrderSup({
+          ...createOrderDto,
+          id_order_sup: orderAllSupByIdOrder[0].id_order_sup,
+          id_order_sup_storage: createGoodsOrderSup.id_order_sup_storage,
+        });
+        const requestSup = await this.telegramService.sendMessage({
+          textMesssage: `Заявка №${orderAllSupByIdOrder[0].id_order_sup}, цікавить позиція: ${createOrderDto.full_name} - ${createOrderDto.quantity}/од., ${tyreIfExist.country.country_manufacturer_ua ?? ''} ${tyreIfExist.year.manufacture_year ?? ''} ціна: ${createOrderDto.price_wholesale} грн. Актуально? Є в наявності?`,
+          userReceiver: getSupplier.address,
+        });
+        if (requestSup) {
+          await this.commentsService.createCommentNew({
+            id_user: 1,
+            comments: `Заявка №${orderAllSupByIdOrder[0].id_order_sup}, позиція: ${createOrderDto.full_name} - ${createOrderDto.quantity}/од., ${tyreIfExist.country.country_manufacturer_ua ?? ''} ${tyreIfExist.year.manufacture_year ?? ''} ціна: ${createOrderDto.price} грн. Уточнення відправлено (автоматично)`,
+            id_order: createOrderDto.id_order,
+            id_order_sup: null,
+          });
+          await this.commentsService.createCommentNew({
+            id_user: 1,
+            comments:  `Заявка №${orderAllSupByIdOrder[0].id_order_sup}, позиція: ${createOrderDto.full_name} - ${createOrderDto.quantity}/од., ${tyreIfExist.country.country_manufacturer_ua ?? ''} ${tyreIfExist.year.manufacture_year ?? ''} ціна: ${createOrderDto.price_wholesale} грн. Постач ${getSupplier.name}.Уточнення відправлено (автоматично)`,
+            id_order: null,
+            id_order_sup: orderAllSupByIdOrder[0].id_order_sup,
+          });
+          await this.ordersRepository.update(
+            { status: 'Уточнення' },
+            { where: {id_order: createOrderDto.id_order}},
+          );
+          await this.ordersSupplierService.updateOrderSupOne({
+            id_supplier: getSupplier.id_supplier,
+            id_contract: getSupplier.contract[0].id_contract,
+            status:'Уточнення',
+            id_order_sup: orderAllSupByIdOrder[0].id_order_sup,
+          });
+        }
+      }
+      if (getOrder.id_basket && 
+          getOrder.storage === 'Постачальник' &&
+          !getSupplier.address
+        ) {
+          console.log('NO_ADRESS //----------------------//')
+        const orderAllSupByIdOrder =
+          await this.ordersSupplierService.findOrderSupByIdOrder(createOrderDto);
+        const createGoodsOrderSup =
+          await this.ordersSupplierService.createOrderSupGoods({
+            ...createOrderDto,
+            storage_index: +createOrderDto?.id_storage,
+            price_wholesale: +createOrderDto.price_wholesale,
+            order_sup_index: orderAllSupByIdOrder[0].id_order_sup,
+          });
+        await this.ordersSupplierService.addGoodsToOrderSup({
+          ...createOrderDto,
+          id_order_sup: orderAllSupByIdOrder[0].id_order_sup,
+          id_order_sup_storage: createGoodsOrderSup.id_order_sup_storage,
+        });
+        await this.ordersSupplierService.updateOrderSupOne({
+          id_supplier: getSupplier.id_supplier,
+          id_contract: getSupplier.contract[0].id_contract,
+          status:'Уточнення',
+          id_order_sup: orderAllSupByIdOrder[0].id_order_sup,
+        });
+      }
+      
       return orderAddWheel;
     }
 
@@ -443,14 +658,6 @@ export class OrdersService {
     if (oilStock) {
       const orderAddOil = await this.oilStockOrder(createOrderDto);
       return orderAddOil;
-    }
-    if (createOrderDto.id_basket && getSupplier.address) {
-      const getOrdersId = await this.ordersRepository.findByPk(
-        createOrderDto.id_order,
-        { include: { all: true } },
-      );
-
-
     }
   }
 

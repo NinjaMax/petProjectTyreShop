@@ -253,7 +253,7 @@ const AdminOrderContent = (
             data-value={filteredOrder![index].id_order}>
             <div>{filteredOrder![index].id_order}</div>
             <div>{new Date(filteredOrder![index].createdAt).toLocaleString()}</div>
-            <div>{filteredOrder![index]?.customer.name}</div>
+            <div>{filteredOrder![index]?.customer?.name}</div>
             <div>{filteredOrder![index]?.storage}</div>
             <div>{filteredOrder![index]?.mix_store}</div>
             <div>{filteredOrder![index]?.total_cost}</div>
@@ -269,29 +269,39 @@ const AdminOrderContent = (
                 <button className='basketAdmGoods'
                     value={filteredOrder![index].id_order}
                     onClick={activeFormOrderSup}>
-                    <i className="fas fa-truck-loading"></i>
+                    <i className="fas fa-truck-loading"
+                        title='Створити Замовлення Постачальника'
+                    ></i>
                 </button>
                 <button className='editAdmGoods'
                     name='editOrder'
                     value={filteredOrder![index].id_order}
                     onClick={createSaleOrder}
                 >
-                    <i className="fas fa-clipboard-check"></i>
+                    <i className="fas fa-clipboard-check"
+                        title='Створити продажу'
+                    ></i>
                 </button>
                 <button className='editAdmGoods'
                     name='editOrder'
                     value={filteredOrder![index].id_order}
                     onClick={showOrderData}>
-                    <i className="fas fa-edit"></i>
+                    <i className="fas fa-edit"
+                        title='Редагувати'
+                    ></i>
                 </button>
 
                 <button className='closeAdmGoods'
                     value={filteredOrder![index].id_order}>
-                    <i className="fa fa-remove"></i>
+                    <i className="fa fa-remove"
+                        title='Видалити'
+                    ></i>
                 </button>                  
             </div>
         </div>    
     );
+    
+    console.log('ORDERS: ', filteredOrder);
 
     return (
         <div  onClick={inputCancelHandler}>

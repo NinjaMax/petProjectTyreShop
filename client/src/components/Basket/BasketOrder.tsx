@@ -107,7 +107,7 @@ const BasketOrder = observer(() => {
             taskGetSupplier[i]?.id_supplier
         );
         dataSupCity.push(getCitySup.city_ua);
-        let citySupNovaPoshta = await getCityNovaPoshta(getCitySup.city_ua);
+        let citySupNovaPoshta = await getCityNovaPoshta(getCitySup.city_ua ?? 'Київ');
         let citySupDelivery = await getCityDelivery(getCitySup.city_ua ?? 'Київ');
         if (depart?.delivery === 'Нова Пошта') {
             let dataSupByCity = citySupNovaPoshta?.data[0]?.Addresses.find(
@@ -186,6 +186,7 @@ const BasketOrder = observer(() => {
         }
         if (taskGetSupplier[i] && dataSupplier && depart?.delivery === 'Нова Пошта') {
             let getCalcNovaPoshta = await getCalcPriceNovaPoshta(dataSupplier);
+            console.log('getCalcNovaPoshta: ', getCalcNovaPoshta.data);
             if (getCalcNovaPoshta.success === true) {
                 setCostNovaPoshta(oldCalc => { 
                 return [...oldCalc!,
@@ -283,7 +284,7 @@ const BasketOrder = observer(() => {
             }
             });
             setPayMethod('Карта/Терминал (LiqPay)');
-            setCommitionPay((Number((sumGoods! * 0.015).toFixed())));
+            //setCommitionPay((Number((sumGoods! * 0.015).toFixed())));
         }
         if (!isMounted && costNovaPoshta && delivery === 'Нова Пошта') {
             setDeliverySum(Number(
@@ -563,7 +564,7 @@ const BasketOrder = observer(() => {
             console.log('CHOOSE_DELIVERY: ', deliverySelect);
             // if (deliverySelect === "Нова Пошта" || 
             //     deliverySelect === "Делівері") {
-            if (deliverySelect !== "Самовивіз") {
+            if (deliverySelect === "Нова Пошта" || deliverySelect === "Делівері") {
                 console.log('CALCULATE_DELIVERY')
                 basketSupplierGoods(updateBasketDelivery?.data, updateBasketDelivery?.data.pay_view);
             }
@@ -581,7 +582,7 @@ const BasketOrder = observer(() => {
             setPayMethod(e.currentTarget.getAttribute('data-select'));
             if (e.currentTarget.getAttribute('data-select') !== 'Зворотній платіж (Післяплата)' || 
             e.currentTarget.getAttribute('data-select') !== 'Готівкою') {
-                setCommitionPay((Number((sumGoods! * 0.015).toFixed())));
+                //setCommitionPay((Number((sumGoods! * 0.015).toFixed())));
                 const updateBasketPay = await updateBasket(
                 {...basketData,
                     pay_view: e.currentTarget.getAttribute('data-select'),
@@ -843,6 +844,7 @@ const BasketOrder = observer(() => {
                     });
                     basketData?.basket_storage?.forEach( async(item: CreateGoods):Promise<any> => {
                         let goodsToOrder = await createGoodsToOrderBasket(item, createOrder?.data?.id_order!); 
+                        console.log('ADD_GOODS_TO_ORDER: ', goodsToOrder)
                         await addGoodsToOrder(goodsToOrder);
                     });
                     if(createOrder?.data?.id_order) {

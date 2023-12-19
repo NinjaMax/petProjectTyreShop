@@ -15,8 +15,8 @@ import { UsersModule } from '../users/users.module';
 import { CustomersModule } from '../customers/customers.module';
 import { SuppliersModule } from '../suppliers/suppliers.module';
 import { OrdersSuppliersModule } from '../orders-suppliers/orders-suppliers.module';
-import { OrdersSuppliersService } from 'src/orders-suppliers/orders-suppliers.service';
-import { OrdersSupplier } from '../orders-suppliers/entities/orders-supplier.model';
+import { TelegramApiModule } from '../telegram-api/telegram-api.module';
+import { CommentsModule } from '../comments/comments.module';
 
 @Module({
   controllers: [OrdersController],
@@ -32,7 +32,8 @@ import { OrdersSupplier } from '../orders-suppliers/entities/orders-supplier.mod
     AuthModule,
     CustomersModule,
     SuppliersModule,
-    //OrdersSuppliersModule,
+    TelegramApiModule,
+    forwardRef(() => CommentsModule),
     forwardRef(() => OrdersSuppliersModule),
   ],
   exports: [OrdersService, OrdersStorageService],

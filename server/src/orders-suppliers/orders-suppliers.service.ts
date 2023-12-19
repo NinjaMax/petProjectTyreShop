@@ -152,10 +152,10 @@ export class OrdersSuppliersService {
 
   async addGoodsToOrderSup(createOrdersSupplierDto: CreateOrdersSupplierDto) {
     //try {
-      const findByOrderSup =
-        await this.ordersSupStorageService.findOrdersSupStorageByOrdSup(
-          createOrdersSupplierDto,
-        );
+      // const findByOrderSup =
+      //   await this.ordersSupStorageService.findOrdersSupStorageByOrdSup(
+      //     createOrdersSupplierDto,
+      //   );
       const findAllByIdOrderSup =
         await this.ordersSupStorageService.findAllOrdersSupStorageByOrdSup(
           createOrdersSupplierDto,
@@ -354,6 +354,46 @@ export class OrdersSuppliersService {
         },
       );
       const updateOrdersSup = this.ordersSupRepository.findByPk(updateOrdersSupplierDto.id_order_sup);
+      
+      return updateOrdersSup;
+    // } catch {
+    //   throw new HttpException(
+    //     'Data is incorrect and must be uniq',
+    //     HttpStatus.NOT_FOUND,
+    //   );
+    // }
+  }
+
+  async updateOrderSupOne(item: any) {
+    //try {
+      await this.ordersSupRepository.update(
+        {
+          id: item.id,
+          id_order_sup: item.id_order_sup,
+          storage: item.storage,
+          organisation: item.organisation,
+          total_cost: item.total_cost,
+          total_purchase_cost: item.total_purchase_cost,
+          delivery_cost: item.delivery_cost,
+          commission_cost: item.commission_cost,
+          status: item.status,
+          order_view: item.order_view,
+          delivery: item.delivery,
+          status_delivery: item.status_delivery,
+          delivery_ttn: item.delivery_ttn,
+          pay_view: item.pay_view,
+          status_pay: item.status_pay,
+          notes: item.notes,
+          id_supplier: item.id_supplier,
+          id_contract: item.id_contract,
+        },
+        {
+          where: {
+            id_order_sup: item.id_order_sup,
+          },
+        },
+      );
+      const updateOrdersSup = this.ordersSupRepository.findByPk(item.id_order_sup);
       
       return updateOrdersSup;
     // } catch {

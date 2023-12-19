@@ -8,25 +8,21 @@ import { Contract } from './entities/contract.model';
 @Injectable()
 export class ContractService {
 
-  constructor(@InjectModel(Contract) private contractRepository: typeof Contract
+  constructor(
+    @InjectModel(Contract) private contractRepository: typeof Contract,
   ) {}
 
-  async createContract( createContractDto:CreateContractDto ) {
-
-     try {
-
+  async createContract(createContractDto: CreateContractDto) {
+    //try {
       const contractNew = await this.contractRepository.create(createContractDto);
       contractNew.name = createContractDto.name + " Основний договір";
       contractNew.save();
-
+      console.log('NEW_CONTRACT: ', contractNew)
       return contractNew;
 
-    } catch (error) {
-
-      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
-
-    }
-  
+    // } catch (error) {
+    //   throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
+    // }
   }
 
   async createContractFromPrice(id_supplier: number, name: string) {

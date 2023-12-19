@@ -164,11 +164,16 @@ const addGoodsToOrder = async (value: IRestAdminApi) =>
 await $hostPost.post('/orders/add', {
     id_order_storage: value?.id_order_storage,
     id: value.id,
+    full_name:value?.full_name,
+    category: value?.category,
+    price_wholesale: value?.price_wholesale,
     id_supplier: value.id_supplier,
     id_order: value?.order_index,
     id_storage: value.storage_index,
     quantity: value.quantity,
-    price: value.price
+    price: value.price,
+    ref_diameter: value?.ref_diameter,
+    ref_weight: value?.ref_weight,
 })
 .catch(error => {
     console.log(

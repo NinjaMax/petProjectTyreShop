@@ -70,6 +70,62 @@ export class CommentsService {
     // }
   }
 
+  async createCommentNew(
+    item
+    : any
+    
+   //{
+    //id_user: number,
+    //comments: string,
+    //id_order: number,
+    //id_order_sup: number,
+   //}
+  ) {
+    //try {
+    const user = await this.usersService.findUserById(item);
+    const order = await this.ordersService.findOrderById(item);
+    const orderSup = await this.orderSuppliersService.findOrderSupById(item);
+
+      if (user && order) {
+        const commentOrder = await this.commentsRepository.create(item);
+        await user.$add('comments', [commentOrder.id_comment]);
+        await order.$add('comments', [commentOrder.id_comment]);
+
+        user.comments.push(commentOrder);
+        order.comments.push(commentOrder);
+        const findCommentOrder = await this.commentsRepository.findByPk(
+          commentOrder.id_comment,
+          { include: { all: true } },
+        );
+
+        return findCommentOrder;
+      }
+
+      if (user && orderSup) {
+        const commentOrderSup:any = await this.commentsRepository.create(item);
+        await user.$add('comments', [commentOrderSup.id_comment]);
+        await orderSup.$add('comments', [commentOrderSup.id_comment]);
+        user.comments.push(commentOrderSup);
+        orderSup.comments.push(commentOrderSup);
+        const findCommentOrderSup = await this.commentsRepository.findByPk(
+          commentOrderSup.id_comment,
+          { include: { all: true } },
+        );
+
+        return findCommentOrderSup;
+      }
+      return new HttpException(
+        `Data user "User ID or Order ID" is incorrect or not found`,
+        HttpStatus.NOT_FOUND,
+      );
+    // } catch {
+    //   throw new HttpException(
+    //     'Data is incorrect and must be uniq',
+    //     HttpStatus.NOT_FOUND,
+    //   );
+    // }
+  }
+
   async findAllComments() {
     try {
       const commentsAll = await this.commentsRepository.findAll({

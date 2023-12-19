@@ -37,9 +37,7 @@ export class CustomersService {
       const contractCustomer = await this.contractService.createContract(
         createCustomerDto,
       );
-
       await customer.$add('contract', contractCustomer);
-
       await customer.reload();
 
       return customer;
@@ -89,7 +87,7 @@ export class CustomersService {
   }
 
   async findOrCreateCustomer(getCustomerDto: GetCustomerDto) {
-    try {
+    //try {
       const createPass = {
         password: await argon2.hash(String(getCustomerDto.phone)),
       };
@@ -111,7 +109,7 @@ export class CustomersService {
           name: getCustomerDto.name,
           phone: getCustomerDto.phone,
           full_name: getCustomerDto.full_name,
-          picture:  getCustomerDto.picture,
+          picture: getCustomerDto.picture,
           delivery_city_ref: getCustomerDto.ref_city_delivery,
           delivery_dep: getCustomerDto.delivery_dep,
           delivery_dep_ref: getCustomerDto.delivery_dep_ref,
@@ -121,20 +119,23 @@ export class CustomersService {
         const contractNewCustomer = await this.contractService.createContract(
           getCustomerDto,
         );
+        console.log('CONTRACT CREATED', contractNewCustomer);
+        console.log('CUSTOMER CREATED', customerFindCreate);
         await customerFindCreate.$add('contract', contractNewCustomer);
         await customerFindCreate.reload();
 
         return customerFindCreate;
 
       } else {
+        console.log('CUSTOMER FOUND: ', customerFindCreate);
         return customerFindCreate;
       }
-    } catch {
-      throw new HttpException(
-        'Data Customer Email is incorrect or Not Found',
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    // } catch {
+    //   throw new HttpException(
+    //     'Data Customer Email is incorrect or Not Found',
+    //     HttpStatus.NOT_FOUND,
+    //   );
+    // }
   }
 
   async findAllCustomer() {

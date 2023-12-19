@@ -81,4 +81,9 @@ export class CreateOrderDto {
   readonly ref_diameter: string;
   readonly weight: string;
   readonly ref_weight: string;
+  readonly id_order_sup_storage: number; 
+  readonly order_sup_index: number; 
+  readonly order_sup: number; 
+  readonly total_purchase_cost: number;
+  readonly id_order_sup: number;
 }
