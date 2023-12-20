@@ -5,11 +5,16 @@ export type ISupplierItem = {
     //customer:{full_name: string;}
     name: string;
     city: string;
+    city_ua: string;
     delivery: string;
     phone: string;
     email: string;
     id_user: number;
     notes: string;
+    address: string;
+    delivery_city_ref: string[];
+    delivery_dep: string[];
+    delivery_dep_ref: string[];
     //balance: number;
     //id_contract: number | string;
     contract: [

@@ -252,15 +252,12 @@ export class OrdersService {
       await stockTyreExists.increment('reserve', {
         by: newReserveTyre || createOrderDto.quantity,
       });
-      //await stockTyreExists.reload();
       await orderStorageIdTyre.increment('reserve', {
         by: newReserveTyre || createOrderDto.quantity,
       });
-      //await orderStorageIdTyre.reload();
       await orderIdTyre.$add('order_storage', orderStorageIdTyre);
       await storageTyreStorage.$add('order_storage', orderStorageIdTyre);
     }
-    //oilStock = null;
     await orderIdTyre.reload();
 
     return orderIdTyre;
@@ -309,15 +306,12 @@ export class OrdersService {
       await stockWheelExists.increment('reserve', {
         by: newReserveWheel || createOrderDto.quantity,
       });
-      //await stockWheelExists.reload();
       await orderStorageIdWheel.increment('reserve', {
         by: newReserveWheel || createOrderDto.quantity,
       });
-      //await orderStorageIdWheel.reload();
       await orderIdWheel.$add('order_storage', orderStorageIdWheel);
       await storageStorageWheel.$add('order_storage', orderStorageIdWheel);
     }
-    //oilStock = null;
     await orderIdWheel.reload();
     return orderIdWheel;
   }
@@ -367,15 +361,12 @@ export class OrdersService {
       await stockBatteryExists.increment('reserve', {
         by: newReserveBattery || createOrderDto.quantity,
       });
-      //await stockBatteryExists.reload();
       await orderStorageIdBattery.increment('reserve', {
         by: newReserveBattery || createOrderDto.quantity,
       });
-      //await orderStorageIdBattery.reload();
       await orderIdBattery.$add('order_storage', orderStorageIdBattery);
       await storageStorageBattery.$add('order_storage', orderStorageIdBattery);
     }
-    //oilStock = null;
     await orderIdBattery.reload();
     return orderIdBattery;
     // } catch {
@@ -429,16 +420,12 @@ export class OrdersService {
       await stockOilExists.increment('reserve', {
         by: newReserveOil || createOrderDto.quantity,
       });
-      //await stockOilExists.reload();
       await orderStorageIdOil.increment('reserve', {
         by: newReserveOil || createOrderDto.quantity,
       });
-      //await orderStorageIdOil.reload();
       await orderIdOil.$add('order_storage', orderStorageIdOil);
       await storageStorageOil.$add('order_storage', orderStorageIdOil);
     }
-    //oilStock = null;
-
     await orderIdOil.reload();
     return orderIdOil;
     // } catch {
@@ -471,13 +458,11 @@ export class OrdersService {
     );
     if (tyreStock) {
       const orderAddTyre = await this.tyreStockOrder(createOrderDto);
-      //console.log('ORDER_ADD_STOCK: ', tyreStock);
       if (
         getOrder.id_basket &&
         getOrder.storage === 'Постачальник' &&
         getSupplier.address
       ) {
-        console.log('WITH_ADDRESS //--------------------------' );
         const orderAllSupByIdOrder =
           await this.ordersSupplierService.findOrderSupByIdOrder(
             createOrderDto,
@@ -532,8 +517,6 @@ export class OrdersService {
         console.log('NO_ADDRESS: //-----------------------//')
         const orderAllSupByIdOrder =
           await this.ordersSupplierService.findOrderSupByIdOrder(createOrderDto);
-        //console.log('ORDER_ALL_SUPBY_ID_ORDER: ', orderAllSupByIdOrder);
-        //console.log('ORDER_DTO: ', createOrderDto);
         const createGoodsOrderSup =
           await this.ordersSupplierService.createOrderSupGoods({
             ...createOrderDto,
@@ -542,21 +525,18 @@ export class OrdersService {
             order_sup_index: +orderAllSupByIdOrder[0].id_order_sup,
             id_order_sup: +orderAllSupByIdOrder[0].id_order_sup,
           });
-          //console.log('CREATE_SUP_GOODS: ', createGoodsOrderSup);
-        const addGoodsSup = await this.ordersSupplierService.addGoodsToOrderSup({
+        await this.ordersSupplierService.addGoodsToOrderSup({
           ...createOrderDto,
           id: +createOrderDto.id,
           id_supplier: +createOrderDto?.id_supplier,
           full_name: createOrderDto.full_name,
           category: createOrderDto.category,
-          //id_storage:+createOrderDto?.id_storage,
           storage_index: +createOrderDto?.id_storage,
           price_wholesale: +createOrderDto.price_wholesale,
           order_sup_index: +orderAllSupByIdOrder[0].id_order_sup,
           id_order_sup: +orderAllSupByIdOrder[0].id_order_sup,
           id_order_sup_storage: createGoodsOrderSup.id_order_sup_storage,
         });
-        //console.log('ADDED_SUP_GOODS: ', createGoodsOrderSup);
         await orderAllSupByIdOrder[0].reload();
         await this.ordersSupplierService.updateOrderSupOne({
           id_supplier: getSupplier.id_supplier,
@@ -569,7 +549,6 @@ export class OrdersService {
       
       return orderAddTyre;
     }
-
     if (wheelStock) {
       const orderAddWheel = await this.wheelStockOrder(createOrderDto);
       if (
@@ -604,7 +583,7 @@ export class OrdersService {
           });
           await this.commentsService.createCommentNew({
             id_user: 1,
-            comments:  `Заявка №${orderAllSupByIdOrder[0].id_order_sup}, позиція: ${createOrderDto.full_name} - ${createOrderDto.quantity}/од., ${tyreIfExist.country.country_manufacturer_ua ?? ''} ${tyreIfExist.year.manufacture_year ?? ''} ціна: ${createOrderDto.price_wholesale} грн. Постач ${getSupplier.name}.Уточнення відправлено (автоматично)`,
+            comments:  `Заявка №${orderAllSupByIdOrder[0].id_order_sup}, позиція: ${createOrderDto.full_name} - ${createOrderDto.quantity}/од., ${tyreIfExist.country.country_manufacturer_ua ?? ''} ${tyreIfExist.year.manufacture_year ?? ''} ціна: ${createOrderDto.price_wholesale} грн. ${getSupplier.name}. Уточнення відправлено (автоматично)`,
             id_order: null,
             id_order_sup: orderAllSupByIdOrder[0].id_order_sup,
           });
@@ -616,6 +595,7 @@ export class OrdersService {
             id_supplier: getSupplier.id_supplier,
             id_contract: getSupplier.contract[0].id_contract,
             status:'Уточнення',
+            total_purchase_cost: orderAllSupByIdOrder[0]?.orders_sup_storage.reduce((sum: any, current: any) => sum + (current.price_wholesale * current.quantity),0),
             id_order_sup: orderAllSupByIdOrder[0].id_order_sup,
           });
         }
@@ -643,18 +623,17 @@ export class OrdersService {
           id_supplier: getSupplier.id_supplier,
           id_contract: getSupplier.contract[0].id_contract,
           status:'Уточнення',
+          total_purchase_cost: orderAllSupByIdOrder[0]?.orders_sup_storage.reduce((sum: any, current: any) => sum + (current.price_wholesale * current.quantity),0),
           id_order_sup: orderAllSupByIdOrder[0].id_order_sup,
         });
       }
       
       return orderAddWheel;
     }
-
     if (batteryStock) {
       const orderAddBattery = await this.batteryStockOrder(createOrderDto);
       return orderAddBattery;
     }
-
     if (oilStock) {
       const orderAddOil = await this.oilStockOrder(createOrderDto);
       return orderAddOil;
@@ -667,7 +646,6 @@ export class OrdersService {
         updateOrderDto.id_order,
         { include: { all: true } },
       );
-
       if (ordersId) {
         await this.ordersRepository.update(
           {
@@ -698,6 +676,7 @@ export class OrdersService {
           { where: { id_order: updateOrderDto.id_order } },
         );
         await ordersId.reload();
+        
         return ordersId;
       }
     } catch {

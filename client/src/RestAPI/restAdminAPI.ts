@@ -2,6 +2,7 @@
 //import axios from "axios";
 import { $hostGet, $hostPost, $hostPostUpload } from "./index";
 import { IRestAdminApi } from "./interfaces/restAdmin.interface";
+import { SupplierCreate } from "./types/createSupplier.type";
 
 const createGoodsToOrder = async (
     item:IRestAdminApi, id_order: number) => 
@@ -147,6 +148,19 @@ await $hostPost.post('/sales', data)
 .catch(error => {
     console.log(error);
 });
+
+const createSupplier = async (data: SupplierCreate) => 
+await $hostPost.post('/suppliers', data)
+.catch((error: any) => {
+    console.log('Помилка не вірно вказанні данні або інша помилка',error);
+});
+
+const createContract = async (data: any) => 
+await $hostPost.post('/contract/new', data)
+.catch((error: any) => {
+    console.log('Помилка не вірно вказанні данні або інша помилка',error);
+});
+
 
 const addGoodsToSaleOrder = async (data: any) => 
 await $hostPost.post('/sales/add', data)
@@ -472,5 +486,7 @@ export {
     getStorageAll,
     requestToSupplier,
     createToSaleOrder,
-    addGoodsToSaleOrder
+    addGoodsToSaleOrder,
+    createSupplier,
+    createContract
 };

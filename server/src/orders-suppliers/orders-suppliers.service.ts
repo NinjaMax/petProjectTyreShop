@@ -151,7 +151,7 @@ export class OrdersSuppliersService {
   }
 
   async addGoodsToOrderSup(createOrdersSupplierDto: CreateOrdersSupplierDto) {
-    //try {
+    try {
       // const findByOrderSup =
       //   await this.ordersSupStorageService.findOrdersSupStorageByOrdSup(
       //     createOrdersSupplierDto,
@@ -173,12 +173,12 @@ export class OrdersSuppliersService {
         await orderSup.reload();
         return orderSup;
        }
-    // } catch {
-    //   throw new HttpException(
-    //     'Data is incorrect and must be uniq',
-    //     HttpStatus.NOT_FOUND,
-    //   );
-    // }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async addGoodsToStock(createOrdersSupplierDto: CreateOrdersSupplierDto) {

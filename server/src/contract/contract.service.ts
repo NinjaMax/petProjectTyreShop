@@ -13,20 +13,39 @@ export class ContractService {
   ) {}
 
   async createContract(createContractDto: CreateContractDto) {
-    //try {
-      const contractNew = await this.contractRepository.create(createContractDto);
+    try {
+      const contractNew = await this.contractRepository.create(
+        createContractDto,
+      );
       contractNew.name = createContractDto.name + " Основний договір";
       contractNew.save();
-      console.log('NEW_CONTRACT: ', contractNew)
-      return contractNew;
 
-    // } catch (error) {
-    //   throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
-    // }
+      return contractNew;
+    } catch (error) {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async createContractNew(createContractDto: CreateContractDto) {
+    try {
+      const contractNewAdd = await this.contractRepository.create(
+        createContractDto,
+      );
+
+      return contractNewAdd;
+    } catch (error) {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async createContractFromPrice(id_supplier: number, name: string) {
-    //try {
+    try {
       const findContract = await this.contractRepository.findOne({
         where: { id_supplier: +id_supplier }
       });
@@ -37,54 +56,60 @@ export class ContractService {
         contractPrice.name = name + " Основний договір";
         await contractPrice.$set('supplier', id_supplier);
         await contractPrice.save();
-        
+
         return contractPrice; 
       }
-    // } catch (error) {
-    //   throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
-    // }
+    } catch (error) {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async findAllContract() {
     try {
-      const contractAll = await this.contractRepository.findAll({include: {all: true}});
+      const contractAll = await this.contractRepository.findAll({
+        include: { all: true },
+      });
 
       return contractAll;
-
     } catch (error) {
-
-      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
   async findContractById(getContractDto: GetContractDto) {
-
     try {
-
-      const contractById = await this.contractRepository.findByPk(getContractDto.id_contract, {include: {all: true}});
+      const contractById = await this.contractRepository.findByPk(
+        getContractDto.id_contract,
+        { include: { all: true } },
+      );
 
       return contractById;
-
     } catch (error) {
-
-      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
   async findAllContractByCustomer(getContractDto: GetContractDto) {
-
     try {
-
-      const contractByCustomer = await this.contractRepository.findAll({where: {id_customer: getContractDto.id_customer}});
+      const contractByCustomer = await this.contractRepository.findAll({
+        where: { id_customer: getContractDto.id_customer },
+      });
 
       return contractByCustomer;
-
     } catch (error) {
-
-      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
@@ -93,17 +118,17 @@ export class ContractService {
   }
 
   async removeContract(getContractDto: GetContractDto) {
-
     try {
-
-      const contractRemove = await this.contractRepository.destroy({where: {id_contract: getContractDto.id_contract}});
+      const contractRemove = await this.contractRepository.destroy({
+        where: { id_contract: getContractDto.id_contract },
+      });
 
       return contractRemove;
-
     } catch (error) {
-
-      throw new HttpException('Data is incorrect or Not Found', HttpStatus.NOT_FOUND);
-
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 }

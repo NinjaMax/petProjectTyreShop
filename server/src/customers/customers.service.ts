@@ -8,7 +8,6 @@ import { Customer } from './entities/customer.model';
 import * as argon2 from 'argon2';
 import { Op } from 'sequelize';
 import { Contract } from '../contract/entities/contract.model';
-import path from 'path';
 
 @Injectable()
 export class CustomersService {
@@ -31,7 +30,7 @@ export class CustomersService {
         picture: createCustomerDto.picture,
         delivery_city_ref: createCustomerDto.ref_city_delivery,
         delivery_dep: createCustomerDto.delivery_dep,
-        delivery_dep_ref: createCustomerDto.delivery_dep_ref
+        delivery_dep_ref: createCustomerDto.delivery_dep_ref,
       });
 
       const contractCustomer = await this.contractService.createContract(
@@ -57,11 +56,8 @@ export class CustomersService {
   ) {
     try {
       const customer = await this.customersRepository.create({
-        //id_customer: createCustomerDto.id_customer,
         password: password,
         email: createCustomerDto.email,
-        // id_contract: createCustomerDto.id_contract,
-        // balance: createCustomerDto.balance,
         name: createCustomerDto.name,
         phone: phone,
         full_name: createCustomerDto.full_name,
@@ -77,6 +73,7 @@ export class CustomersService {
         customer.id_customer,
         { include: [Contract] },
       );
+
       return newCustomerByEmail;
     } catch {
       throw new HttpException(
@@ -87,55 +84,51 @@ export class CustomersService {
   }
 
   async findOrCreateCustomer(getCustomerDto: GetCustomerDto) {
-    //try {
+    try {
       const createPass = {
         password: await argon2.hash(String(getCustomerDto.phone)),
       };
       const [customerFindCreate, created] =
         await this.customersRepository.findOrCreate({
-        where: {
-          [Op.or]: [
-            { email: getCustomerDto.email ?? 'mail@example.com' },
-            { name: getCustomerDto.name },
-            { phone: getCustomerDto.phone},
-          ],
-        },
-        include: [Contract],
-        defaults: {
-          password: createPass.password,
-          email: getCustomerDto.email,
-          address: getCustomerDto.address,
-          delivery: getCustomerDto.delivery,
-          name: getCustomerDto.name,
-          phone: getCustomerDto.phone,
-          full_name: getCustomerDto.full_name,
-          picture: getCustomerDto.picture,
-          delivery_city_ref: getCustomerDto.ref_city_delivery,
-          delivery_dep: getCustomerDto.delivery_dep,
-          delivery_dep_ref: getCustomerDto.delivery_dep_ref,
-        }
-      });
+          where: {
+            [Op.or]: [
+              { email: getCustomerDto.email ?? 'mail@example.com' },
+              { name: getCustomerDto.name },
+              { phone: getCustomerDto.phone },
+            ],
+          },
+          include: [Contract],
+          defaults: {
+            password: createPass.password,
+            email: getCustomerDto.email,
+            address: getCustomerDto.address,
+            delivery: getCustomerDto.delivery,
+            name: getCustomerDto.name,
+            phone: getCustomerDto.phone,
+            full_name: getCustomerDto.full_name,
+            picture: getCustomerDto.picture,
+            delivery_city_ref: getCustomerDto.ref_city_delivery,
+            delivery_dep: getCustomerDto.delivery_dep,
+            delivery_dep_ref: getCustomerDto.delivery_dep_ref,
+          },
+        });
       if (created) {
         const contractNewCustomer = await this.contractService.createContract(
           getCustomerDto,
         );
-        console.log('CONTRACT CREATED', contractNewCustomer);
-        console.log('CUSTOMER CREATED', customerFindCreate);
         await customerFindCreate.$add('contract', contractNewCustomer);
         await customerFindCreate.reload();
 
         return customerFindCreate;
-
       } else {
-        console.log('CUSTOMER FOUND: ', customerFindCreate);
         return customerFindCreate;
       }
-    // } catch {
-    //   throw new HttpException(
-    //     'Data Customer Email is incorrect or Not Found',
-    //     HttpStatus.NOT_FOUND,
-    //   );
-    // }
+    } catch {
+      throw new HttpException(
+        'Data Customer Email is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async findAllCustomer() {
@@ -171,9 +164,9 @@ export class CustomersService {
 
   async findCustomerByIdParams(id_customer: number) {
     try {
-      const customerId = await this.customersRepository.findByPk(id_customer, 
-        { include: { all: true }}
-      );
+      const customerId = await this.customersRepository.findByPk(id_customer, {
+        include: { all: true },
+      });
 
       return customerId;
     } catch {
@@ -187,8 +180,8 @@ export class CustomersService {
   async findCustomerByPhone(getCustomerDto: GetCustomerDto) {
     try {
       const customerByPhone = await this.customersRepository.findOne({
-        where: { phone: getCustomerDto.phone}, 
-        include: [Contract]
+        where: { phone: getCustomerDto.phone },
+        include: [Contract],
       });
 
       return customerByPhone;
@@ -204,7 +197,7 @@ export class CustomersService {
     try {
       const customerByEmail = await this.customersRepository.findOne({
         where: { email: getCustomerDto.email },
-        include: [Contract]
+        include: [Contract],
       });
 
       return customerByEmail;
@@ -225,8 +218,9 @@ export class CustomersService {
             { name: getCustomerDto.name },
           ],
         },
-        include: [Contract]
+        include: [Contract],
       });
+
       return customerByEmail;
     } catch {
       throw new HttpException(
@@ -242,7 +236,6 @@ export class CustomersService {
         updateCustomerDto.id_customer,
         { include: { all: true } },
       );
-
       if (customerId) {
         await this.customersRepository.update(
           {
@@ -257,11 +250,9 @@ export class CustomersService {
             delivery_city_ref: updateCustomerDto.ref_city_delivery,
             delivery_dep: updateCustomerDto.delivery_dep,
             delivery_dep_ref: updateCustomerDto.delivery_dep_ref,
-            //update_date : updateTyreDto.update_date
           },
           { where: { id_customer: customerId.id_customer } },
         );
-
         customerId.save();
 
         return customerId;

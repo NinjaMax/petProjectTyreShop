@@ -13,13 +13,18 @@ export class ContractController {
     return this.contractService.createContract(createContractDto);
   }
 
+  @Post('/new')
+  createNewContract(@Body() createContractDto: CreateContractDto) {
+    return this.contractService.createContractNew(createContractDto);
+  }
+
   @Get()
   findAllContract() {
     return this.contractService.findAllContract();
   }
 
   @Get('/id')
-  findContractById( getContractDto: GetContractDto) {
+  findContractById(getContractDto: GetContractDto) {
     return this.contractService.findContractById(getContractDto);
   }
 

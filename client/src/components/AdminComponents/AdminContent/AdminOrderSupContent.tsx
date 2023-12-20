@@ -20,7 +20,6 @@ const AdminOrderSupContent = (
         showComment
     }: IOrderSupContent) => {
     const [activeOrderSup, setActiveOrderSup] = useState(false);
-    //const [activeOrderSup, setActiveOrderSup] = useState(false);
     const [orderSupData, setOrderSupData] = useState(null);
     const [filterOrderSup, setFilterOrderSup] = useState<any[] | null>(ordersSup);
     const [value, setValue] = useState('');
@@ -103,23 +102,23 @@ const AdminOrderSupContent = (
             setActiveOrderSup(!activeOrderSup);
             showComment(e);
         }
-    }
+    };
 
     const itemClickHandler = (e: any) => {
         const entity = e.target.textContent.split(':')
         setValue(entity[1]);
         setIsSearch(!isSearch);
-    }
+    };
 
     const inputHandler = () => {
         setIsSearch(true);
-    }
+    };
 
     const inputCancelHandler = () => {
         if(isSearch){
            setIsSearch(false); 
         }
-    }
+    };
 
     const sortOrderSup = (e: any) => {
         if (e.target.textContent === 'Код') {
@@ -232,7 +231,7 @@ const AdminOrderSupContent = (
             )
             setFilterOrderSup(sortByUser);
         }
-    }
+    };
 
     const orderSupRowTable = ({index, style}: any) => (
         <div className='admOrderSupGridItem' style={style}
