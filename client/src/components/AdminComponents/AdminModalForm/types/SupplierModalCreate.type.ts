@@ -4,4 +4,5 @@ export type SupplierModalCreate = {
     active: boolean;
     setActive(arg0: any):void;
     dataSupplier?:ISupplierItem | null;
+    setAddSupplier?(arg0: any): void;
 }

@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminSuppliersContent.css';
 import ButtonSearch from '../../buttons/ButtonSearch';
 import ModalAdmin from '../../modal/ModalAdmin';
-import AdminModalSupplier from '../adminModalForm/AdminModalSupplier';
 import { ISupplierItem } from './types/SupplierItem.type';
 import { FixedSizeList  as List } from 'react-window';
 import SpinnerCarRot from '../../spinners/SpinnerCarRot';
@@ -29,23 +28,12 @@ const AdminSupplierContent = ({suppliers}:any) => {
     },[suppliers, value]);
 
     const showSuppliersData = async (e: any) => {
-        let suppliersInfo: any;
-        //const dataSupplierName = e.currentTarget.getAttribute("data-name");
-        //const dataSupplierValue = e.currentTarget.getAttribute("data-value");
-        //if (e.currentTarget.name === 'supplierShow') {
-            suppliersInfo = suppliers?.find(
+        let suppliersInfo = suppliers?.find(
             (item:{id_supplier: number}) => 
                 item.id_supplier === e.currentTarget.value
             );
-        //}
-        //if (e.currentTarget.name === 'editSupplier') {
-            // suppliersInfo = suppliers?.find(
-            // (item:{id_supplier: number}) => 
-            //     item.id_supplier === e.currentTarget.value
-            // );  
-        //}  
         if(suppliersInfo) {
-            e.currentTarget.name === 'editSupplier' ? suppliersInfo.disableBtns = false : suppliersInfo.disableBtns = true;
+            e.currentTarget.name === 'editSupplier' ? suppliersInfo.disableBtns = true : suppliersInfo.disableBtns = false;
             if (e.currentTarget.name === 'editSupplier') {
                 setSupplierData(suppliersInfo);
                 setCreateSupplier(!createSupplier);
@@ -153,13 +141,8 @@ const AdminSupplierContent = ({suppliers}:any) => {
         }
     };
 
-    const orderSuppliersTable = ({index, style}: any) => (
-        <div className='admSupplierGridItem' style={style}
-            //onClick={showComment}
-            //onDoubleClick={showSuppliersData}
-            //data-name='supplierShow'
-            //data-value={filteredSupplier![index].id_supplier}
-            >
+    const suppliersTable = ({index, style}: any) => (
+        <div className='admSupplierGridItem' style={style}>
             <div>{filteredSupplier![index].id_supplier}</div>
             <div>{filteredSupplier![index]?.name}</div>
             <div>{filteredSupplier![index].city_ua}</div>
@@ -178,11 +161,6 @@ const AdminSupplierContent = ({suppliers}:any) => {
                         title='Інфо постачальника'
                     ></i>
                 </button>
-                <button className='basketAdmGoods'
-                    value={filteredSupplier![index].id_supplier}
-                    onClick={() => console.log('SOME_FUNCTION')}>
-                    <i className="fas fa-truck-loading"></i>
-                </button>
                 <button className='editAdmGoods'
                     name='editSupplier'
                     value={filteredSupplier![index].id_supplier}
@@ -200,6 +178,8 @@ const AdminSupplierContent = ({suppliers}:any) => {
             </div>
         </div>    
     );
+    
+    console.log('SUPPLIERS_DATA: ', suppliers);
 
     return (
         <div onClick={inputCancelHandler}>
@@ -273,11 +253,12 @@ const AdminSupplierContent = ({suppliers}:any) => {
             height={330}
             width={1315}
         >
-            {orderSuppliersTable}
+            {suppliersTable}
         </List>       
         </div> :
             <SpinnerCarRot/>
         } 
+        <div>
         {createSupplier?
             <ModalAdmin active={createSupplier} setActive={setCreateSupplier}>
                 <AdminModalSupplierCreate 
@@ -309,9 +290,13 @@ const AdminSupplierContent = ({suppliers}:any) => {
                     }
                 </div>
                 <div>Перевізник: {supplierData?.delivery}</div>
+                <div>Відділення: {supplierData?.delivery_dep}</div>
+                <div>Відділення Ref: {supplierData?.delivery_dep_ref}</div>
+                <div>Місто Ref: {supplierData?.delivery_city_ref}</div>
                 <div>Постачання адреса телеграм: {supplierData?.address}</div>
             </div>
         </ModalAdmin>
+        </div>
     </div>
     );
 };

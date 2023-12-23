@@ -48,6 +48,42 @@ export class CustomersService {
     }
   }
 
+  async createCustomerNew(createCustomerDto: CreateCustomerDto) {
+    try {
+      const createPass = {
+        password: await argon2.hash(createCustomerDto.password),
+      };
+      const customer = await this.customersRepository.create({
+        id_customer: createCustomerDto.id_customer,
+        password: createPass.password,
+        email: createCustomerDto.email,
+        id_contract: createCustomerDto.id_contract,
+        balance: createCustomerDto.balance,
+        address: createCustomerDto.address,
+        name: createCustomerDto.name,
+        phone: createCustomerDto.phone,
+        full_name: createCustomerDto.full_name,
+        picture: createCustomerDto.picture,
+        delivery_city_ref: createCustomerDto.ref_city_delivery,
+        delivery_dep: createCustomerDto.delivery_dep,
+        delivery_dep_ref: createCustomerDto.delivery_dep_ref,
+      });
+
+      const contractCustomer = await this.contractService.createContract(
+        createCustomerDto,
+      );
+      await customer.$add('contract', contractCustomer);
+      await customer.reload();
+
+      return customer;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
   async createCustomerByEmail(
     createCustomerDto: CreateCustomerDto,
     password: string,
@@ -257,6 +293,7 @@ export class CustomersService {
 
         return customerId;
       }
+
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',

@@ -1,44 +1,73 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminCashboxContent.css';
 import ButtonSearch from '../../buttons/ButtonSearch';
 import ModalAdmin from '../../modal/ModalAdmin';
 import AdminModalCashbox from '../adminModalForm/AdminModalCashbox';
 import { ICashboxItem } from './types/CashboxItem.type';
+import { CashboxCreate } from '../adminModalForm/types/CashboxCreate.type';
+import SpinnerCarRot from '../../spinners/SpinnerCarRot';
 
 interface ICashbox {
     cashboxData?: [] | null;  
 }
 
 const AdminCashBoxContent = ({cashboxData}: ICashbox) => {
+    //const [activeCustomer, setActiveCustomer] = useState(false);
+    const [cashboxGetData, setCashboxGetData] = useState<any | null>(null);
+    const [filteredCashbox, setFilteredCashbox] = useState< any[] | null | undefined>(cashboxData);
     const [cashbox, setCashbox] = useState(false);
     const [value, setValue] = useState('');
     const [isSearch, setIsSearch] = useState(true);
     
+
+    useEffect(() => {
+        if(value.length !== 0) {
+            const filteredCashBoxData = cashboxData?.filter((cashboxItem: any) => {
+                return cashboxItem.id_cashbox.toLowerCase().toString().includes(+value.toLowerCase()) ||
+                cashboxItem.cashbox.toLowerCase().includes(value.toLowerCase())  
+            })
+            setFilteredCashbox(filteredCashBoxData);
+        } else {
+            setFilteredCashbox(cashboxData);
+        }
+    },[cashboxData, value])
+
+    const showCashboxData = async (e: any) => {
+        let cashboxInfo: any = cashboxData?.find(
+            (item:{id_cashbox: number}) => 
+                item.id_cashbox === +e.currentTarget.value
+            );
+        if(cashboxInfo) {
+            e.currentTarget.name === 'editCashbox' ? cashboxInfo.disableBtns = true : cashboxInfo.disableBtns = false;
+            if (e.currentTarget.name === 'editCashbox') {
+                setCashboxGetData(cashboxInfo);
+                setCashbox(!cashbox);
+            }
+        } else{
+            setCashboxGetData(null);
+        }
+    };
+
     const createCashbox = () => {
         setCashbox(!cashbox);
     };
-
-    const filteredCashBoxData = cashboxData?.filter((orderItem: any) => {
-        return orderItem.id_cashbox.toLowerCase().includes(+value.toLowerCase()) ||
-        orderItem.cashbox.toLowerCase().includes(value.toLowerCase())  
-    })
 
     const itemClickHandler = (e: any) => {
         const entity = e.target.textContent.split(':')
         setValue(entity[1]);
         //setValue(e.target.value);
         setIsSearch(!isSearch);
-    }
+    };
 
     const inputHandler = () => {
         setIsSearch(true);
-    }
+    };
 
     const inputCancelHandler = () => {
         if(isSearch){
            setIsSearch(false); 
         }
-    }
+    };
 
     return (
         <div onClick={inputCancelHandler}>
@@ -52,7 +81,7 @@ const AdminCashBoxContent = ({cashboxData}: ICashbox) => {
             <input 
                 className='inputAdminCashBox' 
                 type="text" 
-                id="myInput" 
+                id="myInputCashbox" 
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 onClick={inputHandler}
@@ -60,7 +89,7 @@ const AdminCashBoxContent = ({cashboxData}: ICashbox) => {
             />
             <ul className='inputCashBoxContent'>
                         {value && isSearch ?
-                            filteredCashBoxData?.map(
+                            filteredCashbox?.map(
                                 (item: ICashboxItem, index: number) =>{
                             return (
                             <li key={'fullName' + index}
@@ -78,6 +107,7 @@ const AdminCashBoxContent = ({cashboxData}: ICashbox) => {
             <ButtonSearch clickSearchBtn={() => console.log('seaachBTN')}/>
         </div>
         <div className='admCashBoxTable'>
+        {filteredCashbox ? 
         <table className='admListCashBoxTable'>
             <thead>
                 <tr className='headerCashBoxTable'>
@@ -90,7 +120,7 @@ const AdminCashBoxContent = ({cashboxData}: ICashbox) => {
                 </tr>
             </thead>    
             <tbody>
-            {filteredCashBoxData ? filteredCashBoxData.map(
+            {filteredCashbox ? filteredCashbox.map(
                 (items: ICashboxItem) => (
                     <tr key={'or' + items.id_cashbox}
                         //onClick={e => showComment(e)}
@@ -102,7 +132,11 @@ const AdminCashBoxContent = ({cashboxData}: ICashbox) => {
                         <td>{items.cashboxType}</td>
                         <td>{items.funds}</td>
                         <td>
-                        <button className='editAdmGoods'>
+                        <button className='editAdmGoods'
+                            value={items.id_cashbox}
+                            onClick={showCashboxData}
+                            name='editCashbox'
+                        >
                             <i className="fas fa-edit"></i>
                         </button>
                         <button className='closeAdmGoods'>
@@ -111,14 +145,20 @@ const AdminCashBoxContent = ({cashboxData}: ICashbox) => {
                         </td>
                         </tr>
                     ))
-                    : <tr><td>......Очікуемо ордери......</td></tr>
+                    : null
                     }            
             </tbody>
         </table>
+        : <SpinnerCarRot/>
+        }
         </div> 
         {cashbox ?
             <ModalAdmin active={cashbox} setActive={setCashbox}>
-                <AdminModalCashbox/>
+                <AdminModalCashbox
+                    active={cashbox}
+                    setActive={setCashbox}
+                    dataCashbox={cashboxGetData}
+                />
             </ModalAdmin> : null
         }
     </div>

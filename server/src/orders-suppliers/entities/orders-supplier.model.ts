@@ -19,108 +19,125 @@ import { Users } from '../../users/entities/users.model';
 export class OrdersSupplier extends Model<OrdersSupplier, OrdersSupConfigAttr> {
   @Column({
     type: DataType.BIGINT,
-    unique: true, 
+    unique: true,
     allowNull: false,
-    primaryKey: true, 
+    primaryKey: true,
     autoIncrement: true,
-    })
-    id_order_sup: number;
+  })
+  id_order_sup: number;
 
-    @Column({ 
-        type: DataType.STRING, unique: false, allowNull: false 
-    })
-    organisation: string;
-  
-    @Column({ 
-        type: DataType.STRING, unique: false, allowNull: true 
-    })
-    storage: string;
-  
-    @Column({ 
-        type: DataType.STRING, unique: false, allowNull: false 
-    })
-    order_view: string;
-  
-    @Column({ 
-        type: DataType.STRING, unique: false, allowNull: false 
-    })
-    delivery: string;
-  
-    @Column({ 
-        type: DataType.STRING, unique: false, allowNull: false 
-    })
-    status_delivery: string;
-  
-    @Column({ 
-        type: DataType.STRING, unique: false, allowNull: true 
-    })
-    delivery_ttn: string;
-  
-    @Column({ 
-        type: DataType.STRING, unique: false, allowNull: false 
-    })
-    status: string;
-  
-    @Column({ 
-        type: DataType.STRING, unique: false, allowNull: false 
-    })
-    pay_view: string;
-  
-    @Column({ 
-        type: DataType.STRING, unique: false, allowNull: false 
-    })
-    status_pay: string;
-  
-    @Column({ 
-        type: DataType.STRING, unique: false, allowNull: true 
-    })
-    notes: string;
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: false,
+  })
+  organisation: string;
 
-    @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
-    delivery_cost: number;
-  
-    @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
-    commission_cost: number;
-  
-    @Column({ type: DataType.INTEGER, allowNull: true })
-    total_purchase_cost: number;
-  
-    @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
-    total_cost: number;
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: true,
+  })
+  storage: string;
 
-    @ForeignKey(() => Users)
-    @Column({type: DataType.INTEGER})
-    id_user: number;
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: false,
+  })
+  order_view: string;
 
-    @ForeignKey(() => Orders)
-    @Column({type: DataType.INTEGER})
-    id_order: number;
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: false,
+  })
+  delivery: string;
 
-    @ForeignKey(() => Supplier)
-    @Column({type: DataType.INTEGER})
-    id_supplier: number;
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: false,
+  })
+  status_delivery: string;
 
-    @Column({type: DataType.INTEGER, allowNull: false, defaultValue: 0})
-    id_contract: number;
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: true,
+  })
+  delivery_ttn: string;
 
-    @BelongsTo(() => Users, 'id_user')
-    user: Users;
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: false,
+  })
+  status: string;
 
-    @BelongsTo(() => Orders, 'id_order')
-    order: Orders;
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: false,
+  })
+  pay_view: string;
 
-    //@BelongsTo(() => Storage, 'id_storage')
-    //storage: Storage;
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: false,
+  })
+  status_pay: string;
 
-    @BelongsTo(() => Supplier, 'id_supplier')
-    supplier: Supplier;
+  @Column({
+    type: DataType.STRING,
+    unique: false,
+    allowNull: true,
+  })
+  notes: string;
 
-    @HasMany(() => Comments, 'id_order_sup')
-    comments: Comments[];
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+  delivery_cost: number;
 
-    @HasMany(() => Paynment, 'id_order_sup')
-    paynment: Paynment[];
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+  commission_cost: number;
 
-    @HasMany(() => OrdersSupStorage, 'id_order_sup')
-    orders_sup_storage: OrdersSupStorage[];
+  @Column({ type: DataType.INTEGER, allowNull: true })
+  total_purchase_cost: number;
+
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: true })
+  total_cost: number;
+
+  @ForeignKey(() => Users)
+  @Column({ type: DataType.INTEGER })
+  id_user: number;
+
+  @ForeignKey(() => Orders)
+  @Column({ type: DataType.INTEGER })
+  id_order: number;
+
+  @ForeignKey(() => Supplier)
+  @Column({ type: DataType.INTEGER })
+  id_supplier: number;
+
+  @Column({ type: DataType.INTEGER, allowNull: false, defaultValue: 0 })
+  id_contract: number;
+
+  @BelongsTo(() => Users, 'id_user')
+  user: Users;
+
+  @BelongsTo(() => Orders, 'id_order')
+  order: Orders;
+
+  @BelongsTo(() => Supplier, 'id_supplier')
+  supplier: Supplier;
+
+  @HasMany(() => Comments, 'id_order_sup')
+  comments: Comments[];
+
+  @HasMany(() => Paynment, 'id_order_sup')
+  paynment: Paynment[];
+
+  @HasMany(() => OrdersSupStorage, 'id_order_sup')
+  orders_sup_storage: OrdersSupStorage[];
 }

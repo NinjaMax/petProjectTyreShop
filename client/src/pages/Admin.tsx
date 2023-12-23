@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
 import '../css/Admin.css';
-//import axios from 'axios';
 import { getTyresAdmin, 
         getWheelsAdmin, 
         getCommentOrderData,
@@ -10,7 +9,12 @@ import { getTyresAdmin,
         getSuppliers,
         getOrderSupData,
         getUsers,
-        getStorageAll
+        getStorageAll,
+        getCashboxAll,
+        getAllIncomesPay,
+        getAllExpensesPay,
+        getAllPayTypes,
+        getAllPayViews
     } from '../restAPI/restAdminAPI';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
@@ -63,17 +67,7 @@ const Admin = observer(() => {
     const {user} = useContext<any | null>(Context);
     const [sideBarItem, setSideBarItem] = useState("golovna");
     const [tyreData, setTyreData] = useState(null);
-    const [tyreStockData, setTyreStockData] = useState(null);
-    const [tyrePriceData, setTyrePriceData] = useState(null);
     const [wheelData, setWheelData] = useState(null);
-    const [wheelStockData, setWheelStockData] = useState(null);
-    const [wheelPriceData, setWheelPriceData] = useState(null);
-    // const [oilData, setOildata] = useState(null);
-    // const [oilStockData, setOilStockData] = useState(null);
-    // const [oilPriceData, setOilPriceData] = useState(null);
-    // const [batteryData, setBatteryData] = useState(null);
-    // const [batteryStockData, setBatteryStockData] = useState(null);
-    // const [batteryPriceData, setBatteryPriceData] = useState(null);
     const [orderSupAllData, setOrderSupAllData] = useState(null);
     const [users, setUsers] = useState(null);
     const [suppliers, setSuppliers] = useState(null);
@@ -84,31 +78,28 @@ const Admin = observer(() => {
     const [customers, setCustomers] = useState(null);
     const [commentOrder, setCommentOrder] = useState(null);
     const [commentOrderSup, setCommentOrderSup] = useState(null);
-    const [commentByOrderSup, setCommentByOrderSup] = useState<number>(0);
-    const [commentByOrder, setCommentByOrder] = useState<number>(0);
     const [orderAllData, setOrderAllData] = useState(null);
     const [storageAll, setStorageAll] = useState(null);
+    const [payTypes, setPayTypes] = useState<any[] | null>(null);
+    const [payViews, setPayViews] = useState<any[] | null>(null);
   
     useEffect(()=> {
         let isMounted = false;
             const postTask = async () => {
                 const tasks:any[] = [
-                    //addGoodsToOrder,
-                    //createGoodsToOrder,
-                    //responseForm,
                     getUsers,
                     getOrderSupData,
                     getSuppliers,
                     getTyresAdmin,
-                    //getStockTyres,
-                    //getPriceTyres,
                     getWheelsAdmin,
-                    //getStockWheel,
-                    //getPriceWheels,
                     getStorageAll,
-                    //getCommentOrderData,
                     getOrderData,
-                    getCustomers
+                    getCustomers,
+                    getCashboxAll,
+                    getAllIncomesPay,
+                    getAllExpensesPay,
+                    getAllPayTypes,
+                    getAllPayViews
                 ]
                 let i: number = 0;
                 while(tasks.length > i) {
@@ -117,30 +108,14 @@ const Admin = observer(() => {
                         let resultTyre: any = await tasks[i]();
                         setTyreData(resultTyre?.data);
                     }
-                    // if(!isMounted && tasks[i] === getStockTyres) {
-                    //     let resultStockTyre: any = await tasks[i]();
-                    //     setTyreStockData(resultStockTyre?.data);
-                    // } 
-                    // if(!isMounted && tasks[i] === getPriceTyres) {   
-                    //     let resultPriceTyre: any = await tasks[i]();
-                    //     setTyrePriceData(resultPriceTyre?.data);
-                    // } 
                     if (!isMounted && tasks[i] === getWheelsAdmin) {   
                         let resultWheels: any = await tasks[i]();
                         setWheelData(resultWheels?.data);
                     } 
-                    // if(!isMounted && tasks[i] === getStockWheel) {
-                    //     let resultStockWheel: any = await tasks[i]();
-                    //     setWheelStockData(resultStockWheel?.data);
-                    // } 
                     if(!isMounted && tasks[i] === getStorageAll) {
                         let resultStorage: any = await tasks[i]();
                         setStorageAll(resultStorage?.data);
                     } 
-                    // if(!isMounted && tasks[i] === getPriceWheels) {
-                    //     let resultPriceWheel: any = await tasks[i]();
-                    //     setWheelPriceData(resultPriceWheel?.data);
-                    // } 
                     if (!isMounted && tasks[i] === getOrderData) {
                         let resultOrder: any = await tasks[i]();
                         setOrderAllData(resultOrder?.data);
@@ -161,19 +136,31 @@ const Admin = observer(() => {
                         let resultSuppliers: any = await tasks[i]();
                         setSuppliers(resultSuppliers?.data);
                     }
-                    // if (!isMounted && tasks[i] === getCommentOrderData) {
-                    //     let resultComOrder: any = await tasks[i](commentByOrder);
-                    //     console.log('COMMENT_DATA: ', resultComOrder?.data);
-                    //     setCommentOrder(resultComOrder?.data);  
-                    // }
-                    // if (!isMounted && tasks[i] === getCommentOrderSupData) {
-                    //     let resultComOrderSup: any = await tasks[i](commentByOrderSup);
-                    //     setCommentOrderSup(resultComOrderSup?.data);
-                    // }
+                    if (!isMounted && tasks[i] === getCashboxAll) {
+                        let resultCashbox: any = await tasks[i]();
+                        setCashBoxAll(resultCashbox?.data);
+                    }
+                    if (!isMounted && tasks[i] === getAllIncomesPay) {
+                        let resultPayIncomes: any = await tasks[i]();
+                        setPayIncomes(resultPayIncomes?.data);
+                    }
+                    if (!isMounted && tasks[i] === getAllExpensesPay) {
+                        let resultExpenses: any = await tasks[i]();
+                        setPayExpenses(resultExpenses?.data);
+                    }
+                    if (!isMounted && tasks[i] === getAllPayTypes) {
+                        let resultPayTypes: any = await tasks[i]();
+                        setPayTypes(resultPayTypes?.data);
+                    }
+                    if (!isMounted && tasks[i] === getAllPayViews) {
+                        let resultPayViews: any = await tasks[i]();
+                        setPayViews(resultPayViews?.data);
+                    }
+
                     const task = tasks.shift();
                     // Run the task:
                     task();
-                    await yieldToMain()   
+                    await yieldToMain();   
                 }
             }
             postTask();
@@ -190,30 +177,36 @@ const Admin = observer(() => {
     }
 
     const showCommentOrder = async (e: any) => {
-        if (e.currentTarget?.getAttribute('data-value')){
-            //setCommentByOrder(+e.currentTarget?.getAttribute('data-value'));
-            const resultComOrder = await getCommentOrderData(+e.currentTarget?.getAttribute('data-value'));
-            if (resultComOrder?.data?.length !== 0) {
-                console.log('COMMENT_DATA: ', resultComOrder?.data);
-                setCommentOrder(resultComOrder?.data);  
+        try {
+            if (e.currentTarget?.getAttribute('data-value')){
+                const resultComOrder = await getCommentOrderData(+e.currentTarget?.getAttribute('data-value'));
+                if (resultComOrder?.data?.length !== 0) {
+                    setCommentOrder(resultComOrder?.data);  
+                } else {
+                    setCommentOrder(null);  
+                }
             } else {
-                setCommentOrder(null);  
+                setCommentOrder(null); 
             }
-        } else {
-            setCommentOrder(null); 
+        } catch (error) {
+            console.log('ERROR_ORDER_COMMENTS_DATA: ', error);
         }
     };
 
     const showCommentOrderSup = async (e: any) => {
-        if (e.currentTarget?.getAttribute('data-value')){
-            let resultComOrderSup: any = await getCommentOrderSupData(e.currentTarget?.getAttribute('data-value'));
-            if (resultComOrderSup?.data?.length !== 0) {
-                setCommentOrderSup(resultComOrderSup?.data);
-            } else {
-                setCommentOrderSup(null);
-            }
-        } 
-    }
+        try {
+            if (e.currentTarget?.getAttribute('data-value')){
+                let resultComOrderSup: any = await getCommentOrderSupData(e.currentTarget?.getAttribute('data-value'));
+                if (resultComOrderSup?.data?.length !== 0) {
+                    setCommentOrderSup(resultComOrderSup?.data);
+                } else {
+                    setCommentOrderSup(null);
+                }
+            } 
+        } catch (error) {
+            console.log('ERROR_ORDER_SUP_COMMENTS_DATA: ', error);    
+        }
+    };
     // console.log('USERS: ', users);
     // console.log('CUSTOMERS: ',customers);
     //console.log('ORDERS: ', orderAllData);
@@ -260,8 +253,7 @@ const Admin = observer(() => {
                 : null}
                 {sideBarItem === 'zamovleniaPost' ?
                     <AdminOrderSupContent 
-                        props={[tyreData, tyreStockData, tyrePriceData,
-                            wheelData, wheelPriceData, wheelStockData]}
+                        props={[tyreData, wheelData]}
                         supplier={suppliers} 
                         comments={commentOrderSup}
                         storage={storageAll}
@@ -277,11 +269,15 @@ const Admin = observer(() => {
                 {sideBarItem === 'plategiVh' ?
                     <AdminPayIncomesContent 
                         payIncomes={payIncomes}
+                        payTypes={payTypes} 
+                        payViews={payViews}
                     />
                 : null}
                 {sideBarItem === 'plategiVih' ?
                     <AdminPayExpensesContent 
                         payExpenses={payExpenses}
+                        payTypes={payTypes} 
+                        payViews={payViews}
                     />
                 : null}
                 {sideBarItem === 'postachal' ?
@@ -296,7 +292,7 @@ const Admin = observer(() => {
                 : null}
                 {sideBarItem === 'koristuvachi' ?
                     <AdminUsersContent 
-                            users={users}
+                        users={users}
                     />
                 : null}
                 {sideBarItem === 'zavantag' ?

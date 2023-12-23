@@ -6,7 +6,7 @@ import AdminModalPayExpense from '../adminModalForm/AdminModalPayExpense';
 import { IPaymentItem } from './types/PaymentItem.type';
 import { IAdminPayment } from './interfaces/AdminPayment.interface';
 
-const AdminPayExpensesContent = ({payExpenses}: IAdminPayment) => {
+const AdminPayExpensesContent = ({payExpenses, payTypes, payViews}: IAdminPayment) => {
     const [outgoingPay, setOutgoingPay] = useState(false);
     const [filteredPay, setFilteredPay] = useState< any[] | null | undefined>(payExpenses);
     const [value, setValue] = useState('');

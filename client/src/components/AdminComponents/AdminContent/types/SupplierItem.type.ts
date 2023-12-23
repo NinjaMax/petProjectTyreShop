@@ -28,4 +28,5 @@ export type ISupplierItem = {
     comments: any[];
     reduce(arg0: any, ...arg: any[]): any;
     user:{name: string; role: string; id_user: number;}
-}
+    disableBtns?:boolean;
+};

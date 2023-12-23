@@ -34,7 +34,6 @@ import { RedisModule } from '../redis/redis.module';
     forwardRef(() => StockModule),
     SuppliersModule,
     AuthModule,
-    //PropertiesTyreModule
     RedisModule,
   ],
   exports: [TyresService],

@@ -27,6 +27,11 @@ export class CustomersController {
     return this.customersService.createCustomer(createCustomerDto, password);
   }
 
+  @Post('/form')
+  createCustomerForm(@Body() createCustomerDto: CreateCustomerDto) {
+    return this.customersService.createCustomerNew(createCustomerDto);
+  }
+
   @Get('/all')
   findAllCustomer() {
     return this.customersService.findAllCustomer();

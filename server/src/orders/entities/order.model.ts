@@ -10,7 +10,6 @@ import {
   Sequelize,
 } from 'sequelize-typescript';
 import { OrdersConfigAttr } from '../interfaces/orders.interface';
-//import { Orders_Goods } from "./order-goods.model";
 import { Order_Storage } from './order-storage.model';
 import { Basket } from '../../basket/entities/basket.model';
 import { Comments } from '../../comments/entities/comment.model';

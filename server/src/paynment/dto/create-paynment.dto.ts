@@ -1,5 +1,7 @@
 export class CreatePaynmentDto {
   readonly id_paynment: number;
+  readonly id_payviews: number;
+  readonly id_paytype: number;
   readonly type_paynment: string;
   readonly price: number;
   readonly price_wholesale: number;
@@ -10,11 +12,7 @@ export class CreatePaynmentDto {
   readonly id_order_sup: number;
   readonly id_goods: number;
   readonly id_cat: number;
-  readonly id_expense: number;
-  readonly id_income: number;
   readonly goods: string;
-  readonly expense: string;
-  readonly income: string;
   readonly total: number;
   readonly quantity: number;
   readonly reserve: number;

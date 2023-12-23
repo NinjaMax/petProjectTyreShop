@@ -132,7 +132,7 @@ const AdminModalGoods = ({props, showRowModData, storageGoods}: IModalGoods) => 
             <div>Печалька... Нажаль немає зараз товарів</div>
         </div>
     );
-
+    
     return (
         <div className='admModalGoodsBox'>
                 <span>Каталог товарів: {chooseCatMod}</span>

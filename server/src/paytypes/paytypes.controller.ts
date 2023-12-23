@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PaytypesService } from './paytypes.service';
 import { CreatePaytypeDto } from './dto/create-paytype.dto';
 import { UpdatePaytypeDto } from './dto/update-paytype.dto';
@@ -12,9 +20,9 @@ export class PaytypesController {
     return this.paytypesService.create(createPaytypeDto);
   }
 
-  @Get()
+  @Get('/all')
   findAll() {
-    return this.paytypesService.findAll();
+    return this.paytypesService.findAllPayTypes();
   }
 
   @Get(':id')

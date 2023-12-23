@@ -64,5 +64,5 @@ export class Contract extends Model<Contract, ContractConfigAttr> {
   supplier: Supplier;
 
   @HasMany(() => Paynment, 'id_contract')
-  paynment: Paynment;
+  paynment: Paynment[];
 }

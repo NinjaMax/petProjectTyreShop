@@ -19,7 +19,6 @@ import {
     updateOrder,
     updateOrderStorage} from '../../../restAPI/restAdminAPI';
 import AdminComment from '../adminContent/AdminComment';
-import AdminModalCustmCreate from '../adminModalForm/AdminModalCustmCreate';
 import AdminModalCustomers from '../adminModalForm/AdminModalCustomers';
 import AdminModalGoods from '../adminModalForm/AdminModalGoods';
 import { Context } from '../../../context/Context';
@@ -38,6 +37,7 @@ import { ICity } from '../../basket/types/CityNP.type';
 import { getCityNovaPoshta, getWareHousesNovaPoshta } from '../../../restAPI/restNovaPoshtaAPI';
 import { getCityDelivery, getWareHousesDelivery } from '../../../restAPI/restDeliveryAPI';
 import { IDapertmentNP } from '../../basket/types/DepartmentType.type';
+import AdminModalCustomerCreate from './AdminModalCustomerCreate';
 
 const AdminFormOrder = observer((
     { props, 
@@ -1321,7 +1321,11 @@ const AdminFormOrder = observer((
             }
             {createCustomer ?
                 <ModalAdmin active={createCustomer} setActive={setCreateCustomer}>
-                    <AdminModalCustmCreate />   
+                    <AdminModalCustomerCreate 
+                        active={createCustomer} 
+                        setActive={setCreateCustomer}
+                        setAddCustomer={setAddCustomer}
+                    />    
                 </ModalAdmin> : null
             }
             {addGoods ? 

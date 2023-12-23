@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Delete } from '@nestjs/common';
 import { PaynmentService } from './paynment.service';
 import { CreatePaynmentDto } from './dto/create-paynment.dto';
 import { GetPaynmentDto } from './dto/get-paynment.dto';
@@ -26,18 +18,28 @@ export class PaynmentController {
     return this.paynmentService.findAllPaynment();
   }
 
+  @Get('/all-incomes')
+  findAllIncomes() {
+    return this.paynmentService.findAllIncomesPaynments();
+  }
+
+  @Get('/all-expenses')
+  findAllExpenses() {
+    return this.paynmentService.findAllExpensesPaynments();
+  }
+
   @Get('/id')
   findOne(@Body() getPaynmentDto: GetPaynmentDto) {
     return this.paynmentService.findPaynmentById(getPaynmentDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePaynmentDto: UpdatePaynmentDto) {
-    return this.paynmentService.update(+id, updatePaynmentDto);
+  @Patch('/update')
+  update(@Body() updatePaynmentDto: UpdatePaynmentDto) {
+    return this.paynmentService.updatePayment(updatePaynmentDto);
   }
 
   @Delete('/id')
-  remove( @Body() getPaynmentDto: GetPaynmentDto) {
+  remove(@Body() getPaynmentDto: GetPaynmentDto) {
     return this.paynmentService.removePaynment(getPaynmentDto);
   }
 }

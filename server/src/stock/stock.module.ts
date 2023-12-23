@@ -24,17 +24,38 @@ import { WheelsModule } from '../wheels/wheels.module';
 //import { OrdersSuppliersModule } from 'src/orders-suppliers/orders-suppliers.module';
 
 @Module({
-  controllers: [StockTyresController, StockWheelsController,
-    StockBatteriesController, StockOilsController],
-  providers: [StockTyresService, StockWheelsService, 
-    StockOilsService, StockBatteriesService],
-  imports: [ 
-    SequelizeModule.forFeature([StockTyres, StockWheels, StockOils,
-    StockBatteries]),
-    forwardRef(() => TyresModule), SuppliersModule, StorageModule,
-    WheelsModule, OilsModule, BatteriesModule, AuthModule
+  controllers: [
+    StockTyresController,
+    StockWheelsController,
+    StockBatteriesController,
+    StockOilsController,
   ],
-  exports: [StockTyresService, StockWheelsService, 
-    StockOilsService, StockBatteriesService]
+  providers: [
+    StockTyresService,
+    StockWheelsService,
+    StockOilsService,
+    StockBatteriesService,
+  ],
+  imports: [
+    SequelizeModule.forFeature([
+      StockTyres,
+      StockWheels,
+      StockOils,
+      StockBatteries,
+    ]),
+    forwardRef(() => TyresModule),
+    forwardRef(() => SuppliersModule),
+    StorageModule,
+    WheelsModule,
+    OilsModule,
+    BatteriesModule,
+    AuthModule,
+  ],
+  exports: [
+    StockTyresService,
+    StockWheelsService,
+    StockOilsService,
+    StockBatteriesService,
+  ],
 })
 export class StockModule {}

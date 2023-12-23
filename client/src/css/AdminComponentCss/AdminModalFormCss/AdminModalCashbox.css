@@ -9,26 +9,8 @@
     resize: vertical /* Allow the us*/
 }
 
-.admFormCashBoxId {
-    width: 100px; /* Full width */
-    padding: 12px; /* Some padding */ 
-    border: 1px solid #ccc; /* Gray border */
-    border-radius: 4px; /* Rounded borders */
-    box-sizing: border-box; /* Make sure that padding and width stays in place */
-    margin-top: 6px; /* Add a top margin */
-    margin-bottom: 16px; /* Bottom margin */
-    resize: vertical /* Allow the us*/
-}
-
-.admFormCashBoxCustm {
-    width: 330px;
-    display: flex;
-    flex-direction: row;
-    align-items:baseline;
-
-}
 .admFormCashBoxName {
-    width: 250px; /* Full width */
+    width: 230px; /* Full width */
     padding: 12px; /* Some padding */ 
     border: 1px solid #ccc; /* Gray border */
     border-radius: 4px; /* Rounded borders */
@@ -36,28 +18,6 @@
     margin-top: 6px; /* Add a top margin */
     margin-bottom: 16px; /* Bottom margin */
     resize: vertical /* Allow the user to vert*/
-}
-
-.admFormCashBoxNotes {
-    width: 650px; /* Full width */
-    padding: 12px; /* Some padding */ 
-    border: 1px solid #ccc; /* Gray border */
-    border-radius: 4px; /* Rounded borders */
-    box-sizing: border-box; /* Make sure that padding and width stays in place */
-    margin-top: 6px; /* Add a top margin */
-    margin-bottom: 16px; /* Bottom margin */
-    resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
-}
-
-.admFormCashBoxDelivery {
-    width: 140px; /* Full width */
-    padding: 12px; /* Some padding */ 
-    border: 1px solid #ccc; /* Gray border */
-    border-radius: 4px; /* Rounded borders */
-    box-sizing: border-box; /* Make sure that padding and width stays in place */
-    margin-top: 6px; /* Add a top margin */
-    margin-bottom: 16px; /* Bottom margin */
-    resize: vertical /* Allow the user*/
 }
 
 .admCashBoxFormGrp {
@@ -95,6 +55,15 @@
 }
 
 .admFormCashBoxBtnSave {
+    background-color: #ccc;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.admFormCashBoxBtnSaveActive {
     background-color: #4CAF50;
     color: white;
     padding: 12px 20px;
@@ -103,11 +72,20 @@
     cursor: pointer;
 }
 
-.admFormCashBoxBtnSave:hover {
+.admFormCashBoxBtnSaveActive:hover {
     background-color: #2caf30;
 }
 
 .admFormCashBoxBtnOk {
+    background-color: #ccc;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.admFormCashBoxBtnOkActive {
     background-color: #4CAF50;
     color: white;
     padding: 12px 20px;
@@ -116,7 +94,7 @@
     cursor: pointer;
 }
 
-.admFormCashBoxBtnOk:hover {
+.admFormCashBoxBtnOkActive:hover {
     background-color: #2caf30;
 }
 

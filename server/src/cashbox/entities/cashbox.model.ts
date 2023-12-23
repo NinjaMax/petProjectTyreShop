@@ -15,10 +15,10 @@ export class Cashbox extends Model<Cashbox, CashboxConfigAttr> {
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   cashbox: string;
 
-  @Column({ type: DataType.STRING, unique: true, allowNull: false })
+  @Column({ type: DataType.STRING, unique: false, allowNull: false })
   organisation: string;
 
-  @Column({ type: DataType.STRING, unique: true, allowNull: false })
+  @Column({ type: DataType.STRING, unique: false, allowNull: false })
   cashboxType: string;
 
   @Column({

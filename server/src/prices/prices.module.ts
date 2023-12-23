@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { PriceTyresService } from './price-tyres.service';
 import { PriceTyresController } from './price-tyres.controller';
@@ -41,11 +41,11 @@ import { PriceOilsController } from './price-oils.controller';
       PriceOil,
       PriceBatteries,
     ]),
-    TyresModule,
+    forwardRef(() => TyresModule),
     WheelsModule,
     OilsModule,
     BatteriesModule,
-    SuppliersModule,
+    forwardRef(() => SuppliersModule),
     StorageModule,
     AuthModule,
   ],

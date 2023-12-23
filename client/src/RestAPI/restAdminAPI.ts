@@ -1,7 +1,6 @@
-// //React Axios Post Request:
-//import axios from "axios";
 import { $hostGet, $hostPost, $hostPostUpload } from "./index";
 import { IRestAdminApi } from "./interfaces/restAdmin.interface";
+import { CustomerCreate } from "./types/CreateCustomer.type";
 import { SupplierCreate } from "./types/createSupplier.type";
 
 const createGoodsToOrder = async (
@@ -155,12 +154,93 @@ await $hostPost.post('/suppliers', data)
     console.log('Помилка не вірно вказанні данні або інша помилка',error);
 });
 
+const createCustomer = async (data: CustomerCreate) => 
+await $hostPost.post('/customers/form', data)
+.catch((error: any) => {
+    console.log('Помилка не вірно вказанні данні або інша помилка',error);
+});
+
+const updateCustomer = async (data: CustomerCreate) => 
+await $hostPost.patch(`/customers/${data.id_customer}`, data)
+.catch((error: any) => {
+    console.log('Помилка не вірно вказанні данні або інша помилка',error);
+});
+
+const updateSupplier = async (data: SupplierCreate) => 
+await $hostPost.patch('/suppliers/update', data)
+.catch((error: any) => {
+    console.log('Помилка не вірно вказанні данні або інша помилка',error);
+});
+
 const createContract = async (data: any) => 
 await $hostPost.post('/contract/new', data)
 .catch((error: any) => {
     console.log('Помилка не вірно вказанні данні або інша помилка',error);
 });
 
+const createCashbox = async (data: {
+    cashbox: string;
+    organisation: string;
+    cashboxType: string;
+}) => 
+await $hostPost.post('/cashbox', data)
+.catch((error: any) => {
+    console.log('Помилка не вірно вказанні данні або інша помилка',error);
+});
+
+const updateCashbox = async (data: {
+    id_cashbox: number;
+    cashbox: string;
+    organisation: string;
+    cashboxType: string;
+    funds: string;
+}) => 
+await $hostPost.patch('/cashbox/update', data)
+.catch((error: any) => {
+    console.log('Помилка не вірно вказанні данні або інша помилка',error);
+});
+
+const getCashboxAll = async () => 
+await $hostGet.get('/cashbox/all')
+.catch(error => {
+    console.log(error)
+});
+
+const createPayment = async (data: any) => 
+await $hostPost.post('/paynment', data)
+.catch((error: any) => {
+    console.log('Помилка не вірно вказанні данні або інша помилка',error);
+});
+
+const updatePayment = async (data: any) => 
+await $hostPost.patch('/paynment/update', data)
+.catch((error: any) => {
+    console.log('Помилка не вірно вказанні данні або інша помилка',error);
+});
+
+const getAllIncomesPay = async () => 
+await $hostGet.get('/paynment/all-incomes')
+.catch(error => {
+    console.log(error)
+});
+
+const getAllExpensesPay = async () => 
+await $hostGet.get('/paynment/all-expenses')
+.catch(error => {
+    console.log(error)
+});
+
+const getAllPayTypes = async () => 
+await $hostGet.get('/paytypes/all')
+.catch(error => {
+    console.log(error)
+});
+
+const getAllPayViews = async () => 
+await $hostGet.get('/payviews/all')
+.catch(error => {
+    console.log(error)
+});
 
 const addGoodsToSaleOrder = async (data: any) => 
 await $hostPost.post('/sales/add', data)
@@ -259,22 +339,6 @@ await $hostGet.get('/tyres/all-admin')
     console.log(error)
 });
 
-// const getTyresById = async (id:string) => 
-// await $hostGet.get('/tyres/id', {
-//     params: {
-//         id: id
-//     }
-// })
-// .catch(error => {
-//     console.log(error)
-// });
-
-// const getStockTyres = async () => 
-// await $hostGet.get('/stock/tyres/all')
-// .catch(error => {
-//     console.log(error)
-// });
-
 const getAdminStockTyresByIdtyre = async (id: string) => {
     const {data}: any = await $hostGet.get('/stock/tyres/idtyre', { 
         params: { id_tyre: id}
@@ -284,12 +348,6 @@ const getAdminStockTyresByIdtyre = async (id: string) => {
     });
     return data;
 };
-
-// const getPriceTyres = async () => 
-// await $hostGet.get('/price/tyres/all')
-// .catch(error => {
-//     console.log(error)
-// });
 
 const getAdminPriceTyresById = async (id: string) => {
     const {data}: any = await $hostGet.get('/price/tyres/idtyre', { 
@@ -307,12 +365,6 @@ await $hostGet.get('/wheels/all-admin')
     console.log(error)
 });
 
-// const getStockWheel = async () =>
-// await $hostGet.get('/stock/wheels/all')
-// .catch(error => {
-//     console.log(error)
-// });
-
 const getAdminStockWheelByIdWheel = async (id: string) => {
     const {data}: any = await $hostGet.get('/stock/wheels/idwheel', 
     {params: {id_wheel: id}})
@@ -321,12 +373,6 @@ const getAdminStockWheelByIdWheel = async (id: string) => {
     });
     return data;
 };
-
-// const getPriceWheels = async () =>
-// await $hostGet.get('/price/wheels/all')
-// .catch(error => {
-//     console.log(error)
-// });
 
 const getAdminPriceWheelsById = async (id: string) => {
     const {data}: any = await $hostGet.get('/price/wheels/idwheel', {params: {id_wheel: id}})
@@ -488,5 +534,17 @@ export {
     createToSaleOrder,
     addGoodsToSaleOrder,
     createSupplier,
-    createContract
+    createContract,
+    updateSupplier,
+    createCustomer,
+    updateCustomer,
+    createCashbox,
+    updateCashbox,
+    getCashboxAll,
+    createPayment,
+    updatePayment,
+    getAllIncomesPay,
+    getAllExpensesPay,
+    getAllPayTypes,
+    getAllPayViews
 };

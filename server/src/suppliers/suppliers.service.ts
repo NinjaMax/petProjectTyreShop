@@ -70,7 +70,7 @@ export class SuppliersService {
   async findAllSupplier() {
     try {
       const supplierAll = await this.suppliersRepository.findAll({
-        include: { model: Contract }
+        include: [{ model: Contract }]
       });
       return supplierAll;
     } catch {
@@ -98,6 +98,20 @@ export class SuppliersService {
   }
 
   async findSupplierByIdParam(id: number) {
+    try {
+      const supplierByIdParam = await this.suppliersRepository.findByPk(id, {
+        include: [{ model: Contract }],
+      });
+      return supplierByIdParam;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found', 
+        HttpStatus.NOT_FOUND
+      );
+    }
+  }
+
+  async findSupplierOrderByIdSupplier(id: number) {
     try {
       const supplierByIdParam = await this.suppliersRepository.findByPk(id, {
         include: [{ model: Contract }],
@@ -152,9 +166,14 @@ export class SuppliersService {
           {
             name: updateSupplierDto.name,
             city: updateSupplierDto.city,
+            city_ua: updateSupplierDto.city_ua,
             phone: updateSupplierDto.phone,
             email: updateSupplierDto.email,
+            address: updateSupplierDto.address,
             delivery: updateSupplierDto.delivery,
+            delivery_dep: updateSupplierDto.delivery_dep,
+            delivery_dep_ref: updateSupplierDto.delivery_dep_ref,
+            delivery_city_ref: updateSupplierDto.delivery_city_ref,
           },
           { where: { id_supplier: updateSupplierDto.id_supplier } },
         );

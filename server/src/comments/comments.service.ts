@@ -1,4 +1,10 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  Inject,
+  forwardRef,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { GetCommentDto } from './dto/get-comment.dto';
@@ -13,13 +19,15 @@ import { Users } from 'src/users/entities/users.model';
 export class CommentsService {
   constructor(
     @InjectModel(Comments) private commentsRepository: typeof Comments,
+    @Inject(forwardRef(() => OrdersService))
     private ordersService: OrdersService,
+    @Inject(forwardRef(() => OrdersSuppliersService))
     private orderSuppliersService: OrdersSuppliersService,
     private usersService: UsersService,
   ) {}
 
   async createComment(createCommentDto: CreateCommentDto) {
-    //try {
+    try {
       const user = await this.usersService.findUserById(createCommentDto);
       const order = await this.ordersService.findOrderById(createCommentDto);
       const orderSup = await this.orderSuppliersService.findOrderSupById(
@@ -62,30 +70,19 @@ export class CommentsService {
         `Data user "User ID or Order ID" is incorrect or not found`,
         HttpStatus.NOT_FOUND,
       );
-    // } catch {
-    //   throw new HttpException(
-    //     'Data is incorrect and must be uniq',
-    //     HttpStatus.NOT_FOUND,
-    //   );
-    // }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
-  async createCommentNew(
-    item
-    : any
-    
-   //{
-    //id_user: number,
-    //comments: string,
-    //id_order: number,
-    //id_order_sup: number,
-   //}
-  ) {
-    //try {
-    const user = await this.usersService.findUserById(item);
-    const order = await this.ordersService.findOrderById(item);
-    const orderSup = await this.orderSuppliersService.findOrderSupById(item);
-
+  async createCommentNew(item: any) {
+    try {
+      const user = await this.usersService.findUserById(item);
+      const order = await this.ordersService.findOrderById(item);
+      const orderSup = await this.orderSuppliersService.findOrderSupById(item);
       if (user && order) {
         const commentOrder = await this.commentsRepository.create(item);
         await user.$add('comments', [commentOrder.id_comment]);
@@ -100,7 +97,6 @@ export class CommentsService {
 
         return findCommentOrder;
       }
-
       if (user && orderSup) {
         const commentOrderSup:any = await this.commentsRepository.create(item);
         await user.$add('comments', [commentOrderSup.id_comment]);
@@ -118,12 +114,12 @@ export class CommentsService {
         `Data user "User ID or Order ID" is incorrect or not found`,
         HttpStatus.NOT_FOUND,
       );
-    // } catch {
-    //   throw new HttpException(
-    //     'Data is incorrect and must be uniq',
-    //     HttpStatus.NOT_FOUND,
-    //   );
-    // }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async findAllComments() {
@@ -165,6 +161,7 @@ export class CommentsService {
           include: [{ model: Users }],
           order: [['createdAt', 'DESC']],
         });
+
         return commentByOrderId;
       } else {
         return null;
@@ -184,6 +181,7 @@ export class CommentsService {
           where: { id_order_sup: getCommentDto.id_order_sup },
           include: { all: true },
         });
+
         return commentByOrderSupId;
       } else {
         return null;

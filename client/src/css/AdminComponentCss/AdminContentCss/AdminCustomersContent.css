@@ -1,19 +1,3 @@
-
-/* Add a "checked" mark when clicked on */
-/*ul li.checked::before {
-    content: '';
-    position: absolute;
-    border-color: #fff;
-    border-style: solid;
-    border-width: 0 2px 2px 0;
-    top: 10px;
-    left: 16px;
-    transform: rotate(45deg);
-    height: 15px;
-    width: 7px;
-}
-*/
-
 .admCustomersAddBtn{
     margin: 4px;
     border: 0px;
@@ -35,6 +19,41 @@
     font-size: 12px;
     font-family: var(--main-font-family);
     font-weight: bold;
+}
+
+.headerCustomerHeadTableCode {
+    width: 60px;
+}
+
+.headerCustomerHeadTableCust {
+    width: 210px;
+}
+
+.headerCustomerHeadTablePhone {
+    width: 130px;
+}
+
+.headerCustomerHeadTableBalance {
+    width: 70px;
+}
+
+.headerCustomerHeadTableBonuse {
+    width: 70px;
+}
+
+.headerCustomerHeadTableDelivery {
+    width: 140px;
+}
+
+.headerCustomerHeadTableAddresss {
+    width: 180px;
+}
+.headerCustomerHeadTableDepart {
+    width: 180px;
+}
+
+.headerCustomerHeadTableOption {
+    width: 200px;
 }
 
 .admListCustomersTable {
@@ -162,6 +181,17 @@
     margin: 3px;
 }
 
+.inputAdminCustomers {
+    margin: 0;
+    border: none;
+    border-radius: 8px;
+    width: 75%;
+    height: 15px;
+    padding: 3px;
+    float: left;
+    font-size: 10px;
+}
+
 .inputCustomerContent {
     position: absolute;
     top: 30px;
@@ -185,6 +215,28 @@
     background-color: #ddd;
     cursor: pointer;
     transition:cubic-bezier(1, 0, 0, 1) .3s all;
+}
+
+.admCustomerGridItem {
+    vertical-align:middle;
+    display: grid;
+    grid-template-columns: 60px 210px 125px 65px 65px 150px 180px 180px 180px;
+    grid-column-gap: 10px;
+}
+.admCustomerGridItem:nth-child(even) {
+    background-color: #f2f2f2;
+}
+.admCustomerGridItem .admOrderGridItemBtn {
+    display: flex;
+    flex-direction: row;
+}
+.admCustomerTableColmId tr {
+    border: 1px solid #ddd;
+    padding: 8px 5px;
+} 
+.admCustomerTableColmId .admCustomerGridItem:hover {
+    background-color: #ddd;
+    cursor: pointer;
 }
 
 .admChooseCat {
@@ -220,4 +272,11 @@
     padding: 3px;
     float: left;
     font-size: 10px;
+}
+
+.admCustomersModalInfo {
+    width: 100%;
+    height: 430px;
+    overflow-y: scroll;
+    margin: 3px;
 }

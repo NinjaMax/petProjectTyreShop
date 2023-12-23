@@ -116,6 +116,15 @@
 }
 
 .admFormSupplierCreateBtnSave {
+    background-color: #ccc;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.admFormSupplierCreateBtnSaveActive {
     background-color: #4CAF50;
     color: white;
     padding: 12px 20px;
@@ -124,11 +133,20 @@
     cursor: pointer;
 }
 
-.admFormSupplierCreateBtnSave:hover {
+.admFormSupplierCreateBtnSaveActive:hover {
     background-color: #2caf30;
 }
 
 .admFormSupplierCreateBtnOk {
+    background-color: #ccc;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.admFormSupplierCreateBtnOkActive {
     background-color: #4CAF50;
     color: white;
     padding: 12px 20px;

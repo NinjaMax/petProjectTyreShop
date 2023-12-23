@@ -15,7 +15,7 @@ import { CustomersModule } from '../customers/customers.module';
   imports: [
     SequelizeModule.forFeature([Comments]),
     forwardRef(() => OrdersModule),
-    OrdersSuppliersModule,
+    forwardRef(() => OrdersSuppliersModule),
     UsersModule,
     AuthModule,
     CustomersModule,

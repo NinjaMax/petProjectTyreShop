@@ -20,7 +20,7 @@ const AdminOrderContent = (
     const [filteredOrder, setFilteredOrder] = useState< any[] | null>(orders);
     const [value, setValue] = useState('');
     const [isSearch, setIsSearch] = useState(true);
-    console.log('ORDERS: ', orders)
+   
     useEffect(() => {
         if(value.length !== 0) {
             const filteredOrderData: any = orders?.filter((orderItem: any) => {
@@ -301,8 +301,6 @@ const AdminOrderContent = (
         </div>    
     );
     
-    console.log('ORDERS: ', filteredOrder);
-
     return (
         <div  onClick={inputCancelHandler}>
             <div className="admOrderContent">
@@ -355,8 +353,6 @@ const AdminOrderContent = (
                             onClick={sortOrder}>Код</th>
                         <th className='headerOrderTableDate' 
                             onClick={sortOrder}>Дата</th>
-                        {/* <th className='headerOrderTableDateUpdate' 
-                            onClick={sortOrder}>Дата оновлення</th> */}
                         <th className='headerOrderTableCustm' 
                             onClick={sortOrder}>Покупець</th>
                         <th className='headerOrderTableStorage' 

@@ -25,12 +25,10 @@ import { StorageModule } from './storage/storage.module';
 import { SalesModule } from './sales/sales.module';
 import { CashboxModule } from './cashbox/cashbox.module';
 import { PaynmentModule } from './paynment/paynment.module';
-import { ExpensesModule } from './expenses/expenses.module';
 import { ServicesModule } from './add_services/services.module';
 import { WheelsModule } from './wheels/wheels.module';
 import { BatteriesModule } from './batteries/batteries.module';
 import { OilsModule } from './oils/oils.module';
-import { IncomesModule } from './incomes/incomes.module';
 import { PriceWheels } from './prices/entities/price-wheels.model';
 import { PriceBatteries } from './prices/entities/price-battery.model';
 import { PriceOil } from './prices/entities/price-oils.model';
@@ -41,8 +39,6 @@ import { Wheel } from './wheels/entities/wheel.model';
 import { Battery } from './batteries/entities/battery.model';
 import { Oil } from './oils/entities/oil.model';
 import { Comments } from './comments/entities/comment.model';
-import { Expense } from './expenses/entities/expense.model';
-import { Incomes } from './incomes/entities/income.model';
 import { Category } from './categorys/entities/category.model';
 import { Sales } from './sales/entities/sale.model';
 import { Cashbox } from './cashbox/entities/cashbox.model';
@@ -117,6 +113,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { RedisModule } from './redis/redis.module';
 import { ViberApiModule } from './viber-api/viber-api.module';
 import { TelegramApiModule } from './telegram-api/telegram-api.module';
+import { PayviewsModule } from './payviews/payviews.module';
+import { Payview } from './payviews/entities/payview.entity';
 
 @Module({
   imports: [
@@ -148,8 +146,6 @@ import { TelegramApiModule } from './telegram-api/telegram-api.module';
           Oil,
           Supplier,
           Comments,
-          Expense,
-          Incomes,
           Category,
           Sales,
           Cashbox,
@@ -199,6 +195,7 @@ import { TelegramApiModule } from './telegram-api/telegram-api.module';
           WheelType,
           WheelWidth,
           Paytype,
+          Payview,
           Users,
           Service,
           Orders,
@@ -244,9 +241,7 @@ import { TelegramApiModule } from './telegram-api/telegram-api.module';
     SalesModule,
     CashboxModule,
     PaynmentModule,
-    ExpensesModule,
     ServicesModule,
-    IncomesModule,
     OrdersModule,
     OrdersSuppliersModule,
     BasketModule,
@@ -262,6 +257,7 @@ import { TelegramApiModule } from './telegram-api/telegram-api.module';
     RedisModule,
     ViberApiModule,
     TelegramApiModule,
+    PayviewsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

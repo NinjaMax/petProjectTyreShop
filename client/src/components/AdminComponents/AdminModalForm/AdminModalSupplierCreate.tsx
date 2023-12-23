@@ -1,27 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminModalSupplierCreate.css';
 import { useForm } from 'react-hook-form';
-import { createSupplier } from '../../../restAPI/restAdminAPI';
+import { createContract, createSupplier, updateSupplier } from '../../../restAPI/restAdminAPI';
 import { SupplierCreate } from '../../../restAPI/types/createSupplier.type';
 import { SupplierModalCreate } from './types/SupplierModalCreate.type';
+import { ContractType } from './types/Contract.type';
 
 const AdminModalSupplierCreate = ({active, setActive, dataSupplier}: SupplierModalCreate) => {
-    const {register, handleSubmit, setValue, getValues, setError, formState: {errors}} = useForm<SupplierCreate, any>(); 
+    const {register, handleSubmit, setValue, formState: {errors}} = useForm<SupplierCreate, any>(); 
+    const [contractData, setContractData] = useState<ContractType | null>();
     
     const onSubmit = async (data: SupplierCreate) => {
         try {
-            const createSupplierNew = await createSupplier(data);
-            console.log('CREATE_SUPPLIER: ', createSupplierNew);
-            if (createSupplierNew?.data) {
-                alert(`Постчальника ${createSupplierNew?.data.name} ID ${createSupplierNew?.data.id_supplier} створено.`)
-                setActive(!active);
+            if (!dataSupplier?.disableBtns) {
+                const createSupplierNew = await createSupplier(data);
+                if (createSupplierNew?.data) {
+                    alert(`Постчальника ${createSupplierNew?.data.name} ID ${createSupplierNew?.data.id_supplier} створено.`)
+                    setActive(!active);
+                }
+            }
+            if (dataSupplier?.disableBtns) {
+                const supplierUpdate = await updateSupplier(data);
+                if (supplierUpdate) {
+                    alert(`Данні постчальника ${data.name} ID ${data.id_supplier} оновлено.`)
+                    setActive(!active);
+                } else {
+                    alert('Помилка при оновлені постачальника.')
+                }
             }
         } catch (error) {
             alert('Помилка при створені постачальника.')
+            console.log('ERROR_CREATE_CUSTOMER: ', error);
+        }
+    };
+
+    const createNewContract = async () => {
+        try {
+            if (dataSupplier?.disableBtns && contractData) {
+                const newContarct = await createContract({
+                    ...contractData,
+                    id_supplier: dataSupplier?.id_supplier
+                });
+                if (newContarct?.data) {
+                    alert('Договір додано');
+                } else {
+                    alert('Помилка при створені контракту.')
+                }
+            }
+        } catch (error) {
+            alert('Помилка при створені контракту.')
             console.log('ERROR_CREATE_CUSTOMER: ',error);
         }
     };
-    console.log('ERRORS_FORM: ', errors);
+
     return (
         <div>
             Створити поcтачальника
@@ -175,16 +206,63 @@ const AdminModalSupplierCreate = ({active, setActive, dataSupplier}: SupplierMod
                             onChange={(e) => setValue('delivery_dep_ref', [e.target.value])}
                             placeholder="Телеграм постачальника.."
                         />  
-                    </div>   
+                    </div>
+                    {dataSupplier?.disableBtns ?
+                    <div onClick={(e) => e.preventDefault()}>
+                        <label htmlFor="contractSupplierName">Назва договору </label>
+                        <input type="text" 
+                            id='contractSupplierName'
+                            className="admFormSupplierCreateAddress" 
+                            name="contractSupplierFormName" 
+                            maxLength={45}
+                            //defaultValue={dataSupplier?.delivery_dep_ref ?? ''}
+                            onChange={(e) => setContractData({...contractData!, name: e.target.value})}
+                            placeholder="Назва договору"
+                        />
+                        <label htmlFor="contractSupBalance">баланс </label>
+                        <input type="text" 
+                            id='contractSupBalance'
+                            className="admFormSupplierCreateAddress" 
+                            name="contractSupplierFormBalance" 
+                            maxLength={45}
+                            onChange={(e) => setContractData({...contractData!, balance: +e.target.value})}
+                            placeholder="баланс договору"
+                        />  
+                        <button className={dataSupplier?.disableBtns ? 
+                                'admFormSupplierCreateBtnSaveActive' :
+                                'admFormSupplierCreateBtnSave'
+                            } 
+                            disabled={!dataSupplier?.disableBtns ? true : false}
+                            onClick={createNewContract}
+                        >Додати договір </button> 
+                    </div> : null
+                    }  
                 </div>
-                <div className='admSupplierCreateFormGrp'
-                    onClick={(e:any) => e.stopPropagation()}
-                >
-                    <button type="submit" className='admFormSupplierCreateBtnOk'>Ok</button>
-                    <button className='admFormSupplierCreateBtnSave' 
-                        disabled={dataSupplier ? false : true}
-                        onClick={(e:any) => console.log('UPDATE_SUPPLIER')}
+                <div className='admSupplierCreateFormGrp'>
+                    <div 
+                        onClick={e => console.log('BUBBLES: ', e.bubbles)}
+                    >
+                    <button
+                        className={dataSupplier?.disableBtns ? 
+                            'admFormSupplierCreateBtnOk':
+                           'admFormSupplierCreateBtnOkActive'
+                        }
+                        disabled={dataSupplier?.disableBtns}
+                        onClick={handleSubmit(onSubmit)}
+                    >Ok</button>
+                    </div>
+                    <div 
+                        //onClick={(e) => e.preventDefault()}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                    <button className={dataSupplier?.disableBtns ? 
+                            'admFormSupplierCreateBtnSaveActive' :
+                            'admFormSupplierCreateBtnSave'
+                        } 
+                        disabled={!dataSupplier?.disableBtns ? true : false}
+                        onClick={handleSubmit(onSubmit)}
                     >Зберегти </button> 
+                    </div>
                     <button className='admFormSupplierCreateBtnCancel'
                         onClick={() => setActive(!active)}
                     >Відмінити</button>

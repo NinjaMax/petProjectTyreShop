@@ -1,7 +1,8 @@
 import React from 'react';
 import '../../../css/AdminComponentCss/AdminModalFormCss/AdminModalPayIncome.css';
+import { PayModal } from './types/PayModal.types';
 
-const AdminModalPayIncome = () => {
+const AdminModalPayIncome = ({payViews, payTypes, paynmentData}: PayModal) => {
     return (
         <div>
             Створити вхідний платіж

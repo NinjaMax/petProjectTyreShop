@@ -17,13 +17,12 @@ import { PricesModule } from '../prices/prices.module';
   providers: [OrdersSuppliersService, OrdersSupStorageService],
   imports: [
     SequelizeModule.forFeature([OrdersSupplier, OrdersSupStorage]),
-    //OrdersModule,
     forwardRef(() => OrdersModule),
-    StockModule, 
+    forwardRef(() => StockModule), 
     PricesModule,
     ContractModule, 
     AuthModule,
-    SuppliersModule
+    forwardRef(() => SuppliersModule),
   ],
   exports: [OrdersSuppliersService, OrdersSupStorageService],
 })
