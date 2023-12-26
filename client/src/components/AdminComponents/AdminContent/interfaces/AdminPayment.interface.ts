@@ -3,4 +3,5 @@ export interface IAdminPayment {
     payIncomes?: [] | null;
     payTypes: any[] | null;
     payViews: any[] | null;
+    cashBoxes?: any[] | null;
 }

@@ -30,21 +30,6 @@
     padding: 5px; 
 }
 
-
-/* Add a "checked" mark when clicked on */
-/*ul li.checked::before {
-    content: '';
-    position: absolute;
-    border-color: #fff;
-    border-style: solid;
-    border-width: 0 2px 2px 0;
-    top: 10px;
-    left: 16px;
-    transform: rotate(45deg);
-    height: 15px;
-    width: 7px;
-}
-*/
 .admIncomesAddBtn{
     margin: 4px;
     border: 0px;
@@ -66,6 +51,53 @@
     font-size: 12px;
     font-family: var(--main-font-family);
     font-weight: bold;
+}
+
+.headerPayIncomesHeadTableCode {
+    width: 85px;
+}
+
+.headerPayIncomesHeadTableDate {
+    width: 120px;
+}
+
+.headerPayIncomesHeadTableType {
+    width: 70px;
+}
+
+.headerPayIncomesHeadTableView {
+    width: 120px;
+}
+
+.headerPayIncomesHeadTableCashbox {
+    width: 130px;
+}
+
+.headerPayIncomesHeadTableSum {
+    width: 80px;
+}
+
+.headerPAyIncomesHeadTableIdOrder {
+    width: 80px;
+}
+.headerPayIncomesHeadTableIdOrderSup {
+    width: 80px;
+}
+
+.headerPayIncomesHeadTableIdContract {
+    width: 80px;
+}
+.headerPayIncomesHeadTableContract {
+    width: 185px;
+}
+.headerPayIncomesHeadTableUser {
+    width: 50px;
+}
+.headerPayIncomesHeadTableNotes {
+    width: 200px;
+}
+.headerPayIncomesHeadTableOption {
+    width: 250px;
 }
 
 .admListIncomesTable {
@@ -193,6 +225,27 @@
     margin: 3px;
 }
 
+.admPayIncomesGridItem {
+    vertical-align:middle;
+    display: grid;
+    grid-template-columns: 65px 85px 65px 90px 95px 65px 55px 60px 60px 150px 65px 150px 180px;
+    grid-column-gap: 10px;
+}
+.admPayIncomesGridItem:nth-child(even) {
+    background-color: #f2f2f2;
+}
+.admPayIncomesGridItem .admOrderGridItemBtn {
+    display: flex;
+    flex-direction: row;
+}
+.admPayIncomesTableColmId tr {
+    border: 1px solid #ddd;
+    padding: 8px 5px;
+} 
+.admPayIncomesTableColmId .admPayIncomesGridItem:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
 .admChooseCat {
     appearance: none;
 }

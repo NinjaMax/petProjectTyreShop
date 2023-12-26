@@ -271,6 +271,7 @@ const Admin = observer(() => {
                         payIncomes={payIncomes}
                         payTypes={payTypes} 
                         payViews={payViews}
+                        cashBoxes={cashBoxAll}
                     />
                 : null}
                 {sideBarItem === 'plategiVih' ?
@@ -278,6 +279,7 @@ const Admin = observer(() => {
                         payExpenses={payExpenses}
                         payTypes={payTypes} 
                         payViews={payViews}
+                        cashBoxes={cashBoxAll}
                     />
                 : null}
                 {sideBarItem === 'postachal' ?

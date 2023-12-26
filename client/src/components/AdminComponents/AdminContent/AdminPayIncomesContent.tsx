@@ -2,13 +2,15 @@ import React, {useEffect, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminPayIncomesContent.css';
 import ButtonSearch from '../../buttons/ButtonSearch';
 import ModalAdmin from '../../modal/ModalAdmin';
-import AdminModalPayIncome from '../adminModalForm/AdminModalPayIncome';
+import AdminModalPay from '../adminModalForm/AdminModalPay';
 import { IPaymentItem } from './types/PaymentItem.type';
 import { IAdminPayment } from './interfaces/AdminPayment.interface';
 import { FixedSizeList  as List } from 'react-window';
+import SpinnerCarRot from '../../spinners/SpinnerCarRot';
 
-const AdminPayIncomesContent = ({payIncomes, payTypes, payViews}: IAdminPayment) => {
-    const [incomePay, setIncomePay] = useState(false);
+const AdminPayIncomesContent = ({payIncomes, payTypes, payViews, cashBoxes}: IAdminPayment) => {
+    const [incomePay, setIncomePay] = useState<boolean>(false);
+    const [createPayIncome, setCreatePayIncome] = useState<boolean>(false);
     const [payIncomeData, setPayIncomeData] = useState<{} | null>(null);
     const [filteredPay, setFilteredPay] = useState< any[] | null | undefined>(payIncomes);
     const [value, setValue] = useState('');
@@ -29,19 +31,19 @@ const AdminPayIncomesContent = ({payIncomes, payTypes, payViews}: IAdminPayment)
     //createPayment,
     //updatePayment,
     const showPayIncomesData = async (e: any) => {
-        let customersInfo = payIncomes?.find(
+        let payIncomesInfo: any = payIncomes?.find(
             (item:{id_paynment: number}) => 
                 item.id_paynment === +e.currentTarget.value
             );
-        if(customersInfo) {
-            e.currentTarget.name === 'editCustomer' ? customersInfo.disableBtns = true : customersInfo.disableBtns = false;
-            if (e.currentTarget.name === 'editCustomer') {
-                setPayIncomeData(customersInfo);
-                setCreateCustm(!createCustm);
+        if(payIncomesInfo) {
+            e.currentTarget.name === 'editPayIncomes' ? payIncomesInfo.disableBtns = true : payIncomesInfo.disableBtns = false;
+            if (e.currentTarget.name === 'editPayIncomes') {
+                setPayIncomeData(payIncomesInfo);
+                setCreatePayIncome(!createPayIncome);
             }
-            if (e.currentTarget.name === 'customerShow') {
-                setPayIncomeData(customersInfo);
-                setActiveCustomer(!activeCustomer);
+            if (e.currentTarget.name === 'payIncomesShow') {
+                setPayIncomeData(payIncomesInfo);
+                setIncomePay(!incomePay);
             }
         } else{
             setPayIncomeData(null);
@@ -49,7 +51,8 @@ const AdminPayIncomesContent = ({payIncomes, payTypes, payViews}: IAdminPayment)
     };
 
     const createIncPay = () => {
-        setIncomePay(!incomePay);
+        setPayIncomeData(null);
+        setCreatePayIncome(!createPayIncome);
     };
 
     const itemClickHandler = (e: any) => {
@@ -151,45 +154,37 @@ const AdminPayIncomesContent = ({payIncomes, payTypes, payViews}: IAdminPayment)
     };
 
     const payIncomeTable = ({index, style}: any) => (
-        <div className='admOrderGridItem' style={style}
+        <div className='admPayIncomesGridItem' style={style}
             //onClick={showComment}
             //onDoubleClick={showOrderData}
-            data-name='orderShow'
+            data-name='payIncomesShow'
             data-value={filteredPay![index].id_paynment}>
             <div>{filteredPay![index].id_paynment}</div>
             <div>{new Date(filteredPay![index].createdAt).toLocaleString()}</div>
-            
+            <div>{filteredPay![index]?.paytype?.paytype}</div>
+            <div>{filteredPay![index]?.payview?.payviews}</div>
+            <div>{filteredPay![index]?.cashbox?.cashbox}</div>
             <div>{filteredPay![index].price}</div>
-            <div>{filteredPay![index]?.customer?.name}</div>
-            <div>{filteredPay![index]?.paytype.paytype}</div>
-            <div>{filteredPay![index]?.cashbox.cashbox}</div>
-            <div>{filteredPay![index]?.status_delivery}</div>
-            <div>{filteredPay![index]?.pay_view}</div>
-            <div>{filteredPay![index]?.status_pay}</div>
+            <div>{filteredPay![index].id_order}</div>
+            <div>{filteredPay![index].id_order_sup}</div>
+            <div>{filteredPay![index]?.contract?.id_contract}</div>
+            <div>{filteredPay![index]?.contract?.name}</div>
             <div>{filteredPay![index]?.user?.name}</div>
             <div>{filteredPay![index]?.notes}</div>
             <div>
-                <button className='basketAdmGoods'
-                    value={filteredPay![index].id_order}
-                    //</div>onClick={activeFormOrderSup}
-                    >
-                    <i className="fas fa-truck-loading"
-                        title='Створити Замовлення Постачальника'
-                    ></i>
-                </button>
                 <button className='editAdmGoods'
-                    name='editOrder'
-                    value={filteredPay![index].id_order}
-                    //onClick={createSaleOrder}
+                    name='payIncomesShow'
+                    value={filteredPay![index].id_paynment}
+                    onClick={showPayIncomesData}
                 >
-                    <i className="fas fa-clipboard-check"
-                        title='Створити продажу'
+                    <i className="fas fa-list"
+                        title="пов'язані документи"
                     ></i>
                 </button>
                 <button className='editAdmGoods'
-                    name='editOrder'
-                    value={filteredPay![index].id_order}
-                    //onClick={showOrderData}
+                    name='editPayIncomes'
+                    value={filteredPay![index].id_paynment}
+                    onClick={showPayIncomesData}
                     >
                     <i className="fas fa-edit"
                         title='Редагувати'
@@ -197,7 +192,7 @@ const AdminPayIncomesContent = ({payIncomes, payTypes, payViews}: IAdminPayment)
                 </button>
 
                 <button className='closeAdmGoods'
-                    value={filteredPay![index].id_order}>
+                    value={filteredPay![index].id_paynment}>
                     <i className="fa fa-remove"
                         title='Видалити'
                     ></i>
@@ -242,57 +237,72 @@ const AdminPayIncomesContent = ({payIncomes, payTypes, payViews}: IAdminPayment)
                     </ul>
             <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
         </div>
+        {filteredPay ? 
         <div className='admIncomesTable'>
         <table className='admListIncomesTable'>
             <thead>
                 <tr className='headerIncomesTable'>
-                    <th onClick={sortPayExpense}>Код</th>
-                    <th onClick={sortPayExpense}>Дата</th>
-                    <th>Тип платежа</th>
-                    <th onClick={sortPayExpense}>Вид Платежа</th>
-                    <th onClick={sortPayExpense}>Каса</th>
-                    <th onClick={sortPayExpense}>Сума</th>
-                    <th onClick={sortPayExpense}>Користувач</th>
-                    <th>Коментар</th>
-                    <th>Опції</th>
+                    <th className='headerPayIncomesHeadTableCode'
+                        onClick={sortPayExpense}>Код</th>
+                    <th className='headerPayIncomesHeadTableDate'
+                        onClick={sortPayExpense}>Дата</th>
+                    <th className='headerPayIncomesHeadTableType'
+                        >Тип платежа</th>
+                    <th className='headerPayIncomesHeadTableView'
+                        onClick={sortPayExpense}>Вид Платежа</th>
+                    <th className='headerPayIncomesHeadTableCashbox'
+                        onClick={sortPayExpense}>Каса</th>
+                    <th className='headerPayIncomesHeadTableSum'
+                        onClick={sortPayExpense}>Сума</th>
+                    <th className='headerPAyIncomesHeadTableIdOrder'
+                        onClick={sortPayExpense}>id Зам пок</th>
+                    <th className='headerPayIncomesHeadTableIdOrderSup'
+                        onClick={sortPayExpense}>id Зам пост</th>
+                    <th className='headerPayIncomesHeadTableIdContract'
+                        onClick={sortPayExpense}>id контр</th>
+                    <th className='headerPayIncomesHeadTableContract'
+                        onClick={sortPayExpense}>договір</th>
+                    <th className='headerPayIncomesHeadTableUser'
+                        onClick={sortPayExpense}>Користувач</th>
+                    <th className='headerPayIncomesHeadTableNotes'
+                        >Коментар</th>
+                    <th className='headerPayIncomesHeadTableOption'
+                        >Опції</th>
                 </tr>
             </thead>    
             <tbody>
-            {filteredPay ? filteredPay.map((items: IPaymentItem) => (
-                    <tr key={'or' + items.id_paynment}
-                        //onClick={e => showComment(e)}
-                        //onDoubleClick={e => showOrderData(e)}
-                        data-value={items.id_paynment}>
-                        <td>{items.id_paynment}</td>
-                        <td>{new Date(items.createdAt).toLocaleString()}</td>
-                        <td>{new Date(items.updatedAt).toLocaleString()}</td>
-                        <td>{items.incomes?.income}</td>
-                        <td>{items.cashbox.cashbox}</td>
-                        <td>{items.price}</td>
-                        <td>{items.status}</td>
-                        <td>{items.paytype?.paytype}</td>
-                        <td>{items.user.name}</td>
-                        <td>{items.notes}</td>
-                        <td>
-                        <button className='editAdmGoods'>
-                            <i className="fas fa-edit"></i>
-                        </button>
-                        <button className='closeAdmGoods'>
-                            <i className="fa fa-remove"></i>
-                        </button>                  
-                        </td>
-                    </tr>
-                    ))
-                    : <tr><td>......Очікуемо ордери......</td></tr>
-                    }               
             </tbody>
         </table>
-        </div>
-        {incomePay ?
-            <ModalAdmin active={incomePay} setActive={setIncomePay}>
-                <AdminModalPayIncome/>
+        <List
+            className="admPayIncomesTableColmId"
+            itemCount={filteredPay!.length}
+            itemSize={90}
+            height={330}
+            width={1315}
+        >
+            {payIncomeTable}
+        </List>   
+        </div> :
+            <SpinnerCarRot/>
+        } 
+        {createPayIncome ?
+            <ModalAdmin active={createPayIncome} setActive={setCreatePayIncome}>
+                <AdminModalPay
+                    payViews={payViews} 
+                    payTypes={[payTypes![0].id_paytype, payTypes![0].paytype]} 
+                    cashBoxes={cashBoxes}
+                    paynmentData={payIncomeData}
+                    title={"Створити вхідний платіж"}
+                    active={createPayIncome}
+                    setActive={setCreatePayIncome}
+                />
             </ModalAdmin> : null
         } 
+        <ModalAdmin active={incomePay} setActive={setIncomePay}>
+            <div>
+
+            </div>
+        </ModalAdmin>
     </div>
     );
 };

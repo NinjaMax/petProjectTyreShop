@@ -50,9 +50,12 @@ export class PaynmentService {
         }
 
         //await expense.$add('paynment', paynmentIdExp.id_paynment);
-        await contract.decrement('balance', { by: paynmentIdExp.price });
+        if (contract) {
+          await contract.decrement('balance', { by: paynmentIdExp.price });
+          await contract.reload();
+        }
+      
         await cashBox.decrement('funds', { by: paynmentIdExp.price });
-        await contract.reload();
         await cashBox.reload();
 
         return paynmentIdExp;
@@ -75,9 +78,12 @@ export class PaynmentService {
 
         //await income.$add('paynment', paynmentIdInc.id_paynment);
         //income.paynment.push(paynmentIdInc);
-        await contract.increment('balance', { by: paynmentIdInc.price });
+        if (contract) {
+          await contract.increment('balance', { by: paynmentIdInc.price });
+          await contract.reload();
+        }
+        
         await cashBox.increment('funds', { by: paynmentIdInc.price });
-        await contract.reload();
         await cashBox.reload();
 
         return paynmentIdInc;
@@ -179,6 +185,7 @@ export class PaynmentService {
       );
     }
   }
+
 
   async removePaynment(getPaynmentDto: GetPaynmentDto) {
     try {

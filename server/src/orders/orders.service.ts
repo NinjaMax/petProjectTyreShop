@@ -46,7 +46,7 @@ export class OrdersService {
   ) {}
 
   async createOrder(createOrderDto: CreateOrderDto) {
-    //try {
+    try {
       const basket = await this.basketService.findBasketById(createOrderDto);
       if (createOrderDto.id_contract && createOrderDto.id_customer) {
         const orderCustomer = await this.ordersRepository.create(
@@ -129,12 +129,12 @@ export class OrdersService {
           return orderNew;
         }
       }
-    // } catch {
-    //   throw new HttpException(
-    //     'Data is incorrect and must be uniq',
-    //     HttpStatus.NOT_FOUND,
-    //   );
-    // }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async findAllOrders() {
@@ -151,6 +151,7 @@ export class OrdersService {
     }
   }
   
+
   async findOrderById(getOrdersDto: GetOrdersDto) {
     try {
       const orderId = await this.ordersRepository.findByPk(
@@ -159,8 +160,11 @@ export class OrdersService {
           include: { all: true },
         },
       );
-
-      return orderId;
+      if (orderId) {
+        return orderId;
+      } else {
+        return null;
+      }
     } catch {
       throw new HttpException(
         'Data is incorrect and must be uniq',

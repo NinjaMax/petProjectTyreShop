@@ -14,6 +14,7 @@ import { Comments } from '../../comments/entities/comment.model';
 import { OrdersSupplier } from '../../orders-suppliers/entities/orders-supplier.model';
 import { Contract } from '../../contract/entities/contract.model';
 import { Question } from '../../questions/entities/question.entity';
+import { Paynment } from '../../paynment/entities/paynment.model';
 
 @Table({ tableName: 'user', createdAt: false, updatedAt: false })
 export class Users extends Model<Users, UsersConfigAttr> {
@@ -57,6 +58,9 @@ export class Users extends Model<Users, UsersConfigAttr> {
 
   @HasOne(() => Basket, 'id_user')
   basket: Basket;
+
+  @HasOne(() => Paynment, 'id_user')
+  paynment: Paynment;
 
   @HasMany(() => Orders, 'id_user')
   orders: Orders[];

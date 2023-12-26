@@ -41,19 +41,19 @@ export class CashboxService {
   }
 
   async findCashboxById(getCashboxDto: GetCashboxDto) {
-    try {
+    //try {
       const cashboxById = await this.cashboxRepository.findByPk(
         getCashboxDto.id_cashbox,
         { include: { all: true } },
       );
 
       return cashboxById;
-    } catch (error) {
-      throw new HttpException(
-        'Data is incorrect or Not Found',
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    // } catch (error) {
+    //   throw new HttpException(
+    //     'Data is incorrect or Not Found',
+    //     HttpStatus.NOT_FOUND,
+    //   );
+    // }
   }
 
   async updateCashbox(updateCashboxDto: UpdateCashboxDto) {

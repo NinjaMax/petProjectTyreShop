@@ -32,7 +32,7 @@ import { PayviewsModule } from '../payviews/payviews.module';
     ContractModule,
     AuthModule,
     PaytypesModule,
-    PayviewsModule
+    PayviewsModule,
   ],
   exports: [PaynmentService],
 })

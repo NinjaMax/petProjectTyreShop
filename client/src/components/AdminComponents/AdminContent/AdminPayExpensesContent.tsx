@@ -2,12 +2,16 @@ import React, {useEffect, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminPayExpenseContent.css';
 import ButtonSearch from '../../buttons/ButtonSearch';
 import ModalAdmin from '../../modal/ModalAdmin';
-import AdminModalPayExpense from '../adminModalForm/AdminModalPayExpense';
+import AdminModalPay from '../adminModalForm/AdminModalPay';
 import { IPaymentItem } from './types/PaymentItem.type';
 import { IAdminPayment } from './interfaces/AdminPayment.interface';
+import SpinnerCarRot from '../../spinners/SpinnerCarRot';
+import { FixedSizeList  as List } from 'react-window';
 
-const AdminPayExpensesContent = ({payExpenses, payTypes, payViews}: IAdminPayment) => {
+const AdminPayExpensesContent = ({payExpenses, payTypes, payViews, cashBoxes}: IAdminPayment) => {
     const [outgoingPay, setOutgoingPay] = useState(false);
+    const [createPayIncome, setCreatePayIncome] = useState<boolean>(false);
+    const [payExpenseData, setExpensePayData] = useState<{} | null>(null);
     const [filteredPay, setFilteredPay] = useState< any[] | null | undefined>(payExpenses);
     const [value, setValue] = useState('');
     const [isSearch, setIsSearch] = useState(true);
@@ -28,7 +32,25 @@ const AdminPayExpensesContent = ({payExpenses, payTypes, payViews}: IAdminPaymen
         setOutgoingPay(!outgoingPay);
     };  
 
-    
+    const showPayExpensesData = async (e: any) => {
+        let payExpensesInfo: any = payExpenses?.find(
+            (item:{id_paynment: number}) => 
+                item.id_paynment === +e.currentTarget.value
+            );
+        if(payExpensesInfo) {
+            e.currentTarget.name === 'editPayExpenses' ? payExpensesInfo.disableBtns = true : payExpensesInfo.disableBtns = false;
+            if (e.currentTarget.name === 'editPayExpenses') {
+                setExpensePayData(payExpensesInfo);
+                setCreatePayIncome(!createPayIncome);
+            }
+            if (e.currentTarget.name === 'payExpensesShow') {
+                setExpensePayData(payExpensesInfo);
+                setOutgoingPay(!outgoingPay);
+            }
+        } else{
+            setExpensePayData(null);
+        }
+    };
 
     const itemClickHandler = (e: any) => {
         const entity = e.target.textContent.split(':')
@@ -128,6 +150,53 @@ const AdminPayExpensesContent = ({payExpenses, payTypes, payViews}: IAdminPaymen
         }
     }
 
+    const payExpensesTable = ({index, style}: any) => (
+        <div className='admPayIncomesGridItem' style={style}
+            //onClick={showComment}
+            //onDoubleClick={showOrderData}
+            data-name='payIncomesShow'
+            data-value={filteredPay![index].id_paynment}>
+            <div>{filteredPay![index].id_paynment}</div>
+            <div>{new Date(filteredPay![index].createdAt).toLocaleString()}</div>
+            <div>{filteredPay![index]?.paytype?.paytype}</div>
+            <div>{filteredPay![index]?.payview?.payviews}</div>
+            <div>{filteredPay![index]?.cashbox?.cashbox}</div>
+            <div>{filteredPay![index].price}</div>
+            <div>{filteredPay![index].id_order}</div>
+            <div>{filteredPay![index].id_order_sup}</div>
+            <div>{filteredPay![index]?.contract?.id_contract}</div>
+            <div>{filteredPay![index]?.contract?.name}</div>
+            <div>{filteredPay![index]?.user?.name}</div>
+            <div>{filteredPay![index]?.notes}</div>
+            <div>
+                <button className='editAdmGoods'
+                    name='payIncomesShow'
+                    value={filteredPay![index].id_paynment}
+                    onClick={showPayExpensesData}
+                >
+                    <i className="fas fa-list"
+                        title="пов'язані документи"
+                    ></i>
+                </button>
+                <button className='editAdmGoods'
+                    name='editPayIncomes'
+                    value={filteredPay![index].id_paynment}
+                    onClick={showPayExpensesData}
+                    >
+                    <i className="fas fa-edit"
+                        title='Редагувати'
+                    ></i>
+                </button>
+
+                <button className='closeAdmGoods'
+                    value={filteredPay![index].id_paynment}>
+                    <i className="fa fa-remove"
+                        title='Видалити'
+                    ></i>
+                </button>                  
+            </div>
+        </div>    
+    );
 
     return (
         <div onClick={inputCancelHandler}>
@@ -163,59 +232,65 @@ const AdminPayExpensesContent = ({payExpenses, payTypes, payViews}: IAdminPaymen
                     </ul>
             <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
         </div>
+        {filteredPay ?
         <div className='admExpenseTable'>
         <table className='admListExpenseTable'>
             <thead>
                 <tr className='headerExpenseTable'>
-                    <th>Тип</th>
-                    <th onClick={sortPayExpense}>Код</th>
-                    <th onClick={sortPayExpense}>Дата</th>
-                    <th onClick={sortPayExpense}>Дата оновлення</th>
-                    <th onClick={sortPayExpense}>Вид Платежів</th>
-                    <th onClick={sortPayExpense}>Каса</th>
-                    <th onClick={sortPayExpense}>Сума</th>
-                    <th onClick={sortPayExpense}>Статус</th>
-                    <th onClick={sortPayExpense}>Тип платежа</th>
-                    <th onClick={sortPayExpense}>Користувач</th>
-                    <th>Коментар</th>
-                    <th>Опції</th>
+                <th className='headerPayIncomesHeadTableCode'
+                        onClick={sortPayExpense}>Код</th>
+                    <th className='headerPayIncomesHeadTableDate'
+                        onClick={sortPayExpense}>Дата</th>
+                    <th className='headerPayIncomesHeadTableType'
+                        >Тип платежа</th>
+                    <th className='headerPayIncomesHeadTableView'
+                        onClick={sortPayExpense}>Вид Платежа</th>
+                    <th className='headerPayIncomesHeadTableCashbox'
+                        onClick={sortPayExpense}>Каса</th>
+                    <th className='headerPayIncomesHeadTableSum'
+                        onClick={sortPayExpense}>Сума</th>
+                    <th className='headerPAyIncomesHeadTableIdOrder'
+                        onClick={sortPayExpense}>id Зам пок</th>
+                    <th className='headerPayIncomesHeadTableIdOrderSup'
+                        onClick={sortPayExpense}>id Зам пост</th>
+                    <th className='headerPayIncomesHeadTableIdContract'
+                        onClick={sortPayExpense}>id контр</th>
+                    <th className='headerPayIncomesHeadTableContract'
+                        onClick={sortPayExpense}>договір</th>
+                    <th className='headerPayIncomesHeadTableUser'
+                        onClick={sortPayExpense}>Користувач</th>
+                    <th className='headerPayIncomesHeadTableNotes'
+                        >Коментар</th>
+                    <th className='headerPayIncomesHeadTableOption'
+                        >Опції</th>
                 </tr>
             </thead>    
             <tbody>
-            {filteredPay ? filteredPay.map(
-                (items: IPaymentItem) => (
-                    <tr key={'or' + items.id_paynment}
-                        //onClick={e => showComment(e)}
-                        //onDoubleClick={e => showOrderData(e)}
-                        data-value={items.id_paynment}>
-                        <td>{items.id_paynment}</td>
-                        <td>{new Date(items.createdAt).toLocaleString()}</td>
-                        <td>{new Date(items.updatedAt).toLocaleString()}</td>
-                        <td>{items.expenses?.expense}</td>
-                        <td>{items.cashbox.cashbox}</td>
-                        <td>{items.price}</td>
-                        <td>{items.status}</td>
-                        <td>{items.paytype?.paytype}</td>
-                        <td>{items.user.name}</td>
-                        <td>{items.notes}</td>
-                        <td>
-                        <button className='editAdmGoods'>
-                            <i className="fas fa-edit"></i>
-                        </button>
-                        <button className='closeAdmGoods'>
-                            <i className="fa fa-remove"></i>
-                        </button>                  
-                        </td>
-                    </tr>
-                    ))
-                    : <tr><td>......Очікуемо ордери......</td></tr>
-                    }                   
             </tbody>
         </table>
-        </div> 
+        <List
+            className="admPayIncomesTableColmId"
+            itemCount={filteredPay!.length}
+            itemSize={90}
+            height={330}
+            width={1315}
+        >
+            {payExpensesTable}
+        </List>   
+        </div> :
+            <SpinnerCarRot/>
+        }  
         {outgoingPay ?
             <ModalAdmin active={outgoingPay} setActive={setOutgoingPay}>
-                <AdminModalPayExpense/>
+                <AdminModalPay
+                    active={outgoingPay}
+                    setActive={setOutgoingPay}
+                    payViews={payViews} 
+                    payTypes={[payTypes![1].id_paytype, payTypes![1].paytype]} 
+                    cashBoxes={cashBoxes}
+                    paynmentData={payExpenseData}
+                    title={"Створити вихідний платіж"}
+                />
             </ModalAdmin> : null
         }
     </div>

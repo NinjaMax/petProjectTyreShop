@@ -300,7 +300,11 @@ export class OrdersSuppliersService {
         getOrdersSupDto.id_order_sup, 
         { include: { all: true }}
       );
-      return orderSupId;
+      if (orderSupId) {
+        return orderSupId;
+      } else {
+        return null;
+      }
     } catch {
       throw new HttpException(
         'Data is incorrect and must be uniq',
@@ -325,7 +329,7 @@ export class OrdersSuppliersService {
   }
 
   async updateOrderSup(updateOrdersSupplierDto: UpdateOrdersSupplierDto) {
-    //try {
+    try {
       await this.ordersSupRepository.update(
         {
           id: updateOrdersSupplierDto.id,
@@ -356,16 +360,16 @@ export class OrdersSuppliersService {
       const updateOrdersSup = this.ordersSupRepository.findByPk(updateOrdersSupplierDto.id_order_sup);
       
       return updateOrdersSup;
-    // } catch {
-    //   throw new HttpException(
-    //     'Data is incorrect and must be uniq',
-    //     HttpStatus.NOT_FOUND,
-    //   );
-    // }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async updateOrderSupOne(item: any) {
-    //try {
+    try {
       await this.ordersSupRepository.update(
         {
           id: item.id,
@@ -396,12 +400,12 @@ export class OrdersSuppliersService {
       const updateOrdersSup = this.ordersSupRepository.findByPk(item.id_order_sup);
       
       return updateOrdersSup;
-    // } catch {
-    //   throw new HttpException(
-    //     'Data is incorrect and must be uniq',
-    //     HttpStatus.NOT_FOUND,
-    //   );
-    // }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async removeOrderSup(getOrdersSupDto: GetOrdersSuppliersDto) {

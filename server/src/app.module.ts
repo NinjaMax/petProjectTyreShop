@@ -115,6 +115,7 @@ import { ViberApiModule } from './viber-api/viber-api.module';
 import { TelegramApiModule } from './telegram-api/telegram-api.module';
 import { PayviewsModule } from './payviews/payviews.module';
 import { Payview } from './payviews/entities/payview.entity';
+import { SmsFlyApiModule } from './sms-fly-api/sms-fly-api.module';
 
 @Module({
   imports: [
@@ -258,6 +259,7 @@ import { Payview } from './payviews/entities/payview.entity';
     ViberApiModule,
     TelegramApiModule,
     PayviewsModule,
+    SmsFlyApiModule,
   ],
   controllers: [AppController],
   providers: [AppService],
