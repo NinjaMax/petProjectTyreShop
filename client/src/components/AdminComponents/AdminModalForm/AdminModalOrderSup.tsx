@@ -11,7 +11,7 @@ import { ActionReducer, ActionType, StateReducer } from './types/OrderReducer.ty
 import { createInitialState } from './reducer/initialState';
 import AdminModalGoods from './AdminModalGoods';
 import AdminModalSupplier from './AdminModalSupplier';
-import { addCommentsToOrder, addGoodsToOrderSup, createGoodsToOrderSup, createOrderSupForm, deleteGoodsFromOrderSup, getAdminPriceTyresById, getAdminPriceWheelsById, requestToSupplier, updateOrderSup } from '../../../restAPI/restAdminAPI';
+import { addCommentsToOrder, addGoodsToOrderSup, createGoodsToOrderSup, createOrderSupForm, deleteGoodsFromOrderSup, getAdminPriceTyresById, getAdminPriceWheelsById, requestToSupplier, updateOrder, updateOrderSup } from '../../../restAPI/restAdminAPI';
 import { CreateGoods } from './types/CreateGoods.type';
 import { IModalFormOrder } from './types/FormOrders.type';
 
@@ -287,13 +287,96 @@ const AdminModalOrderSup = observer((
                     let resultOrder: any = await createGoodsToOrderSup(itemGoods, orderSupId);
                  setOrderSupStorage(oldOrdStor => [...oldOrdStor!, resultOrder?.data]);  
                 });  
-                const newOrderSupData = await updateOrderSup(data, orderSupId);  
+                const newOrderSupData = await updateOrderSup(data, orderSupId); 
+                if (data.status === 'Уточнення' && orderSupData.id_order) {
+                    await updateOrder({status: 'Уточнення'}, orderSupData?.id_order);
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Заявка №${orderSupId}/Замовлення №${orderSupData.id_order}, Переведено в статус -> Уточнення`,
+                        id_order: orderSupData.id_order,
+                        id_order_sup: null
+                    });
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Заявка №${orderSupId}, Переведено в статус -> Уточнення`,
+                        id_order: orderSupData.id_order,
+                        id_order_sup: null
+                    });
+                } 
+                if (data.status === 'Підтвердження' && orderSupData.id_order) {
+                    await updateOrder({status: 'Підтвердження'}, orderSupData?.id_order);
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Заявка №${orderSupId}/Замовлення №${orderSupData.id_order}, Переведено в статус -> Підтвердження`,
+                        id_order: orderSupData.id_order,
+                        id_order_sup: null
+                    });
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Заявка №${orderSupId}, Переведено в статус -> Підтвердження`,
+                        id_order: null,
+                        id_order_sup: orderSupId
+                    });
+                }
+                if (data.status === 'На Відгрузку' && 
+                    (data.delivery !== 'Самовивіз' || data.delivery !== 'Своя Доставка') && 
+                    orderSupData.id_order
+                    ) {
+                    await updateOrder({status: 'На Відгрузку', status_delivery:'Очікує ТТН'}, orderSupData?.id_order);
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Заявка №${orderSupId}/Замовлення №${orderSupData.id_order}, Переведено в статус -> На Відгрузку. Статус доставки -> Очікує ТТН`,
+                        id_order: orderSupData.id_order,
+                        id_order_sup: null
+                    });
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Заявка №${orderSupId}, Переведено в статус -> На Відгрузку. Статус доставки -> Очікує ТТН`,
+                        id_order: null,
+                        id_order_sup: orderSupId
+                    });
+                }
+                if (data.status === 'На Складі' && 
+                    (data.delivery === 'Самовивіз' || data.delivery === 'Своя Доставка') && 
+                    orderSupData.id_order
+                    ) {
+                    await updateOrder({status: 'На Відгрузку'}, orderSupData?.id_order);
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Заявка №${orderSupId}/Замовлення №${orderSupData.id_order}, Переведено в статус -> На Відгрузку`,
+                        id_order: orderSupData.id_order,
+                        id_order_sup: null
+                    });
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Заявка №${orderSupId}, Переведено в статус -> На Відгрузку`,
+                        id_order: null,
+                        id_order_sup: orderSupId
+                    });
+                }
+                if (data.status === 'Відвантажено' &&
+                    (data.delivery !== 'Самовивіз' || data.delivery !== 'Своя Доставка') && 
+                    orderSupData.id_order
+                ) {
+                    await updateOrder({status: 'Відвантажено', status_delivery:'Доставляеться'}, orderSupData?.id_order);
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Заявка №${orderSupId}/Замовлення №${orderSupData.id_order}, Переведено в статус -> Відвантажено`,
+                        id_order: orderSupData.id_order,
+                        id_order_sup: null
+                    });
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Заявка №${orderSupId}, Переведено в статус -> Відвантажено`,
+                        id_order: null,
+                        id_order_sup: orderSupId
+                    });
+                }
                 console.log('UPDATE_ORDER_SUP: ', newOrderSupData)
                 setOrderSupData(newOrderSupData?.data);  
                 alert(`Замовлення id ${orderSupId} збереженно,  товари оновлені.`);
-            
             } 
-            if(orderSupId && state.length === 0){
+            if(orderSupId && state.length === 0) {
                 alert("Товари не додані");
             }
             if (orderSupId && state.length !== 0 && disableBtnOk === true){
@@ -310,6 +393,90 @@ const AdminModalOrderSup = observer((
                 newStorage();
                 setDisableBtnOk(!disableBtnOk);
                 const newOrdersSupData = await updateOrderSup(data, orderSupId);
+                if (data.status === 'Уточнення' && orderSupData.id_order) {
+                    await updateOrder({status: 'Уточнення'}, orderSupData?.id_order);
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Заявка №${orderSupId}/Замовлення №${orderSupData.id_order}, Переведено в статус -> Уточнення`,
+                        id_order: orderSupData.id_order,
+                        id_order_sup: null
+                    });
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Заявка №${orderSupId}, Переведено в статус -> Уточнення`,
+                        id_order: orderSupData.id_order,
+                        id_order_sup: null
+                    });
+                } 
+                if (data.status === 'Підтвердження' && orderSupData.id_order) {
+                    await updateOrder({status: 'Підтвердження'}, orderSupData?.id_order);
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Заявка №${orderSupId}/Замовлення №${orderSupData.id_order}, Переведено в статус -> Підтвердження`,
+                        id_order: orderSupData.id_order,
+                        id_order_sup: null
+                    });
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Заявка №${orderSupId}, Переведено в статус -> Підтвердження`,
+                        id_order: null,
+                        id_order_sup: orderSupId
+                    });
+                }
+                if (data.status === 'На Відгрузку' && 
+                    (data.delivery !== 'Самовивіз' || data.delivery !== 'Своя Доставка') && 
+                    orderSupData.id_order
+                    ) {
+                    await updateOrder({status: 'На Відгрузку', status_delivery:'Очікує ТТН'}, orderSupData?.id_order);
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Заявка №${orderSupId}/Замовлення №${orderSupData.id_order}, Переведено в статус -> На Відгрузку. Статус доставки -> Очікує ТТН`,
+                        id_order: orderSupData.id_order,
+                        id_order_sup: null
+                    });
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Заявка №${orderSupId}, Переведено в статус -> На Відгрузку. Статус доставки -> Очікує ТТН`,
+                        id_order: null,
+                        id_order_sup: orderSupId
+                    });
+                }
+                if (data.status === 'На Складі' && 
+                    (data.delivery === 'Самовивіз' || data.delivery === 'Своя Доставка') && 
+                    orderSupData.id_order
+                    ) {
+                    await updateOrder({status: 'На Відгрузку'}, orderSupData?.id_order);
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Заявка №${orderSupId}/Замовлення №${orderSupData.id_order}, Переведено в статус -> На Відгрузку`,
+                        id_order: orderSupData.id_order,
+                        id_order_sup: null
+                    });
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Заявка №${orderSupId}, Переведено в статус -> На Відгрузку`,
+                        id_order: null,
+                        id_order_sup: orderSupId
+                    });
+                }
+                if (data.status === 'Відвантажено' &&
+                    (data.delivery !== 'Самовивіз' || data.delivery !== 'Своя Доставка') && 
+                    orderSupData.id_order
+                ) {
+                    await updateOrder({status: 'Відвантажено', status_delivery:'Доставляеться'}, orderSupData?.id_order);
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Заявка №${orderSupId}/Замовлення №${orderSupData.id_order}, Переведено в статус -> Відвантажено`,
+                        id_order: orderSupData.id_order,
+                        id_order_sup: null
+                    });
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Заявка №${orderSupId}, Переведено в статус -> Відвантажено`,
+                        id_order: null,
+                        id_order_sup: orderSupId
+                    });
+                }
                 console.log('UPDATE_ORDER_SUP: ', newOrdersSupData)
                 setOrderSupData(newOrdersSupData?.data);  
                 alert(`Товари до замовлення id ${orderSupId}, оновлено.`);
@@ -359,6 +526,7 @@ const AdminModalOrderSup = observer((
                             }, 
                             orderSupId!
                         );
+                        await updateOrder({status: 'Уточнення'}, orderSupData?.id_order);
                         setOrderSupData(newDataSupReq?.data); 
                         alert(`Заявка №${orderSupId}, уточнення відправлено постачальнику.`);
                         const addCommitReq: any = await addCommentsToOrder({
@@ -397,6 +565,7 @@ const AdminModalOrderSup = observer((
                             }, 
                             orderSupId!
                         );
+                        await updateOrder({status: 'Уточнення'}, orderSupData?.id_order);
                         setOrderSupData(newDataSupReqW?.data); 
                         alert(`Заявка №${orderSupId}, Уточнення відправлено.`);
 
@@ -654,12 +823,8 @@ const AdminModalOrderSup = observer((
                         onChange={(e) => setValue('status_delivery', e.target.value)}
                         >
                             <option value="Новий">Новий</option>
-                            <option value="Самовивіз">Самовивіз</option>
-                            <option value="Обробляеться">Обробляеться</option>
                             <option value="Очікує ТТН">Очікує ТТН</option>
                             <option value="Доставляеться">Доставляеться</option>
-                            <option value="Отримано ТТН">Отримано ТТН</option>
-                            <option value="Повернення ТТН">Повернення ТТН</option>
                             <option value="Відміна">Відміна</option>
                     </select>    
                 </div>

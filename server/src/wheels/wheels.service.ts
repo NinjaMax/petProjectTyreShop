@@ -126,7 +126,7 @@ export class WheelsService {
           { model: WheelBrand },
           { model: WheelSizeDigits },
           { model: PriceWheels },
-          { model: StockWheels }
+          { model: StockWheels },
         ],
       });
 
@@ -199,6 +199,99 @@ export class WheelsService {
     }
   }
 
+  async findAllWheelsMainOffset(
+    width: string,
+    diameter: string,
+    bolt_count: string,
+    brand: string,
+    type: string,
+    sort: string,
+  ) {
+    try {
+      const cachedWheelsMain = await this.redisService.get(
+        'wheel' + width + diameter + bolt_count + brand + type + sort + 'main',
+      );
+      if (cachedWheelsMain) {
+        return cachedWheelsMain;
+      }
+      if (sort === 'ASC') {
+        const wheelsAllWithoutLimitMain =
+          await this.wheelRepository.findAndCountAll({
+            include: [
+              width
+                ? {
+                    model: WheelWidth,
+                    where: {
+                      width: {
+                        [Op.in]: width.split(','),
+                      },
+                    },
+                  }
+                : { model: WheelWidth },
+              diameter
+                ? {
+                    model: WheelDiameter,
+                    where: {
+                      diameter: {
+                        [Op.in]: diameter.split(','),
+                      },
+                    },
+                  }
+                : { model: WheelDiameter },
+              bolt_count
+                ? {
+                    model: WheelBoltCount,
+                    where: {
+                      bolt_count: {
+                        [Op.in]: bolt_count.split(','),
+                      },
+                    },
+                  }
+                : { model: WheelBoltCount },
+              brand
+                ? {
+                    model: WheelBrand,
+                    where: {
+                      brand: {
+                        [Op.in]: brand.split(','),
+                      },
+                    },
+                  }
+                : { model: WheelBrand },
+              type
+                ? {
+                    model: WheelType,
+                    where: {
+                      type: {
+                        [Op.in]: type.split(','),
+                      },
+                    },
+                  }
+                : { model: WheelType },
+            ],
+          });
+        await this.redisService.set(
+          'wheel' +
+            width +
+            diameter +
+            bolt_count +
+            brand +
+            type +
+            sort +
+            'main',
+          3600,
+          JSON.stringify(wheelsAllWithoutLimitMain),
+        );
+        return wheelsAllWithoutLimitMain;
+      }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
   async findAllWheelsWithoutOffset(
     width: string,
     diameter: string,
@@ -217,19 +310,19 @@ export class WheelsService {
     try {
       const cachedTyres = await this.redisService.get(
         'wheel' +
-        width +
-        diameter +
-        bolt_count +
-        bolt_count_pcd +
-        brand +
-        price +
-        type +
-        color +
-        dia +
-        et +
-        pcd +
-        pcd2 +
-        sort
+          width +
+          diameter +
+          bolt_count +
+          bolt_count_pcd +
+          brand +
+          price +
+          type +
+          color +
+          dia +
+          et +
+          pcd +
+          pcd2 +
+          sort,
       );
       if (cachedTyres) {
         return cachedTyres;
@@ -237,784 +330,788 @@ export class WheelsService {
       if (sort === 'ASC') {
         const wheelsAllWithoutLimitC =
           await this.wheelRepository.findAndCountAll({
-          include: [
-            { model: RatingWheels },
-            { model: ReviewWheels },
-            { model: StockWheels },
-            { model: Category},
-            // { all: true },
-            width
-              ? {
-                  model: WheelWidth,
-                  where: {
-                    width: {
-                      [Op.in]: width.split(','),
+            include: [
+              { model: RatingWheels },
+              { model: ReviewWheels },
+              { model: StockWheels },
+              { model: Category },
+              // { all: true },
+              width
+                ? {
+                    model: WheelWidth,
+                    where: {
+                      width: {
+                        [Op.in]: width.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelWidth },
-            diameter
-              ? {
-                  model: WheelDiameter,
-                  where: {
-                    diameter: {
-                      [Op.in]: diameter.split(','),
+                  }
+                : { model: WheelWidth },
+              diameter
+                ? {
+                    model: WheelDiameter,
+                    where: {
+                      diameter: {
+                        [Op.in]: diameter.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelDiameter },
-            bolt_count
-              ? {
-                  model: WheelBoltCount,
-                  where: {
-                    bolt_count: {
-                      [Op.in]: bolt_count.split(','),
+                  }
+                : { model: WheelDiameter },
+              bolt_count
+                ? {
+                    model: WheelBoltCount,
+                    where: {
+                      bolt_count: {
+                        [Op.in]: bolt_count.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelBoltCount },
-            bolt_count_pcd
-              ? {
-                  model: WheelBoltCountPcd,
-                  where: {
-                    bolt_count_pcd: {
-                      [Op.in]: bolt_count_pcd.split(','),
+                  }
+                : { model: WheelBoltCount },
+              bolt_count_pcd
+                ? {
+                    model: WheelBoltCountPcd,
+                    where: {
+                      bolt_count_pcd: {
+                        [Op.in]: bolt_count_pcd.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelBoltCountPcd },
-            brand
-              ? {
-                  model: WheelBrand,
-                  where: {
-                    brand: {
-                      [Op.in]: brand.split(','),
+                  }
+                : { model: WheelBoltCountPcd },
+              brand
+                ? {
+                    model: WheelBrand,
+                    where: {
+                      brand: {
+                        [Op.in]: brand.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelBrand },
-            price
-              ? {
-                  model: PriceWheels,
-                  where: {
-                    price: { [Op.between]: price.split(',') },
-                  },
-                }
-              : { model: PriceWheels },
-            type
-              ? {
-                  model: WheelType,
-                  where: {
-                    type: {
-                      [Op.in]: type.split(','),
+                  }
+                : { model: WheelBrand },
+              price
+                ? {
+                    model: PriceWheels,
+                    where: {
+                      price: { [Op.between]: price.split(',') },
                     },
-                  },
-                }
-              : { model: WheelType },
-            color
-              ? {
-                  model: WheelColor,
-                  where: {
-                    color: {
-                      [Op.in]: color.split(','),
+                  }
+                : { model: PriceWheels },
+              type
+                ? {
+                    model: WheelType,
+                    where: {
+                      type: {
+                        [Op.in]: type.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelColor },
-            dia
-              ? {
-                  model: WheelDia,
-                  where: {
-                    dia: {
-                      [Op.in]: dia.split(','),
+                  }
+                : { model: WheelType },
+              color
+                ? {
+                    model: WheelColor,
+                    where: {
+                      color: {
+                        [Op.in]: color.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelDia },
-            et
-              ? {
-                  model: WheelEt,
-                  where: {
-                    et: {
-                      [Op.in]: et.split(','),
+                  }
+                : { model: WheelColor },
+              dia
+                ? {
+                    model: WheelDia,
+                    where: {
+                      dia: {
+                        [Op.in]: dia.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelEt },
-            pcd
-              ? {
-                  model: WheelPcd,
-                  where: {
-                    pcd: {
-                      [Op.in]: pcd.split(','),
+                  }
+                : { model: WheelDia },
+              et
+                ? {
+                    model: WheelEt,
+                    where: {
+                      et: {
+                        [Op.in]: et.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelPcd },
-            pcd2
-              ? {
-                  model: WheelPcd2,
-                  where: {
-                    pcd2: {
-                      [Op.in]: pcd2.split(','),
+                  }
+                : { model: WheelEt },
+              pcd
+                ? {
+                    model: WheelPcd,
+                    where: {
+                      pcd: {
+                        [Op.in]: pcd.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelPcd2 },
-          ],
-          order: [
-            [
-              sequelize.literal(
-                `CASE WHEN price.price = null OR price.price = 0 THEN NULL ELSE 0 END`,
-              ),
-              'ASC',
+                  }
+                : { model: WheelPcd },
+              pcd2
+                ? {
+                    model: WheelPcd2,
+                    where: {
+                      pcd2: {
+                        [Op.in]: pcd2.split(','),
+                      },
+                    },
+                  }
+                : { model: WheelPcd2 },
             ],
-            ['price', 'price', 'ASC NULLS LAST'],
-          ],
-        });
+            order: [
+              [
+                sequelize.literal(
+                  `CASE WHEN price.price = null OR price.price = 0 THEN NULL ELSE 0 END`,
+                ),
+                'ASC',
+              ],
+              ['price', 'price', 'ASC NULLS LAST'],
+            ],
+          });
         await this.redisService.set(
           'wheel' +
-          width +
-          diameter +
-          bolt_count +
-          bolt_count_pcd +
-          brand +
-          price +
-          type +
-          color +
-          dia +
-          et +
-          pcd +
-          pcd2 +
-          sort,
+            width +
+            diameter +
+            bolt_count +
+            bolt_count_pcd +
+            brand +
+            price +
+            type +
+            color +
+            dia +
+            et +
+            pcd +
+            pcd2 +
+            sort,
           1200,
           JSON.stringify(wheelsAllWithoutLimitC),
         );
         return wheelsAllWithoutLimitC;
       }
       if (sort === 'DESC') {
-        const wheelsAllWithoutLimitE = await this.wheelRepository.findAndCountAll({
-          include: [
-            // { all: true },
-            { model: RatingWheels },
-            { model: ReviewWheels },
-            { model: StockWheels },
-            { model: Category},
-            width
-              ? {
-                  model: WheelWidth,
-                  where: {
-                    width: {
-                      [Op.in]: width.split(','),
+        const wheelsAllWithoutLimitE =
+          await this.wheelRepository.findAndCountAll({
+            include: [
+              // { all: true },
+              { model: RatingWheels },
+              { model: ReviewWheels },
+              { model: StockWheels },
+              { model: Category },
+              width
+                ? {
+                    model: WheelWidth,
+                    where: {
+                      width: {
+                        [Op.in]: width.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelWidth },
-            diameter
-              ? {
-                  model: WheelDiameter,
-                  where: {
-                    diameter: {
-                      [Op.in]: diameter.split(','),
+                  }
+                : { model: WheelWidth },
+              diameter
+                ? {
+                    model: WheelDiameter,
+                    where: {
+                      diameter: {
+                        [Op.in]: diameter.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelDiameter },
-            bolt_count
-              ? {
-                  model: WheelBoltCount,
-                  where: {
-                    bolt_count: {
-                      [Op.in]: bolt_count.split(','),
+                  }
+                : { model: WheelDiameter },
+              bolt_count
+                ? {
+                    model: WheelBoltCount,
+                    where: {
+                      bolt_count: {
+                        [Op.in]: bolt_count.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelBoltCount },
-            bolt_count_pcd
-              ? {
-                  model: WheelBoltCountPcd,
-                  where: {
-                    bolt_count_pcd: {
-                      [Op.in]: bolt_count_pcd.split(','),
+                  }
+                : { model: WheelBoltCount },
+              bolt_count_pcd
+                ? {
+                    model: WheelBoltCountPcd,
+                    where: {
+                      bolt_count_pcd: {
+                        [Op.in]: bolt_count_pcd.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelBoltCountPcd },
-            brand
-              ? {
-                  model: WheelBrand,
-                  where: {
-                    brand: {
-                      [Op.in]: brand.split(','),
+                  }
+                : { model: WheelBoltCountPcd },
+              brand
+                ? {
+                    model: WheelBrand,
+                    where: {
+                      brand: {
+                        [Op.in]: brand.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelBrand },
-            price
-              ? {
-                  model: PriceWheels,
-                  where: {
-                    price: { [Op.between]: price.split(',') },
-                  },
-                }
-              : { model: PriceWheels },
-            type
-              ? {
-                  model: WheelType,
-                  where: {
-                    type: {
-                      [Op.in]: type.split(','),
+                  }
+                : { model: WheelBrand },
+              price
+                ? {
+                    model: PriceWheels,
+                    where: {
+                      price: { [Op.between]: price.split(',') },
                     },
-                  },
-                }
-              : { model: WheelType },
-            color
-              ? {
-                  model: WheelColor,
-                  where: {
-                    color: {
-                      [Op.in]: color.split(','),
+                  }
+                : { model: PriceWheels },
+              type
+                ? {
+                    model: WheelType,
+                    where: {
+                      type: {
+                        [Op.in]: type.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelColor },
-            dia
-              ? {
-                  model: WheelDia,
-                  where: {
-                    dia: {
-                      [Op.in]: dia.split(','),
+                  }
+                : { model: WheelType },
+              color
+                ? {
+                    model: WheelColor,
+                    where: {
+                      color: {
+                        [Op.in]: color.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelDia },
-            et
-              ? {
-                  model: WheelEt,
-                  where: {
-                    et: {
-                      [Op.in]: et.split(','),
+                  }
+                : { model: WheelColor },
+              dia
+                ? {
+                    model: WheelDia,
+                    where: {
+                      dia: {
+                        [Op.in]: dia.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelEt },
-            pcd
-              ? {
-                  model: WheelPcd,
-                  where: {
-                    pcd: {
-                      [Op.in]: pcd.split(','),
+                  }
+                : { model: WheelDia },
+              et
+                ? {
+                    model: WheelEt,
+                    where: {
+                      et: {
+                        [Op.in]: et.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelPcd },
-            pcd2
-              ? {
-                  model: WheelPcd2,
-                  where: {
-                    pcd2: {
-                      [Op.in]: pcd2.split(','),
+                  }
+                : { model: WheelEt },
+              pcd
+                ? {
+                    model: WheelPcd,
+                    where: {
+                      pcd: {
+                        [Op.in]: pcd.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelPcd2 },
-          ],
-          order: [
-            [
-              sequelize.literal(
-                `CASE WHEN price.price = null OR price.price = 0 THEN NULL ELSE 0 END`,
-              ),
-              'ASC',
+                  }
+                : { model: WheelPcd },
+              pcd2
+                ? {
+                    model: WheelPcd2,
+                    where: {
+                      pcd2: {
+                        [Op.in]: pcd2.split(','),
+                      },
+                    },
+                  }
+                : { model: WheelPcd2 },
             ],
-            ['price', 'price', 'DESC'],
-          ],
-        });
+            order: [
+              [
+                sequelize.literal(
+                  `CASE WHEN price.price = null OR price.price = 0 THEN NULL ELSE 0 END`,
+                ),
+                'ASC',
+              ],
+              ['price', 'price', 'DESC'],
+            ],
+          });
         await this.redisService.set(
           'wheel' +
-          width +
-          diameter +
-          bolt_count +
-          bolt_count_pcd +
-          brand +
-          price +
-          type +
-          color +
-          dia +
-          et +
-          pcd +
-          pcd2 +
-          sort,
+            width +
+            diameter +
+            bolt_count +
+            bolt_count_pcd +
+            brand +
+            price +
+            type +
+            color +
+            dia +
+            et +
+            pcd +
+            pcd2 +
+            sort,
           1200,
           JSON.stringify(wheelsAllWithoutLimitE),
         );
         return wheelsAllWithoutLimitE;
       }
       if (sort === 'oldPrice') {
-        const wheelsAllWithoutLimitO = await this.wheelRepository.findAndCountAll({
-          include: [
-            // { all: true },
-            { model: RatingWheels },
-            { model: ReviewWheels },
-            { model: StockWheels },
-            { model: Category},
-            width
-              ? {
-                  model: WheelWidth,
-                  where: {
-                    width: {
-                      [Op.in]: width.split(','),
+        const wheelsAllWithoutLimitO =
+          await this.wheelRepository.findAndCountAll({
+            include: [
+              // { all: true },
+              { model: RatingWheels },
+              { model: ReviewWheels },
+              { model: StockWheels },
+              { model: Category },
+              width
+                ? {
+                    model: WheelWidth,
+                    where: {
+                      width: {
+                        [Op.in]: width.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelWidth },
-            diameter
-              ? {
-                  model: WheelDiameter,
-                  where: {
-                    diameter: {
-                      [Op.in]: diameter.split(','),
+                  }
+                : { model: WheelWidth },
+              diameter
+                ? {
+                    model: WheelDiameter,
+                    where: {
+                      diameter: {
+                        [Op.in]: diameter.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelDiameter },
-            bolt_count
-              ? {
-                  model: WheelBoltCount,
-                  where: {
-                    bolt_count: {
-                      [Op.in]: bolt_count.split(','),
+                  }
+                : { model: WheelDiameter },
+              bolt_count
+                ? {
+                    model: WheelBoltCount,
+                    where: {
+                      bolt_count: {
+                        [Op.in]: bolt_count.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelBoltCount },
-            bolt_count_pcd
-              ? {
-                  model: WheelBoltCountPcd,
-                  where: {
-                    bolt_count_pcd: {
-                      [Op.in]: bolt_count_pcd.split(','),
+                  }
+                : { model: WheelBoltCount },
+              bolt_count_pcd
+                ? {
+                    model: WheelBoltCountPcd,
+                    where: {
+                      bolt_count_pcd: {
+                        [Op.in]: bolt_count_pcd.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelBoltCountPcd },
-            brand
-              ? {
-                  model: WheelBrand,
-                  where: {
-                    brand: {
-                      [Op.in]: brand.split(','),
+                  }
+                : { model: WheelBoltCountPcd },
+              brand
+                ? {
+                    model: WheelBrand,
+                    where: {
+                      brand: {
+                        [Op.in]: brand.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelBrand },
-            price
-              ? {
-                  model: PriceWheels,
-                  where: {
-                    price: { [Op.between]: price.split(',') },
-                  },
-                }
-              : { model: PriceWheels },
-            type
-              ? {
-                  model: WheelType,
-                  where: {
-                    type: {
-                      [Op.in]: type.split(','),
+                  }
+                : { model: WheelBrand },
+              price
+                ? {
+                    model: PriceWheels,
+                    where: {
+                      price: { [Op.between]: price.split(',') },
                     },
-                  },
-                }
-              : { model: WheelType },
-            color
-              ? {
-                  model: WheelColor,
-                  where: {
-                    color: {
-                      [Op.in]: color.split(','),
+                  }
+                : { model: PriceWheels },
+              type
+                ? {
+                    model: WheelType,
+                    where: {
+                      type: {
+                        [Op.in]: type.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelColor },
-            dia
-              ? {
-                  model: WheelDia,
-                  where: {
-                    dia: {
-                      [Op.in]: dia.split(','),
+                  }
+                : { model: WheelType },
+              color
+                ? {
+                    model: WheelColor,
+                    where: {
+                      color: {
+                        [Op.in]: color.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelDia },
-            et
-              ? {
-                  model: WheelEt,
-                  where: {
-                    et: {
-                      [Op.in]: et.split(','),
+                  }
+                : { model: WheelColor },
+              dia
+                ? {
+                    model: WheelDia,
+                    where: {
+                      dia: {
+                        [Op.in]: dia.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelEt },
-            pcd
-              ? {
-                  model: WheelPcd,
-                  where: {
-                    pcd: {
-                      [Op.in]: pcd.split(','),
+                  }
+                : { model: WheelDia },
+              et
+                ? {
+                    model: WheelEt,
+                    where: {
+                      et: {
+                        [Op.in]: et.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelPcd },
-            pcd2
-              ? {
-                  model: WheelPcd2,
-                  where: {
-                    pcd2: {
-                      [Op.in]: pcd2.split(','),
+                  }
+                : { model: WheelEt },
+              pcd
+                ? {
+                    model: WheelPcd,
+                    where: {
+                      pcd: {
+                        [Op.in]: pcd.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelPcd2 },
-          ],
-          order: [
-            [
-              sequelize.literal(
-                `CASE WHEN price.price = null OR price.price = 0 THEN NULL ELSE 0 END`,
-              ),
-              'ASC',
+                  }
+                : { model: WheelPcd },
+              pcd2
+                ? {
+                    model: WheelPcd2,
+                    where: {
+                      pcd2: {
+                        [Op.in]: pcd2.split(','),
+                      },
+                    },
+                  }
+                : { model: WheelPcd2 },
             ],
-            ['price', 'old_price', 'ASC'],
-          ],
-        });
+            order: [
+              [
+                sequelize.literal(
+                  `CASE WHEN price.price = null OR price.price = 0 THEN NULL ELSE 0 END`,
+                ),
+                'ASC',
+              ],
+              ['price', 'old_price', 'ASC'],
+            ],
+          });
         await this.redisService.set(
           'wheel' +
-          width +
-          diameter +
-          bolt_count +
-          bolt_count_pcd +
-          brand +
-          price +
-          type +
-          color +
-          dia +
-          et +
-          pcd +
-          pcd2 +
-          sort,
+            width +
+            diameter +
+            bolt_count +
+            bolt_count_pcd +
+            brand +
+            price +
+            type +
+            color +
+            dia +
+            et +
+            pcd +
+            pcd2 +
+            sort,
           1200,
           JSON.stringify(wheelsAllWithoutLimitO),
         );
         return wheelsAllWithoutLimitO;
       }
       if (sort === 'title') {
-        const wheelsAllWithoutLimitT = await this.wheelRepository.findAndCountAll({
-          include: [
-            // { all: true },
-            { model: RatingWheels },
-            { model: ReviewWheels },
-            { model: StockWheels },
-            { model: Category},
-            width
-              ? {
-                  model: WheelWidth,
-                  where: {
-                    width: {
-                      [Op.in]: width.split(','),
+        const wheelsAllWithoutLimitT =
+          await this.wheelRepository.findAndCountAll({
+            include: [
+              // { all: true },
+              { model: RatingWheels },
+              { model: ReviewWheels },
+              { model: StockWheels },
+              { model: Category },
+              width
+                ? {
+                    model: WheelWidth,
+                    where: {
+                      width: {
+                        [Op.in]: width.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelWidth },
-            diameter
-              ? {
-                  model: WheelDiameter,
-                  where: {
-                    diameter: {
-                      [Op.in]: diameter.split(','),
+                  }
+                : { model: WheelWidth },
+              diameter
+                ? {
+                    model: WheelDiameter,
+                    where: {
+                      diameter: {
+                        [Op.in]: diameter.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelDiameter },
-            bolt_count
-              ? {
-                  model: WheelBoltCount,
-                  where: {
-                    bolt_count: {
-                      [Op.in]: bolt_count.split(','),
+                  }
+                : { model: WheelDiameter },
+              bolt_count
+                ? {
+                    model: WheelBoltCount,
+                    where: {
+                      bolt_count: {
+                        [Op.in]: bolt_count.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelBoltCount },
-            bolt_count_pcd
-              ? {
-                  model: WheelBoltCountPcd,
-                  where: {
-                    bolt_count_pcd: {
-                      [Op.in]: bolt_count_pcd.split(','),
+                  }
+                : { model: WheelBoltCount },
+              bolt_count_pcd
+                ? {
+                    model: WheelBoltCountPcd,
+                    where: {
+                      bolt_count_pcd: {
+                        [Op.in]: bolt_count_pcd.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelBoltCountPcd },
-            brand
-              ? {
-                  model: WheelBrand,
-                  where: {
-                    brand: {
-                      [Op.in]: brand.split(','),
+                  }
+                : { model: WheelBoltCountPcd },
+              brand
+                ? {
+                    model: WheelBrand,
+                    where: {
+                      brand: {
+                        [Op.in]: brand.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelBrand },
-            price
-              ? {
-                  model: PriceWheels,
-                  where: {
-                    price: { [Op.between]: price.split(',') },
-                  },
-                }
-              : { model: PriceWheels },
-            type
-              ? {
-                  model: WheelType,
-                  where: {
-                    type: {
-                      [Op.in]: type.split(','),
+                  }
+                : { model: WheelBrand },
+              price
+                ? {
+                    model: PriceWheels,
+                    where: {
+                      price: { [Op.between]: price.split(',') },
                     },
-                  },
-                }
-              : { model: WheelType },
-            color
-              ? {
-                  model: WheelColor,
-                  where: {
-                    color: {
-                      [Op.in]: color.split(','),
+                  }
+                : { model: PriceWheels },
+              type
+                ? {
+                    model: WheelType,
+                    where: {
+                      type: {
+                        [Op.in]: type.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelColor },
-            dia
-              ? {
-                  model: WheelDia,
-                  where: {
-                    dia: {
-                      [Op.in]: dia.split(','),
+                  }
+                : { model: WheelType },
+              color
+                ? {
+                    model: WheelColor,
+                    where: {
+                      color: {
+                        [Op.in]: color.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelDia },
-            et
-              ? {
-                  model: WheelEt,
-                  where: {
-                    et: {
-                      [Op.in]: et.split(','),
+                  }
+                : { model: WheelColor },
+              dia
+                ? {
+                    model: WheelDia,
+                    where: {
+                      dia: {
+                        [Op.in]: dia.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelEt },
-            pcd
-              ? {
-                  model: WheelPcd,
-                  where: {
-                    pcd: {
-                      [Op.in]: pcd.split(','),
+                  }
+                : { model: WheelDia },
+              et
+                ? {
+                    model: WheelEt,
+                    where: {
+                      et: {
+                        [Op.in]: et.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelPcd },
-            pcd2
-              ? {
-                  model: WheelPcd2,
-                  where: {
-                    pcd2: {
-                      [Op.in]: pcd2.split(','),
+                  }
+                : { model: WheelEt },
+              pcd
+                ? {
+                    model: WheelPcd,
+                    where: {
+                      pcd: {
+                        [Op.in]: pcd.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelPcd2 },
-          ],
-          order: [
-            [
-              sequelize.literal(
-                `CASE WHEN price.price = null OR price.price = 0 THEN NULL ELSE 0 END`,
-              ),
-              'ASC',
+                  }
+                : { model: WheelPcd },
+              pcd2
+                ? {
+                    model: WheelPcd2,
+                    where: {
+                      pcd2: {
+                        [Op.in]: pcd2.split(','),
+                      },
+                    },
+                  }
+                : { model: WheelPcd2 },
             ],
-            ['full_name', 'ASC'],
-          ],
-        });
+            order: [
+              [
+                sequelize.literal(
+                  `CASE WHEN price.price = null OR price.price = 0 THEN NULL ELSE 0 END`,
+                ),
+                'ASC',
+              ],
+              ['full_name', 'ASC'],
+            ],
+          });
         await this.redisService.set(
           'wheel' +
-          width +
-          diameter +
-          bolt_count +
-          bolt_count_pcd +
-          brand +
-          price +
-          type +
-          color +
-          dia +
-          et +
-          pcd +
-          pcd2 +
-          sort,
+            width +
+            diameter +
+            bolt_count +
+            bolt_count_pcd +
+            brand +
+            price +
+            type +
+            color +
+            dia +
+            et +
+            pcd +
+            pcd2 +
+            sort,
           1200,
           JSON.stringify(wheelsAllWithoutLimitT),
         );
         return wheelsAllWithoutLimitT;
       }
       if (sort === 'rating') {
-        const wheelsAllWithoutLimitR = await this.wheelRepository.findAndCountAll({
-          include: [
-            // { all: true },
-            { model: RatingWheels },
-            { model: ReviewWheels },
-            { model: StockWheels },
-            { model: Category},
-            width
-              ? {
-                  model: WheelWidth,
-                  where: {
-                    width: {
-                      [Op.in]: width.split(','),
+        const wheelsAllWithoutLimitR =
+          await this.wheelRepository.findAndCountAll({
+            include: [
+              // { all: true },
+              { model: RatingWheels },
+              { model: ReviewWheels },
+              { model: StockWheels },
+              { model: Category },
+              width
+                ? {
+                    model: WheelWidth,
+                    where: {
+                      width: {
+                        [Op.in]: width.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelWidth },
-            diameter
-              ? {
-                  model: WheelDiameter,
-                  where: {
-                    diameter: {
-                      [Op.in]: diameter.split(','),
+                  }
+                : { model: WheelWidth },
+              diameter
+                ? {
+                    model: WheelDiameter,
+                    where: {
+                      diameter: {
+                        [Op.in]: diameter.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelDiameter },
-            bolt_count
-              ? {
-                  model: WheelBoltCount,
-                  where: {
-                    bolt_count: {
-                      [Op.in]: bolt_count.split(','),
+                  }
+                : { model: WheelDiameter },
+              bolt_count
+                ? {
+                    model: WheelBoltCount,
+                    where: {
+                      bolt_count: {
+                        [Op.in]: bolt_count.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelBoltCount },
-            bolt_count_pcd
-              ? {
-                  model: WheelBoltCountPcd,
-                  where: {
-                    bolt_count_pcd: {
-                      [Op.in]: bolt_count_pcd.split(','),
+                  }
+                : { model: WheelBoltCount },
+              bolt_count_pcd
+                ? {
+                    model: WheelBoltCountPcd,
+                    where: {
+                      bolt_count_pcd: {
+                        [Op.in]: bolt_count_pcd.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelBoltCountPcd },
-            brand
-              ? {
-                  model: WheelBrand,
-                  where: {
-                    brand: {
-                      [Op.in]: brand.split(','),
+                  }
+                : { model: WheelBoltCountPcd },
+              brand
+                ? {
+                    model: WheelBrand,
+                    where: {
+                      brand: {
+                        [Op.in]: brand.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelBrand },
-            price
-              ? {
-                  model: PriceWheels,
-                  where: {
-                    price: { [Op.between]: price.split(',') },
-                  },
-                }
-              : { model: PriceWheels },
-            type
-              ? {
-                  model: WheelType,
-                  where: {
-                    type: {
-                      [Op.in]: type.split(','),
+                  }
+                : { model: WheelBrand },
+              price
+                ? {
+                    model: PriceWheels,
+                    where: {
+                      price: { [Op.between]: price.split(',') },
                     },
-                  },
-                }
-              : { model: WheelType },
-            color
-              ? {
-                  model: WheelColor,
-                  where: {
-                    color: {
-                      [Op.in]: color.split(','),
+                  }
+                : { model: PriceWheels },
+              type
+                ? {
+                    model: WheelType,
+                    where: {
+                      type: {
+                        [Op.in]: type.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelColor },
-            dia
-              ? {
-                  model: WheelDia,
-                  where: {
-                    dia: {
-                      [Op.in]: dia.split(','),
+                  }
+                : { model: WheelType },
+              color
+                ? {
+                    model: WheelColor,
+                    where: {
+                      color: {
+                        [Op.in]: color.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelDia },
-            et
-              ? {
-                  model: WheelEt,
-                  where: {
-                    et: {
-                      [Op.in]: et.split(','),
+                  }
+                : { model: WheelColor },
+              dia
+                ? {
+                    model: WheelDia,
+                    where: {
+                      dia: {
+                        [Op.in]: dia.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelEt },
-            pcd
-              ? {
-                  model: WheelPcd,
-                  where: {
-                    pcd: {
-                      [Op.in]: pcd.split(','),
+                  }
+                : { model: WheelDia },
+              et
+                ? {
+                    model: WheelEt,
+                    where: {
+                      et: {
+                        [Op.in]: et.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelPcd },
-            pcd2
-              ? {
-                  model: WheelPcd2,
-                  where: {
-                    pcd2: {
-                      [Op.in]: pcd2.split(','),
+                  }
+                : { model: WheelEt },
+              pcd
+                ? {
+                    model: WheelPcd,
+                    where: {
+                      pcd: {
+                        [Op.in]: pcd.split(','),
+                      },
                     },
-                  },
-                }
-              : { model: WheelPcd2 },
-          ],
-          order: [
-            [
-              sequelize.literal(
-                `CASE WHEN price.price = null OR price.price = 0 THEN NULL ELSE 0 END`,
-              ),
-              'ASC',
+                  }
+                : { model: WheelPcd },
+              pcd2
+                ? {
+                    model: WheelPcd2,
+                    where: {
+                      pcd2: {
+                        [Op.in]: pcd2.split(','),
+                      },
+                    },
+                  }
+                : { model: WheelPcd2 },
             ],
-            ['rating', 'rating_overall', 'ASC'],
-          ],
-        });
+            order: [
+              [
+                sequelize.literal(
+                  `CASE WHEN price.price = null OR price.price = 0 THEN NULL ELSE 0 END`,
+                ),
+                'ASC',
+              ],
+              ['rating', 'rating_overall', 'ASC'],
+            ],
+          });
         await this.redisService.set(
           'wheel' +
-          width +
-          diameter +
-          bolt_count +
-          bolt_count_pcd +
-          brand +
-          price +
-          type +
-          color +
-          dia +
-          et +
-          pcd +
-          pcd2 +
-          sort,
+            width +
+            diameter +
+            bolt_count +
+            bolt_count_pcd +
+            brand +
+            price +
+            type +
+            color +
+            dia +
+            et +
+            pcd +
+            pcd2 +
+            sort,
           1200,
           JSON.stringify(wheelsAllWithoutLimitR),
         );
@@ -1035,10 +1132,10 @@ export class WheelsService {
           { model: RatingWheels },
           { model: ReviewWheels },
           { model: StockWheels },
-          { model: Category},
+          { model: Category },
           { model: PriceWheels },
           { model: WheelType },
-          { model: WheelSizeDigits},
+          { model: WheelSizeDigits },
           { model: WheelDiameter, where: { diameter: diameter } },
         ],
       });
@@ -1065,13 +1162,16 @@ export class WheelsService {
           { model: RatingWheels },
           { model: ReviewWheels },
           { model: StockWheels },
-          { model: Category},
+          { model: Category },
           { model: PriceWheels },
           { model: WheelType },
-          { model: WheelSizeDigits},
+          { model: WheelSizeDigits },
           { model: WheelBrand, where: { brand: brand } },
           { model: WheelWidth, where: { width: width } },
-          { model: WheelBoltCountPcd, where: { bolt_count_pcd: bolt_count_pcd } },
+          {
+            model: WheelBoltCountPcd,
+            where: { bolt_count_pcd: bolt_count_pcd },
+          },
           { model: WheelDia, where: { dia: dia } },
           { model: WheelEt, where: { et: et } },
           { model: WheelDiameter, where: { diameter: diameter } },
@@ -1093,10 +1193,10 @@ export class WheelsService {
           { model: RatingWheels },
           { model: ReviewWheels },
           { model: StockWheels },
-          { model: Category},
+          { model: Category },
           { model: PriceWheels },
           { model: WheelType },
-          { model: WheelSizeDigits},
+          { model: WheelSizeDigits },
           { model: WheelBrand, where: { brand: brand } },
           { model: WheelModel, where: { model: model } },
         ],
@@ -1115,20 +1215,23 @@ export class WheelsService {
     bolt_count_pcd: string,
     dia: string,
     et: string,
-    diameter: string
-    ) {
+    diameter: string,
+  ) {
     try {
       const wheelsAllByParams = await this.wheelRepository.findAll({
         include: [
           { model: RatingWheels },
           { model: ReviewWheels },
           { model: StockWheels },
-          { model: Category},
+          { model: Category },
           { model: PriceWheels },
           { model: WheelType },
-          { model: WheelSizeDigits},
+          { model: WheelSizeDigits },
           { model: WheelWidth, where: { width: width } },
-          { model: WheelBoltCountPcd, where: { bolt_count_pcd: bolt_count_pcd } },
+          {
+            model: WheelBoltCountPcd,
+            where: { bolt_count_pcd: bolt_count_pcd },
+          },
           { model: WheelDia, where: { dia: dia } },
           { model: WheelEt, where: { et: et } },
           { model: WheelDiameter, where: { diameter: diameter } },

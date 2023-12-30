@@ -7,8 +7,8 @@ import { sendMessage } from './gatewayApi/smsGateway';
 export class SmsFlyApiService {
   async sendSmsViber(createSmsFlyApiDto: CreateSmsFlyApiDto) {
     try {
-       const sendNewMessage = await sendMessage(createSmsFlyApiDto);
-       return 'message transmitted';
+      const sendNewMessage: any = await sendMessage(createSmsFlyApiDto);
+      return sendNewMessage;
     } catch (error) {
       throw new HttpException(`Помилка`, HttpStatus.BAD_REQUEST);
     }

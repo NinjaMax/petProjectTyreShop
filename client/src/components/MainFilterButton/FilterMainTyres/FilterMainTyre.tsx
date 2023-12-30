@@ -42,10 +42,15 @@ const FilterMainTyre = observer((
     },[filterState])
 
     const handleChange = (e: any) => {
+        //const idProperty = e.target.id;
+        // console.log('FILTER_NAME: ', e.target.name);
+        // console.log('FILTER_CHOOSE: ', e.target.value);
         if (e.target.name === 'Ширина') {
+            //console.log('ID', e.target.id);
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setWidth(e.target.value);
+            //filter.setWidth_id(idProperty);
             setStateWidth(!stateWidth);
             filterOpenCloseAction(!filterState);
         }
@@ -105,6 +110,7 @@ const FilterMainTyre = observer((
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setWidth(null);
+            filter.setWidth_id(null);
         }
         if (e.target.getAttribute('data-name') === 'Профіль') {
             page.setLoadMore(0);
@@ -212,7 +218,7 @@ const FilterMainTyre = observer((
                 deleteChip={handleDeleteChange}
             >
             { goodsTyre._width ? 
-                goodsTyre._width.map((widthItem: any) => (
+                goodsTyre._width.map((widthItem:any) => (
                 <SelectFilterList 
                     key={widthItem}
                     nameFilter={'Ширина'}

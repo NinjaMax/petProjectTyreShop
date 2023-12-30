@@ -25,13 +25,11 @@ const FilterMainBtn = observer(({
     } 
   }
   const inputSearch = (e: any) => {
-    // console.log(e.target.value.length);
-    // console.log(e.target.name);
     if (e.target.name === 'Ширина') {
       if (e.target.value.length !==0) {
         const newGoodsTyreWidth = goodsTyre._width.filter(
           (itemSearch: any) => (
-          itemSearch.toLowerCase().includes(e.target.value)));
+          itemSearch.width.toLowerCase().includes(e.target.value)));
         goodsTyre.setWidth(newGoodsTyreWidth);
       } else {
         goodsTyre.setWidth(filter.widthSearch);

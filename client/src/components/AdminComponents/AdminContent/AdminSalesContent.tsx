@@ -3,9 +3,13 @@ import '../../../css/AdminComponentCss/AdminContentCss/AdminSalesContent.css';
 import ButtonSearch from '../../buttons/ButtonSearch';
 import { ISalesItem } from './types/SalesItem.type';
 import { IAdminSales } from './interfaces/AdminSales.interface';
+import { FixedSizeList  as List } from 'react-window';
+import SpinnerCarRot from '../../spinners/SpinnerCarRot';
 
 const AdminSalesContent = ({sales}: IAdminSales) => {
     const [filteredSales, setFilteredSales] = useState< any[] | null>(sales);
+    const [activeSales, setActiveSales] = useState(false);
+    const [salesData, setSalesData] = useState(null);
     const [value, setValue] = useState('');
     const [isSearch, setIsSearch] = useState(true);
 
@@ -20,6 +24,30 @@ const AdminSalesContent = ({sales}: IAdminSales) => {
             setFilteredSales(sales);
         }
     },[sales, value])
+
+    const showSalesData = async (e: any) => {
+        let orderSupInfo: any;
+        const dataSupName = e.currentTarget.getAttribute("data-name");
+        const dataSupValue = e.currentTarget.getAttribute("data-value");
+        if (dataSupName === 'salesShow') {
+            orderSupInfo = sales?.find(
+            (item:{id_sale: number}) => 
+                item.id_sale === dataSupValue || 
+                e.target.value
+            );
+        }
+        if (e.currentTarget.name === 'editSupOrder') {
+            orderSupInfo = sales?.find(
+            (item:{id_sale: number}) => 
+                item.id_sale === e.currentTarget.value
+            );  
+        }  
+        if(orderSupInfo) {
+            //e.currentTarget.name === 'editSupOrder' ? orderSupInfo.disableBtns = false : orderSupInfo.disableBtns = true;
+            setSalesData(orderSupInfo);
+            setActiveSales(!activeSales);
+        }
+    };
 
     const itemClickHandler = (e: any) => {
         const entity = e.target.textContent.split(':')
@@ -151,6 +179,57 @@ const AdminSalesContent = ({sales}: IAdminSales) => {
         }
     }
 
+    const salesRowTable = ({index, style}: any) => (
+        <div className='admOrderSupGridItem' style={style}
+            //onClick={showComment}
+            onDoubleClick={showSalesData}
+            data-name='salesShow'
+            data-value={filteredSales![index].id_sale}>
+            <div>{filteredSales![index].id_sale}</div>
+            <div>{new Date(filteredSales![index].createdAt).toLocaleString()}</div>
+            <div>{filteredSales![index]?.customer?.name}</div>
+            <div>{filteredSales![index].id_order}</div>
+            <div>{filteredSales![index]?.status}</div>
+            <div>{filteredSales![index]?.order_view}</div>
+            <div>{filteredSales![index]?.delivery}</div>
+            <div>{filteredSales![index]?.status_delivery}</div>
+            <div>{filteredSales![index]?.pay_view}</div>
+            <div>{filteredSales![index]?.status_pay}</div>
+            <div>{filteredSales![index]?.user?.name}</div>
+            <div>{filteredSales![index]?.notes}</div>
+            <div>
+                <button className='basketAdmGoods'
+                    value={filteredSales![index].id_order_sup}
+                    //onClick={addStockOrderSupGoods}
+                    >
+                    <i className="fas fa-warehouse"
+                        title='Додати на склад'
+                    ></i>
+                </button>
+                <button className='basketAdmGoods'
+                    value={filteredSales![index].id_order_sup}
+                    onClick={() => console.log('SOME_FUNCTION')}>
+                    <i className="fas fa-truck-loading"></i>
+                </button>
+                <button className='editAdmGoods'
+                    name='editSupOrder'
+                    value={filteredSales![index].id_order_sup}
+                    //onClick={showOrderSupData}
+                    >
+                    <i className="fas fa-edit"
+                        title='Редагувати'
+                    ></i>
+                </button>
+                <button className='closeAdmGoods'
+                    value={filteredSales![index].id_order_sup}>
+                    <i className="fa fa-remove"
+                        title='Видалити'
+                    ></i>
+                </button>                  
+            </div>
+        </div>    
+    );
+
     return (
         <div onClick={inputCancelHandler}>
         <div className="admSalesContent">
@@ -183,6 +262,7 @@ const AdminSalesContent = ({sales}: IAdminSales) => {
                     </ul>
             <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
         </div>
+        {filteredSales ? 
         <div className='admSalesTable'>
         <table className='admListSalesTable'>
             <thead>
@@ -206,7 +286,7 @@ const AdminSalesContent = ({sales}: IAdminSales) => {
                 </tr>
             </thead>    
             <tbody>
-            {filteredSales ? filteredSales.map((items: ISalesItem) => (
+            {/* {filteredSales ? filteredSales.map((items: ISalesItem) => (
                     <tr key={'or' + items.id_sales}
                         //onClick={e => showComment(e)}
                         //onDoubleClick={e => showOrderData(e)}
@@ -239,10 +319,21 @@ const AdminSalesContent = ({sales}: IAdminSales) => {
                     </tr>
                     ))
                     : <tr><td>......Очікуемо продажі......</td></tr>
-                    }                   
+                    }                    */}
             </tbody>
         </table>
-        </div> 
+        <List
+            className="admOrderSupTableColmId"
+            itemCount={filteredSales!.length}
+            itemSize={65}
+            height={330}
+            width={1315}
+        >
+            {salesRowTable}
+        </List>       
+        </div> :
+        <SpinnerCarRot/>
+        }
     </div>
     );
 };

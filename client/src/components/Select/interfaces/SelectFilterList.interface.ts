@@ -5,4 +5,5 @@ export interface ISelectFilterList {
     onChange: (e: any) => void; 
     width?: number;
     nameFilter?: string;
+    id?: string;
 }

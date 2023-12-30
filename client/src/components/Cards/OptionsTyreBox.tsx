@@ -15,7 +15,7 @@ const OptionsTyreBox = ({character}: any) => {
                 </span>
             </div>
             <div className="tooltipCardTyres">
-                <span>Діаметр: {character?.diameter.diameter}
+                <span>Діаметр: {character?.diameter?.diameter}
                     <span className="tooltipTextCardTyres">Посадочний діаметр шини</span>                        
                 </span>
             </div>

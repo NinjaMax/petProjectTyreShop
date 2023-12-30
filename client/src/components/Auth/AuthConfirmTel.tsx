@@ -26,12 +26,17 @@ const AuthConfirmTel = ({
     }
     return () => {isError = true}
     },[formError, setError]);
+
+  const onSubmit = (data:any) => {
+    console.log('PHONE ', data.phone);   
+    preSignUp(+data.phone);
+  };
   console.log(typeof(writeTel));
 
     return (
         <div className='authFormMain'>
         <div className="containerAuthForm">
-          <form onSubmit={handleSubmit((data:any) => preSignUp(+data))}>
+          <form onSubmit={handleSubmit(onSubmit)}>
               <div className='titleAuthForm'>Вхід / Реєстрація</div>
               <div className="colAuthForm">
                 <div className="hide-md-lg">
@@ -40,7 +45,7 @@ const AuthConfirmTel = ({
                 {!isSendSms ? 
                   <input className='inputAuthForm' 
                     type="tel" 
-                    pattern="[0-9]{3}"
+                    pattern="[0-9]{12}"
                     maxLength={12}
                     //name="username" 
                     placeholder="номер телефона 38**********"

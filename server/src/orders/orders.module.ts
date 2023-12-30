@@ -17,6 +17,7 @@ import { SuppliersModule } from '../suppliers/suppliers.module';
 import { OrdersSuppliersModule } from '../orders-suppliers/orders-suppliers.module';
 import { TelegramApiModule } from '../telegram-api/telegram-api.module';
 import { CommentsModule } from '../comments/comments.module';
+import { SmsFlyApiModule } from 'src/sms-fly-api/sms-fly-api.module';
 
 @Module({
   controllers: [OrdersController],
@@ -35,6 +36,7 @@ import { CommentsModule } from '../comments/comments.module';
     TelegramApiModule,
     forwardRef(() => CommentsModule),
     forwardRef(() => OrdersSuppliersModule),
+    SmsFlyApiModule,
   ],
   exports: [OrdersService, OrdersStorageService],
 })

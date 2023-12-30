@@ -9,7 +9,7 @@ import BreadCrumbs from '../components/BreadCrumbs';
 //import CyrillicToTranslit from 'cyrillic-to-translit-js';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
-import { getTyresReviewLimit, getTyresWithoutOffset, getWheelsReviewLimit, getWheelsWithoutOffset} from '../restAPI/restGoodsApi';
+import { getTyresReviewLimit, getTyresWithCatOffset, getTyresWithoutOffset, getWheelsReviewLimit, getWheelsWithoutOffset} from '../restAPI/restGoodsApi';
 import { Context } from '../context/Context';
 import { tyreSeasonCat, tyreVehicleTypeCat } from '../services/tyresCatService';
 import CatalogWheels from '../components/catalogs/CatalogWheels';
@@ -164,16 +164,80 @@ const CatalogTyresPage = observer(() => {
 
   useEffect(() =>{
     let isMounted = false;
-    const loadCatalogTyreTask = async() => {
-      const taskLoad: any[] = [
-        getTyresWithoutOffset,    
-      ];
+    const loadCatalogTyre = async() => {
+      if (!isMounted && location.pathname.includes('tyres')) {
+        console.time('GET_REQUEST_TYRE_WITH_ID');
+        let tyreFilterGoodsId: any = await getTyresWithCatOffset(
+            page.limit,
+            page.offset,
+            filter.width ?? '',
+            filter.height ?? '',
+            filter.diameter ?? '',
+            filter.season ?? '',
+            filter.brands ?? '',
+            filter.price ?? '',
+            filter.vehicle_type ?? '',
+            filter.speed_index ?? '',
+            filter.load_index ?? '',
+            filter.studded ?? '',
+            filter.run_flat ?? '',
+            filter.homologation ?? '',
+            filter.reinforced ?? '',
+            filter.sort,
+          );
+        //goodsTyre?.setTotalCount(tyreFilterGoodsId.rows.length);
+        //goodsTyre?.setTyres(tyreFilterGoodsId.rows);
+        console.timeEnd('GET_REQUEST_TYRE_WITH_ID');
+        page.loadMore > 0  ? goodsTyre?.setTyres(
+          [...goodsTyre._tyres, 
+            ...tyreFilterGoodsId] 
+          ) : goodsTyre?.setTyres(
+            tyreFilterGoodsId);
+      }
+    }
+    loadCatalogTyre();
+    return () => {
+        isMounted = true;
+    };
+  },
+  [
+    filter.brands, 
+    filter.diameter, 
+    filter.height, 
+    filter.homologation, 
+    filter.load_index, 
+    filter.price, 
+    filter.reinforced, 
+    filter.run_flat, 
+    filter.season, 
+    filter.sort, 
+    filter.speed_index, 
+    filter.studded, 
+    filter.vehicle_type, 
+    filter.width, 
+    goodsTyre, 
+    location.pathname, 
+    page.limit, 
+    page.loadMore, 
+    page.offset
+  ]);
 
-      let i:number = 0;
-      while(taskLoad.length > i) {
-        if(!isMounted && taskLoad[i] === getTyresWithoutOffset && location.pathname.includes('tyres')) {
+
+  useEffect(() =>{
+    let isMounted = false;
+    const loadCatalogTyreTask = async() => {
+      // const taskLoad: any[] = [
+      //   getTyresWithoutOffset, 
+      //   getTyresWithCatOffset,   
+      // ];
+
+      //let i:number = 0;
+      //while(taskLoad.length > i) {
+        //if(!isMounted && taskLoad[i] === getTyresWithoutOffset && location.pathname.includes('tyres')) {
+        if(!isMounted && location.pathname.includes('tyres')) {
           console.time('GET_REQUEST_TYRE')
-          let tyreFilterGoods: any = await taskLoad[i](
+          let tyreFilterGoods: any = await getTyresWithoutOffset(
+          //let tyreFilterGoods: any = await taskLoad[i](
             filter.width ?? '',
             filter.height ?? '',
             filter.diameter ?? '',
@@ -204,13 +268,13 @@ const CatalogTyresPage = observer(() => {
           let setStuddedFilter: any[] | null  = [];
           
           goodsTyre?.setTotalCount(tyreFilterGoods.rows.length);
-          console.time('SET_TYRES')
-          page.loadMore > 0  ? goodsTyre?.setTyres(
-            [...goodsTyre._tyres, 
-              ...tyreFilterGoods.rows.splice(page.offset, page.limit)] 
-            ) : goodsTyre?.setTyres(
-              tyreFilterGoods.rows.splice(page.offset, page.limit));
-          console.timeEnd('SET_TYRES')
+          // console.time('SET_TYRES')
+          // page.loadMore > 0  ? goodsTyre?.setTyres(
+          //   [...goodsTyre._tyres, 
+          //     ...tyreFilterGoods.rows.splice(page.offset, page.limit)] 
+          //   ) : goodsTyre?.setTyres(
+          //     tyreFilterGoods.rows.splice(page.offset, page.limit));
+          //console.timeEnd('SET_TYRES')
           tyreFilterGoods.rows.map((item: any) => 
           { return (
             setWidthFilter?.push(item.width.width),
@@ -392,10 +456,37 @@ const CatalogTyresPage = observer(() => {
           setRunFlatFilter = null;
           setStuddedFilter = null;
         }
-        const task = taskLoad.shift();
-        task();
-        await yieldToMain(); 
-      }
+        // if (!isMounted && location.pathname.includes('tyres')) {
+        //   console.time('GET_REQUEST_TYRE_WITH_ID')
+        //   let tyreFilterGoodsId: any = await getTyresWithCatOffset(
+        //     //let tyreFilterGoods: any = await taskLoad[i](
+        //       filter.width_id ?? '',
+        //       filter.height ?? '',
+        //       filter.diameter ?? '',
+        //       filter.season ?? '',
+        //       filter.brands ?? '',
+        //       filter.price ?? '',
+        //       filter.vehicle_type ?? '',
+        //       filter.speed_index ?? '',
+        //       filter.load_index ?? '',
+        //       filter.studded ?? '',
+        //       filter.run_flat ?? '',
+        //       filter.homologation ?? '',
+        //       filter.reinforced ?? '',
+        //       filter.sort,
+        //     );
+        //   goodsTyre?.setTotalCount(tyreFilterGoodsId.rows.length);
+        //   console.time('SET_TYRES_WITH_ID')
+        //   page.loadMore > 0  ? goodsTyre?.setTyres(
+        //     [...goodsTyre._tyres, 
+        //       ...tyreFilterGoodsId.rows.splice(page.offset, page.limit)] 
+        //     ) : goodsTyre?.setTyres(
+        //       tyreFilterGoodsId.rows.splice(page.offset, page.limit));
+        // }
+        // const task = taskLoad.shift();
+        // task();
+        // await yieldToMain(); 
+      //}
       for (let key in params) {
         if (params[key] && !filter.season && filter.chipSeason.length === 0 ) {
           const tyreCatSeason = tyreSeasonCat(params[key]);

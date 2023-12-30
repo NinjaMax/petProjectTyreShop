@@ -44,42 +44,25 @@ export class TyresController {
     return this.tyresService.findTyresByIdParam(id);
   }
 
-  @Get('/offset')
-  findTyresByLimit(
-    @Query('offset') offset: number,
-    @Query('limit') limit: number,
+  @Get('/main-offset')
+  findTyresByLimitMain(
     @Query('width') width: string,
     @Query('height') height: string,
     @Query('diameter') diameter: string,
     @Query('season') season: string,
     @Query('brand') brand: string,
-    @Query('price') price: string,
-    @Query('type') type: string,
-    @Query('speed_index') speed_index: string,
-    @Query('load_index') load_index: string,
-    @Query('studded') studded: string,
-    @Query('run_flat') run_flat: string,
-    @Query('homologation') homologation: string,
-    @Query('reinforce') reinforce: string,
+    @Query('sort') sort: string,
   ) {
-    return this.tyresService.findAllTyresWithOffset(
-      offset,
-      limit,
+    return this.tyresService.findAllTyresWithOffsetMain(
       width,
       height,
       diameter,
       season,
       brand,
-      price,
-      type,
-      speed_index,
-      load_index,
-      studded,
-      run_flat,
-      homologation,
-      reinforce,
+      sort
     );
   }
+
   @Get('/no-offset')
   findTyresWithoutLimit(
     @Query('width') width: string,
@@ -98,6 +81,45 @@ export class TyresController {
     @Query('sort') sort: string,
   ) {
     return this.tyresService.findAllTyresWithoutOffset(
+      width,
+      height,
+      diameter,
+      season,
+      brand,
+      price,
+      type,
+      speed_index,
+      load_index,
+      studded,
+      run_flat,
+      homologation,
+      reinforce,
+      sort,
+    );
+  }
+
+  @Get('/cat-offset')
+  findTyresWithCat(
+    @Query('limit') limit: string,
+    @Query('offset') offset: string,
+    @Query('width') width: string,
+    @Query('height') height: string,
+    @Query('diameter') diameter: string,
+    @Query('season') season: string,
+    @Query('brand') brand: string,
+    @Query('price') price: string,
+    @Query('type') type: string,
+    @Query('speed_index') speed_index: string,
+    @Query('load_index') load_index: string,
+    @Query('studded') studded: string,
+    @Query('run_flat') run_flat: string,
+    @Query('homologation') homologation: string,
+    @Query('reinforce') reinforce: string,
+    @Query('sort') sort: string,
+  ) {
+    return this.tyresService.findAllTyresWithCatOffset(
+      +limit,
+      +offset,
       width,
       height,
       diameter,

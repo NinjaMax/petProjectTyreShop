@@ -23,6 +23,7 @@ import { OrdersSuppliersService } from '../orders-suppliers/orders-suppliers.ser
 import { CommentsService } from '../comments/comments.service';
 import { TelegramApiService } from '../telegram-api/telegram-api.service';
 import { TyresService } from '../tyres/tyres.service';
+import { SmsFlyApiService } from '../sms-fly-api/sms-fly-api.service';
 
 @Injectable()
 export class OrdersService {
@@ -43,6 +44,7 @@ export class OrdersService {
     private telegramService: TelegramApiService,
     @Inject(forwardRef(() => OrdersSuppliersService))
     private ordersSupplierService: OrdersSuppliersService,
+    private smsFlyApiService: SmsFlyApiService,
   ) {}
 
   async createOrder(createOrderDto: CreateOrderDto) {
@@ -52,6 +54,13 @@ export class OrdersService {
         const orderCustomer = await this.ordersRepository.create(
           createOrderDto,
         );
+        const cutomerExist = await this.customerService.findCustomerById(
+          createOrderDto,
+        );
+        await this.smsFlyApiService.sendSmsViber({
+          textMessage: `Замовлення ${orderCustomer.id_order} підтверджене та комплектується. Сума ${orderCustomer.total_cost}. Обов'язково перевірте товар при отриманні на відсутність пошкоджень та відповідність Вашому замовленню. Дякуємо за замовлення.`,
+          phone: String(cutomerExist.phone),
+        });
         if (basket) {
           const orderId: Orders = await this.ordersRepository.findByPk(
             orderCustomer.id_order,
@@ -98,7 +107,10 @@ export class OrdersService {
           });
           //order.reload();
         //} 
-        
+          await this.smsFlyApiService.sendSmsViber({
+            textMessage: `Замовлення ${orderNew.id_order} підтверджене та комплектується. Сума ${orderNew.total_cost}. Обов'язково перевірте товар при отриманні на відсутність пошкоджень та відповідність Вашому замовленню. Дякуємо за замовлення.`,
+            phone: String(customer.phone),
+          });
         if (basket) {
           const orderNewId: Orders = await this.ordersRepository.findByPk(
             orderNew.id_order,
@@ -321,123 +333,124 @@ export class OrdersService {
   }
 
   async batteryStockOrder(createOrderDto: CreateOrderDto) {
-    const orderIdBattery = await this.ordersRepository.findByPk(
-      createOrderDto.id_order,
-      { include: { all: true } },
-    );
+    try {
+      const orderIdBattery = await this.ordersRepository.findByPk(
+        createOrderDto.id_order,
+        { include: { all: true } },
+      );
 
-    const batteryStock = await this.stockBatteriesService.findStockBatteryById(
-      createOrderDto,
-    );
+      const batteryStock =
+        await this.stockBatteriesService.findStockBatteryById(createOrderDto);
 
-    const storageStorageBattery = await this.storageService.findStorageById(
-      createOrderDto,
-    );
-    const orderStorageIdBattery =
-      await this.ordersStorageService.findOrderStorageById(createOrderDto);
+      const storageStorageBattery = await this.storageService.findStorageById(
+        createOrderDto,
+      );
+      const orderStorageIdBattery =
+        await this.ordersStorageService.findOrderStorageById(createOrderDto);
 
-    let stockBatteryExists = null;
-    let newReserveBattery = 0;
+      let stockBatteryExists = null;
+      let newReserveBattery = 0;
 
-    if (batteryStock) {
-      if (
-        batteryStock.remainder < createOrderDto.quantity &&
-        batteryStock.stock !== 0
-      ) {
-        newReserveBattery =
-          createOrderDto.quantity -
-          (createOrderDto.quantity - batteryStock.remainder);
-        stockBatteryExists = batteryStock;
-      } else if (
-        batteryStock.remainder >= createOrderDto.quantity &&
-        batteryStock.stock !== 0
-      ) {
-        stockBatteryExists = batteryStock;
-      } else {
-        throw new HttpException(
-          `Ви не можете поставити резерв, томущо немає залишків ("Залишки 0"), або не вірно вказаний склад чи інша помилка.`,
-          HttpStatus.BAD_REQUEST,
-        );
+      if (batteryStock) {
+        if (
+          batteryStock.remainder < createOrderDto.quantity &&
+          batteryStock.stock !== 0
+        ) {
+          newReserveBattery =
+            createOrderDto.quantity -
+            (createOrderDto.quantity - batteryStock.remainder);
+          stockBatteryExists = batteryStock;
+        } else if (
+          batteryStock.remainder >= createOrderDto.quantity &&
+          batteryStock.stock !== 0
+        ) {
+          stockBatteryExists = batteryStock;
+        } else {
+          throw new HttpException(
+            `Ви не можете поставити резерв, томущо немає залишків ("Залишки 0"), або не вірно вказаний склад чи інша помилка.`,
+            HttpStatus.BAD_REQUEST,
+          );
+        }
       }
-    }
 
-    if (stockBatteryExists) {
-      await stockBatteryExists.increment('reserve', {
-        by: newReserveBattery || createOrderDto.quantity,
-      });
-      await orderStorageIdBattery.increment('reserve', {
-        by: newReserveBattery || createOrderDto.quantity,
-      });
-      await orderIdBattery.$add('order_storage', orderStorageIdBattery);
-      await storageStorageBattery.$add('order_storage', orderStorageIdBattery);
+      if (stockBatteryExists) {
+        await stockBatteryExists.increment('reserve', {
+          by: newReserveBattery || createOrderDto.quantity,
+        });
+        await orderStorageIdBattery.increment('reserve', {
+          by: newReserveBattery || createOrderDto.quantity,
+        });
+        await orderIdBattery.$add('order_storage', orderStorageIdBattery);
+        await storageStorageBattery.$add('order_storage', orderStorageIdBattery);
+      }
+      await orderIdBattery.reload();
+      return orderIdBattery;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
     }
-    await orderIdBattery.reload();
-    return orderIdBattery;
-    // } catch {
-    //   throw new HttpException(
-    //     'Data is incorrect and must be uniq',
-    //     HttpStatus.NOT_FOUND,
-    //   );
-    // }
   }
 
   async oilStockOrder(createOrderDto: CreateOrderDto) {
-    const orderIdOil = await this.ordersRepository.findByPk(
-      createOrderDto.id_order,
-      { include: { all: true } },
-    );
+    try {
+      const orderIdOil = await this.ordersRepository.findByPk(
+        createOrderDto.id_order,
+        { include: { all: true } },
+      );
 
-    const oilStock = await this.stockOilsService.findStockOilById(
-      createOrderDto,
-    );
-    const storageStorageOil = await this.storageService.findStorageById(
-      createOrderDto,
-    );
-    const orderStorageIdOil =
-      await this.ordersStorageService.findOrderStorageById(createOrderDto);
+      const oilStock = await this.stockOilsService.findStockOilById(
+        createOrderDto,
+      );
+      const storageStorageOil = await this.storageService.findStorageById(
+        createOrderDto,
+      );
+      const orderStorageIdOil =
+        await this.ordersStorageService.findOrderStorageById(createOrderDto);
 
-    let stockOilExists = null;
-    let newReserveOil = 0;
+      let stockOilExists = null;
+      let newReserveOil = 0;
 
-    if (oilStock) {
-      if (
-        oilStock.remainder < createOrderDto.quantity &&
-        oilStock.stock !== 0
-      ) {
-        newReserveOil =
-          createOrderDto.quantity -
-          (createOrderDto.quantity - oilStock.remainder);
-        stockOilExists = oilStock;
-      } else if (
-        oilStock.remainder >= createOrderDto.quantity &&
-        oilStock.stock !== 0
-      ) {
-        stockOilExists = oilStock;
-      } else {
-        throw new HttpException(
-          `Ви не можете поставити резерв, томущо немає залишків ("Залишки 0"), або не вірно вказаний склад чи інша помилка.`,
-          HttpStatus.BAD_REQUEST,
-        );
+      if (oilStock) {
+        if (
+          oilStock.remainder < createOrderDto.quantity &&
+          oilStock.stock !== 0
+        ) {
+          newReserveOil =
+            createOrderDto.quantity -
+            (createOrderDto.quantity - oilStock.remainder);
+          stockOilExists = oilStock;
+        } else if (
+          oilStock.remainder >= createOrderDto.quantity &&
+          oilStock.stock !== 0
+        ) {
+          stockOilExists = oilStock;
+        } else {
+          throw new HttpException(
+            `Ви не можете поставити резерв, томущо немає залишків ("Залишки 0"), або не вірно вказаний склад чи інша помилка.`,
+            HttpStatus.BAD_REQUEST,
+          );
+        }
       }
+      if (stockOilExists) {
+        await stockOilExists.increment('reserve', {
+          by: newReserveOil || createOrderDto.quantity,
+        });
+        await orderStorageIdOil.increment('reserve', {
+          by: newReserveOil || createOrderDto.quantity,
+        });
+        await orderIdOil.$add('order_storage', orderStorageIdOil);
+        await storageStorageOil.$add('order_storage', orderStorageIdOil);
+      }
+      await orderIdOil.reload();
+      return orderIdOil;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
     }
-    if (stockOilExists) {
-      await stockOilExists.increment('reserve', {
-        by: newReserveOil || createOrderDto.quantity,
-      });
-      await orderStorageIdOil.increment('reserve', {
-        by: newReserveOil || createOrderDto.quantity,
-      });
-      await orderIdOil.$add('order_storage', orderStorageIdOil);
-      await storageStorageOil.$add('order_storage', orderStorageIdOil);
-    }
-    await orderIdOil.reload();
-    return orderIdOil;
-    // } catch {
-    //   throw new HttpException(
-    //     'Data is incorrect and must be uniq',
-    //     HttpStatus.NOT_FOUND,
-    //   );
-    // }
   }
 
   async addGoodsToOrder(createOrderDto: CreateOrderDto) {
@@ -518,7 +531,6 @@ export class OrdersService {
           getOrder.storage === 'Постачальник' &&
           !getSupplier.address
         ) {
-        console.log('NO_ADDRESS: //-----------------------//')
         const orderAllSupByIdOrder =
           await this.ordersSupplierService.findOrderSupByIdOrder(createOrderDto);
         const createGoodsOrderSup =
@@ -560,7 +572,6 @@ export class OrdersService {
         getOrder.storage === 'Постачальник' &&
         getSupplier.address
       ) {
-        console.log('WITH_ADDRESS //--------------//')
         const orderAllSupByIdOrder =
           await this.ordersSupplierService.findOrderSupByIdOrder(createOrderDto);
         const createGoodsOrderSup =
@@ -608,7 +619,6 @@ export class OrdersService {
           getOrder.storage === 'Постачальник' &&
           !getSupplier.address
         ) {
-          console.log('NO_ADRESS //----------------------//')
         const orderAllSupByIdOrder =
           await this.ordersSupplierService.findOrderSupByIdOrder(createOrderDto);
         const createGoodsOrderSup =

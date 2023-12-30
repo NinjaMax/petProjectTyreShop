@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { SmsFlyApiService } from './sms-fly-api.service';
 import { CreateSmsFlyApiDto } from './dto/create-sms-fly-api.dto';
 import { UpdateSmsFlyApiDto } from './dto/update-sms-fly-api.dto';

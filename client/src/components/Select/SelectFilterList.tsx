@@ -4,7 +4,8 @@ import { ISelectFilterList } from './interfaces/SelectFilterList.interface';
 
 const SelectFilterList = ({
         items, 
-        value, 
+        value,
+        id, 
         checked, 
         onChange,
         nameFilter, 

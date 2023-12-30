@@ -3,31 +3,43 @@ import {makeAutoObservable} from 'mobx';
 export default class FilterStore {
     _filterCount: number;
     _width:string | undefined;
+    _width_id:string;
     _chipWidth: string[];
     _height:string;
+    _height_id:string;
     _chipHeight: string[];
     _brands: string;
+    _brands_id: string;
     _chipBrands: string[];
     _models: string;
     _price:string;
     _chipPrice:string[];
     _diameter: string;
+    _diameter_id: string;
     _chipDiameter: string[];
     _season: string;
+    _season_id: string;
     _chipSeason: string[];
     _vehicle_type: string;
+    _vehicle_type_id: string;
     _chipVehicleType: string[];
     _studded:string;
+    _studded_id:string;
     _chipStudded: string[];
     _speed_index:string;
+    _speed_index_id:string;
     _chipSpeedIndex: string[];
     _load_index:string;
+    _load_index_id:string;
     _chipLoadIndex:string[];
     _homologation:string;
+    _homologation_id:string;
     _chipHomologation:string[];
     _run_flat:string;
+    _run_flat_id:string;
     _chipRunFlat:string[];
     _reinforced:string;
+    _reinforced_id:string;
     _chipReinforced:string[];
     _bolt_count: string;
     _chipBoltCount:string[];
@@ -57,31 +69,43 @@ export default class FilterStore {
     constructor() { 
         this._filterCount = 0;
         this._width = '';
+        this._width_id = '';
         this._chipWidth = [];
         this._height = '';
+        this._height_id = '';
         this._chipHeight = [];
         this._brands = '';
+        this._brands_id = '';
         this._chipBrands = [];
         this._models = '';
         this._price = '';
         this._chipPrice = ['0','0'];
         this._diameter = '';
+        this._diameter_id = '';
         this._chipDiameter = [];
         this._season = '';
+        this._season_id = '';
         this._chipSeason =[];
         this._vehicle_type = '';
+        this._vehicle_type_id = '';
         this._chipVehicleType = [];
         this._studded = '';
+        this._studded_id = '';
         this._chipStudded = [];
         this._speed_index = '';
+        this._speed_index_id = '';
         this._chipSpeedIndex = [];
         this._load_index = '';
+        this._load_index_id = '';
         this._chipLoadIndex = [];
         this._homologation = '';
+        this._homologation_id = '';
         this._chipHomologation = [];
         this._run_flat = '';
+        this._run_flat_id = '';
         this._chipRunFlat = [];
         this._reinforced = '';
+        this._reinforced_id = '';
         this._chipReinforced = [];
         this._bolt_count = '';
         this._chipBoltCount = [];
@@ -116,17 +140,26 @@ export default class FilterStore {
     setWidth(width: string) {
         this._width = width;
     }
+    setWidth_id(width_id: string) {
+        this._width_id = width_id;
+    }
     setChipWidth(chipWidth: []) {
         this._chipWidth = chipWidth;
     }
     setHeight(height: string) {
         this._height = height;
     }
+    setHeight_id(height_id: string) {
+        this._height_id = height_id;
+    }
     setChipHeight(chipHeight: []) {
         this._chipHeight = chipHeight;
     }
     setBrands(brands: string) {
         this._brands = brands;
+    }
+    setBrands_id(brands_id: string) {
+        this._brands_id = brands_id;
     }
     setChipBrands(chipBrands: []) {
         this._chipBrands = chipBrands;
@@ -143,11 +176,17 @@ export default class FilterStore {
     setDiameter(diameter: string) {
         this._diameter = diameter;
     }
+    setDiameter_id(diameter_id: string) {
+        this._diameter_id = diameter_id;
+    }
     setChipDiameter(diameter: []) {
         this._chipDiameter = diameter;
     }
     setSeason(season: string) {
         this._season = season;
+    }
+    setSeason_id(season_id: string) {
+        this._season_id = season_id;
     }
     setChipSeason(chipSeason: []) {
         this._chipSeason = chipSeason;
@@ -155,11 +194,17 @@ export default class FilterStore {
     setVehicleType(vehicle_type: string) {
         this._vehicle_type = vehicle_type;
     }
+    setVehicleType_id(vehicle_type_id: string) {
+        this._vehicle_type_id = vehicle_type_id;
+    }
     setChipVehicleType(chipVehicleType: []) {
         this._chipVehicleType = chipVehicleType;
     }
     setStudded(studded: string) {
         this._studded = studded;
+    }
+    setStudded_id(studded_id: string) {
+        this._studded_id = studded_id;
     }
     setChipStudded(chipStudded: []) {
         this._chipStudded = chipStudded;
@@ -167,11 +212,17 @@ export default class FilterStore {
     setSpeedIndex(speed_index: string) {
         this._speed_index = speed_index;
     }
+    setSpeedIndex_id(speed_index_id: string) {
+        this._speed_index_id = speed_index_id;
+    }
     setChipSpeedIndex(chipSpeed_index: []) {
         this._chipSpeedIndex = chipSpeed_index;
     }
     setLoadIndex(load_index: string) {
         this._load_index = load_index;
+    }
+    setLoadIndex_id(load_index_id: string) {
+        this._load_index_id = load_index_id;
     }
     setChipLoadIndex(chipLoad_index: []) {
         this._chipLoadIndex = chipLoad_index;
@@ -179,17 +230,26 @@ export default class FilterStore {
     setHomologation(homologation: string) {
         this._homologation = homologation;
     }
+    setHomologation_id(homologation_id: string) {
+        this._homologation_id = homologation_id;
+    }
     setChipHomologation(chiphomologation: []) {
         this._chipHomologation = chiphomologation;
     }
     setRunFlat(run_flat: string) {
         this._run_flat = run_flat;
     }
+    setRunFlat_id(run_flat_id: string) {
+        this._run_flat_id = run_flat_id;
+    }
     setChipRunFlat(chipRun_flat: []) {
         this._chipRunFlat = chipRun_flat;
     }
     setReinforced(reinforced: string) {
         this._reinforced = reinforced;
+    }
+    setReinforced_id(reinforced_id: string) {
+        this._reinforced = reinforced_id;
     }
     setChipReinforced(chipreinforced: []) {
         this._chipReinforced = chipreinforced;
@@ -274,6 +334,9 @@ export default class FilterStore {
     }
     get width() {
         return this._width;
+    }
+    get width_id() {
+        return this._width_id;
     }
     get chipWidth() {
         return this._chipWidth;

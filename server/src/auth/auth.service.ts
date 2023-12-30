@@ -17,6 +17,7 @@ import { sendSmsPass } from './gatewayApi/smsGateway';
 import { CustomersService } from '../customers/customers.service';
 import { Request, Response } from 'express';
 import { ConfigService } from '../config/config.service';
+import { SmsFlyApiService } from '../sms-fly-api/sms-fly-api.service';
 
 @Injectable()
 export class AuthService {
@@ -25,6 +26,7 @@ export class AuthService {
     private customersService: CustomersService,
     private usersService: UsersService,
     private jwtService: JwtService,
+    private smsFlyApiService: SmsFlyApiService,
   ) {}
 
   // async findUserByPhone(userAuthDto: UserAuthDto) {
@@ -49,6 +51,7 @@ export class AuthService {
       const custByPhone = await this.customersService.findCustomerByPhone(
         signupDto,
       );
+      console.log('CUSTM_BY_PHONE: ', custByPhone);
       if (custByPhone) {
         throw new HttpException(
           `Користувач з ім'ям або номер ${signupDto.phone} вже існує`,
@@ -82,33 +85,38 @@ export class AuthService {
       const custPhone = await this.customersService.findCustomerByPhone(
         signupDto,
       );
+      console.log('CUSTM_BY_PHONE_PRE: ', custPhone);
       if (custPhone) {
         throw new HttpException(
           `Користувач з ім'ям або номером ${signupDto.phone} вже існує.`,
           HttpStatus.BAD_REQUEST,
         );
       } else {
-        const dataReq = {
-          auth: {
-            key: 'n7GyAj36j6uZyBA5y1AUwVxNZrml9R2r',
-          },
-          action: 'GETBALANCE',
-        };
+        // const dataReq = {
+        //   auth: {
+        //     key: 'n7GyAj36j6uZyBA5y1AUwVxNZrml9R2r',
+        //   },
+        //   action: 'GETBALANCE',
+        // };
         const randomPass: number = randomInt(1000, 9000);
-        const sendSms = await sendSmsPass(dataReq);
+        //const sendSms = await sendSmsPass(dataReq);
+
         //const sendSms = await sendSmsPass(randomPass, signupDto.phone);
-        if (!sendSms.success) {
+        const sendSms = await this.smsFlyApiService.sendSmsViber({
+          textMessage: `Пароль для регістрації: ${randomPass}`,
+          phone: String(signupDto.phone),
+        });
+        if (!sendSms?.success) {
           throw new HttpException(
             `Помилка, або не вірно вказаний номер телефону`,
             HttpStatus.BAD_REQUEST,
           );
         }
-        console.log(sendSms.success);
-        console.log(randomPass);
+        //console.log(sendSms.success);
+        console.log('ПАРОЛЬ: ', randomPass);
         return randomPass;
       }
     } catch (error) {
-      //console.log('preSignUp: ', error);
       throw new HttpException(`${error.message}`, HttpStatus.UNAUTHORIZED);
     }
   }

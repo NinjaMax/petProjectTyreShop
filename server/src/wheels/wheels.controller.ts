@@ -37,6 +37,25 @@ export class WheelsController {
     return this.wheelsService.findWheelByIdQuery(id);
   }
 
+  @Get('/main-offset')
+  findWheelsMainLimit(
+    @Query('width') width: string,
+    @Query('diameter') diameter: string,
+    @Query('bolt_count') bolt_count: string,
+    @Query('brand') brand: string,
+    @Query('type') type: string,
+    @Query('sort') sort: string,
+  ) {
+    return this.wheelsService.findAllWheelsMainOffset(
+      width,
+      diameter,
+      bolt_count,
+      brand,
+      type,
+      sort,
+    );
+  }
+  
   @Get('/no-offset')
   findWheelsWithoutLimit(
     @Query('width') width: string,

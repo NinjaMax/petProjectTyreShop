@@ -17,7 +17,8 @@ import {
     getAdminPriceWheelsById, 
     responseForm,
     updateOrder,
-    updateOrderStorage} from '../../../restAPI/restAdminAPI';
+    updateOrderStorage,
+    updateOrderSup} from '../../../restAPI/restAdminAPI';
 import AdminComment from '../adminContent/AdminComment';
 import AdminModalCustomers from '../adminModalForm/AdminModalCustomers';
 import AdminModalGoods from '../adminModalForm/AdminModalGoods';
@@ -406,7 +407,7 @@ const AdminFormOrder = observer((
         });
     }; 
     //GOOD PERFORM
-    const onSubmit = async (data:{}, e: any) => {
+    const onSubmit = async (data: any, e: any) => {
         //e.preventDefault();
         console.log('CREATE ORDER: ', data);
         try {
@@ -506,6 +507,26 @@ const AdminFormOrder = observer((
                 setDisableBtnOk(!disableBtnOk);
                 console.log('UDATE_DATA_ORDER: ', data);
                 const newOrderData = await updateOrder(data, orderId);
+                if (data.status === 'Відвантажено' &&
+                    (data.delivery === 'Самовивіз' || data.delivery === 'Своя Доставка') && 
+                    ordersData.id_order
+                ) {
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Замовлення №${ordersData.id_order}, Переведено в статус -> Відвантажено`,
+                        id_order: ordersData.id_order,
+                        id_order_sup: null
+                    });
+                    newOrderData?.data?.order_sup?.forEach(async (supData: any): Promise<any> => {
+                        await updateOrderSup({status: 'Відвантажено'}, +supData.id_order_sup);
+                        await addCommentsToOrder({
+                            id_user: user._user?.sub.id_user, 
+                            comments: `Замовлення №${ordersData.id_order}/Заявка №${+supData.id_order_sup}, Переведено в статус -> Відвантажено`,
+                            id_order: null,
+                            id_order_sup: +supData.id_order_sup
+                        })
+                    });
+                }
                 setOrdersData(newOrderData?.data);
                 setOrderStorage([...newOrderData?.data?.order_storage]);
                 console.log('NEW_ORDER_DATA_ORDER: ', newOrderData?.data)
@@ -631,7 +652,7 @@ const AdminFormOrder = observer((
     // console.log('STATE: ', state);
     // console.log('ERRORS_FORM: ', errors);
     // console.log('ORDERS_STORAGE : ', orderStorage);
-    // console.log('ORDER_DATA: ', ordersData);
+     //console.log('ORDER_DATA: ', ordersData);
     // console.log('PURCHASE_PRICE: ', purchaseGoods);
 
     return (

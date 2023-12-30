@@ -19,9 +19,10 @@ const AdminModalPay = ({
 
     useEffect(() => {
         if (user) {
-            
+            register('id_user', {required: 'Це необхідні дані'});
+            setValue('id_user', user._user?.sub.id_user);
         }
-    },[]);
+    },[register, setValue, user]);
 
     const onSubmit = async (data: any) => {
         try {

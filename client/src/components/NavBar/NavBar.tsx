@@ -46,7 +46,7 @@ const NavBar = observer(() => {
   const [phoneTel, setPhoneTel] = useState<bigint | undefined>();
   const [facebookIsAuth, setFacebookIsAuth] = useState('');
   const [twitterIsAuth, setTwitterIsAuth] = useState('');
-  const [formError, setFormError] = useState('');
+  const [formError, setFormError] = useState<string | null>('');
   const [favoritesCount, setFavoritesCount] = useState<number | null>();
   const [comparisonCount, setComparisonCount] = useState<number | null>();
 
@@ -153,10 +153,12 @@ const NavBar = observer(() => {
   }
 
   const authActive = () => {
+    setFormError(null);
     setActiveAuth(!activeAuth);
   }
 
   const authActiveConfirm = () => {
+    setFormError(null);
     setAuthConfirm(!activeAuthConfirm);
   }
 
@@ -181,6 +183,7 @@ const NavBar = observer(() => {
         setSmsPass(sendPass);
       } else {
         console.log(`Помилка номера. Або користувач з номером ${telnumber} вже існує.`);
+        setFormError(`Помилка номера. Або користувач з номером ${telnumber} вже існує.`);
       }
     } catch (error) {
       console.log(error);
@@ -197,9 +200,12 @@ const NavBar = observer(() => {
         setIsMatchPass(!isMatchPass);
         setAuthConfirm(!activeAuthConfirm); 
         setSignUp(!signUp);
-      } 
+      } else {
+        setFormError('Не вірний пароль. Або інша помилка.')
+      }
     } catch (error: any) {
       console.log(error);
+      setFormError(error.response.data.message);
     }
   }
 
@@ -226,6 +232,8 @@ const NavBar = observer(() => {
       if(logInData) {
         setActiveAuth(!activeAuth);
         customer.setIsAuth(true);
+      } else {
+        setFormError('Помилка авторизаціі');
       }
     } catch (error: any) {
       console.log('LOGIN_ERROR_DATA:', error.response.data.message);
