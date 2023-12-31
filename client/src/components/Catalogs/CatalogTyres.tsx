@@ -40,12 +40,18 @@ const CatalogTyres = observer(() => {
         let isMounted = false;
         const getBrandTyreData = async () => {
            if (!isMounted && filter.brands && !filter.brands.includes(',')) {
-                const getBrandsIdTyre = await getTyresBrandByName(filter.brands);
-                //console.log('GET_TYRE_BRAND: ', getBrandsIdTyre);
-                const getTyresRatingBrand = await getTyresBrandRatingAvg(getBrandsIdTyre.id_brand);
-                //console.log('GET_RATING_TYRE_BRAND: ', getTyresRatingBrand);
-                setTyreRatingAvr(getTyresRatingBrand);
-            } 
+                try {
+                    const getBrandsIdTyre = await getTyresBrandByName(filter.brands);
+                    //console.log('GET_TYRE_BRAND: ', getBrandsIdTyre);
+                    const getTyresRatingBrand = await getTyresBrandRatingAvg(getBrandsIdTyre.id_brand);
+                    //console.log('GET_RATING_TYRE_BRAND: ', getTyresRatingBrand);
+                    if (getTyresRatingBrand) {
+                        setTyreRatingAvr(getTyresRatingBrand);
+                    }
+                } catch (error) {
+                    console.log(error);
+                } 
+            }
         };
         getBrandTyreData();
         return () => {
@@ -147,7 +153,7 @@ const CatalogTyres = observer(() => {
             <h2>{`Шини ${filter.season && !filter.season.includes(',') ? `${filter.season}` : ''} ${filter.studded && !filter.studded.includes(',') ? `${filter.studded}` : ''} ${filter.vehicle_type && !filter.vehicle_type.includes(',') ? `${filter.vehicle_type}` : ''} ${filter.brands && !filter.brands.includes(',') ? `${filter.brands}` : ''} ${filter.width ? `${filter.width}` : ''} ${filter.height ? `/${filter.height}` : ''} ${filter.diameter ? `R${filter.diameter}` : ''}`}</h2>
             { filter.brands && !filter.brands.includes(',') ?
                 <div>
-                    <img src={tyreBrandLogo(filter.brands)} alt='tyreBrandLogo'/>
+                    <img src={tyreBrandLogo(filter.brands) ?? ''} alt='tyreBrandLogo'/>
                     <Rating 
                         numScore={tyreRatingAvr?.rows[0]?.avgRatingBrand ?? 0}
                         disabled={true}

@@ -57,33 +57,93 @@ const getWheelsWithoutOffset = async (
     return data;
 }
 
-const getTyresWithoutOffset = async (
+const getWheelsWithCatOffset = async (
+    limit: number,
+    offset: number,
     width: string,
-    height: string,
     diameter: string,
-    season: string,
+    bolt_count: string,
+    bolt_count_pcd: string,
     brand: string,
+    price: string,
+    type: string,
+    color: string,
+    dia: string,
+    et: string,
+    pcd: string,
+    pcd2: string,
+    sort: string,
+    ) => {
+    const {data} = await $hostGet.get('wheels/cat-offset', 
+    {params: {
+        limit: limit,
+        offset: offset,
+        width: width,
+        diameter: diameter,
+        bolt_count: bolt_count,
+        bolt_count_pcd: bolt_count_pcd,
+        brand: brand,
+        price: price,
+        type: type,
+        color: color,
+        dia: dia,
+        et: et,
+        pcd: pcd,
+        pcd2: pcd2,
+        sort: sort,
+        }
+    })
+    return data;
+}
+
+const getTyresWithoutOffset = async (
+    // width: string,
+    // height: string,
+    // diameter: string,
+    // season: string,
+    // brand: string,
     price: string,
     type: string,
     speed_index: string,
     load_index: string,
-    studded: string,
-    run_flat: string,
-    homologation: string,
-    reinforced: string,
+    //studded: string,
+    // run_flat: string,
+    // homologation: string,
+    // reinforced: string,
     sort: string,
     ) => {
     const {data} = await $hostGet.get('tyres/no-offset', 
     {params: {
-        width: width,
-        height: height,
-        diameter: diameter,
-        season: season,
-        brand: brand,
+        // width: width,
+        // height: height,
+        // diameter: diameter,
+        // season: season,
+        // brand: brand,
         price: price,
         type: type,
         speed_index: speed_index,
         load_index: load_index,
+        //studded: studded,
+        //run_flat: run_flat,
+        //homologation: homologation,
+        //reinforce: reinforced,
+        sort: sort,
+        }
+    })
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_OFFSET9: ', data )
+    return data;
+}
+
+const getTyresWithoutOffsetProps = async (
+        studded: string,
+        run_flat: string,
+        homologation: string,
+        reinforced: string,
+        sort: string,
+    ) => {
+    const {data} = await $hostGet.get('tyres/props-offset', 
+    {params: {
         studded: studded,
         run_flat: run_flat,
         homologation: homologation,
@@ -91,8 +151,6 @@ const getTyresWithoutOffset = async (
         sort: sort,
         }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_OFFSET9: ', data )
     return data;
 }
 
@@ -102,7 +160,7 @@ const getTyresOffsetMain = async (
     diameter: string,
     season: string,
     brand: string,
-    // price: string,
+    //price: string,
     // type: string,
     // speed_index: string,
     // load_index: string,
@@ -119,7 +177,7 @@ const getTyresOffsetMain = async (
         diameter: diameter,
         season: season,
         brand: brand,
-        // price: price,
+        //price: price,
         // type: type,
         // speed_index: speed_index,
         // load_index: load_index,
@@ -1122,20 +1180,25 @@ const getTyresSeasonPropsAll = async () => {
 }
 
 export {
-    //getTyresOffset,
     getTyresOffsetMain,
     getTyresWithoutOffset,
     getTyresWithCatOffset,
-    //getTyresSeason,
-    //getTyresType,
-    //getTyresParams,
-    //getTyresDiameter,
+    getTyresWithoutOffsetProps,
+    //getTyresWithoutOffsetDiameter,
+    // getTyresWithoutOffsetSeason,
+    // getTyresWithoutOffsetBrand,
+    // getTyresWithoutOffsetType,
+    // getTyresWithoutOffsetSpeed,
+    // getTyresWithoutOffsetLoad,
+    // getTyresWithoutOffsetStudded,
+    // getTyresWithoutOffsetRunFlat,
+    // getTyresWithoutOffsetHomologation,
+    // getTyresWithoutOffsetReinforce,
     getTyresById,
     getTyresAll,
     getWheelsAll,
     getTyresReviewLimit,
     getTyresByIdParam,
-    //getTyresCountAll,
     getTyresBrandPropsAll,
     getTyresDiameterPropsAll,
     getTyresHeightPropsAll,
@@ -1182,6 +1245,7 @@ export {
     getAllQuestionsModel,
     getWheelsMainOffset,
     getWheelsWithoutOffset,
+    getWheelsWithCatOffset,
     likesWheelReview,
     createWheelReview,
     getWheelsById,
@@ -1204,8 +1268,6 @@ export {
     getArticlesId,
     getArticlesImage,
     getStorageByIdParam,
-    //getTyresBrandNameRatingAvg,
-    //getWheelsBrandNameRatingAvg,
     getTyresBrandByName,
     getWheelsBrandByName
 }

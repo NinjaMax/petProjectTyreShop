@@ -29,7 +29,7 @@ const FilterMainBtn = observer(({
       if (e.target.value.length !==0) {
         const newGoodsTyreWidth = goodsTyre._width.filter(
           (itemSearch: any) => (
-          itemSearch.width.toLowerCase().includes(e.target.value)));
+          itemSearch.toLowerCase().includes(e.target.value)));
         goodsTyre.setWidth(newGoodsTyreWidth);
       } else {
         goodsTyre.setWidth(filter.widthSearch);

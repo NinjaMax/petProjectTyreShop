@@ -309,7 +309,6 @@ export class WheelsService {
   ) {
     try {
       const cachedTyres = await this.redisService.get(
-        'wheel' +
           width +
           diameter +
           bolt_count +
@@ -322,13 +321,215 @@ export class WheelsService {
           et +
           pcd +
           pcd2 +
-          sort,
+          sort +
+          'wheel_props',
       );
       if (cachedTyres) {
         return cachedTyres;
       }
       if (sort === 'ASC') {
         const wheelsAllWithoutLimitC =
+          await this.wheelRepository.findAndCountAll({
+            include: [
+              width
+                ? {
+                    model: WheelWidth,
+                    where: {
+                      width: {
+                        [Op.in]: width.split(','),
+                      },
+                    },
+                  }
+                : { model: WheelWidth },
+              diameter
+                ? {
+                    model: WheelDiameter,
+                    where: {
+                      diameter: {
+                        [Op.in]: diameter.split(','),
+                      },
+                    },
+                  }
+                : { model: WheelDiameter },
+              bolt_count
+                ? {
+                    model: WheelBoltCount,
+                    where: {
+                      bolt_count: {
+                        [Op.in]: bolt_count.split(','),
+                      },
+                    },
+                  }
+                : { model: WheelBoltCount },
+              bolt_count_pcd
+                ? {
+                    model: WheelBoltCountPcd,
+                    where: {
+                      bolt_count_pcd: {
+                        [Op.in]: bolt_count_pcd.split(','),
+                      },
+                    },
+                  }
+                : { model: WheelBoltCountPcd },
+              brand
+                ? {
+                    model: WheelBrand,
+                    where: {
+                      brand: {
+                        [Op.in]: brand.split(','),
+                      },
+                    },
+                  }
+                : { model: WheelBrand },
+              price
+                ? {
+                    model: PriceWheels,
+                    where: {
+                      price: { [Op.between]: price.split(',') },
+                    },
+                  }
+                : { model: PriceWheels },
+              type
+                ? {
+                    model: WheelType,
+                    where: {
+                      type: {
+                        [Op.in]: type.split(','),
+                      },
+                    },
+                  }
+                : { model: WheelType },
+              color
+                ? {
+                    model: WheelColor,
+                    where: {
+                      color: {
+                        [Op.in]: color.split(','),
+                      },
+                    },
+                  }
+                : { model: WheelColor },
+              dia
+                ? {
+                    model: WheelDia,
+                    where: {
+                      dia: {
+                        [Op.in]: dia.split(','),
+                      },
+                    },
+                  }
+                : { model: WheelDia },
+              et
+                ? {
+                    model: WheelEt,
+                    where: {
+                      et: {
+                        [Op.in]: et.split(','),
+                      },
+                    },
+                  }
+                : { model: WheelEt },
+              pcd
+                ? {
+                    model: WheelPcd,
+                    where: {
+                      pcd: {
+                        [Op.in]: pcd.split(','),
+                      },
+                    },
+                  }
+                : { model: WheelPcd },
+              pcd2
+                ? {
+                    model: WheelPcd2,
+                    where: {
+                      pcd2: {
+                        [Op.in]: pcd2.split(','),
+                      },
+                    },
+                  }
+                : { model: WheelPcd2 },
+            ],
+            order: [
+              [
+                sequelize.literal(
+                  `CASE WHEN price.price = null OR price.price = 0 THEN NULL ELSE 0 END`,
+                ),
+                'ASC',
+              ],
+              ['price', 'price', 'ASC NULLS LAST'],
+            ],
+          });
+        await this.redisService.set(
+            width +
+            diameter +
+            bolt_count +
+            bolt_count_pcd +
+            brand +
+            price +
+            type +
+            color +
+            dia +
+            et +
+            pcd +
+            pcd2 +
+            sort +
+            'wheel_props',
+          1200,
+          JSON.stringify(wheelsAllWithoutLimitC),
+        );
+        return wheelsAllWithoutLimitC;
+      }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async findAllWheelsWithCatOffset(
+    limit: number,
+    offset: number,
+    width: string,
+    diameter: string,
+    bolt_count: string,
+    bolt_count_pcd: string,
+    brand: string,
+    price: string,
+    type: string,
+    color: string,
+    dia: string,
+    et: string,
+    pcd: string,
+    pcd2: string,
+    sort: string,
+  ) {
+    try {
+      const cachedWheels = await this.redisService.get(
+        'wheel' +
+          limit +
+          offset +
+          width +
+          diameter +
+          bolt_count +
+          bolt_count_pcd +
+          brand +
+          price +
+          type +
+          color +
+          dia +
+          et +
+          pcd +
+          pcd2 +
+          sort +
+          'catalog',
+      );
+      if (cachedWheels) {
+        return cachedWheels;
+      }
+      if (sort === 'ASC') {
+        const wheelsAllWithLimitCat =
           await this.wheelRepository.findAndCountAll({
             include: [
               { model: RatingWheels },
@@ -467,26 +668,29 @@ export class WheelsService {
           });
         await this.redisService.set(
           'wheel' +
-            width +
-            diameter +
-            bolt_count +
-            bolt_count_pcd +
-            brand +
-            price +
-            type +
-            color +
-            dia +
-            et +
-            pcd +
-            pcd2 +
-            sort,
+          limit +
+          offset +
+          width +
+          diameter +
+          bolt_count +
+          bolt_count_pcd +
+          brand +
+          price +
+          type +
+          color +
+          dia +
+          et +
+          pcd +
+          pcd2 +
+          sort +
+          'catalog',
           1200,
-          JSON.stringify(wheelsAllWithoutLimitC),
+          JSON.stringify(wheelsAllWithLimitCat.rows.splice(offset, limit)),
         );
-        return wheelsAllWithoutLimitC;
+        return wheelsAllWithLimitCat.rows.splice(offset, limit);
       }
       if (sort === 'DESC') {
-        const wheelsAllWithoutLimitE =
+        const wheelsAllWithCatLimitDesc =
           await this.wheelRepository.findAndCountAll({
             include: [
               // { all: true },
@@ -625,26 +829,29 @@ export class WheelsService {
           });
         await this.redisService.set(
           'wheel' +
-            width +
-            diameter +
-            bolt_count +
-            bolt_count_pcd +
-            brand +
-            price +
-            type +
-            color +
-            dia +
-            et +
-            pcd +
-            pcd2 +
-            sort,
+          limit +
+          offset +
+          width +
+          diameter +
+          bolt_count +
+          bolt_count_pcd +
+          brand +
+          price +
+          type +
+          color +
+          dia +
+          et +
+          pcd +
+          pcd2 +
+          sort +
+          'catalog',
           1200,
-          JSON.stringify(wheelsAllWithoutLimitE),
+          JSON.stringify(wheelsAllWithCatLimitDesc.rows.splice(offset, limit)),
         );
-        return wheelsAllWithoutLimitE;
+        return wheelsAllWithCatLimitDesc.rows.splice(offset, limit);
       }
       if (sort === 'oldPrice') {
-        const wheelsAllWithoutLimitO =
+        const wheelsAllWithCatLimitOld =
           await this.wheelRepository.findAndCountAll({
             include: [
               // { all: true },
@@ -783,26 +990,29 @@ export class WheelsService {
           });
         await this.redisService.set(
           'wheel' +
-            width +
-            diameter +
-            bolt_count +
-            bolt_count_pcd +
-            brand +
-            price +
-            type +
-            color +
-            dia +
-            et +
-            pcd +
-            pcd2 +
-            sort,
+          limit +
+          offset +
+          width +
+          diameter +
+          bolt_count +
+          bolt_count_pcd +
+          brand +
+          price +
+          type +
+          color +
+          dia +
+          et +
+          pcd +
+          pcd2 +
+          sort +
+          'catalog',
           1200,
-          JSON.stringify(wheelsAllWithoutLimitO),
+          JSON.stringify(wheelsAllWithCatLimitOld.rows.splice(offset, limit)),
         );
-        return wheelsAllWithoutLimitO;
+        return wheelsAllWithCatLimitOld.rows.splice(offset, limit);
       }
       if (sort === 'title') {
-        const wheelsAllWithoutLimitT =
+        const wheelsAllWithCatLimitTitle =
           await this.wheelRepository.findAndCountAll({
             include: [
               // { all: true },
@@ -941,26 +1151,29 @@ export class WheelsService {
           });
         await this.redisService.set(
           'wheel' +
-            width +
-            diameter +
-            bolt_count +
-            bolt_count_pcd +
-            brand +
-            price +
-            type +
-            color +
-            dia +
-            et +
-            pcd +
-            pcd2 +
-            sort,
+          limit +
+          offset +
+          width +
+          diameter +
+          bolt_count +
+          bolt_count_pcd +
+          brand +
+          price +
+          type +
+          color +
+          dia +
+          et +
+          pcd +
+          pcd2 +
+          sort +
+          'catalog',
           1200,
-          JSON.stringify(wheelsAllWithoutLimitT),
+          JSON.stringify(wheelsAllWithCatLimitTitle.rows.splice(offset, limit)),
         );
-        return wheelsAllWithoutLimitT;
+        return wheelsAllWithCatLimitTitle.rows.splice(offset, limit);
       }
       if (sort === 'rating') {
-        const wheelsAllWithoutLimitR =
+        const wheelsAllWithCatLimitRating =
           await this.wheelRepository.findAndCountAll({
             include: [
               // { all: true },
@@ -1099,23 +1312,26 @@ export class WheelsService {
           });
         await this.redisService.set(
           'wheel' +
-            width +
-            diameter +
-            bolt_count +
-            bolt_count_pcd +
-            brand +
-            price +
-            type +
-            color +
-            dia +
-            et +
-            pcd +
-            pcd2 +
-            sort,
+          limit +
+          offset +
+          width +
+          diameter +
+          bolt_count +
+          bolt_count_pcd +
+          brand +
+          price +
+          type +
+          color +
+          dia +
+          et +
+          pcd +
+          pcd2 +
+          sort +
+          'catalog',
           1200,
-          JSON.stringify(wheelsAllWithoutLimitR),
+          JSON.stringify(wheelsAllWithCatLimitRating.rows.splice(offset, limit)),
         );
-        return wheelsAllWithoutLimitR;
+        return wheelsAllWithCatLimitRating.rows.splice(offset, limit);
       }
     } catch {
       throw new HttpException(

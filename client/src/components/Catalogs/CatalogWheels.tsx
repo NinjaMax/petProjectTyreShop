@@ -38,9 +38,15 @@ const CatalogWheels = observer(() => {
         let isMounted = false;
         const getWheelBrandRatingAvg = async () => {
             if (!isMounted && filter.brands && !filter.brands.includes(',')) {
-                const getWheelBrandName = await getWheelsBrandByName(filter.brands);
-                const getRatingWheelBrand = await getWheelsBrandRatingAvg(getWheelBrandName.id_brands);
-                setWheelBrandRating(getRatingWheelBrand);
+                try {
+                    const getWheelBrandName = await getWheelsBrandByName(filter?.brands);
+                    const getRatingWheelBrand = await getWheelsBrandRatingAvg(getWheelBrandName?.id_brand);
+                    if (getRatingWheelBrand) {
+                        setWheelBrandRating(getRatingWheelBrand);
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
                 //console.log('GET_RATING_BRAND: ', getRatingWheelBrand);
             }
         };

@@ -29,7 +29,6 @@ const Main = observer(() => {
 
   useEffect(() =>{
     let isMounted = false;
-    
     const loadMainTyreTask = async () => {
       if(!isMounted) {
         console.time('GET_REQUEST_TYRE_FROM_DATA_BASE');
@@ -39,6 +38,7 @@ const Main = observer(() => {
             filter.diameter,
             filter.season,
             filter.brands,
+            //filter.price,
             filter.sort,
           );
           console.timeEnd('GET_REQUEST_TYRE_FROM_DATA_BASE');
@@ -136,9 +136,7 @@ const Main = observer(() => {
           setSeasonFilter =  null;
       }
     }
-    console.time('LOAD_MAIN_TYRE_TASK');
     loadMainTyreTask();
-    console.timeEnd('LOAD_MAIN_TYRE_TASK');
     return () => {
         isMounted = true;
     };
