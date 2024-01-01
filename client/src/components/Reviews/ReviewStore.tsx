@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../css/Reviews/ReviewStore.css';
 import Rating from '../ux/Rating';
-import customerReview from '../../assets/icons/customer64.png';
+//import customerReview from '../../assets/icons/customer64.png';
 //import ReviewAnswer from '../question/ReviewAnswer';
 //import DotSite from '../ux/DotSite';
 //import ButtonPrevNext from '../buttons/ButtonPrevNext';
@@ -25,7 +25,7 @@ const ReviewStore = ({storeData}: IReviewStoreData) => {
             <div className="mySlidesStoreReview">
                 <div className="authorStoreReview">
                     <img className='avatarImgStore' 
-                        src={storeData?.customer_pictures ?? customerReview} 
+                        src={storeData?.customer_pictures ?? './customer64.png'} 
                         alt='avatarUser'
                     /> 
                     {storeData?.name}

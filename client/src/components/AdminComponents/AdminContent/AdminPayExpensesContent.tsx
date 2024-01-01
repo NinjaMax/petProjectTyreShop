@@ -10,7 +10,7 @@ import { FixedSizeList  as List } from 'react-window';
 
 const AdminPayExpensesContent = ({payExpenses, payTypes, payViews, cashBoxes}: IAdminPayment) => {
     const [outgoingPay, setOutgoingPay] = useState(false);
-    const [createPayIncome, setCreatePayIncome] = useState<boolean>(false);
+    const [createPayExpenses, setCreatePayExpenses] = useState<boolean>(false);
     const [payExpenseData, setExpensePayData] = useState<{} | null>(null);
     const [filteredPay, setFilteredPay] = useState< any[] | null | undefined>(payExpenses);
     const [value, setValue] = useState('');
@@ -30,6 +30,7 @@ const AdminPayExpensesContent = ({payExpenses, payTypes, payViews, cashBoxes}: I
 
     const outgoingCreate = () => {
         setOutgoingPay(!outgoingPay);
+        setCreatePayExpenses(!createPayExpenses);
     };  
 
     const showPayExpensesData = async (e: any) => {
@@ -41,7 +42,7 @@ const AdminPayExpensesContent = ({payExpenses, payTypes, payViews, cashBoxes}: I
             e.currentTarget.name === 'editPayExpenses' ? payExpensesInfo.disableBtns = true : payExpensesInfo.disableBtns = false;
             if (e.currentTarget.name === 'editPayExpenses') {
                 setExpensePayData(payExpensesInfo);
-                setCreatePayIncome(!createPayIncome);
+                setCreatePayExpenses(!createPayExpenses);
             }
             if (e.currentTarget.name === 'payExpensesShow') {
                 setExpensePayData(payExpensesInfo);
@@ -53,7 +54,7 @@ const AdminPayExpensesContent = ({payExpenses, payTypes, payViews, cashBoxes}: I
     };
 
     const itemClickHandler = (e: any) => {
-        const entity = e.target.textContent.split(':')
+        const entity = e.target.textContent.split(':');
         setValue(entity[1]);
         //setValue(e.target.value);
         setIsSearch(!isSearch);
@@ -169,7 +170,7 @@ const AdminPayExpensesContent = ({payExpenses, payTypes, payViews, cashBoxes}: I
             <div>{filteredPay![index]?.user?.name}</div>
             <div>{filteredPay![index]?.notes}</div>
             <div>
-                <button className='editAdmGoods'
+                {/* <button className='editAdmGoods'
                     name='payIncomesShow'
                     value={filteredPay![index].id_paynment}
                     onClick={showPayExpensesData}
@@ -177,9 +178,9 @@ const AdminPayExpensesContent = ({payExpenses, payTypes, payViews, cashBoxes}: I
                     <i className="fas fa-list"
                         title="пов'язані документи"
                     ></i>
-                </button>
+                </button> */}
                 <button className='editAdmGoods'
-                    name='editPayIncomes'
+                    name='editPayExpenses'
                     value={filteredPay![index].id_paynment}
                     onClick={showPayExpensesData}
                     >
@@ -229,8 +230,7 @@ const AdminPayExpensesContent = ({payExpenses, payTypes, payViews, cashBoxes}: I
                             })  
                         : null  
                         }
-                    </ul>
-            <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
+                </ul>
         </div>
         {filteredPay ?
         <div className='admExpenseTable'>
@@ -280,11 +280,11 @@ const AdminPayExpensesContent = ({payExpenses, payTypes, payViews, cashBoxes}: I
         </div> :
             <SpinnerCarRot/>
         }  
-        {outgoingPay ?
-            <ModalAdmin active={outgoingPay} setActive={setOutgoingPay}>
+        {createPayExpenses ?
+            <ModalAdmin active={createPayExpenses} setActive={setCreatePayExpenses}>
                 <AdminModalPay
-                    active={outgoingPay}
-                    setActive={setOutgoingPay}
+                    active={createPayExpenses}
+                    setActive={setCreatePayExpenses}
                     payViews={payViews} 
                     payTypes={[payTypes![1].id_paytype, payTypes![1].paytype]} 
                     cashBoxes={cashBoxes}

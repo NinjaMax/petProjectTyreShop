@@ -44,8 +44,9 @@
 
 .admChartsOrdersCount {
     font-size: 30px;
+    padding: 5px;
     background-color:#9EB9D3;
-    border-radius: 8px;
+    border-radius: 20px;
 }
 
 .admChartsOrdersNew {
@@ -98,8 +99,9 @@
 
 .admChartsSalesCount {
     font-size: 30px;
+    padding: 5px;
     background-color:#9EB9D3;
-    border-radius: 8px;
+    border-radius: 20px;
 }
 
 .admChartsSalesNew {
@@ -107,7 +109,7 @@
     height: 50px;
     font-size: 28px;
     background-color:#71C2ff;
-    border-radius: 8px;
+    border-radius: 20px;
 }
 
 .admChartsSalesNew span {
@@ -143,14 +145,16 @@
 
 .admChartsBill span {
     font-size: 28px;
+    padding: 5px;
     background-color:#CADBEA;
-    border-radius: 8px;
+    border-radius: 20px;
 }
 
 .admChartBillI {
     display: flex;
     flex-direction: column;
     align-items:center;
+    gap: 5px;
 }
 
 .admChartBillI i {

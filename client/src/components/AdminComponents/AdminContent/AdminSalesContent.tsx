@@ -259,8 +259,7 @@ const AdminSalesContent = ({sales}: IAdminSales) => {
                             })  
                         : null  
                         }
-                    </ul>
-            <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
+                </ul>
         </div>
         {filteredSales ? 
         <div className='admSalesTable'>

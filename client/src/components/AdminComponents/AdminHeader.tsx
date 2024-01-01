@@ -1,7 +1,17 @@
 import React from 'react';
 import '../../css/AdminComponentCss/AdminHeader.css';
 
-const AdminHeader = () => {
+type AdminHeaderType = {
+    orderOverall: number | undefined | null;
+    orderNew: number | undefined | null;
+    salesOverAll: number | undefined | null;
+    salesToday: any[] | undefined | null;
+};
+
+const AdminHeader = ({orderOverall, orderNew, salesOverAll, salesToday}: AdminHeaderType) => {
+
+    const salesPercent: string = ((salesOverAll!/orderOverall!) * 100).toFixed(1);
+    const getSalesToday = salesToday?.reduce((sum: any, current: any) => sum + current.order.total.cost, 0); 
 
     return (    
         <div className='adminHeader'>
@@ -11,10 +21,10 @@ const AdminHeader = () => {
                 </div> 
                 <div className='admChartOrdersItem'>
                     <div>Замовлень </div>   
-                    <span className='admChartsOrdersCount'>1250</span> 
+                    <span className='admChartsOrdersCount'>{orderOverall ?? 0}</span> 
                     <div>Нові </div>
                     <div className='admChartsOrdersNew'>
-                        <span>98</span>
+                        <span>{orderNew ?? 0}</span>
                     </div>      
                 </div>   
             </div>
@@ -24,9 +34,9 @@ const AdminHeader = () => {
                 </div>    
                 <div className='admChartSalesItem'>
                     <div>Продажів</div>
-                    <span className='admChartsSalesCount'>1000 </span>
+                    <span className='admChartsSalesCount'>{salesOverAll ?? 0}</span>
                     <div className='admChartsSalesNew'>
-                        <span>12.5%</span>  
+                        <span>{salesPercent ?? 0} %</span>  
                     </div>       
                 </div>    
             </div> 
@@ -37,7 +47,7 @@ const AdminHeader = () => {
                 <div className='admChartBillI'>
                     <div>Продажі сьогодні</div>
                     <div>
-                        <span>10000 <i className="fas fa-hryvnia"></i></span>
+                        <span>{getSalesToday ?? 0} <i className="fas fa-hryvnia"></i></span>
                     </div>  
                 </div> 
             </div> 

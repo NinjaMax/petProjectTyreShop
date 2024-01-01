@@ -368,7 +368,6 @@ const AdminGoodsContent = (
                         : null  
                         }
                     </ul>
-                    <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>  
                 </div>
             </div>
             <div className='admGoodsTable'>

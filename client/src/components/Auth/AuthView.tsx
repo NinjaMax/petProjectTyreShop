@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import '../../css/AuthCss/AuthView.css';
-import userImg from '../../assets/icons/customer64.png';
+//import userImg from './customer64.png';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../../context/Context';
 
@@ -33,7 +33,7 @@ const AuthView = observer(({logOutUser}:IAuthView) => {
                 <img id='imgCustomerAuth' 
                     src={customer._customer.picture ?? 
                             customer._customer.profile_image_url ?? 
-                            userImg ?? ""
+                            './customer64.png' ?? ""
                         } 
                     alt='imgUser'
                 />

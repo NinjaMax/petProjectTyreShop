@@ -75,7 +75,6 @@ const AdminUsersContent = ({users}:IUser) => {
                         : null  
                     }
                 </ul>
-            <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
         </div>
         <div className='admUsersTable'>
         <table className='admListUsersTable'>

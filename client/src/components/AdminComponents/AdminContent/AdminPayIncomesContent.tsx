@@ -172,7 +172,7 @@ const AdminPayIncomesContent = ({payIncomes, payTypes, payViews, cashBoxes}: IAd
             <div>{filteredPay![index]?.user?.name}</div>
             <div>{filteredPay![index]?.notes}</div>
             <div>
-                <button className='editAdmGoods'
+                {/* <button className='editAdmGoods'
                     name='payIncomesShow'
                     value={filteredPay![index].id_paynment}
                     onClick={showPayIncomesData}
@@ -180,7 +180,7 @@ const AdminPayIncomesContent = ({payIncomes, payTypes, payViews, cashBoxes}: IAd
                     <i className="fas fa-list"
                         title="пов'язані документи"
                     ></i>
-                </button>
+                </button> */}
                 <button className='editAdmGoods'
                     name='editPayIncomes'
                     value={filteredPay![index].id_paynment}
@@ -234,8 +234,7 @@ const AdminPayIncomesContent = ({payIncomes, payTypes, payViews, cashBoxes}: IAd
                             })  
                         : null  
                         }
-                    </ul>
-            <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
+                </ul>
         </div>
         {filteredPay ? 
         <div className='admIncomesTable'>
@@ -298,11 +297,6 @@ const AdminPayIncomesContent = ({payIncomes, payTypes, payViews, cashBoxes}: IAd
                 />
             </ModalAdmin> : null
         } 
-        <ModalAdmin active={incomePay} setActive={setIncomePay}>
-            <div>
-
-            </div>
-        </ModalAdmin>
     </div>
     );
 };

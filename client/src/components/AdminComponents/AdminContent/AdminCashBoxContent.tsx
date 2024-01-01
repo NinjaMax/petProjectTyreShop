@@ -88,9 +88,9 @@ const AdminCashBoxContent = ({cashboxData}: ICashbox) => {
                 placeholder="Введіть значення для пошуку..."
             />
             <ul className='inputCashBoxContent'>
-                        {value && isSearch ?
-                            filteredCashbox?.map(
-                                (item: ICashboxItem, index: number) =>{
+                {value && isSearch ?
+                    filteredCashbox?.map(
+                        (item: ICashboxItem, index: number) =>{
                             return (
                             <li key={'fullName' + index}
                                 className='inputCashBoxContentItem'
@@ -99,12 +99,10 @@ const AdminCashBoxContent = ({cashboxData}: ICashbox) => {
                             {`${item.id_cashbox}:${item.cashbox}`}
                             </li>
                             ) 
-                            })  
-                        : null  
-                        }
-                    </ul>
-
-            <ButtonSearch clickSearchBtn={() => console.log('seaachBTN')}/>
+                        })  
+                    : null  
+                }
+            </ul>
         </div>
         <div className='admCashBoxTable'>
         {filteredCashbox ? 

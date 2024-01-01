@@ -248,6 +248,12 @@ await $hostPost.post('/sales/add', data)
     console.log(error);
 });
 
+const getSalesAll = async () => 
+await $hostPost.get('/sales/all')
+.catch(error => {
+    console.log(error);
+});
+
 const createOrderSupForm = async (data: any) => 
 await $hostPost.post('/ordersup', data)
 .catch(error => {
@@ -546,5 +552,6 @@ export {
     getAllIncomesPay,
     getAllExpensesPay,
     getAllPayTypes,
-    getAllPayViews
+    getAllPayViews,
+    getSalesAll
 };

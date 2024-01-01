@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../../css/Reviews/ReviewsGoods.css';
-import customerReview from '../../assets/icons/customer64.png';
+//import customerReview from '../../assets/icons/customer64.png';
 import ButtonPrevNext from '../buttons/ButtonPrevNext';
 import Rating from '../ux/Rating';
 import Thumbs from '../ux/Thumbs';
@@ -103,7 +103,7 @@ const ReviewsGoods = ({
                     <div className="authorGoodsReview">
                         <img className='userImg' src={
                             reviewEntity?.customer_pictures ??
-                            customerReview
+                            './customer64.png'
                             } 
                             alt='avatarUser'
                         /> 
@@ -112,6 +112,7 @@ const ReviewsGoods = ({
                     <div className='ratingGoodsReview'>
                         <span>Рейтинг товара:</span>
                          <Rating 
+                            id={'id_review_' + reviewEntity.id_review}
                             numScore={
                                 rating?.find(
                                     rating => 

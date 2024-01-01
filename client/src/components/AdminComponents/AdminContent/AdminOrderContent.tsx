@@ -340,7 +340,6 @@ const AdminOrderContent = (
                         : null  
                         }
                     </ul>
-                <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
             </div>
             {filteredOrder ?
             <div className='admOrdersTable'

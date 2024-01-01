@@ -4,9 +4,11 @@ import responseCat from './dataCat.json';
 import responseManger from './dataManager.json';
 import responseSales from './dataSales.json';
 import Charts from './adminModalForm/Chart';
+import AdminComment from './adminContent/AdminComment';
 
 
 interface IMainContent {
+    comments: [] | null;
     version: number; 
     totalCharts: number; 
     charts: { name: string; chartType: string; data: (string | number)[][];
@@ -15,19 +17,21 @@ interface IMainContent {
     height: string; }[]; 
 }
 
-const AdminMainContent = ({}) => {
-
+const AdminMainContent = ({comments}: any) => {
+    const [lastComments, setLastComments] = useState<[] | null>();
     const [dataCat, setDataCat] = useState<IMainContent>();
     const [dataManager, setDataManager] =useState<IMainContent>();
     const [dataOrders, setDataOrders] =useState<IMainContent>();
 
-    useEffect(() => {
-      //if(data){
-        setDataCat(responseCat);
-        setDataManager(responseManger);
-        setDataOrders(responseSales);
-      //}
-    }, [dataCat, dataManager, dataOrders]);
+    // useEffect(() => {
+    //   //if(data){
+    //     setDataCat(responseCat);
+    //     setDataManager(responseManger);
+    //     setDataOrders(responseSales);
+    //   //}
+    // }, [dataCat, dataManager, dataOrders]);
+
+    //console.log(comments);
 
     return (
         <div className='adminMainContent'>
@@ -46,38 +50,29 @@ const AdminMainContent = ({}) => {
             </div>
             <div className='admMainContentComments'>
                 Останні коментарі користувачів
-                <div className='admLastComment'>
-                    <div className='admLastCommentItem'>Замовлення 1025: Миколай 02.03.2023: Перший коментар.</div>
-                    <div className='admLastCommentItem'>Замовлення 1023: Миколай 02.03.2023: Другийкоментар.</div>
-                    <div className='admLastCommentItem'>Замовлення 1025: Миколай 02.03.2023: Третій коментар.</div>
-                </div>
+                <AdminComment
+                    comments={comments?.splice(0, 4)}
+                />
             </div>
             <div className='adminMainContentChart'>
                 { dataOrders ?
-                
-                dataOrders && dataOrders.charts.map((chartData, i) => ( 
+                    dataOrders && dataOrders.charts.map((chartData, i) => ( 
                     <div className='admMainContentItem' key={i + 1}>     
                         <Charts chart={chartData} key={i + 1}/>
                     </div>     
                     ))
-                
                     : <span>No charts available </span>
                 } 
-            
             </div>
             <div className='admMainContentMetric'>
-                
                 { dataManager ?
-                
-                dataManager && dataManager.charts.map((chartData, i) => ( 
-                <div className='admMainContentItem' key={i + 1}>     
-                    <Charts chart={chartData} key={i + 1}/>
-                </div>     
+                    dataManager && dataManager.charts.map((chartData, i) => ( 
+                    <div className='admMainContentItem' key={i + 1}>     
+                        <Charts chart={chartData} key={i + 1}/>
+                    </div>     
                 ))
-            
                 : <span>No charts available </span>
                 } 
-                
             </div>  
         </div>
     );

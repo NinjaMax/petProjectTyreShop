@@ -26,10 +26,17 @@
     border-radius: 12px;
     /*margin: 5px;*/
     color: #444B54;
-    background-color: orange;
+    background-color: #71C2ff;
     
 }
-
+.activeSidebarItem {
+    margin: 3px;
+    padding: 6px;
+    border-radius: 12px;
+    cursor:pointer;
+    color: #888888;
+    background-color: #71C2ff;
+}
 /*.admSideBarItem:active {
     background-color: orange;
 }*/

@@ -24,7 +24,7 @@ const AdminComment = ({newCommit, comments}:any) => {
             commentNew?.map((item:any, index: number) => {
                 return (
                 <div key={index + 1} className="containerAdmComment">
-                    <img src={item.user?.picture ?? "../../../assets/icons/customer64.png"} 
+                    <img src={item.user.picture ?? "./customer64.png"} 
                     alt="Avatar"/>
                     <span className="timeAdmCommitLeft">{item.user?.name} ({item.user?.role}):</span>
                     <span className="timeAdmCommitLeft">&nbsp;{new Date(item.createdAt).toLocaleString()}:</span>

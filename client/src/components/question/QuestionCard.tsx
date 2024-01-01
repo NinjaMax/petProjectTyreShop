@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../css/Question/QuestionCard.css';
 import { IQuestionCard } from './types/QuestionCard.type';
-import customerReview from '../../assets/icons/customer64.png';
+//import customerReview from '../../assets/icons/customer64.png';
 import QuestionAnswer from './QuestionAnswer';
 
 const QuestionCard = ({questionData}: IQuestionCard) => {
@@ -12,7 +12,7 @@ const QuestionCard = ({questionData}: IQuestionCard) => {
         <div className="questionCardBox">
             <div className="authorQuestionCard">
                 <img className='avatarImgQuestionCard' 
-                    src={questionData?.customer_pictures ?? customerReview} 
+                    src={questionData?.customer_pictures ?? './customer64.png'} 
                     alt='avatarUser'
                 /> 
                 {questionData?.name}

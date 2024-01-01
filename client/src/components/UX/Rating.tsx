@@ -32,9 +32,9 @@ const Rating = observer((
                 }
             </div>
             <input 
-                id={nameRating ? 
-                    nameRating + '_'+ id + '_' + 5: 
-                    5 +'_' + id}
+                id={nameRating && !id ? 
+                    nameRating + '_' + 5: 
+                    5 + '_' + id}
                 type="radio"  
                 name="rating"
                 value="5"
@@ -49,16 +49,15 @@ const Rating = observer((
                     5 < chooseStar! ? 
                     "fa fa-star checked" :
                     "fa fa-star"}
-                htmlFor={nameRating ? 
-                    nameRating + '_'+ id + '_' + 5: 
-                    5 +'_' + id} 
+                htmlFor={nameRating && !id ? 
+                    nameRating + '_' + 5: 
+                    5 + '_' + id} 
                 title="Оцінка «5»"
             ></label>
-
             <input 
-                id={nameRating ? 
-                    nameRating + '_'+ id + '_' + 4: 
-                    4 +'_' + id}
+                id={nameRating && !id ? 
+                    nameRating + '_' + 4: 
+                    4 + '_' + id}
                 type="radio" 
                 name="rating" 
                 value="4"
@@ -73,16 +72,15 @@ const Rating = observer((
                 4 < chooseStar! ? 
                 "fa fa-star checked" :
                 "fa fa-star"}
-                htmlFor={nameRating ? 
-                    nameRating + '_'+ id + '_' + 4: 
-                    4 +'_' + id} 
+                htmlFor={!nameRating && !id ? 
+                    nameRating + '_' + 4: 
+                    4 + '_' + id} 
                 title="Оцінка «4»"
             ></label>
-
             <input 
-                id={nameRating ? 
-                    nameRating + '_'+ id + '_' + 3: 
-                    3 +'_' + id}
+                id={nameRating && !id ? 
+                    nameRating + '_' + 3: 
+                    3 + '_' + id}
                 type="radio" 
                 title={nameRating}
                 name="rating" 
@@ -98,16 +96,15 @@ const Rating = observer((
                     "fa fa-star checked" :
                     "fa fa-star"
                 }
-                htmlFor={nameRating ? 
-                    nameRating + '_'+ id + '_' + 3: 
-                    3 +'_' + id} 
+                htmlFor={nameRating && !id ? 
+                    nameRating + '_' + 3: 
+                    3 + '_' + id} 
                 title="Оцінка «3»"
             ></label>
-
             <input 
-                id={nameRating ?
-                    nameRating + '_'+ id + '_' + 2: 
-                    2 +'_' + id}
+                id={nameRating && !id ?
+                    nameRating + '_' + 2: 
+                    2 + '_' + id}
                 type="radio" 
                 title={nameRating} 
                 name="rating" 
@@ -123,16 +120,15 @@ const Rating = observer((
                 "fa fa-star checked" :
                 "fa fa-star"
             }
-                htmlFor={nameRating ? 
-                    nameRating + '_'+ id + '_' + 2: 
-                    2 +'_' + id} 
+                htmlFor={nameRating && !id ? 
+                    nameRating + '_' + 2: 
+                    2 + '_' + id} 
                 title="Оцінка «2»"
             ></label>
-
             <input 
-                id={nameRating ? 
-                    nameRating + '_'+ id + '_' + 1: 
-                    1 +'_' + id}
+                id={nameRating && !id ? 
+                    nameRating + '_' + 1: 
+                    1 + '_' + id}
                 type="radio" 
                 title={nameRating} 
                 name="rating" 
@@ -141,9 +137,9 @@ const Rating = observer((
             />
             <label 
                 className={1 <= chooseStar! ? "fa fa-star checked" :"fa fa-star"}
-                htmlFor={nameRating ? 
-                    nameRating + '_'+ id + '_' + 1: 
-                    1 +'_' + id} 
+                htmlFor={nameRating && !id ? 
+                    nameRating + '_' + 1: 
+                    1 + '_' + id} 
                 title="Оцінка «1»"
             ></label>
         </div>

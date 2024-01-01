@@ -215,7 +215,6 @@ const AdminSupplierContent = ({suppliers}:any) => {
                         : null  
                         }
                     </ul>
-            <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
         </div>
         {filteredSupplier ?
         <div className='admSupplierTable'>

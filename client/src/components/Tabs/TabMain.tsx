@@ -7,10 +7,11 @@ import FilterMainWheel from '../mainFilterButton/filterMainTyres/FilterMainWheel
 
 interface ITabMain {
     filterStateAction(arg0:any):void;
-    filterMainState: boolean
+    filterMainState: boolean;
+    getFilterTitle(arg0:any):void;
 }
 
-const TabMain = ({filterMainState, filterStateAction}: ITabMain) => {
+const TabMain = ({filterMainState, filterStateAction, getFilterTitle}: ITabMain) => {
     const [filterOpenClose, setFilterOpenClose] = useState<boolean>(false);
     const [filterState, setFilterState] = useState<string>('ШИНИ');
     const [filterTyreState, setFilterTyreState] = useState<boolean>(false);
@@ -45,7 +46,8 @@ const TabMain = ({filterMainState, filterStateAction}: ITabMain) => {
     // };
 
     const handleSetFilterState = (e: any) => {
-        setFilterState(e.currentTarget.value)
+        setFilterState(e.currentTarget.value);
+        getFilterTitle(e.currentTarget.value);
     };
 
     return (
@@ -66,7 +68,7 @@ const TabMain = ({filterMainState, filterStateAction}: ITabMain) => {
                 onClick={handleSetFilterState}>
                 ДИСКИ<span className='arrowTabWheels'></span>   
             </button>
-            <button className="tablinksAkb" 
+            {/* <button className="tablinksAkb" 
                 value={'АКБ'} 
                 onClick={handleSetFilterState}>
                 АКБ<span className='arrowTabAkb'></span>
@@ -75,7 +77,7 @@ const TabMain = ({filterMainState, filterStateAction}: ITabMain) => {
                 value={'МАСТИЛА/РІДИНИ'} 
                 onClick={handleSetFilterState}>
                 МАСЛА ТА РІДИНИ<span className='arrowTabSelect'></span>
-            </button>
+            </button> */}
             
         </div>
         {filterTyreState ?

@@ -36,7 +36,7 @@ const BreadCrumbs = ({route, hrefTitle}: IBreadCrumbs) => {
                     }
                     {newRoute[4] ?
                         <Fragment>
-                        <a className='anchBreadCrumbs' href={hrefTitle[4] ? newRoute[4] : newRoute.slice(1, newRoute.length - 1).join('/')} >{hrefTitle[4]}</a> 
+                        <a className='anchBreadCrumbs' href={hrefTitle[4] ? newRoute[1] + '/' + newRoute[4] : newRoute.slice(1, newRoute.length - 1).join('/')} >{hrefTitle[4]}</a> 
                         <span> {hrefTitle[4] ? '>' : ''} </span>
                         </Fragment>  
                        : null

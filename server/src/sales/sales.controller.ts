@@ -26,7 +26,7 @@ export class SalesController {
     return this.salesService.addGoodsSale(createSaleDto);
   }
 
-  @Get()
+  @Get('/all')
   findAll() {
     return this.salesService.findAllSales();
   }

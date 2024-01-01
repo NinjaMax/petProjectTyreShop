@@ -217,8 +217,7 @@ const AdminCustomersContent = ({customers}: ICustomer) => {
                             })  
                         : null  
                         }
-                    </ul>
-                    <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
+                </ul>
             </div>
             {filteredCustomer ? 
             <div className='admCustomersTable'>

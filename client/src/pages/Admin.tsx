@@ -14,7 +14,8 @@ import { getTyresAdmin,
         getAllIncomesPay,
         getAllExpensesPay,
         getAllPayTypes,
-        getAllPayViews
+        getAllPayViews,
+        getSalesAll
     } from '../restAPI/restAdminAPI';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
@@ -65,20 +66,20 @@ import AdminUsersContent from '../components/adminComponents/adminContent/AdminU
 
 const Admin = observer(() => {
     const {user} = useContext<any | null>(Context);
-    const [sideBarItem, setSideBarItem] = useState("golovna");
+    const [sideBarItem, setSideBarItem] = useState<string>("golovna");
     const [tyreData, setTyreData] = useState(null);
     const [wheelData, setWheelData] = useState(null);
     const [orderSupAllData, setOrderSupAllData] = useState(null);
     const [users, setUsers] = useState(null);
     const [suppliers, setSuppliers] = useState(null);
-    const [sales, setSales] = useState(null);
+    const [sales, setSales] = useState<[] | null>(null);
     const [cashBoxAll, setCashBoxAll] = useState(null);
     const [payIncomes, setPayIncomes] = useState(null);
     const [payExpenses, setPayExpenses] = useState(null);
     const [customers, setCustomers] = useState(null);
     const [commentOrder, setCommentOrder] = useState(null);
     const [commentOrderSup, setCommentOrderSup] = useState(null);
-    const [orderAllData, setOrderAllData] = useState(null);
+    const [orderAllData, setOrderAllData] = useState<[] | null>(null);
     const [storageAll, setStorageAll] = useState(null);
     const [payTypes, setPayTypes] = useState<any[] | null>(null);
     const [payViews, setPayViews] = useState<any[] | null>(null);
@@ -99,7 +100,8 @@ const Admin = observer(() => {
                     getAllIncomesPay,
                     getAllExpensesPay,
                     getAllPayTypes,
-                    getAllPayViews
+                    getAllPayViews,
+                    getSalesAll
                 ]
                 let i: number = 0;
                 while(tasks.length > i) {
@@ -156,7 +158,10 @@ const Admin = observer(() => {
                         let resultPayViews: any = await tasks[i]();
                         setPayViews(resultPayViews?.data);
                     }
-
+                    if (!isMounted && tasks[i] === getSalesAll) {
+                        let resultSales: any = await tasks[i]();
+                        setSales(resultSales?.data);
+                    }
                     const task = tasks.shift();
                     // Run the task:
                     task();
@@ -173,7 +178,6 @@ const Admin = observer(() => {
         if (e.target?.value) {
             setSideBarItem(e.target.value);  
         }
-        //console.log(e.target.value);
     }
 
     const showCommentOrder = async (e: any) => {
@@ -217,14 +221,25 @@ const Admin = observer(() => {
                 <AdminProfile/>
             </div>
             <div className='leftColumn'>
-                <AdminSideBar changeMenu={sideBarItemChange}/>
+                <AdminSideBar 
+                    changeMenuItem={sideBarItem}
+                    changeMenu={sideBarItemChange}
+                />
             </div>
             <div className='headerAdmin'>
-                <AdminHeader/>
+                <AdminHeader 
+                    orderOverall={orderAllData?.length} 
+                    orderNew={orderAllData?.filter((item: any) => item?.status === 'Новий').length} 
+                    salesOverAll={sales?.length} 
+                    salesToday={sales?.filter((item: any) => 
+                        new Date(item.createdAt).getDay() === new Date().getDate())}                    
+                />
             </div>
             <div className='rightColumn'>
                 {sideBarItem === 'golovna' ?
-                    <AdminMainContent />
+                    <AdminMainContent 
+                        comments={commentOrder}
+                    />
                 : null}
                 {sideBarItem === 'catalog' ?
                     <AdminGoodsContent

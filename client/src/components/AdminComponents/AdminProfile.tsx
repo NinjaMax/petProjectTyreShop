@@ -5,12 +5,13 @@ import { observer } from 'mobx-react-lite';
 
 const AdminProfile = observer(() => {
     const {user} = useContext<any | null>(Context);
-    console.log('USERPROFILE: ', user);
+    // console.log('USERPROFILE: ', user._user?.sub);
+    // console.log('USER_PICTURE: ', user._user?.sub?.picture)
 
     return (
         <div className='adminProfile'>
-            {user.picture ? 
-                <img src={user._user.picture} alt='user'/> :
+            {user._user?.sub?.picture ? 
+                <img src={user._user?.sub?.picture} width={52} height={52} alt='user'/> :
                 <i className="fas fa-user-circle"></i>    
             }
             <div className='admProfileItem'>id:{user._user?.sub?.id_user ?? 'немає данних'}</div>

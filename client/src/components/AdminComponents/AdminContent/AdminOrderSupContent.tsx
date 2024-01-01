@@ -320,7 +320,6 @@ const AdminOrderSupContent = (
                         : null  
                         }
                     </ul>
-            <ButtonSearch clickSearchBtn={()=> console.log('searchBtn')}/>
         </div>
         {filterOrderSup ? 
         <div className='admOrdersSupTable'>

@@ -26,6 +26,7 @@ const Main = observer(() => {
   const [prevBtnReview, setPrevBtnReview] = useState<number>(0);
   const [nextBtnReview, setNextBtnReview] = useState<number>(0);
   const [articlesAll, setArticlesAll] = useState<any[] | null>();
+  const [chooseFilterState, setChooseFilterState] = useState<string>('ШИНИ');
 
   useEffect(() =>{
     let isMounted = false;
@@ -33,11 +34,11 @@ const Main = observer(() => {
       if(!isMounted) {
         console.time('GET_REQUEST_TYRE_FROM_DATA_BASE');
         let tyreFilterGoods: any = await getTyresOffsetMain(
-            filter.width,
-            filter.height,
-            filter.diameter,
-            filter.season,
-            filter.brands,
+          chooseFilterState === 'ШИНИ' ? filter.width : '',
+          chooseFilterState === 'ШИНИ' ? filter.height : '',
+          chooseFilterState === 'ШИНИ' ? filter.diameter : '',
+          chooseFilterState === 'ШИНИ' ? filter.season : '',
+          chooseFilterState === 'ШИНИ' ? filter.brands : '',
             //filter.price,
             filter.sort,
           );
@@ -150,6 +151,7 @@ const Main = observer(() => {
     filter.season, 
     filter.brands, 
     filter.sort,
+    chooseFilterState,
   ]);
 
   useEffect(() =>{
@@ -163,11 +165,11 @@ const Main = observer(() => {
         if(!isMounted && taskLoad[i] === getWheelsMainOffset) {
           console.time('GET_REQUEST_WHEEL_FROM_DATA_BASE');
           let wheelFilterGoods: any = await taskLoad[i](
-            filter.width,
-            filter.diameter,
-            filter.bolt_count,
-            filter.brands,
-            filter.type,
+            chooseFilterState === 'ДИСКИ' ? filter.width : '',
+            chooseFilterState === 'ДИСКИ' ? filter.diameter : '',
+            chooseFilterState === 'ДИСКИ' ? filter.bolt_count : '',
+            chooseFilterState === 'ДИСКИ' ? filter.brands : '',
+            chooseFilterState === 'ДИСКИ' ? filter.type : '',
             filter.sort,
           );
           console.timeEnd('GET_REQUEST_WHEEL_FROM_DATA_BASE');
@@ -426,6 +428,7 @@ const Main = observer(() => {
       <TabMain
         filterMainState={filterClose}
         filterStateAction={setFilterClose}
+        getFilterTitle={setChooseFilterState}
       />
       <BrandsListMain/>
       <TabProdMain titleTab='ЛІДЕРИ ПРОДАЖУ'>

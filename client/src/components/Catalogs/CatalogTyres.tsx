@@ -155,6 +155,7 @@ const CatalogTyres = observer(() => {
                 <div>
                     <img src={tyreBrandLogo(filter.brands) ?? ''} alt='tyreBrandLogo'/>
                     <Rating 
+                        id={'brand'}
                         numScore={tyreRatingAvr?.rows[0]?.avgRatingBrand ?? 0}
                         disabled={true}
                     />

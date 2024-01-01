@@ -194,6 +194,123 @@ const CatalogTyresPage = observer(() => {
             ...tyreFilterGoodsId.rows] 
           ) : goodsTyre?.setTyres(
             tyreFilterGoodsId.rows);
+      //       for (let key in params) {
+      //         if (params[key] && !filter.season && filter.chipSeason.length === 0 ) {
+      //           const tyreCatSeason = tyreSeasonCat(params[key]);
+      //         if (tyreCatSeason) {
+      //           filter.setSeason(tyreCatSeason);
+      //           filter.setChipSeason(
+      //             Array.from(new Set([...filter.chipSeason, tyreCatSeason]))
+      //           ); 
+      //           }
+      //         }
+      //         if (params[key] && !filter.studded && filter.chipStudded.length === 0 ) {
+      //           const tyreStudded = goodsTyre._studded?.find(
+      //           (studded:string) => 
+      //           createStringUrl(studded.toLocaleLowerCase()) === params[key]);
+      //         if (tyreStudded) {
+      //           filter.setStudded(tyreStudded);
+      //           filter.setChipStudded(
+      //             Array.from(new Set([...filter.chipStudded, tyreStudded]))
+      //           ); 
+      //         }
+      //         }
+      //         if (params[key] && !filter.vehicle_type && filter.chipVehicleType.length === 0) {
+      //           const tyreCatType = tyreVehicleTypeCat(params[key]);
+      //         if (tyreCatType) {
+      //           filter.setVehicleType(tyreCatType);
+      //           filter.setChipVehicleType(
+      //             Array.from(new Set([...filter.chipVehicleType, tyreCatType]))
+      //           );
+      //         }
+      //         }
+      //         if (params[key] && !filter.brands && filter.chipBrands.length === 0) {
+      //         const findBrandInSeason:string = goodsTyre._brands?.find(
+      //           (brands:string) => 
+      //           createStringUrl(brands.toLocaleLowerCase()) === params[key]);
+      //         if (findBrandInSeason) {
+      //           filter.setBrands(findBrandInSeason);
+      //           filter.setChipBrands(
+      //             Array.from(new Set([...filter.chipBrands, findBrandInSeason]))
+      //             );
+      //           }
+      //         }
+      //         if (params[key]?.includes('w') && !filter.width && filter.chipWidth.length === 0 ) {
+      //         const findWidth = goodsTyre._width?.find((width:string) => width === params[key]?.slice(1, params[key]?.length));
+      //         if (findWidth) {
+      //           filter.setWidth(findWidth);
+      //           filter.setChipWidth(
+      //               Array.from(new Set([...filter.chipWidth, findWidth]))
+      //             );
+      //           }
+      //         }
+      //         if (params[key]?.includes('h') && !filter.height && filter.chipHeight.length === 0) {
+      //           const findHeight = goodsTyre._height?.find((height:string) => height === params[key]?.slice(1, params[key]?.length));
+      //           if (findHeight) {
+      //             filter.setHeight(findHeight);
+      //             filter.setChipHeight(
+      //             Array.from(
+      //               new Set([...filter.chipHeight, findHeight]))
+      //             );
+      //           }
+      //         }
+      //         if (params[key]?.includes('r') && !filter.diameter && filter.chipDiameter.length === 0) {
+      //           const findDiameter = goodsTyre._diameter?.find(
+      //           (diameter:string) => 
+      //           diameter === params[key]?.slice(1, params[key]?.length));
+      //         if (findDiameter) {
+      //           filter.setDiameter(findDiameter);
+      //           filter.setChipDiameter(
+      //             Array.from(
+      //               new Set([...filter.chipDiameter, findDiameter]))
+      //             );
+      //           }
+      //         }
+      //         if (params[key]?.includes('li-') && !filter.load_index && filter.chipLoadIndex.length === 0) {
+      //         const findLoadIndex = goodsTyre._load_index?.find(
+      //           (load_index_with_desc:string) => 
+      //           createStringUrl(load_index_with_desc.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
+      //         if (findLoadIndex) {
+      //           filter.setLoadIndex(findLoadIndex);
+      //           filter.setChipLoadIndex(
+      //               Array.from(new Set([...filter.chipLoadIndex, findLoadIndex]))
+      //             );
+      //           }
+      //         }
+      //         if (params[key]?.includes('si-') && !filter.speed_index && filter.chipSpeedIndex.length === 0) {
+      //           const findSpeedIndex = goodsTyre._speed_index?.find(
+      //           (speed_index_with_desc:string) => 
+      //           createStringUrl(speed_index_with_desc.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
+      //         if (findSpeedIndex) {
+      //           filter.setSpeedIndex(findSpeedIndex);
+      //           filter.setChipSpeedIndex(
+      //               Array.from(new Set([...filter.chipSpeedIndex, findSpeedIndex]))
+      //             );
+      //           }
+      //         }
+      //         if (params[key]?.includes('xl-') && !filter.reinforced && filter.chipReinforced.length === 0) {
+      //           const findReinforcedSeason = goodsTyre._reinforced?.find(
+      //           (reinforced:string) => 
+      //           createStringUrl(reinforced.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
+      //           if (findReinforcedSeason) {
+      //             filter.setReinforced(findReinforcedSeason);
+      //             filter.setChipReinforced(
+      //               Array.from(new Set([...filter.chipReinforced, findReinforcedSeason]))
+      //             );
+      //           }
+      //         }
+      //         if (params[key]?.includes('om-') && !filter.homologation && filter.chipHomologation.length === 0) {
+      //         const findOmSeason = goodsTyre._homologation?.find(
+      //           (homologation:string) => 
+      //           createStringUrl(homologation.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
+      //         if (findOmSeason) {
+      //           filter.setHomologation(findOmSeason);
+      //           filter.setChipHomologation(
+      //             Array.from(new Set([...filter.chipHomologation, findOmSeason]))
+      //           );
+      //         }
+      //         }
+      //       }
       }
     }
     loadCatalogTyre();
@@ -201,7 +318,9 @@ const CatalogTyresPage = observer(() => {
         isMounted = true;
     };
   },
-  [
+  [ 
+    filter, 
+    params,
     filter.brands, 
     filter.diameter, 
     filter.height, 
@@ -234,7 +353,6 @@ const CatalogTyresPage = observer(() => {
             filter.diameter,
             filter.season,
             filter.brands,
-            //filter.price,
             filter.sort,
           );
           console.timeEnd('GET_REQUEST_TYRE_FROM_DATA_BASE');
@@ -331,6 +449,123 @@ const CatalogTyresPage = observer(() => {
           setBrandFilter = null;
           setSeasonFilter =  null;
       }
+      for (let key in params) {
+        if (params[key] && !filter.season && filter.chipSeason.length === 0 ) {
+          const tyreCatSeason = tyreSeasonCat(params[key]);
+          if (tyreCatSeason) {
+            filter.setSeason(tyreCatSeason);
+            filter.setChipSeason(
+              Array.from(new Set([...filter.chipSeason, tyreCatSeason]))
+            ); 
+          }
+        }
+        if (params[key] && !filter.studded && filter.chipStudded.length === 0 ) {
+          const tyreStudded = goodsTyre._studded?.find(
+            (studded:string) => 
+            createStringUrl(studded.toLocaleLowerCase()) === params[key]);
+          if (tyreStudded) {
+            filter.setStudded(tyreStudded);
+            filter.setChipStudded(
+              Array.from(new Set([...filter.chipStudded, tyreStudded]))
+            ); 
+          }
+        }
+        if (params[key] && !filter.vehicle_type && filter.chipVehicleType.length === 0) {
+          const tyreCatType = tyreVehicleTypeCat(params[key]);
+          if (tyreCatType) {
+            filter.setVehicleType(tyreCatType);
+            filter.setChipVehicleType(
+              Array.from(new Set([...filter.chipVehicleType, tyreCatType]))
+            );
+          }
+        }
+        if (params[key] && !filter.brands && filter.chipBrands.length === 0) {
+          const findBrandInSeason:string = goodsTyre._brands?.find(
+            (brands:string) => 
+            createStringUrl(brands.toLocaleLowerCase()) === params[key]);
+          if (findBrandInSeason) {
+            filter.setBrands(findBrandInSeason);
+            filter.setChipBrands(
+              Array.from(new Set([...filter.chipBrands, findBrandInSeason]))
+            );
+          }
+        }
+        if (params[key]?.includes('w') && !filter.width && filter.chipWidth.length === 0 ) {
+          const findWidth = goodsTyre._width?.find((width:string) => width === params[key]?.slice(1, params[key]?.length));
+          if (findWidth) {
+            filter.setWidth(findWidth);
+            filter.setChipWidth(
+              Array.from(new Set([...filter.chipWidth, findWidth]))
+            );
+          }
+        }
+        if (params[key]?.includes('h') && !filter.height && filter.chipHeight.length === 0) {
+          const findHeight = goodsTyre._height?.find((height:string) => height === params[key]?.slice(1, params[key]?.length));
+          if (findHeight) {
+            filter.setHeight(findHeight);
+            filter.setChipHeight(
+              Array.from(
+                new Set([...filter.chipHeight, findHeight]))
+            );
+          }
+        }
+        if (params[key]?.includes('r') && !filter.diameter && filter.chipDiameter.length === 0) {
+          const findDiameter = goodsTyre._diameter?.find(
+            (diameter:string) => 
+            diameter === params[key]?.slice(1, params[key]?.length));
+          if (findDiameter) {
+            filter.setDiameter(findDiameter);
+            filter.setChipDiameter(
+              Array.from(
+                new Set([...filter.chipDiameter, findDiameter]))
+            );
+          }
+        }
+        if (params[key]?.includes('li-') && !filter.load_index && filter.chipLoadIndex.length === 0) {
+          const findLoadIndex = goodsTyre._load_index?.find(
+            (load_index_with_desc:string) => 
+            createStringUrl(load_index_with_desc.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
+          if (findLoadIndex) {
+            filter.setLoadIndex(findLoadIndex);
+            filter.setChipLoadIndex(
+              Array.from(new Set([...filter.chipLoadIndex, findLoadIndex]))
+            );
+          }
+        }
+        if (params[key]?.includes('si-') && !filter.speed_index && filter.chipSpeedIndex.length === 0) {
+          const findSpeedIndex = goodsTyre._speed_index?.find(
+            (speed_index_with_desc:string) => 
+            createStringUrl(speed_index_with_desc.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
+          if (findSpeedIndex) {
+            filter.setSpeedIndex(findSpeedIndex);
+            filter.setChipSpeedIndex(
+              Array.from(new Set([...filter.chipSpeedIndex, findSpeedIndex]))
+            );
+          }
+        }
+        if (params[key]?.includes('xl-') && !filter.reinforced && filter.chipReinforced.length === 0) {
+          const findReinforcedSeason = goodsTyre._reinforced?.find(
+            (reinforced:string) => 
+            createStringUrl(reinforced.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
+          if (findReinforcedSeason) {
+            filter.setReinforced(findReinforcedSeason);
+            filter.setChipReinforced(
+              Array.from(new Set([...filter.chipReinforced, findReinforcedSeason]))
+            );
+          }
+        }
+        if (params[key]?.includes('om-') && !filter.homologation && filter.chipHomologation.length === 0) {
+          const findOmSeason = goodsTyre._homologation?.find(
+            (homologation:string) => 
+            createStringUrl(homologation.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
+          if (findOmSeason) {
+            filter.setHomologation(findOmSeason);
+            filter.setChipHomologation(
+              Array.from(new Set([...filter.chipHomologation, findOmSeason]))
+            );
+          }
+        }
+      }
     }
     loadMainFilterTyreTask();
     return () => {
@@ -339,6 +574,7 @@ const CatalogTyresPage = observer(() => {
   },
   [
     filter, 
+    params,
     goodsTyre, 
     filter.width, 
     filter.height, 
@@ -584,123 +820,123 @@ const CatalogTyresPage = observer(() => {
           // setStuddedFilter = null;
         }
       //}
-      // for (let key in params) {
-      //   if (params[key] && !filter.season && filter.chipSeason.length === 0 ) {
-      //     const tyreCatSeason = tyreSeasonCat(params[key]);
-      //     if (tyreCatSeason) {
-      //       filter.setSeason(tyreCatSeason);
-      //       filter.setChipSeason(
-      //         Array.from(new Set([...filter.chipSeason, tyreCatSeason]))
-      //       ); 
-      //     }
-      //   }
-      //   if (params[key] && !filter.studded && filter.chipStudded.length === 0 ) {
-      //     const tyreStudded = goodsTyre._studded?.find(
-      //       (studded:string) => 
-      //       createStringUrl(studded.toLocaleLowerCase()) === params[key]);
-      //     if (tyreStudded) {
-      //       filter.setStudded(tyreStudded);
-      //       filter.setChipStudded(
-      //         Array.from(new Set([...filter.chipStudded, tyreStudded]))
-      //       ); 
-      //     }
-      //   }
-      //   if (params[key] && !filter.vehicle_type && filter.chipVehicleType.length === 0) {
-      //     const tyreCatType = tyreVehicleTypeCat(params[key]);
-      //     if (tyreCatType) {
-      //       filter.setVehicleType(tyreCatType);
-      //       filter.setChipVehicleType(
-      //         Array.from(new Set([...filter.chipVehicleType, tyreCatType]))
-      //       );
-      //     }
-      //   }
-      //   if (params[key] && !filter.brands && filter.chipBrands.length === 0) {
-      //     const findBrandInSeason:string = goodsTyre._brands?.find(
-      //       (brands:string) => 
-      //       createStringUrl(brands.toLocaleLowerCase()) === params[key]);
-      //     if (findBrandInSeason) {
-      //       filter.setBrands(findBrandInSeason);
-      //       filter.setChipBrands(
-      //         Array.from(new Set([...filter.chipBrands, findBrandInSeason]))
-      //       );
-      //     }
-      //   }
-      //   if (params[key]?.includes('w') && !filter.width && filter.chipWidth.length === 0 ) {
-      //     const findWidth = goodsTyre._width?.find((width:string) => width === params[key]?.slice(1, params[key]?.length));
-      //     if (findWidth) {
-      //       filter.setWidth(findWidth);
-      //       filter.setChipWidth(
-      //         Array.from(new Set([...filter.chipWidth, findWidth]))
-      //       );
-      //     }
-      //   }
-      //   if (params[key]?.includes('h') && !filter.height && filter.chipHeight.length === 0) {
-      //     const findHeight = goodsTyre._height?.find((height:string) => height === params[key]?.slice(1, params[key]?.length));
-      //     if (findHeight) {
-      //       filter.setHeight(findHeight);
-      //       filter.setChipHeight(
-      //         Array.from(
-      //           new Set([...filter.chipHeight, findHeight]))
-      //       );
-      //     }
-      //   }
-      //   if (params[key]?.includes('r') && !filter.diameter && filter.chipDiameter.length === 0) {
-      //     const findDiameter = goodsTyre._diameter?.find(
-      //       (diameter:string) => 
-      //       diameter === params[key]?.slice(1, params[key]?.length));
-      //     if (findDiameter) {
-      //       filter.setDiameter(findDiameter);
-      //       filter.setChipDiameter(
-      //         Array.from(
-      //           new Set([...filter.chipDiameter, findDiameter]))
-      //       );
-      //     }
-      //   }
-      //   if (params[key]?.includes('li-') && !filter.load_index && filter.chipLoadIndex.length === 0) {
-      //     const findLoadIndex = goodsTyre._load_index?.find(
-      //       (load_index_with_desc:string) => 
-      //       createStringUrl(load_index_with_desc.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
-      //     if (findLoadIndex) {
-      //       filter.setLoadIndex(findLoadIndex);
-      //       filter.setChipLoadIndex(
-      //         Array.from(new Set([...filter.chipLoadIndex, findLoadIndex]))
-      //       );
-      //     }
-      //   }
-      //   if (params[key]?.includes('si-') && !filter.speed_index && filter.chipSpeedIndex.length === 0) {
-      //     const findSpeedIndex = goodsTyre._speed_index?.find(
-      //       (speed_index_with_desc:string) => 
-      //       createStringUrl(speed_index_with_desc.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
-      //     if (findSpeedIndex) {
-      //       filter.setSpeedIndex(findSpeedIndex);
-      //       filter.setChipSpeedIndex(
-      //         Array.from(new Set([...filter.chipSpeedIndex, findSpeedIndex]))
-      //       );
-      //     }
-      //   }
-      //   if (params[key]?.includes('xl-') && !filter.reinforced && filter.chipReinforced.length === 0) {
-      //     const findReinforcedSeason = goodsTyre._reinforced?.find(
-      //       (reinforced:string) => 
-      //       createStringUrl(reinforced.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
-      //     if (findReinforcedSeason) {
-      //       filter.setReinforced(findReinforcedSeason);
-      //       filter.setChipReinforced(
-      //         Array.from(new Set([...filter.chipReinforced, findReinforcedSeason]))
-      //       );
-      //     }
-      //   }
-      //   if (params[key]?.includes('om-') && !filter.homologation && filter.chipHomologation.length === 0) {
-      //     const findOmSeason = goodsTyre._homologation?.find(
-      //       (homologation:string) => 
-      //       createStringUrl(homologation.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
-      //     if (findOmSeason) {
-      //       filter.setHomologation(findOmSeason);
-      //       filter.setChipHomologation(
-      //         Array.from(new Set([...filter.chipHomologation, findOmSeason]))
-      //       );
-      //     }
-      //   }
-      // }
+      for (let key in params) {
+        if (params[key] && !filter.season && filter.chipSeason.length === 0 ) {
+          const tyreCatSeason = tyreSeasonCat(params[key]);
+          if (tyreCatSeason) {
+            filter.setSeason(tyreCatSeason);
+            filter.setChipSeason(
+              Array.from(new Set([...filter.chipSeason, tyreCatSeason]))
+            ); 
+          }
+        }
+        if (params[key] && !filter.studded && filter.chipStudded.length === 0 ) {
+          const tyreStudded = goodsTyre._studded?.find(
+            (studded:string) => 
+            createStringUrl(studded.toLocaleLowerCase()) === params[key]);
+          if (tyreStudded) {
+            filter.setStudded(tyreStudded);
+            filter.setChipStudded(
+              Array.from(new Set([...filter.chipStudded, tyreStudded]))
+            ); 
+          }
+        }
+        if (params[key] && !filter.vehicle_type && filter.chipVehicleType.length === 0) {
+          const tyreCatType = tyreVehicleTypeCat(params[key]);
+          if (tyreCatType) {
+            filter.setVehicleType(tyreCatType);
+            filter.setChipVehicleType(
+              Array.from(new Set([...filter.chipVehicleType, tyreCatType]))
+            );
+          }
+        }
+        if (params[key] && !filter.brands && filter.chipBrands.length === 0) {
+          const findBrandInSeason:string = goodsTyre._brands?.find(
+            (brands:string) => 
+            createStringUrl(brands.toLocaleLowerCase()) === params[key]);
+          if (findBrandInSeason) {
+            filter.setBrands(findBrandInSeason);
+            filter.setChipBrands(
+              Array.from(new Set([...filter.chipBrands, findBrandInSeason]))
+            );
+          }
+        }
+        if (params[key]?.includes('w') && !filter.width && filter.chipWidth.length === 0 ) {
+          const findWidth = goodsTyre._width?.find((width:string) => width === params[key]?.slice(1, params[key]?.length));
+          if (findWidth) {
+            filter.setWidth(findWidth);
+            filter.setChipWidth(
+              Array.from(new Set([...filter.chipWidth, findWidth]))
+            );
+          }
+        }
+        if (params[key]?.includes('h') && !filter.height && filter.chipHeight.length === 0) {
+          const findHeight = goodsTyre._height?.find((height:string) => height === params[key]?.slice(1, params[key]?.length));
+          if (findHeight) {
+            filter.setHeight(findHeight);
+            filter.setChipHeight(
+              Array.from(
+                new Set([...filter.chipHeight, findHeight]))
+            );
+          }
+        }
+        if (params[key]?.includes('r') && !filter.diameter && filter.chipDiameter.length === 0) {
+          const findDiameter = goodsTyre._diameter?.find(
+            (diameter:string) => 
+            diameter === params[key]?.slice(1, params[key]?.length));
+          if (findDiameter) {
+            filter.setDiameter(findDiameter);
+            filter.setChipDiameter(
+              Array.from(
+                new Set([...filter.chipDiameter, findDiameter]))
+            );
+          }
+        }
+        if (params[key]?.includes('li-') && !filter.load_index && filter.chipLoadIndex.length === 0) {
+          const findLoadIndex = goodsTyre._load_index?.find(
+            (load_index_with_desc:string) => 
+            createStringUrl(load_index_with_desc.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
+          if (findLoadIndex) {
+            filter.setLoadIndex(findLoadIndex);
+            filter.setChipLoadIndex(
+              Array.from(new Set([...filter.chipLoadIndex, findLoadIndex]))
+            );
+          }
+        }
+        if (params[key]?.includes('si-') && !filter.speed_index && filter.chipSpeedIndex.length === 0) {
+          const findSpeedIndex = goodsTyre._speed_index?.find(
+            (speed_index_with_desc:string) => 
+            createStringUrl(speed_index_with_desc.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
+          if (findSpeedIndex) {
+            filter.setSpeedIndex(findSpeedIndex);
+            filter.setChipSpeedIndex(
+              Array.from(new Set([...filter.chipSpeedIndex, findSpeedIndex]))
+            );
+          }
+        }
+        if (params[key]?.includes('xl-') && !filter.reinforced && filter.chipReinforced.length === 0) {
+          const findReinforcedSeason = goodsTyre._reinforced?.find(
+            (reinforced:string) => 
+            createStringUrl(reinforced.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
+          if (findReinforcedSeason) {
+            filter.setReinforced(findReinforcedSeason);
+            filter.setChipReinforced(
+              Array.from(new Set([...filter.chipReinforced, findReinforcedSeason]))
+            );
+          }
+        }
+        if (params[key]?.includes('om-') && !filter.homologation && filter.chipHomologation.length === 0) {
+          const findOmSeason = goodsTyre._homologation?.find(
+            (homologation:string) => 
+            createStringUrl(homologation.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
+          if (findOmSeason) {
+            filter.setHomologation(findOmSeason);
+            filter.setChipHomologation(
+              Array.from(new Set([...filter.chipHomologation, findOmSeason]))
+            );
+          }
+        }
+      }
     }
     loadPropsTyreTask();
     return () => {
