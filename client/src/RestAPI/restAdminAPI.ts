@@ -1,6 +1,7 @@
 import { $hostGet, $hostPost, $hostPostUpload } from "./index";
 import { IRestAdminApi } from "./interfaces/restAdmin.interface";
 import { CustomerCreate } from "./types/CreateCustomer.type";
+import { UpdateOrder } from "./types/UpdateOrder.type";
 import { SupplierCreate } from "./types/createSupplier.type";
 
 const createGoodsToOrder = async (
@@ -76,10 +77,10 @@ const createGoodsToOrderSup = async (
         console.log(error)
 }); 
 
-const updateOrder = async (data: any, id_order: number) => 
+const updateOrder = async (data: UpdateOrder, id_order: number) => 
 await $hostPost.patch('/orders/update', {
     id_order: id_order,
-    id_user: data.number,
+    id_user: data.id_user,
     notes: data.notes,
     organisation: data.organisation,
     storage: data.storage,
@@ -90,16 +91,17 @@ await $hostPost.patch('/orders/update', {
     status: data.status,
     pay_view: data.pay_view,
     status_pay: data.status_pay,
-    dop_garanty: +data.dop_garanty,
-    delivery_cost: +data.delivery_cost,
+    dop_garanty: data.dop_garanty,
+    delivery_cost: data.delivery_cost,
     delivery_city: data.delivery_city,
     delivery_city_ref: data.delivery_city_ref,
     delivery_city_depart: data.delivery_city_depart,
     delivery_city_depart_ref: data.delivery_city_depart_ref,
     total_cost: data.total_cost,
-    bonus_decrease: +data.bonus_decrease, 
+    bonus_decrease: data.bonus_decrease, 
     id_customer: data.id_customer,
     id_contract: data.id_contract,
+    mix_store: data.mix_store,
 }).catch(error => {
     console.log(error);
 });
@@ -394,6 +396,12 @@ await $hostGet.get('/storage/all')
     console.log(error)
 });
 
+const getAllLastComment = async () => 
+await $hostGet.get('/comments/all-last')
+.catch(error => {
+    console.log(error)
+});
+
 const getCommentOrderData = async (orderId: number) =>
 await $hostGet.get('/comments/byorderid', {params: {id_order: orderId ?? 0}})
 .catch(error => {
@@ -553,5 +561,6 @@ export {
     getAllExpensesPay,
     getAllPayTypes,
     getAllPayViews,
-    getSalesAll
+    getSalesAll,
+    getAllLastComment
 };

@@ -122,10 +122,26 @@ export class CommentsService {
     }
   }
 
+  async findAllLastComments() {
+    try {
+      const commentsAll = await this.commentsRepository.findAll({
+        include: [{ model: Users }],
+        order: [['createdAt', 'DESC']],
+      });
+
+      return commentsAll.splice(0, 6);
+    } catch {
+      throw new HttpException(
+        'Data is incorrect and must be uniq',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
   async findAllComments() {
     try {
       const commentsAll = await this.commentsRepository.findAll({
-        include: { all: true },
+        //include: { all: true },
       });
 
       return commentsAll;

@@ -6,6 +6,10 @@
     overflow-x: auto;
 }
 
+.admCommitBoxMain {
+    height: 280px;
+}
+
 .containerAdmComment {
     border: 2px solid #dedede;
     background-color: #f1f1f1;

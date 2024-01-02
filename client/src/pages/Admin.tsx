@@ -15,7 +15,8 @@ import { getTyresAdmin,
         getAllExpensesPay,
         getAllPayTypes,
         getAllPayViews,
-        getSalesAll
+        getSalesAll,
+        getAllLastComment
     } from '../restAPI/restAdminAPI';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
@@ -83,11 +84,13 @@ const Admin = observer(() => {
     const [storageAll, setStorageAll] = useState(null);
     const [payTypes, setPayTypes] = useState<any[] | null>(null);
     const [payViews, setPayViews] = useState<any[] | null>(null);
+    const [lastComments, setLastComments] = useState<any[] | null>(null);
   
     useEffect(()=> {
         let isMounted = false;
             const postTask = async () => {
                 const tasks:any[] = [
+                    getAllLastComment,
                     getUsers,
                     getOrderSupData,
                     getSuppliers,
@@ -101,11 +104,15 @@ const Admin = observer(() => {
                     getAllExpensesPay,
                     getAllPayTypes,
                     getAllPayViews,
-                    getSalesAll
+                    getSalesAll,
                 ]
                 let i: number = 0;
                 while(tasks.length > i) {
                 //for (let i = 0; tasks.length > i; i++) {
+                    if (!isMounted && tasks[i] === getAllLastComment) {
+                        let resultLastComm: any = await tasks[i]();
+                        setLastComments(resultLastComm?.data);
+                    }
                     if (!isMounted && tasks[i] === getTyresAdmin) {    
                         let resultTyre: any = await tasks[i]();
                         setTyreData(resultTyre?.data);
@@ -237,8 +244,9 @@ const Admin = observer(() => {
             </div>
             <div className='rightColumn'>
                 {sideBarItem === 'golovna' ?
-                    <AdminMainContent 
-                        comments={commentOrder}
+                    <AdminMainContent
+                        orders={orderAllData}
+                        comments={lastComments}
                     />
                 : null}
                 {sideBarItem === 'catalog' ?

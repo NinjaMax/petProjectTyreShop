@@ -27,6 +27,11 @@ export class CommentsController {
     return this.commentsService.findAllComments();
   }
 
+  @Get('/all-last')
+  findAllLast() {
+    return this.commentsService.findAllLastComments();
+  }
+
   @Get('/id')
   findOne(@Query() getCommentDto: GetCommentDto) {
     return this.commentsService.findCommentById(getCommentDto);

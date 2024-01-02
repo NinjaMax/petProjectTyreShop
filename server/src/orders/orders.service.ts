@@ -153,6 +153,7 @@ export class OrdersService {
     try {
       const orderAll = await this.ordersRepository.findAll({
         include: { all: true },
+        order: [['createdAt', 'DESC']]
       });
       return orderAll;
     } catch {
@@ -162,7 +163,6 @@ export class OrdersService {
       );
     }
   }
-  
 
   async findOrderById(getOrdersDto: GetOrdersDto) {
     try {

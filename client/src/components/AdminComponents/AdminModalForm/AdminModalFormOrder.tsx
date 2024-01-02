@@ -116,9 +116,14 @@ const AdminFormOrder = observer((
         register("id_user", {required: 'Це необхідні дані'});
         setValue("id_user", user._user?.sub.id_user);
         if (addCustomer) {
-            setValue("id_customer", addCustomer?.id_customer! ?? ordersData?.id_customer,
+            setValue("id_customer", addCustomer?.id_customer!,
             { shouldValidate: true }) 
-            setValue("id_contract", addCustomer?.contract[0]?.id_contract! ?? ordersData?.id_contract,
+            setValue("id_contract", addCustomer?.contract[0]?.id_contract!,
+            { shouldValidate: true })
+        } else {
+            setValue("id_customer", ordersData?.id_customer,
+            { shouldValidate: true }) 
+            setValue("id_contract", ordersData?.id_contract,
             { shouldValidate: true })
         }
     }, [
@@ -504,7 +509,7 @@ const AdminFormOrder = observer((
                 });
                 //}
                 //newStorage();
-                setDisableBtnOk(!disableBtnOk);
+                setDisableBtnOk(true);
                 console.log('UDATE_DATA_ORDER: ', data);
                 const newOrderData = await updateOrder(data, orderId);
                 if (data.status === 'Відвантажено' &&
@@ -1217,7 +1222,7 @@ const AdminFormOrder = observer((
                         name="deliveryOrderCost" 
                         maxLength={45}
                         placeholder="Сума доставки.."
-                        defaultValue={ordersData?.delivery_cost ?? 0}
+                        defaultValue={ordersData?.delivery_cost}
                         onChange={setDeliveryCostOrder}
                     />
                     <label htmlFor="bonusOrder">Бонуси(-) </label>
@@ -1267,6 +1272,7 @@ const AdminFormOrder = observer((
                     <div className='admFormOrderCommitChat'>
                         {/* {comments?.length !== 0 ? */}
                           <AdminComment 
+                            main={false}
                             newCommit={addNewCommit}
                             comments={comments}/>
                         {/* //   : <span>... очікуємо коментарі ...</span>  

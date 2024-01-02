@@ -1071,6 +1071,7 @@ const AdminModalOrderSup = observer((
                 <div className='admFormOrderCommitChat'>
                     {/* {comments?.length !== 0 ? */}
                       <AdminComment 
+                        main={false}
                         newCommit={addNewCommit}
                         comments={comments}/>
                     {/* //   : <span>... очікуємо коментарі ...</span>  

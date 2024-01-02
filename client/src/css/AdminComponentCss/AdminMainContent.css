@@ -10,9 +10,17 @@
     grid-area: 1/ 1/ 2/ 4;
     padding: 8px;
     /*margin-left: 3px;*/
-    /*height: 200px;*/
+    height: 300px;
     border-radius: 8px;
     box-shadow: 0px 5px 16px 1px rgba(0,0,0,0.2);
+}
+
+.admLastOrdersTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+    align-items:center;
+    gap: 10px;
 }
 
 .admLastOrders {
@@ -23,8 +31,9 @@
 }
 
 .admLastOrdersItem {
-    width: 400px;
-    height: 200px;
+    /* width: 400px;
+    height: 200px; */
+    padding: 5px;
     border-radius: 8px;
     box-shadow: 0px 5px 16px 1px rgba(0,0,0,0.2);
     background-color:#C7C3F4;
@@ -32,28 +41,23 @@
 }
 
 .admLastOrdersValue {
-    width: 400px;
-    height: 100px;
+    /* width: 400px;
+    height: 100px; */
+    padding: 5px;
     border-radius: 8px;
+    box-shadow: 0px 5px 16px 1px rgba(0,0,0,0.2);
     background-color:#CADBEA;
     text-align: center;
     vertical-align: middle;
 }
 
 .admMainContentComments {
-    grid-area: 2/ 1/ 4/ 4;
+    grid-area: 2/ 1/ 4/ 4; 
     padding: 8px;
     /*margin-left: 3px;*/
-    /*height: 200px;*/
+    height: 331px;
     border-radius: 8px;
     box-shadow: 0px 5px 16px 1px rgba(0,0,0,0.2);
-}
-
-.admLastComment {
-    display: flex;
-    flex-direction: column;
-    align-items:flex-start;
-    gap: 10px;
 }
 
 .admLastCommentItem {
