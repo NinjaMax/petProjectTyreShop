@@ -36,43 +36,74 @@ const AdminMainContent = ({comments, orders}: AdminMainContent) => {
     //     setDataOrders(responseSales);
     //   //}
     // }, [dataCat, dataManager, dataOrders]);
+
     const ordersData: any[] = [
-        {createdAt: '2023-12-27T12:44:54.721Z'},
-        {createdAt: '2023-12-26T10:44:54.721Z'},
-        {createdAt: '2023-12-26T09:44:54.721Z'},
-        {createdAt: '2023-12-26T13:44:54.721Z'},
-        {createdAt: '2023-12-25T12:40:54.721Z'},
-        {createdAt: '2023-12-25T12:04:54.721Z'},
-    ]
-
-
-
-    const ordersToChart: any[] = ordersData!.map((entity: any) => ({date: new Date(entity.createdAt).toLocaleDateString(), count: 1}));
-    const filteredOrdersDate = ordersToChart?.map((entity: any, index) => 
-    entity.date === (new Date(ordersData[index].createdAt).toLocaleDateString()) ? entity.count + 1 : null)
-    const getOrders = [
-        ...ordersToChart,
-        ['28.12.2023', 1],
-        ['28.12.2023', 1],
-        ['28.12.2023', 1],
-        ['29.12.2023', 1],
-        ['29.12.2023', 1],
-    ]
-    console.log('ORDER_DATA_CHART: ', filteredOrdersDate);
-
+        {createdAt: '2023-12-27T12:44:54.721Z', user: {name: 'Max'}, total_cost: 10624},
+        {createdAt: '2023-12-26T10:44:54.721Z', user: {name: 'Артем'}, total_cost: 21624},
+        {createdAt: '2023-12-26T09:44:54.721Z', user: {name: 'Max'}, total_cost: 20000},
+        {createdAt: '2023-12-26T13:44:54.721Z', user: {name: 'Артем'}, total_cost: 15020},
+        {createdAt: '2023-12-25T12:40:54.721Z', user: {name: 'Артем'}, total_cost: 10224},
+        {createdAt: '2023-12-25T12:04:54.721Z', user: {name: 'Max'}, total_cost: 8216},
+        {createdAt: '2023-12-24T12:14:50.721Z', user: {name: 'Max'}, total_cost: 9604},
+        {createdAt: '2023-12-23T12:14:50.721Z', user: {name: 'Max'}, total_cost: 21000},
+        {createdAt: '2023-12-22T12:14:50.721Z', user: {name: 'Max'}, total_cost: 7524},
+        {createdAt: '2023-12-21T12:14:50.721Z', user: {name: 'Max'}, total_cost: 11124},
+    ];
+    const ordersToChart: any[] = ordersData!.slice(0, 7).map(
+        (entity: any) => ({date: new Date(entity.createdAt).toLocaleDateString(), count: 1})
+        ).sort((a: any, b: any) => a.date.localeCompare(b.date));
+        
+    const reduceOrderCount = ordersToChart.reduce(
+        (acc: any, item: any) => { 
+            acc[item.date] = (acc[item.date] || 0) + 1;
+            return acc;
+        }, {} 
+    );
+    const getOrders = Object.entries(reduceOrderCount);
+    
     const data = [
         [
           "Дата",
           "Замовленя",
         ],
         ...getOrders
-      ];
+    ];
     const options = {
         title: "Замовлення за останні дні",
         сurveType: "function",
         legend: { position: "bottom" },
-      };
-    //console.log(comments);
+    };
+    const ordersByManToChart: any[] = ordersData!.slice(0, 7).map(
+        (entity: any) => (
+            {date: new Date(entity.createdAt).toLocaleDateString(), 
+                count: 1, 
+                user_name: entity.user.name,
+                total_cost: entity.total_cost
+            }));
+    const reduceOrderByManCount = ordersByManToChart.reduce(
+        (acc: any, item: any) => { 
+            acc[item.user_name] = (acc[item.user_name] || 0) + 1;
+            acc.total_cost = (acc[item.total_cost] || 0) + 1;
+            return acc;
+        }, {} 
+    );
+    console.log('ORDERS_TO_CHART: ', reduceOrderByManCount);
+    const getOrdersByMan = Object.entries(reduceOrderByManCount);
+    console.log('BY_MAN: ', getOrdersByMan)
+    const dataCountByManager = [
+        [
+          "Менеджер",
+          "Замовленя",
+        ],
+        ...getOrdersByMan
+    ];
+    const optionsByManager = {
+        title: "Замовлення за останні дні",
+        legend: { position: "bottom" },
+    };
+    
+    
+    console.log('ORDERS_DATA: ', orders);
 
     return (
         <div>
@@ -124,24 +155,17 @@ const AdminMainContent = ({comments, orders}: AdminMainContent) => {
                         data={data}
                         options={options}
                     />
-                {/* { dataOrders ?
-                    dataOrders && dataOrders.charts.map((chartData, i) => ( 
-                    <div className='admMainContentItem' key={i + 1}>     
-                        <Charts chart={chartData} key={i + 1}/>
-                    </div>     
-                    ))
-                    : <span>No charts available </span>
-                }  */}
                 </div>
                 <div className='admMainContentMetric'>
-                { dataManager ?
-                    dataManager && dataManager.charts.map((chartData, i) => ( 
-                    <div className='admMainContentItem' key={i + 1}>     
-                        <Charts chart={chartData} key={i + 1}/>
-                    </div>     
-                ))
-                : <span>No charts available </span>
-                } 
+                    <div className='admMainContentItem'>     
+                    <Chart
+                        chartType="Bar"
+                        width="100%"
+                        height="280px"
+                        data={dataCountByManager}
+                        options={optionsByManager}
+                    />
+                    </div> 
                 </div> 
             </div>
             : <SpinnerCarRot/>
