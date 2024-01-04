@@ -1,10 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import '../../css/AdminComponentCss/AdminMainContent.css';
 import { Chart } from "react-google-charts";
-import responseCat from './dataCat.json';
-import responseManger from './dataManager.json';
-import responseSales from './dataSales.json';
-import Charts from './adminModalForm/Chart';
 import AdminComment from './adminContent/AdminComment';
 import SpinnerCarRot from '../spinners/SpinnerCarRot';
 
@@ -49,7 +45,7 @@ const AdminMainContent = ({comments, orders}: AdminMainContent) => {
         {createdAt: '2023-12-22T12:14:50.721Z', user: {name: 'Max'}, total_cost: 7524},
         {createdAt: '2023-12-21T12:14:50.721Z', user: {name: 'Max'}, total_cost: 11124},
     ];
-    const ordersToChart: any[] = ordersData!.slice(0, 7).map(
+    const ordersToChart: any[] = ordersData!.slice(0, 70).map(
         (entity: any) => ({date: new Date(entity.createdAt).toLocaleDateString(), count: 1})
         ).sort((a: any, b: any) => a.date.localeCompare(b.date));
         
@@ -73,27 +69,27 @@ const AdminMainContent = ({comments, orders}: AdminMainContent) => {
         сurveType: "function",
         legend: { position: "bottom" },
     };
-    const ordersByManToChart: any[] = ordersData!.slice(0, 7).map(
+    const ordersByManToChart: any[] = ordersData!.slice(0, 70).map(
         (entity: any) => (
             {date: new Date(entity.createdAt).toLocaleDateString(), 
                 count: 1, 
                 user_name: entity.user.name,
                 total_cost: entity.total_cost
             }));
-    const reduceOrderByManCount = ordersByManToChart.reduce(
-        (acc: any, item: any) => { 
-            acc[item.user_name] = (acc[item.user_name] || 0) + 1;
-            acc.total_cost = (acc[item.total_cost] || 0) + 1;
+    const reduceCostByManCount = ordersByManToChart.reduce(
+        (acc: any, item: any, index: any) => 
+            { 
+            acc[item.user_name] = (acc[item.user_name] || 0) + item.total_cost;
             return acc;
-        }, {} 
+        }
+        , {} 
     );
-    console.log('ORDERS_TO_CHART: ', reduceOrderByManCount);
-    const getOrdersByMan = Object.entries(reduceOrderByManCount);
-    console.log('BY_MAN: ', getOrdersByMan)
+
+    const getOrdersByMan = Object.entries(reduceCostByManCount);
     const dataCountByManager = [
         [
           "Менеджер",
-          "Замовленя",
+          "Сума",
         ],
         ...getOrdersByMan
     ];
@@ -102,8 +98,7 @@ const AdminMainContent = ({comments, orders}: AdminMainContent) => {
         legend: { position: "bottom" },
     };
     
-    
-    console.log('ORDERS_DATA: ', orders);
+    //console.log('ORDERS_DATA: ', orders);
 
     return (
         <div>
