@@ -256,6 +256,19 @@ await $hostPost.get('/sales/all')
     console.log(error);
 });
 
+const getSalesAllBydate = async (
+    date_start: string,
+    date_end: string) => 
+await $hostPost.get('/sales/all-by-date' , {
+    params: {
+        date_start: date_start,
+        date_end: date_end,
+    }
+})
+.catch(error => {
+    console.log(error);
+});
+
 const createOrderSupForm = async (data: any) => 
 await $hostPost.post('/ordersup', data)
 .catch(error => {
@@ -562,5 +575,6 @@ export {
     getAllPayTypes,
     getAllPayViews,
     getSalesAll,
+    getSalesAllBydate,
     getAllLastComment
 };

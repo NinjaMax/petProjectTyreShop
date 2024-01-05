@@ -12,6 +12,8 @@ import { StockBatteriesService } from '../stock/stock-batteries.service';
 import { StockOilsService } from '../stock/stock-oils.service';
 import { StockTyresService } from '../stock/stock-tyres.service';
 import { StockWheelsService } from '../stock/stock-wheels.service';
+import { Op } from 'sequelize';
+
 
 @Injectable()
 export class SalesService {
@@ -28,7 +30,7 @@ export class SalesService {
   ) {}
   
   async createSale(createSaleDto: CreateSaleDto) {
-    //try {
+    try {
       console.log('CREATE_SALE_DTO: ', createSaleDto)
       const order = await this.ordersService.findOrderById(createSaleDto);
       if (order) {
@@ -71,16 +73,16 @@ export class SalesService {
         const sale = await this.salesRepository.create(createSaleDto);
         return sale; 
       }
-    // } catch {
-    //   throw new HttpException(
-    //     'Data is incorrect or Not Found', 
-    //     HttpStatus.NOT_FOUND
-    //   );
-    // }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found', 
+        HttpStatus.NOT_FOUND
+      );
+    }
   }
 
   async addGoodsSale(createSaleDto: CreateSaleDto) {
-    //try {
+    try {
       const findSale = await this.salesRepository.findByPk(
         createSaleDto.id_sale,
       );
@@ -156,12 +158,12 @@ export class SalesService {
         return "ORDER DOESN'T EXIST";
       }
 
-    // } catch {
-    //   throw new HttpException(
-    //     'Data is incorrect or Not Found',
-    //     HttpStatus.NOT_FOUND,
-    //   );
-    // }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async findAllSales() {
@@ -170,6 +172,24 @@ export class SalesService {
         include: { all: true },
       });
       return saleAll;
+
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,)
+    }
+  }
+
+  async findAllSalesByDate(startDate: string, endDate: string) {
+    try {
+      const saleAllByDate = await this.salesRepository.findAndCountAll({
+        where: {
+          updatedAt: {
+            [Op.between]: [startDate, endDate],
+          },
+        },
+      });
+      return saleAllByDate;
 
     } catch {
       throw new HttpException(

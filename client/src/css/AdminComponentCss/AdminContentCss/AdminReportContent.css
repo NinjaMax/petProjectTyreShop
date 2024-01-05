@@ -1,0 +1,70 @@
+.admReportContentBox {
+    border-radius: 8px;
+    box-shadow: 0px 5px 16px 1px rgba(0,0,0,0.2);
+    height: 636px;
+    width: 100%;
+
+}
+.admReportTitleList {
+    padding-top: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.admReportNoTitleList {
+    padding-top: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 25px;
+}
+
+.admReportNoTitleList i {
+    color: #888888;
+}
+
+.admReportMainNoData {
+    padding-top: 200px;
+    padding-bottom: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 25px;
+    color: #888888;
+}
+
+.admReportTitleListItem {
+    padding: 6px;
+    border-radius: 12px;
+    cursor: pointer;
+    color: #888888;
+    background-color: #f2f2f2;
+}
+
+.admReportTitleListItem:hover {
+    background-color: #71C2ff;
+}
+
+.activeTitleReport {
+    padding: 6px;
+    border-radius: 12px;
+    cursor: pointer;
+    color: #888888;
+    background-color: #71C2ff;
+}
+
+.activeTitleReport:hover {
+    background-color: #71C2ff;
+}
+
+.admReportMain {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.admReportMainInput {
+    margin: 10px;
+}
+

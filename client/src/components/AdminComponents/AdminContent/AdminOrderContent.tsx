@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminOrderContent.css';
 import ButtonSearch from '../../buttons/ButtonSearch';
 import ModalAdmin from '../../modal/ModalAdmin';
@@ -9,11 +9,13 @@ import { IAdminOrder } from './interfaces/AdminOrder.interface';
 import { IOrdersItem } from './types/OrderItem.type';
 import { FixedSizeList  as List } from 'react-window';
 import SpinnerCarRot from '../../spinners/SpinnerCarRot';
-import { addGoodsToSaleOrder, createToSaleOrder } from '../../../restAPI/restAdminAPI';
+import { addCommentsToOrder, addGoodsToSaleOrder, createToSaleOrder, updateOrder } from '../../../restAPI/restAdminAPI';
+import { Context } from '../../../context/Context';
 
 const AdminOrderContent = (
     {props, orders, customer, comments, showComment, storage, suppliers}:IAdminOrder
     ) => {
+    const {user} = useContext<any | null>(Context);
     const [activeOrder, setActiveOrder] = useState(false);
     const [activeOrderSup, setActiveOrderSup] = useState(false);
     const [orderData, setOrderData] = useState<IOrdersItem | null>(null);
@@ -95,6 +97,12 @@ const AdminOrderContent = (
                         ...orderInfo,
                         id_sale: orderInfo.id_sale,
                     });
+                })
+                await addCommentsToOrder({
+                    id_user: user._user?.sub.id_user, 
+                    comments: `Замовлення №${orderInfoForSale?.id_order}, Продаж здійснено.`,
+                    id_order: orderInfoForSale?.id_order,
+                    id_order_sup: null
                 })
                 alert('Продаж проведено.');
             } else {

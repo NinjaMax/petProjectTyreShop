@@ -10,8 +10,8 @@ type AdminHeaderType = {
 
 const AdminHeader = ({orderOverall, orderNew, salesOverAll, salesToday}: AdminHeaderType) => {
 
-    const salesPercent: string | null = ((salesOverAll!/orderOverall!) * 100).toFixed(1);
-    const getSalesToday = salesToday?.reduce((sum: any, current: any) => sum + current.order.total.cost, 0); 
+    const salesPercent: string | null = ((salesOverAll!/orderOverall!) * 100).toFixed(0);
+    const getSalesToday = salesToday?.reduce((sum: any, current: any) => sum + current.order.total_cost, 0); 
 
     return (    
         <div className='adminHeader'>
@@ -36,7 +36,7 @@ const AdminHeader = ({orderOverall, orderNew, salesOverAll, salesToday}: AdminHe
                     <div>Продажів</div>
                     <span className='admChartsSalesCount'>{salesOverAll ?? 0}</span>
                     <div className='admChartsSalesNew'>
-                        <span>{salesPercent !== 'NaN' ? salesPercent : 0} %</span>  
+                        <span>{salesPercent !== 'NaN' ? salesPercent : 0}%</span>  
                     </div>       
                 </div>    
             </div> 

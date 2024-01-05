@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminOrderSupContent.css';
 import ButtonSearch from '../../buttons/ButtonSearch';
 import ModalAdmin from '../../modal/ModalAdmin';
@@ -8,7 +8,8 @@ import { IOrdersSupItem } from './types/OrderSupItem.type';
 import { IComments } from './types/Comment.type';
 import { FixedSizeList  as List } from 'react-window';
 import SpinnerCarRot from '../../spinners/SpinnerCarRot';
-import { addGoodsOrderSupToStock, updateOrder, updateOrderSup } from '../../../restAPI/restAdminAPI';
+import { addCommentsToOrder, addGoodsOrderSupToStock, updateOrder, updateOrderSup } from '../../../restAPI/restAdminAPI';
+import { Context } from '../../../context/Context';
 
 const AdminOrderSupContent = (
     {
@@ -19,6 +20,7 @@ const AdminOrderSupContent = (
         supplier,
         showComment
     }: IOrderSupContent) => {
+    const {user} = useContext<any | null>(Context);
     const [activeOrderSup, setActiveOrderSup] = useState(false);
     const [orderSupData, setOrderSupData] = useState(null);
     const [filterOrderSup, setFilterOrderSup] = useState<any[] | null>(ordersSup);
@@ -62,13 +64,25 @@ const AdminOrderSupContent = (
                     }, 
                     orderSupInfo?.id_order_sup
                 );
-                if (orderSupInfo.id_order && orderSupInfo?.storage === 'Постачальник') {
+                await addCommentsToOrder({
+                    id_user: user._user?.sub.id_user, 
+                    comments: `Заявка №${orderSupInfo?.id_order_sup}/Замовлення №${orderSupInfo?.id_order}, Переведено в статус -> Відвантажено`,
+                    id_order: null,
+                    id_order_sup: orderSupInfo?.id_order_sup
+                })
+                if (orderSupInfo?.id_order && orderSupInfo?.storage === 'Постачальник') {
                     await updateOrder(
                         {
                             status:'Відвантажено',
                         }, 
                         orderSupInfo?.id_order
                     );
+                    await addCommentsToOrder({
+                        id_user: user._user?.sub.id_user, 
+                        comments: `Замовлення №${orderSupInfo?.id_order}/Заявка №${orderSupInfo?.id_order_sup}, Переведено в статус -> Відвантажено`,
+                        id_order: orderSupInfo?.id_order,
+                        id_order_sup: null
+                    })
                 }
                 alert('Перевірте. Товари добавлені на склад.')
             } else {

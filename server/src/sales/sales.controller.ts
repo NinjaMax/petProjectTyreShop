@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { SalesService } from './sales.service';
 import { CreateSaleDto } from './dto/create-sale.dto';
@@ -29,6 +30,14 @@ export class SalesController {
   @Get('/all')
   findAll() {
     return this.salesService.findAllSales();
+  }
+
+  @Get('/all-by-date')
+  findAllDate(
+    @Query('date_start') dateStart: string,
+    @Query('date_end') dateEnd: string
+  ) {
+    return this.salesService.findAllSalesByDate(dateStart, dateEnd);
   }
 
   @Get('/id')

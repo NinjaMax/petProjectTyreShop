@@ -222,6 +222,7 @@ const Admin = observer(() => {
     // console.log('CUSTOMERS: ',customers);
     //console.log('ORDERS: ', orderAllData);
 
+
     return (
         <div className='adminPageMain'>
             <div className='profileAdmin'>
@@ -239,7 +240,7 @@ const Admin = observer(() => {
                     orderNew={orderAllData?.filter((item: any) => item?.status === 'Новий').length} 
                     salesOverAll={sales?.length} 
                     salesToday={sales?.filter((item: any) => 
-                        new Date(item.createdAt).getDay() === new Date().getDate())}                    
+                        new Date(item.updatedAt).toLocaleDateString() === new Date().toLocaleDateString())}                    
                 />
             </div>
             <div className='rightColumn'>

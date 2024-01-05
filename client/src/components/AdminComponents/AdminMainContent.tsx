@@ -20,10 +20,11 @@ interface IMainContent {
 }
 
 const AdminMainContent = ({comments, orders}: AdminMainContent) => {
-    const [lastComments, setLastComments] = useState<[] | null>();
-    const [dataCat, setDataCat] = useState<IMainContent>();
-    const [dataManager, setDataManager] =useState<IMainContent>();
-    const [dataOrders, setDataOrders] =useState<IMainContent>();
+    //const [lastComments, setLastComments] = useState<[] | null>();
+    const [dataOrder, setDataOrder] = useState<any>();
+    const [orderOptions, setOrderOptions] = useState<any>();
+    const [dataByManager, setDataByManager] =useState<any>();
+    const [byManagerOptions, setByManagerOptions] =useState<any>();
 
     // useEffect(() => {
     //   //if(data){
@@ -45,60 +46,62 @@ const AdminMainContent = ({comments, orders}: AdminMainContent) => {
         {createdAt: '2023-12-22T12:14:50.721Z', user: {name: 'Max'}, total_cost: 7524},
         {createdAt: '2023-12-21T12:14:50.721Z', user: {name: 'Max'}, total_cost: 11124},
     ];
-    const ordersToChart: any[] = ordersData!.slice(0, 70).map(
-        (entity: any) => ({date: new Date(entity.createdAt).toLocaleDateString(), count: 1})
-        ).sort((a: any, b: any) => a.date.localeCompare(b.date));
+    useEffect(() => {
+        if (orders) {
+            const ordersToChart: any[] = orders!.slice(0, 70).map(
+                (entity: any) => ({date: new Date(entity.createdAt).toLocaleDateString(), count: 1})
+                ).sort((a: any, b: any) => a.date.localeCompare(b.date));
         
-    const reduceOrderCount = ordersToChart.reduce(
-        (acc: any, item: any) => { 
-            acc[item.date] = (acc[item.date] || 0) + 1;
-            return acc;
-        }, {} 
-    );
-    const getOrders = Object.entries(reduceOrderCount);
+            const reduceOrderCount = ordersToChart.reduce(
+                (acc: any, item: any) => { 
+                    acc[item.date] = (acc[item.date] || 0) + 1;
+                    return acc;
+                }, {} 
+            );
+            const getOrders = Object.entries(reduceOrderCount);
     
-    const data = [
-        [
-          "Дата",
-          "Замовленя",
-        ],
-        ...getOrders
-    ];
-    const options = {
-        title: "Замовлення за останні дні",
-        сurveType: "function",
-        legend: { position: "bottom" },
-    };
-    const ordersByManToChart: any[] = ordersData!.slice(0, 70).map(
-        (entity: any) => (
-            {date: new Date(entity.createdAt).toLocaleDateString(), 
-                count: 1, 
-                user_name: entity.user.name,
-                total_cost: entity.total_cost
-            }));
-    const reduceCostByManCount = ordersByManToChart.reduce(
-        (acc: any, item: any, index: any) => 
-            { 
-            acc[item.user_name] = (acc[item.user_name] || 0) + item.total_cost;
-            return acc;
-        }
-        , {} 
-    );
+            setDataOrder([
+                [
+                "Дата",
+                "Замовленя",
+                ],
+                ...getOrders
+            ]);
+            setOrderOptions({
+                title: "Замовлення за останні дні",
+                сurveType: "function",
+                legend: { position: "bottom" },
+            });
+            const ordersByManToChart: any[] = orders!.slice(0, 70).map(
+                (entity: any) => (
+                    {date: new Date(entity.createdAt).toLocaleDateString(), 
+                        count: 1, 
+                        user_name: entity.user.name,
+                        total_cost: entity.total_cost
+                    }));
+            const reduceCostByManCount = ordersByManToChart.reduce(
+                (acc: any, item: any, index: any) => 
+                    { 
+                    acc[item.user_name] = (acc[item.user_name] || 0) + item.total_cost;
+                    return acc;
+                    }
+                , {} 
+            );
 
-    const getOrdersByMan = Object.entries(reduceCostByManCount);
-    const dataCountByManager = [
-        [
-          "Менеджер",
-          "Сума",
-        ],
-        ...getOrdersByMan
-    ];
-    const optionsByManager = {
-        title: "Замовлення за останні дні",
-        legend: { position: "bottom" },
-    };
-    
-    //console.log('ORDERS_DATA: ', orders);
+            const getOrdersByMan = Object.entries(reduceCostByManCount);
+            setDataByManager([
+                [
+                    "Менеджер",
+                    "Сума",
+                ],
+                ...getOrdersByMan
+            ]);
+            setByManagerOptions({
+                title: "Замовлення за останні дні",
+                legend: { position: "bottom" },
+            });
+        }
+    }, [orders]);
 
     return (
         <div>
@@ -114,7 +117,7 @@ const AdminMainContent = ({comments, orders}: AdminMainContent) => {
                     <span>Сума замовлення:</span>
                 </div> */}
                 {orders ? orders.slice(0, 6).map((item: any) =>
-                <div className='admLastOrders'>
+                <div className='admLastOrders' key={item.id_order}>
                     {/* <div className='admLastOrdersItem'>
                         {item.id_order}
                     </div> */}
@@ -143,23 +146,29 @@ const AdminMainContent = ({comments, orders}: AdminMainContent) => {
                 />
                 </div>
                 <div className='adminMainContentChart'>
+                    {dataOrder ?
                     <Chart
                         chartType="LineChart"
                         width="100%"
                         height="280px"
-                        data={data}
-                        options={options}
+                        data={dataOrder}
+                        options={orderOptions}
                     />
+                    : null
+                    }
                 </div>
                 <div className='admMainContentMetric'>
-                    <div className='admMainContentItem'>     
+                    <div className='admMainContentItem'>  
+                    {dataByManager ? 
                     <Chart
                         chartType="Bar"
                         width="100%"
                         height="280px"
-                        data={dataCountByManager}
-                        options={optionsByManager}
-                    />
+                        data={dataByManager}
+                        options={byManagerOptions}
+                    /> 
+                    : null
+                    }
                     </div> 
                 </div> 
             </div>
