@@ -220,6 +220,19 @@ await $hostPost.patch('/paynment/update', data)
     console.log('Помилка не вірно вказанні данні або інша помилка',error);
 });
 
+const getPaynmentAllBydate = async (
+    date_start: string,
+    date_end: string) => 
+await $hostPost.get('/paynment/all-by-date' , {
+    params: {
+        date_start: date_start,
+        date_end: date_end,
+    }
+})
+.catch(error => {
+    console.log(error);
+});
+
 const getAllIncomesPay = async () => 
 await $hostGet.get('/paynment/all-incomes')
 .catch(error => {
@@ -570,11 +583,12 @@ export {
     getCashboxAll,
     createPayment,
     updatePayment,
+    getPaynmentAllBydate,
     getAllIncomesPay,
     getAllExpensesPay,
     getAllPayTypes,
     getAllPayViews,
     getSalesAll,
     getSalesAllBydate,
-    getAllLastComment
+    getAllLastComment,
 };

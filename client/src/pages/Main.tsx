@@ -274,6 +274,7 @@ const Main = observer(() => {
   },
   [
     filter, 
+    chooseFilterState,
     filter.width, 
     filter.diameter,  
     filter.brands, 
@@ -465,7 +466,7 @@ const Main = observer(() => {
       <div className='mainReviewsBox'>
         <ReviewsMain 
           props={'Відгуки про магазин'}
-          marginText={-285}
+          marginText={-270}
           prevBtnAction={undefined}
           nextBtnAction={undefined}
           buttonPosition={undefined}

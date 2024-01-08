@@ -1,17 +1,16 @@
-* {box-sizing:border-box}
-
-/* Slideshow container */
 .sliderMain {
   display:grid;
   grid-gap: 10px;
-  grid-template-columns:repeat(2, 50%);
+  grid-template-columns:repeat(2, 49.7%);
   /*grid-template-rows: max-content;*/
   grid-template-areas: 
           "slideShowContainer sliderImgBoxTop";
           /* "slideShowContainer sliderImgBoxBottom"; */
   height: 400px;
-  padding: 10px;
-  margin-left: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+  
   /* background-color: #ccc; */
 }
 
@@ -25,7 +24,7 @@
 }
 
 #imgSliderBoxTop {
-  width: 700px;
+  width: 680px;
   height: 380px;
   border-radius:5px;
   margin: 0;
@@ -33,7 +32,7 @@
 }
 
 #imgSliderBoxBottom {
-  width: 700px;
+  width: 680px;
   height: 385px;
   border-radius:5px;
   margin: 0;
@@ -62,10 +61,8 @@
     margin: 0;
 }
 .mySlides img {
-  /*display:contents;*/
-  
-  width:700px;
-  height: 370px;
+  width:680px;
+  height: 380px;
   /*border: palevioletred solid 5px;*/
   border-radius:5px;
   margin: 0;

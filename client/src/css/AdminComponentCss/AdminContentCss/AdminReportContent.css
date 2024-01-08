@@ -24,9 +24,23 @@
     color: #888888;
 }
 
+.admChartsItem {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 20px;
+}
+
+.admChartsItemInTotal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .admReportMainNoData {
     padding-top: 200px;
-    padding-bottom: 50px;
+    padding-bottom: 100px;
     display: flex;
     flex-direction: row;
     justify-content: center;

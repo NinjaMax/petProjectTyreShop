@@ -11,8 +11,10 @@ const AdminSideBar = ({changeMenu, changeMenuItem}:ISideBar) => {
         <div className='adminSideBar'>
             <label className={changeMenuItem === 'golovna' ? 
                 'admSideBarItem activeSidebarItem' : 'admSideBarItem'}
+                htmlFor='admin_main'
             >
                 <input className='admSideBarItemMenu' 
+                id='admin_main'
                 onClick={changeMenu} 
                 name='sideBar' 
                 value='golovna' 
@@ -23,8 +25,10 @@ const AdminSideBar = ({changeMenu, changeMenuItem}:ISideBar) => {
             </label>
             <label className={changeMenuItem === 'catalog' ? 
                 'admSideBarItem activeSidebarItem' : 'admSideBarItem'}
+                htmlFor='admin_catalog'
             >
                 <input className='admSideBarItemMenu' 
+                id='admin_catalog'
                 onClick={changeMenu}
                 name='sideBar' 
                 value='catalog' 
@@ -34,8 +38,10 @@ const AdminSideBar = ({changeMenu, changeMenuItem}:ISideBar) => {
             </label>
             <label className={changeMenuItem === 'zamovlenia' ? 
                 'admSideBarItem activeSidebarItem' : 'admSideBarItem'}
+                htmlFor='admin_orders'
             >
                 <input className='admSideBarItemMenu'
+                id='admin_orders'
                 onClick={changeMenu}
                 name='sideBar' 
                 value='zamovlenia'
@@ -45,8 +51,10 @@ const AdminSideBar = ({changeMenu, changeMenuItem}:ISideBar) => {
             </label>
             <label className={changeMenuItem === 'prodagi' ? 
                 'admSideBarItem activeSidebarItem' : 'admSideBarItem'}
+                htmlFor='admin_sales'
             >
                 <input className='admSideBarItemMenu' 
+                id='admin_sales'
                 onClick={changeMenu}
                 name='sideBar' 
                 value='prodagi'
@@ -56,8 +64,10 @@ const AdminSideBar = ({changeMenu, changeMenuItem}:ISideBar) => {
             </label>
             <label className={changeMenuItem === 'zamovleniaPost' ? 
                 'admSideBarItem activeSidebarItem' : 'admSideBarItem'}
+                htmlFor='admin_order_sup'
             >
                 <input className='admSideBarItemMenu' 
+                id='admin_order_sup'
                 onClick={changeMenu}
                 name='sideBar' 
                 value='zamovleniaPost'
@@ -67,8 +77,10 @@ const AdminSideBar = ({changeMenu, changeMenuItem}:ISideBar) => {
             </label>
             <label className={changeMenuItem === 'kasi' ? 
                 'admSideBarItem activeSidebarItem' : 'admSideBarItem'}
+                htmlFor='admin_cashbox'
             >
                 <input className='admSideBarItemMenu' 
+                id='admin_cashbox'
                 onClick={changeMenu}
                 name='sideBar'  
                 value='kasi'
@@ -78,8 +90,10 @@ const AdminSideBar = ({changeMenu, changeMenuItem}:ISideBar) => {
             </label>
             <label className={changeMenuItem === 'plategiVh' ? 
                 'admSideBarItem activeSidebarItem' : 'admSideBarItem'}
+                htmlFor='admin_paynment_in'
             >
                 <input className='admSideBarItemMenu' 
+                id='admin_paynment_in'
                 onClick={changeMenu}
                 name='sideBar' 
                 value='plategiVh'
@@ -89,8 +103,10 @@ const AdminSideBar = ({changeMenu, changeMenuItem}:ISideBar) => {
             </label>
             <label className={changeMenuItem === 'plategiVih' ? 
                 'admSideBarItem activeSidebarItem' : 'admSideBarItem'}
+                htmlFor='admin_paynment_out'
             >
                 <input className='admSideBarItemMenu' 
+                id='admin_paynment_out'
                 onClick={changeMenu}
                 name='sideBar'  
                 value='plategiVih'
@@ -100,8 +116,10 @@ const AdminSideBar = ({changeMenu, changeMenuItem}:ISideBar) => {
             </label>
             <label className={changeMenuItem === 'postachal' ? 
                 'admSideBarItem activeSidebarItem' : 'admSideBarItem'}
+                htmlFor='admin_suppliers'
             >
                 <input className='admSideBarItemMenu' 
+                id='admin_suppliers'
                 onClick={changeMenu}
                 name='sideBar'  
                 value='postachal'
@@ -111,8 +129,10 @@ const AdminSideBar = ({changeMenu, changeMenuItem}:ISideBar) => {
             </label>
             <label className={changeMenuItem === 'pokupci' ? 
                 'admSideBarItem activeSidebarItem' : 'admSideBarItem'}
+                htmlFor='admin_customers'
             >
                 <input className='admSideBarItemMenu' 
+                id='admin_customers'
                 onClick={changeMenu}
                 name='sideBar'  
                 value='pokupci'
@@ -122,8 +142,10 @@ const AdminSideBar = ({changeMenu, changeMenuItem}:ISideBar) => {
             </label>
             <label className={changeMenuItem === 'koristuvachi' ? 
                 'admSideBarItem activeSidebarItem' : 'admSideBarItem'}
+                htmlFor='admin_users'
             >
                 <input className='admSideBarItemMenu' 
+                id='admin_users'
                 onClick={changeMenu}
                 name='sideBar'  
                 value='koristuvachi'
@@ -133,8 +155,10 @@ const AdminSideBar = ({changeMenu, changeMenuItem}:ISideBar) => {
             </label>
             <label className={changeMenuItem === 'zavantag' ? 
                 'admSideBarItem activeSidebarItem' : 'admSideBarItem'}
+                htmlFor='admin_downloads'
             >
                 <input className='admSideBarItemMenu' 
+                id='admin_downloads'
                 onClick={changeMenu}
                 name='sideBar'  
                 value='zavantag'
@@ -144,8 +168,10 @@ const AdminSideBar = ({changeMenu, changeMenuItem}:ISideBar) => {
             </label>
             <label className={changeMenuItem === 'zviti' ? 
                 'admSideBarItem activeSidebarItem' : 'admSideBarItem'}
+                htmlFor='admin_reports'
             >
                 <input className='admSideBarItemMenu' 
+                id='admin_reports'
                 onClick={changeMenu}
                 name='sideBar'  
                 value='zviti'
@@ -155,8 +181,10 @@ const AdminSideBar = ({changeMenu, changeMenuItem}:ISideBar) => {
             </label>
             <label className={changeMenuItem === 'nalashtuvania' ? 
                 'admSideBarItem activeSidebarItem' : 'admSideBarItem'}
+                htmlFor='admin_options'
             >
                 <input className='admSideBarItemMenu' 
+                id='admin_options'
                 onClick={changeMenu}
                 name='sideBar'  
                 value='nalashtuvania'

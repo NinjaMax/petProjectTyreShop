@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { PaynmentService } from './paynment.service';
 import { CreatePaynmentDto } from './dto/create-paynment.dto';
 import { GetPaynmentDto } from './dto/get-paynment.dto';
@@ -17,6 +25,14 @@ export class PaynmentController {
   findAll() {
     return this.paynmentService.findAllPaynment();
   }
+
+  @Get('/all-by-date')
+  findAllByDate(
+    @Query('date_start') date_start: string,
+    @Query('date_end') date_end: string,
+  ) {
+    return this.paynmentService.findAllPaynmentByDate(date_start, date_end);
+  };
 
   @Get('/all-incomes')
   findAllIncomes() {

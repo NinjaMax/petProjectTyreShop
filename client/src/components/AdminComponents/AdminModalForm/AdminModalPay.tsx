@@ -40,7 +40,7 @@ const AdminModalPay = ({
                         await updateOrder({status_pay: 'Оплачено'}, data.id_order);
                         await addCommentsToOrder({
                             id_user: user._user?.sub?.id_user,
-                            comments: `Оплачено, сума${data.price}.`,
+                            comments: `Оплачено, Замовлення №${data.id_order} сума${data.price}.`,
                             id_order: data.id_order,
                             id_order_sup:null, 
                         });
@@ -49,7 +49,7 @@ const AdminModalPay = ({
                         await updateOrderSup({status_pay: 'Оплачено'}, data.id_order_sup);
                         await addCommentsToOrder({
                             id_user: user._user?.sub?.id_user,
-                            comments: `Оплачено, сума${data.price}.`,
+                            comments: `Оплачено, Замовлення пост №${data.id_order_sup} сума${data.price}.`,
                             id_order: null,
                             id_order_sup: data.id_order_sup, 
                         });

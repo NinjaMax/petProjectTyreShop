@@ -8,6 +8,7 @@ import { CashboxService } from '../cashbox/cashbox.service';
 import { ContractService } from '../contract/contract.service';
 import { OrdersSuppliersService } from '../orders-suppliers/orders-suppliers.service';
 import { OrdersService } from '../orders/orders.service';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class PaynmentService {
@@ -108,6 +109,25 @@ export class PaynmentService {
         'Data is incorrect or Not Found',
         HttpStatus.NOT_FOUND,
       );
+    }
+  }
+
+  async findAllPaynmentByDate(startDate: string, endDate: string) {
+    try {
+      const paynmentAllByDate = await this.paynmentRepository.findAndCountAll({
+        where: {
+          createdAt: {
+            [Op.between]: [startDate, endDate],
+          },
+        },
+        //include: [{ model: Orders }],
+      });
+      return paynmentAllByDate;
+
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,)
     }
   }
 

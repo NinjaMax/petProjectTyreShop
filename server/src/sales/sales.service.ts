@@ -13,6 +13,7 @@ import { StockOilsService } from '../stock/stock-oils.service';
 import { StockTyresService } from '../stock/stock-tyres.service';
 import { StockWheelsService } from '../stock/stock-wheels.service';
 import { Op } from 'sequelize';
+import { Orders } from '../orders/entities/order.model';
 
 
 @Injectable()
@@ -188,6 +189,7 @@ export class SalesService {
             [Op.between]: [startDate, endDate],
           },
         },
+        include: [{ model: Orders }],
       });
       return saleAllByDate;
 

@@ -6,7 +6,7 @@
     /* flex-wrap: wrap; */
     /*position: relative;*/
     /*overflow: hidden;*/
-    width: 1455px;
+    width: 100%;
 }
 .promotionBoxItem{
     display: flex;

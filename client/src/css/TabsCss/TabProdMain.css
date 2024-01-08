@@ -8,28 +8,6 @@
     padding: 10px;
 }
 
-/* Style the buttons that are used to open the tab content */
-/* .tabProdMain button {
-    background-color: inherit;
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
-} */
-
-/* Change background color of buttons on hover */
-/* .tabProdMain button:hover {
-    background-color: #ddd;
-}
-
-/* Create an active/current tablink class */
-/*.tabProdMain button.active {
-    background-color: #ccc;
-} */
-
-/* Style the tab content */
 .tabContentProdMain {
     display: '';
     padding: 14px 12px;
