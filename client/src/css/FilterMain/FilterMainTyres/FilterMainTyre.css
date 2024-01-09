@@ -7,10 +7,11 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-width:5px 5px 5px 5px;
     border-radius:25px;
-    margin: 0px 200px 0px 200px;
+    margin: 0px 150px 0px 150px;
     padding: 6px;
     background-image:linear-gradient(45deg,#CADBEA 60%, #fff);
     height: 100px;
+    /* width: 80%; */
 }
 
 .btnSelect {
@@ -21,7 +22,84 @@
     width: 130px;
 }
 
-/*.btnSelect:active {
-    border:#71C2FF solid 5px;
-    border-radius:5px;
-}*/
+@media (min-device-width: 2560px) { 
+    .filterMain {
+        max-width: 1124px;
+        /* max-height: 100px; */
+        /* margin-left: auto;
+        margin-right: auto; */
+    }
+} 
+  
+@media (min-device-width: 1440px) { 
+    .filterMain {
+        min-width: 1024px;
+        /* margin-left: auto;
+        margin-right: auto; */
+        height: 100px;
+        /* margin-left: auto;
+        margin-right: auto; */
+    } 
+} 
+  
+@media (min-device-width: 1024px) { 
+    .filterMain {
+        min-width: 768px;
+        /* margin-left: auto;
+        margin-right: auto; */
+        height: 100px;
+        /* margin-left: auto;
+        margin-right: auto; */
+    } 
+} 
+
+@media (min-device-width: 768px) { 
+    .filterMain {
+        min-width: 425px;
+        /* margin-left: auto;
+        margin-right: auto; */
+        height: 150px;
+        flex-wrap: wrap;
+    } 
+} 
+  
+@media (min-device-width: 600px) { 
+    .filterMain {
+        min-width: 375px;
+        margin-left: auto;
+        margin-right: auto;
+        max-height: 220px;
+        flex-wrap: wrap;
+    } 
+} 
+
+@media (min-device-width: 425px) { 
+    .filterMain {
+        min-width: 375px;
+        margin-left: auto;
+        margin-right: auto;
+        max-height: 220px;
+        flex-wrap: wrap;
+    } 
+} 
+
+@media (min-device-width: 375px) { 
+    .filterMain {
+        min-width: 320px;
+        margin-left: auto;
+        margin-right: auto;
+        max-height: 310px;
+        flex-wrap: wrap;
+    } 
+} 
+  
+@media (min-device-width: 320px) { 
+    .filterMain {
+        min-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        /* min-height: 310px; */
+        max-height: 360px;
+        flex-wrap: wrap;
+    } 
+} 

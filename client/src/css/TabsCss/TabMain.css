@@ -26,12 +26,8 @@
     url("../../assets/img/tyreBlueBackground_1.png");*/
 }
 
-
-
 .tabMain {
     overflow: hidden;
-    /*border: 1px solid #ccc;*/
-    /*border-radius:5px;*/
     font-family: var(--main-font-family);
     margin: 10px 10px 10px 10px;
     display: flex;
@@ -54,14 +50,12 @@
     width: 150px;
     height: 50px;
     border-radius:15px;
-    
 }
 
 /* Change background color of buttons on hover */
 .tabMain button:hover {
     background-color: #fff;
     /* border-color:#71C2FF; */
-
 }
 
 .tablinksTyres:hover .arrowTabTyres, 
@@ -72,22 +66,11 @@
     opacity: 1;
 }
 
-
-
-/* Create an active/current tablink class */
-/*.tabMain button:active {
-    background-color: #ccc;
-}*/
-
 .tabMain button:focus {
     background-color: #ccc;
     /* border: solid #71C2FF; */
     border-width: 5px 5px 5px 5px;
 }
-
-/*.tablinksWheel {
-    display: '';
-}*/
 
 .tablinksTyres:focus, .tabMainFilterTyre {
     background-image:
@@ -121,8 +104,6 @@
     url("../../assets/img/wheels_tab_main.png");
 }
 
-
-/* Style the tab content */
 .tabContentMain {
     display: '';
     padding: 6px 12px;
@@ -165,60 +146,103 @@
     align-items:center;
 }
 
-/* .arrowTabTyres, .arrowTabWheels, 
-.arrowTabAkb, .arrowTabSelect {
-    visibility: hidden;
-    color:#fff;
-    transition: opacity 0.3s;
-}
+@media (max-width: 2560px) { 
+    .tabMainFilterTyre {
+        height: 250px;
+    }
+    
+    .tabMainFilterWheel {
+        height: 250px;
+    }
+  } 
+  
+  @media (min-width: 1440px) { 
+    .tabMainFilterTyre {
+        height: 250px;
+    }
+    
+    .tabMainFilterWheel {
+        max-height: 250px;
+    }
+  } 
+  
+  @media (min-width: 1024px) { 
+    .tabMainFilterTyre {
+        max-height: 250px;
+    }
+    
+    .tabMainFilterWheel {
+        max-height: 250px;
+    }
+  } 
+  @media (min-device-width: 768px) { 
+    .tabMainFilterTyre {
+        height: 250px;
+    }
+    
+    .tabMainFilterWheel {
+        height: 250px;
+    }
+  } 
+  
+  @media (min-device-width: 580px) {
+    .tabMainFilterTyre {
+        height: 300px;
+    }
+    
+    .tabMainFilterWheel {
+        height: 300px;
+    }
+  } 
 
-.arrowTabTyres::after {
-    content: "";
-    position: absolute;
-    top: 562px;
-    left: 32%;
-    margin-left:0px;
-    margin-right:0px;
-    border-width: 10px;
-    border-style: solid;
-    border-color: #71C2FF transparent #71C2FF transparent ;
-}
+  @media (min-device-width: 425px) { 
+    .tabMainFilterTyre {
+        height: 350px;
+    }
+    
+    .tabMainFilterWheel {
+        height: 350px;
+    }
+  } 
 
-.arrowTabWheels::after {
-    content: "";
-    position: absolute;
-    top: 562px;
-    left: 43.5%;
-    margin-left:0px;
-    margin-right:0px;
-    border-width: 10px;
-    border-style: solid;
-    border-color: #71C2FF transparent #71C2FF transparent ;
-}
+  @media (min-device-width: 396px) { 
+    .tabMainFilterTyre {
+        height: 400px;
+    }
+    
+    .tabMainFilterWheel {
+        height: 400px;
+    }
+  } 
 
-.arrowTabAkb::after {
-    content: "";
-    position: absolute;
-    top: 562px;
-    left: 55.2%;
-    margin-left:0px;
-    margin-right:0px;
-    border-width: 10px;
-    border-style: solid;
-    border-color: #71C2FF transparent #71C2FF transparent ;
-}
-
-.arrowTabSelect::after {
-    content: "";
-    position: absolute;
-    top: 562px;
-    left: 66.6%;
-    margin-left:0px;
-    margin-right:0px;
-    border-width: 10px;
-    border-style: solid;
-    border-color: #71C2FF transparent #71C2FF transparent ;
-} */
+  @media (min-device-width: 375px) { 
+    .tabMainFilterTyre {
+        height: 400px;
+    }
+    
+    .tabMainFilterWheel {
+        height: 400px;
+    }
+  } 
+  @media (min-device-width: 367px) { 
+    .tabMainFilterTyre {
+        height: 460px;
+    }
+    
+    .tabMainFilterWheel {
+        height: 460px;
+    }
+  } 
+  
+  @media (min-device-width: 320px) { 
+    .tabMainFilterTyre {
+        height: 460px;
+    }
+    
+    .tabMainFilterWheel {
+        height: 460px;
+    }
+  } 
 
 
 
