@@ -1,28 +1,24 @@
-/* Slideshow container */
 .reviewStore {
   display: block;
-  width: 655px;
+  width: 100%;
   max-height: 355px;
   font-family: var(--main-font-family);
 }
 
 .reviewsStoreContainer{
-    /* position: relative; */
-    background: #ddd;
-    border-radius:10px;
-    max-height: 290.4px;
-    
+  background: #ddd;
+  border-radius:10px;
+  max-height: 290.4px;
 }
-  
-  /* Slides */
+
 .mySlidesStoreReview {
   display: grid;
   grid-template-columns: repeat(auto-fill, 1fr);
   padding: 15px;
-  max-height: 200px;
-  /*text-align: center;*/
+  height: 200px;
+  width: 100%;
 } 
-  /* Add a blue color to the author */
+
 .authorStoreReview {
   padding: 5px;
   grid-column: 1/2;
@@ -63,14 +59,6 @@
   font-family: var(--main-font-family);
 }
 
-  /* .answerStoreReview {
-   
-
-    grid-column: 1/3;
-    grid-row: 4/7;
-  } */
-
-  /* Next & previous buttons */
 .prevReview, .nextReview {
   cursor: pointer;
   position: absolute;
@@ -86,22 +74,18 @@
   user-select: none;
 }
   
-  /* Position the "next button" to the right */
 .nextReview {
   position: absolute;
   right: 0;
   border-radius: 3px 0 0 3px;
 }
   
-  /* On hover, add a black background color with a little bit see-through */
 .prevReview:hover, .nextReview:hover {
   background-color: rgba(0,0,0,0.8);
   color: white;
 }
   
-  /* The dot/bullet/indicator container */
 .dotReviewContainerStore {
-    /*text-align: left;*/
   display: flex;
   height: 65.6px;
   padding: 17px;
@@ -114,8 +98,6 @@
   font-size: 14px;
   font-family: var(--main-font-family);
 }
-  
-  /* The dots/bullets/indicators */
 
 .btnStoreReview {
   border:none;
@@ -124,6 +106,69 @@
   font-size: 18px;
   font-family: var(--main-font-family);    
 }
+
+@media only screen and (max-width: 2560px) { 
+  .reviewStore {
+    width: 655px;
+  }
+  .mySlidesStoreReview {
+    max-width: 655px;
+  }
+} 
+
+@media only screen and (max-width: 1440px) { 
+  .reviewStore {
+    max-width: 655px;
+  }
+  .mySlidesStoreReview {
+    max-width: 655px;
+  }
+} 
+
+@media only screen and (max-width: 1024px) { 
+  .reviewStore {
+    max-width: 655px;
+  }
+  .mySlidesStoreReview {
+    max-width: 655px;
+  }
+} 
+
+@media only screen and (max-width: 768px) { 
+  .reviewStore {
+    max-width: 400px;
+  }
+  .mySlidesStoreReview {
+    max-width: 400px;
+  }
+} 
+
+@media only screen and (max-width: 425px) { 
+  .reviewStore {
+    max-width: 360px;
+  }
+  .mySlidesStoreReview {
+    max-width: 360px;
+  }
+} 
+
+@media only screen and (max-width: 375px) { 
+  .reviewStore {
+    max-width: 310px;
+  }
+  .mySlidesStoreReview {
+    max-width: 310px;
+  }
+} 
+
+@media only screen and (max-width: 320px) { 
+  .reviewStore {
+    max-width: 300px;
+  }
+  .mySlidesStoreReview {
+    max-width: 300px;
+  }
+} 
 
   
  

@@ -6,10 +6,23 @@
   /*font-family: 'Fredoka', sans-serif;*/
   display:flex;
   flex-direction: row;
-  justify-content:space-around;
+  justify-content:space-evenly;
+  flex-wrap: wrap;
   align-items:center;
-  margin: 0px 20px 0 20px;
+  /* margin: 0px 20px 0 20px; */
+  width: 100%;
   /*position:relative;*/
+}
+
+.navBarLogoBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+.navBarLogoBox i {
+  opacity: 0;
+  transition: 0.3s all linear;
 }
 .navbar img {
   width: 162px;
@@ -97,4 +110,55 @@
   display: inline;
 }
 
+@media only screen and (max-width: 2560px) { 
+  .navbar {
+    max-width: 2440px;
+  }
+}
+
+@media only screen and (max-width: 1440px) { 
+  .navbar {
+
+  }
+}
+
+@media only screen and (max-width: 1024px) { 
+  .navbar {
+
+  }
+}
+
+@media only screen and (max-width: 768px) { 
+  .navbar {
+
+  }
+}
+
+@media only screen and (max-width: 425px) { 
+  .navbar {
+    background-color: #fff;
+    font-family: var(--main-font-family);
+    /*font-family: 'Fredoka', sans-serif;*/
+    display:flex;
+    flex-direction: column;
+    justify-content:space-around;
+    flex-wrap: wrap;
+    align-items:center;
+    /* margin: 0px 20px 0 20px; */
+    width: 100%;
+    /*position:relative;*/
+  }
+}
+
+@media only screen and (max-width: 375px) { 
+  .navbar {
+
+  }
+}
+
+@media only screen and (max-width: 320px) { 
+  .navbar {
+
+  }
+}
   

@@ -243,9 +243,12 @@ const NavBar = observer(() => {
  
   return (
   <div className="navbar">
+    <div className='navBarLogoBox'>
+    <i className="fas fa-bars fa-2x"></i> 
     <a href='/'>
       <img src='/logoSky180.png' alt='logoShop'/>
     </a>
+    </div>
     <NavBarDropTyres/>
     <NavBarDropWheels/>
     <a href={DELIVERY_ROUTE} className='anchorBtn'>Доставка і оплата</a>
@@ -260,7 +263,6 @@ const NavBar = observer(() => {
         <span>063 777 77 77</span>
       </span>
     </div>
-    
     <span data-href="/">Більше</span>
     <ButtonSearch clickSearchBtn={clickSearchBtn}/>
     {searchBtn? 
@@ -272,7 +274,6 @@ const NavBar = observer(() => {
     <a href={COMPARISON_ROUTE}>
      <CompareGoods countCompare={page.comparisonCount.length ?? 0} /> 
     </a>
-    
     {customer._isAuth ?
       <AuthView logOutUser={logOutUser}/>
       : <span className='enterAuthNavBar' onClick={authActive}>

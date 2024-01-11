@@ -13,16 +13,12 @@
         max-width: 1440px;
         margin-left: auto;
         margin-right: auto;
-        /* margin-left: 100px;
-        margin-right: 100px; */
     } 
 } 
 
 @media (min-width: 1440px) { 
     .main {
         min-width: 1024px;
-        /* margin-left: auto;
-        margin-right: auto; */
     } 
 } 
 
@@ -30,28 +26,43 @@
     .main {
         min-width: 768px;
     } 
+    .mainReviewsBox {
+        min-width: 768px;
+    }
 } 
 @media (min-width: 768px) { 
     .main {
         min-width: 425px;
     } 
+    .mainReviewsBox {
+        min-width: 425px;
+    }
 } 
 
 @media (min-width: 425px) { 
     .main {
         min-width: 375px;
     } 
+    .mainReviewsBox {
+        min-width: 375px;
+    }
 } 
 @media (min-width: 375px) { 
     .main {
         min-width: 320px;
     } 
+    .mainReviewsBox {
+        min-width: 320px;
+    }
 } 
 
 @media (min-width: 320px) { 
     .main {
         min-width: 300px;
     } 
+    .mainReviewsBox {
+        min-width: 300px;
+    }
 } 
 
 :root {
@@ -62,8 +73,9 @@
 
 .mainAfterReviews {
     display:inline-block;
-    margin: 26px;
+    margin: 25px;
     padding: 20px;
+    height: 150px;
 }
 
 .mainLinkReview {
@@ -74,8 +86,9 @@
     text-decoration-color: #6666;
 }
 .mainReviewsBox {
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     justify-content: center;
-    height: 250px;
+    height: 250px; */
+    width: 100%;
 }

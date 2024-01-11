@@ -87,16 +87,16 @@ const FilterMainBtnWheel = observer(({
                   "dropdownContentFilterMainBtn" :
                   "dropdownContentFilterMainBtnRound"
                 } 
-                onClick={e=>e.stopPropagation()}>
+                onClick={e => e.stopPropagation()}>
                 <input 
-                  id="myInput"
+                  id="myInputFilterBtn"
                   name={titleFilter}
                   onChange={inputSearch}
                   type="text" placeholder=" Пошук.."  />
                 <div className='contentOptionsFilterMainBtn'>
                   {children}
                 </div>
-               {contentInfo ? 
+                {contentInfo ? 
                 <ContentFilterInfo 
                   setActive={filterClick}
                   infoMarking={contentInfo} 

@@ -466,7 +466,7 @@ const Main = observer(() => {
       <div className='mainReviewsBox'>
         <ReviewsMain 
           props={'Відгуки про магазин'}
-          marginText={-270}
+          marginText={0}
           prevBtnAction={undefined}
           nextBtnAction={undefined}
           buttonPosition={undefined}
@@ -489,9 +489,9 @@ const Main = observer(() => {
       </div>
       <ButtonPrevNext 
         prevBtnLeft={20} 
-        prevTop={-155} 
-        nextBtnRight={-73} 
-        nextTop={-155}    
+        prevTop={-130} 
+        nextBtnRight={-72.9} 
+        nextTop={-130}    
         leftClickActive={prevBtnReviewStore} 
         rightClickActive={nextBtnReviewStore}
       />

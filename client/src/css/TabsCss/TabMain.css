@@ -146,7 +146,7 @@
     align-items:center;
 }
 
-@media (max-width: 2560px) { 
+@media only screen and (max-width: 2560px) { 
     .tabMainFilterTyre {
         height: 250px;
     }
@@ -156,7 +156,7 @@
     }
   } 
   
-  @media (min-width: 1440px) { 
+@media only screen and (max-width: 1440px) { 
     .tabMainFilterTyre {
         height: 250px;
     }
@@ -164,9 +164,9 @@
     .tabMainFilterWheel {
         max-height: 250px;
     }
-  } 
+} 
   
-  @media (min-width: 1024px) { 
+@media only screen and (max-width: 1024px) { 
     .tabMainFilterTyre {
         max-height: 250px;
     }
@@ -174,28 +174,29 @@
     .tabMainFilterWheel {
         max-height: 250px;
     }
-  } 
-  @media (min-device-width: 768px) { 
-    .tabMainFilterTyre {
-        height: 250px;
-    }
-    
-    .tabMainFilterWheel {
-        height: 250px;
-    }
-  } 
-  
-  @media (min-device-width: 580px) {
-    .tabMainFilterTyre {
-        height: 300px;
-    }
-    
-    .tabMainFilterWheel {
-        height: 300px;
-    }
-  } 
+} 
 
-  @media (min-device-width: 425px) { 
+@media only screen and (max-width: 768px) { 
+    .tabMainFilterTyre {
+        height: 250px;
+    }
+    
+    .tabMainFilterWheel {
+        height: 250px;
+    }
+  } 
+  
+@media only screen and (max-width: 580px) {
+    .tabMainFilterTyre {
+        min-height: 335px;
+    }
+    
+    .tabMainFilterWheel {
+        min-height: 335px;
+    }
+} 
+
+@media only screen and (max-width: 425px) { 
     .tabMainFilterTyre {
         height: 350px;
     }
@@ -203,46 +204,37 @@
     .tabMainFilterWheel {
         height: 350px;
     }
-  } 
+} 
 
-  @media (min-device-width: 396px) { 
+@media only screen and (max-width: 400px) { 
     .tabMainFilterTyre {
-        height: 400px;
+        min-height: 410px;
     }
     
     .tabMainFilterWheel {
-        height: 400px;
+        min-height: 410px;
     }
-  } 
+} 
 
-  @media (min-device-width: 375px) { 
+@media only screen and (max-width: 375px) { 
     .tabMainFilterTyre {
-        height: 400px;
+        min-height: 460px;
     }
     
     .tabMainFilterWheel {
-        height: 400px;
+        min-height: 460px;
     }
-  } 
-  @media (min-device-width: 367px) { 
+} 
+
+@media only screen and (max-width: 320px) { 
     .tabMainFilterTyre {
-        height: 460px;
+        min-height: 460px;
     }
     
     .tabMainFilterWheel {
-        height: 460px;
+        min-height: 460px;
     }
-  } 
-  
-  @media (min-device-width: 320px) { 
-    .tabMainFilterTyre {
-        height: 460px;
-    }
-    
-    .tabMainFilterWheel {
-        height: 460px;
-    }
-  } 
+} 
 
 
 

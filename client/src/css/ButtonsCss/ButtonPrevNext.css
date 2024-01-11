@@ -13,63 +13,89 @@
 /* Position the "next button" to the right */
 .nextButton {
   position: relative;
-  right: calc(var(--positRight) * 1%);
+  right: calc(var(--positRight) * 1px);
   top: calc(var(--positTopRight) * 1px);
 }
   
 /* Position the "previous button" to the left */
 .prevButton {
   position: relative;
-  left: calc(var(--positLeft) * 1%);
-  top: calc(var(--positTopLeft) * 1px);;
+  left: calc(var(--positLeft) * 1px);
+  top: calc(var(--positTopLeft) * 1px);
   /*border-radius: 3px 0 0 3px;*/
 }
   
-  /* On hover, add a black background color with a little bit see-through */
+/* On hover, add a black background color with a little bit see-through */
 .prevButton:hover, .nextButton:hover {
   background-color: #71C2FF;
   color: white;
 }
 
-
-
-
-/* @media (min-width: 1200px) { 
+@media only screen and (max-width: 2560px) { 
   .nextButton {
-    position: relative;
     right: calc(var(--positRight) * 1%);
     top: calc(var(--positTopRight) * 1px);
   }
-}  */
-
-/* @media (min-width: 1024px) { 
-    .main {
-        width: 1024px;
-    } 
-} 
-@media (max-width: 768px) { 
-    .main {
-        width: 700px;
-    } 
-} 
-@media (max-width: 800px) { 
-    .main {
-        width: 1024px;
-    } 
-} 
-@media (max-width: 425px) { 
-    .main {
-        width: 970px;
-    } 
-} 
-@media (max-width: 375px) { 
-    .main {
-        width: 970px;
-    } 
+  .prevButton {
+    left: calc(var(--positLeft) * 1%);
+    top: calc(var(--positTopLeft) * 1px);
+  }
 } 
 
-@media (max-width: 320px) { 
-    .main {
-        width: 970px;
-    } 
-}  */
+@media only screen and (max-width: 1440px) { 
+  .nextButton {
+    right: -74%;
+  } 
+  .prevButton {
+    left: 16%;
+  }
+} 
+
+@media only screen and (max-width: 1024px) { 
+  .nextButton {
+    right: -83%;
+    /* top: -130px; */
+  } 
+  .prevButton {
+    left: 4%;
+    /* top: calc(var(--positTopLeft) * 1px); */
+  }
+}
+
+@media only screen and (max-width: 768px) { 
+  .nextButton {
+    right: -79%;
+    /* top: -130px; */
+  } 
+  .prevButton {
+    left: -2%;
+    /* top: calc(var(--positTopLeft) * 1px); */
+  }
+} 
+
+@media only screen and (max-width: 425px) { 
+  .nextButton {
+    right: -78%;
+  } 
+  .prevButton {
+    left: -3%;
+  }
+}
+
+@media only screen and (max-width: 375px) { 
+  .nextButton {
+    right: -76%;
+  } 
+  .prevButton {
+    left: -3%;
+  }
+} 
+
+@media only screen and (max-width: 320px) { 
+  .nextButton {
+    right: -75%;
+  } 
+  .prevButton {
+    left: -6%;
+  }
+} 

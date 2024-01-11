@@ -1,11 +1,4 @@
 .promotionBox{
-    /* display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center; */
-    /* flex-wrap: wrap; */
-    /*position: relative;*/
-    /*overflow: hidden;*/
     width: 100%;
 }
 .promotionBoxItem{
@@ -13,7 +6,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    /* flex-wrap: wrap; */
+    flex-wrap: wrap;
     /* width: 1455px; */
 }
 .newsCard {
@@ -33,7 +26,67 @@
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-/* Add some padding inside the card container */
-/*.newsContainer {
-    padding: 2px 16px;
-}*/
+/* @media only screen and (max-width: 2560px) { 
+    .nextButton {
+      right: calc(var(--positRight) * 1%);
+      top: calc(var(--positTopRight) * 1px);
+    }
+    .prevButton {
+      left: calc(var(--positLeft) * 1%);
+      top: calc(var(--positTopLeft) * 1px);
+    }
+} 
+  
+@media only screen and (max-width: 1440px) { 
+    .nextButton {
+      right: -74%;
+    } 
+    .prevButton {
+      left: 16%;
+    }
+} 
+  
+@media only screen and (max-width: 1024px) { 
+    .nextButton {
+      right: -83%;
+    } 
+    .prevButton {
+      left: 4%;
+    }
+}
+  
+@media only screen and (max-width: 768px) { 
+    .nextButton {
+      right: -79%;
+    } 
+    .prevButton {
+      left: -2%;
+    }
+} 
+  
+@media only screen and (max-width: 425px) { 
+    .nextButton {
+      right: -78%;
+    } 
+    .prevButton {
+      left: -3%;
+    }
+}
+  
+@media only screen and (max-width: 375px) { 
+    .nextButton {
+      right: -76%;
+    } 
+    .prevButton {
+      left: -3%;
+    }
+} 
+  
+@media only screen and (max-width: 320px) { 
+    .nextButton {
+      right: -75%;
+    } 
+    .prevButton {
+      left: -6%;
+    }
+}  */

@@ -91,7 +91,7 @@ const FilterMainBtn = observer(({
           onClick={ e => e.stopPropagation()}
         >
           <input 
-            id="myInput"
+            id="myInputFilterBtn"
             name={titleFilter}
             onChange={inputSearch}
             type="text" placeholder=" Пошук.."  
