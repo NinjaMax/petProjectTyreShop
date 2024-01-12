@@ -31,9 +31,10 @@ import NavBarDropWheels from './NavBarDropWheels';
 import { getCompare, getFavorites, getSession } from '../../restAPI/restGoodsApi';
 import CompareGoods from '../ux/CompareGoods';
 import { COMPARISON_ROUTE, DELIVERY_ROUTE, FAVORITES_ROUTE } from '../../utils/consts';
+import { useMediaQuery } from 'react-responsive';
 
 const NavBar = observer(() => {
-  const {customer, page, goodsTyre} = useContext<any | null>(Context);
+  const {customer, page} = useContext<any | null>(Context);
   const [signUp, setSignUp] = useState(false);
   const [activeAuth, setActiveAuth] = useState(false);
   const [googleIsAuth, setGoogleIsAuth] = useState('');
@@ -47,8 +48,12 @@ const NavBar = observer(() => {
   const [facebookIsAuth, setFacebookIsAuth] = useState('');
   const [twitterIsAuth, setTwitterIsAuth] = useState('');
   const [formError, setFormError] = useState<string | null>('');
-  const [favoritesCount, setFavoritesCount] = useState<number | null>();
-  const [comparisonCount, setComparisonCount] = useState<number | null>();
+  // const [favoritesCount, setFavoritesCount] = useState<number | null>();
+  // const [comparisonCount, setComparisonCount] = useState<number | null>();
+  //const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isOpenMobileBar, setIsOpenMobileBar] = useState<boolean>(false);
+  //const [windowWidth, setWindowWidth] = useState<number>(window.screen.width);
+  const isMobile = useMediaQuery({ query: '(max-width: 426px)' })
 
   useEffect(() => {
     let isUser = false;
@@ -82,7 +87,7 @@ const NavBar = observer(() => {
     }
     socialSignIn();
     return () => {isUser = true}
-  },[])
+  },[]);
 
   useEffect(() => {
     let isCurUser = false;
@@ -97,7 +102,6 @@ const NavBar = observer(() => {
       let i:number = 0;
       while(taskCustm.length > i) {
         let curCustm: any = await taskCustm[i]();
-        //console.log(`CURR_CUSTM: `, curCustm);
         if (!isCurUser && curCustm) {
           customer.setIsAuth(true);
           customer.setUser(curCustm);
@@ -109,7 +113,7 @@ const NavBar = observer(() => {
     }
     getCurUser();
     return () => {isCurUser = true}
-  },[customer])
+  },[customer]);
 
   useEffect(() => {
     let isMounted = false;
@@ -140,62 +144,65 @@ const NavBar = observer(() => {
     }
     getFavoriteCompare();
     return () => {isMounted = true}
-  },[page])
+  },[page]);
 
   useEffect(() => {
-    if(isPassSend) {
+    if (isPassSend) {
       setTimeout(() => setPassSend(false), 118000);
     }
-  },[isPassSend])
+  },[isPassSend]);
 
   const openBasket = () => {
     setActiveBasket(!activeBasket);
-  }
+  };
 
   const authActive = () => {
     setFormError(null);
     setActiveAuth(!activeAuth);
-  }
+  };
 
   const authActiveConfirm = () => {
     setFormError(null);
     setAuthConfirm(!activeAuthConfirm);
-  }
+  };
 
   const clickSearchBtn = () => {
     setSearchBtn(!searchBtn);
     //console.log('CLOSE NAVBAR SEARCH');
-  }
+  };
 
   const signActiveUp = () => {
     setSignUp(!signUp);
-  }
+  };
+
+  const openMobileBar = () => {
+    setIsOpenMobileBar(!isOpenMobileBar);
+  };
 
   const preSignUpAuth = async (telnumber: bigint) => {
-
-    console.log('TEL NUMBER: ', telnumber);
+    //console.log('TEL NUMBER: ', telnumber);
     try {
       setPhoneTel(telnumber);
       const sendPass = await preSignUpUser(telnumber);
-      console.log('SEND SMS: ', sendPass);
+      //console.log('SEND SMS: ', sendPass);
       if (sendPass) {
         setPassSend(!isPassSend);
         setSmsPass(sendPass);
       } else {
-        console.log(`Помилка номера. Або користувач з номером ${telnumber} вже існує.`);
+        console.log(`Помилка номера. Або користувач з номером вже існує.`);
         setFormError(`Помилка номера. Або користувач з номером ${telnumber} вже існує.`);
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const matchGetPass = async (passFromTel: number) => {
     try {
       const matchPass = await matchPassSms(smsPass!, passFromTel);
-      console.log('PASS_TEL: ', passFromTel);
-      console.log('MATCH PASS: ', matchPass);
-      console.log('SMS: ', smsPass)
+      // console.log('PASS_TEL: ', passFromTel);
+      // console.log('MATCH PASS: ', matchPass);
+      // console.log('SMS: ', smsPass)
       if (matchPass) {
         setIsMatchPass(!isMatchPass);
         setAuthConfirm(!activeAuthConfirm); 
@@ -207,24 +214,24 @@ const NavBar = observer(() => {
       console.log(error);
       setFormError(error.response.data.message);
     }
-  }
+  };
 
   const logOutUser = async () => {
     await logOut();
     customer.setIsAuth(false);
     customer.setUser({});
     document.location.assign('/');
-  }
+  };
 
   const signUpCustm = async (dataSignIn: any) => {
     try {
       await signUpCustomer(dataSignIn);
-      console.log( 'SIGN_UP_DATA: ', dataSignIn);
+      //console.log( 'SIGN_UP_DATA: ', dataSignIn);
     } catch (error: any) {
       console.log('SIGN_UP_ERROR', error);
       setFormError(error.response.data.message);
     }
-  }
+  };
 
   const logInCustomer = async (dataLogIn: any) => {
     try {
@@ -239,16 +246,39 @@ const NavBar = observer(() => {
       console.log('LOGIN_ERROR_DATA:', error.response.data.message);
       setFormError(error.response.data.message);
     }
-  }
+  };
  
   return (
   <div className="navbar">
     <div className='navBarLogoBox'>
-    <i className="fas fa-bars fa-2x"></i> 
-    <a href='/'>
-      <img src='/logoSky180.png' alt='logoShop'/>
-    </a>
+      {isMobile ? 
+        <i className={isOpenMobileBar ? 
+          "fas fa-times fa-2x"
+          : "fas fa-bars fa-2x"}
+          onClick={openMobileBar}
+        ></i> 
+        : null
+      }
+      <a href='/'>
+        <img src='/logoSky180.png' alt='logoShop'/>
+      </a>
+      {isMobile ? 
+        <ButtonSearch isSearched={false} 
+          clickSearchBtn={clickSearchBtn}
+        />
+        : null
+      }
+      {searchBtn && isMobile ? 
+        <NavBarSearch searchBtn={searchBtn} clickSearchBtn={clickSearchBtn}/>
+        :null
+      }
+      {isMobile ? 
+        <BasketNavBar setActive={openBasket}/>
+        : null
+      }
     </div>
+    {!isMobile || (isMobile && isOpenMobileBar) ?
+    <>
     <NavBarDropTyres/>
     <NavBarDropWheels/>
     <a href={DELIVERY_ROUTE} className='anchorBtn'>Доставка і оплата</a>
@@ -264,10 +294,11 @@ const NavBar = observer(() => {
       </span>
     </div>
     <span data-href="/">Більше</span>
-    <ButtonSearch clickSearchBtn={clickSearchBtn}/>
-    {searchBtn? 
+    <ButtonSearch isSearched={true}  clickSearchBtn={clickSearchBtn}/>
+    {searchBtn ? 
       <NavBarSearch searchBtn={searchBtn} clickSearchBtn={clickSearchBtn}/>
-    :null}
+    :null
+    }
     <a href={FAVORITES_ROUTE}>
       <FavoriteGoods countFavorite={page.favoritesCount.length ?? 0}/>
     </a>
@@ -313,7 +344,13 @@ const NavBar = observer(() => {
       </Modal> 
       :null
     }
-    <BasketNavBar setActive={openBasket}/>
+    {!isMobile ?
+      <BasketNavBar setActive={openBasket}/>
+      : null
+    }
+    </>
+    : null
+    }
   </div>
   );
 });

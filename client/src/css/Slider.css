@@ -9,77 +9,79 @@
   height: 400px;
   padding-top: 10px;
   padding-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
   width: 100%;
   
   /* background-color: #ccc; */
 }
 
-@media (max-width: 2560px) { 
+@media only screen and (max-width: 2560px) { 
   .sliderMain {
     max-width: 1440px;
     max-height: 400px;
-    margin-left: auto;
-    margin-right: auto;
+    /* margin-left: auto;
+    margin-right: auto; */
   }
   #imgSliderBoxTop {
-    max-width: 720px;
-    max-height: 380px;
+    max-width: 710px;
+    max-height: 360px;
   }
   #imgSliderBoxBottom {
-    max-width: 720px;
-    max-height: 380px;
+    max-width: 710px;
+    max-height: 360px;
   }
   .mySlides img {
-    max-width:720px;
-    max-height: 380px;
+    max-width:710px;
+    max-height: 360px;
   }
 } 
 
-@media (min-width: 1440px) { 
+@media only screen and (max-width: 1440px) { 
   .sliderMain {
-    min-width: 1024px;
-    min-height: 280px;
+    max-width: 1440px;
+    max-height: 360px;
     /* margin-left: auto;
     margin-right: auto; */
   } 
   #imgSliderBoxTop {
-    min-width: 507px;
-    min-height: 360px;
+    max-width: 710px;
+    max-height: 360px;
   }
   #imgSliderBoxBottom {
-    min-width: 507px;
-    min-height: 360px;
+    max-width: 710px;
+    max-height: 360px;
   }
   .mySlides img {
-    min-width:507px;
-    min-height: 360px;
+    max-width:710px;
+    max-height: 360px;
   }
 } 
 
-@media (min-width: 1024px) { 
+@media only screen and (max-width: 1024px) { 
   .sliderMain {
-    min-width: 768px;
-    min-height: 280px;
+    max-width: 1024px;
+    max-height: 280px;
     /* margin-left: auto;
     margin-right: auto; */
   } 
   #imgSliderBoxTop {
-    min-width: 378px;
-    min-height: 260px;
+    max-width: 507px;
+    max-height: 260px;
   }
   #imgSliderBoxBottom {
-    min-width: 378px;
-    min-height: 260px;
+    max-width: 507px;
+    max-height: 260px;
   }
   .mySlides img {
-    min-width:378px;
-    min-height: 260px;
+    max-width:507px;
+    max-height: 260px;
   }
 } 
-@media (min-width: 768px) { 
+@media only screen and (max-width: 768px) { 
   .sliderMain {
-    min-width: 425px;
-    min-height: 280px;
+    max-width: 425px;
+    max-height: 220px;
     /*grid-template-columns: 100%;
     /*grid-template-rows: max-content;*/
     /*grid-template-areas: 
@@ -88,37 +90,49 @@
     /* margin-left: auto;
     margin-right: auto; */
   } 
-  /* #imgSliderBoxTop {
-    min-width: 425px;
-    min-height: 260px;
+  #imgSliderBoxTop {
+    max-width: 355px;
+    max-height: 260px;
   }
   #imgSliderBoxBottom {
-    min-width: 425px;
-    min-height: 260px;
-  } */
-  /* .mySlides img {
-    min-width:425px;
-    min-height: 260px;
-  } */
+    max-width: 355px;
+    max-height: 260px;
+  }
+  .mySlides img {
+    max-width:355px;
+    max-height: 260px;
+  }
 } 
 
-@media (min-width: 425px) { 
+@media only screen and (max-width: 425px) { 
   .sliderMain {
-    min-width: 375px;
-    min-height: 280px;
+    max-width: 425px;
+    max-height: 220px;
   } 
+  #imgSliderBoxTop {
+    max-width: 200px;
+    max-height: 220px;
+  }
+  #imgSliderBoxBottom {
+    max-width: 200px;
+    max-height: 220px;
+  }
+  .mySlides img {
+    max-width:200px;
+    max-height: 220px;
+  }
 } 
-@media (min-width: 375px) { 
+@media only screen and(max-width: 375px) { 
   .sliderMain {
-    min-width: 320px;
-    min-height: 280px;
+    max-width: 375px;
+    max-height: 220px;
   } 
 } 
 
-@media (min-width: 320px) { 
+@media only screen and (max-width: 320px) { 
   .sliderMain {
-    min-width: 300px;
-    min-height: 280px;
+    max-width: 320px;
+    max-height: 220px;
   } 
 } 
 

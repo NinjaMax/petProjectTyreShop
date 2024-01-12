@@ -3,15 +3,16 @@ import '../../css/ButtonsCss/ButtonSearch.css';
 
 interface IButtonSearch {
     clickSearchBtn(arg: any): void;
+    isSearched: boolean;
 }
 
-const ButtonSearch = ({clickSearchBtn}: IButtonSearch) => {
+const ButtonSearch = ({clickSearchBtn, isSearched}: IButtonSearch) => {
     
     return (
         <div>
             <button className="btnSearch"
             onClick={clickSearchBtn}
-            > Пошук <i className='fa fa-search'></i>
+            >{isSearched ? 'Пошук' : ''}<i className='fa fa-search'></i>
             </button>        
         </div>
     );

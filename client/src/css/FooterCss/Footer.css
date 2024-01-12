@@ -48,3 +48,39 @@
     color: #444B54;
     text-decoration: underline;
 }
+
+@media only screen and (max-width: 2560px) { 
+    .footerContainer {
+      max-width: 2560px;
+    }
+}
+  
+@media only screen and (max-width: 1440px) { 
+    .footerContainer {
+      max-width: 1440px;
+    }
+}
+  
+@media only screen and (max-width: 1024px) { 
+    .footerContainer {
+      max-width: 1024px;
+    }
+}
+  
+@media only screen and (max-width: 768px) { 
+    .footerContainer {
+      max-width: 768px;
+    }
+}
+  
+@media only screen and (max-width: 425px) { 
+    .footerContainer {
+      max-width: 425px;
+    }
+}
+  
+@media only screen and (max-width: 320px) { 
+    .footerContainer {
+      max-width: 320px;
+    }
+}
