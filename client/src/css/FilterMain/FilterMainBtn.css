@@ -97,26 +97,52 @@
     display:block;
 }
 
-@media only screen and (max-width: 375px) { 
+@media only screen and (max-width: 768px) { 
     .contentOptionsFilterMainBtn {
-        width: 230px;
+        width: 210px;
     }
     .dropdownContentFilterMainBtnRound {
-        width: 230px;
+        width: 210px;
     }
     #myInputFilterBtn {
-        width: 230px;
+        width: 210px;
+    }
+} 
+
+@media only screen and (max-width: 425px) { 
+    .contentOptionsFilterMainBtn {
+        width: 208px;
+    }
+    .dropdownContentFilterMainBtnRound {
+        width: 208px;
+        left: -11%;
+    }
+    #myInputFilterBtn {
+        width: 208px;
+    }
+} 
+
+@media only screen and (max-width: 375px) { 
+    .contentOptionsFilterMainBtn {
+        width: 208px;
+    }
+    .dropdownContentFilterMainBtnRound {
+        width: 208px;
+        left: -19%;
+    }
+    #myInputFilterBtn {
+        width: 208px;
     }
 } 
   
 @media only screen and (max-width: 320px) { 
     .contentOptionsFilterMainBtn {
-        width: 230px;
+        width: 208px;
     }
     .dropdownContentFilterMainBtnRound {
-        width: 230px;
+        width: 208px;
     }
     #myInputFilterBtn {
-        width: 230px;
+        width: 208px;
     }
 } 

@@ -13,6 +13,7 @@ import { tyreSeasonCat, tyreVehicleTypeCat } from '../../services/tyresCatServic
 import { createStringUrl } from '../../services/stringUrl';
 import { homologationByCar } from '../../services/homologation';
 import { CATALOG_TYRES_ROUTE } from '../../utils/consts';
+import { useMediaQuery } from 'react-responsive';
 
 interface IFilterCatTyres {
     handleChange?(args0: any): void;
@@ -23,18 +24,20 @@ interface IFilterCatTyres {
 const FilterCatalogTyres = observer((
     {filterState, setFilterAction}: IFilterCatTyres) => {
     const {filter, goodsTyre, page} = useContext<any | null>(Context);
-    const [stateWidth, setStateWidth]=useState(false);
-    const [stateHeight, setStateHeight]=useState(false);
-    const [stateDiameter, setStateDiameter]=useState(false);
-    const [stateBrand, setStateBrand]=useState(false);
-    const [stateSeason, setStateSeason]=useState(false);
-    const [stateVehicleType, setStateVehicleType]=useState(false);
-    const [stateStudded, setStateStudded]=useState(false);
-    const [stateSpeedIndex, setStateSpeedIndex]=useState(false);
-    const [stateLoadIndex, setStateLoadIndex]=useState(false);
-    const [stateHomologation, setStateHomologation]=useState(false);
-    const [stateRunFlat, setStateRunFlat]=useState(false);
-    const [stateReinforced, setStateReinforced]=useState(false);
+    const [stateWidth, setStateWidth]=useState<boolean>(false);
+    const [stateHeight, setStateHeight]=useState<boolean>(false);
+    const [stateDiameter, setStateDiameter]=useState<boolean>(false);
+    const [stateBrand, setStateBrand]=useState<boolean>(false);
+    const [stateSeason, setStateSeason]=useState<boolean>(false);
+    const [stateVehicleType, setStateVehicleType]=useState<boolean>(false);
+    const [stateStudded, setStateStudded]=useState<boolean>(false);
+    const [stateSpeedIndex, setStateSpeedIndex]=useState<boolean>(false);
+    const [stateLoadIndex, setStateLoadIndex]=useState<boolean>(false);
+    const [stateHomologation, setStateHomologation]=useState<boolean>(false);
+    const [stateRunFlat, setStateRunFlat]=useState<boolean>(false);
+    const [stateReinforced, setStateReinforced]=useState<boolean>(false);
+    const [isOpenFilter, setIsOpenFilter]=useState<boolean>(false);
+    const isMobileFilterTyre = useMediaQuery({ query: '(max-width: 475px)' });
     const params = useParams<any>();
     const history = useHistory();
 
@@ -434,7 +437,7 @@ const FilterCatalogTyres = observer((
         history.push(
           tyreCatalogPathType, 
         );
-    }  
+    };  
     const filterBrandAdd = () => {
         filter.setBrands(filter.chipBrands.join(','));
         setStateBrand(!stateBrand);
@@ -443,7 +446,7 @@ const FilterCatalogTyres = observer((
           history.push(
             tyreCatalogPathBrand, 
           );
-    }
+    };
     const filterSeasonAdd = () => {
         filter.setSeason(filter.chipSeason.join(','));
         setStateSeason(!stateSeason);
@@ -452,7 +455,7 @@ const FilterCatalogTyres = observer((
           history.push(
             tyreCatalogPathSeason, 
           );
-    }
+    };
     const filterVehicleTypeAdd = () => {
         filter.setVehicleType(filter.chipVehicleType.join(','));
         setStateVehicleType(!stateVehicleType);
@@ -461,7 +464,7 @@ const FilterCatalogTyres = observer((
           history.push(
             tyreCatalogPathType, 
           );
-    }
+    };
     const filterStuddedAdd = () => {
         filter.setStudded(filter.chipStudded.join(','));
         setStateStudded(!stateStudded);
@@ -470,7 +473,7 @@ const FilterCatalogTyres = observer((
           history.push(
             tyreCatalogPathStud, 
           );
-    }
+    };
     const filterSpeedIndexAdd = () => {
         filter.setSpeedIndex(filter.chipSpeedIndex.join(','));
         setStateSpeedIndex(!stateSpeedIndex);
@@ -479,7 +482,7 @@ const FilterCatalogTyres = observer((
           history.push(
             tyreCatalogPathSi, 
           );
-    }
+    };
     const filterLoadIndexAdd = () => {
         filter.setLoadIndex(filter.chipLoadIndex.join(','));
         setStateLoadIndex(!stateLoadIndex);
@@ -488,7 +491,7 @@ const FilterCatalogTyres = observer((
           history.push(
             tyreCatalogPathLi, 
           );
-    }
+    };
     const filterHomologationAdd = () => {
         filter.setHomologation(filter.chipHomologation.join(','));
         setStateHomologation(!stateHomologation);
@@ -497,7 +500,7 @@ const FilterCatalogTyres = observer((
           history.push(
             tyreCatalogPathOm, 
           );
-    }
+    };
     const filterRunFlatAdd = () => {
         filter.setRunFlat(filter.chipRunFlat.join(','));
         setStateRunFlat(!stateRunFlat);
@@ -506,7 +509,7 @@ const FilterCatalogTyres = observer((
           history.push(
             tyreCatalogPathRf, 
           );
-    }
+    };
     const filterReinforcedAdd = () => {
         filter.setReinforced(filter.chipReinforced.join(','));
         setStateReinforced(!stateReinforced);
@@ -515,10 +518,10 @@ const FilterCatalogTyres = observer((
           history.push(
             tyreCatalogPathXl, 
           );
-    }
+    };
     const filterPriceAdd = () => {
         filter.setPrice(filter.chipPrice.join(','));
-    }
+    };
 
     const filterPriceRange = (e: any) => {
         if (e.target.name === 'vid') {
@@ -529,62 +532,76 @@ const FilterCatalogTyres = observer((
             filter.addLastPrice(e.target.value);
             filter.setChipPrice(filter._chipPrice);
         }
-    }
+    };
 
     const filterWidthClick = () => {
         setStateWidth(!stateWidth);
         setFilterAction(!filterState);
-    }
+    };
     const filterHeightClick = () => {
         setStateHeight(!stateHeight);
         setFilterAction(!filterState);
-    }
+    };
     const filterDiameterClick = () => {
         setStateDiameter(!stateDiameter);
         setFilterAction(!filterState);
-    }
+    };
     const filterSeasonClick = () => {
         setStateSeason(!stateSeason);
         setFilterAction(!filterState);
-    }
+    };
     const filterStuddedClick = () => {
         setFilterAction(!filterState);
         setStateStudded(!stateStudded);
-    }
+    };
     const filterBrandClick = () => {
         setFilterAction(!filterState);
         setStateBrand(!stateBrand);
-    }
+    };
     const filterVehicleTypeClick = () => {
         setFilterAction(!filterState);
         setStateVehicleType(!stateVehicleType);
-    }
+    };
     const filterSpeedIndexClick = () => {
         setFilterAction(!filterState);
         setStateSpeedIndex(!stateSpeedIndex);
-    }
+    };
     const filterLoadIndexClick = () => {
         setFilterAction(!filterState);
         setStateLoadIndex(!stateLoadIndex);
-    }
+    };
     const filterHomologationClick = () => {
         setFilterAction(!filterState);
         setStateHomologation(!stateHomologation);
-    }
+    };
     const filterRunFlatClick = () => {
         setFilterAction(!filterState);
         setStateRunFlat(!stateRunFlat);
-    }
+    };
     const filterReinforcedClick = () => {
         setFilterAction(!filterState);
         setStateReinforced(!stateReinforced);
-    }
+    };
+    const openFilterInMobile = () => {
+        setIsOpenFilter(!isOpenFilter);
+    };
 
     return (
         <div className='filterCatalogTyres'>
             <div className='filterCatalogTyresHeader'>
-                Фильтр Підбір по авто
+            {isMobileFilterTyre ? 
+                <i className={isOpenFilter ? 
+                "fas fa-times fa-2x"
+                : "fas fa-bars fa-2x"}
+                onClick={openFilterInMobile}
+                ></i> 
+            : null
+            }
+                <span>
+                    Фільтр Шин
+                </span>
             </div>
+            {!isMobileFilterTyre || (isMobileFilterTyre && isOpenFilter) ?
             <div className='filterTyresOption'>
                 <FilterMainBtn 
                     filterAction={filterWidthClick}
@@ -594,7 +611,7 @@ const FilterCatalogTyres = observer((
                     width={247.4} 
                     titleFilter={'Ширина'} 
                     contentInfo={'A'}>
-                    { goodsTyre._width ? 
+                    {goodsTyre._width ? 
                         goodsTyre._width.map((widthItem: any) => (
                        <SelectFilterList 
                         key={widthItem}
@@ -990,7 +1007,9 @@ const FilterCatalogTyres = observer((
                     }
                     <p/>
                 </Accordion>
-            </div>       
+            </div>  
+            : null
+            }     
         </div>
     );
 });

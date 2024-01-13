@@ -15,6 +15,7 @@
 
 .a {
     grid-area: a;
+    width: 100%;
 }
 
 .b {
@@ -38,4 +39,45 @@
 .e {
     grid-area: e;
     /* border: rebeccapurple solid 3px; */
+}
+
+@media only screen and (max-width: 1024px) {
+    .catalogTyres {
+        display: flex;
+        max-width: 1024px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0px;
+        padding: 10px;
+    }
+    .a {
+        display: block;
+        max-width: 1024px;
+    }
+    
+    .b {
+        display: block;
+        max-width: 1024px;
+    }
+    
+    .c {
+        display: block;
+        max-width: 1024px;
+    }
+    
+    .d {
+        max-width: 1024px;
+        grid-area: d;
+        display: flex; 
+        flex-direction: row;
+        justify-content:center;
+        gap: 10px;
+        padding: 18px 18px 25px 18px;
+    }
+    
+    .e {
+        display: block;
+        max-width: 1024px;
+    }
 }

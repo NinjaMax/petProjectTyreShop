@@ -15,6 +15,7 @@ import { observer } from 'mobx-react-lite';
 import BrandsListMain from '../components/BrandsListMain';
 import PromotionBox from '../components/PromotionBox';
 import ButtonPrevNext from '../components/buttons/ButtonPrevNext';
+import { useMediaQuery } from 'react-responsive';
 
 const Main = observer(() => {
   const {goodsTyre, goodsWheel, filter} = useContext<any | null>(Context);
@@ -27,6 +28,7 @@ const Main = observer(() => {
   const [nextBtnReview, setNextBtnReview] = useState<number>(0);
   const [articlesAll, setArticlesAll] = useState<any[] | null>();
   const [chooseFilterState, setChooseFilterState] = useState<string>('ШИНИ');
+  const isMobileMain = useMediaQuery({ query: '(max-width: 475px)' });
 
   useEffect(() =>{
     let isMounted = false;
@@ -424,8 +426,11 @@ const Main = observer(() => {
   return (
     <div className='main'
       onClick={handleCloseFilter}
-    >    
-      <Slider/>
+    > 
+      {!isMobileMain ?
+        <Slider/>
+        : null
+      }
       <TabMain
         filterMainState={filterClose}
         filterStateAction={setFilterClose}
