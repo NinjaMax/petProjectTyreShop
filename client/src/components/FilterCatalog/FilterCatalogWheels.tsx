@@ -11,6 +11,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { createStringUrl } from '../../services/stringUrl';
 import { typeWheels } from '../../services/wheelsProps.service';
 import { CATALOG_WHEELS_ROUTE } from '../../utils/consts';
+import { useMediaQuery } from 'react-responsive';
 
 interface IFilterCatTyres {
     handleChange?(args0: any): void;
@@ -21,17 +22,19 @@ interface IFilterCatTyres {
 const FilterCatalogWheels = observer((
     {filterState, setFilterAction}: IFilterCatTyres) => {
     const {filter, goodsWheel, page} = useContext<any | null>(Context);
-    const [stateWidth, setStateWidth]=useState(false);
-    const [stateDiameter, setStateDiameter]=useState(false);
-    const [stateBoltCount, setStateBoltCount]=useState(false);
-    const [stateBrand, setStateBrand]=useState(false);
-    const [stateType, setStateType]=useState(false);
-    const [stateColor, setStateColor]=useState(false);
-    const [stateDia, setStateDia]=useState(false);
-    const [stateEt, setStateEt]=useState(false);
-    const [statePcd, setStatePcd]=useState(false);
-    const [statePcd2, setStatePcd2]=useState(false);
-    const [stateBoltCountPcd, setStateBoltCountPcd]=useState(false);
+    const [stateWidth, setStateWidth]=useState<boolean>(false);
+    const [stateDiameter, setStateDiameter]=useState<boolean>(false);
+    const [stateBoltCount, setStateBoltCount]=useState<boolean>(false);
+    const [stateBrand, setStateBrand]=useState<boolean>(false);
+    const [stateType, setStateType]=useState<boolean>(false);
+    const [stateColor, setStateColor]=useState<boolean>(false);
+    const [stateDia, setStateDia]=useState<boolean>(false);
+    const [stateEt, setStateEt]=useState<boolean>(false);
+    const [statePcd, setStatePcd]=useState<boolean>(false);
+    const [statePcd2, setStatePcd2]=useState<boolean>(false);
+    const [stateBoltCountPcd, setStateBoltCountPcd]=useState<boolean>(false);
+    const [isOpenFilter, setIsOpenFilter]=useState<boolean>(false);
+    const isMobileFilterTyre = useMediaQuery({ query: '(max-width: 1075px)' });
     const params = useParams<any>();
     const history = useHistory();
     
@@ -50,7 +53,7 @@ const FilterCatalogWheels = observer((
             setStatePcd2(false);
             setStateBoltCountPcd(false);
         }
-    },[filterState])
+    },[filterState]);
 
     const handleChange  = (e: any) => {
         if (e.target.name === 'Ширина') {
@@ -206,7 +209,7 @@ const FilterCatalogWheels = observer((
           history.push(
             wheelCatalogPath, 
           );
-    } 
+    };
     
     const handleDeleteChange  = (e: any) => {
         if (e.target.getAttribute('data-name') === 'Ширина') {
@@ -338,7 +341,7 @@ const FilterCatalogWheels = observer((
         history.push(
           wheelCatalogPath, 
         );
-    }  
+    };
     const filterBrandAdd = () => {
         filter.setBrands(filter.chipBrands.join(','));
         setStateBrand(!stateBrand);
@@ -347,7 +350,7 @@ const FilterCatalogWheels = observer((
         history.push(
           wheelCatalogPath, 
         );
-    }
+    };
     const filterBoltCountAdd = () => {
         filter.setBoltCount(filter.chipBoltCount.join(','));
         setStateBoltCount(!stateBoltCount);
@@ -356,7 +359,7 @@ const FilterCatalogWheels = observer((
         history.push(
           wheelCatalogPath, 
         );
-    }
+    };
     const filterTypeAdd = () => {
         filter.setType(filter.chipType.join(','));
         setStateType(!stateType);
@@ -365,7 +368,7 @@ const FilterCatalogWheels = observer((
         history.push(
           wheelCatalogPath, 
         );
-    }
+    };
     const filterColorAdd = () => {
         filter.setColor(filter.chipColor.join(','));
         setStateColor(!stateColor);
@@ -374,7 +377,7 @@ const FilterCatalogWheels = observer((
         history.push(
           wheelCatalogPath, 
         );
-    }
+    };
     const filterDiaAdd = () => {
         filter.setDia(filter.chipDia.join(','));
         setStateDia(!stateDia);
@@ -383,7 +386,7 @@ const FilterCatalogWheels = observer((
         history.push(
           wheelCatalogPath, 
         );
-    }
+    };
     const filterEtAdd = () => {
         filter.setEt(filter.chipEt.join(','));
         setStateEt(!stateEt);
@@ -392,7 +395,7 @@ const FilterCatalogWheels = observer((
         history.push(
           wheelCatalogPath, 
         );
-    }
+    };
     const filterPcdAdd = () => {
         filter.setPcd(filter.chipPcd.join(','));
         setStatePcd(!statePcd);
@@ -401,7 +404,7 @@ const FilterCatalogWheels = observer((
         history.push(
           wheelCatalogPath, 
         );
-    }
+    };
     const filterPcd2Add = () => {
         filter.setPcd2(filter.chipPcd2.join(','));
         setStatePcd2(!statePcd2);
@@ -410,14 +413,14 @@ const FilterCatalogWheels = observer((
         history.push(
           wheelCatalogPath, 
         );
-    }
+    };
     const filterBoltCountPcddAdd = () => {
         filter.setBoltCountPcd(filter.chipBoltCountPcd.join(','));
         setStateBoltCountPcd(!stateBoltCountPcd);
-    }
+    };
     const filterPriceAdd = () => {
         filter.setPrice(filter.chipPrice.join(','));
-    }
+    };
 
     const filterPriceRange = (e: any) => {
         if (e.target.name === 'vid') {
@@ -428,57 +431,71 @@ const FilterCatalogWheels = observer((
             filter.addLastPrice(e.target.value);
             filter.setChipPrice(filter._chipPrice);
         }
-    }
+    };
 
     const filterWidthClick = () => {
         setStateWidth(!stateWidth);
         setFilterAction(!filterState);
-    }
+    };
     const filterDiameterClick = () => {
         setStateDiameter(!stateDiameter);
         setFilterAction(!filterState);
-    }
+    };
     const filterColorClick = () => {
         setStateColor(!stateColor);
         setFilterAction(!filterState);
-    }
+    };
     const filterBoltCountClick = () => {
         setStateBoltCount(!stateBoltCount);
         setFilterAction(!filterState);
-    }
+    };
     const filterBrandClick = () => {
         setStateBrand(!stateBrand);
         setFilterAction(!filterState);
-    }
+    };
     const filterTypeClick = () => {
         setStateType(!stateType);
         setFilterAction(!filterState);
-    }
+    };
     const filterDiaClick = () => {
         setStateDia(!stateDia);
         setFilterAction(!filterState);
-    }
+    };
     const filterEtClick = () => {
         setStateEt(!stateEt);
         setFilterAction(!filterState);
-    }
+    };
     const filterPcdClick = () => {
         setStatePcd(!statePcd);
         setFilterAction(!filterState);
-    }
+    };
     const filterPcd2Click = () => {
         setStatePcd2(!statePcd2);
         setFilterAction(!filterState);
-    }
+    };
     const filterBoltCountPcdClick = () => {
         setStateBoltCountPcd(!stateBoltCountPcd);
         setFilterAction(!filterState);
-    }
+    };
+
+    const openFilterInMobile = () => {
+        setIsOpenFilter(!isOpenFilter);
+    };
 
     return (
         <div className='filterCatalogWheels'>
             <div className='filterCatalogTyresHeader'>
-                Фильтр Дисків
+            {isMobileFilterTyre ? 
+                <i className={isOpenFilter ? 
+                "fas fa-times fa-2x"
+                : "fas fa-bars fa-2x"}
+                onClick={openFilterInMobile}
+                ></i> 
+            : null
+            }
+                <span>
+                 Фільтр Дисків   
+                </span>
             </div>
             <div className='filterWheelsOption'>
                 <FilterMainBtnWheel 

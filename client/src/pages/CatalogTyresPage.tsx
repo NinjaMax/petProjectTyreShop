@@ -1588,7 +1588,7 @@ const CatalogTyresPage = observer(() => {
         {location.pathname.includes('tyres') ?
           <ReviewsMain 
             props={'Відгуки кліентів'} 
-            marginText={-120}
+            marginText={-50}
             prevBtnAction={prevBtnReviewGoods} 
             nextBtnAction={nextBtnReviewGoods}    
             buttonPosition={{
@@ -1634,7 +1634,7 @@ const CatalogTyresPage = observer(() => {
           {location.pathname.includes('wheels') ?
           <ReviewsMain 
             props={'Відгуки кліентів'} 
-            marginText={-120}
+            marginText={0}
             prevBtnAction={prevBtnReviewGoods} 
             nextBtnAction={nextBtnReviewGoods}    
             buttonPosition={{

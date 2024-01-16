@@ -29,16 +29,74 @@
 
 .d {
     grid-area: d;
-    display: flex; 
+    /*display: flex; 
     flex-direction: row;
     justify-content:center;
     gap: 10px;
-    padding: 18px 18px 25px 18px;
+    padding: 18px 18px 25px 18px; */
+    width: 100%;
 }
 
 .e {
     grid-area: e;
     /* border: rebeccapurple solid 3px; */
+}
+
+@media only screen and (max-width: 2560px) {
+    .catalogTyres {
+        max-width: 1440px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media only screen and (max-width: 1440px) {
+    .catalogTyres {
+        max-width: 1075px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media only screen and (max-width: 1075px) {
+    .catalogTyres {
+        display: flex;
+        max-width: 1024px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0px;
+        padding: 10px;
+    }
+    .a {
+        display: block;
+        max-width: 1024px;
+    }
+    
+    .b {
+        display: block;
+        max-width: 1024px;
+    }
+    
+    .c {
+        display: block;
+        max-width: 1024px;
+    }
+    
+    .d {
+        max-width: 1024px;
+        grid-area: d;
+        display: flex; 
+        flex-direction: row;
+        justify-content:center;
+        gap: 10px;
+        padding: 18px 18px 25px 18px;
+    }
+    
+    .e {
+        display: block;
+        max-width: 1024px;
+    }
 }
 
 @media only screen and (max-width: 1024px) {
@@ -79,5 +137,210 @@
     .e {
         display: block;
         max-width: 1024px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .catalogTyres {
+        display: flex;
+        max-width: 768px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0px;
+        padding: 10px;
+    }
+    .a {
+        display: block;
+        max-width: 768px;
+    }
+    
+    .b {
+        display: block;
+        max-width: 768px;
+    }
+    
+    .c {
+        display: block;
+        max-width: 768px;
+    }
+    
+    .d {
+        max-width: 768px;
+        grid-area: d;
+        display: flex; 
+        flex-direction: row;
+        justify-content:center;
+        gap: 10px;
+        padding: 18px 18px 25px 18px;
+    }   
+    
+    .e {
+        display: block;
+        max-width: 768px;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .catalogTyres {
+        display: flex;
+        max-width: 425px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0px;
+        padding: 10px;
+    }
+    .a {
+        display: block;
+        max-width: 425px;
+    }
+    
+    .b {
+        display: block;
+        max-width: 425px;
+    }
+    
+    .c {
+        display: block;
+        max-width: 425px;
+    }
+    
+    .d {
+        max-width: 425px;
+        grid-area: d;
+        display: flex; 
+        flex-direction: row;
+        justify-content:center;
+        gap: 10px;
+        padding: 18px 18px 25px 18px;
+    }   
+    
+    .e {
+        display: block;
+        max-width: 425px;
+    }
+}
+
+@media only screen and (max-width: 380px) {
+    .catalogTyres {
+        display: flex;
+        max-width: 380px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0px;
+        padding: 10px;
+    }
+    .a {
+        display: block;
+        max-width: 380px;
+    }
+    
+    .b {
+        display: block;
+        max-width: 380px;
+    }
+    
+    .c {
+        display: block;
+        max-width: 380px;
+    }
+    
+    .d {
+        max-width: 380px;
+        grid-area: d;
+        display: flex; 
+        flex-direction: row;
+        justify-content:center;
+        gap: 10px;
+        padding: 18px 18px 25px 18px;
+    }   
+    
+    .e {
+        display: block;
+        max-width: 380px;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .catalogTyres {
+        display: flex;
+        max-width: 375px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0px;
+        padding: 10px;
+    }
+    .a {
+        display: block;
+        max-width: 375px;
+    }
+    
+    .b {
+        display: block;
+        max-width: 375px;
+    }
+    
+    .c {
+        display: block;
+        max-width: 375px;
+    }
+    
+    .d {
+        max-width: 375px;
+        grid-area: d;
+        display: flex; 
+        flex-direction: row;
+        justify-content:center;
+        gap: 10px;
+        padding: 18px 18px 25px 18px;
+    }   
+    
+    .e {
+        display: block;
+        max-width: 375px;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .catalogTyres {
+        display: flex;
+        max-width: 320px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0px;
+        padding: 10px;
+    }
+    .a {
+        display: block;
+        max-width: 320px;
+    }
+    
+    .b {
+        display: block;
+        max-width: 320px;
+    }
+    
+    .c {
+        display: block;
+        max-width: 320px;
+    }
+    
+    .d {
+        max-width: 320px;
+        grid-area: d;
+        display: flex; 
+        flex-direction: row;
+        justify-content:center;
+        gap: 10px;
+        padding: 18px 18px 25px 18px;
+    }   
+    
+    .e {
+        display: block;
+        max-width: 320px;
     }
 }

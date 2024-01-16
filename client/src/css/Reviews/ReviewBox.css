@@ -3,6 +3,7 @@
     font-weight: bold;
     font-family: var(--main-font-family);
     padding-left: 60px;
-    margin: 15px;
+    margin: 15px; 
     margin-left: calc(var(--mainReview-marginLeft) * 1px);
+
 }

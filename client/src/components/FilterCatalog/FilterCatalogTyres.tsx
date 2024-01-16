@@ -37,7 +37,7 @@ const FilterCatalogTyres = observer((
     const [stateRunFlat, setStateRunFlat]=useState<boolean>(false);
     const [stateReinforced, setStateReinforced]=useState<boolean>(false);
     const [isOpenFilter, setIsOpenFilter]=useState<boolean>(false);
-    const isMobileFilterTyre = useMediaQuery({ query: '(max-width: 475px)' });
+    const isMobileFilterTyre = useMediaQuery({ query: '(max-width: 1075px)' });
     const params = useParams<any>();
     const history = useHistory();
 

@@ -1,7 +1,12 @@
 .pagination {
-    margin: 20px 33.5% 20px 34.5%;
-    text-align:justify;
+    /* margin: 20px 33.5% 20px 34.5%;
+    text-align:justify; */
     font-family: var(--main-font-family);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .pagination .paginationItem {
@@ -21,4 +26,6 @@
 }
 
 /* Add a grey background color on mouse-over */
-.pagination .paginationItem:hover:not(.active) {background-color: #ddd;}
+.pagination .paginationItem:hover:not(.active) {
+    background-color: #ddd;
+}

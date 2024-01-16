@@ -1,6 +1,7 @@
 .reviewGoods {
   /* position: relative; */
-  width:655px;
+  /*width:655px;*/
+  width: 100%;
   /* height:355px; */
 }
 .reviewsGoodsContainer {
@@ -131,4 +132,50 @@
   border-radius:0 0 10px 10px;
 }
   
+@media only screen and (max-width: 2560px) {
+  .reviewGoods {
+    width: 655px;
+  }
+}
 
+@media only screen and (max-width: 1440px) {
+  .reviewGoods {
+    width: 655px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .reviewGoods {
+    width: 655px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .reviewGoods {
+    max-width: 390px;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .reviewGoods {
+    max-width: 360px;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+  .reviewGoods {
+    max-width: 300px;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .reviewGoods {
+    max-width: 300px;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .reviewGoods {
+    max-width: 300px;
+  }
+}
