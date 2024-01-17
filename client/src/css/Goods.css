@@ -134,6 +134,7 @@
   align-items:center;
   gap: 15px;
   margin: 15px;
+  width: 100%;
 }
 
 @media only screen and (max-width: 2560px) {
@@ -142,6 +143,85 @@
     margin-left: auto;
     margin-right: auto;
   }
+  .goodsBreadCrumbs {
+    grid-area: 1 / 1 / 1 / 5;
+    max-width: 1440px;
+  }
+  .tabGoods {
+    grid-area: 2 / 1 / 4 / 5;
+    max-width: 1440px;
+    
+  }
+  .tabGoodsActive {
+    grid-area: 2 / 1 / 4 / 4;
+    max-width: 1440px;
+  }
+
+  .modelSectionGoodsActive {
+    grid-area: 6 / 1 / 8 / 5;
+    max-width: 1440px;
+  }
+  .productPayDelGoods {
+    grid-area: 4 / 1 / 4 / 5;
+    text-align: center;
+    max-width: 1440px;
+  }
+  .productPayDelGoodsNext {
+    grid-area: 4 / 1 / 4 / 4;
+    text-align: center;
+    max-width: 1440px;
+  }
+  .goodsBenefits {
+    grid-area: 5 / 1 / 5 / 5;
+    text-align: center;
+    max-width: 1440px;
+  
+  }
+  .similarGoods {
+    grid-area: 6 / 1 / 6 / 4;
+    max-width: 1000px;
+  }
+  .similarGoodsModel {
+    grid-area: 7 / 1 / 7 / 4;
+    max-width: 1000px;
+  }
+
+  .allSizeModel {
+    grid-area: 8 / 1 / 8 / 4;
+    max-width: 1000px;
+  }
+  
+  .allModelBrand {
+    grid-area: 9 / 1 / 9 / 4;
+    max-width: 1000px;
+  }
+  
+  .youWatched {
+    grid-area: 10 / 1 / 10 / 4;
+    max-width: 1000px;
+  }
+  
+  .youWatchedModel {
+    grid-area: 8 / 1 / 8 / 4;
+    max-width: 1000px;
+  }
+  .smallCardNext {
+    grid-area: 2 / 4 / 10 / 5;
+  }
+  .smallCardNextNone {
+    display: none;
+  }
+  .goodsModalBox {
+    grid-area: 11 / 1 / 11 / 4;
+    height: 30px;
+  }
+  .goodsModalBoxModel {
+    grid-area: 9 / 1 / 9 / 4;
+    height: 30px;
+  }
+  .tabReviewsActive {
+    max-width: 1000px;
+  }
 }
 
 @media only screen and (max-width: 1440px) {
@@ -149,5 +229,530 @@
     max-width: 1024px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .goodsBreadCrumbs {
+    grid-area: 1 / 1 / 1 / 5;
+    max-width: 1024px;
+  }
+  .tabGoods {
+    grid-area: 2 / 1 / 4 / 5;
+    max-width: 1024px;
+    
+  }
+  .tabGoodsActive {
+    grid-area: 2 / 1 / 4 / 4;
+    max-width: 1024px;
+  }
+
+  .modelSectionGoodsActive {
+    grid-area: 6 / 1 / 8 / 5;
+    max-width: 1024px;
+  }
+  .productPayDelGoods {
+    grid-area: 4 / 1 / 4 / 5;
+    text-align: center;
+    max-width: 1024px;
+  }
+  .productPayDelGoodsNext {
+    grid-area: 4 / 1 / 4 / 4;
+    text-align: center;
+    max-width: 1440px;
+  }
+  .goodsBenefits {
+    grid-area: 5 / 1 / 5 / 5;
+    text-align: center;
+    max-width: 1024px;
+  
+  }
+  .similarGoods {
+    grid-area: 6 / 1 / 6 / 4;
+    max-width: 800px;
+  }
+  .similarGoodsModel {
+    grid-area: 7 / 1 / 7 / 4;
+    max-width: 800px;
+  }
+
+  .allSizeModel {
+    grid-area: 8 / 1 / 8 / 4;
+    max-width: 800px;
+  }
+  
+  .allModelBrand {
+    grid-area: 9 / 1 / 9 / 4;
+    max-width: 800px;
+  }
+  
+  .youWatched {
+    grid-area: 10 / 1 / 10 / 4;
+    max-width: 800px;
+  }
+  
+  .youWatchedModel {
+    grid-area: 8 / 1 / 8 / 4;
+    max-width: 800px;
+  }
+  .smallCardNext {
+    grid-area: 2 / 4 / 10 / 5;
+  }
+  .smallCardNextNone {
+    display: none;
+  }
+  .goodsModalBox {
+    grid-area: 11 / 1 / 11 / 4;
+    height: 30px;
+  }
+  .goodsModalBoxModel {
+    grid-area: 9 / 1 / 9 / 4;
+    height: 30px;
+  }
+  .tabReviewsActive {
+    max-width: 1024px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .goodsCard {
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .goodsBreadCrumbs {
+    grid-area: 1 / 1 / 1 / 5;
+    max-width: 768px;
+  }
+  .tabGoods {
+    grid-area: 2 / 1 / 4 / 5;
+    max-width: 768px;
+    
+  }
+  .tabGoodsActive {
+    grid-area: 2 / 1 / 4 / 4;
+    max-width: 768px;
+  }
+
+  .modelSectionGoodsActive {
+    grid-area: 6 / 1 / 8 / 5;
+    max-width: 768px;
+  }
+  .productPayDelGoods {
+    grid-area: 4 / 1 / 4 / 5;
+    text-align: center;
+    max-width: 768px;
+  }
+  .productPayDelGoodsNext {
+    grid-area: 4 / 1 / 4 / 4;
+    text-align: center;
+    max-width: 768px;
+  }
+  .goodsBenefits {
+    grid-area: 5 / 1 / 5 / 5;
+    text-align: center;
+    max-width: 768px;
+  
+  }
+  .similarGoods {
+    grid-area: 6 / 1 / 6 / 4;
+    max-width: 768px;
+  }
+  .similarGoodsModel {
+    grid-area: 7 / 1 / 7 / 4;
+    max-width: 768px;
+  }
+
+  .allSizeModel {
+    grid-area: 8 / 1 / 8 / 4;
+    max-width: 768px;
+  }
+  
+  .allModelBrand {
+    grid-area: 9 / 1 / 9 / 4;
+    max-width: 768px;
+  }
+  
+  .youWatched {
+    grid-area: 10 / 1 / 10 / 4;
+    max-width: 768px;
+  }
+  
+  .youWatchedModel {
+    grid-area: 8 / 1 / 8 / 4;
+    max-width: 768px;
+  }
+  .smallCardNext {
+    grid-area: 2 / 4 / 10 / 5;
+  }
+  .smallCardNextNone {
+    display: none;
+  }
+  .goodsModalBox {
+    grid-area: 11 / 1 / 11 / 4;
+    height: 30px;
+  }
+  .goodsModalBoxModel {
+    grid-area: 9 / 1 / 9 / 4;
+    height: 30px;
+  }
+  .tabReviewsActive {
+    max-width: 768px;
+    margin: 0px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .goodsCard {
+    max-width: 425px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .goodsBreadCrumbs {
+    grid-area: 1 / 1 / 1 / 5;
+    max-width: 425px;
+  }
+  .tabGoods {
+    grid-area: 2 / 1 / 4 / 5;
+    max-width: 425px;
+    
+  }
+  .tabGoodsActive {
+    grid-area: 2 / 1 / 4 / 4;
+    max-width: 425px;
+  }
+
+  .modelSectionGoodsActive {
+    grid-area: 6 / 1 / 8 / 5;
+    max-width: 425px;
+  }
+  .productPayDelGoods {
+    grid-area: 4 / 1 / 4 / 5;
+    text-align: center;
+    max-width: 425px;
+  }
+  .productPayDelGoodsNext {
+    grid-area: 4 / 1 / 4 / 4;
+    text-align: center;
+    max-width: 425px;
+  }
+  .goodsBenefits {
+    grid-area: 5 / 1 / 5 / 5;
+    text-align: center;
+    max-width: 425px;
+  
+  }
+  .similarGoods {
+    grid-area: 6 / 1 / 6 / 4;
+    max-width: 425px;
+  }
+  .similarGoodsModel {
+    grid-area: 7 / 1 / 7 / 4;
+    max-width: 425px;
+  }
+
+  .allSizeModel {
+    grid-area: 8 / 1 / 8 / 4;
+    max-width: 425px;
+  }
+  
+  .allModelBrand {
+    grid-area: 9 / 1 / 9 / 4;
+    max-width: 425px;
+  }
+  
+  .youWatched {
+    grid-area: 10 / 1 / 10 / 4;
+    max-width: 425px;
+  }
+  
+  .youWatchedModel {
+    grid-area: 8 / 1 / 8 / 4;
+    max-width: 425px;
+  }
+  .smallCardNext {
+    grid-area: 2 / 4 / 10 / 5;
+  }
+  .smallCardNextNone {
+    display: none;
+  }
+  .goodsModalBox {
+    grid-area: 11 / 1 / 11 / 4;
+    height: 30px;
+  }
+  .goodsModalBoxModel {
+    grid-area: 9 / 1 / 9 / 4;
+    height: 30px;
+  }
+  .tabReviewsActive {
+    max-width: 425px;
+    margin: 0px;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .goodsCard {
+    max-width: 375px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .goodsBreadCrumbs {
+    grid-area: 1 / 1 / 1 / 5;
+    max-width: 375px;
+  }
+  .tabGoods {
+    grid-area: 2 / 1 / 4 / 5;
+    max-width: 375px;
+    
+  }
+  .tabGoodsActive {
+    grid-area: 2 / 1 / 4 / 4;
+    max-width: 375px;
+  }
+
+  .modelSectionGoodsActive {
+    grid-area: 6 / 1 / 8 / 5;
+    max-width: 375px;
+  }
+  .productPayDelGoods {
+    grid-area: 4 / 1 / 4 / 5;
+    text-align: center;
+    max-width: 375px;
+  }
+  .productPayDelGoodsNext {
+    grid-area: 4 / 1 / 4 / 4;
+    text-align: center;
+    max-width: 375px;
+  }
+  .goodsBenefits {
+    grid-area: 5 / 1 / 5 / 5;
+    text-align: center;
+    max-width: 375px;
+  
+  }
+  .similarGoods {
+    grid-area: 6 / 1 / 6 / 4;
+    max-width: 375px;
+  }
+  .similarGoodsModel {
+    grid-area: 7 / 1 / 7 / 4;
+    max-width: 375px;
+  }
+
+  .allSizeModel {
+    grid-area: 8 / 1 / 8 / 4;
+    max-width: 375px;
+  }
+  
+  .allModelBrand {
+    grid-area: 9 / 1 / 9 / 4;
+    max-width: 375px;
+  }
+  
+  .youWatched {
+    grid-area: 10 / 1 / 10 / 4;
+    max-width: 375px;
+  }
+  
+  .youWatchedModel {
+    grid-area: 8 / 1 / 8 / 4;
+    max-width: 375px;
+  }
+  .smallCardNext {
+    grid-area: 2 / 4 / 10 / 5;
+  }
+  .smallCardNextNone {
+    display: none;
+  }
+  .goodsModalBox {
+    grid-area: 11 / 1 / 11 / 4;
+    height: 30px;
+  }
+  .goodsModalBoxModel {
+    grid-area: 9 / 1 / 9 / 4;
+    height: 30px;
+  }
+  .tabReviewsActive {
+    max-width: 375px;
+    margin: 0px;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .goodsCard {
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .goodsBreadCrumbs {
+    grid-area: 1 / 1 / 1 / 5;
+    max-width: 320px;
+  }
+  .tabGoods {
+    grid-area: 2 / 1 / 4 / 5;
+    max-width: 320px;
+    
+  }
+  .tabGoodsActive {
+    grid-area: 2 / 1 / 4 / 4;
+    max-width: 320px;
+  }
+
+  .modelSectionGoodsActive {
+    grid-area: 6 / 1 / 8 / 5;
+    max-width: 320px;
+  }
+  .productPayDelGoods {
+    grid-area: 4 / 1 / 4 / 5;
+    text-align: center;
+    max-width: 320px;
+  }
+  .productPayDelGoodsNext {
+    grid-area: 4 / 1 / 4 / 4;
+    text-align: center;
+    max-width: 320px;
+  }
+  .goodsBenefits {
+    grid-area: 5 / 1 / 5 / 5;
+    text-align: center;
+    max-width: 320px;
+  
+  }
+  .similarGoods {
+    grid-area: 6 / 1 / 6 / 4;
+    max-width: 320px;
+  }
+  .similarGoodsModel {
+    grid-area: 7 / 1 / 7 / 4;
+    max-width: 320px;
+  }
+
+  .allSizeModel {
+    grid-area: 8 / 1 / 8 / 4;
+    max-width: 320px;
+  }
+  
+  .allModelBrand {
+    grid-area: 9 / 1 / 9 / 4;
+    max-width: 320px;
+  }
+  
+  .youWatched {
+    grid-area: 10 / 1 / 10 / 4;
+    max-width: 320px;
+  }
+  
+  .youWatchedModel {
+    grid-area: 8 / 1 / 8 / 4;
+    max-width: 320px;
+  }
+  .smallCardNext {
+    grid-area: 2 / 4 / 10 / 5;
+  }
+  .smallCardNextNone {
+    display: none;
+  }
+  .goodsModalBox {
+    grid-area: 11 / 1 / 11 / 4;
+    height: 30px;
+  }
+  .goodsModalBoxModel {
+    grid-area: 9 / 1 / 9 / 4;
+    height: 30px;
+  }
+  .tabReviewsActive {
+    max-width: 320px;
+    margin: 0px;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .goodsCard {
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .goodsBreadCrumbs {
+    grid-area: 1 / 1 / 1 / 5;
+    max-width: 300px;
+  }
+  .tabGoods {
+    grid-area: 2 / 1 / 4 / 5;
+    max-width: 300px;
+    
+  }
+  .tabGoodsActive {
+    grid-area: 2 / 1 / 4 / 4;
+    max-width: 300px;
+  }
+
+  .modelSectionGoodsActive {
+    grid-area: 6 / 1 / 8 / 5;
+    max-width: 300px;
+  }
+  .productPayDelGoods {
+    grid-area: 4 / 1 / 4 / 5;
+    text-align: center;
+    max-width: 300px;
+  }
+  .productPayDelGoodsNext {
+    grid-area: 4 / 1 / 4 / 4;
+    text-align: center;
+    max-width: 300px;
+  }
+  .goodsBenefits {
+    grid-area: 5 / 1 / 5 / 5;
+    text-align: center;
+    max-width: 300px;
+  
+  }
+  .similarGoods {
+    grid-area: 6 / 1 / 6 / 4;
+    max-width: 300px;
+  }
+  .similarGoodsModel {
+    grid-area: 7 / 1 / 7 / 4;
+    max-width: 300px;
+  }
+
+  .allSizeModel {
+    grid-area: 8 / 1 / 8 / 4;
+    max-width: 300px;
+  }
+  
+  .allModelBrand {
+    grid-area: 9 / 1 / 9 / 4;
+    max-width: 300px;
+  }
+  
+  .youWatched {
+    grid-area: 10 / 1 / 10 / 4;
+    max-width: 300px;
+  }
+  
+  .youWatchedModel {
+    grid-area: 8 / 1 / 8 / 4;
+    max-width: 300px;
+  }
+  .smallCardNext {
+    grid-area: 2 / 4 / 10 / 5;
+  }
+  .smallCardNextNone {
+    display: none;
+  }
+  .goodsModalBox {
+    grid-area: 11 / 1 / 11 / 4;
+    height: 30px;
+  }
+  .goodsModalBoxModel {
+    grid-area: 9 / 1 / 9 / 4;
+    height: 30px;
+  }
+  .tabReviewsActive {
+    max-width: 300px;
+    margin: 0px;
   }
 }

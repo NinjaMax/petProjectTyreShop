@@ -3,8 +3,10 @@
     flex-direction: row;
     justify-content:flex-start;
     align-items:flex-start;
+    flex-wrap: wrap;
     padding: 10px;
-    width: 905px;
+    width: 100%;
+    /* width: 905px; */
     background-color:#CADBEA;
     border-radius:10px;
     gap:50px;
@@ -38,4 +40,10 @@
     font-family: var(--main-font-family);
     /*justify-content: center;*/
     /*gap:5px;*/
+}
+
+@media only screen and (max-width: 768px) {
+    .reviewsBrand {
+        max-width: 375px;
+    }
 }

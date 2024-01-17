@@ -147,7 +147,6 @@ const AllAboutProduct = observer(({
             </div>  
             : null 
             }
-            
             <div className='allAboutProductInfo'>
                 {goods?.tyre_brand ?
                     <div className='productInfoName'>{

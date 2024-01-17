@@ -1,6 +1,7 @@
 .allModelBrandsBox {
     display: block;
     margin: 8px;
+    width: 100%;
 }
 
 .allModelBrands {
@@ -27,4 +28,46 @@
     background-color:#fff;
     box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.2);
     text-decoration: none;
+}
+
+@media only screen and (max-width: 2560px) {
+    .allModelBrandsBox {
+        max-width: 1440px;
+    }
+}
+
+@media only screen and (max-width: 1440px) {
+    .allModelBrandsBox {
+        max-width: 1024px;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .allModelBrandsBox {
+        max-width: 768px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .allModelBrandsBox {
+        max-width: 425px;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .allModelBrandsBox {
+        max-width: 375px;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .allModelBrandsBox {
+        max-width: 320px;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .allModelBrandsBox {
+        max-width: 300px;
+    }
 }

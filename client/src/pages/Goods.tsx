@@ -14,8 +14,8 @@ import AllTyreModelSize from '../components/goods/AllTyreModelSize';
 import AllModelBrand from '../components/goods/AllModelBrand';
 import ProductPayDel from '../components/goods/ProductPayDel';
 import YouWatched from '../components/goods/YouWatched';
-import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
-import { GOODS_ROUTE, NOT_FOUND_ROUTE } from '../utils/consts';
+import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
+import { NOT_FOUND_ROUTE } from '../utils/consts';
 import { 
   addGoodsToBasket,
   createBasket,
@@ -64,6 +64,7 @@ import Question from '../components/question/Questions';
 import PropertiesWheelGoods from '../components/goods/PropertiesWheelGoods';
 import { ICheckOrderItem } from '../components/catalogs/types/CheckOrder.type';
 import CheckOrder from '../components/modal/CheckOrder';
+import { useMediaQuery } from 'react-responsive';
 
 type ILikeTyreType = {
   id_review: number;
@@ -95,9 +96,9 @@ const GoodsPage = observer(() => {
   const [paramsModel, setParamsModel] = useState<boolean>(false);
   const [active, setActive] = useState(false);
   const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem[] | null>([]);
+  const isMobileProduct = useMediaQuery({ query: '(max-width: 1440px)' });
   const history =  useHistory();
   const params = useParams<any>();
-  const location = useLocation();
   let match = useRouteMatch<any>('/:goodsItem');
   
   useEffect(() => {
@@ -474,21 +475,21 @@ const GoodsPage = observer(() => {
     storageItem: number,
     priceStockIndex: number,
     ) => {
-    //try {
+    try {
         setActive(!active);
         if (!active) {
-            console.log('ITEM: ', item);
-            console.log("RATING_ITEM", ratingModel);
-            console.log("STORAGE_ITEM", storageItem);
-            console.log("PRICE_STOCK_INDEX", priceStockIndex);
+            // console.log('ITEM: ', item);
+            // console.log("RATING_ITEM", ratingModel);
+            // console.log("STORAGE_ITEM", storageItem);
+            // console.log("PRICE_STOCK_INDEX", priceStockIndex);
             const getStorage = await getStorageByIdParam(storageItem);
             const basket: any = await createBasket({
                 id_customer: customer.customer?.id, 
                 storage: getStorage.storage
             });
-            console.log('GET_STORAGE: ', getStorage);
+            // console.log('GET_STORAGE: ', getStorage);
             
-            console.log('CREATE_BASKET_ID_BASKET: ', basket?.data);
+            // console.log('CREATE_BASKET_ID_BASKET: ', basket?.data);
             if(basket?.status === 201) {
                 const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
                 const addTobasket: any = await addGoodsToBasket(
@@ -522,9 +523,9 @@ const GoodsPage = observer(() => {
                 }  
             }
         }
-    // } catch (error) {
-    //     console.log('BASKET_ERROR: ',error);
-    // }
+    } catch (error) {
+        console.log('BASKET_ERROR: ',error);
+    }
   }
 
 
@@ -762,8 +763,11 @@ const GoodsPage = observer(() => {
           checkOrders={checkOrders}
         />
       </div>
-      <div className={changeTabGoods==="vseProTovar" ? "smallCardOne":"smallCardNext"}>
-        {goodsTyre._product && !paramsModel ?
+      <div className={changeTabGoods === 'vseProTovar' && !isMobileProduct ? 
+        'smallCardOne' : 'smallCardNext'
+        }
+      >
+        {goodsTyre._product && !isMobileProduct && !paramsModel ?
           <TyreCardSmall 
             rating={ratingIdAndIdModelAvg}
             product={goodsTyre._product}
@@ -771,7 +775,7 @@ const GoodsPage = observer(() => {
           />
         : null 
         }
-        {goodsWheel._product && !paramsModel ?
+        {goodsWheel._product && !isMobileProduct && !paramsModel ?
           <TyreCardSmall 
             rating={ratingIdAndIdModelAvg}
             product={goodsWheel._product}

@@ -8,6 +8,8 @@
     display: flex;
     flex-direction: row;
     justify-content:flex-start;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 0px;
     font-family: var(--main-font-family);
 }
@@ -15,8 +17,8 @@
 .tabsGoodsCardLinks {
     appearance: none;
     cursor: pointer;
-    border: solid red;
-    border-width: 0px 0px 4px 0px;
+    /* border: solid red;
+    border-width: 0px 0px 4px 0px; */
 }
 
 .tabsGoodsCardLinks:hover {
@@ -78,4 +80,15 @@
     padding-right: 6px;
     margin-left: 6px;
 
+}
+
+@media only screen and (max-width: 768px) {
+    .labelItem {
+        max-width: 170px;
+        height: 50px;
+    }
+    .tabsGoodsCardActive {
+        max-width: 170px;
+        height: 50px;
+    }
 }

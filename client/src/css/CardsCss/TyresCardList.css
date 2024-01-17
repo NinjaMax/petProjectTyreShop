@@ -1,6 +1,6 @@
 .tyresCardList {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    width: 780px;
+    width: 100%;
     /* height: 140px; */
     margin: auto;
     /*text-align:left;*/
@@ -134,4 +134,88 @@
 
 .buttonBuyCardList {
     grid-area: buttonCardList;
+}
+
+@media only screen and (max-width: 768px) {
+    .tyresCardList {
+        max-width: 425px;
+        grid-template-columns:100px 293px;
+    }
+    .tyresCardListBox {
+        grid-template-columns: 98%;
+        grid-template-rows: 28px 40px 40px 40px 40px 40px 40px 40px;
+        grid-template-areas: 
+        "nameCardList"
+        "nameCardList"
+        "ratingCardList" 
+        "codeCardList" 
+        "propsCardList"
+        "countryCardList"
+        "priceCardList" 
+        "buttonCardList";
+        grid-column: 2;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .tyresCardList {
+        max-width: 375px;
+        grid-template-columns:100px 243px;
+    }
+    .tyresCardListBox {
+        grid-template-columns: 98%;
+        grid-template-rows: 28px 40px 40px 40px 40px 40px 40px 40px;
+        grid-template-areas: 
+        "nameCardList"
+        "nameCardList"
+        "ratingCardList" 
+        "codeCardList" 
+        "propsCardList"
+        "countryCardList"
+        "priceCardList" 
+        "buttonCardList";
+        grid-column: 2;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .tyresCardList {
+        max-width: 320px;
+        grid-template-columns:100px 188px;
+    }
+    .tyresCardListBox {
+        grid-template-columns: 98%;
+        grid-template-rows: 28px 40px 40px 40px 40px 40px 40px 40px;
+        grid-template-areas: 
+        "nameCardList"
+        "nameCardList"
+        "ratingCardList" 
+        "codeCardList" 
+        "propsCardList"
+        "countryCardList"
+        "priceCardList" 
+        "buttonCardList";
+        grid-column: 2;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .tyresCardList {
+        max-width: 300px;
+        grid-template-columns:100px 168px;
+    }
+    .tyresCardListBox {
+        grid-template-columns: 98%;
+        grid-template-rows: 28px 40px 45px 40px 40px 40px 40px 40px;
+        grid-template-areas: 
+        "nameCardList"
+        "nameCardList"
+        "ratingCardList" 
+        "codeCardList" 
+        "propsCardList"
+        "countryCardList"
+        "priceCardList" 
+        "buttonCardList";
+        grid-column: 2;
+    }
 }

@@ -2,10 +2,11 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    /*max-width: 650px;*/
-    height: 650px;
-    /* border:3px solid blue; */
     gap: 3px;
+    flex-wrap: wrap;
+    /*max-width: 650px;*/
+    /* height: 650px; */
+    /* border:3px solid blue; */
     padding: 3px;
     font-family: var(--main-font-family);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -19,10 +20,8 @@
 }
 
 #productImgGoods {
-    
     width: 400px;
     height: 400px;
-
 }
 
 .allAboutProductInfo {
@@ -31,7 +30,8 @@
     flex-wrap: wrap;
     /* border:3px solid red; */
     padding: 25px;
-    width: 575px;
+    /* width: 575px; */
+    /* width: 100%; */
     /*height: 50px;*/
     gap:8px;
 }
@@ -44,6 +44,7 @@
 .productInfoProps {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     gap: 35px;
@@ -54,6 +55,7 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    flex-wrap: wrap;
     gap: 55px;
     
 }
@@ -106,6 +108,7 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    flex-wrap: wrap;
     gap: 10px;
 }
 .productBonusReview {
@@ -113,6 +116,7 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    flex-wrap: wrap;
     gap: 10px;
 }
 .productInfoCountry {
@@ -120,6 +124,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .productRightgBox {
@@ -133,6 +138,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 15px;
     text-align: center;
     font-size: 24px;
@@ -148,7 +154,6 @@
 }
 
 .productInfoRatingLink {
-   
     text-decoration: none;
 }
 
@@ -158,6 +163,7 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    flex-wrap: wrap;
     gap: 10px;
 }
 
@@ -202,6 +208,7 @@
     justify-content: center;
     align-items:center;
     gap:10px;
+    width: 100%;
 }
 
 .btnGoodsBoxTwo {
@@ -209,6 +216,7 @@
     flex-direction:row;
     justify-content: center;
     align-items:center;
+    flex-wrap: wrap;
     gap:10px;
     margin: 5px;
 }
@@ -341,3 +349,193 @@
     opacity: 1;
     cursor: pointer;
 }
+
+@media only screen and (max-width: 2560px) {
+    .allProductImgBox {
+        width: 450px;
+        height: 450px;
+        /* border:3px solid greenyellow; */
+    }
+    
+    #productImgGoods {
+        width: 400px;
+        height: 400px;
+    }
+}
+
+@media only screen and (max-width: 1440px) {
+    .allProductImgBox {
+        width: 450px;
+        height: 450px;
+        /* border:3px solid greenyellow; */
+    }
+    
+    #productImgGoods {
+        width: 400px;
+        height: 400px;
+    }
+
+    .productRightgBox {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 650px;
+        overflow: hidden;
+        /* border:3px solid goldenrod; */
+        padding: 10px;
+        gap: 15px;
+    }
+
+    .attentionGoods {
+        width: 300px;
+        margin-top: 10px;
+        font-size: 14px;
+        font-family: var(--main-font-family);
+    }
+
+    .allAboutProduct {
+        justify-content: center;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .allProductImgBox {
+        width: 450px;
+        height: 450px;
+        /* border:3px solid greenyellow; */
+    }
+    
+    #productImgGoods {
+        width: 400px;
+        height: 400px;
+    }
+
+    .productRightgBox {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 650px;
+        overflow: hidden;
+        /* border:3px solid goldenrod; */
+        padding: 10px;
+        gap: 15px;
+    }
+
+    .attentionGoods {
+        width: 300px;
+        margin-top: 10px;
+        font-size: 14px;
+        font-family: var(--main-font-family);
+    }
+
+    .allAboutProduct {
+        justify-content: center;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .allProductImgBox {
+        max-width: 425px;
+        max-height: 425px;
+        /* border:3px solid greenyellow; */
+    }
+    
+    #productImgGoods {
+        max-width: 400px;
+        max-height: 400px;
+    }
+
+    .productRightgBox {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        max-width: 650px;
+        overflow: hidden;
+        /* border:3px solid goldenrod; */
+        padding: 10px;
+        gap: 15px;
+    }
+
+    .attentionGoods {
+        width: 300px;
+        margin-top: 10px;
+        font-size: 14px;
+        font-family: var(--main-font-family);
+    }
+    .allAboutProductInfo {
+        max-width: 425px;
+        padding: 10px;
+    }
+
+    .allAboutProduct {
+        justify-content: center;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .allProductImgBox {
+        width: 375px;
+        height: 375px;
+        /* border:3px solid greenyellow; */
+    }
+    
+    #productImgGoods {
+        width: 350px;
+        height: 350px;
+    }
+
+    .allAboutProductInfo {
+        max-width: 375px;
+        padding: 10px;
+    }
+
+    .allAboutProduct {
+        justify-content: center;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .allProductImgBox {
+        width: 320px;
+        height: 320px;
+        /* border:3px solid greenyellow; */
+    }
+    
+    #productImgGoods {
+        width: 300px;
+        height: 300px;
+    }
+
+    .allAboutProductInfo {
+        max-width: 320px;
+        padding: 10px;
+    }
+
+    .allAboutProduct {
+        justify-content: center;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .allProductImgBox {
+        width: 300px;
+        height: 300px;
+        /* border:3px solid greenyellow; */
+    }
+    
+    #productImgGoods {
+        width: 280px;
+        height: 280px;
+    }
+    .allAboutProductInfo {
+        max-width: 300px;
+        padding: 10px;
+    }
+
+    .allAboutProduct {
+        justify-content: center;
+    }
+}
+
+
