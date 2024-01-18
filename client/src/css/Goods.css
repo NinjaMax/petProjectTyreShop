@@ -1,7 +1,7 @@
 .goodsCard {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 25%));
-  grid-template-rows:minmax(45px, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 25%));
+  grid-template-rows:minmax(0px, 1fr);
   /*grid-template-areas: 
     "goodsBreadCrumbs goodsBreadCrumbs goodsBreadCrumbs"
     "tabGoods tabGoods tabGoods"
@@ -50,8 +50,8 @@
 .goodsBenefitsNext {
   grid-area: 5 / 1 / 5 / 4;
   text-align: center;
-
 }
+
 .similarGoods {
   grid-area: 6 / 1 / 6 / 4;
 }
@@ -175,12 +175,18 @@
     grid-area: 5 / 1 / 5 / 5;
     text-align: center;
     max-width: 1440px;
-  
   }
+
+  .goodsBenefitsNext {
+    grid-area: 5 / 1 / 5 / 4;
+    text-align: center;
+  }
+
   .similarGoods {
     grid-area: 6 / 1 / 6 / 4;
     max-width: 1000px;
   }
+
   .similarGoodsModel {
     grid-area: 7 / 1 / 7 / 4;
     max-width: 1000px;
@@ -214,10 +220,12 @@
   .goodsModalBox {
     grid-area: 11 / 1 / 11 / 4;
     height: 30px;
+    max-width: 1000px;
   }
   .goodsModalBoxModel {
     grid-area: 9 / 1 / 9 / 4;
     height: 30px;
+    max-width: 1000px;
   }
   .tabReviewsActive {
     max-width: 1000px;
@@ -263,8 +271,13 @@
     grid-area: 5 / 1 / 5 / 5;
     text-align: center;
     max-width: 1024px;
-  
   }
+
+  .goodsBenefitsNext {
+    grid-area: 5 / 1 / 5 / 4;
+    text-align: center;
+  }
+
   .similarGoods {
     grid-area: 6 / 1 / 6 / 4;
     max-width: 800px;
@@ -294,7 +307,7 @@
     max-width: 800px;
   }
   .smallCardNext {
-    grid-area: 2 / 4 / 10 / 5;
+    display: none;
   }
   .smallCardNextNone {
     display: none;
@@ -302,10 +315,12 @@
   .goodsModalBox {
     grid-area: 11 / 1 / 11 / 4;
     height: 30px;
+    max-width: 800px;
   }
   .goodsModalBoxModel {
     grid-area: 9 / 1 / 9 / 4;
     height: 30px;
+    max-width: 800px;
   }
   .tabReviewsActive {
     max-width: 1024px;
@@ -351,8 +366,13 @@
     grid-area: 5 / 1 / 5 / 5;
     text-align: center;
     max-width: 768px;
-  
   }
+
+  .goodsBenefitsNext {
+    grid-area: 5 / 1 / 5 / 4;
+    text-align: center;
+  }
+
   .similarGoods {
     grid-area: 6 / 1 / 6 / 4;
     max-width: 768px;
@@ -382,7 +402,7 @@
     max-width: 768px;
   }
   .smallCardNext {
-    grid-area: 2 / 4 / 10 / 5;
+    display: none;
   }
   .smallCardNextNone {
     display: none;
@@ -390,10 +410,12 @@
   .goodsModalBox {
     grid-area: 11 / 1 / 11 / 4;
     height: 30px;
+    max-width: 768px;
   }
   .goodsModalBoxModel {
     grid-area: 9 / 1 / 9 / 4;
     height: 30px;
+    max-width: 768px;
   }
   .tabReviewsActive {
     max-width: 768px;
@@ -440,8 +462,13 @@
     grid-area: 5 / 1 / 5 / 5;
     text-align: center;
     max-width: 425px;
-  
   }
+
+  .goodsBenefitsNext {
+    grid-area: 5 / 1 / 5 / 4;
+    text-align: center;
+  }
+
   .similarGoods {
     grid-area: 6 / 1 / 6 / 4;
     max-width: 425px;
@@ -471,7 +498,7 @@
     max-width: 425px;
   }
   .smallCardNext {
-    grid-area: 2 / 4 / 10 / 5;
+    display: none;
   }
   .smallCardNextNone {
     display: none;
@@ -479,10 +506,12 @@
   .goodsModalBox {
     grid-area: 11 / 1 / 11 / 4;
     height: 30px;
+    max-width: 425px;
   }
   .goodsModalBoxModel {
     grid-area: 9 / 1 / 9 / 4;
     height: 30px;
+    max-width: 425px;
   }
   .tabReviewsActive {
     max-width: 425px;
@@ -495,6 +524,7 @@
     max-width: 375px;
     margin-left: auto;
     margin-right: auto;
+    grid-gap:0px;
   }
 
   .goodsBreadCrumbs {
@@ -529,8 +559,13 @@
     grid-area: 5 / 1 / 5 / 5;
     text-align: center;
     max-width: 375px;
-  
   }
+
+  .goodsBenefitsNext {
+    grid-area: 5 / 1 / 5 / 4;
+    text-align: center;
+  }
+
   .similarGoods {
     grid-area: 6 / 1 / 6 / 4;
     max-width: 375px;
@@ -560,7 +595,7 @@
     max-width: 375px;
   }
   .smallCardNext {
-    grid-area: 2 / 4 / 10 / 5;
+    display: none;
   }
   .smallCardNextNone {
     display: none;
@@ -568,10 +603,12 @@
   .goodsModalBox {
     grid-area: 11 / 1 / 11 / 4;
     height: 30px;
+    max-width: 375px;
   }
   .goodsModalBoxModel {
     grid-area: 9 / 1 / 9 / 4;
     height: 30px;
+    max-width: 375px;
   }
   .tabReviewsActive {
     max-width: 375px;
@@ -584,6 +621,7 @@
     max-width: 320px;
     margin-left: auto;
     margin-right: auto;
+    /* grid-gap:0px; */
   }
 
   .goodsBreadCrumbs {
@@ -618,8 +656,13 @@
     grid-area: 5 / 1 / 5 / 5;
     text-align: center;
     max-width: 320px;
-  
   }
+
+  .goodsBenefitsNext {
+    grid-area: 5 / 1 / 5 / 4;
+    text-align: center;
+  }
+
   .similarGoods {
     grid-area: 6 / 1 / 6 / 4;
     max-width: 320px;
@@ -649,7 +692,7 @@
     max-width: 320px;
   }
   .smallCardNext {
-    grid-area: 2 / 4 / 10 / 5;
+    display: none;
   }
   .smallCardNextNone {
     display: none;
@@ -657,10 +700,12 @@
   .goodsModalBox {
     grid-area: 11 / 1 / 11 / 4;
     height: 30px;
+    max-width: 320px;
   }
   .goodsModalBoxModel {
     grid-area: 9 / 1 / 9 / 4;
     height: 30px;
+    max-width: 320px;
   }
   .tabReviewsActive {
     max-width: 320px;
@@ -670,89 +715,112 @@
 
 @media only screen and (max-width: 320px) {
   .goodsCard {
-    max-width: 300px;
+    max-width: 305px;
     margin-left: auto;
     margin-right: auto;
+    /* grid-gap:0px; */
   }
 
   .goodsBreadCrumbs {
-    grid-area: 1 / 1 / 1 / 5;
-    max-width: 300px;
+    /* grid-area: 1 / 1 / 1 / 5; */
+    grid-area: 1 / 1 / 1 / 1;
+    max-width: 305px;
   }
   .tabGoods {
-    grid-area: 2 / 1 / 4 / 5;
-    max-width: 300px;
+    /* grid-area: 2 / 1 / 4 / 5; */
+    grid-area: 2 / 1 / 1 / 1;
+    max-width: 305px;
     
   }
   .tabGoodsActive {
-    grid-area: 2 / 1 / 4 / 4;
-    max-width: 300px;
+    /* grid-area: 2 / 1 / 4 / 4; */
+    grid-area: 2 / 1 / 2 / 1;
+    max-width: 305px;
   }
 
   .modelSectionGoodsActive {
-    grid-area: 6 / 1 / 8 / 5;
-    max-width: 300px;
+    /* grid-area: 6 / 1 / 8 / 5; */
+    grid-area: 6 / 1 / 6 / 1;
+    max-width: 305px;
   }
   .productPayDelGoods {
-    grid-area: 4 / 1 / 4 / 5;
+    /* grid-area: 4 / 1 / 4 / 5; */
+    grid-area: 4 / 1 / 4 / 1;
     text-align: center;
-    max-width: 300px;
+    max-width: 305px;
   }
   .productPayDelGoodsNext {
-    grid-area: 4 / 1 / 4 / 4;
+    /* grid-area: 4 / 1 / 4 / 4; */
+    grid-area: 4 / 1 / 4 / 1;
     text-align: center;
-    max-width: 300px;
+    max-width: 305px;
   }
   .goodsBenefits {
-    grid-area: 5 / 1 / 5 / 5;
+    /* grid-area: 5 / 1 / 5 / 5; */
+    grid-area: 5 / 1 / 5 / 1;
     text-align: center;
-    max-width: 300px;
-  
+    max-width: 305px;
   }
+
+  .goodsBenefitsNext {
+    grid-area: 5 / 1 / 5 / 4;
+    text-align: center;
+  }
+  
   .similarGoods {
-    grid-area: 6 / 1 / 6 / 4;
-    max-width: 300px;
+    /* grid-area: 6 / 1 / 6 / 4; */
+    grid-area: 6 / 1 / 6 / 1;
+    max-width: 305px;
   }
   .similarGoodsModel {
-    grid-area: 7 / 1 / 7 / 4;
-    max-width: 300px;
+    /* grid-area: 7 / 1 / 7 / 4; */
+    grid-area: 7 / 1 / 7 / 1;
+    max-width: 305px;
   }
 
   .allSizeModel {
-    grid-area: 8 / 1 / 8 / 4;
-    max-width: 300px;
+    /* grid-area: 8 / 1 / 8 / 4; */
+    grid-area: 8 / 1 / 8 / 1;
+    max-width: 305px;
   }
   
   .allModelBrand {
-    grid-area: 9 / 1 / 9 / 4;
-    max-width: 300px;
+    /* grid-area: 9 / 1 / 9 / 4; */
+    grid-area: 9 / 1 / 9 / 1;
+    max-width: 305px;
   }
   
   .youWatched {
-    grid-area: 10 / 1 / 10 / 4;
-    max-width: 300px;
+    /* grid-area: 10 / 1 / 10 / 4; */
+    grid-area: 10 / 1 / 10 / 1;
+    max-width: 305px;
   }
   
   .youWatchedModel {
-    grid-area: 8 / 1 / 8 / 4;
-    max-width: 300px;
+    /* grid-area: 8 / 1 / 8 / 4; */
+    grid-area: 8 / 1 / 8 / 1;
+    max-width: 305px;
   }
   .smallCardNext {
-    grid-area: 2 / 4 / 10 / 5;
+    display: none;
   }
   .smallCardNextNone {
     display: none;
   }
   .goodsModalBox {
-    grid-area: 11 / 1 / 11 / 4;
+    /* grid-area: 11 / 1 / 11 / 4; */
+    grid-area: 11 / 1 / 11 / 1;
     height: 30px;
+    max-width: 305px;
   }
   .goodsModalBoxModel {
-    grid-area: 9 / 1 / 9 / 4;
+    /* grid-area: 9 / 1 / 9 / 4; */
+    grid-area: 9 / 1 / 9 / 1;
     height: 30px;
+    max-width: 305px;
   }
   .tabReviewsActive {
-    max-width: 300px;
+    max-width: 305px;
     margin: 0px;
   }
 }

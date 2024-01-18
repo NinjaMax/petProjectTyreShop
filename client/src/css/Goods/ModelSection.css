@@ -1,110 +1,116 @@
-/* The overlay effect with black background */
-  
 .modelSectionActive {
-    height: 80%;
-    width: 92%;
-    margin-left: 50px;
-    margin-right: 50px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    font-family: var(--main-font-family);
-  }
+  height: 80%;
+  width: 100%;
+  /* margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 15px;
+  margin-bottom: 15px; */
+  font-family: var(--main-font-family);
+}
   
-  .modelSectionData {
-    background-color:#ffff;
-    border-radius: 15px;
-    padding: 15px;
-    display: block;
-    overflow: hidden;
+.modelSectionData {
+  background-color:#ffff;
+  border-radius: 15px;
+  /* padding: 15px; */
+  display: block;
+  overflow: hidden;
+  width: 100%;
+}
 
-  }
+.modelSectionItemsTitle {
+  float: left;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
 
-  /* .noFavoritesGoods {
-
-  } */
-
-  .modelSectionItemsTitle {
-    float: left;
-    margin-top: 10px;
-    margin-right: 10px;
-  }
-  .modelSectionItemsLines {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 5px;
-      height: 90px;
-      width: 600px;
-  }
+.modelSectionItemsLines {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+  height: 90px;
+  /* width: 600px; */
+  width: 100%;
+}
   
-  .titleModelSectionSelect {
-      padding: 10px 10px 10px 10px;
-      margin-left: 3px;
-      border-radius: 20px;
-      background-color: #ddd;
-  }
+.titleModelSectionSelect {
+  padding: 10px 10px 10px 10px;
+  margin-left: 3px;
+  border-radius: 20px;
+  background-color: #ddd;
+}
 
-  .titleModelSectionSelect:hover {
-      background-color: #ccc;
-      cursor: pointer;
-      padding: 10px 10px 10px 10px;
-  }
+.titleModelSectionSelect:hover {
+  background-color: #ccc;
+  cursor: pointer;
+  padding: 10px 10px 10px 10px;
+}
 
-  .titleModelSectionSelect:active {
-      background-color: #ddd;
-      cursor: pointer;
-  }
+.titleModelSectionSelect:active {
+  background-color: #ddd;
+  cursor: pointer;
+}
 
-  .modelSectionItems .titleModelSectionChoose {
-    padding: 10px 10px 10px 10px;
-    border-radius: 20px;
-    background-color: #ddd;
-  }
-  .modelSectionItems .activatedModelSectionTitle {
-    background-color: #999;
-    padding: 10px 10px 10px 10px;
-    border-radius: 20px;
-  }
-  .modelSectionItems .activatedModelSectionTitle:hover {
-    background-color: #ccc;
-    cursor: pointer;
-    padding: 10px 10px 10px 10px;
-  }
-  .modelSectionItems .activatedModelSectionTitle:active {
-    background-color: #ddd;
-    cursor: pointer;
-  }
-  .modelSectionItems .titleModelSectionChoose:hover {
-    background-color: #ccc;
-    cursor: pointer;
-    padding: 10px 10px 10px 10px;
-  }
-  .modelSectionItems .titleModelSectionChoose:active {
-    background-color: #ddd;
-    cursor: pointer;
-  }
-  .modelSectionItems .countModelSectionDiam {
-    border-radius: 35px;
-    color: #ffff;
-    margin: 10px;
-    padding: 1px 8px 1px 8px;
-    background-color: crimson;
-  }
-  .modelSectionItemsBox {
-    overflow-y: scroll;
-    max-height: 500px;
-    width: 1000px;
-    display: flex;
-    flex-direction:column;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 5px;
-    background-color: #ffff;
-    margin: 15px;
-  }
+.modelSectionItems .titleModelSectionChoose {
+  padding: 10px 10px 10px 10px;
+  border-radius: 20px;
+  background-color: #ddd;
+}
 
-  .modelSectionItemsList {
-      margin: 3px;
-  }
+.modelSectionItems .activatedModelSectionTitle {
+  background-color: #999;
+  padding: 10px 10px 10px 10px;
+  border-radius: 20px;
+}
+
+.modelSectionItems .activatedModelSectionTitle:hover {
+  background-color: #ccc;
+  cursor: pointer;
+  padding: 10px 10px 10px 10px;
+}
+
+.modelSectionItems .activatedModelSectionTitle:active {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.modelSectionItems .titleModelSectionChoose:hover {
+  background-color: #ccc;
+  cursor: pointer;
+  padding: 10px 10px 10px 10px;
+}
+
+.modelSectionItems .titleModelSectionChoose:active {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.modelSectionItems .countModelSectionDiam {
+  border-radius: 35px;
+  color: #ffff;
+  margin: 10px;
+  padding: 1px 8px 1px 8px;
+  background-color: crimson;
+}
+  
+.modelSectionItemsBox {
+  overflow-y: scroll;
+  max-height: 500px;
+  /* width: 1000px; */
+  width: 100%;
+  display: flex;
+  flex-direction:column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+  background-color: #ffff;
+  /* margin: 15px; */
+  /* padding: 15px; */
+}
+
+.modelSectionItemsList {
+  margin: 3px;
+}

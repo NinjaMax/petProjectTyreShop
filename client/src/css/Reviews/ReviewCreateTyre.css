@@ -1,6 +1,7 @@
 .reviewTyreCreate {
     margin: 10px;
-    width: 570px;
+    /* width: 570px; */
+    width: 80%;
     max-height: 550px;
     font-family: var(--main-font-family);
     overflow:hidden;
