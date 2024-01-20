@@ -108,7 +108,6 @@ export class TyresService {
           { model: TyreBrand },
           { model: Category},
           { model: TyreDiameter },
-          //{ all: true },
         ],
       });
       return tyresAll;
@@ -132,7 +131,6 @@ export class TyresService {
           { model: StockTyres },
           { model: TyreBrand },
           { model: Category},
-          //{ all: true },
         ],
       });
       return tyresAllAdmin;
@@ -150,7 +148,6 @@ export class TyresService {
     diameter: string,
     season: string,
     brand: string,
-    //price: string,
     sort: string,
   ): Promise<any> {
     try {
@@ -239,7 +236,7 @@ export class TyresService {
         return tyresAllWithoutLimitMain;
       }
     } catch (error) {
-      console.log('ERROR_GET_TYRE: ', error);
+      console.log('ERROR_GET_TYRE_MAIN: ', error);
       throw new HttpException(
         //'Data is incorrect or Not Found',
         error.message,
@@ -326,13 +323,8 @@ export class TyresService {
         return tyresAllWithoutLimitTyreProps;
       }
     } catch (error) {
-      console.log('ERROR_GET_TYRE: ', error);
-      //await t.rollback();
-      throw new HttpException(
-        //'Data is incorrect or Not Found',
-        error.message,
-        HttpStatus.NOT_FOUND,
-      );
+      console.log('ERROR_GET_TYRE_MIDDLE: ', error);
+      throw new HttpException(error.message, HttpStatus.NOT_FOUND);
     }
   }
 
@@ -416,13 +408,8 @@ export class TyresService {
         return tyresAllWithoutLimitTyreProps;
       }
     } catch (error) {
-      console.log('ERROR_GET_TYRE: ', error);
-      //await t.rollback();
-      throw new HttpException(
-        //'Data is incorrect or Not Found',
-        error.message,
-        HttpStatus.NOT_FOUND,
-      );
+      console.log('ERROR_GET_TYRE_PROPS: ', error);
+      throw new HttpException(error.message, HttpStatus.NOT_FOUND);
     }
   }
 
@@ -444,7 +431,7 @@ export class TyresService {
     reinforce: string,
     sort: string,
   ): Promise<any> {
-    try {
+    //try {
       const cachedTyresCatalog = await this.redisService.get(
         'tyres' +
         limit +
@@ -1172,14 +1159,13 @@ export class TyresService {
         const tyresAllWithCatLimitRating =
           await this.tyresRepository.findAndCountAll({
             include: [
-              { model: RatingTyres },
+              { model: RatingTyres, as: 'rating', attributes: []},
               { model: ReviewTyres },
               //{ model: StockTyres },
               { model: TyreCountry },
               { model: TyreYear },
               { model: Category},
-              ,
-              width
+              width 
                 ? {
                     model: TyreWidth,
                     where: {
@@ -1308,6 +1294,13 @@ export class TyresService {
                   }
                 : { model: TyreReinforce },
             ],
+            attributes: {
+              include:[
+              [
+                sequelize.fn('avg', sequelize.col('rating.rating_overall')), 'avg_rating'
+              ]
+              ]
+            },
             order: [
               [
                 sequelize.literal(
@@ -1315,8 +1308,28 @@ export class TyresService {
                 ),
                 'ASC',
               ],
-              ['rating', 'rating_overall', 'ASC'],
+              ['avg_rating', 'DESC NULLS LAST'],
             ],
+            group: [
+              'Tyres.id', 
+              'reviews.id_review', 
+              'country.id_country',
+              'year.id_year',
+              'category.id_cat',
+              'width.id_width',
+              'height.id_height',
+              'diameter.id_diameter',
+              'season.id_season',
+              'tyre_brand.id_brand',
+              'price.id',
+              'vehicle_type.id_vehicle_type',
+              'speed_index.id_speed_index',
+              'load_index.id_load_index',
+              'studded.id_studded',
+              'run_flat.id_run_flat',
+              'homologation.id_homologation',
+              'reinforce.id_reinforce'
+            ]
           });
         const lengthTyresAllRating = tyresAllWithCatLimitRating.rows.length;
         const tyresAllCatCashRating = tyresAllWithCatLimitRating.rows.splice(offset, limit);
@@ -1344,14 +1357,14 @@ export class TyresService {
         );
         return { rows: tyresAllCatCashRating, count: lengthTyresAllRating};
       }
-    } catch (error) {
-      console.log('ERROR_GET_TYRE: ', error);
-      throw new HttpException(
-        //'Data is incorrect or Not Found',
-        error.message,
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    // } catch (error) {
+    //   console.log('ERROR_GET_TYRE_CAT: ', error);
+    //   throw new HttpException(
+    //     //'Data is incorrect or Not Found',
+    //     error.message,
+    //     HttpStatus.NOT_FOUND,
+    //   );
+    // }
   }
 
 

@@ -353,7 +353,7 @@ const CatalogTyresPage = observer(() => {
             filter.diameter,
             filter.season,
             filter.brands,
-            filter.sort,
+            'ASC',
           );
           console.timeEnd('GET_REQUEST_TYRE_FROM_DATA_BASE');
 
@@ -581,7 +581,6 @@ const CatalogTyresPage = observer(() => {
     filter.diameter, 
     filter.season, 
     filter.brands, 
-    filter.sort,
     location.pathname,
   ]);
 
@@ -614,7 +613,7 @@ const CatalogTyresPage = observer(() => {
             // filter.run_flat ?? '',
             // filter.homologation ?? '',
             // filter.reinforced ?? '',
-            filter.sort,
+            'ASC',
           );
           console.timeEnd('GET_REQUEST_TYRE_PROPS')
           // let setWidthFilter: any[] | null = [];
@@ -964,7 +963,6 @@ const CatalogTyresPage = observer(() => {
     // filter.run_flat,
     // filter.homologation,
     // filter.reinforced,
-    filter.sort,
     location.pathname,
   ]);
 
@@ -986,7 +984,7 @@ const CatalogTyresPage = observer(() => {
             filter.run_flat ?? '',
             filter.homologation ?? '',
             filter.reinforced ?? '',
-            filter.sort,
+            'ASC',
           );
           console.timeEnd('GET_REQUEST_TYRE_PROPS')
           let setHomologationFilter: any[] | null  = [];
@@ -1065,7 +1063,6 @@ const CatalogTyresPage = observer(() => {
     filter.run_flat,
     filter.homologation,
     filter.reinforced,
-    filter.sort,
     location.pathname,
   ]);
 
