@@ -133,7 +133,9 @@
   justify-content: center;
   align-items:center;
   gap: 15px;
-  margin: 15px;
+  /* margin: 15px; */
+  margin-left: auto;
+  margin-right: auto;
   width: 100%;
 }
 
@@ -265,7 +267,7 @@
   .productPayDelGoodsNext {
     grid-area: 4 / 1 / 4 / 4;
     text-align: center;
-    max-width: 1440px;
+    max-width: 1024px;
   }
   .goodsBenefits {
     grid-area: 5 / 1 / 5 / 5;
@@ -323,7 +325,7 @@
     max-width: 800px;
   }
   .tabReviewsActive {
-    max-width: 1024px;
+    max-width: 1000px;
   }
 }
 
@@ -410,16 +412,15 @@
   .goodsModalBox {
     grid-area: 11 / 1 / 11 / 4;
     height: 30px;
-    max-width: 768px;
+    max-width: 740px;
   }
   .goodsModalBoxModel {
     grid-area: 9 / 1 / 9 / 4;
     height: 30px;
-    max-width: 768px;
+    max-width: 740px;
   }
   .tabReviewsActive {
-    max-width: 768px;
-    margin: 0px;
+    max-width: 740px;
   }
 }
 
@@ -506,16 +507,15 @@
   .goodsModalBox {
     grid-area: 11 / 1 / 11 / 4;
     height: 30px;
-    max-width: 425px;
+    max-width: 375px;
   }
   .goodsModalBoxModel {
     grid-area: 9 / 1 / 9 / 4;
     height: 30px;
-    max-width: 425px;
+    max-width: 375px;
   }
   .tabReviewsActive {
-    max-width: 425px;
-    margin: 0px;
+    max-width: 375px;
   }
 }
 
@@ -564,6 +564,7 @@
   .goodsBenefitsNext {
     grid-area: 5 / 1 / 5 / 4;
     text-align: center;
+    max-width: 375px;
   }
 
   .similarGoods {
@@ -603,16 +604,15 @@
   .goodsModalBox {
     grid-area: 11 / 1 / 11 / 4;
     height: 30px;
-    max-width: 375px;
+    max-width: 320px;
   }
   .goodsModalBoxModel {
     grid-area: 9 / 1 / 9 / 4;
     height: 30px;
-    max-width: 375px;
+    max-width: 320px;
   }
   .tabReviewsActive {
-    max-width: 375px;
-    margin: 0px;
+    max-width: 320px;
   }
 }
 
@@ -661,6 +661,7 @@
   .goodsBenefitsNext {
     grid-area: 5 / 1 / 5 / 4;
     text-align: center;
+    max-width: 320px;
   }
 
   .similarGoods {
@@ -700,16 +701,15 @@
   .goodsModalBox {
     grid-area: 11 / 1 / 11 / 4;
     height: 30px;
-    max-width: 320px;
+    max-width: 305px;
   }
   .goodsModalBoxModel {
     grid-area: 9 / 1 / 9 / 4;
     height: 30px;
-    max-width: 320px;
+    max-width: 305px;
   }
   .tabReviewsActive {
-    max-width: 320px;
-    margin: 0px;
+    max-width: 310px;
   }
 }
 
@@ -765,6 +765,7 @@
   .goodsBenefitsNext {
     grid-area: 5 / 1 / 5 / 4;
     text-align: center;
+    max-width: 305px;
   }
   
   .similarGoods {
@@ -821,6 +822,6 @@
   }
   .tabReviewsActive {
     max-width: 305px;
-    margin: 0px;
+    margin-bottom: 5px;
   }
 }

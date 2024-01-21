@@ -107,6 +107,7 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items:flex-start;
+    flex-wrap: wrap;
     gap:5px;
     
 }
@@ -138,7 +139,7 @@
 
 @media only screen and (max-width: 768px) {
     .tyresCardList {
-        max-width: 425px;
+        max-width: 420px;
         grid-template-columns:100px 293px;
     }
     .tyresCardListBox {
@@ -159,8 +160,9 @@
 
 @media only screen and (max-width: 425px) {
     .tyresCardList {
-        max-width: 375px;
-        grid-template-columns:100px 243px;
+        max-width: 300px;
+        grid-template-columns:100px 188px;
+        /*grid-template-columns:100px 243px;*/
     }
     .tyresCardListBox {
         grid-template-columns: 98%;
@@ -180,7 +182,7 @@
 
 @media only screen and (max-width: 375px) {
     .tyresCardList {
-        max-width: 320px;
+        max-width: 310px;
         grid-template-columns:100px 188px;
     }
     .tyresCardListBox {
@@ -206,7 +208,8 @@
     }
     .tyresCardListBox {
         grid-template-columns: 98%;
-        grid-template-rows: 28px 40px 45px 40px 40px 40px 40px 40px;
+        max-height: 345px;
+        grid-template-rows: 30px 55px 45px 40px 40px 40px 40px 40px;
         grid-template-areas: 
         "nameCardList"
         "nameCardList"

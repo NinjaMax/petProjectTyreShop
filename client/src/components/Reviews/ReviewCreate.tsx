@@ -26,7 +26,7 @@ const ReviewCreate = observer(({
     });
     
     useEffect(() => {
-        register("rating_overall", { required: "Обов'язково вкажіть рейтинг",
+        register("rating_overall", { required: "Вкажіть рейтинг.",
             valueAsNumber: true,
         });
         if (goodsTyre.ratingList.rating_overall) {
@@ -171,7 +171,7 @@ const ReviewCreate = observer(({
                 maxLength={200}
                 placeholder='Написати відгук'
                 {...register("description", 
-                    { required: "Напишіть відгук", 
+                    { required: "Напишіть відгук.", 
                     maxLength: 200 })
                 }
             />
@@ -216,7 +216,7 @@ const ReviewCreate = observer(({
                 placeholder="Ваше ім'я"
                 defaultValue={customer._customer?.name ?? customer._customer?.sub?.name ?? ''}
                 {...register("name", 
-                    { required: "Треба заповнити ім'я", maxLength: 50,
+                    { required: "Треба заповнити ім'я.", maxLength: 50,
                     minLength: 2
                 })
                 }
@@ -235,6 +235,7 @@ const ReviewCreate = observer(({
             type={"submit"}
             props={'Зберегти відгук'}
         /> 
+        <div className='reviewTyreErrorsBox'>
         {errors?.name && 
             <span className='reviewTyreErrors'>
                 {errors.name?.message}
@@ -250,6 +251,7 @@ const ReviewCreate = observer(({
                 {errors.rating_overall?.message}
             </span>
         }
+        </div>
         </form>
     </div>
   )

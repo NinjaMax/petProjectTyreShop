@@ -17,7 +17,8 @@
 .checkOrder {
     display: flex;
     max-height: 350px;
-    width: 865px;
+    max-width: 865px; 
+    /* width: 100%; */
     overflow-y: auto;
     flex-direction: column;
     justify-content:flex-start;
@@ -29,12 +30,10 @@
 
 .checkOrderItem {
     display: inline-flex;
+    width: 100%;
 }
 
 .checkOrderItemRemove {
-    /* content: "✖"; */
-    /* color: #6666; */
-    /* vertical-align: text-bottom; */
     text-align: center;
     position: relative;
     top: 45px;
@@ -56,6 +55,63 @@
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
 }
 
+@media only screen and (max-width: 435px) {
+    .checkOrderItemRemove {
+        top: 270px;
+        left: -47%;  
+    }
 
+    .checkOrderContainer {
+        margin: 5px;
+    }
 
+    .checkOrder {
+        display: flex;
+        max-height: 350px;
+        /* max-width: 865px; */
+        width: 100%;
+        overflow-y: auto;
+        flex-direction: column;
+        justify-content:flex-start;
+        align-items:flex-start; 
+        gap: 5px;
+        /* margin: 5px; */
+        padding: 5px;
+    }
+
+    .checkOrderItem {
+        display: inline-flex;
+        width: 330px;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .checkOrderItemRemove {
+        top: 270px;
+        left: -47%;  
+    }
+
+    .checkOrderContainer {
+        margin: 5px;
+    }
+
+    .checkOrder {
+        display: flex;
+        max-height: 350px;
+        /* max-width: 865px; */
+        width: 100%;
+        overflow-y: auto;
+        flex-direction: column;
+        justify-content:flex-start;
+        align-items:flex-start; 
+        gap: 5px;
+        /* margin: 5px; */
+        padding: 5px;
+    }
+
+    .checkOrderItem {
+        display: inline-flex;
+        width: 330px;
+    }
+}
 

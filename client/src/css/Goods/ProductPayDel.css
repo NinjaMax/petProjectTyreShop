@@ -1,7 +1,6 @@
 .productPayDelBox {
     /*width: 380px;*/
     overflow: hidden;
-
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -517,4 +516,137 @@
     visibility: visible;
     opacity: 1;
     cursor: pointer;
+}
+
+@media only screen and (max-width: 1024px) {
+    .productPayDelNovaPoshta .tooltipProductPayDelNova {
+        bottom: 110%;
+        left: 0%;
+    }
+    /* Tooltip arrow */
+    .productPayDelNovaPoshta .tooltipProductPayDelNova::after {
+        top: 109%;
+        right: 45%; 
+        border-color: #444 transparent  transparent transparent;
+    }
+    /* Show the tooltip text when you mouse over the tooltip container */
+    .productPayDelDelivery .tooltipProductPayDelDelivery {
+        bottom: 110%;
+        left: 0%;
+    }
+    /* Tooltip arrow */
+    .productPayDelDelivery .tooltipProductPayDelDelivery::after {
+        top: 109%;
+        right: 45%;
+        border-color: #444 transparent  transparent transparent;
+    }
+
+    .productPayDelPickUp .tooltipProductPayDelPickUp {
+        bottom: 105%;
+        left: 0%;
+    }
+    /* Tooltip arrow */
+    .productPayDelPickUp .tooltipProductPayDelPickUp::after {
+        top: 106%;
+        right: 45%; 
+        border-color: #444 transparent  transparent transparent;
+    }
+
+    .productPayDelCash .tooltipProductPayDelCash {
+        bottom: 110%;
+        left: 0%;
+    }
+    /* Tooltip arrow */
+    .productPayDelCash .tooltipProductPayDelCash::after {
+        top: 107%;
+        right: 45%; 
+        border-color: #444 transparent  transparent transparent;
+    }
+
+    .productPayDelBank .tooltipProductPayDelBank {
+        bottom: 110%;
+        left: -50%;
+    }
+    /* Tooltip arrow */
+    .productPayDelBank .tooltipProductPayDelBank::after {
+        top: 105%;
+        right: 45%; 
+        border-color: #444 transparent  transparent transparent;
+    }
+
+    .productPayDelVisa .tooltipProductPayDelVisaMaster {
+        bottom: 110%;
+        left: 0%;
+    }
+    /* Tooltip arrow */
+    .productPayDelVisa .tooltipProductPayDelVisaMaster::after {
+        top: 106%;
+        right: 45%; 
+        border-color: #444 transparent  transparent transparent;
+    }
+
+    .productPayDelPrivat .tooltipProductPayDelPrivat {
+        bottom: 110%;
+        left: -20%;
+    }
+    /* Tooltip arrow */
+    .productPayDelPrivat .tooltipProductPayDelPrivat::after {
+        top: 106%;
+        right: 45%; 
+        border-color: #444 transparent  transparent transparent;
+    }
+
+    .productPayDelMono .tooltipProductPayDelMono {
+        bottom: 110%;
+        left: -50%;
+    }
+    /* Tooltip arrow */
+    .productPayDelMono .tooltipProductPayDelMono::after {
+        top: 106%;
+        right: 45%; 
+        border-color: #444 transparent  transparent transparent;
+    }
+
+    .productPayDelGaranty .tooltipProductPayDelGaranty {
+        bottom: 110%;
+        left: 0%;
+    }
+    /* Tooltip arrow */
+    .productPayDelGaranty .tooltipProductPayDelGaranty::after {
+        top: 106%;
+        right: 45%; 
+        border-color: #444 transparent  transparent transparent;
+    }
+
+    .productPayDelReturn .tooltipProductPayDelReturn {
+        bottom: 110%;
+        left: 0%;
+    }
+    /* Tooltip arrow */
+    .productPayDelReturn .tooltipProductPayDelReturn::after {
+        top: 105%;
+        right: 45%; 
+        border-color: #444 transparent  transparent transparent;
+    }
+
+    .productPayDelBonus .tooltipProductPayDelBonus {
+        bottom: 110%;
+        left: -30%;
+    }
+    /* Tooltip arrow */
+    .productPayDelBonus .tooltipProductPayDelBonus::after {
+        top: 103%;
+        left: 45%; 
+        border-color: #444 transparent  transparent transparent;
+    }
+
+    .productPayDeSertificate .tooltipProductPayDeSertificate {
+        bottom: 110%;
+        left: 30%;
+    }
+    .productPayDeSertificate .tooltipProductPayDeSertificate::after {
+        top: 105%;
+        right: 45%; 
+        border-color: #444 transparent  transparent transparent;
+    }
 }

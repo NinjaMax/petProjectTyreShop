@@ -1,23 +1,25 @@
 .reviewTyreCreate {
     margin: 10px;
     /* width: 570px; */
-    width: 80%;
+    width: 100%;
     max-height: 550px;
     font-family: var(--main-font-family);
-    overflow:hidden;
+    overflow: hidden;
 }
 .reviewTyreCreate h4 {
     margin-top: 18px;
     margin-bottom: 18px;
 }
+
 .reviewRatingList {
     display: flex;
     flex-direction:row;
     justify-content:space-evenly;
     flex-wrap: wrap;
     align-items:flex-start;
-    gap: 10px;
+    gap: 50px;
 }
+
 .reviewInputRatingBox {
     /* overflow: visible; */
     overflow-y: scroll;
@@ -33,40 +35,163 @@
     /* height: 350px; */
 }
 .reviewInputRating textarea {
-    width: 550px;
+    width: 100%;
 }
+
 .reviewInputRatingCar {
     display: flex;
     flex-direction: row;
     justify-content:space-between;
+    flex-wrap: wrap;
     gap: 50px;
-    
-    
+    width: 100%;
 }
+
 .reviewInputRatingCar input {
     border: 2px solid #ccc;
     border-radius: 8px;
     font-size: large;
     padding: 2px;
-    width: 250px;
+    max-width: 250px;
 }
 .reviewInputRating input {
     border: 2px solid #ccc;
     border-radius: 8px;
     font-size: large;
     padding: 2px;
+    margin: auto;
 }
 .reviewInputRating textarea {
     border: 2px solid #ccc;
     border-radius: 8px;
     font-size: large;
     padding: 2px;
+    width: 100%;
 }
+
+#positiveReview {
+    width: 100%;
+}
+
+.reviewTyreErrorsBox {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 3px;
+}
+
 .reviewTyreErrors {
     color: red;
     margin-top: 1px;
     margin-bottom: 2px;
-    margin-left: 10px;
+    /* margin-left: 10px; */
     margin-right: 2px;
     font-size: small;
+    max-height: 16px;
+    /* width: 100%; */
+}
+
+@media only screen and (max-width: 2560px){
+    .reviewRatingList {
+        max-width: 1000px;
+    }
+
+    .reviewTyreCreate {
+        max-width: 985px;
+        max-height: 555px;
+    }
+}
+
+@media only screen and (max-width: 1440px){
+    .reviewRatingList {
+        max-width: 700px;
+        max-height: 235px;
+        overflow-y: auto;
+    }
+
+    .reviewTyreCreate {
+        max-width: 700px;
+        max-height: 555px;
+    }
+}
+
+@media only screen and (max-width: 1024px){
+    .reviewRatingList {
+        /* flex-direction:column; */
+        max-width: 700px;
+    }
+
+    .reviewTyreCreate {
+        max-width: 700px;
+        max-height: 555px;
+    }
+}
+
+@media only screen and (max-width: 768px){
+    .reviewRatingList {
+        /* flex-direction:column; */
+        max-width: 240px;
+        gap: 40px;
+    }
+
+    .reviewTyreCreate {
+        max-width: 380px;
+        max-height: 555px;
+    }
+
+    .reviewInputRatingCar {
+        flex-direction: column;
+        justify-content:center;
+        gap: 10px;
+    }
+}
+
+@media only screen and (max-width: 425px){
+    .reviewRatingList {
+        /* flex-direction:column; */
+        max-width: 240px;
+        gap: 40px;
+    }
+
+    .reviewTyreCreate {
+        max-width: 340px;
+        max-height: 560px;
+    }
+    .reviewInputRating {
+        justify-content: center;
+    }
+
+    .reviewInputRatingCar {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+}
+
+@media only screen and (max-width: 375px){
+    .reviewRatingList {
+        /* flex-direction:column; */
+        max-width: 240px;
+        gap: 40px;
+    }
+
+    .reviewTyreCreate {
+        max-width: 280px;
+        max-height: 560px;
+    }
+}
+
+@media only screen and (max-width: 320px){
+    .reviewRatingList {
+        /* flex-direction:column; */
+        max-width: 240px;
+        gap: 40px;
+    }
+
+    .reviewTyreCreate {
+        max-width: 280px;
+        max-height: 560px;
+    }
 }

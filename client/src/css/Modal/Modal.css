@@ -45,3 +45,45 @@
     font-family: var(--main-font-family);
     font-weight: bold;
 }
+
+@media only screen and (max-width: 2560px){
+    .modalWindowBox.active {
+        max-width: 1100px;
+    }
+}
+
+@media only screen and (max-width: 1440px){
+    .modalWindowBox.active {
+        max-width: 1000px;
+    }
+}
+
+@media only screen and (max-width: 1024px){
+    .modalWindowBox.active {
+        max-width: 700px;
+    }
+}
+
+@media only screen and (max-width: 768px){
+    .modalWindowBox.active {
+        max-width: 400px;
+    }
+}
+
+@media only screen and (max-width: 425px){
+    .modalWindowBox.active {
+        max-width: 340px;
+    }
+}
+
+@media only screen and (max-width: 375px){
+    .modalWindowBox.active {
+        max-width: 300px;
+    }
+}
+
+@media only screen and (max-width: 320px){
+    .modalWindowBox.active {
+        max-width: 300px;
+    }
+}

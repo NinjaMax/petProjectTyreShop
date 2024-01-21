@@ -26,7 +26,7 @@
     /* height: 350px; */
 }
 .questionCreateInput textarea {
-    width: 550px;
+    width: 100%;
 }
 
 .questionCreateInput input {

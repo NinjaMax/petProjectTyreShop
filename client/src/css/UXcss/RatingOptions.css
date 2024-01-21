@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;
     justify-content:flex-start;
+    flex-wrap: wrap;
     /* align-items:normal; */
     gap: 15px;
     /* vertical-align:middle; */
@@ -14,4 +15,28 @@
 .ratingBoxStar {
     width: 90px;
     vertical-align:middle;
+}
+
+@media only screen and (max-width: 768px){
+    .ratingOptions {
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-width: 425px){
+    .ratingOptions {
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-width: 375px){
+    .ratingOptions {
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-width: 320px){
+    .ratingOptions {
+        flex-direction: column;
+    }
 }

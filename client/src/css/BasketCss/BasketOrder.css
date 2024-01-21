@@ -435,3 +435,7 @@
     font-family: var(--main-font-family);
     color: red;
 }
+
+@media only screen and (max-width: 435px) {
+
+}
