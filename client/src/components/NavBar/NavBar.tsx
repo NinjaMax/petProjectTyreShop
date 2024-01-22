@@ -48,12 +48,11 @@ const NavBar = observer(() => {
   const [facebookIsAuth, setFacebookIsAuth] = useState('');
   const [twitterIsAuth, setTwitterIsAuth] = useState('');
   const [formError, setFormError] = useState<string | null>('');
-  // const [favoritesCount, setFavoritesCount] = useState<number | null>();
-  // const [comparisonCount, setComparisonCount] = useState<number | null>();
-  //const [isMobile, setIsMobile] = useState<boolean>(false);
   const [isOpenMobileBar, setIsOpenMobileBar] = useState<boolean>(false);
-  //const [windowWidth, setWindowWidth] = useState<number>(window.screen.width);
-  const isMobile = useMediaQuery({ query: '(max-width: 426px)' })
+  const [isEmptyBasket, setIsEmptyBasket] = useState<boolean>(false);
+  const [isEmptyFavorite, setIsEmptyFavorite] = useState<boolean>(false);
+  const [isEmptyCompare, setIsEmptyCompare] = useState<boolean>(false);
+  const isMobile = useMediaQuery({ query: '(max-width: 426px)' });
 
   useEffect(() => {
     let isUser = false;
@@ -153,8 +152,25 @@ const NavBar = observer(() => {
   },[isPassSend]);
 
   const openBasket = () => {
-    setActiveBasket(!activeBasket);
+    if (page.basketCount !== 0) {
+      setActiveBasket(!activeBasket);
+    } else {
+      setIsEmptyBasket(!isEmptyBasket);
+    }
   };
+
+  const openFavorite = () => {
+    if (!page.favoritesCount.length) {
+      setIsEmptyFavorite(!isEmptyFavorite);
+    }
+  };
+
+  const openCompare = () => {
+    if (!page.comparisonCount.length) {
+      setIsEmptyCompare(!isEmptyCompare);
+    }
+  };
+
 
   const authActive = () => {
     setFormError(null);
@@ -299,12 +315,24 @@ const NavBar = observer(() => {
       <NavBarSearch searchBtn={searchBtn} clickSearchBtn={clickSearchBtn}/>
     :null
     }
+    {page.favoritesCount.length !== 0 ?
     <a href={FAVORITES_ROUTE}>
       <FavoriteGoods countFavorite={page.favoritesCount.length ?? 0}/>
     </a>
+    :
+    <div onClick={openFavorite}>
+      <FavoriteGoods countFavorite={page.favoritesCount.length ?? 0}/>
+    </div>
+    }
+    {page.comparisonCount.length !== 0 ?
     <a href={COMPARISON_ROUTE}>
-     <CompareGoods countCompare={page.comparisonCount.length ?? 0} /> 
+      <CompareGoods countCompare={page.comparisonCount.length ?? 0} /> 
     </a>
+    :
+    <div onClick={openCompare}>
+      <CompareGoods countCompare={page.comparisonCount.length ?? 0} /> 
+    </div>
+    }
     {customer._isAuth ?
       <AuthView logOutUser={logOutUser}/>
       : <span className='enterAuthNavBar' onClick={authActive}>
@@ -341,6 +369,24 @@ const NavBar = observer(() => {
           signUpAuth={signUpCustm}
           formError={formError}
         />
+      </Modal> 
+      :null
+    }
+    {isEmptyBasket ?
+      <Modal active={isEmptyBasket} setActive={openBasket}>
+        <span>Корзина порожня, додайте товари &nbsp;</span>
+      </Modal> 
+      :null
+    }
+    {isEmptyFavorite ?
+      <Modal active={isEmptyFavorite} setActive={openFavorite}>
+        <span>Немає улюбленних товарів &nbsp;</span>
+      </Modal> 
+      :null
+    }
+    {isEmptyCompare ?
+      <Modal active={isEmptyCompare} setActive={openCompare}>
+        <span>Немає товарі для порівняння &nbsp;</span>
       </Modal> 
       :null
     }

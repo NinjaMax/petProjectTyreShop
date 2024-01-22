@@ -2,8 +2,7 @@
     border: solid 2px #9999;
     border-radius: 10px;
     padding: 3px;
-    width: 315px;
-    /* font-weight:bolder; */
+    width: 100%;
     font-size: 16px;
     font-family: var(--main-font-family);
 }
@@ -17,6 +16,48 @@
 .inputDataText::placeholder {
     color: #999;
     text-align: center;
+}
+
+@media only screen and (max-width: 2560px) {
+    .inputDataText {
+        width: 315px;
+    }
+}
+
+@media only screen and (max-width: 1440px) {
+    .inputDataText {
+        width: 315px;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .inputDataText {
+        width: 315px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .inputDataText {
+        width: 315px;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .inputDataText {
+        width: 315px;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .inputDataText {
+        width: 270px;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .inputDataText {
+        width: 270px;
+    }
 }
 
 

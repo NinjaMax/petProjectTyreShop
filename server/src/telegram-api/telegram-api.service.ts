@@ -12,14 +12,12 @@ export class TelegramApiService {
 
   async sendMessage(createTelegramApiDto: CreateTelegramApiDto) {
     await this.telegram.connect();
-
     const result = await this.telegram.sendMessage(
       createTelegramApiDto.userReceiver, 
       { 
         message: createTelegramApiDto.textMesssage,
       }
-    )
-
+    );
     if (result) {
       return true;
     } else {
@@ -42,11 +40,11 @@ export class TelegramApiService {
       )
       .map((item) => item.message);
     return filterOutMsg;
-  }
+  };
+
   async getAllDialogs() {
     await this.telegram.connect();
     const result = this.telegram.getMe();
-    //const first = result[0];
     return result;
   }
 

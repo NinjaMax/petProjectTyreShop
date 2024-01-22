@@ -11,6 +11,7 @@
 .notification {
   opacity: 0;
   transition: 0.3s all linear;
+  height: 20px;
 }
 
 .notificationActive {

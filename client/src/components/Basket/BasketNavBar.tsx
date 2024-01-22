@@ -1,7 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import '../../css/BasketCss/BasketNavBar.css';
-import shoppingCart from '../../assets/icons/shopping_cart64Clear.png';
-import shoppingCartFull from '../../../public/iconsCart/shopping_cart_full_94.png';
 import { getBasketOrder } from '../../restAPI/restGoodsApi';
 import { yieldToMain } from '../../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
@@ -43,13 +41,13 @@ const BasketNavBar = observer(({setActive}: IBasketNav) => {
 
   return (
     <div className='basketNav' onClick={setActive}>
-      <a href='/basket'>
-      {page.basketCount !== 0 ?       
-        <img id='imgBasketNav' src={'/iconsCart/shopping_cart_full_94.png'}  alt='basketNav'/>
-      :
+      {page.basketCount !== 0 ?  
+        <a href='/basket'>   
+          <img id='imgBasketNav' src={'/iconsCart/shopping_cart_full_94.png'}  alt='basketNav'/>
+        </a>
+        :
         <img id='imgBasketNav' src={'/iconsCart/shopping_cart_94.png'}  alt='basketNav'/>
       }
-      </a>
     {page.basketCount !== 0 ?
       <div className='basketNavCount'>
         <span className= {!customer ? 'basketNavCountNum' : 'basketNavCountNum active'}>

@@ -1,6 +1,7 @@
 import React, {useRef} from 'react';
 import '../../css/UXcss/InputDataTel.css';
 import { IMaskInput } from 'react-imask';
+import { useMediaQuery } from 'react-responsive';
 
 interface IinputDataTel {
     current?: any;
@@ -10,7 +11,7 @@ interface IinputDataTel {
 }
 
 const InputDataTel = ({onAccept, dataTel}: IinputDataTel) => {
-
+    const isMobile = useMediaQuery({ query: '(max-width: 1024px)' });
     const refLabel = useRef<any>();
 
     return (
@@ -26,10 +27,6 @@ const InputDataTel = ({onAccept, dataTel}: IinputDataTel) => {
                 lazy={false}
                 onAccept={onAccept} 
                 onChange={onAccept}
-                // data-oninput={ (e: any) =>
-                //     e.currentTarget.value.length > 4 && e.currentTarget.value.length <= 10 ?
-                //         refLabel.current.className = 'inputDataTelLabelActive' :
-                //         refLabel.current.className = 'inputDataTelLabel'}
                 data-placeholder='0'
                 data-autocomplete="tel"
                 data-type="text"
@@ -38,12 +35,14 @@ const InputDataTel = ({onAccept, dataTel}: IinputDataTel) => {
                 overwrite={true} 
                 data-required
             />
+            {!isMobile ?
             <label 
                 data-ref={refLabel} 
                 className={String(dataTel).length !== 0 && String(dataTel).length > 2 ? 'inputDataTelLabelActive' : 'inputDataTelLabel'}>
                     введіть номер телефону 
                     <span className='inputDataTelSpan'> *</span>
-            </label>   
+            </label> : null
+            }  
         </div>
     );
 };

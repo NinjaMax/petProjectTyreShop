@@ -194,12 +194,7 @@ const BasketOrder = observer(() => {
                         getCalcNovaPoshta.data[0].CostRedelivery,
                     ]}
                 );
-            } 
-            // if (dataSupCity.includes('Харків') && depart?.address?.includes('м. Харків')) {
-            //     setTakeOut(true); 
-            // } else {
-            //     setTakeOut(false); 
-            // }
+            }
         }
         if (taskGetSupplier[i] && dataSupplier && depart?.delivery === 'Делівері') {
             let getCalcDelivery = await getCalcPriceDelivery(dataSupplier);
@@ -212,16 +207,10 @@ const BasketOrder = observer(() => {
                 }
                 );
             }             
-            // if (dataSupCity.includes('Харків') && depart?.address?.includes('м. Харків')) {
-            //     setTakeOut(true); 
-            // } else {
-            //     setTakeOut(false); 
-            // }
         }
         taskGetSupplier.shift();
         };
         dataSupplier = null;
-        //dataSupCity = null;
     };
 
     useEffect(() => {
@@ -1037,7 +1026,7 @@ const BasketOrder = observer(() => {
                                     --віберіть відділення--
                                 </option>
                         {chooseCity && departListNovaPoshta?.map((depart: IDepart) =>
-                                <option 
+                                <option className='basketSelectDepartOption'
                                     key={depart?.SiteKey}
                                     label={depart?.Description}
                                     value={`${depart?.Ref}//${depart?.Description}//${depart?.CityRef}`}

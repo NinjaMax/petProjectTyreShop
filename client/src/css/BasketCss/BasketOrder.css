@@ -47,6 +47,7 @@
     align-items:flex-start;
     gap: 5px;
     margin-left: 20px;
+    width: 100%;
 }
 .basketColmRight {
     grid-column: 2/2;
@@ -55,6 +56,7 @@
     flex-direction: column;
     align-items:flex-start;
     gap: 5px;
+    width: 100%;
 }
 .basketColmRightListGoods {
     display: flex;
@@ -65,12 +67,14 @@
     padding-bottom: 20px;
     padding-left: 12px;
     padding-right: 10px;
-    width: 850px;
+    /* max-width: 850px; */
+    width: 100%;
     max-height: 350px;
     overflow-y: auto;
 }
 .basketColmRightListGoods .itemGoodsBasket {
     display:inline-flex;
+    
 }
 .basketColmRightClose {
     text-align: center;
@@ -137,6 +141,7 @@
     flex-direction: column;
     align-items:flex-start;
     gap: 3px;
+    width: 100%;
 }
 .basketCityList {
     display: flex;
@@ -144,13 +149,14 @@
     align-items: flex-start;
     gap: 5px;
     position: absolute;
-    top: 77.5%;
+    top: 78%;
     overflow-y: auto;
     max-height: 150px;
     border-radius: 8px;
     background-color: #ffff;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     z-index: 99;
+    width: 100%;
 }
 .basketCityList .basketCityListItem {
     cursor: pointer;
@@ -174,19 +180,16 @@
 }
 
 .basketDepartList {
-    /* content: "▼"; */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 5px;
     position: relative;
     font-family: var(--main-font-family);
-    /* top: 110%; */
     overflow-y: auto;
     max-height: 150px;
     border-radius: solid #9999 6px;
     background-color: #ffff;
-    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
     appearance: none;
     border-radius: 10px;
 }
@@ -197,13 +200,11 @@
     right: 5px;
     position: absolute;
     z-index: 9;
-    /* appearance: none; */
-    /* cursor: pointer; */
   }
 
 .basketDepartList .basketDepartListItem {
     cursor: pointer;
-    width: 540px;
+    width: 100%;
     border-radius: 6px;
     padding: 2px;
 }
@@ -211,7 +212,7 @@
 .basketSelectDepart {
     appearance: none;
     cursor: pointer;
-    width: 480px;
+    width: 100%;
     font-family: var(--main-font-family);
     color: #444B54;
     font-size:16px;
@@ -224,7 +225,6 @@
 }
 
 .basketDepartListDel {
-    /* content: "▼"; */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -236,7 +236,6 @@
     max-height: 150px;
     border-radius: solid #9999 6px;
     background-color: #ffff;
-    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
     appearance: none;
 }
 .basketDepartListDel::after {
@@ -246,20 +245,17 @@
     right: 5px;
     position: absolute;
     z-index: 9;
-    /* appearance: none; */
-    /* cursor: pointer; */
 }
 .basketDepartListDel .basketDepartListItem {
     cursor: pointer;
-    /* background-color: blueviolet; */
-    width: 540px;
+    width: 100%;
     border-radius: 6px;
     padding: 2px;
 }
 .basketSelectDepartDel {
     appearance: none;
     cursor: pointer;
-    width: 480px;
+    width: 100%;
     font-family: var(--main-font-family);
     color: #444B54;
     font-size:16px;
@@ -399,7 +395,7 @@
     border: solid 2px #9999;
     border-radius: 10px;
     padding: 3px;
-    width: 315px;
+    width: 100%;
     z-index: 9;
     /* font-weight:bolder; */
     font-size: 16px;
@@ -436,6 +432,303 @@
     color: red;
 }
 
-@media only screen and (max-width: 435px) {
+@media only screen and (max-width: 2560px) {
+    .basketCityList {
+        max-width: 550px;
+    }
 
+    .basketCityList .basketCityListItem {
+        max-width: 550px;
+    }
+    
+    .basketDepartList .basketDepartListItem {
+        max-width: 540px;
+    }
+    
+    .basketSelectDepart {
+        max-width: 480px;
+    }
+
+    .basketSelectDepartOption {
+        max-width: 480px;
+    }
+
+    .basketDepartListDel .basketDepartListItem {
+        max-width: 540px;
+    }
+    .basketSelectDepartDel {
+        max-width: 480px;
+    }
+ 
+
+}
+@media only screen and (max-width: 1440px) {
+    .basketOrder {
+        grid-template-columns: 36% 61.8%;
+    }
+    .basketColmLeft {
+        max-width: 380px;
+    }
+
+    .basketColmRightListGoods {
+        max-width: 800px;
+    }
+
+    .basketColmRight {
+        max-width: 800px;
+    }
+
+    .basketInputSearchCity {
+        width: 315px;
+    }
+
+    .basketCityList {
+        max-width: 500px;
+    }
+
+    .basketCityList .basketCityListItem {
+        max-width: 500px;
+    }
+    
+    .basketDepartList .basketDepartListItem {
+        max-width: 540px;
+    }
+    
+    .basketSelectDepart {
+        max-width: 480px;
+    }
+
+    .basketSelectDepartOption {
+        max-width: 240px !important;
+    }
+
+    .basketDepartListDel .basketDepartListItem {
+        max-width: 540px;
+    }
+    .basketSelectDepartDel {
+        max-width: 480px;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .basketOrder {
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+       align-items: center;
+       max-width: 760px;
+       margin-left: auto;
+       margin-right: auto;
+    }
+
+    .basketInputSearchCity {
+        width: 315px;
+    }
+
+    .basketCityList {
+        max-width: 450px;
+    }
+
+    .basketCityList .basketCityListItem {
+        max-width: 450px;
+    }
+    
+    .basketDepartList .basketDepartListItem {
+        max-width: 540px;
+    }
+    
+    .basketSelectDepart {
+        max-width: 480px;
+    }
+
+    .basketDepartListDel .basketDepartListItem {
+        max-width: 540px;
+    }
+    .basketSelectDepartDel {
+        max-width: 480px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .basketOrder {
+        max-width: 420px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .basketColmLeft {
+        max-width: 420px;
+    }
+
+    .basketColmRight {
+        max-width: 420px;
+    }
+
+    .inputDataTelLabelActive {
+        appearance: none;  
+    }
+
+    .basketInputSearchCity {
+        width: 315px;
+    }
+
+    .basketCityList {
+        max-width: 350px;
+    }
+
+    .basketCityList .basketCityListItem {
+        max-width: 350px;
+    }
+    
+    .basketDepartList .basketDepartListItem {
+        max-width: 350px;
+    }
+    
+    .basketSelectDepart {
+        max-width: 350px;
+    }
+
+    .basketDepartListDel .basketDepartListItem {
+        max-width: 350px;
+    }
+    .basketSelectDepartDel {
+        max-width: 350px;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .basketOrder {
+        max-width: 370px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .basketColmLeft {
+        max-width: 370px;
+    }
+
+    .basketColmRight {
+        max-width: 370px;
+    }
+
+    .inputDataTelLabelActive {
+        appearance: none;  
+    }
+
+    .basketInputSearchCity {
+        width: 315px;
+    }
+
+    .basketCityList {
+        max-width: 340px;
+    }
+
+    .basketCityList .basketCityListItem {
+        max-width: 340px;
+    }
+    
+    .basketDepartList .basketDepartListItem {
+        max-width: 340px;
+    }
+    
+    .basketSelectDepart {
+        max-width: 340px;
+    }
+
+    .basketDepartListDel .basketDepartListItem {
+        max-width: 340px;
+    }
+    .basketSelectDepartDel {
+        max-width: 340px;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .basketOrder {
+        max-width: 310px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .basketColmLeft {
+        max-width: 310px;
+    }
+
+    .basketColmRight {
+        max-width: 310px;
+    }
+
+    .basketInputSearchCity {
+        width: 270px;
+    }
+
+    .basketCityList {
+        max-width: 280px;
+    }
+
+    .basketCityList .basketCityListItem {
+        max-width: 280px;
+    }
+    
+    .basketDepartList .basketDepartListItem {
+        max-width: 280px;
+    }
+    
+    .basketSelectDepart {
+        max-width: 280px;
+    }
+
+    .basketDepartListDel .basketDepartListItem {
+        max-width: 280px;
+    }
+    .basketSelectDepartDel {
+        max-width: 280px;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .basketOrder {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        max-width: 320px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .basketColmLeft {
+        max-width: 310px;
+    }
+
+    .basketColmRight {
+        max-width: 310px;
+    }
+
+    .basketInputSearchCity {
+        width: 270px;
+    }
+
+    .basketCityList {
+        max-width: 280px;
+    }
+
+    .basketCityList .basketCityListItem {
+        max-width: 280px;
+    }
+    
+    .basketDepartList .basketDepartListItem {
+        max-width: 280px;
+    }
+    
+    .basketSelectDepart {
+        max-width: 280px;
+    }
+
+    .basketDepartListDel .basketDepartListItem {
+        max-width: 280px;
+    }
+    .basketSelectDepartDel {
+        max-width: 280px;
+    }
 }
