@@ -88,6 +88,7 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     padding-top: 6px;
 }
+
 .basketColmRightClose::before {
     content: "✖";
     color: black;
@@ -212,7 +213,7 @@
 .basketSelectDepart {
     appearance: none;
     cursor: pointer;
-    width: 100%;
+    /* width: 100%; */
     font-family: var(--main-font-family);
     color: #444B54;
     font-size:16px;
@@ -433,6 +434,10 @@
 }
 
 @media only screen and (max-width: 2560px) {
+    .basketInputSearchCity {
+        max-width: 315px;
+    }
+    
     .basketCityList {
         max-width: 550px;
     }
@@ -459,9 +464,8 @@
     .basketSelectDepartDel {
         max-width: 480px;
     }
- 
-
 }
+
 @media only screen and (max-width: 1440px) {
     .basketOrder {
         grid-template-columns: 36% 61.8%;
@@ -496,10 +500,6 @@
     
     .basketSelectDepart {
         max-width: 480px;
-    }
-
-    .basketSelectDepartOption {
-        max-width: 240px !important;
     }
 
     .basketDepartListDel .basketDepartListItem {
@@ -547,6 +547,12 @@
     .basketSelectDepartDel {
         max-width: 480px;
     }
+
+    .basketColmRightClose {
+        top: 80px;
+        right:50%;
+    }
+
 }
 
 @media only screen and (max-width: 768px) {
@@ -594,6 +600,15 @@
     .basketSelectDepartDel {
         max-width: 350px;
     }
+
+    .basketColmItemRight #commentsOrder {
+        max-width: 315px;
+    }
+
+    .basketColmRightClose {
+        top: 255px;
+        right:50%;
+    }
 }
 
 @media only screen and (max-width: 425px) {
@@ -633,7 +648,7 @@
     
     .basketSelectDepart {
         max-width: 340px;
-    }
+    } 
 
     .basketDepartListDel .basketDepartListItem {
         max-width: 340px;
@@ -684,6 +699,10 @@
     .basketSelectDepartDel {
         max-width: 280px;
     }
+
+    .basketColmItemRight #commentsOrder {
+        max-width: 280px;
+    }
 }
 
 @media only screen and (max-width: 320px) {
@@ -720,15 +739,20 @@
     .basketDepartList .basketDepartListItem {
         max-width: 280px;
     }
-    
-    .basketSelectDepart {
-        max-width: 280px;
-    }
 
     .basketDepartListDel .basketDepartListItem {
         max-width: 280px;
     }
+    
     .basketSelectDepartDel {
         max-width: 280px;
     }
-}
+
+    .basketColmItemRight #commentsOrder {
+        max-width: 280px;
+    }
+    
+    .basketSelectDepart {
+        width: 270px;
+    }
+} 

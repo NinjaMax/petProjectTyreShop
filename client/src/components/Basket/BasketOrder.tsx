@@ -28,6 +28,7 @@ import { IDapertmentDelivery } from './types/DepartmentDelivery.type';
 import { cargoTypesDelivery } from '../../services/cargoTypesDelivery';
 import { tyresCarDiameterDelivery, tyresCargoDiameterDelivery } from '../../services/tyresDiameterDelivery';
 import { IbasketData } from './types/BasketData.type';
+import { useMediaQuery } from 'react-responsive';
 
 const BasketOrder = observer(() => {
     const {customer, page} = useContext<any | null>(Context);
@@ -56,6 +57,7 @@ const BasketOrder = observer(() => {
     const [deliverySum, setDeliverySum] = useState<number | null>(0);
     const [payMethod, setPayMethod] = useState<string | null>();
     const [getIdOrder, setGetIdOrder] = useState<number>();
+    const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
     useEffect(() => window.scrollTo(0, 0), []);
 
@@ -860,6 +862,7 @@ const BasketOrder = observer(() => {
 
     console.log('BASKET_DATA: ', basketData);
     console.log('DELIVERY_DATA: ', delivery);
+    console.log("DEPARTURE_DATA: ", departListNovaPoshta);
 
     return (
         <div>
@@ -1026,12 +1029,19 @@ const BasketOrder = observer(() => {
                                     --віберіть відділення--
                                 </option>
                         {chooseCity && departListNovaPoshta?.map((depart: IDepart) =>
-                                <option className='basketSelectDepartOption'
+                                
+                                <option 
+                                    //style={{'width': '130px'} as React.CSSProperties}
+                                    //className='basketSelectDepartOption'
                                     key={depart?.SiteKey}
-                                    label={depart?.Description}
+                                    title={depart?.Description}
+                                    //label={depart?.Description}
                                     value={`${depart?.Ref}//${depart?.Description}//${depart?.CityRef}`}
                                 >
-                                {depart?.Description}
+                                {isMobile ?
+                                    `Відділення№${depart?.Number}` :
+                                    depart?.Description
+                                }
                                 </option>
                             )
                         }
@@ -1066,10 +1076,14 @@ const BasketOrder = observer(() => {
                                 (depart: IDapertmentDelivery) =>
                                 <option 
                                     key={depart?.id}
-                                    label={depart?.name + ', ' + depart?.address}
+                                    title={depart?.name + ', ' + depart?.address}
+                                    //label={depart?.name + ', ' + depart?.address}
                                     value={`${depart?.id}//${depart?.name + ', ' + depart?.address}//${depart?.CityId}`}
                                 >
-                                {depart?.name + ', ' + depart?.address}
+                                {isMobile ?
+                                    depart?.name  :
+                                    depart?.name + ', ' + depart?.address
+                                }
                                 </option>
                             )
                             }
