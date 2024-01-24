@@ -1,103 +1,150 @@
-/* The overlay effect with black background */
+.overlayFavoriteActive {
+  height: 80%;
+  width: 92%;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-family: var(--main-font-family);
+}
+    
+.overlayActive .outputDataFavorite {
+  background-color:#ffff;
+  border-radius: 15px;
+  padding: 15px;
+  display: block;
+  overflow: hidden;
+}
   
+.outputDataFavoriteItemsTitle {
+  float: left;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.outputDataFavoriteItemsLines {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+    
+.titleFavoriteClear {
+  padding: 10px 10px 10px 10px;
+  margin-left: 3px;
+  border-radius: 20px;
+  background-color: #ddd;
+}
+
+.titleFavoriteClear:hover {
+  background-color: #ccc;
+  cursor: pointer;
+  padding: 10px 10px 10px 10px;
+}
+
+.titleFavoriteClear:active {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.outputDataFavoriteItems .titleFavoriteSearch {
+  padding: 10px 10px 10px 10px;
+  border-radius: 20px;
+}
+
+.outputDataFavoriteItems .activatedFavoriteTitle {
+  background-color: #ddd;
+  padding: 10px 10px 10px 10px;
+  border-radius: 20px;
+}
+
+.outputDataFavoriteItems .activatedFavoriteTitle:hover {
+  background-color: #ccc;
+  cursor: pointer;
+  padding: 10px 10px 10px 10px;
+}
+
+.outputDataFavoriteItems .activatedFavoriteTitle:active {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.outputDataFavoriteItems .titleFavoriteSearch:hover {
+  background-color: #ccc;
+  cursor: pointer;
+  padding: 10px 10px 10px 10px;
+}
+
+.outputDataFavoriteItems .titleFavoriteSearch:active {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.outputDataFavoriteItems .countFavoriteSearch {
+  border-radius: 35px;
+  color: #ffff;
+  margin: 10px;
+  padding: 1px 8px 1px 8px;
+  background-color: crimson;
+}
+
+.outputDataFavoriteItemsBox {
+  overflow-y: scroll;
+  max-height: 300px;
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background-color: #ffff;
+  margin: 15px;
+  width: 100%;
+}
+
+.outputDataFavoriteItemsList {
+  margin: 3px;
+  width: 100%;
+}
+
+@media only screen and (max-width: 2560px) {
+  .outputDataFavoriteItemsBox  {
+    max-width: 800px;
+  }
+
+  .outputDataFavoriteItemsList {
+    max-width: 750px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .outputDataFavoriteItemsBox {
+    max-width: 750px;
+    max-height: 450px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: flex-start;
+  }
+
+  .outputDataFavoriteItemsList {
+    max-width: 750px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .outputDataFavoriteItemsBox {
+    max-width: 425px;
+  }
+
+  .outputDataFavoriteItemsList {
+    max-width: 425px;
+  }
+
   .overlayFavoriteActive {
-      height: 80%;
-      width: 92%;
-      margin-left: 50px;
-      margin-right: 50px;
-      margin-top: 15px;
-      margin-bottom: 15px;
-      font-family: var(--main-font-family);
-    }
-    
-    .overlayActive .outputDataFavorite {
-      background-color:#ffff;
-      border-radius: 15px;
-      padding: 15px;
-      display: block;
-      overflow: hidden;
-  
-    }
+    max-width: 425px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 
-    /* .noFavoritesGoods {
-
-    } */
-  
-    .outputDataFavoriteItemsTitle {
-      float: left;
-      margin-top: 10px;
-      margin-right: 10px;
-    }
-    .outputDataFavoriteItemsLines {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
-    
-    .titleFavoriteClear {
-        padding: 10px 10px 10px 10px;
-        margin-left: 3px;
-        border-radius: 20px;
-        background-color: #ddd;
-    }
-
-    .titleFavoriteClear:hover {
-        background-color: #ccc;
-        cursor: pointer;
-        padding: 10px 10px 10px 10px;
-    }
-
-    .titleFavoriteClear:active {
-        background-color: #ddd;
-        cursor: pointer;
-    }
-
-    .outputDataFavoriteItems .titleFavoriteSearch {
-      padding: 10px 10px 10px 10px;
-      border-radius: 20px;
-    }
-    .outputDataFavoriteItems .activatedFavoriteTitle {
-      background-color: #ddd;
-      padding: 10px 10px 10px 10px;
-      border-radius: 20px;
-    }
-    .outputDataFavoriteItems .activatedFavoriteTitle:hover {
-      background-color: #ccc;
-      cursor: pointer;
-      padding: 10px 10px 10px 10px;
-    }
-    .outputDataFavoriteItems .activatedFavoriteTitle:active {
-      background-color: #ddd;
-      cursor: pointer;
-    }
-    .outputDataFavoriteItems .titleFavoriteSearch:hover {
-      background-color: #ccc;
-      cursor: pointer;
-      padding: 10px 10px 10px 10px;
-    }
-    .outputDataFavoriteItems .titleFavoriteSearch:active {
-      background-color: #ddd;
-      cursor: pointer;
-    }
-    .outputDataFavoriteItems .countFavoriteSearch {
-      border-radius: 35px;
-      color: #ffff;
-      margin: 10px;
-      padding: 1px 8px 1px 8px;
-      background-color: crimson;
-    }
-    .outputDataFavoriteItemsBox {
-      overflow-y: scroll;
-      max-height: 300px;
-      display: flex;
-      flex-direction:column;
-      justify-content: center;
-      gap: 5px;
-      background-color: #ffff;
-      margin: 15px;
-    }
-
-    .outputDataFavoriteItemsList {
-        margin: 3px;
-    }
   

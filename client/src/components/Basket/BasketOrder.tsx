@@ -28,7 +28,6 @@ import { IDapertmentDelivery } from './types/DepartmentDelivery.type';
 import { cargoTypesDelivery } from '../../services/cargoTypesDelivery';
 import { tyresCarDiameterDelivery, tyresCargoDiameterDelivery } from '../../services/tyresDiameterDelivery';
 import { IbasketData } from './types/BasketData.type';
-import { useMediaQuery } from 'react-responsive';
 
 const BasketOrder = observer(() => {
     const {customer, page} = useContext<any | null>(Context);
@@ -57,7 +56,6 @@ const BasketOrder = observer(() => {
     const [deliverySum, setDeliverySum] = useState<number | null>(0);
     const [payMethod, setPayMethod] = useState<string | null>();
     const [getIdOrder, setGetIdOrder] = useState<number>();
-    const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
     useEffect(() => window.scrollTo(0, 0), []);
 
@@ -1038,10 +1036,7 @@ const BasketOrder = observer(() => {
                                     //label={depart?.Description}
                                     value={`${depart?.Ref}//${depart?.Description}//${depart?.CityRef}`}
                                 >
-                                {isMobile ?
-                                    `Відділення№${depart?.Number}` :
-                                    depart?.Description
-                                }
+                                {depart?.Description}
                                 </option>
                             )
                         }
@@ -1080,10 +1075,7 @@ const BasketOrder = observer(() => {
                                     //label={depart?.name + ', ' + depart?.address}
                                     value={`${depart?.id}//${depart?.name + ', ' + depart?.address}//${depart?.CityId}`}
                                 >
-                                {isMobile ?
-                                    depart?.name  :
-                                    depart?.name + ', ' + depart?.address
-                                }
+                                {depart?.name + ', ' + depart?.address}
                                 </option>
                             )
                             }

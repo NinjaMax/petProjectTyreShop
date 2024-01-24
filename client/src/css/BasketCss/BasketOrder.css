@@ -440,10 +440,12 @@
     
     .basketCityList {
         max-width: 550px;
+        position: relative;
+        top: 0px;
     }
 
     .basketCityList .basketCityListItem {
-        max-width: 550px;
+        max-width: 330px;
     }
     
     .basketDepartList .basketDepartListItem {
@@ -451,7 +453,7 @@
     }
     
     .basketSelectDepart {
-        max-width: 480px;
+        max-width: 450px;
     }
 
     .basketSelectDepartOption {
@@ -462,7 +464,7 @@
         max-width: 540px;
     }
     .basketSelectDepartDel {
-        max-width: 480px;
+        max-width: 450px;
     }
 }
 
@@ -488,10 +490,12 @@
 
     .basketCityList {
         max-width: 500px;
+        position: relative;
+        top: 0px;
     }
 
     .basketCityList .basketCityListItem {
-        max-width: 500px;
+        max-width: 330px;
     }
     
     .basketDepartList .basketDepartListItem {
@@ -499,14 +503,22 @@
     }
     
     .basketSelectDepart {
-        max-width: 480px;
+        max-width: 320px;
+    }
+
+    .basketSelectDepart option{
+        font-size: 12px;
     }
 
     .basketDepartListDel .basketDepartListItem {
         max-width: 540px;
     }
     .basketSelectDepartDel {
-        max-width: 480px;
+        max-width: 320px;
+    }
+
+    .basketSelectDepartDel option{
+        font-size: 12px;
     }
 }
 
@@ -527,10 +539,12 @@
 
     .basketCityList {
         max-width: 450px;
+        position: relative;
+        top: 0px;
     }
 
     .basketCityList .basketCityListItem {
-        max-width: 450px;
+        max-width: 380px;
     }
     
     .basketDepartList .basketDepartListItem {
@@ -541,11 +555,19 @@
         max-width: 480px;
     }
 
+    .basketSelectDepart option{
+        font-size: 12px;
+    }
+
     .basketDepartListDel .basketDepartListItem {
         max-width: 540px;
     }
     .basketSelectDepartDel {
         max-width: 480px;
+    }
+
+    .basketSelectDepartDel option{
+        font-size: 12px;
     }
 
     .basketColmRightClose {
@@ -580,6 +602,8 @@
 
     .basketCityList {
         max-width: 350px;
+        position: relative;
+        top: 0px;
     }
 
     .basketCityList .basketCityListItem {
@@ -594,11 +618,19 @@
         max-width: 350px;
     }
 
+    .basketSelectDepart option{
+        font-size: 10px;
+    }
+
     .basketDepartListDel .basketDepartListItem {
         max-width: 350px;
     }
     .basketSelectDepartDel {
         max-width: 350px;
+    }
+
+    .basketSelectDepartDel option{
+        font-size: 10px;
     }
 
     .basketColmItemRight #commentsOrder {
@@ -636,9 +668,15 @@
 
     .basketCityList {
         max-width: 340px;
+        position: relative;
+        top: 0px;
     }
 
     .basketCityList .basketCityListItem {
+        max-width: 340px;
+    }
+
+    .selectRadioActive {
         max-width: 340px;
     }
     
@@ -647,14 +685,22 @@
     }
     
     .basketSelectDepart {
-        max-width: 340px;
+        max-width: 320px;
     } 
+
+    .basketSelectDepart option{
+        font-size: 8px;
+    }
 
     .basketDepartListDel .basketDepartListItem {
         max-width: 340px;
     }
     .basketSelectDepartDel {
-        max-width: 340px;
+        max-width: 320px;
+    }
+
+    .basketSelectDepartDel option{
+        font-size: 8px;
     }
 }
 
@@ -679,9 +725,14 @@
 
     .basketCityList {
         max-width: 280px;
+        top: 50%;
     }
 
     .basketCityList .basketCityListItem {
+        max-width: 280px;
+    }
+
+    .selectRadioActive {
         max-width: 280px;
     }
     
@@ -690,14 +741,22 @@
     }
     
     .basketSelectDepart {
-        max-width: 280px;
+        max-width: 260px;
+    }
+
+    .basketSelectDepart option{
+        font-size: 8px;
     }
 
     .basketDepartListDel .basketDepartListItem {
         max-width: 280px;
     }
     .basketSelectDepartDel {
-        max-width: 280px;
+        max-width: 260px;
+    }
+
+    .basketSelectDepartDel option{
+        font-size: 8px;
     }
 
     .basketColmItemRight #commentsOrder {
@@ -748,11 +807,19 @@
         max-width: 280px;
     }
 
+    .basketSelectDepartDel option{
+        font-size: 8px;
+    }
+
     .basketColmItemRight #commentsOrder {
         max-width: 280px;
     }
     
     .basketSelectDepart {
         width: 270px;
+    }
+
+    .basketSelectDepart option{
+        font-size: 8px;
     }
 } 

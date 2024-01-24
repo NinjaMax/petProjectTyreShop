@@ -1,4 +1,3 @@
-
 .overlayCompareActive {
   height: 80%;
   width: 92%;
@@ -125,14 +124,9 @@
   grid-area: list;
   padding-top: 45%;
 }
-    
-/* .propertiesGoodsCompare {
-  grid-area: compare;
-} */
 
 .outputDataCompareContainerRating {
   grid-area: rating;
-  /* height: 100px; */
 }
 
 .outputDataCompareItemsBoxRating {
@@ -230,3 +224,72 @@
   visibility: visible;
   opacity: 1;
 }
+
+@media only screen and (max-width: 2560px) {
+  .overlayCompareActive {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media only screen and (max-width: 1440px) {
+  .overlayCompareActive {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .outputDataCompareItemsBox {
+    width: 700px;
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  .overlayCompareActive {
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .outputDataCompareItemsBox {
+    width: 400px;
+    height: 2400px;
+    flex-direction: column;
+  }
+
+  .outputDataCompareItemsBoxRating {
+    width: 400px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .overlayCompareActive {
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .outputDataCompareItemsBox {
+    width: 380px;
+    height: 2400px;
+    flex-direction: column;
+    overflow-y: scroll;
+    justify-content: center;
+  }
+
+  .outputDataCompareItemsBoxRating {
+    width: 380px;
+  }
+
+  .outputDataCompareContainer {
+    grid-template-areas: 
+    "title"
+    "goods"
+    "goods"
+    "goods";
+  }
+
+}
+
+
+
+
