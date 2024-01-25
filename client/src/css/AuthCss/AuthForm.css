@@ -1,5 +1,4 @@
 * {box-sizing: border-box}
-
 /* style the container */
 .containerAuthForm {
   position: relative;
@@ -10,7 +9,6 @@
 
 .titleAuthForm {
   text-align: center;
-  /*padding-left: 1rem;*/
   font-size: 20px;
   font-family: var(--main-font-family);
   font-weight: bold;
@@ -30,7 +28,6 @@
   font-family: var(--main-font-family);
   line-height: 20px;
   text-decoration: none; /* remove underline from anchors */
-  /*color: #fff;*/
 }
 
 .btnAuthForm {
@@ -65,11 +62,9 @@
  
 }
 
-
 .btnAuthForm:hover {
   opacity: 1;
   color:#ccc;
-
 }
 
 /* add appropriate colors to fb, twitter and google buttons */
@@ -104,9 +99,9 @@ input[type=submit]:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-wrap: wrap;
   gap: 5px;
   width: 100%;
-  /*margin: auto;*/
   padding: 0 50px;
   margin-top: 6px;
 }
@@ -128,14 +123,10 @@ input[type=submit]:hover {
   height: 175px;
 }
 
-/* text inside the vertical line */
-
-
 /* hide some text on medium and large screens */
 .hide-md-lg {
   display: none;
 }
-
 /* bottom container */
 .bottomContainer {
   text-align: center;
@@ -144,18 +135,31 @@ input[type=submit]:hover {
 }
 
 /* Responsive layout - when the screen is less than 650px wide, make the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 650px) {
-  .colAuthForm {
-    width: 100%;
-    margin-top: 0;
+
+@media only screen and (max-width: 768px) {
+  .containerAuthForm {
+      max-width: 420px;
   }
-  /* hide the vertical line */
+  .rowAuthForm {
+    flex-direction: column;
+    gap:5px;
+  }
   .vl {
-    display: none;
+    top:52%;
   }
-  /* show the hidden text on small screens */
-  .hide-md-lg {
-    display: block;
-    text-align: center;
+}
+@media only screen and (max-width: 425px) {
+  .containerAuthForm {
+      max-width: 370px;
+  }
+}
+@media only screen and (max-width: 375px) {
+  .containerAuthForm {
+      max-width: 310px;
+  }
+}
+@media only screen and (max-width: 320px) {
+  .containerAuthForm {
+      max-width: 300px;
   }
 }

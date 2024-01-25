@@ -25,7 +25,9 @@
 .outputDataCompareItemsLines {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
+  gap: 13px;
 }
     
 .titleCompareClear {
@@ -240,7 +242,17 @@
     margin-right: auto;
   }
   .outputDataCompareItemsBox {
-    width: 700px;
+    width: 700px; 
+    height: auto;
+    margin: 5px;
+    gap: 10px;
+  }
+
+  .dataCompareItemsPropsTyre {
+    margin-top: 0px;
+  }
+  .propertiesTyresCompare {
+    margin-top: 40px;
   }
 }
 
@@ -251,34 +263,43 @@
     margin-right: auto;
   }
   .outputDataCompareItemsBox {
-    width: 400px;
-    height: 2400px;
-    flex-direction: column;
+    width: 700px; 
+    justify-content: flex-start;
   }
 
   .outputDataCompareItemsBoxRating {
     width: 400px;
+  }
+
+  .outputDataCompareTable {
+    display: none;
+    appearance: none;
+  }
+
+  .outputDataCompareContainerRating {
+    display: none;
+    appearance: none;
+  }
+  .outputDataCompareContainerList {
+    display: none;
+    appearance: none;
   }
 }
 
 @media only screen and (max-width: 768px) {
   .overlayCompareActive {
     max-width: 750px;
+    height: 100%;
     margin-left: auto;
     margin-right: auto;
   }
 
   .outputDataCompareItemsBox {
-    width: 380px;
-    height: 2400px;
+    width: 420px;
+    /* height: 2400px;
     flex-direction: column;
-    overflow-y: scroll;
-    justify-content: center;
-  }
-
-  .outputDataCompareItemsBoxRating {
-    width: 380px;
-  }
+    justify-content: center; */
+  } 
 
   .outputDataCompareContainer {
     grid-template-areas: 
@@ -288,6 +309,145 @@
     "goods";
   }
 
+  .outputDataCompareTable {
+    display: none;
+    appearance: none;
+  }
+
+  .outputDataCompareContainerRating {
+    display: none;
+    appearance: none;
+  }
+  .outputDataCompareContainerList {
+    display: none;
+    appearance: none;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .overlayCompareActive {
+    max-width: 750px;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .outputDataCompareItemsBox {
+    width: 300px;
+    /* height: 2400px;
+    flex-direction: column;
+    justify-content: center; */
+  } 
+
+  /* .outputDataCompareItemsBoxRating {
+    width: 380px;
+  } */
+
+  .outputDataCompareContainer {
+    grid-template-areas: 
+    "title"
+    "goods"
+    "goods"
+    "goods";
+  }
+
+  .outputDataCompareTable {
+    display: none;
+    appearance: none;
+  }
+
+  .outputDataCompareContainerRating {
+    display: none;
+    appearance: none;
+  }
+  .outputDataCompareContainerList {
+    display: none;
+    appearance: none;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .overlayCompareActive {
+    max-width: 750px;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .outputDataCompareItemsBox {
+    width: 290px;
+    /* height: 2400px;
+    flex-direction: column;
+    justify-content: center; */
+  } 
+
+  /* .outputDataCompareItemsBoxRating {
+    width: 380px;
+  } */
+
+  .outputDataCompareContainer {
+    grid-template-areas: 
+    "title"
+    "goods"
+    "goods"
+    "goods";
+  }
+
+  .outputDataCompareTable {
+    display: none;
+    appearance: none;
+  }
+
+  .outputDataCompareContainerRating {
+    display: none;
+    appearance: none;
+  }
+  .outputDataCompareContainerList {
+    display: none;
+    appearance: none;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .overlayCompareActive {
+    max-width: 750px;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .outputDataCompareItemsBox {
+    width: 270px;
+    /* height: 2400px;
+    flex-direction: column;
+    justify-content: center; */
+  } 
+
+  /* .outputDataCompareItemsBoxRating {
+    width: 380px;
+  } */
+
+  .outputDataCompareContainer {
+    grid-template-areas: 
+    "title"
+    "goods"
+    "goods"
+    "goods";
+  }
+
+  .outputDataCompareTable {
+    display: none;
+    appearance: none;
+  }
+
+  .outputDataCompareContainerRating {
+    display: none;
+    appearance: none;
+  }
+  .outputDataCompareContainerList {
+    display: none;
+    appearance: none;
+  }
 }
 
 

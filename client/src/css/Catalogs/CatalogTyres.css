@@ -8,6 +8,10 @@ h1 {
   word-break: break-all;
 }
 
+h2 {
+  margin-left: 8px;
+}
+
 .rowCatalogTyres {
   display: flex;
   flex-direction:row;
@@ -88,10 +92,17 @@ h1 {
   .popularCatalogTyre {
     max-width: 380px;
   }
+  .cataloTyresImg {
+    max-width: 380px;
+  }
 }
 
 @media only screen and (max-width: 380px) {
   .popularCatalogTyre {
+    max-width: 375px;
+  }
+
+  .cataloTyresImg {
     max-width: 375px;
   }
 }
@@ -100,10 +111,18 @@ h1 {
   .popularCatalogTyre {
     max-width: 320px;
   }
+
+  .cataloTyresImg {
+    max-width: 320px;
+  }
 }
 
 @media only screen and (max-width: 320px) {
   .popularCatalogTyre {
     max-width: 300px;
+  }
+
+  .cataloTyresImg {
+    max-width: 280px;
   }
 }

@@ -10,10 +10,11 @@
                     "bDev eDev eDev eDev"
                     "bDev fDev fDev fDev";
     grid-gap:5px;
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-left: auto;
+    margin-right: auto;
     padding: 5px;
     font-family: var(--main-font-family);
+    width: 100%;
 }
 
 .aDev {
@@ -40,9 +41,9 @@
     display: flex; 
     flex-direction: row;
     justify-content:center;
+    flex-wrap: wrap;
     gap: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    /* border: rebeccapurple solid 3px; */
     padding: 18px 18px 25px 18px;
 }
 
@@ -139,6 +140,7 @@
     flex-direction: column;
     flex-wrap: wrap;
     max-height: 600px;
+    width: 100%;
 }
 
 .deliveryGoodsCityInRegion ul {
@@ -171,4 +173,87 @@
     border: #71C2FF solid;
     border-width:0 0 5px 0;
     background-color: #ffff;
+}
+
+@media only screen and (max-width: 2560px) {
+    .deliveryGoodsPage {
+        max-width: 1400px;
+    }
+}
+
+@media only screen and (max-width: 1440px) {
+    .deliveryGoodsPage {
+        max-width: 1000px;
+    }
+}
+
+@media only screen and (max-width: 1075px) {
+    .deliveryGoodsPage {
+        max-width: 750px;
+    }
+
+    .deliveryGoodsCityInRegion {
+        max-height: 820px;
+    }
+
+    .deliveryGoodsPage {
+        grid-template-columns: repeat(3, 30%);
+        grid-template-areas: 
+                        "aDev aDev aDev"
+                        "hDev hDev hDev"
+                        "bDev bDev bDev"
+                        "cDev cDev cDev"
+                        "gDev gDev gDev"
+                        "dDev dDev dDev"
+                        "eDev eDev eDev"
+                        "fDev fDev fDev";
+        grid-gap:5px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 5px;
+        font-family: var(--main-font-family);
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .deliveryGoodsPage {
+        max-width: 750px;
+    }
+
+    .deliveryGoodsCityInRegion {
+        max-height: 820px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .deliveryGoodsPage {
+        max-width: 420px;
+    }
+
+    .deliveryGoodsCityInRegion {
+        max-height: 1400px;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .deliveryGoodsPage {
+        max-width: 370px;
+    }
+
+    .deliveryGoodsCityInRegion {
+        max-height: 2400px;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .deliveryGoodsPage {
+        max-width: 300px;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .deliveryGoodsPage {
+        max-width: 300px;
+    }
 }

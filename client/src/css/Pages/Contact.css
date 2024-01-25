@@ -1,11 +1,14 @@
 .contactPageContainer {
     display: block;
     font-family: var(--main-font-family);
-    margin: 50px 100px 50px 100px ;
+    margin-top: 50px;
+    margin-left: auto; 
+    margin-bottom: 50px;
+    margin-right: auto;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     padding: 20px;
-    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
+    width: 100%;
 }
 
 .contactPageBox {
@@ -13,6 +16,7 @@
     flex-direction: row;
     align-items:flex-start;
     justify-content:space-around;
+    flex-wrap: wrap;
     gap: 20px;
     
 
@@ -26,10 +30,6 @@
     justify-content:flex-start;
     gap: 8px;
     padding: 8px;
-    /* border-radius: 8px;
-    background-color: #9e9e9e;
-    height: 185px;
-    vertical-align: top; */
 }
 }
 
@@ -39,9 +39,6 @@
     justify-content: flex-start;
     gap: 8px;
     padding: 8px;
-    /* border-radius: 8px;
-    background-color: #9e9e9e;
-    height: 185px; */
 }
 
 .contactPageSocial {
@@ -50,9 +47,6 @@
     justify-content: flex-start;
     gap: 8px;
     padding: 8px;
-    /* border-radius: 8px;
-    background-color: #9e9e9e;
-    height: 185px; */
 }
 
 .contactPageSchedule {
@@ -61,7 +55,40 @@
     justify-content: flex-start;
     gap: 8px;
     padding: 8px;
-    /* border-radius: 8px;
-    background-color: #9e9e9e;
-    height: 185px; */
+}
+
+@media only screen and (max-width: 2560px) {
+    .contactPageContainer {
+        max-width: 1400px;
+    }
+}
+@media only screen and (max-width: 1440px) {
+    .contactPageContainer {
+        max-width: 1000px;
+    }
+}
+@media only screen and (max-width: 1024px) {
+    .contactPageContainer {
+        max-width: 750px;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .contactPageContainer {
+        max-width: 420px;
+    }
+}
+@media only screen and (max-width: 425px) {
+    .contactPageContainer {
+        max-width: 370px;
+    }
+}
+@media only screen and (max-width: 375px) {
+    .contactPageContainer {
+        max-width: 300px;
+    }
+}
+@media only screen and (max-width: 320px) {
+    .contactPageContainer {
+        max-width: 300px;
+    }
 }
