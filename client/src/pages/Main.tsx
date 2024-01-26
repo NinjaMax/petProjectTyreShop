@@ -16,6 +16,7 @@ import BrandsListMain from '../components/BrandsListMain';
 import PromotionBox from '../components/PromotionBox';
 import ButtonPrevNext from '../components/buttons/ButtonPrevNext';
 import { useMediaQuery } from 'react-responsive';
+import { Helmet } from 'react-helmet';
 
 const Main = observer(() => {
   const {goodsTyre, goodsWheel, filter} = useContext<any | null>(Context);
@@ -427,6 +428,19 @@ const Main = observer(() => {
     <div className='main'
       onClick={handleCloseFilter}
     > 
+      <Helmet>
+        <h1>Главная</h1>
+        <title>SKYPARTS - Интернет Магазин Купить Шины И Диски В Украине Лучшая Автомобильная Резина И Дисков Для Любого Типа Авто</title>
+        <meta
+          name="description"
+          content="Шины и диски в интернет - магазине СКАЙПАРТС. Большой выбор автомобильная резина, лучшие цены в Харькове, Днепре, Киеве. ✈Быстрая доставка по Украине✈. 💰Скидки акции💰"
+        />
+        <meta
+          name="keywords"
+          content="шины и диски. Автомобильные диски резина в интернет-магазине СКАЙПАРСТ "
+        />
+        <link rel="canonical" href="https://localhost:3000/" />
+      </Helmet>
       {!isMobileMain ?
         <Slider/>
         : null

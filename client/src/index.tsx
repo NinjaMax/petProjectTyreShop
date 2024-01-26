@@ -13,24 +13,41 @@ import PageStore from './store/PageStore';
 import FilterStore from './store/FilterStore';
 
 const rootElement = document.getElementById("root") as HTMLElement;
-
-ReactDOMClient.createRoot(rootElement).render(
-  <Context.Provider value={{
-    user: new UserStore(),
-    goodsTyre: new GoodsTyreStore(),
-    goodsWheel: new GoodsWheelStore(),
-    goodsBattery: new GoodsBatteryStore(),
-    goodsOil: new GoodsOilStore(),
-    customer: new CustomersStore(),
-    page: new PageStore(),
-    filter: new FilterStore(),
-    isAuth: false,
-    isLoading: true, 
-  }}>
-    <App/>
-  </Context.Provider>,
-  
-);
+if (rootElement.hasChildNodes()) {
+  ReactDOMClient.hydrateRoot(rootElement, 
+    <Context.Provider value={{
+      user: new UserStore(),
+      goodsTyre: new GoodsTyreStore(),
+      goodsWheel: new GoodsWheelStore(),
+      goodsBattery: new GoodsBatteryStore(),
+      goodsOil: new GoodsOilStore(),
+      customer: new CustomersStore(),
+      page: new PageStore(),
+      filter: new FilterStore(),
+      isAuth: false,
+      isLoading: true, 
+    }}>
+      <App/>
+    </Context.Provider>,
+  );
+} else {
+  ReactDOMClient.createRoot(rootElement).render(
+    <Context.Provider value={{
+      user: new UserStore(),
+      goodsTyre: new GoodsTyreStore(),
+      goodsWheel: new GoodsWheelStore(),
+      goodsBattery: new GoodsBatteryStore(),
+      goodsOil: new GoodsOilStore(),
+      customer: new CustomersStore(),
+      page: new PageStore(),
+      filter: new FilterStore(),
+      isAuth: false,
+      isLoading: true, 
+    }}>
+      <App/>
+    </Context.Provider>,
+  );
+}
 
 
 
