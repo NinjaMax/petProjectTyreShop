@@ -1,40 +1,31 @@
 import React from 'react';
 import '../../css/NavBarCss/NavBarDropTyres.css';
-//import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const NavBarDropWheels = () => {
-    //const { season } = useParams()
+  const { t, i18n } = useTranslation();
 
-    return (
-        
+  return (
     <div className="dropdownNavbar">
       <button className="dropbtnNavbar" >
-        <a className='navbarAnchMain' href="/wheels">Диски </a> 
+        <a className='navbarAnchMain' href="/wheels">
+          {t('navBar.category_wheels')}&nbsp;
+        </a> 
          <i className="fa fa-caret-down"></i>
       </button>
       <div className="dropdownContentNavbar">
         <div className="headerNavbar">
-          <h3>Каталог дисків</h3>
+          <h3>{t('navBar.catalog_wheels')}</h3>
         </div>
         <div className="rowNavbar">
           <div className="columnNavbar">
-            <h4>по типу диска</h4>
-            <a className='columnNavbarAnch' href="/wheels/stalni">Сталеві</a>
-            <a className='columnNavbarAnch' href="/wheels/litoi">Легкосплавні</a>
-            <a className='columnNavbarAnch' href="/#">Ковані</a>
+            <h4>{t('navBar.catalog_wheels_by_type')}</h4>
+            <a className='columnNavbarAnch' href="/wheels/stalni">{t('navBar.catalog_wheels_type_steel')}</a>
+            <a className='columnNavbarAnch' href="/wheels/litoi">{t('navBar.catalog_wheels_litoi')}</a>
+            <a className='columnNavbarAnch' href="/#">{t('navBar.catalog_wheels_kovani')}</a>
           </div>
           <div className="columnNavbar">
-            <h4>по типу транспорту</h4>
-            <a className='columnNavbarAnch' href="/#">легкові</a>
-            <a className='columnNavbarAnch' href="/#">грузові</a>
-            <a className='columnNavbarAnch' href="/#">позашляховик</a>
-            <a className='columnNavbarAnch' href="/#">мікроавтобус</a>
-            <a className='columnNavbarAnch' href="/#">с/х</a>
-            <a className='columnNavbarAnch' href="/#">спецтехніка</a>
-            <a className='columnNavbarAnch' href="/#">мото</a>
-          </div>
-          <div className="columnNavbar">
-            <h4>по діаметру</h4>
+            <h4>{t('navBar.catalog_wheels_by_diameter')}</h4>
             <a className='columnNavbarAnch' href="/wheels/r13">R13</a>
             <a className='columnNavbarAnch' href="/wheels/r14">R14</a>
             <a className='columnNavbarAnch' href="/wheels/r15">R15</a>
@@ -51,8 +42,7 @@ const NavBarDropWheels = () => {
         </div>
       </div>
     </div>
-        
-    );
+  );
 };
 
 export default NavBarDropWheels;

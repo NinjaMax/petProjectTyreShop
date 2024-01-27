@@ -1,45 +1,48 @@
 import React from 'react';
 import '../../css/NavBarCss/NavBarDropTyres.css';
+import { useTranslation } from 'react-i18next';
 
 const NavBarDropTyres = () => {
-
+  const { t, i18n } = useTranslation();
+  
     return (
-        
     <div className="dropdownNavbar">
       <button className="dropbtnNavbar" >
-        <a className='navbarAnchMain' href="/tyres">Шини </a> 
+        <a className='navbarAnchMain' href={i18n.resolvedLanguage === 'uk' ? '/tyres' : 'ru/tyres'}>
+          {t('navBar.category_tyres')}&nbsp; 
+        </a> 
          <i className="fa fa-caret-down"></i>
       </button>
       <div className="dropdownContentNavbar">
         <div className="headerNavbar">
-          <h3>Каталог шин</h3>
+          <h3>{t('navBar.catalog_tyres')}</h3>
         </div>
         <div className="rowNavbar">
           <div className="columnNavbar">
-            <h4>по сезону</h4>
-            <a className='columnNavbarAnch' href='/tyres/litni'>Літні шини</a>
-            <a className='columnNavbarAnch' href="/tyres/zimni">Зимові шини</a>
-            <a className='columnNavbarAnch' href="/tyres/vsesezon">Всесезонні шини</a>
+            <h4>{t('navBar.catalog_tyres_by_season')}</h4>
+            <a className='columnNavbarAnch' href='/tyres/litni'>{t('navBar.catalog_tyres_season_litni')}</a>
+            <a className='columnNavbarAnch' href="/tyres/zimni">{t('navBar.catalog_tyres_season_zimovi')}</a>
+            <a className='columnNavbarAnch' href="/tyres/vsesezon">{t('navBar.catalog_tyres_season_vsesozon')}</a>
           </div>
           <div className="columnNavbar">
-            <h4>по типу транспорту</h4>
+            <h4>{t('navBar.catalog_tyres_by_type')}</h4>
             <a className='columnNavbarAnch' 
-              href="/tyres/legkovi">легкові</a>
+              href="/tyres/legkovi">{t('navBar.catalog_tyres_type_legkovi')}</a>
             <a className='columnNavbarAnch' 
-              href="/tyres/gruzovi">грузові</a>
+              href="/tyres/gruzovi">{t('navBar.catalog_tyres_type_gruzovi')}</a>
             <a className='columnNavbarAnch' 
-              href="/tyres/vnedorognik">позашляховик</a>
+              href="/tyres/vnedorognik">{t('navBar.catalog_tyres_type_pozashliahovik')}</a>
             <a className='columnNavbarAnch' 
-              href="/tyres/microavtobus">мікроавтобус</a>
+              href="/tyres/microavtobus">{t('navBar.catalog_tyres_type_microavtobus')}</a>
             <a className='columnNavbarAnch' 
-              href="/tyres/selhoz">с/х</a>
+              href="/tyres/selhoz">{t('navBar.catalog_tyres_type_sh')}</a>
             <a className='columnNavbarAnch' 
-              href="/tyres/spectehnika">спецтехніка</a>
+              href="/tyres/spectehnika">{t('navBar.catalog_tyres_type_spectehnika')}</a>
             <a className='columnNavbarAnch' 
-              href="/tyres/moto">мото</a>
+              href="/tyres/moto">{t('navBar.catalog_tyres_type_moto')}</a>
           </div>
           <div className="columnNavbar">
-            <h4>по діаметру</h4>
+            <h4>{t('navBar.catalog_tyres_by_diameter')}</h4>
             <a className='columnNavbarAnch' href="/tyres/r13">R13</a>
             <a className='columnNavbarAnch' href="/tyres/r14">R14</a>
             <a className='columnNavbarAnch' href="/tyres/r15">R15</a>

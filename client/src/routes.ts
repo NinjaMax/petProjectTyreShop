@@ -45,22 +45,22 @@ export const adminRoutes = [
 export const publicRoutes = [
 
   {
-    path: BASKET_ROUTE,
+    path: '/:ru?' + BASKET_ROUTE,
     exact: true,
     Component: Basket
   },
   {
-    path: CATALOG_TYRES_ROUTE,
+    path: '/:ru?' + CATALOG_TYRES_ROUTE,
     exact: true,
     Component: CatalogTyresPage
   },
   {
-    path: DELIVERY_ROUTE,
+    path: '/:ru?' + DELIVERY_ROUTE,
     exact: true,
     Component: DeliveryPage
   },
   {
-    path: BONUS_ROUTE,
+    path: '/:ru?' + BONUS_ROUTE,
     exact: true,
     Component: BonusPage
   },
@@ -80,24 +80,24 @@ export const publicRoutes = [
     Component: CustomerSettings
   },
   {
-    path: DELIVERY_GOODS_ROUTE + '/:region',
+    path: '/:ru?' + DELIVERY_GOODS_ROUTE + '/:region',
     exact: true,
     Component: DeliveryGoodsPage
   },
   {
-    path: CATALOG_TYRES_ROUTE + 
+    path: '/:ru?' + CATALOG_TYRES_ROUTE + 
     '/:season?/:studded?/:type?/:brands?/:width?/:height?/:diameter?/:loadindex?/:speedindex?/:reinforced?/:om?',
     exact: true,
     Component: CatalogTyresPage
   },
   {
-    path: CATALOG_WHEELS_ROUTE,
+    path: '/:ru?' + CATALOG_WHEELS_ROUTE,
     exact: true,
     Component: CatalogTyresPage
   },
   {
     path: CATALOG_WHEELS_ROUTE + 
-    '/:type?/:brands?/:width?/:diameter?/:boltcount?/:pcd?/:et?/:dia?',
+    '/:ru?/:type?/:brands?/:width?/:diameter?/:boltcount?/:pcd?/:et?/:dia?',
     exact: true,
     Component: CatalogTyresPage
   },
@@ -107,32 +107,32 @@ export const publicRoutes = [
     Component: CarSelect
   },
   {
-    path: SEARCH_ROUTE,
+    path: '/:ru?' + SEARCH_ROUTE,
     exact: true,
     Component: Search
   },
   {
-    path: NEWS_ROUTE,
+    path: '/:ru?' + NEWS_ROUTE,
     exact: true,
     Component: News
   },
   {
-    path: NEWS_ROUTE + '/:articles',
+    path: '/:ru?' + NEWS_ROUTE + '/:articles',
     exact: true,
     Component: NewsItemPage
   },
   {
-    path: REVIEW_STORE_ROUTE,
+    path: '/:ru?' + REVIEW_STORE_ROUTE,
     exact: true,
     Component: ReviewStorePage
   },
   {
-    path: COMPARISON_ROUTE,
+    path: '/:ru?' + COMPARISON_ROUTE,
     exact: true,
     Component: Compare
   },
   {
-    path: FAVORITES_ROUTE,
+    path: '/:ru?' + FAVORITES_ROUTE,
     exact: true,
     Component: Favorite
   },
@@ -148,7 +148,7 @@ export const publicRoutes = [
   },
 
   {
-    path: CONTACT_ROUTE,
+    path: '/:ru?' + CONTACT_ROUTE,
     exact: true,
     Component: Contact
   },
@@ -158,17 +158,17 @@ export const publicRoutes = [
     Component: AdminAuth
   },
   {
+    path: MAIN_ROUTE + 'ru',
+    exact: true,
+    Component: Main,
+  }, 
+  {
     path: NOT_FOUND_ROUTE,
     exact: true,
     Component: NotFound,
   }, 
-  //   {
-  //   path: '/:model',
-  //   exact: true,
-  //   Component: GoodsPage
-  // },
   {
-    path: '/' + GOODS_ROUTE,
+    path: '/:ru?/' + GOODS_ROUTE,
     exact: true,
     Component: GoodsPage
   },

@@ -2,6 +2,7 @@ import React from 'react';
 import * as ReactDOMClient from 'react-dom/client';
 import './index.css';
 import App from './App';
+import './i18n';
 import UserStore from './store/UserStore';
 import GoodsTyreStore from './store/GoodsTyreStore';
 import { Context } from './context/Context';
@@ -11,6 +12,7 @@ import GoodsBatteryStore from './store/GoodsBatteryStore';
 import GoodsOilStore from './store/GoodsOilStore';
 import PageStore from './store/PageStore';
 import FilterStore from './store/FilterStore';
+import LanguageStore from './store/LangStore';
 
 const rootElement = document.getElementById("root") as HTMLElement;
 if (rootElement.hasChildNodes()) {
@@ -24,6 +26,7 @@ if (rootElement.hasChildNodes()) {
       customer: new CustomersStore(),
       page: new PageStore(),
       filter: new FilterStore(),
+      lang: new LanguageStore(),
       isAuth: false,
       isLoading: true, 
     }}>
@@ -41,6 +44,7 @@ if (rootElement.hasChildNodes()) {
       customer: new CustomersStore(),
       page: new PageStore(),
       filter: new FilterStore(),
+      lang: new LanguageStore(),
       isAuth: false,
       isLoading: true, 
     }}>

@@ -1,0 +1,40 @@
+{
+    "main": {
+        "header": "Welcome to the app!"
+    },
+    "navBar": {
+        "category_tyres": "Шини",
+        "catalog_tyres": "Каталог шин",
+        "catalog_tyres_by_season": "по сезону",
+        "catalog_tyres_by_type": "по типу транспорту",
+        "catalog_tyres_by_diameter": "по діаметру",
+        "catalog_tyres_season_litni": "Літні шини",
+        "catalog_tyres_season_zimovi": "Зимові шини",
+        "catalog_tyres_season_vsesozon": "Всесезонні шини",
+        "catalog_tyres_type_legkovi": "легкові",
+        "catalog_tyres_type_gruzovi": "грузові",
+        "catalog_tyres_type_pozashliahovik": "позашляховик",
+        "catalog_tyres_type_microavtobus": "мікроавтобус",
+        "catalog_tyres_type_sh": "с/х",
+        "catalog_tyres_type_spectehnika": "спецтехніка",
+        "catalog_tyres_type_moto": "мото",
+        "category_wheels": "Диски",
+        "catalog_wheels": "Каталог дисків",
+        "catalog_wheels_by_type": "по типу диска",
+        "catalog_wheels_type_steel": "Сталеві",
+        "catalog_wheels_litoi": "Легкосплавні",
+        "catalog_wheels_kovani": "Ковані",
+        "catalog_wheels_by_diameter": "по діаметру",
+        "category_battery": "Акб",
+        "category_oils": "Масло",
+        "category_parts": "Запчастини",
+        "delivery_section": "Доставка і оплата",
+        "contact_section": "Контакти",
+        "more_section": "Більше",
+        "search_button": "Шини",
+        "auth_link": "Вхід / Реєстрація",
+        "basket_is_empty": "Корзина порожня, додайте товари",
+        "no_favorite_goods": "Немає улюбленних товарів",
+        "no_compare_goods": "Немає товарі для порівняння"
+    }
+}

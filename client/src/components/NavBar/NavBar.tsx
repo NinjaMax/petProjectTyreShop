@@ -32,6 +32,13 @@ import { getCompare, getFavorites, getSession } from '../../restAPI/restGoodsApi
 import CompareGoods from '../ux/CompareGoods';
 import { COMPARISON_ROUTE, DELIVERY_ROUTE, FAVORITES_ROUTE } from '../../utils/consts';
 import { useMediaQuery } from 'react-responsive';
+//import i18n from '../../i18n';
+import { useTranslation } from 'react-i18next';
+
+const locales: any = {
+  uk: { title: 'Укр' },
+  ru: { title: 'Рус' },
+};
 
 const NavBar = observer(() => {
   const {customer, page} = useContext<any | null>(Context);
@@ -53,6 +60,7 @@ const NavBar = observer(() => {
   const [isEmptyFavorite, setIsEmptyFavorite] = useState<boolean>(false);
   const [isEmptyCompare, setIsEmptyCompare] = useState<boolean>(false);
   const isMobile = useMediaQuery({ query: '(max-width: 426px)' });
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     let isUser = false;
@@ -263,6 +271,11 @@ const NavBar = observer(() => {
       setFormError(error.response.data.message);
     }
   };
+
+  const chooseLanguage = (e: any) => {
+    const langChoose: string = e.target.value;
+    i18n.changeLanguage(langChoose);
+  };
  
   return (
   <div className="navbar">
@@ -297,8 +310,8 @@ const NavBar = observer(() => {
     <>
     <NavBarDropTyres/>
     <NavBarDropWheels/>
-    <a href={DELIVERY_ROUTE} className='anchorBtn'>Доставка і оплата</a>
-    <a href='/contact' className='anchorBtn'>Контакти</a>
+    <a href={DELIVERY_ROUTE} className='anchorBtn'>{t('navBar.delivery_section')}</a>
+    <a href='/contact' className='anchorBtn'>{t('navBar.contact_section')}</a>
     <div className='navbarPhoneBox'>
       <span className='navbarPhone'>067 777 77 77 
         <span className='navbarPhoneBtnDown'> <i className="fa fa-caret-down"></i></span>
@@ -309,7 +322,7 @@ const NavBar = observer(() => {
         <span>063 777 77 77</span>
       </span>
     </div>
-    <span data-href="/">Більше</span>
+    <span data-href="/">{t('navBar.more_section')}</span>
     <ButtonSearch isSearched={true}  clickSearchBtn={clickSearchBtn}/>
     {searchBtn ? 
       <NavBarSearch searchBtn={searchBtn} clickSearchBtn={clickSearchBtn}/>
@@ -333,10 +346,24 @@ const NavBar = observer(() => {
       <CompareGoods countCompare={page.comparisonCount.length ?? 0} /> 
     </div>
     }
+    <div className='navbarLanguageBox'>
+      <div>
+        {Object.keys(locales).map((locale: any) => (
+          <div key={locale}>
+            <button style={{ fontWeight: i18n.resolvedLanguage === locale ? 'bold' : 'normal' }} 
+            //type="submit" 
+            value={locale}
+            onClick={chooseLanguage}>
+            {locales[locale].title}
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
     {customer._isAuth ?
       <AuthView logOutUser={logOutUser}/>
       : <span className='enterAuthNavBar' onClick={authActive}>
-          Вхід / Реєстрація
+           {t('navBar.auth_link')}
         </span>
     }
     {activeAuth ?
@@ -374,19 +401,19 @@ const NavBar = observer(() => {
     }
     {isEmptyBasket ?
       <Modal active={isEmptyBasket} setActive={openBasket}>
-        <span>Корзина порожня, додайте товари &nbsp;</span>
+        <span>{t('navBar.basket_is_empty')} &nbsp;</span>
       </Modal> 
       :null
     }
     {isEmptyFavorite ?
       <Modal active={isEmptyFavorite} setActive={openFavorite}>
-        <span>Немає улюбленних товарів &nbsp;</span>
+        <span>{t('navBar.no_favorite_goods')} &nbsp;</span>
       </Modal> 
       :null
     }
     {isEmptyCompare ?
       <Modal active={isEmptyCompare} setActive={openCompare}>
-        <span>Немає товарі для порівняння &nbsp;</span>
+        <span>{t('navBar.no_compare_goods')} &nbsp;</span>
       </Modal> 
       :null
     }
