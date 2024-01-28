@@ -35,6 +35,34 @@
         "auth_link": "Вхід / Реєстрація",
         "basket_is_empty": "Корзина порожня, додайте товари",
         "no_favorite_goods": "Немає улюбленних товарів",
-        "no_compare_goods": "Немає товарі для порівняння"
+        "no_compare_goods": "Немає товарі для порівняння",
+        "phone_number_error": "Помилка номера. Або користувач з номером {{phone}} вже існує.",
+        "password_error": "Не вірний пароль. Або інша помилка.",
+        "auth_error": "Помилка авторизаціі"
+    },
+    "footer" : {
+        "company" : "Компанія",
+        "goods": "Товари",
+        "customers" : "Покупцям",
+        "contacts": "Контакти",
+        "about_company" : "О компании",
+        "reviews" : "Відгуки",
+        "tyre_service": "Шиномонтаж",
+        "tyres": "Шини",
+        "wheels": "Диски",
+        "battery": "Акб",
+        "chemy": "Автохімія масла",
+        "tyres_summer":"Літні шини",
+        "tyres_winter": "Зимові шини",
+        "tyres_passnger": "Легкові шини",
+        "tyres_cargo": "Вантажні шини",
+        "tyres_spec": "Спецтехніка",
+        "delivery_pay": "Доставка і оплата",
+        "garanty": "Гарантія",
+        "garanty_skysafe": "Гарантія SKYSAFE",
+        "contacs_link": "Контакти",
+        "bonuse": "Бонусна програма",
+        "articles": "Статті",
+        "contact_address" : "Україна, м Харків 10012"
     }
 }

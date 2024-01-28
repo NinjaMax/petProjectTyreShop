@@ -213,8 +213,8 @@ const NavBar = observer(() => {
         setPassSend(!isPassSend);
         setSmsPass(sendPass);
       } else {
-        console.log(`Помилка номера. Або користувач з номером вже існує.`);
-        setFormError(`Помилка номера. Або користувач з номером ${telnumber} вже існує.`);
+        //console.log(`Помилка номера. Або користувач з номером вже існує.`);
+        setFormError(`${t('navBar.phone_number_error', { phone: telnumber })}`);
       }
     } catch (error) {
       console.log(error);
@@ -232,7 +232,7 @@ const NavBar = observer(() => {
         setAuthConfirm(!activeAuthConfirm); 
         setSignUp(!signUp);
       } else {
-        setFormError('Не вірний пароль. Або інша помилка.')
+        setFormError(t('navBar.password_error'))
       }
     } catch (error: any) {
       console.log(error);
@@ -264,7 +264,7 @@ const NavBar = observer(() => {
         setActiveAuth(!activeAuth);
         customer.setIsAuth(true);
       } else {
-        setFormError('Помилка авторизаціі');
+        setFormError(t('navBar.auth_error'));
       }
     } catch (error: any) {
       console.log('LOGIN_ERROR_DATA:', error.response.data.message);

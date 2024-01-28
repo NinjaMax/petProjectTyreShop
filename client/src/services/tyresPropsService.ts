@@ -18,6 +18,7 @@ const typeCar = (type: string | undefined) => {
         case 'грузовой':
         case 'вантажний':
         case 'вантажні шини':
+        case 'грузовые шины':
             return TyreType.TRUCK_TYPE;
         case 'причіпна':
         case 'прицепная':
@@ -38,10 +39,8 @@ const typeCar = (type: string | undefined) => {
         case `кар'єрна`:
             return TyreType.SPECTEHNIKA_TYPE;
         case 'мото':
-        //case 'всесезонна':
             return TyreType.MOTO_TYPE;
         case 'вело':
-            //case 'всесезонна':
             return TyreType.BICYCLE_TYPE;
         default:
             return TyreType.NO_TYPE;

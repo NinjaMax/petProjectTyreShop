@@ -8,7 +8,8 @@ const NavBarDropTyres = () => {
     return (
     <div className="dropdownNavbar">
       <button className="dropbtnNavbar" >
-        <a className='navbarAnchMain' href={i18n.resolvedLanguage === 'uk' ? '/tyres' : 'ru/tyres'}>
+        <a className='navbarAnchMain' 
+          href={i18n.resolvedLanguage === 'uk' ? '/tyres' : 'ru/tyres'}>
           {t('navBar.category_tyres')}&nbsp; 
         </a> 
          <i className="fa fa-caret-down"></i>
@@ -20,18 +21,33 @@ const NavBarDropTyres = () => {
         <div className="rowNavbar">
           <div className="columnNavbar">
             <h4>{t('navBar.catalog_tyres_by_season')}</h4>
-            <a className='columnNavbarAnch' href='/tyres/litni'>{t('navBar.catalog_tyres_season_litni')}</a>
-            <a className='columnNavbarAnch' href="/tyres/zimni">{t('navBar.catalog_tyres_season_zimovi')}</a>
-            <a className='columnNavbarAnch' href="/tyres/vsesezon">{t('navBar.catalog_tyres_season_vsesozon')}</a>
+            <a className='columnNavbarAnch' 
+              href={i18n.resolvedLanguage === 'uk' ? '/tyres/litni' : 'ru/tyres/letnie'}>
+              {t('navBar.catalog_tyres_season_litni')}
+            </a>
+            <a className='columnNavbarAnch' 
+              href={i18n.resolvedLanguage === 'uk' ? '/tyres/zimni' : 'ru/tyres/zimnie'}>
+              {t('navBar.catalog_tyres_season_zimovi')}
+            </a>
+            <a className='columnNavbarAnch' 
+              href={i18n.resolvedLanguage === 'uk' ? '/tyres/vsesezon' : 'ru/tyres/vsesezon'}>
+              {t('navBar.catalog_tyres_season_vsesozon')}
+            </a>
           </div>
           <div className="columnNavbar">
             <h4>{t('navBar.catalog_tyres_by_type')}</h4>
             <a className='columnNavbarAnch' 
-              href="/tyres/legkovi">{t('navBar.catalog_tyres_type_legkovi')}</a>
+              href={i18n.resolvedLanguage === 'uk' ? '/tyres/legkovi' : 'ru/tyres/legkovie'}>
+              {t('navBar.catalog_tyres_type_legkovi')}
+            </a>
             <a className='columnNavbarAnch' 
-              href="/tyres/gruzovi">{t('navBar.catalog_tyres_type_gruzovi')}</a>
+              href={i18n.resolvedLanguage === 'uk' ? '/tyres/gruzovi' : 'ru/tyres/gruzovie'}>
+              {t('navBar.catalog_tyres_type_gruzovi')}
+            </a>
             <a className='columnNavbarAnch' 
-              href="/tyres/vnedorognik">{t('navBar.catalog_tyres_type_pozashliahovik')}</a>
+              href={i18n.resolvedLanguage === 'uk' ? '/tyres/vnedorognik' : 'ru/tyres/vnedorognik'}>
+              {t('navBar.catalog_tyres_type_pozashliahovik')}
+            </a>
             <a className='columnNavbarAnch' 
               href="/tyres/microavtobus">{t('navBar.catalog_tyres_type_microavtobus')}</a>
             <a className='columnNavbarAnch' 

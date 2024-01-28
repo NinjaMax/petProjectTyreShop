@@ -14,12 +14,13 @@ import { RatingTyres } from '../ratings/entities/rating-tyres.model';
 import { ReviewTyres } from '../reviews/entities/review-tyres.model';
 import { Supplier } from '../suppliers/entities/supplier.model';
 import { RedisModule } from '../redis/redis.module';
+import { StringTransformService } from './stringTransform';
 
 //import { PropertiesTyreModule } from 'src/properties/propertiesTyre.module';
 
 @Module({
   controllers: [TyresController],
-  providers: [TyresService],
+  providers: [TyresService, StringTransformService],
   imports: [
     SequelizeModule.forFeature([
       Tyres,

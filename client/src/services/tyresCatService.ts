@@ -6,8 +6,8 @@ const tyreVehicleTypeCat = (type: string | undefined) => {
     switch (type) {
         case 'legkovi':
             return TyreCatVehicles.LEGRKOVOI_CAT_TYPE;
-        case 'legkovii':
-            return TyreCatVehicles.LEGRKOVOI_CAT_TYPE;
+        case 'legkovie':
+            return TyreCatVehicles.LEGRKOVOI_CAT_TYPE_RU;
         case 'vnedorognik':
             return TyreCatVehicles.VNEDOROGNIK_CAT_TYPE;
         case 'pozashlyakhovik': 

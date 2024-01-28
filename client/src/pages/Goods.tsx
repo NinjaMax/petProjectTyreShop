@@ -30,6 +30,7 @@ import {
   getStorageByIdParam, 
   getTyresBrandRatingAvg, 
   getTyresBrandRatingAvgSeason,  
+  getTyresByFullName,  
   getTyresByIdParam, 
   getTyresCountReviewByBrand, 
   getTyresCountReviewByModel, 
@@ -100,6 +101,27 @@ const GoodsPage = observer(() => {
   const history =  useHistory();
   const params = useParams<any>();
   let match = useRouteMatch<any>('/:goodsItem');
+
+  useEffect(() => {
+    let isMounted = false;
+    const getProductByFullName = async () => {
+      const getGoodsId: string = 
+      JSON.parse(localStorage.getItem('goodsId')!);
+      console.log('GET_GOODS_ID: ', getGoodsId);
+      if (!isMounted && !getGoodsId) {
+        const getProductByName = await getTyresByFullName(params.goodsItem);
+        if (getProductByName) {
+          goodsTyre.setProduct(getProductByName);
+          history.push(params.goodsItem)
+        }
+        console.log('GET_PRODUCT_FN: ', getProductByName);
+      }
+    };
+    getProductByFullName();
+    return () => {
+      isMounted = true;
+    };
+  },[goodsTyre, history, params.goodsItem]);
   
   useEffect(() => {
     let isMounted = false;
@@ -362,10 +384,12 @@ const GoodsPage = observer(() => {
         //console.log('ALL_WHEEL_MODEL_PARAMS_DIAMETER: ', getWheelsDiametersByBrand);
         setAllDiametersModel(getWheelsDiametersByBrand);
       }
+
       const task = taskProduct.shift();
       task();
       await yieldToMain();
     }
+    localStorage.removeItem('goodsId');
     };
     getProduct();
     return () => {
@@ -435,7 +459,8 @@ const GoodsPage = observer(() => {
     goodsWheel._product.full_name, 
     goodsWheel._product.wheel_brand?.brand, 
     goodsWheel._product.wheel_model?.model, 
-    history, match?.params.goodsItem
+    history, 
+    match?.params.goodsItem
   ]) ;
   //console.log('LOCATION_PATH:', history.location.hash);
   // const tumbUpAction = () => {
@@ -528,7 +553,6 @@ const GoodsPage = observer(() => {
     }
   }
 
-
   // console.log('LIKE_REVIEW: ', likeReview);
   //console.log("DATA_REVIEW: ", dataReview);
   //console.log('MATCH_URL_PARAMS: ', match?.params.goodsItem);
@@ -541,8 +565,9 @@ const GoodsPage = observer(() => {
   // console.log('LOCALSORAGE_GOODS_ID: ',JSON.parse(localStorage.getItem('goodsId')!));
   // console.log('THUMB_UP:', thumbUp);
   // console.log('THUMB_DOWN:', thumbDown);
-//console.log('GOODS_TYRE_PRODUCT: ', goodsTyre.product)
+  //console.log('GOODS_TYRE_PRODUCT: ', goodsTyre.product)
   //console.log("PARAMS: ", params);
+  //console.log("PARAMS_FROM_URL: ", params.goodsItem.replace(/-/g, ' '));
 
   return (
     <div className='goodsCard'>

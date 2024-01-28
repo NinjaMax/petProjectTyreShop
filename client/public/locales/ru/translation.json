@@ -35,6 +35,34 @@
         "auth_link": "Вход / Регистрация",
         "basket_is_empty": "Корзина пустая, добавьте товары",
         "no_favorite_goods": "Нет любимых товаров",
-        "no_compare_goods": "Нет товаров для сравнения"
+        "no_compare_goods": "Нет товаров для сравнения",
+        "phone_number_error": "Ошибка номера. Или пользователь с номером {{phone}} уже существует.",
+        "password_error": "Не правильный пароль. Или другая ошибка.",
+        "auth_error": "Ошибка авторизации"
+    },
+    "footer" : {
+        "company" : "Компания",
+        "goods": "Товары",
+        "customers" : "Покупателям",
+        "contacts": "Контакты",
+        "about_company" : "О компании",
+        "reviews" : "Отзывы",
+        "tyre_service": "Шиномотаж",
+        "tyres": "Шины",
+        "wheels": "Диски",
+        "battery": "Акб",
+        "chemy": "Автохимия масло",
+        "tyres_summer":"Летние шины",
+        "tyres_winter": "Зимние шины",
+        "tyres_passnger": "Легковые шины",
+        "tyres_cargo": "Грузовые шины",
+        "tyres_spec": "Спецтехника",
+        "delivery_pay": "Доставка и оплата",
+        "garanty": "Гарантия",
+        "garanty_skysafe": "Гарантия SKYSAFE",
+        "contacs_link": "Контакты",
+        "bonuse": "Бонусная программа",
+        "articles": "Статьи",
+        "contact_address" : "Украина, г. Харьков 10012"
     }
   }

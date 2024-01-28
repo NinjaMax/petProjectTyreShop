@@ -1,7 +1,10 @@
 import React from 'react';
 import '../css/FooterCss/Footer.css';
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
+  const { t, i18n } = useTranslation();
+
   return (
   
   <div className="footerContainer">
@@ -53,84 +56,84 @@ const Footer = () => {
       <section className="">
         <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
           <h4 className="footerTitleColumn">
-            Компанія
+            {t('footer.company')}
           </h4>
           <p>
-            <a href="/#" className="text-reset">О компании</a>
+            <a href="/#" className="text-reset">{t('footer.about_company')}</a>
           </p>
           <p>
-            <a href="/review" className="text-reset">Відгуки</a>
+            <a href="/review" className="text-reset">{t('footer.reviews')}</a>
           </p>
           <p>
-            <a href="/#" className="text-reset">Шиномонтаж</a>
+            <a href="/#" className="text-reset">{t('footer.tyre_service')}</a>
           </p>
         </div>
       </section>
       <section>
         <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
           <h4 className="footerTitleColumn">
-            Товари
+            {t('footer.goods')}
           </h4>
           <p>
-            <a href="/tyres" className="text-reset">Шини</a>
+            <a href="/tyres" className="text-reset">{t('footer.tyres')}</a>
           </p>
           <p>
-            <a href="/wheels" className="text-reset">Диски</a>
+            <a href="/wheels" className="text-reset">{t('footer.wheels')}</a>
           </p>
           <p>
-            <a href="/#" className="text-reset">Акб</a>
+            <a href="/#" className="text-reset">{t('footer.battery')}</a>
           </p>
           <p>
-            <a href="/#" className="text-reset">Автохімія масла</a>
+            <a href="/#" className="text-reset">{t('footer.chemy')}</a>
           </p>
           <p>
-            <a href="/tyres/litni" className="text-reset">Літні шини</a>
+            <a href="/tyres/litni" className="text-reset">{t('footer.tyres_summer')}</a>
           </p>
           <p>
-            <a href="/tyres/zimni" className="text-reset">Зимові шини</a>
+            <a href="/tyres/zimni" className="text-reset">{t('footer.tyres_winter')}</a>
           </p>
           <p>
-            <a href="/tyres/legkovi" className="text-reset">Легкові шини</a>
+            <a href="/tyres/legkovi" className="text-reset">{t('footer.tyres_passnger')}</a>
           </p>
           <p>
-            <a href="/#" className="text-reset">Вантажні шини</a>
+            <a href="/#" className="text-reset">{t('footer.tyres_cargo')}</a>
           </p>
           <p>
-            <a href="/#" className="text-reset">Спецтехніка</a>
+            <a href="/#" className="text-reset">{t('footer.tyres_spec')}</a>
           </p>
         </div>
       </section>
       <section>
         <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
           <h4 className="footerTitleColumn">
-            Покупцям
+            {t('footer.customers')}
           </h4>
           <p>
-            <a href="/delivery-pay" className="text-reset">Доставка і оплата</a>
+            <a href="/delivery-pay" className="text-reset">{t('footer.delivery_pay')}</a>
           </p>
           <p>
-            <a href="/#" className="text-reset">Гарантія</a>
+            <a href="/#" className="text-reset">{t('footer.garanty')}</a>
           </p>
           <p>
-            <a href="/#" className="text-reset">Гарантія SKYSAFE</a>
+            <a href="/#" className="text-reset">{t('footer.garanty_skysafe')}</a>
           </p>
           <p>
-            <a href="/contact" className="text-reset">Контакти</a>
+            <a href="/contact" className="text-reset">{t('footer.contacs_link')}</a>
           </p>
           <p>
-            <a href="/bonus" className="text-reset">Бонусна програма</a>
+            <a href="/bonus" className="text-reset">{t('footer.bonuse')}</a>
           </p>
           <p>
-            <a href="/news" className="text-reset">Статті</a>
+            <a href="/news" className="text-reset">{t('footer.articles')}</a>
           </p>
         </div>
       </section>
       <section>
         <div className="contactSection">
           <h4 className="footerTitleColumn">
-            Контакти
+            {t('footer.contacts')}
           </h4>
-          <p><i className="fas fa-home me-3"></i> Україна, м Харків 10012</p>
+          <p><i className="fas fa-home me-3"></i>{t('footer.contact_address')}</p>
           <p>
             <i className="fas fa-envelope me-3"></i>
              info@example.com
@@ -141,7 +144,7 @@ const Footer = () => {
       </section>
     </div>
     <div className="footerCopyPaste">
-        ©2023 Copyright:
+        ©2024 Copyright:
       <a className="text-reset fw-bold" href="/#"> skyparts.com.ua</a>
     </div>
   </div>

@@ -30,12 +30,14 @@ import { TyreYear } from '../properties/entities/tyres/tyre-year.model';
 import { TyreSizeDigits } from '../properties/entities/tyres/tyre-sizeDigits.model';
 import { RedisService } from '../redis/redis.service';
 import { Category } from '../categorys/entities/category.model';
+import { StringTransformService } from './stringTransform';
 
 @Injectable()
 export class TyresService {
   constructor(
     @InjectModel(Tyres) private tyresRepository: typeof Tyres,
     private readonly redisService: RedisService,
+    private readonly translitService: StringTransformService
   ) {}
 
   async createTyres(createTyreDto: CreateTyreDto) {
@@ -1559,11 +1561,14 @@ export class TyresService {
 
   async findAllTyresByFullName(fullname: string) {
     try {
-      const tyresOneByFullname = await this.tyresRepository.findOne({
-        where: { full_name: fullname },
+      const get_all_tyres = await this.tyresRepository.findAll();
+      const getTyre = get_all_tyres.find((item: any) =>
+        this.translitService.createStringUrl(item.full_name) == fullname
+      );
+      const grtTyresId = await this.tyresRepository.findByPk(getTyre.id, {
         include: { all: true },
       });
-      return tyresOneByFullname;
+      return grtTyresId;
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',

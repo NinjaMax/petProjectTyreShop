@@ -41,6 +41,7 @@
     "connect-redis": "^7.1.0",
     "cookie-parser": "^1.4.6",
     "csv-parser": "^3.0.0",
+    "cyrillic-to-translit-js": "^3.2.1",
     "dotenv": "^16.0.3",
     "express-session": "^1.17.3",
     "iconv-lite": "^0.6.3",
