@@ -5,9 +5,12 @@ import winterCat from '../assets/img/winter_tyres1.png';
 import allseasonCat from '../assets/img/all_seasonstyre1_300.png';
 //import akbCat from '../assets/img/akbCatImg300_200.png';
 import wheelsCat from '../assets/img/wheelsImg300_200_3_blugrey.png';
+import { useTranslation } from 'react-i18next';
 
 const CategorySlide = () => {
-    return (
+  const { t, i18n } = useTranslation();
+    
+  return (
         <div>
             <div className="rowCategoreSlider">
                 <div className="columnCategorySlider">
@@ -16,7 +19,7 @@ const CategorySlide = () => {
                       className="hover-shadow" 
                       alt='categorySlider'/>
                     <div className='contentCategorySlider'>
-                      <h2>Літні шини</h2>
+                      <h2>{t('categorySlyder.category_summer_tyre')}</h2>
                     </div>
                   </a>
                 </div>
@@ -27,7 +30,7 @@ const CategorySlide = () => {
                       alt='categorySlider'
                     />
                     <div className='contentCategorySlider'>
-                      <h2>Зимові шини</h2>
+                      <h2>{t('categorySlyder.category_winter_tyre')}</h2>
                     </div>
                   </a> 
                 </div>
@@ -38,7 +41,7 @@ const CategorySlide = () => {
                       alt='categorySlider'
                     />
                     <div className='contentCategorySlider'>
-                      <h2>Всесезонні шини</h2>
+                      <h2>{t('categorySlyder.category_allseason_tyre')}</h2>
                     </div>
                   </a>
                 </div>
@@ -49,7 +52,7 @@ const CategorySlide = () => {
                       alt='categorySlider'
                     />
                     <div className='contentCategorySlider'>
-                      <h2>Диски</h2>
+                      <h2>{t('categorySlyder.category_wheels')}</h2>
                     </div>
                   </a>
                 </div>

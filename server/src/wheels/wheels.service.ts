@@ -25,12 +25,14 @@ import { RatingWheels } from '../ratings/entities/rating-wheels.model';
 import { RedisService } from '../redis/redis.service';
 import { Category } from '../categorys/entities/category.model';
 import { WheelSizeDigits } from 'src/properties/entities/wheels/wheel-sizeDigits.model';
+import { StringTransformService } from './stringTransform';
 
 @Injectable()
 export class WheelsService {
   constructor(
     @InjectModel(Wheel) private wheelRepository: typeof Wheel,
     private readonly redisService: RedisService,
+    private translitService: StringTransformService,
   ) {}
 
   async createWheel(createWheelDto: CreateWheelDto) {
@@ -1469,6 +1471,31 @@ export class WheelsService {
       });
       return wheelsIdParam;
     } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+  async findWheelsByFullName(fullName: string) {
+    try {
+      const get_all_wheels = await this.wheelRepository.findAll();
+      const getWheel = get_all_wheels.find((item: any) =>
+        this.translitService.createStringUrl(item.full_name) == fullName
+      );
+      if (getWheel) {
+        const grtWheelId = await this.wheelRepository.findByPk(getWheel.id, {
+          include: { all: true },
+        });
+        if (grtWheelId) {
+          return grtWheelId;
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
+    } catch (error) {
       throw new HttpException(
         'Data is incorrect or Not Found',
         HttpStatus.NOT_FOUND,

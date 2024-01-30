@@ -7,12 +7,20 @@ import { TyreModel } from '../entities/tyres/tyre-model.model';
 import { TyresService } from '../../tyres/tyres.service';
 import { TyreBrand } from '../entities/tyres/tyre-brand.model';
 import { Tyres } from '../../tyres/entities/tyres.model';
+//import { Op } from 'sequelize';
+import { StringTransformServiceProp } from '../stringTransform';
+import { TyreSeason } from '../entities/tyres/tyre-season.model';
+import { TyreParams } from '../entities/tyres/tyre-params.model';
+import { ReviewTyres } from '../../reviews/entities/review-tyres.model';
+import { Question } from '../../questions/entities/question.entity';
+import { PriceTyres } from '../../prices/entities/price-tyres.model';
 
 @Injectable()
 export class PropsModelService {
   constructor(
     @InjectModel(TyreModel) private tyreModelRepository: typeof TyreModel,
     private tyresService: TyresService,
+    private stringService: StringTransformServiceProp,
   ) {}
 
   async createTyreModel(createPropertyDto: CreatePropertyDto) {
@@ -104,6 +112,51 @@ export class PropsModelService {
       );
     }
   }
+
+  async findAllTyresModelByModelName(brand_and_model: string) {
+    try {
+      const getBrandModel = brand_and_model.split('-');
+      const getAllModelTyre = await this.tyreModelRepository.findAll();
+      const getTyreByModel = getAllModelTyre.find(
+        (item: any) =>
+          this.stringService.createStringUrl(item.model) ===
+            brand_and_model
+              .split('-')
+              .slice(1, getBrandModel.length)
+              .join('-') ||
+          this.stringService.createStringUrl(item.model) ===
+            brand_and_model.split('-').slice(2, getBrandModel.length).join('-'),
+      );
+      if (getTyreByModel) {
+        const tyresAllByModels = await this.tyreModelRepository.findOne({
+          where: {
+            id_model: getTyreByModel.id_model
+          },
+          include: [
+            {
+              model: Tyres,
+              include: [
+                { model: TyreBrand },
+                { model: TyreModel },
+                { model: TyreSeason },
+                { model: TyreParams },
+                { model: ReviewTyres },
+                { model: Question },
+                { model: PriceTyres }
+              ],
+            },
+          ],
+        });
+        return tyresAllByModels;
+      } else {
+        return null;
+      }
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,)
+    }
+  };
 
   async findAllTyresModelByBrand(brand: number) {
     try {

@@ -17,6 +17,7 @@ import PromotionBox from '../components/PromotionBox';
 import ButtonPrevNext from '../components/buttons/ButtonPrevNext';
 import { useMediaQuery } from 'react-responsive';
 import { Helmet } from 'react-helmet';
+import { useTranslation } from 'react-i18next';
 
 const Main = observer(() => {
   const {goodsTyre, goodsWheel, filter} = useContext<any | null>(Context);
@@ -30,6 +31,7 @@ const Main = observer(() => {
   const [articlesAll, setArticlesAll] = useState<any[] | null>();
   const [chooseFilterState, setChooseFilterState] = useState<string>('ШИНИ');
   const isMobileMain = useMediaQuery({ query: '(max-width: 475px)' });
+  const { t, i18n } = useTranslation();
 
   useEffect(() =>{
     let isMounted = false;
@@ -59,7 +61,7 @@ const Main = observer(() => {
             setHightFilter?.push(item.height.height),
             setDiameterFilter?.push(item.diameter.diameter),
             setBrandFilter?.push(item.tyre_brand.brand),
-            setSeasonFilter?.push(item.season.season_ua)
+            setSeasonFilter?.push(i18n.resolvedLanguage === 'uk' ? item.season.season_ua : item.season.season)
             )
           })
           //console.log('WIDTH', setWidthFilter);
@@ -153,8 +155,9 @@ const Main = observer(() => {
     filter.diameter, 
     filter.season, 
     filter.brands, 
-    filter.sort,
-    chooseFilterState,
+    filter.sort, 
+    chooseFilterState, 
+    i18n.resolvedLanguage
   ]);
 
   useEffect(() =>{
@@ -439,7 +442,7 @@ const Main = observer(() => {
           name="keywords"
           content="шины и диски. Автомобильные диски резина в интернет-магазине СКАЙПАРСТ "
         />
-        <link rel="canonical" href="https://localhost:3000/" />
+        <link rel="canonical" href={process.env.REACT_APP_CORS} />
       </Helmet>
       {!isMobileMain ?
         <Slider/>
@@ -451,7 +454,7 @@ const Main = observer(() => {
         getFilterTitle={setChooseFilterState}
       />
       <BrandsListMain/>
-      <TabProdMain titleTab='ЛІДЕРИ ПРОДАЖУ'>
+      <TabProdMain titleTab={t('main.title_prod_main')}>
         <PromotionBox 
           prevButtonEvent={prevBtnEvent}
           nextButtonEvent={nextBtnEvent}
@@ -484,7 +487,7 @@ const Main = observer(() => {
       <CategorySlide/>
       <div className='mainReviewsBox'>
         <ReviewsMain 
-          props={'Відгуки про магазин'}
+          props={t('main.review_main')}
           marginText={0}
           prevBtnAction={undefined}
           nextBtnAction={undefined}
@@ -500,7 +503,7 @@ const Main = observer(() => {
           : 
           <div className='mainAfterReviews' >
             <a className='mainLinkReview'
-            href='/review'>Дивитися всі відгуки про магазин</a>
+            href='/review'>{t('main.review_main_all')}</a>
           </div>
           }
         </div>

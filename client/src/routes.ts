@@ -157,6 +157,7 @@ export const publicRoutes = [
     exact: true,
     Component: AdminAuth
   },
+  
   {
     path: MAIN_ROUTE + 'ru',
     exact: true,

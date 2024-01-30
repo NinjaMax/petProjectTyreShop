@@ -18,7 +18,7 @@ export default class GoodsTyreStore {
     _reinforced:string[];
     _descriptions: {};
     _tyres_filter: any [] | null;
-    _product: {};
+    _product: {} | null;
     _totalCount: number;
     _ratingList:{[key: string]: number};
 
@@ -31,7 +31,7 @@ export default class GoodsTyreStore {
         this._season = [];
         this._diameter = [];
         this._tyres_filter = [];
-        this._product = {};
+        this._product = null;
         this._totalCount = 0;
         this._vehicle_type = [];
         this._studded = [];

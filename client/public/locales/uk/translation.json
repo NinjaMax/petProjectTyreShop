@@ -1,6 +1,13 @@
 {
     "main": {
-        "header": "Welcome to the app!"
+        "header": "Welcome to the app!",
+        "title_prod_main" : "ЛІДЕРИ ПРОДАЖУ",
+        "review_main" : "Відгуки про магазин",
+        "review_main_all" : "Дивитися всі відгуки про магазин"
+    },
+    "newsMainBox" : {
+        "news_box_title" : "Новини статті огляди",
+        "news_box_title_all" : "Дивитися всі новини"
     },
     "navBar": {
         "category_tyres": "Шини",
@@ -64,5 +71,77 @@
         "bonuse": "Бонусна програма",
         "articles": "Статті",
         "contact_address" : "Україна, м Харків 10012"
+    },
+    "categorySlyder" : {
+        "category_summer_tyre": "Літні шини",
+        "category_winter_tyre": "Зимові шини",
+        "category_allseason_tyre": "Всесезонні шини",
+        "category_wheels": "Диски"
+    },
+    "catalogPage" : {
+        "bread_crumbs_site": "Інтернет-магазин SkyParts",
+        "bread_crumbs_tyre": "Шини",
+        "bread_crumbs_wheel": "Диски",
+        "review_title_custm": "Відгуки покупців",
+        "review_goods_all": "Дивитися всі відгуки", 
+        "review_goods_no": "Нажаль наразі немає відгуків"
+    },
+    "catalogTyre" : {
+        "title":  "Шини",
+        "brand_rating_one": "рейтинг на основі", 
+        "brand_rating_two": "відгуків",
+        "popular_size" : "Популярні розміри:",
+        "popular_request" : "Популярні запити:", 
+        "sort_title" : "Сортування:",
+        "sort_cheapest" : "Від дешевих до дорогих",
+        "sort_expensive" : "Від дорогих до дешевих",
+        "sort_rating" : "рейтингу",
+        "sort_name": "назві",
+        "sort_promotion" : "акційній ціні"
+    },
+    "card" : {
+        "review": "відгуки",
+        "goods_code": "код товара:",
+        "bonus": "бонусів",
+        "not_available" : "немає в наявності",
+        "buy" : "КУПИТИ",
+        "title_country" : "Країна виробник:",
+        "not_available_big" : "НЕМАЄ В НАЯВНОСТІ"
+    },
+    "loadMore" : {
+        "title" : "Показати ще товари"
+    },
+    "benefitsBox" : {
+        "online_support_head" : "Допомога єкспертів",
+        "online_support_text" : "Кваліфікована та швидка допомога єкспертів. Допомога в підборі, допомога в оформленні замовлення", 
+        "online_delivery_head" : "Оперативна доставка",
+        "online_delivery_text" : "Доставка різними перевізниками: Нова Пошта, Делівері. Самовивіз зі складу обо курєрська доставка",
+        "online_handshake_head" : "Нам довіряють",
+        "online_handshake_text" : "Партнерські відносини з прямими постачальниками. Позитивні та чесні відгуки покупців"
+    }, 
+    "filterMainTyre" : {
+        "filter_height_title" : "Профіль",
+        "filter_diameter_title" : "Діаметр",
+        "filter_btn_name" : "ПІДІБРАТИ"
+    },
+    "filterCatalogTyre" : {
+        "filter_title" : "Фільтр Шин",
+        "filter_show_btn" : "Показати",
+        "filter_height_title" : "Профіль", 
+        "filter_diameter_title" : "Діаметр",
+        "filter_vehicle_type_title" : "Тип транспорту", 
+        "filter_speed_index_title" : "Індекс швидкості", 
+        "filter_load_index_title" : "Індекс навантаження", 
+        "filter_homologation_title" : "Омологація",
+        "filter_reinforced_title" : "Високонагруженість", 
+        "filter_axis_view_title" : "Вид вісі"
+    },
+    "filterMainWheel" : {
+        "filter_boltCount_title" : "Кількість болтів",
+        "filter_diameter_title" : "Діаметр",
+        "filter_btn_name" : "ПІДІБРАТИ"
+    },
+    "reviewStore" : {
+        "grade" : "Оцінка:"
     }
 }

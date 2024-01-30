@@ -162,6 +162,11 @@ export class WheelsController {
     );
   };
 
+  @Get('/fullname/:fullname')
+  findWheelsFullName(@Param('fullname') fullname: string) {
+    return this.wheelsService.findWheelsByFullName(fullname);
+  }
+
   @Get('/paramid/:id')
   findWheelsByParamId(@Param('id') id: string) {
     return this.wheelsService.findWheelsByIdParam(id);

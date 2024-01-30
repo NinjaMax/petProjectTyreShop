@@ -17,7 +17,7 @@ export default class GoodsWheelStore {
     _pcd2: string[];
     _descriptions: {};
     _wheels_filter: [];
-    _product: {};
+    _product: {} | null;
     _totalCount: number;
     _ratingList:{[key: string]: number};
     constructor() {  
@@ -29,7 +29,7 @@ export default class GoodsWheelStore {
         this._bolt_count = [];
         this._diameter = [];
         this._wheels_filter = [];
-        this._product = {};
+        this._product = null;
         this._totalCount = 0;
         this._type = [];
         this._bolt_count_pcd = [];

@@ -1565,10 +1565,18 @@ export class TyresService {
       const getTyre = get_all_tyres.find((item: any) =>
         this.translitService.createStringUrl(item.full_name) == fullname
       );
-      const grtTyresId = await this.tyresRepository.findByPk(getTyre.id, {
-        include: { all: true },
-      });
-      return grtTyresId;
+      if (getTyre) {
+        const getTyresId = await this.tyresRepository.findByPk(getTyre.id, {
+          include: { all: true },
+        });
+        if (getTyresId) {
+          return getTyresId;
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',

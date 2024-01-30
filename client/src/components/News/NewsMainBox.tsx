@@ -4,8 +4,10 @@ import { IArticle } from './types/Article.type';
 import { IArticleItem } from './types/ArticleItem.types';
 import { createStringUrl } from '../../services/stringUrl';
 import { NEWS_ROUTE } from '../../utils/consts';
+import { useTranslation } from 'react-i18next';
 
 const NewsMainBox = ({articlesArr, isNewsPage}: IArticle ) => {
+    const { t, i18n } = useTranslation();
 
     const openArticle = (e:any) => {
         localStorage.setItem('newsId', e.currentTarget.getAttribute('data-value'));
@@ -13,7 +15,7 @@ const NewsMainBox = ({articlesArr, isNewsPage}: IArticle ) => {
 
     return (
         <div className='newsMainBox'>
-            <div className='newsTitle'>Новини статті огляди</div>
+            <div className='newsTitle'>{t('newsMainBox.news_box_title')}</div>
             <div className="newsMainBoxList">
             {articlesArr ? articlesArr.map((article: IArticleItem) => (
             <a href={NEWS_ROUTE + '/' + createStringUrl(article.title.slice(0, article.title.length - 1))} 
@@ -40,7 +42,7 @@ const NewsMainBox = ({articlesArr, isNewsPage}: IArticle ) => {
              <div className='btnNewsMainContainer'>
                 <a className='btmNewsMainBox'
                     href='/news'
-                >Дивитися всі новини
+                >{t('newsMainBox.news_box_title_all')}
                 </a>
             </div>   
             : null

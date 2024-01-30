@@ -37,6 +37,13 @@ export class PropertiesModelController {
     return this.propertiesModelService.findAllTyresModelByBrand(+brand);
   };
 
+  @Get('/tyres/by-model')
+  findAllModelsByModel(@Query('brand_and_model') brand_and_model: string) {
+    return this.propertiesModelService.findAllTyresModelByModelName(
+      brand_and_model,
+    );
+  };
+
   @Patch('/tyres/model/update')
   update(@Body() updatePropertyDto: UpdatePropertyDto) {
     return this.propertiesModelService.updateTyreModel(updatePropertyDto);

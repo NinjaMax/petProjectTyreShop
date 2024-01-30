@@ -32,14 +32,17 @@ import {
   getTyresBrandRatingAvgSeason,  
   getTyresByFullName,  
   getTyresByIdParam, 
+  getTyresByModel, 
   getTyresCountReviewByBrand, 
   getTyresCountReviewByModel, 
   getTyresModelRatingAvg, 
   getTyresParamsByBrandAndSeason, 
   getTyresParamsBySeason, 
   getTyresRatingAvgIdAndIdmodel, 
+  getWheelByFullName, 
   getWheelsBrandRatingAvg, 
   getWheelsByIdParam, 
+  getWheelsByModel, 
   getWheelsCountReviewByBrand, 
   getWheelsCountReviewByModel, 
   getWheelsModelRatingAvg, 
@@ -107,21 +110,46 @@ const GoodsPage = observer(() => {
     const getProductByFullName = async () => {
       const getGoodsId: string = 
       JSON.parse(localStorage.getItem('goodsId')!);
-      console.log('GET_GOODS_ID: ', getGoodsId);
       if (!isMounted && !getGoodsId) {
+        //console.log('GET_PARAMS: ', params.goodsItem);
         const getProductByName = await getTyresByFullName(params.goodsItem);
+        const getProductTyreByModel = await getTyresByModel(params.goodsItem);
+        const getProductWheel = await getWheelByFullName(params.goodsItem);
+        const getProductWheelByModel = await getWheelsByModel(params.goodsItem);
+        // console.log('GET_TYRE_BY_FULL_NAME: ', getProductByName);
+        // console.log('GET_TYRE_BY_MODEL: ', getProductTyreByModel);
         if (getProductByName) {
           goodsTyre.setProduct(getProductByName);
-          history.push(params.goodsItem)
+          //localStorage.setItem('goodsId', getProductByName?.id);
+          //history.push(params.goodsItem);
         }
-        console.log('GET_PRODUCT_FN: ', getProductByName);
+        if (getProductTyreByModel) {
+          //localStorage.setItem('goodsId', getProductTyreByModel?.tyres[0]?.id);
+          goodsTyre.setProduct(getProductTyreByModel?.tyres[0]);
+          //history.push(params.goodsItem);
+        }
+        if (getProductWheel) {
+          goodsWheel.setProduct(getProductWheel);
+          //history.push(params.goodsItem);
+        }
+        if (getProductWheelByModel) {
+          //goodsWheel.setProduct(getProductWheelByModel?.wheels[0]);
+          localStorage.setItem('goodsId', getProductWheelByModel?.wheels[0]?.id);
+          //history.push(params.goodsItem);
+        }
+        if (!getProductByName && 
+          !getProductTyreByModel && 
+          !getProductWheel && 
+          !getProductWheelByModel) {
+            history.push(NOT_FOUND_ROUTE);
+        }
       }
     };
     getProductByFullName();
     return () => {
       isMounted = true;
     };
-  },[goodsTyre, history, params.goodsItem]);
+  },[goodsTyre, goodsWheel, history, params.goodsItem]);
   
   useEffect(() => {
     let isMounted = false;
@@ -157,70 +185,74 @@ const GoodsPage = observer(() => {
       JSON.parse(localStorage.getItem('goodsId')!);
     let i: number = 0; 
     while (taskProduct.length > i) {
-      if (!isMounted && taskProduct[i] === getTyresByIdParam && getGoodsId) {
+      if (!isMounted && taskProduct[i] === getTyresByIdParam) {
         const getProduct: any = await taskProduct[i](getGoodsId);
-        goodsTyre.setProduct(getProduct);
+        if (getProduct) {
+          goodsTyre.setProduct(getProduct);
+        }
       }
-      if (!isMounted && taskProduct[i] === getWheelsByIdParam && getGoodsId) {
+      if (!isMounted && taskProduct[i] === getWheelsByIdParam) {
         const getProductWheel: any = await taskProduct[i](getGoodsId);
-        goodsWheel.setProduct(getProductWheel);
+        if (getProductWheel) {
+          goodsWheel.setProduct(getProductWheel);
+        } 
       }
-      if (!isMounted && taskProduct[i] === getTyresModelRatingAvg && goodsTyre._product.id_model) {
+      if (!isMounted && taskProduct[i] === getTyresModelRatingAvg && goodsTyre?._product?.id_model) {
         const getRatingModel: any = await taskProduct[i](
-          goodsTyre._product.id_model
+          goodsTyre?._product?.id_model
         );
         setRatingModelAvg(getRatingModel[0]); 
       }
       if (!isMounted && taskProduct[i] === getTyresRatingAvgIdAndIdmodel && 
-        goodsTyre._product.id_model && goodsTyre._product.id ) {
+        goodsTyre?._product?.id_model && goodsTyre?._product?.id ) {
         const getTyreRatingIdAndIdModel: any = await taskProduct[i](
-          goodsTyre._product.id,
-          goodsTyre._product.id_model
+          goodsTyre?._product?.id,
+          goodsTyre?._product?.id_model
         );
         if(getTyreRatingIdAndIdModel) {
           setRatingIdAndModelAvg(getTyreRatingIdAndIdModel[0]);
         }
       }
       if (!isMounted && taskProduct[i] === getWheelsModelRatingAvg && 
-        goodsWheel._product.id_model) {
+        goodsWheel?._product?.id_model) {
         const getWheelRatingModel: any = await taskProduct[i](
-          goodsWheel._product.id_model
+          goodsWheel?._product?.id_model
         );
         setRatingModelAvg(getWheelRatingModel[0]);
       }
       if (!isMounted && taskProduct[i] === getWheelsRatingAvgIdAndIdmodel &&
-        goodsWheel._product.id_model && goodsWheel._product.id
+        goodsWheel?._product?.id_model && goodsWheel?._product?.id
         ) 
         {
         const getWheelRatingIdAndIdModel: any = await taskProduct[i](
-          goodsWheel._product.id,
-          goodsWheel._product.id_model
+          goodsWheel?._product?.id,
+          goodsWheel?._product?.id_model
         );
         if(getWheelRatingIdAndIdModel) {
           setRatingIdAndModelAvg(getWheelRatingIdAndIdModel[0]);
         }
       }
-      if (!isMounted && taskProduct[i] === getTyresBrandRatingAvg && goodsTyre._product.id_brand) {
+      if (!isMounted && taskProduct[i] === getTyresBrandRatingAvg && goodsTyre?._product?.id_brand) {
         const getRatingBrand: any = await taskProduct[i](
-          goodsTyre._product.id_brand
+          goodsTyre?._product?.id_brand
         );
         setRatingBrandAvg(getRatingBrand);
       }
-      if (!isMounted && taskProduct[i] === getWheelsBrandRatingAvg && goodsWheel._product.id_brand) {
+      if (!isMounted && taskProduct[i] === getWheelsBrandRatingAvg && goodsWheel?._product?.id_brand) {
         const getWheelRatingBrand: any = await taskProduct[i](
-          goodsWheel._product.id_brand
+          goodsWheel?._product?.id_brand
         );
         setRatingBrandAvg(getWheelRatingBrand);
       }
-      if (!isMounted && taskProduct[i] === getTyresBrandRatingAvgSeason && goodsTyre._product.id_brand) {
+      if (!isMounted && taskProduct[i] === getTyresBrandRatingAvgSeason && goodsTyre?._product?.id_brand) {
         const getRatingSummer: any = await taskProduct[i](
-          goodsTyre._product.id_brand, 1
+          goodsTyre?._product?.id_brand, 1
         );
         const getRatingWinter: any = await taskProduct[i](
-          goodsTyre._product.id_brand, 2
+          goodsTyre?._product?.id_brand, 2
         );
         const getRatingAllSeason: any = await taskProduct[i](
-          goodsTyre._product.id_brand, 3
+          goodsTyre?._product?.id_brand, 3
         );
         setRatingSummerAvg(getRatingSummer[0]);
         setRatingWinterAvg(getRatingWinter[0]);
@@ -234,31 +266,31 @@ const GoodsPage = observer(() => {
       //   const getCountWheelBrand: any = await taskProduct[i](goodsWheel._product.id_brand);
       //   setReviewCountBrand(getCountWheelBrand);
       // }
-      if (!isMounted && taskProduct[i] === getTyresCountReviewByModel && goodsTyre._product.id_model) {
-        const getCountModel: any = await taskProduct[i](goodsTyre._product.id_model);
+      if (!isMounted && taskProduct[i] === getTyresCountReviewByModel && goodsTyre?._product?.id_model) {
+        const getCountModel: any = await taskProduct[i](goodsTyre?._product?.id_model);
         setReviewCountModel(getCountModel);
       }
-      if (!isMounted && taskProduct[i] === getWheelsCountReviewByModel && goodsWheel._product.id_model) {
-        const getCountWheelModel: any = await taskProduct[i](goodsWheel._product.id_model);
+      if (!isMounted && taskProduct[i] === getWheelsCountReviewByModel && goodsWheel?._product?.id_model) {
+        const getCountWheelModel: any = await taskProduct[i](goodsWheel?._product?.id_model);
         setReviewCountModel(getCountWheelModel);
       }
-      if (!isMounted && taskProduct[i] === createTyreReview && dataReview && goodsTyre._product) {
+      if (!isMounted && taskProduct[i] === createTyreReview && dataReview && goodsTyre?._product) {
         if (dataReview) {
           const createReviewTyre: any = await taskProduct[i](
           dataReview,
-          goodsTyre._product.id,
-          goodsTyre._product.tyre_brand.id_brand,
-          goodsTyre._product.tyre_model.id_model,
-          goodsTyre._product.id_season,
+          goodsTyre?._product?.id,
+          goodsTyre?._product?.tyre_brand.id_brand,
+          goodsTyre?._product?.tyre_model.id_model,
+          goodsTyre?._product?.id_season,
           customer._customer.id_customer,
           customer._customer.picture ?? customer._customer.profile_image_url,
-          goodsTyre.ratingList.rating_dry_road,
-          goodsTyre.ratingList.rating_wet_road,
-          goodsTyre.ratingList.rating_snow_road,
-          goodsTyre.ratingList.rating_ice_road,
-          goodsTyre.ratingList.rating_cross_country,
-          goodsTyre.ratingList.rating_treadwear,
-          goodsTyre.ratingList.rating_price_quality
+          goodsTyre?.ratingList.rating_dry_road,
+          goodsTyre?.ratingList.rating_wet_road,
+          goodsTyre?.ratingList.rating_snow_road,
+          goodsTyre?.ratingList.rating_ice_road,
+          goodsTyre?.ratingList.rating_cross_country,
+          goodsTyre?.ratingList.rating_treadwear,
+          goodsTyre?.ratingList.rating_price_quality
           );
           if (createReviewTyre?.status === 201) {
             setDataReview(null);
@@ -274,13 +306,13 @@ const GoodsPage = observer(() => {
           }
         } 
       }
-      if (!isMounted && taskProduct[i] === createWheelReview && dataReview && goodsWheel._product) {
+      if (!isMounted && taskProduct[i] === createWheelReview && dataReview && goodsWheel?._product) {
         if (dataReview) {
           const createReviewWheel: any = await taskProduct[i](
           dataReview,
-          goodsWheel._product.id,
-          goodsWheel._product.wheel_brand.id_brand,
-          goodsWheel._product.wheel_model.id_model,
+          goodsWheel?._product?.id,
+          goodsWheel?._product?.wheel_brand.id_brand,
+          goodsWheel?._product?.wheel_model.id_model,
           customer._customer.id_customer,
           customer._customer.picture ?? customer._customer.profile_image_url,
           );
@@ -299,77 +331,77 @@ const GoodsPage = observer(() => {
         } 
       }
       if (!isMounted && taskProduct[i] === getTyresParamsByBrandAndSeason 
-        && goodsTyre._product.id_brand && goodsTyre._product.id_season) {
+        && goodsTyre?._product?.id_brand && goodsTyre?._product?.id_season) {
         const getTyresParamsByBrandSeason: any = await taskProduct[i](
-          goodsTyre._product.params.params,
-          goodsTyre._product.tyre_brand.brand,
-          goodsTyre._product.season.season_ua,
+          goodsTyre?._product?.params?.params,
+          goodsTyre?._product?.tyre_brand?.brand,
+          goodsTyre?._product?.season?.season_ua,
         );
         //console.log('SIMILAR_BRAND_GOODS_PARAMS: ', getTyresParamsByBrandSeason);
         setSimilarBrandGoods(getTyresParamsByBrandSeason);
       }
       if (!isMounted && taskProduct[i] === getWheelsParamsByBrand 
-        && goodsWheel._product.id_brand) {
+        && goodsWheel?._product?.id_brand) {
         const getWheelsParamsByBrand: any = await taskProduct[i](
-          goodsWheel._product.wheel_brand.brand,
-          goodsWheel._product.width.width,
-          goodsWheel._product.bolt_count_pcd.bolt_count_pcd,
-          goodsWheel._product.dia.dia,
-          goodsWheel._product.et.et,
-          goodsWheel._product.diameter.diameter,
+          goodsWheel?._product?.wheel_brand.brand,
+          goodsWheel?._product?.width.width,
+          goodsWheel?._product?.bolt_count_pcd.bolt_count_pcd,
+          goodsWheel?._product?.dia.dia,
+          goodsWheel?._product?.et.et,
+          goodsWheel?._product?.diameter.diameter,
         );
         //console.log('SIMILAR_BRAND_GOODS_PARAMS: ', getWheelsParamsByBrand);
         setSimilarBrandGoods(getWheelsParamsByBrand);
       }
       if (!isMounted && taskProduct[i] === getTyresParamsBySeason 
-        && goodsTyre._product.id_brand && goodsTyre._product.id_season) {
+        && goodsTyre?._product?.id_brand && goodsTyre?._product?.id_season) {
         const getTyresParamsBySeason: any = await taskProduct[i](
-          goodsTyre._product.params.params,
-          goodsTyre._product.season.season_ua,
+          goodsTyre?._product?.params.params,
+          goodsTyre?._product?.season.season_ua,
         );
         //console.log('SIMILAR_GOODS_PARAMS: ', getTyresParamsBySeason);
         setSimilarGoods(getTyresParamsBySeason);
       }
       if (!isMounted && taskProduct[i] === getWheelsParamsBy 
-        && goodsWheel._product.id_width && goodsWheel._product.id_dia &&
-        goodsWheel._product.id_bolt_count_pcd
+        && goodsWheel?._product?.id_width && goodsWheel?._product?.id_dia &&
+        goodsWheel?._product?.id_bolt_count_pcd
         ) {
         const getWheelsParamsBy: any = await taskProduct[i](
-          goodsWheel._product.width.width,
-          goodsWheel._product.bolt_count_pcd.bolt_count_pcd,
-          goodsWheel._product.dia.dia,
-          goodsWheel._product.et.et,
-          goodsWheel._product.diameter.diameter,
+          goodsWheel?._product?.width.width,
+          goodsWheel?._product?.bolt_count_pcd.bolt_count_pcd,
+          goodsWheel?._product?.dia.dia,
+          goodsWheel?._product?.et.et,
+          goodsWheel?._product?.diameter.diameter,
         );
         //console.log('SIMILAR_GOODS_PARAMS: ', getWheelsParamsBy);
         setSimilarGoods(getWheelsParamsBy);
       }
       if (!isMounted && taskProduct[i] === getAllTyresModelByBrand 
-        && goodsTyre._product.id_brand && goodsTyre._product.id_season) {
+        && goodsTyre?._product?.id_brand && goodsTyre?._product?.id_season) {
         const getTyresModelByBrand: any = await taskProduct[i](
-          goodsTyre._product.id_brand,
+          goodsTyre?._product?.id_brand,
         );
         //console.log('ALL_TYRES_MODEL_BY_BRAND: ', getTyresModelByBrand);
         setAllModelsBrand(getTyresModelByBrand);
       }
       if (!isMounted && taskProduct[i] === getAllWheelsModelByBrand 
-        && goodsWheel._product.id_brand && goodsWheel._product.id_model) {
+        && goodsWheel?._product?.id_brand && goodsWheel?._product?.id_model) {
         const getWheelsModelByBrand: any = await taskProduct[i](
-          goodsWheel._product.id_brand,
+          goodsWheel?._product?.id_brand,
         );
         //console.log('ALL_WHEELS_MODEL_BY_BRAND: ', getWheelsModelByBrand);
         setAllModelsBrand(getWheelsModelByBrand);
       }
       if (!isMounted && taskProduct[i] === getAllTyresParamsByModel 
-        && goodsTyre._product.id_brand && goodsTyre._product.id_season) {
+        && goodsTyre?._product?.id_brand && goodsTyre?._product?.id_season) {
         const getTyresParamsByModel: any = await taskProduct[i](
-          goodsTyre._product.id_model,
+          goodsTyre?._product?.id_model,
         );
         //console.log('ALL_TYRES_MODEL_PARAMS: ', getTyresParamsByModel);
         setAllParamsModel(getTyresParamsByModel);
       }
       if (!isMounted && taskProduct[i] === getAllTyresDiametersByModel 
-        && goodsTyre._product.id_brand && goodsTyre._product.id_season) {
+        && goodsTyre?._product?.id_brand && goodsTyre?._product?.id_season) {
         const getTyresDiametersByModel: any = await taskProduct[i](
           goodsTyre._product.id_model,
         );
@@ -377,14 +409,13 @@ const GoodsPage = observer(() => {
         setAllDiametersModel(getTyresDiametersByModel);
       }
       if (!isMounted && taskProduct[i] === getAllWheelsDiametersByBrand 
-        && goodsWheel._product.id_brand && goodsWheel._product.id_diameter) {
+        && goodsWheel?._product?.id_brand && goodsWheel?._product?.id_diameter) {
         const getWheelsDiametersByBrand: any = await taskProduct[i](
-          goodsWheel._product.id_brand,
+          goodsWheel?._product?.id_brand,
         );
         //console.log('ALL_WHEEL_MODEL_PARAMS_DIAMETER: ', getWheelsDiametersByBrand);
         setAllDiametersModel(getWheelsDiametersByBrand);
       }
-
       const task = taskProduct.shift();
       task();
       await yieldToMain();
@@ -397,26 +428,29 @@ const GoodsPage = observer(() => {
     };
   },
   [
-    createReview,
-    customer._customer.id_customer,
-    customer._customer.picture,
-    customer._customer.profile_image_url,
-    dataReview,
-    goodsTyre,
-    goodsWheel, 
-    page
+    createReview, 
+    customer._customer.id_customer, 
+    customer._customer.picture, 
+    customer._customer.profile_image_url, 
+    dataReview, 
+    goodsTyre, 
+    goodsWheel,
+    goodsTyre.product,
+    goodsWheel.product,
+    goodsTyre._product,
+    goodsWheel._product,
   ]);
   
   useEffect(() => {
     let isMounted = false;
     const getPathCard = async () => {
       if (!isMounted) {
-        if (goodsTyre._product.full_name) {
+        if (goodsTyre._product?.full_name) {
           const getTyreUrl: string = 
-          createStringUrl(goodsTyre._product.full_name);
+          createStringUrl(goodsTyre._product?.full_name);
           const getTyreModelUrl = createStringUrl(
-            goodsTyre._product.tyre_brand?.brand + '-' 
-            + goodsTyre._product.tyre_model?.model);
+            goodsTyre._product?.tyre_brand?.brand + '-' 
+            + goodsTyre._product?.tyre_model?.model);
           //console.log('PRODUCT_STRING_URL:', getTyreUrl);
           if (match?.params.goodsItem !== getTyreUrl && 
             match?.params.goodsItem !== getTyreModelUrl) {
@@ -426,12 +460,12 @@ const GoodsPage = observer(() => {
             setParamsModel(true);
           }
         }
-        if (goodsWheel._product.full_name) {
+        if (goodsWheel._product?.full_name) {
           const getWheelUrl: string = 
-          createStringUrl(goodsWheel._product.full_name);
+          createStringUrl(goodsWheel?._product?.full_name);
           const getWheelBrandUrl = createStringUrl(
-            goodsWheel._product.wheel_brand?.brand + '-' 
-            + goodsWheel._product.wheel_model?.model);
+            goodsWheel._product?.wheel_brand?.brand + '-' 
+            + goodsWheel._product?.wheel_model?.model);
           //console.log('PRODUCT_STRING_URL:', getTyreUrl);
           if (match?.params.goodsItem !== getWheelUrl && 
             match?.params.goodsItem !== getWheelBrandUrl) {
@@ -451,14 +485,14 @@ const GoodsPage = observer(() => {
       isMounted = true;
     };
   },[
-    goodsTyre._product.full_name,
-    goodsTyre._product.tyre_brand?.brand, 
-    goodsTyre._product.tyre_model?.model, 
-    goodsTyre._product.wheel_brand?.brand, 
-    goodsTyre._product.wheel_model?.model, 
-    goodsWheel._product.full_name, 
-    goodsWheel._product.wheel_brand?.brand, 
-    goodsWheel._product.wheel_model?.model, 
+    goodsTyre._product?.full_name,
+    goodsTyre._product?.tyre_brand?.brand, 
+    goodsTyre._product?.tyre_model?.model, 
+    goodsTyre._product?.wheel_brand?.brand, 
+    goodsTyre._product?.wheel_model?.model, 
+    goodsWheel._product?.full_name, 
+    goodsWheel._product?.wheel_brand?.brand, 
+    goodsWheel._product?.wheel_model?.model, 
     history, 
     match?.params.goodsItem
   ]) ;
@@ -560,8 +594,8 @@ const GoodsPage = observer(() => {
   // console.log('RATING_MODEL_AVRG: ', ratingModelAvg?.avgRatingModel);
   // console.log("RATING_AVRG_ID_AND_ID_MODEL: ", ratingIdAndIdModelAvg?.avgRatingModel);
   //console.log('RATING_SUMMER: ', ratingSummerAvg);
-  // console.log('PRODUCT_WHEEL: ', goodsWheel?._product);
-  // console.log('PRODUCT_TYRE: ', goodsTyre?._product);
+  console.log('PRODUCT_WHEEL: ', goodsWheel?._product);
+  console.log('PRODUCT_TYRE: ', goodsTyre?._product);
   // console.log('LOCALSORAGE_GOODS_ID: ',JSON.parse(localStorage.getItem('goodsId')!));
   // console.log('THUMB_UP:', thumbUp);
   // console.log('THUMB_DOWN:', thumbDown);
@@ -616,36 +650,36 @@ const GoodsPage = observer(() => {
             titleGoodsTab:"ПИТАННЯ ТА ВІДПОВІДІ",
             value:"pitannja",
             checked: changeTabGoods,
-            reviewCount: goodsWheel._product?.question?.length ?? 
-            goodsTyre._product?.question?.length ?? 0
+            reviewCount: goodsWheel?._product?.question?.length ?? 
+            goodsTyre?._product?.question?.length ?? 0
             }
           ]}
             >
             {changeTabGoods === "vseProTovar" && 
-              goodsTyre._product.length !== 0 ?
+              goodsTyre?._product ?
                 <AllAboutProduct 
                   paramsModel={paramsModel}
                   paramsModelPrice={allDiametersModel}
-                  goods={goodsTyre._product}
+                  goods={goodsTyre?._product}
                   countModelReview={goodsTyre?._product?.reviews?.length}
                   avgRatingModel={ratingIdAndIdModelAvg?.avgRatingModel}
                 />
             :null}
             {changeTabGoods === "vseProTovar" && 
-              goodsWheel._product.length !== 0 ?
+              goodsWheel?._product ?
                 <AllAboutProduct 
                   paramsModel={paramsModel}
                   paramsModelPrice={allDiametersModel}
-                  goods={goodsWheel._product}
+                  goods={goodsWheel?._product}
                   countModelReview={goodsWheel?._product?.reviews?.length}
                   avgRatingModel={ratingIdAndIdModelAvg?.avgRatingModel}
                 />
             :null}
-            {changeTabGoods === "charakteristiki" && goodsTyre._product ?
-              <PropertiesGoods product={goodsTyre._product}/> 
+            {changeTabGoods === "charakteristiki" && goodsTyre?._product ?
+              <PropertiesGoods product={goodsTyre?._product}/> 
             :null}
-            {changeTabGoods === "charakteristiki" && goodsWheel._product ?
-              <PropertiesWheelGoods product={goodsWheel._product}/>
+            {changeTabGoods === "charakteristiki" && goodsWheel?._product ?
+              <PropertiesWheelGoods product={goodsWheel?._product}/>
             : null
             }
           {changeTabGoods === "vidguki" ?
@@ -654,9 +688,9 @@ const GoodsPage = observer(() => {
                 {goodsTyre?._product?.tyre_brand?.brand ?
                 <span>
                   Відгуки про шини {
-                  goodsTyre._product.tyre_brand.brand 
+                  goodsTyre?._product.tyre_brand.brand 
                   + '' 
-                  + goodsTyre._product.tyre_model.model
+                  + goodsTyre?._product.tyre_model.model
                   }
                 </span>
                 : null
@@ -664,9 +698,9 @@ const GoodsPage = observer(() => {
                 {goodsWheel?._product?.wheel_brand?.brand ?
                 <span>
                   Відгуки про диски {
-                  goodsWheel._product.wheel_brand.brand 
+                  goodsWheel?._product.wheel_brand.brand 
                   + '' 
-                  + goodsWheel._product.wheel_model.model
+                  + goodsWheel?._product.wheel_model.model
                   }
                 </span> 
                 : null 
@@ -696,8 +730,8 @@ const GoodsPage = observer(() => {
                 goodsTyre?._product?.reviews?.map((item: IReviewGoods) =>
                 <Fragment key={item.id_review}>
                 <ReviewsGoods 
-                  productFullName={goodsTyre._product.full_name}
-                  rating={goodsTyre._product.rating}
+                  productFullName={goodsTyre?._product.full_name}
+                  rating={goodsTyre?._product.rating}
                   reviewEntity={item}
                   reviewExtend={false}
                   btnLeft={undefined}
@@ -713,8 +747,8 @@ const GoodsPage = observer(() => {
                 goodsWheel?._product?.reviews?.map((item: IReviewGoods) =>
                 <Fragment key={item.id_review}>
                 <ReviewsGoods 
-                  productFullName={goodsWheel._product.full_name}
-                  rating={goodsWheel._product.rating}
+                  productFullName={goodsWheel?._product.full_name}
+                  rating={goodsWheel?._product.rating}
                   reviewEntity={item}
                   reviewExtend={false}
                   btnLeft={undefined}

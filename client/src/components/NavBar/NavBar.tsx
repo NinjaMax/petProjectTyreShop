@@ -275,6 +275,7 @@ const NavBar = observer(() => {
   const chooseLanguage = (e: any) => {
     const langChoose: string = e.target.value;
     i18n.changeLanguage(langChoose);
+    document.location.reload();
   };
  
   return (

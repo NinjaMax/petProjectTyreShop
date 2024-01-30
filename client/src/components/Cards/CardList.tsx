@@ -13,10 +13,12 @@ import { MAIN_ROUTE } from '../../utils/consts';
 import { getTyresRatingAvgIdAndIdmodel, getWheelsRatingAvgIdAndIdmodel } from '../../restAPI/restGoodsApi';
 import { createStringUrl } from '../../services/stringUrl';
 import ButtonAction from '../buttons/ButtonAction';
+import { useTranslation } from 'react-i18next';
 
 const CardList = ({goods, forOrder, priceItem, countEvent, checkOrders}: ICard) => {
     const [ratingModel, setRatingModel] = useState<IRatingAvg>()
     const history = useHistory();
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         let isMounted = false;
@@ -100,7 +102,8 @@ const CardList = ({goods, forOrder, priceItem, countEvent, checkOrders}: ICard) 
                 {!forOrder ?
                     <div className="tyresCardCountryList">
                         <FlagsIcon
-                            country={goods?.country} 
+                            title='Країна виробник:'
+                            country={i18n.resolvedLanguage === 'uk' ? goods?.country.country_manufacturer_ua : goods?.country.country_manufacturer} 
                             year={goods?.year}
                         />
                     </div>

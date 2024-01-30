@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../css/Reviews/ReviewStore.css';
 import Rating from '../ux/Rating';
+import { useTranslation } from 'react-i18next';
 //import customerReview from '../../assets/icons/customer64.png';
 //import ReviewAnswer from '../question/ReviewAnswer';
 //import DotSite from '../ux/DotSite';
@@ -13,12 +14,13 @@ type IReviewStoreData = {
         email?: string,
         rating?: number,
         createdAt?: any,
-        //createdAt?: string | number | Date,
         customer_pictures?: string
     }
 };
 
 const ReviewStore = ({storeData}: IReviewStoreData) => {
+    const { t, i18n } = useTranslation();
+
     return (
     <div className='reviewStore'>  
         <div className="reviewsStoreContainer">
@@ -31,7 +33,7 @@ const ReviewStore = ({storeData}: IReviewStoreData) => {
                     {storeData?.name}
                 </div>
                 <div className='ratingStoreReview'>
-                    Оцінка:
+                    {t('reviewStore.grade')}
                     <Rating 
                         numScore={storeData?.rating}
                         disabled={true}

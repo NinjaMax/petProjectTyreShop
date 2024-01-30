@@ -15,6 +15,7 @@ import { addGoodsToBasket, createBasket, getBasketById, getStorageByIdParam, get
 import { tyreBrandLogo } from '../../services/tyreBrandImg.service';
 import SpinnerCarRot from '../spinners/SpinnerCarRot';
 import Rating from '../ux/Rating';
+import { useTranslation } from 'react-i18next';
 
 type RatingBrandTyre = {
     count: number,
@@ -33,8 +34,8 @@ const CatalogTyres = observer(() => {
     const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem[] | null>([]);
     const [tyreBrandDesc, setTyresBrandDesc] = useState<DescTyreBrand>();
     const [tyreRatingAvr, setTyreRatingAvr] = useState<RatingBrandTyre>();
-    //const [goodsCat, setGoodsCat] = useState([]);
     const {goodsTyre, page, filter, customer} = useContext<any | null>(Context);
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         let isMounted = false;
@@ -150,7 +151,7 @@ const CatalogTyres = observer(() => {
 
     return (
         <div>
-            <h2>{`Шини ${filter.season && !filter.season.includes(',') ? `${filter.season}` : ''} ${filter.studded && !filter.studded.includes(',') ? `${filter.studded}` : ''} ${filter.vehicle_type && !filter.vehicle_type.includes(',') ? `${filter.vehicle_type}` : ''} ${filter.brands && !filter.brands.includes(',') ? `${filter.brands}` : ''} ${filter.width ? `${filter.width}` : ''} ${filter.height ? `/${filter.height}` : ''} ${filter.diameter ? `R${filter.diameter}` : ''}`}</h2>
+            <h2>{`${t('catalogTyre.title')} ${filter.season && !filter.season.includes(',') ? `${filter.season}` : ''} ${filter.studded && !filter.studded.includes(',') ? `${filter.studded}` : ''} ${filter.vehicle_type && !filter.vehicle_type.includes(',') ? `${filter.vehicle_type}` : ''} ${filter.brands && !filter.brands.includes(',') ? `${filter.brands}` : ''} ${filter.width ? `${filter.width}` : ''} ${filter.height ? `/${filter.height}` : ''} ${filter.diameter ? `R${filter.diameter}` : ''}`}</h2>
             { filter.brands && !filter.brands.includes(',') ?
                 <div>
                     <img className='cataloTyresImg' src={tyreBrandLogo(filter.brands) ?? ''} alt='tyreBrandLogo'/>
@@ -159,13 +160,13 @@ const CatalogTyres = observer(() => {
                         numScore={tyreRatingAvr?.rows[0]?.avgRatingBrand ?? 0}
                         disabled={true}
                     />
-                    <span>рейтинг на основі {tyreRatingAvr?.count} відгуків</span>
+                    <span>{t('catalogTyre.brand_rating_one')} {tyreRatingAvr?.count} {t('catalogTyre.brand_rating_two')}</span>
                 </div> 
                 : null  
             }
             <div className='popularCatalogTyre'>
-                <div>Популярні розміри:<PopularSizeTyre/></div>
-                <div>Популярні запити:
+                <div>{t('catalogTyre.popular_size')}<PopularSizeTyre/></div>
+                <div>{t('catalogTyre.popular_request')}
                     <PopularRequests
                         entityLink={[
                         { link: '/tyres/lіtnya/w195/h65/r15', title: '195/65 R15 літо'},
@@ -178,12 +179,12 @@ const CatalogTyres = observer(() => {
                 </div>
             </div> 
             <div className='sortBtnCatalog'>
-                <span>Сортування:</span>
+                <span>{t('catalogTyre.sort_title')}</span>
                 <SelectRadio
                     activeOptions={sortTyresGoods} 
                     radioData={{ 
                         value: "vidDeshevih", 
-                        radioName: "Від дешевих до дорогих",
+                        radioName: t('catalogTyre.sort_cheapest'),
                         name: "sortTyreCatalog",
                     }}
                     direction={"row"} />
@@ -191,7 +192,7 @@ const CatalogTyres = observer(() => {
                     activeOptions={sortTyresGoods} 
                     radioData={{ 
                         value: "vidDorogih", 
-                        radioName: "Від дорогих до дешевих",
+                        radioName: t('catalogTyre.sort_expensive'),
                         name: "sortTyreCatalog",
                     }}
                     direction={"row"} />
@@ -199,7 +200,7 @@ const CatalogTyres = observer(() => {
                     activeOptions={sortTyresGoods} 
                     radioData={{ 
                         value: "poRatingu", 
-                        radioName: "рейтингу", 
+                        radioName: t('catalogTyre.sort_rating'), 
                         name: "sortTyreCatalog",
                     }}
                     direction={"row"} />
@@ -207,7 +208,7 @@ const CatalogTyres = observer(() => {
                     activeOptions={sortTyresGoods} 
                     radioData={{ 
                         value: "poNazvi", 
-                        radioName: "назві", 
+                        radioName: t('catalogTyre.sort_name'), 
                         name: "sortTyreCatalog",
                     }}
                     direction={"row"} />
@@ -215,7 +216,7 @@ const CatalogTyres = observer(() => {
                     activeOptions={sortTyresGoods} 
                     radioData={{ 
                         value: "poAkcii",
-                        radioName: "акційній ціні",
+                        radioName: t('catalogTyre.sort_promotion'),
                         name: "sortTyreCatalog",
                     }}
                     direction={"row"} />               

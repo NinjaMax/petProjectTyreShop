@@ -329,6 +329,22 @@ const getTyresById = async (id:string) => {
     return data;
 }
 
+const getTyresByModel = async (brand_and_model:string) => {
+    const {data} = await $hostGet.get('properties/tyres/by-model',
+     {params: {brand_and_model: brand_and_model}})
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
+const getWheelsByModel = async (brand_and_model:string) => {
+    const {data} = await $hostGet.get('properties/wheel/by-model',
+     {params: {brand_and_model: brand_and_model}})
+    //localStorage.setItem('token', data.token)
+    //console.log('GET_TYRES_BY_ID: ', data )
+    return data;
+}
+
 const getWheelsById = async (id:string) => {
     const {data} = await $hostGet.get('/wheels/id',
      {params: {id: id}})
@@ -402,6 +418,15 @@ const getTyresByFullName = async (
 ) => {
     const {data} = await $hostGet.get(
         `tyres/fullname/${full_name}`,
+    )
+    return data;
+}
+
+const getWheelByFullName = async (
+    full_name: string,
+) => {
+    const {data} = await $hostGet.get(
+        `wheels/fullname/${full_name}`,
     )
     return data;
 }
@@ -1279,5 +1304,8 @@ export {
     getStorageByIdParam,
     getTyresBrandByName,
     getWheelsBrandByName,
-    getTyresByFullName
+    getTyresByFullName,
+    getWheelByFullName,
+    getWheelsByModel,
+    getTyresByModel
 }

@@ -12,6 +12,7 @@ import { seasonCar } from '../../../services/tyresPropsService';
 import { createStringUrl } from '../../../services/stringUrl';
 import { Link, Redirect, generatePath, useHistory, useParams } from 'react-router-dom';
 import { CATALOG_TYRES_ROUTE, MAIN_ROUTE } from '../../../utils/consts';
+import { useTranslation } from 'react-i18next';
 
 interface IFilterMainTyres {
     handleChange?(args0: any): void;
@@ -22,14 +23,12 @@ interface IFilterMainTyres {
 const FilterMainTyre = observer((
     {filterState, filterOpenCloseAction}: IFilterMainTyres) => {
     const {filter, goodsTyre, page} = useContext<any | null>(Context);
-    //const history = useHistory();
-    //const [handleItem, setHandleItem] = useState();
-
     const [stateWidth, setStateWidth]=useState<boolean>(false);
     const [stateHeight, setStateHeight]=useState<boolean>(false);
     const [stateDiameter, setStateDiameter]=useState<boolean>(false);
     const [stateBrand, setStateBrand]=useState<boolean>(false);
     const [stateSeason, setStateSeason]=useState<boolean>(false);
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         if(!filterState) {
@@ -54,14 +53,14 @@ const FilterMainTyre = observer((
             setStateWidth(!stateWidth);
             filterOpenCloseAction(!filterState);
         }
-        if (e.target.name === 'Профіль') {
+        if (e.target.name === 'Профіль' || 'Профиль') {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setHeight(e.target.value);
             setStateHeight(!stateHeight);
             filterOpenCloseAction(!filterState);
         }
-        if (e.target.name === 'Діаметр') {
+        if (e.target.name === 'Діаметр' || 'Диаметр') {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setDiameter(e.target.value);
@@ -112,12 +111,12 @@ const FilterMainTyre = observer((
             filter.setWidth(null);
             filter.setWidth_id(null);
         }
-        if (e.target.getAttribute('data-name') === 'Профіль') {
+        if (e.target.getAttribute('data-name') === 'Профіль' || 'Профиль') {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setHeight(null);
         }
-        if (e.target.getAttribute('data-name') === 'Діаметр') {
+        if (e.target.getAttribute('data-name') === 'Діаметр' || 'Диаметр') {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setDiameter(null);
@@ -139,56 +138,28 @@ const FilterMainTyre = observer((
             filter.setSeason(filter.chipSeason.join(','));
         }
     }  
-    // const filterBrandAdd = () => {
-    //     filter.setBrands(filter.chipBrands.join(','));
-    //     setStateBrand(!stateBrand);
-    // }
-    // const filterSeasonAdd = () => {
-    //     filter.setSeason(filter.chipSeason.join(','));
-    //     setStateSeason(!stateSeason);
-    // }
 
     const filterWidthClick = () => {
         filterOpenCloseAction(!filterState);
         setStateWidth(!stateWidth);
-        // setStateSeason(false);
-        // setStateBrand(false);
-        // setStateHeight(false);
-        // setStateDiameter(false);
     }
     const filterHeightClick = () => {
         filterOpenCloseAction(!filterState);
         setStateHeight(!stateHeight);
-        // setStateSeason(false);
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // setStateDiameter(false);
     }
     const filterDiameterClick = () => {
         filterOpenCloseAction(!filterState);
         setStateDiameter(!stateDiameter);
-        // setStateSeason(false);
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // setStateHeight(false);
     }
     const filterSeasonClick = () => {
         filterOpenCloseAction(!filterState);
         setStateSeason(!stateSeason);
-        // setStateBrand(false);
-        // setStateWidth(false);
-        // setStateHeight(false);
-        // setStateDiameter(false);
     }
 
     const filterBrandClick = () => {
         
         filterOpenCloseAction(!filterState);
         setStateBrand(!stateBrand);
-        // setStateSeason(false);
-        // setStateWidth(false);
-        // setStateHeight(false);
-        // setStateDiameter(false);
     }
 
     const pickUp = () => {
@@ -197,14 +168,6 @@ const FilterMainTyre = observer((
 
         document.location.assign('/tyres');
     };
-    // const handleChange = (e: any) => {
-        
-    //     setHandleItem(e.currentTarget.value);
-    // } 
-
-    // const filterClose = (e: any) => {
-    //     console.log('filter_close')
-    // }
     
     return (
         <div className='filterMain'>
@@ -234,7 +197,7 @@ const FilterMainTyre = observer((
             </FilterMainBtn>
             <FilterMainBtn 
                 width={150} 
-                titleFilter={'Профіль'}
+                titleFilter={t('filterMainTyre.filter_height_title')}
                 contentInfo={false}
                 filterAction={filterHeightClick}
                 filterState={stateHeight}
@@ -245,7 +208,7 @@ const FilterMainTyre = observer((
                 goodsTyre._height.map((heightItem: any) => (
                 <SelectFilterList
                     key={heightItem === '' || 'undefined' ? heightItem + 1 : heightItem}
-                    nameFilter={'Профіль'}
+                    nameFilter={t('filterMainTyre.filter_height_title')}
                     value={heightItem === '' || undefined ? '0' : heightItem}
                     items={heightItem === '' || undefined ? '0' : heightItem}
                     checked={filter._height}
@@ -258,7 +221,7 @@ const FilterMainTyre = observer((
             </FilterMainBtn>
             <FilterMainBtn 
                 width={150} 
-                titleFilter={'Діаметр'}
+                titleFilter={t('filterMainTyre.filter_diameter_title')}
                 filterAction={filterDiameterClick}
                 filterState={stateDiameter}
                 chipItem={filter._diameter}
@@ -270,7 +233,7 @@ const FilterMainTyre = observer((
                 (diameterItem: any) => (
                 <SelectFilterList
                     key={diameterItem}
-                    nameFilter={'Діаметр'}
+                    nameFilter={t('filterMainTyre.filter_diameter_title')}
                     value={diameterItem} 
                     items={diameterItem} 
                     checked={filter._diameter} 
@@ -333,7 +296,7 @@ const FilterMainTyre = observer((
             </FilterMainBtn>
             <div className='btnSelect'>
                 <ButtonAction 
-                    props={'ПІДІБРАТИ'} 
+                    props={t('filterMainTyre.filter_btn_name')} 
                     eventItem={pickUp}
                 />
             </div>

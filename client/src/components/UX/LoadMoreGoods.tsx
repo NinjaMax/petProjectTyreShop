@@ -1,14 +1,16 @@
 import React from 'react'
 import '../../css/UXcss/LoadMoreGoods.css';
 import { observer } from 'mobx-react-lite';
+import { useTranslation } from 'react-i18next';
 
 const LoadMoreGoods = observer(({loadMore}: any) => {
+  const { t, i18n } = useTranslation();
 
   return (
     <div className='loadMoreGoods'
         onClick={loadMore}>
         <i className='fa fa-refresh'></i>
-            <span>Показати ще товари</span>
+            <span>{t('loadMore.title')}</span>
     </div>
   )
 });

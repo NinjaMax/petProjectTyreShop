@@ -14,6 +14,7 @@ import { createStringUrl } from '../../services/stringUrl';
 import { homologationByCar } from '../../services/homologation';
 import { CATALOG_TYRES_ROUTE } from '../../utils/consts';
 import { useMediaQuery } from 'react-responsive';
+import { useTranslation } from 'react-i18next';
 
 interface IFilterCatTyres {
     handleChange?(args0: any): void;
@@ -38,6 +39,7 @@ const FilterCatalogTyres = observer((
     const [stateReinforced, setStateReinforced]=useState<boolean>(false);
     const [isOpenFilter, setIsOpenFilter]=useState<boolean>(false);
     const isMobileFilterTyre = useMediaQuery({ query: '(max-width: 1075px)' });
+    const { t, i18n } = useTranslation();
     const params = useParams<any>();
     const history = useHistory();
 
@@ -70,7 +72,7 @@ const FilterCatalogTyres = observer((
             page.setLoadMore(0);
             page.setOffset(0);
         }
-        if (e.target.name === 'Профіль') {
+        if (e.target.name === ('Профіль' || 'Профиль')) {
             filter.setHeight(e.target.value);
             filter.setChipHeight(
                 Array.from(
@@ -81,7 +83,7 @@ const FilterCatalogTyres = observer((
             page.setLoadMore(0);
             page.setOffset(0);
         }
-        if (e.target.name === 'Діаметр') {
+        if (e.target.name === 'Діаметр' || 'Диаметр') {
             filter.setDiameter(e.target.value);
             filter.setChipDiameter(
                 Array.from(
@@ -120,7 +122,7 @@ const FilterCatalogTyres = observer((
             filter.setChipSeason(Array.from(
                 new Set([...filter.chipSeason])));
         }
-        if (e.target.name === 'Тип транспорту' && e.target.checked) {
+        if (e.target.name === ('Тип транспорту' || 'Тип транспорта') && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             if (e.target.value === 'вантажні шини') {
@@ -130,15 +132,31 @@ const FilterCatalogTyres = observer((
                             'вантажні шини','універсальна','рульова','ведуча','причіпна'
                         ])
                     )
-                ); } 
-             else if (filter.chipVehicleType.includes('вантажні шини')) {
-            filter.setChipVehicleType(
+                ); 
+            } else if (e.target.value === 'грузовые шины') {
+                filter.setChipVehicleType(
                     Array.from(
                         new Set([...filter.chipVehicleType, 
-                            e.target.value,'вантажні шини'
+                            'грузовые шины','универсальная','рулевая','ведущая','прицепная'
                         ])
                     )
                 ); 
+            } else if (filter.chipVehicleType.includes('вантажні шини')) {
+                filter.setChipVehicleType(
+                    Array.from(
+                        new Set([...filter.chipVehicleType, 
+                            e.target.value, 'вантажні шини'
+                        ])
+                    )
+                );
+            } else if (filter.chipVehicleType.includes('грузовые шины')) {
+                    filter.setChipVehicleType(
+                            Array.from(
+                                new Set([...filter.chipVehicleType, 
+                                    e.target.value, 'грузовые шины'
+                                ])
+                            )
+                        ); 
             } else {
                 filter.setChipVehicleType(
                     Array.from(
@@ -146,7 +164,7 @@ const FilterCatalogTyres = observer((
                 ); 
             }
              
-        } else if (e.target.name === 'Тип транспорту') {
+        } else if (e.target.name === ('Тип транспорту' || 'Тип транспорта')) {
             const cancelVehicleType = filter.chipVehicleType.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipVehicleTypeItem(cancelVehicleType);
@@ -167,42 +185,42 @@ const FilterCatalogTyres = observer((
             filter.setChipStudded(Array.from(
                 new Set([...filter.chipStudded])));
         }
-        if (e.target.name === 'Індекс швидкості' && e.target.checked) {
+        if (e.target.name === ('Індекс швидкості' || 'Индекс скорости') && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setChipSpeedIndex(
                 Array.from(
                     new Set([...filter.chipSpeedIndex, e.target.value]))
             );     
-        } else if (e.target.name === 'Індекс швидкості') {
+        } else if (e.target.name === ('Індекс швидкості' || 'Индекс скорости')) {
             const cancelSpeedIndex = filter.chipSpeedIndex.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipSpeedIndexItem(cancelSpeedIndex);
             filter.setChipSpeedIndex(Array.from(
                 new Set([...filter.chipSpeedIndex])));
         }
-        if (e.target.name === 'Індекс навантаження' && e.target.checked) {
+        if (e.target.name === ('Індекс навантаження' || 'Индекс нагрузки') && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setChipLoadIndex(
                 Array.from(
                     new Set([...filter.chipLoadIndex, e.target.value]))
             );     
-        } else if (e.target.name === 'Індекс навантаження') {
+        } else if (e.target.name === ('Індекс навантаження' || 'Индекс нагрузки') && e.target.checked) {
             const cancelLoadIndex = filter.chipLoadIndex.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipLoadIndexItem(cancelLoadIndex);
             filter.setChipLoadIndex(Array.from(
                 new Set([...filter.chipLoadIndex])));
         }
-        if (e.target.name === 'Омологація' && e.target.checked) {
+        if (e.target.name === ('Омологація' || 'Омологация') && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setChipHomologation(
                 Array.from(
                     new Set([...filter.chipHomologation, e.target.value]))
             );     
-        } else if (e.target.name === 'Омологація') {
+        } else if (e.target.name === ('Омологація' || 'Омологация')) {
             const cancelHomologation = filter.chipHomologation.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipHomologationItem(cancelHomologation);
@@ -223,14 +241,14 @@ const FilterCatalogTyres = observer((
             filter.setChipRunFlat(Array.from(
                 new Set([...filter.chipRunFlat])));
         }
-        if (e.target.name === 'Високонагруженість' && e.target.checked) {
+        if (e.target.name === ('Високонагруженість' || 'Високонагруженость') && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setChipReinforced(
                 Array.from(
                     new Set([...filter.chipReinforced, e.target.value]))
             );     
-        } else if (e.target.name === 'Високонагруженість') {
+        } else if (e.target.name === ('Високонагруженість' || 'Високонагруженость')) {
             const cancelReinforced = filter.chipReinforced.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipReinforcedItem(cancelReinforced);
@@ -256,7 +274,7 @@ const FilterCatalogTyres = observer((
             filter.setWidth(null);
             filter.removeChipWidthItem();
         }
-        if (e.target.getAttribute('data-name') === 'Профіль') {
+        if (e.target.getAttribute('data-name') === ('Профіль' || 'Профиль')) {
             page.setLoadMore(0);
             page.setOffset(0);
             for( let key in params) {
@@ -268,7 +286,7 @@ const FilterCatalogTyres = observer((
             filter.removeChipHeightItem();
             params.height = undefined;
         }
-        if (e.target.getAttribute('data-name') === 'Діаметр') {
+        if (e.target.getAttribute('data-name') === ('Діаметр' || 'Диаметр')) {
             page.setLoadMore(0);
             page.setOffset(0);
             for( let key in params) {
@@ -305,17 +323,17 @@ const FilterCatalogTyres = observer((
                 new Set([...filter.chipSeason])));
             filter.setSeason(filter.chipSeason.join(','));
         }
-        if (e.target.getAttribute('data-name') === 'Тип транспорту') {
+        if (e.target.getAttribute('data-name') === ('Тип транспорту' || 'Тип транспорта')) {
             page.setLoadMore(0);
             page.setOffset(0);
-            if (e.target.getAttribute('data-chipname') === 'вантажні шини') {
-                let getChipIndexUniver = filter.chipVehicleType.indexOf('універсальна');
+            if (e.target.getAttribute('data-chipname') === ('вантажні шини' || 'грузовые шины')) {
+                let getChipIndexUniver = filter.chipVehicleType.indexOf('універсальна' || 'универсальная');
                 if(getChipIndexUniver) { filter.removeChipVehicleTypeItem(getChipIndexUniver) };
-                let getChipIndexDriver = filter.chipVehicleType.indexOf('ведуча');
+                let getChipIndexDriver = filter.chipVehicleType.indexOf('ведуча' || 'ведущая');
                 if(getChipIndexDriver) { filter.removeChipVehicleTypeItem(getChipIndexDriver) };
-                let getChipIndexTrailer = filter.chipVehicleType.indexOf('причіпна');
+                let getChipIndexTrailer = filter.chipVehicleType.indexOf('причіпна' || 'прицепная');
                 if(getChipIndexTrailer) { filter.removeChipVehicleTypeItem(getChipIndexTrailer) };
-                let getChipIndexSteer = filter.chipVehicleType.indexOf('рульова'); 
+                let getChipIndexSteer = filter.chipVehicleType.indexOf('рульова' || 'рулевая'); 
                 if(getChipIndexSteer) { filter.removeChipVehicleTypeItem(getChipIndexSteer) };
             }
             for( let key in params) {
@@ -329,17 +347,17 @@ const FilterCatalogTyres = observer((
                 new Set([...filter.chipVehicleType])));
             filter.setVehicleType(filter.chipVehicleType.join(','));
         }
-        if (e.target.getAttribute('data-name') === 'Вид вісі') {
+        if (e.target.getAttribute('data-name') === ('Вид вісі' || 'Вид оси')) {
             page.setLoadMore(0);
             page.setOffset(0);
             const getChipIndex = filter.chipVehicleType.indexOf(e.target.getAttribute('data-chipname'));
             filter.removeChipVehicleTypeItem(getChipIndex);
             const noChipTruck = filter.chipVehicleType.find(
                 (item: string) => 
-                item === 'універсальна' ||
-                item === 'ведуча' || 
-                item === 'причіпна' ||
-                item === 'рульова'
+                item === ('універсальна' || 'универсальная') ||
+                item === ('ведуча' || 'ведущая') || 
+                item === ('причіпна' || 'прицепная') ||
+                item === ('рульова' || 'рулевая')
             );
             if (!noChipTruck) {
                 let getChipIndexNoTruck = filter.chipVehicleType.indexOf('вантажні шини');
@@ -367,7 +385,7 @@ const FilterCatalogTyres = observer((
                 new Set([...filter.chipStudded])));
             filter.setStudded(filter.chipStudded.join(','));
         }
-        if (e.target.getAttribute('data-name') === 'Індекс швидкості') {
+        if (e.target.getAttribute('data-name') === ('Індекс швидкості' || 'Индекс скорости')) {
             page.setLoadMore(0);
             page.setOffset(0);
             for( let key in params) {
@@ -380,7 +398,7 @@ const FilterCatalogTyres = observer((
                 new Set([...filter.chipSpeedIndex])));
             filter.setSpeedIndex(filter.chipSpeedIndex.join(','));
         }
-        if (e.target.getAttribute('data-name') === 'Індекс навантаження') {
+        if (e.target.getAttribute('data-name') === ('Індекс навантаження' || 'Индекс нагрузки')) {
             page.setLoadMore(0);
             page.setOffset(0);
             for( let key in params) {
@@ -393,7 +411,7 @@ const FilterCatalogTyres = observer((
                 new Set([...filter.chipLoadIndex])));
             filter.setLoadIndex(filter.chipLoadIndex.join(','));
         }
-        if (e.target.getAttribute('data-name') === 'Омологація') {
+        if (e.target.getAttribute('data-name') === ('Омологація' || 'Омологация')) {
             page.setLoadMore(0);
             page.setOffset(0);
             for( let key in params) {
@@ -419,7 +437,7 @@ const FilterCatalogTyres = observer((
                 new Set([...filter.chipRunFlat])));
             filter.setRunFlat(filter.chipRunFlat.join(','));
         }
-        if (e.target.getAttribute('data-name') === 'Високонагруженість') {
+        if (e.target.getAttribute('data-name') === ('Високонагруженість' || 'Високонагруженость')) {
             page.setLoadMore(0);
             page.setOffset(0);
             for( let key in params) {
@@ -598,7 +616,7 @@ const FilterCatalogTyres = observer((
             : null
             }
                 <span>
-                    Фільтр Шин
+                    {t('filterCatalogTyre.filter_title')}
                 </span>
             </div>
             {!isMobileFilterTyre || (isMobileFilterTyre && isOpenFilter) ?
@@ -631,13 +649,13 @@ const FilterCatalogTyres = observer((
                     chipItem={filter._height}
                     deleteChip={handleDeleteChange}
                     width={247.4} 
-                    titleFilter={'Профіль'} 
+                    titleFilter={t('filterCatalogTyre.filter_height_title')} 
                     contentInfo={'B'}>
                     {goodsTyre._height ? 
                         goodsTyre._height.map((heightItem: any) => (
                     <SelectFilterList
                         key={heightItem === '' || 'undefined' ? heightItem + 1 : heightItem}
-                        nameFilter={'Профіль'}
+                        nameFilter={t('filterCatalogTyre.filter_height_title')}
                         value={heightItem === '' || undefined ? '0' : heightItem}
                         items={heightItem === '' || undefined ? '0' : heightItem}
                         checked={filter._height}
@@ -652,14 +670,14 @@ const FilterCatalogTyres = observer((
                     chipItem={filter._diameter}
                     deleteChip={handleDeleteChange}
                     width={247.4} 
-                    titleFilter={'Діаметр'} 
+                    titleFilter={t('filterCatalogTyre.filter_diameter_title')} 
                     contentInfo={'C'}>
                     { goodsTyre._diameter ? 
                         goodsTyre._diameter.map(
                             (diameterItem: any) => (
                     <SelectFilterList
                         key={diameterItem}
-                        nameFilter={'Діаметр'}
+                        nameFilter={t('filterCatalogTyre.filter_diameter_title')}
                         value={diameterItem} 
                         items={diameterItem} 
                         checked={filter._diameter} 
@@ -668,7 +686,6 @@ const FilterCatalogTyres = observer((
                     />  )) : null
                     }
                 </FilterMainBtn>
-
                 <Accordion 
                     titleName={'Сезон'}
                     chipItem={filter.season}
@@ -680,10 +697,9 @@ const FilterCatalogTyres = observer((
                   <button 
                     className='checkBoxBtnOn season'
                     onClick={filterSeasonAdd}
-                  >Показати</button> 
+                  >{t('filterCatalogTyre.filter_show_btn')}</button> 
                   : null 
                 } 
-
                     <span>Сезон:</span>
                     {goodsTyre._season ?
                         goodsTyre._season.map(
@@ -704,10 +720,10 @@ const FilterCatalogTyres = observer((
                   <button 
                     className='checkBoxBtnOn studded'
                     onClick={filterStuddedAdd}
-                  >Показати</button> 
+                  >{t('filterCatalogTyre.filter_show_btn')}</button> 
                   : null 
                 }
-                { filter._chipSeason.includes('зимова') ?
+                { filter._chipSeason.includes('зимова' || 'зимняя') ?
                 <Accordion 
                     titleName={'Шип / Не шип'}
                     chipItem={filter.studded}
@@ -742,7 +758,7 @@ const FilterCatalogTyres = observer((
                   <button 
                     className='checkBoxBtnOn brands'
                     onClick={filterBrandAdd}
-                  >Показати</button> 
+                  >{t('filterCatalogTyre.filter_show_btn')}</button> 
                   : null 
                 }
                 <FilterMainBtn 
@@ -775,17 +791,17 @@ const FilterCatalogTyres = observer((
                   <button 
                     className='checkBoxBtnOn vehicleType'
                     onClick={filterVehicleTypeAdd}
-                  >Показати</button> 
+                  >{t('filterCatalogTyre.filter_show_btn')}</button> 
                   : null 
                 }               
                 <Accordion 
-                    titleName={'Тип транспорту'}
+                    titleName={t('filterCatalogTyre.filter_vehicle_type_title')}
                     chipItem={filter.vehicle_type.split(',').filter(
                         (items: string) =>
-                        items !== 'рульова' && 
-                        items !== 'ведуча' &&
-                        items !== 'причіпна' && 
-                        items !== 'універсальна'
+                        items !== ('рульова' || 'рулевая') && 
+                        items !== ('ведуча' || 'ведущая') &&
+                        items !== ('причіпна' || 'прицепная') && 
+                        items !== ('універсальна' || 'универсальная')
                         ).join(',')
                     }
                     deleteChip={handleDeleteChange}
@@ -794,10 +810,10 @@ const FilterCatalogTyres = observer((
                 >
                     { goodsTyre._vehicle_type ? 
                         goodsTyre._vehicle_type.filter((typeItem: string) =>
-                            typeItem !== 'рульова' && 
-                            typeItem !== 'ведуча' && 
-                            typeItem !== 'причіпна' && 
-                            typeItem !== 'універсальна')  
+                            typeItem !== ('рульова' || 'рулевая') && 
+                            typeItem !== ('ведуча' || 'ведущая') && 
+                            typeItem !== ('причіпна' || 'прицепная') && 
+                            typeItem !== ('універсальна' || 'универсальная'))  
                             .map(
                             (vehicleItem: string) => (
                                 
@@ -806,27 +822,27 @@ const FilterCatalogTyres = observer((
                         value={vehicleItem}
                         checked={filter._chipVehicleType.includes(vehicleItem)} 
                         onChange={handleChange}
-                        titleName={'Тип транспорту'}  
+                        titleName={t('filterCatalogTyre.filter_vehicle_type_title')}  
                         titleCheckbox={ vehicleItem} 
                         imageSrc={typeCar(vehicleItem)}/>
                         )) : null
                     }
                 </Accordion>
-                {filter._chipVehicleType.includes('вантажні шини') ?
+                {filter._chipVehicleType.includes('вантажні шини' || 'грузовые шины') ?
                 <Accordion 
-                    titleName={'Вид вісі'}
+                    titleName={t('filterCatalogTyre.filter_axis_view_title')}
                     chipItem={
                         filter.vehicle_type.split(',').filter(
                             (entity: string) => 
-                            entity !== 'вантажні шини' && 
+                            entity !== ('вантажні шини' || 'грузовые шины') && 
                             entity !== 'мото' &&
-                            entity !== 'легковий' &&
-                            entity !== 'позашляховик' &&
-                            entity !== 'с/г' &&
-                            entity !== 'індустріальна' &&
-                            entity !== 'легковантажний' &&
+                            entity !== ('легковий' || 'легковой') &&
+                            entity !== ('позашляховик' || 'внедорожник') &&
+                            entity !== ('с/г' || 'с/х') &&
+                            entity !== ('індустріальна' || 'индустриальная') &&
+                            entity !== ('легковантажний' || 'легкогрузовой') &&
                             entity !== 'вело' &&
-                            entity !== "кар'єрна" 
+                            entity !== ("кар'єрна" || 'карьерная') 
                         ).join(',')
                     }
                     deleteChip={handleDeleteChange}
@@ -835,10 +851,10 @@ const FilterCatalogTyres = observer((
                 >
                     { goodsTyre._vehicle_type ? 
                         goodsTyre._vehicle_type.filter( (typeItem: string) =>
-                            typeItem === 'рульова' || 
-                            typeItem === 'ведуча' ||
-                            typeItem === 'причіпна' || 
-                            typeItem === 'універсальна')  
+                            typeItem === ('рульова' || 'рулевая') || 
+                            typeItem === ('ведуча' || 'ведущая') ||
+                            typeItem === ('причіпна' || 'прицепная') || 
+                            typeItem === ('універсальна' || 'универсальная'))  
                             .map(
                             (vehicleItem: string) => (
                                 
@@ -847,7 +863,7 @@ const FilterCatalogTyres = observer((
                         value={vehicleItem}
                         checked={filter._chipVehicleType.includes(vehicleItem)} 
                         onChange={handleChange}
-                        titleName={'Тип транспорту'}  
+                        titleName={t('filterCatalogTyre.filter_vehicle_type_title')}  
                         titleCheckbox={ vehicleItem} 
                         imageSrc={typeCar(vehicleItem)}/>
                         )) : null
@@ -859,11 +875,11 @@ const FilterCatalogTyres = observer((
                   <button 
                     className='checkBoxBtnOn speedIndex'
                     onClick={filterSpeedIndexAdd}
-                  >Показати</button> 
+                  >{t('filterCatalogTyre.filter_show_btn')}</button> 
                   : null 
                 }
                 <Accordion 
-                    titleName={'Індекс швидкості'}
+                    titleName={t('filterCatalogTyre.filter_speed_index_title')}
                     chipItem={filter.speed_index}
                     deleteChip={handleDeleteChange}
                     filterAction={filterSpeedIndexClick}
@@ -877,7 +893,7 @@ const FilterCatalogTyres = observer((
                         checked={filter._chipSpeedIndex.includes(speedIndexItem)} 
                         onChange={handleChange} 
                         value={speedIndexItem} 
-                        titleName={'Індекс швидкості'}
+                        titleName={t('filterCatalogTyre.filter_speed_index_title')}
                         titleCheckbox={speedIndexItem} 
                         imageSrc={'/iconsSigns/speed_limit_64.png'}
                     />  )) : null
@@ -888,11 +904,11 @@ const FilterCatalogTyres = observer((
                   <button 
                     className='checkBoxBtnOn loadIndex'
                     onClick={filterLoadIndexAdd}
-                  >Показати</button> 
+                  >{t('filterCatalogTyre.filter_show_btn')}</button> 
                   : null 
                 }    
                 <Accordion 
-                    titleName={'Індекс навантаження'}
+                    titleName={t('filterCatalogTyre.filter_load_index_title')}
                     chipItem={filter.load_index}
                     deleteChip={handleDeleteChange}
                     filterAction={filterLoadIndexClick}
@@ -906,7 +922,7 @@ const FilterCatalogTyres = observer((
                         checked={filter.chipLoadIndex.includes(loadIndexItem)} 
                         onChange={handleChange} 
                         value={loadIndexItem} 
-                        titleName={'Індекс навантаження'}
+                        titleName={t('filterCatalogTyre.filter_load_index_title')}
                         titleCheckbox={loadIndexItem} 
                         imageSrc={'/iconsSigns/load_limit_1_64_empty.png'}
                     /> 
@@ -919,11 +935,11 @@ const FilterCatalogTyres = observer((
                   <button 
                     className='checkBoxBtnOn homologation'
                     onClick={filterHomologationAdd}
-                  >Показати</button> 
+                  >{t('filterCatalogTyre.filter_show_btn')}</button> 
                   : null 
                 }
                 <Accordion 
-                    titleName={'Омологація'}
+                    titleName={t('filterCatalogTyre.filter_homologation_title')}
                     chipItem={filter.homologation}
                     deleteChip={handleDeleteChange}
                     filterAction={filterHomologationClick}
@@ -937,7 +953,7 @@ const FilterCatalogTyres = observer((
                         checked={filter._chipHomologation.includes(homologationItem)} 
                         onChange={handleChange} 
                         value={homologationItem} 
-                        titleName={'Омологація'}
+                        titleName={t('filterCatalogTyre.filter_homologation_title')}
                         titleCheckbox={homologationItem} 
                         imageSrc={homologationByCar(homologationItem) ?? ''}
                     /> 
@@ -950,7 +966,7 @@ const FilterCatalogTyres = observer((
                   <button 
                     className='checkBoxBtnOn runFlat'
                     onClick={filterRunFlatAdd}
-                  >Показати</button> 
+                  >{t('filterCatalogTyre.filter_show_btn')}</button> 
                   : null 
                 }
                 <Accordion 
@@ -980,11 +996,11 @@ const FilterCatalogTyres = observer((
                   <button 
                     className='checkBoxBtnOn reinforced'
                     onClick={filterReinforcedAdd}
-                  >Показати</button> 
+                  >{t('filterCatalogTyre.filter_show_btn')}</button> 
                   : null 
                 }
                 <Accordion 
-                    titleName={'Високонагруженість'}
+                    titleName={t('filterCatalogTyre.filter_reinforced_title')}
                     chipItem={filter.reinforced}
                     deleteChip={handleDeleteChange}
                     filterAction={filterReinforcedClick}
@@ -998,7 +1014,7 @@ const FilterCatalogTyres = observer((
                         checked={filter._chipReinforced.includes(reinforceItem)} 
                         onChange={handleChange} 
                         value={reinforceItem}
-                        titleName={'Високонагруженість'} 
+                        titleName={t('filterCatalogTyre.filter_reinforced_title')} 
                         titleCheckbox={reinforceItem} 
                         imageSrc={''}
                     /> 

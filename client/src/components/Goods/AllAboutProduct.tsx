@@ -219,7 +219,8 @@ const AllAboutProduct = observer(({
                 <>
                 <div className="productInfoCountry">
                     <FlagsIcon 
-                        country={goods?.country} 
+                        title='Країна виробник'
+                        country={goods?.country.country_manufacturer_ua} 
                         year={goods?.year}
                     />
                 </div>

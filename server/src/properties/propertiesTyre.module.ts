@@ -62,6 +62,7 @@ import { PropertiesParamsController } from './props-tyres-controllers/props-tyre
 import { TyreEuromark } from './entities/tyres/tyre-euromark.model';
 import { PropertiesEuromarkController } from './props-tyres-controllers/props-tyre-euromark.controller';
 import { PropsTyreEuromarkService } from './props-tyres-services/props-tyre-euromark.service';
+import { StringTransformServiceProp } from './stringTransform';
 
 @Module({
   controllers: [
@@ -102,7 +103,8 @@ import { PropsTyreEuromarkService } from './props-tyres-services/props-tyre-euro
     PropsTyreVehicleTypeService,
     PropsTyreWidthService,
     PropsTyreYearService,
-    PropsTyreEuromarkService
+    PropsTyreEuromarkService,
+    StringTransformServiceProp
   ],
   imports: [ 
     SequelizeModule.forFeature([

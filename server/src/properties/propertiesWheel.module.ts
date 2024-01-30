@@ -31,6 +31,7 @@ import { WheelsModule } from '../wheels/wheels.module';
 import { PropertiesWheelModelController } from './props-wheels-controller/props-wheel-model-controller';
 import { PropertiesWheelDiameterController } from './props-wheels-controller/props-wheel-diameter-controller';
 import { PropertiesWheelBrandController } from './props-wheels-controller/props-wheel-brand-controller';
+import { StringTransformServiceProp } from './stringTransform';
 
 @Module({
   controllers: [
@@ -52,6 +53,7 @@ import { PropertiesWheelBrandController } from './props-wheels-controller/props-
     PropsWheelSizeDigitsService,
     PropsWheelTypeService,
     PropsWheelWidthService,
+    StringTransformServiceProp
   ],
   imports: [
     SequelizeModule.forFeature([

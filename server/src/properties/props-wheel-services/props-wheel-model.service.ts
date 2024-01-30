@@ -6,12 +6,24 @@ import { GetPropertyDto } from '../dto/get-property.dto';
 import { UpdatePropertyDto } from '../dto/update-property.dto';
 import { WheelModel } from '../entities/wheels/wheel-model.model';
 import { Wheel } from '../../wheels/entities/wheel.model';
+//import { Op } from 'sequelize';
+import { StringTransformServiceProp } from '../stringTransform';
+import { WheelBrand } from '../entities/wheels/wheel-brand.model';
+import { WheelWidth } from '../entities/wheels/wheel-width.model';
+import { WheelBoltCountPcd } from '../entities/wheels/wheel-boltCountPcd.model';
+import { WheelDia } from '../entities/wheels/wheel-dia.model';
+import { WheelEt } from '../entities/wheels/wheel-et.model';
+import { WheelDiameter } from '../entities/wheels/wheel-diameter.model';
+import { ReviewTyres } from '../../reviews/entities/review-tyres.model';
+import { Question } from '../../questions/entities/question.entity';
+import { PriceWheels } from '../../prices/entities/price-wheels.model';
 
 @Injectable()
 export class PropsWheelModelService {
   constructor(
     @InjectModel(WheelModel) private wheelModelRepository: typeof WheelModel,
     private wheelsService: WheelsService,
+    private stringService: StringTransformServiceProp,
   ) {}
 
   async createWheelModel(createPropertyDto: CreatePropertyDto) {
@@ -101,6 +113,54 @@ export class PropsWheelModelService {
         include: [{ model: Wheel, where: { id_brand: brand } }],
       });
       return wheelsAllModelsByBrand;
+    } catch {
+      throw new HttpException(
+        'Data is incorrect or Not Found',
+        HttpStatus.NOT_FOUND,)
+    }
+  };
+
+  async findAllWheelsModelByModelName(brand_and_model: string) {
+    try {
+      const getBrandModel = brand_and_model.split('-')
+      const getAllModel = await this.wheelModelRepository.findAll();
+      const getWheelByModel = getAllModel.find(
+        (item: any) =>
+          this.stringService.createStringUrl(item.model) ===
+            brand_and_model
+              .split('-')
+              .slice(1, getBrandModel.length)
+              .join('-') ||
+          this.stringService.createStringUrl(item.model) ===
+            brand_and_model.split('-').slice(2, getBrandModel.length).join('-'),
+      );
+      if (getWheelByModel) {
+        const wheelsAllByModels = await this.wheelModelRepository.findOne({
+          where: {
+            id_model: getWheelByModel.id_model
+          },
+          include: [
+            {
+              model: Wheel,
+              include: [
+                { model: WheelBrand }, 
+                { model: WheelModel },
+                { model: WheelWidth},
+                { model: WheelBoltCountPcd},
+                { model: WheelDia},
+                { model: WheelEt},
+                { model: WheelDiameter},
+                { model: ReviewTyres },
+                { model: Question },
+                { model: PriceWheels }
+              ],
+            },
+          ],
+        });
+        return wheelsAllByModels;
+      } else {
+        return null;
+      }
     } catch {
       throw new HttpException(
         'Data is incorrect or Not Found',

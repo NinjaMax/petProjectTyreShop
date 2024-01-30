@@ -18,9 +18,11 @@ import {
 } from '../../restAPI/restGoodsApi';
 import { IRatingAvg } from '../../pages/types/RatingModelAvg.type';
 import OptionsWheelBox from './OptionsWheelBox';
+import { useTranslation } from 'react-i18next';
 
 const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
-    const [ratingModel, setRatingModel] = useState<IRatingAvg>()
+    const [ratingModel, setRatingModel] = useState<IRatingAvg>();
+    const { t, i18n } = useTranslation();
     const history = useHistory();
     const location = useLocation();
     
@@ -138,10 +140,10 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                         createStringUrl(goods?.full_name) +'#vidguki' : 
                         '#'}
                     >
-                       {goods?.reviews?.length} відгуки
+                       {goods?.reviews?.length} {t('card.review')}
                     </a>
                 </div>
-                <div className="tyresCardCode">код товара: {goods?.id}</div>
+                <div className="tyresCardCode">{t('card.goods_code')} {goods?.id}</div>
                 <div className='propsCard'>
                     <PropsCardIcons
                         type={goods?.vehicle_type}
@@ -153,7 +155,8 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                 {/* {typeCard === 'tyre' ? */}
                 <div className="tyresCardCountry">
                     <FlagsIcon 
-                        country={goods?.country} 
+                        title={t('card.title_country')}
+                        country={i18n.resolvedLanguage === 'uk' ? goods?.country.country_manufacturer_ua : goods?.country.country_manufacturer} 
                         year={goods?.year}
                     />
                 </div>
@@ -165,9 +168,8 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                     alt='bonus'
                     title='Бонуси'
                     />
-                <span className='tyresCardBonusText'>{`+${(goods?.price[0]?.price! * 0.01).toFixed()} бонусів`}</span> 
+                <span className='tyresCardBonusText'>{`+${(goods?.price[0]?.price! * 0.01).toFixed()} ${t('card.bonus')}`}</span> 
                 </div>
-
                 {goods?.price && goods.price.find((entity: any) => entity.id_storage === 2) ? 
                     goods?.price.map((item: any) => (
                     <Fragment key={item.id}>
@@ -211,13 +213,13 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                 }
                 {restStockCard === 0 ? 
                     <div className="tyresCardPrice">
-                        немає в наявності
+                        {t('card.not_available')}
                     </div>
                     : null 
                 }
                 { restStockCard ?
                     <ButtonAction 
-                        props={"КУПИТИ"} 
+                        props={t('card.buy')} 
                         widthBtn={260} 
                         eventItem={() => {
                             checkOrders!(
@@ -233,7 +235,7 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                     />
                     : 
                     <ButtonAction 
-                        props={"НЕМАЄ В НАЯВНОСТІ"} 
+                        props={t('card.not_available_big')} 
                         widthBtn={260} 
                         eventItem={checkOrders}
                         active={true}

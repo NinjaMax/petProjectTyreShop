@@ -153,23 +153,21 @@ import { chooseFlag } from '../../services/flagCardService';
 // }
 
 type Iflag = {
-    country?: {
-        country_manufacturer_ua: string;
-        country_manufacturer: string;
-    };
+    country?: string | undefined;
     year?: {
         manufacture_year: string;
     };
+    title: string;
 }
 
-const FlagsIcon = ({country, year}:Iflag) => {
+const FlagsIcon = ({country, year, title}:Iflag) => {
     const [showFlag, setShowFlag] = useState<string | undefined>();
     
     useEffect(() => {
         let isSetFlag = false;
         const setFlag = async () => {
             const flag = 
-            chooseFlag(country?.country_manufacturer_ua);
+            chooseFlag(country);
             if (!isSetFlag && flag) {
                 setShowFlag(flag);
             }   
@@ -178,7 +176,7 @@ const FlagsIcon = ({country, year}:Iflag) => {
         return () => {
             isSetFlag = true;
         }
-    },[country?.country_manufacturer_ua])
+    },[country])
 
     return (
         <div className='flagIconBox'>
@@ -198,12 +196,12 @@ const FlagsIcon = ({country, year}:Iflag) => {
                 }
                 { showFlag ?
                 <span className="tooltipTextFlagIcons">
-                    Країна виробник: {country?.country_manufacturer_ua}
+                    {title} {country}
                 </span>
                 : null
                 }
             </div> 
-            {country?.country_manufacturer_ua} {year?.manufacture_year}
+            {country} {year?.manufacture_year}
         </div>
         
     );

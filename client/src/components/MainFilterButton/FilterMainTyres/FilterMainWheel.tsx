@@ -11,6 +11,7 @@ import { observer } from 'mobx-react-lite';
 import { seasonCar, typeCar } from '../../../services/tyresPropsService';
 import FilterMainBtnWheel from '../FIlterMainBtnWheel';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface IFilterMainWheels {
     handleChange?(args0: any): void;
@@ -20,21 +21,13 @@ interface IFilterMainWheels {
 
 const FilterMainWheel = observer((
     {filterState, filterOpenCloseAction}: IFilterMainWheels) => {
-
-    //const [handleItem, setHandleItem] = useState();
     const {filter, goodsWheel, page} = useContext<any | null>(Context);
-    //const params = useParams<any>();
     const [stateWidth, setStateWidth]=useState(false);
     const [stateDiameter, setStateDiameter]=useState(false);
     const [stateBoltCount, setStateBoltCount]=useState(false);
     const [stateBrand, setStateBrand]=useState(false);
     const [stateType, setStateType]=useState(false);
-    // const [stateColor, setStateColor]=useState(false);
-    // const [stateDia, setStateDia]=useState(false);
-    // const [stateEt, setStateEt]=useState(false);
-    // const [statePcd, setStatePcd]=useState(false);
-    // const [statePcd2, setStatePcd2]=useState(false);
-    // const [stateBoltCountPcd, setStateBoltCountPcd]=useState(false);
+    const { t, i18n } = useTranslation();
     
     useEffect(() => {
         if(!filterState) {
@@ -44,12 +37,6 @@ const FilterMainWheel = observer((
             setStateBoltCount(false);
             setStateDiameter(false);
             setStateType(false);
-            // setStateColor(false);
-            // setStateDia(false);
-            // setStateEt(false);
-            // setStatePcd(false);
-            // setStatePcd2(false);
-            // setStateBoltCountPcd(false);
         }
     },[filterState])
 
@@ -61,7 +48,7 @@ const FilterMainWheel = observer((
             setStateWidth(!stateWidth);
             filterOpenCloseAction(!filterState);
         }
-        if (e.target.name === 'Діаметр') {
+        if (e.target.name === 'Діаметр' || 'Диаметр') {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setDiameter(e.target.value);
@@ -85,14 +72,14 @@ const FilterMainWheel = observer((
             );
             filter.setBrands(filter.chipBrands.join(',')); 
         }
-        if (e.target.name === 'Кількість болтів' && e.target.checked) {
+        if (e.target.name === ('Кількість болтів' || 'Кол-во болтов') && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setChipBoltCount(
                 Array.from(new Set([...filter.chipBoltCount, e.target.value]))
             );
             filter.setBoltCount(filter.chipBoltCount.join(','));     
-        } else if (e.target.name === 'Кількість болтів') {
+        } else if (e.target.name === 'Кількість болтів' || 'Кол-во болтов') {
             const cancelSeason = filter.chipBoltCount.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipBoltCountdItem(cancelSeason);
@@ -115,90 +102,6 @@ const FilterMainWheel = observer((
             );
             filter.setType(filter.chipType.join(','));
         }
-        // if (e.target.name === 'Колір' && e.target.checked) {
-        //     page.setLoadMore(0);
-        //     page.setOffset(0);
-        //     filter.setChipColor(
-        //         Array.from(
-        //             new Set([...filter.chipColor, e.target.value]))
-        //     );     
-        // } else if (e.target.name === 'Колір') {
-        //     const cancelStudded = filter.chipColor.findIndex(
-        //         (item: string) => item === e.target.value);
-        //     filter.removeChipColorItem(cancelStudded);
-        //     filter.setChipColor(Array.from(
-        //         new Set([...filter.chipColor])));
-        // }
-        // if (e.target.name === 'Діаметр ступиці' && e.target.checked) {
-        //     page.setLoadMore(0);
-        //     page.setOffset(0);
-        //     filter.setChipDia(
-        //         Array.from(
-        //             new Set([...filter.chipDia, e.target.value]))
-        //     );     
-        // } else if (e.target.name === 'Діаметр ступиці') {
-        //     const cancelSpeedIndex = filter.chipDia.findIndex(
-        //         (item: string) => item === e.target.value);
-        //     filter.removeChipDiaItem(cancelSpeedIndex);
-        //     filter.setChipDia(Array.from(
-        //         new Set([...filter.chipDia])));
-        // }
-        // if (e.target.name === 'Виліт ET' && e.target.checked) {
-        //     page.setLoadMore(0);
-        //     page.setOffset(0);
-        //     filter.setChipEt(
-        //         Array.from(
-        //             new Set([...filter.chipEt, e.target.value]))
-        //     );     
-        // } else if (e.target.name === 'Виліт ET') {
-        //     const cancelLoadIndex = filter.chipEt.findIndex(
-        //         (item: string) => item === e.target.value);
-        //     filter.removeChipEtItem(cancelLoadIndex);
-        //     filter.setChipEt(Array.from(
-        //         new Set([...filter.chipEt])));
-        // }
-        // if (e.target.name === 'Міжболтова відстань' && e.target.checked) {
-        //     page.setLoadMore(0);
-        //     page.setOffset(0);
-        //     filter.setChipPcd(
-        //         Array.from(
-        //             new Set([...filter.chipPcd, e.target.value]))
-        //     );     
-        // } else if (e.target.name === 'Міжболтова відстань') {
-        //     const cancelHomologation = filter.chipPcd.findIndex(
-        //         (item: string) => item === e.target.value);
-        //     filter.removeChipPcdItem(cancelHomologation);
-        //     filter.setChipPcd(Array.from(
-        //         new Set([...filter.chipPcd])));
-        // }
-        // if (e.target.name === 'Додаткове міжболтове PCD2' && e.target.checked) {
-        //     page.setLoadMore(0);
-        //     page.setOffset(0);
-        //     filter.setChipPcd2(
-        //         Array.from(
-        //             new Set([...filter.chipPcd2, e.target.value]))
-        //     );     
-        // } else if (e.target.name === 'Додаткове міжболтове PCD2') {
-        //     const cancelRunFlat = filter.chipPcd2.findIndex(
-        //         (item: string) => item === e.target.value);
-        //     filter.removeChipPcd2Item(cancelRunFlat);
-        //     filter.setChipPcd2(Array.from(
-        //         new Set([...filter.chipPcd2])));
-        // }
-        // if (e.target.name === 'Болти і відстань' && e.target.checked) {
-        //     page.setLoadMore(0);
-        //     page.setOffset(0);
-        //     filter.setChipBoltCountPcd(
-        //         Array.from(
-        //             new Set([...filter.chipBoltCountPcd, e.target.value]))
-        //     );     
-        // } else if (e.target.name === 'Болти і відстань') {
-        //     const cancelReinforced = filter.chipBoltCountPcd.findIndex(
-        //         (item: string) => item === e.target.value);
-        //     filter.removeChipBoltCountPcdItem(cancelReinforced);
-        //     filter.setChipBoltCountPcd(Array.from(
-        //         new Set([...filter.chipBoltCountPcd])));
-        // }
     } 
     
     const handleDeleteChange  = (e: any) => {
@@ -207,12 +110,7 @@ const FilterMainWheel = observer((
             page.setOffset(0);
             filter.setWidth(null);
         }
-        // if (e.target.getAttribute('data-name') === 'Профіль') {
-        //     page.setLoadMore(0);
-        //     page.setOffset(0);
-        //     filter.setHeight(null);
-        // }
-        if (e.target.getAttribute('data-name') === 'Діаметр') {
+        if (e.target.getAttribute('data-name') === 'Діаметр' || 'Диаметр') {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setDiameter(null);
@@ -225,7 +123,7 @@ const FilterMainWheel = observer((
                 new Set([...filter.chipBrands])));
             filter.setBrands(filter.chipBrands.join(','));
         }
-        if (e.target.getAttribute('data-name') === 'Кількість болтів') {
+        if (e.target.getAttribute('data-name') === 'Кількість болтів' || 'Кол-во болтов') {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.removeChipBoltCountdItem(e.target.getAttribute('data-index'));
@@ -241,105 +139,7 @@ const FilterMainWheel = observer((
                 new Set([...filter.chipType])));
             filter.setType(filter.chipType.join(','));
         }
-        // if (e.target.getAttribute('data-name') === 'Колір') {
-        //     page.setLoadMore(0);
-        //     page.setOffset(0);
-        //     filter.removechipColorItem(e.target.getAttribute('data-index'));
-        //     filter.setChipColor(Array.from(
-        //         new Set([...filter.chipColor])));
-        //     filter.setColor(filter.chipColor.join(','));
-        // }
-        // if (e.target.getAttribute('data-name') === 'Діаметр ступиці') {
-        //     page.setLoadMore(0);
-        //     page.setOffset(0);
-        //     filter.removeChipDiaItem(e.target.getAttribute('data-index'));
-        //     filter.setChipDia(Array.from(
-        //         new Set([...filter.chipDia])));
-        //     filter.setDia(filter.chipDia.join(','));
-        // }
-        // if (e.target.getAttribute('data-name') === 'Виліт ET') {
-        //     page.setLoadMore(0);
-        //     page.setOffset(0);
-        //     filter.removeChipEtItem(e.target.getAttribute('data-index'));
-        //     filter.setChipEt(Array.from(
-        //         new Set([...filter.chipEt])));
-        //     filter.setEt(filter.chipEt.join(','));
-        // }
-        // if (e.target.getAttribute('data-name') === 'Міжболтова відстань') {
-        //     page.setLoadMore(0);
-        //     page.setOffset(0);
-        //     filter.removeChipPcdItem(e.target.getAttribute('data-index'));
-        //     filter.setChipPcd(Array.from(
-        //         new Set([...filter.chipPcd])));
-        //     filter.setPcd(filter.chipPcd.join(','));
-        // }
-        // if (e.target.getAttribute('data-name') === 'Додаткове міжболтове') {
-        //     page.setLoadMore(0);
-        //     page.setOffset(0);
-        //     filter.removeChipPcd2Item(e.target.getAttribute('data-index'));
-        //     filter.setChipPcd2(Array.from(
-        //         new Set([...filter.chipPcd2])));
-        //     filter.setPcd2(filter.chipPcd2.join(','));
-        // }
-        // if (e.target.getAttribute('data-name') === 'Болти і відстань') {
-        //     page.setLoadMore(0);
-        //     page.setOffset(0);
-        //     filter.removeChipBoltCountPcdItem(e.target.getAttribute('data-index'));
-        //     filter.setChipBoltCountPcd(Array.from(
-        //         new Set([...filter.chipBoltCountPcd])));
-        //     filter.setBoltCountPcd(filter.chipBoltCountPcd.join(','));
-        // }
     }  
-    // const filterBrandAdd = () => {
-    //     filter.setBrands(filter.chipBrands.join(','));
-    //     setStateBrand(!stateBrand);
-    // }
-    // const filterBoltCountAdd = () => {
-    //     filter.setBoltCount(filter.chipBoltCount.join(','));
-    //     setStateBoltCount(!stateBoltCount);
-    // }
-    // const filterTypeAdd = () => {
-    //     filter.setType(filter.chipType.join(','));
-    //     setStateType(!stateType);
-    // }
-    // const filterColorAdd = () => {
-    //     filter.setColor(filter.chipColor.join(','));
-    //     setStateColor(!stateColor);
-    // }
-    // const filterDiaAdd = () => {
-    //     filter.setDia(filter.chipDia.join(','));
-    //     setStateDia(!stateDia);
-    // }
-    // const filterEtAdd = () => {
-    //     filter.setEt(filter.chipEt.join(','));
-    //     setStateEt(!stateEt);
-    // }
-    // const filterPcdAdd = () => {
-    //     filter.setPcd(filter.chipPcd.join(','));
-    //     setStatePcd(!statePcd);
-    // }
-    // const filterPcd2Add = () => {
-    //     filter.setPcd2(filter.chipPcd2.join(','));
-    //     setStatePcd2(!statePcd2);
-    // }
-    // const filterBoltCountPcddAdd = () => {
-    //     filter.setBoltCountPcd(filter.chipBoltCountPcd.join(','));
-    //     setStateBoltCountPcd(!stateBoltCountPcd);
-    // }
-    // const filterPriceAdd = () => {
-    //     filter.setPrice(filter.chipPrice.join(','));
-    // }
-
-    // const filterPriceRange = (e: any) => {
-    //     if (e.target.name === 'vid') {
-    //         filter.addFirstPrice(e.target.value);
-    //         filter.setChipPrice(filter._chipPrice);
-    //     } 
-    //     if (e.target.name === 'do') {
-    //         filter.addLastPrice(e.target.value);
-    //         filter.setChipPrice(filter._chipPrice);
-    //     }
-    // }
 
     const filterWidthClick = () => {
 
@@ -347,72 +147,24 @@ const FilterMainWheel = observer((
         filterOpenCloseAction(!filterState);
         setStateBoltCount(false);
         setStateBrand(false);
-        //setStateHeight(false);
         setStateDiameter(false);
-        // setStatePcd(false);
-        // setStateEt(false);
-        // setStateDia(false);
-        // setStatePcd2(false);
-        // setStateBoltCountPcd(false);
         setStateType(false);
-        // setStateColor(false);
     }
-    // const filterHeightClick = () => {
-    //     //setStateHeight(!stateHeight);
-    //     setStateBoltCount(false);
-    //     setStateBrand(false);
-    //     setStateWidth(false);
-    //     setStateDiameter(false);
-    //     setStatePcd(false);
-    //     setStateEt(false);
-    //     setStateDia(false);
-    //     setStatePcd2(false);
-    //     setStateBoltCountPcd(false);
-    //     setStateType(false);
-    //     setStateColor(false);
-    // }
     const filterDiameterClick = () => {
         setStateDiameter(!stateDiameter);
         filterOpenCloseAction(!filterState);
         setStateBoltCount(false);
         setStateBrand(false);
         setStateWidth(false);
-        //setStateHeight(false);
-        // setStatePcd(false);
-        // setStateEt(false);
-        // setStateDia(false);
-        // setStatePcd2(false);
-        // setStateBoltCountPcd(false);
         setStateType(false);
-        // setStateColor(false);
     }
-    // const filterColorClick = () => {
-    //     setStateBoltCount(!stateBoltCount);
-    //     setStateBrand(false);
-    //     setStateWidth(false);
-    //     //setStateHeight(false);
-    //     setStateDiameter(false);
-    //     setStatePcd(false);
-    //     setStateEt(false);
-    //     setStateDia(false);
-    //     setStatePcd2(false);
-    //     setStateBoltCountPcd(false);
-    //     setStateType(false);
-    //     //setStateColor(false);
-    // }
+
     const filterBoltCountClick = () => {
-        //setStateColor(!stateColor);
         filterOpenCloseAction(!filterState);
         setStateBoltCount(!stateBoltCount);
         setStateBrand(false);
         setStateWidth(false);
-        //setStateHeight(false);
         setStateDiameter(false);
-        // setStatePcd(false);
-        // setStateEt(false);
-        // setStateDia(false);
-        // setStatePcd2(false);
-        // setStateBoltCountPcd(false);
         setStateType(false);
     }
     const filterBrandClick = () => {
@@ -420,15 +172,8 @@ const FilterMainWheel = observer((
         setStateBrand(!stateBrand);
         filterOpenCloseAction(!filterState);
         setStateWidth(false);
-        //setStateHeight(false);
         setStateDiameter(false);
-        // setStatePcd(false);
-        // setStateEt(false);
-        // setStateDia(false);
-        // setStatePcd2(false);
-        // setStateBoltCountPcd(false);
         setStateType(false);
-        // setStateColor(false);
     }
     const filterTypeClick = () => {
         setStateType(!stateType);
@@ -436,85 +181,8 @@ const FilterMainWheel = observer((
         setStateBoltCount(false);
         setStateBrand(false);
         setStateWidth(false);
-        //setStateHeight(false);
         setStateDiameter(false);
-        // setStatePcd(false);
-        // setStateEt(false);
-        // setStateDia(false);
-        // setStatePcd2(false);
-        // setStateBoltCountPcd(false);
-        // setStateColor(false);
     }
-    // const filterDiaClick = () => {
-    //     setStateDia(!stateDia);
-    //     setStateBoltCount(false);
-    //     setStateBrand(false);
-    //     setStateWidth(false);
-    //     //setStateHeight(false);
-    //     setStateDiameter(false);
-    //     setStatePcd(false);
-    //     setStateEt(false);
-    //     setStatePcd2(false);
-    //     setStateBoltCountPcd(false);
-    //     setStateType(false);
-    //     setStateColor(false);
-    // }
-    // const filterEtClick = () => {
-    //     setStateEt(!stateEt);
-    //     setStateBoltCount(false);
-    //     setStateBrand(false);
-    //     setStateWidth(false);
-    //     //setStateHeight(false);
-    //     setStateDiameter(false);
-    //     setStatePcd(false);
-    //     setStateDia(false);
-    //     setStatePcd2(false);
-    //     setStateBoltCountPcd(false);
-    //     setStateType(false);
-    //     setStateColor(false);
-    // }
-    // const filterPcdClick = () => {
-    //     setStatePcd(!statePcd);
-    //     setStateBoltCount(false);
-    //     setStateBrand(false);
-    //     setStateWidth(false);
-    //     //setStateHeight(false);
-    //     setStateDiameter(false);
-    //     setStateEt(false);
-    //     setStateDia(false);
-    //     setStatePcd2(false);
-    //     setStateBoltCountPcd(false);
-    //     setStateType(false);
-    //     setStateColor(false);
-    // }
-    // const filterPcd2Click = () => {
-    //     setStatePcd2(!statePcd2);
-    //     setStateBoltCount(false);
-    //     setStateBrand(false);
-    //     setStateWidth(false);
-    //     //setStateHeight(false);
-    //     setStateDiameter(false);
-    //     setStatePcd(false);
-    //     setStateEt(false);
-    //     setStateDia(false);
-    //     setStateBoltCountPcd(false);
-    //     setStateType(false);
-    //     setStateColor(false);
-    // }
-    // const filterBoltCountPcdClick = () => {
-    //     setStateBoltCountPcd(!stateBoltCountPcd);
-    //     setStateBoltCount(false);
-    //     setStateBrand(false);
-    //     setStateWidth(false);
-    //     //setStateHeight(false);
-    //     setStateDiameter(false);
-    //     setStatePcd(false);
-    //     setStateEt(false);
-    //     setStateDia(false);
-    //     setStatePcd2(false);
-    //     setStateType(false);
-    //     setStateColor(false);
-    // }
 
     const pickUp = () => {
  
@@ -549,7 +217,7 @@ const FilterMainWheel = observer((
             </FilterMainBtnWheel>
             <FilterMainBtn 
                 width={180} 
-                titleFilter={'Кількість болтів'}
+                titleFilter={t('filterMainWheel.filter_boltCount_title')}
                 contentInfo={false}
                 filterAction={filterBoltCountClick}
                 filterState={stateBoltCount}
@@ -565,7 +233,7 @@ const FilterMainWheel = observer((
                         value={color} 
                         checked={filter._chipBoltCount.includes(color)} 
                         onChange={handleChange} 
-                        titleName={'Кількість болтів'}
+                        titleName={t('filterMainWheel.filter_boltCount_title')}
                         titleCheckbox={color} 
                         //imageSrc={seasonCar(color)}
                     />
@@ -579,14 +247,14 @@ const FilterMainWheel = observer((
                 chipItem={filter._diameter}
                 deleteChip={handleDeleteChange}
                 width={180} 
-                titleFilter={'Діаметр'} 
+                titleFilter={t('filterMainWheel.filter_diameter_title')} 
                 contentInfo={false}>
                 { goodsWheel._diameter ? 
                     goodsWheel._diameter.map(
                     (diameterItem: any) => (
                     <SelectFilterList
                         key={diameterItem}
-                        nameFilter={'Діаметр'}
+                        nameFilter={t('filterMainWheel.filter_diameter_title')}
                         value={diameterItem} 
                         items={diameterItem} 
                         checked={filter._diameter} 
@@ -647,7 +315,7 @@ const FilterMainWheel = observer((
             </FilterMainBtnWheel>
             <div className='btnSelect'>
                 <ButtonAction 
-                    props={'ПІДІБРАТИ'}
+                    props={t('filterMainWheel.filter_btn_name')}
                     eventItem={pickUp} 
                 />
             </div>

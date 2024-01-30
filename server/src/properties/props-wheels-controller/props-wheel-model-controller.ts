@@ -39,6 +39,13 @@ export class PropertiesWheelModelController {
     return this.propsWheelModelService.findAllWheelsModelByBrand(+brand);
   }
 
+  @Get('/wheel/by-model')
+  findAllModelsBy(@Query('brand_and_model') brand_and_model: string) {
+    return this.propsWheelModelService.findAllWheelsModelByModelName(
+      brand_and_model,
+    );
+  };
+  
   @Patch('/wheel/model/update')
   update(@Body() updatePropertyDto: UpdatePropertyDto) {
     return this.propsWheelModelService.updateWheelModel(updatePropertyDto);
