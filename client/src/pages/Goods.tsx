@@ -69,6 +69,7 @@ import PropertiesWheelGoods from '../components/goods/PropertiesWheelGoods';
 import { ICheckOrderItem } from '../components/catalogs/types/CheckOrder.type';
 import CheckOrder from '../components/modal/CheckOrder';
 import { useMediaQuery } from 'react-responsive';
+import { useTranslation } from 'react-i18next';
 
 type ILikeTyreType = {
   id_review: number;
@@ -84,13 +85,9 @@ const GoodsPage = observer(() => {
   const [ratingSummerAvg, setRatingSummerAvg] = useState<IRatingSeasonAvg>();
   const [ratingWinterAvg, setRatingWinterAvg] = useState<IRatingSeasonAvg>();
   const [ratingAllSeasonAvg, setRatingAllSeasonAvg] = useState<IRatingSeasonAvg>();
-  //const [reviewCountBrand, setReviewCountBrand] = useState<number>();
   const [reviewCountModel, setReviewCountModel] = useState<number>();
   const [createReview, setCreateReview] = useState<boolean>(false);
   const [dataReview, setDataReview] = useState<{} | null>(null);
-  //const [likeReview, setLikeReview] = useState<ILikeTyreType | null>(null);
-  //const [dislikeReview, setDislikeReview] = useState<number>(0);
-  // const [thumbUp, setThumbUp] = useState<boolean | null>(null);
   const [similarGoods, setSimilarGoods] = useState<any[] | null>();
   const [similarBrandGoods, setSimilarBrandGoods] = useState<any[] | null>();
   const [allModelsBrand, setAllModelsBrand] = useState<any[] | null>();
@@ -101,6 +98,7 @@ const GoodsPage = observer(() => {
   const [active, setActive] = useState(false);
   const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem[] | null>([]);
   const isMobileProduct = useMediaQuery({ query: '(max-width: 1440px)' });
+  const { t, i18n } = useTranslation();
   const history =  useHistory();
   const params = useParams<any>();
   let match = useRouteMatch<any>('/:goodsItem');
@@ -587,29 +585,13 @@ const GoodsPage = observer(() => {
     }
   }
 
-  // console.log('LIKE_REVIEW: ', likeReview);
-  //console.log("DATA_REVIEW: ", dataReview);
-  //console.log('MATCH_URL_PARAMS: ', match?.params.goodsItem);
-  // console.log('MATCH_URL: ', match);
-  // console.log('RATING_MODEL_AVRG: ', ratingModelAvg?.avgRatingModel);
-  // console.log("RATING_AVRG_ID_AND_ID_MODEL: ", ratingIdAndIdModelAvg?.avgRatingModel);
-  //console.log('RATING_SUMMER: ', ratingSummerAvg);
-  console.log('PRODUCT_WHEEL: ', goodsWheel?._product);
-  console.log('PRODUCT_TYRE: ', goodsTyre?._product);
-  // console.log('LOCALSORAGE_GOODS_ID: ',JSON.parse(localStorage.getItem('goodsId')!));
-  // console.log('THUMB_UP:', thumbUp);
-  // console.log('THUMB_DOWN:', thumbDown);
-  //console.log('GOODS_TYRE_PRODUCT: ', goodsTyre.product)
-  //console.log("PARAMS: ", params);
-  //console.log("PARAMS_FROM_URL: ", params.goodsItem.replace(/-/g, ' '));
-
   return (
     <div className='goodsCard'>
       <div className='goodsBreadCrumbs'>
       {goodsTyre._product ?
         <BreadCrumbs 
           route={['/','/tyres', `${createStringUrl(goodsTyre._product.tyre_brand?.brand) ?? ''}`, `${goodsTyre._product.season?.season_ua ? `${createStringUrl(goodsTyre._product.season?.season_ua)}/${createStringUrl(goodsTyre._product.tyre_brand?.brand)}` : ''}`,`${createStringUrl(goodsTyre._product.tyre_brand?.brand) ?? null}-${createStringUrl(goodsTyre._product.tyre_model?.model) ?? null}`,`${createStringUrl(params.season) ?? null}${createStringUrl(params.studded) ?? null}${createStringUrl(goodsTyre._product.vehicle_type?.vehicle_type_ua) ?? null}${createStringUrl(goodsTyre._product.tyre_brand?.brand) ?? null} ${createStringUrl(goodsTyre._product.width?.width) ?? null}${createStringUrl(goodsTyre._product.height?.height) ?? null}${createStringUrl(goodsTyre._product.diameter?.diameter) ?? null}${createStringUrl(goodsTyre._product.load_index?.load_index) ?? null}${createStringUrl(goodsTyre._product.speed_index?.speed_index) ?? null}${createStringUrl(goodsTyre._product.reinforce?.reinforce) ?? null}${createStringUrl(goodsTyre._product.homologation?.homologation) ?? null}`]} 
-          hrefTitle={['Інтернет-магазин SkyParts','Шини', `${goodsTyre._product.tyre_brand?.brand && !goodsTyre._product.tyre_brand?.brand?.includes(',') ? `Шини ${goodsTyre._product.tyre_brand?.brand}` : ''}`, goodsTyre._product.tyre_brand?.brand ? `Шина ${goodsTyre._product.season.season_ua} ${goodsTyre._product.tyre_brand.brand}` : '',`${goodsTyre._product.tyre_brand?.brand ?? ''} ${goodsTyre._product.tyre_model?.model ?? ''}`, `Шини ${goodsTyre._product.vehicle_type?.vehicle_type_ua && !goodsTyre._product.vehicle_type.vehicle_type_ua?.includes(',') ? goodsTyre._product.vehicle_type.vehicle_type_ua : ''} ${goodsTyre._product.season?.season_ua && !goodsTyre._product.season.season_ua?.includes(',') ? goodsTyre._product.season.season_ua : ''} ${goodsTyre._product.studded?.studded && !goodsTyre._product.studded.studded?.includes(',') ? goodsTyre._product.studded.studded : ''} ${goodsTyre._product.tyre_brand?.brand && !goodsTyre._product.tyre_brand.brand?.includes(',') ? goodsTyre._product.tyre_brand.brand : ''}  ${goodsTyre._product.tyre_model?.model && !goodsTyre._product.tyre_model.model?.includes(',') ? goodsTyre._product.tyre_model.model : ''}${goodsTyre._product.width?.width ? goodsTyre._product.width.width : ''} ${goodsTyre._product.height?.height ? '/' + goodsTyre._product.height.height : ''} ${goodsTyre._product.diameter?.diameter ? 'R' + goodsTyre._product.diameter.diameter : '' } ${goodsTyre._product.load_index?.load_index && !goodsTyre._product.load_index.load_index?.includes(',') ? goodsTyre._product.load_index.load_index : ''} ${goodsTyre._product.speed_index?.speed_index && !goodsTyre._product.speed_index.speed_index?.includes(',') ? goodsTyre._product.speed_index.speed_index : ''} ${goodsTyre._product.reinforce?.reinforce && !goodsTyre._product.reinforce.reinforce?.includes(',') ? goodsTyre._product.reinforce.reinforce : ''} ${goodsTyre._product.homologation?.homologation && !goodsTyre._product.homologation.homologation?.includes(',')  ? goodsTyre._product.homologation.homologation : ''}`]}
+          hrefTitle={[t('goodsPage.bread_crumbs_site'),t('goodsPage.bread_crumbs_tyre'), `${goodsTyre._product.tyre_brand?.brand && !goodsTyre._product.tyre_brand?.brand?.includes(',') ? `${t('goodsPage.bread_crumbs_tyre')} ${goodsTyre._product.tyre_brand?.brand}` : ''}`, goodsTyre._product.tyre_brand?.brand ? `${t('goodsPage.bread_crumbs_tyre')} ${goodsTyre._product.season.season_ua} ${goodsTyre._product.tyre_brand.brand}` : '',`${goodsTyre._product.tyre_brand?.brand ?? ''} ${goodsTyre._product.tyre_model?.model ?? ''}`, `${t('goodsPage.bread_crumbs_tyre')} ${goodsTyre._product.vehicle_type?.vehicle_type_ua && !goodsTyre._product.vehicle_type.vehicle_type_ua?.includes(',') ? goodsTyre._product.vehicle_type.vehicle_type_ua : ''} ${goodsTyre._product.season?.season_ua && !goodsTyre._product.season.season_ua?.includes(',') ? goodsTyre._product.season.season_ua : ''} ${goodsTyre._product.studded?.studded && !goodsTyre._product.studded.studded?.includes(',') ? goodsTyre._product.studded.studded : ''} ${goodsTyre._product.tyre_brand?.brand && !goodsTyre._product.tyre_brand.brand?.includes(',') ? goodsTyre._product.tyre_brand.brand : ''}  ${goodsTyre._product.tyre_model?.model && !goodsTyre._product.tyre_model.model?.includes(',') ? goodsTyre._product.tyre_model.model : ''}${goodsTyre._product.width?.width ? goodsTyre._product.width.width : ''} ${goodsTyre._product.height?.height ? '/' + goodsTyre._product.height.height : ''} ${goodsTyre._product.diameter?.diameter ? 'R' + goodsTyre._product.diameter.diameter : '' } ${goodsTyre._product.load_index?.load_index && !goodsTyre._product.load_index.load_index?.includes(',') ? goodsTyre._product.load_index.load_index : ''} ${goodsTyre._product.speed_index?.speed_index && !goodsTyre._product.speed_index.speed_index?.includes(',') ? goodsTyre._product.speed_index.speed_index : ''} ${goodsTyre._product.reinforce?.reinforce && !goodsTyre._product.reinforce.reinforce?.includes(',') ? goodsTyre._product.reinforce.reinforce : ''} ${goodsTyre._product.homologation?.homologation && !goodsTyre._product.homologation.homologation?.includes(',')  ? goodsTyre._product.homologation.homologation : ''}`]}
         />
         : null  
         }
@@ -617,7 +599,7 @@ const GoodsPage = observer(() => {
           <BreadCrumbs 
             route={['/','/wheels',`${goodsWheel._product.wheel_brand?.brand && !goodsWheel._product.wheel_brand?.brand.includes(',') ?  createStringUrl(goodsWheel._product.wheel_brand?.brand) : null}`,`${createStringUrl(goodsWheel._product.type?.type) ?? null}/${createStringUrl(goodsWheel._product.wheel_brand?.brand) ?? null}`,`${createStringUrl(goodsWheel._product.type?.type) ?? null}${createStringUrl(goodsWheel._product.wheel_brand?.brand) ?? null}${createStringUrl(goodsWheel._product.width?.width) ?? null}${createStringUrl(goodsWheel._product.diameter?.diameter) ?? null}${createStringUrl(goodsWheel._product.bolt_count?.bolt_count) ?? null}${createStringUrl(goodsWheel._product.pcd?.pcd) ?? null}${createStringUrl(goodsWheel._product.et?.et) ?? null}${createStringUrl(goodsWheel._product.dia?.dia) ?? null}`]} 
             hrefTitle={
-              ['Інтернет-магазин SkyParts','Диски',  `${goodsWheel._product.wheel_brand?.brand && !goodsWheel._product.wheel_brand?.brand?.includes(',') ? `Диски ${goodsWheel._product.wheel_brand?.brand}` : ''}`, goodsWheel._product.wheel_brand?.brand ? `Диск ${goodsWheel._product.type?.type} ${goodsWheel._product.wheel_brand.brand}` : '',`${goodsWheel._product.wheel_brand?.brand ?? ''} ${goodsWheel._product.wheel_model?.model ?? ''}`, `Диски ${goodsWheel._product.wheel_type?.wheel_type && !goodsWheel._product.wheel_type?.type?.includes(',') ? goodsWheel._product.wheel_type.type : ''} ${goodsWheel._product.wheel_brand?.brand && !goodsWheel._product.wheel_brand.brand?.includes(',') ? goodsWheel._product.wheel_brand.brand : ''}  ${goodsWheel._product.wheel_model?.model && !goodsWheel._product.wheel_model.model?.includes(',') ? goodsWheel._product.wheel_model.model : ''} ${goodsWheel._product.width?.width ? goodsWheel._product.width.width : ''} ${goodsWheel._product.diameter?.diameter ? 'R' + goodsWheel._product.diameter.diameter : '' } ${goodsWheel._product.bolt_count?.bolt_count && !goodsWheel._product.bolt_count.bolt_count?.includes(',') ? goodsWheel._product.bolt_count.bolt_count : ''} ${goodsWheel._product.pcd?.pcd && !goodsWheel._product.pcd.pcd?.includes(',') ? goodsWheel._product.pcd.pcd : ''} ${goodsWheel._product.et?.et && !goodsWheel._product.et.et?.includes(',') ? goodsWheel._product.et.et : ''} ${goodsWheel._product.dia?.dia && !goodsWheel._product.dia.dia?.includes(',')  ? goodsWheel._product.dia.dia : ''}`
+              [t('goodsPage.bread_crumbs_site'),t('goodsPage.bread_crumbs_wheel'),  `${goodsWheel._product.wheel_brand?.brand && !goodsWheel._product.wheel_brand?.brand?.includes(',') ? `Диски ${goodsWheel._product.wheel_brand?.brand}` : ''}`, goodsWheel._product.wheel_brand?.brand ? `Диск ${goodsWheel._product.type?.type} ${goodsWheel._product.wheel_brand.brand}` : '',`${goodsWheel._product.wheel_brand?.brand ?? ''} ${goodsWheel._product.wheel_model?.model ?? ''}`, `Диски ${goodsWheel._product.wheel_type?.wheel_type && !goodsWheel._product.wheel_type?.type?.includes(',') ? goodsWheel._product.wheel_type.type : ''} ${goodsWheel._product.wheel_brand?.brand && !goodsWheel._product.wheel_brand.brand?.includes(',') ? goodsWheel._product.wheel_brand.brand : ''}  ${goodsWheel._product.wheel_model?.model && !goodsWheel._product.wheel_model.model?.includes(',') ? goodsWheel._product.wheel_model.model : ''} ${goodsWheel._product.width?.width ? goodsWheel._product.width.width : ''} ${goodsWheel._product.diameter?.diameter ? 'R' + goodsWheel._product.diameter.diameter : '' } ${goodsWheel._product.bolt_count?.bolt_count && !goodsWheel._product.bolt_count.bolt_count?.includes(',') ? goodsWheel._product.bolt_count.bolt_count : ''} ${goodsWheel._product.pcd?.pcd && !goodsWheel._product.pcd.pcd?.includes(',') ? goodsWheel._product.pcd.pcd : ''} ${goodsWheel._product.et?.et && !goodsWheel._product.et.et?.includes(',') ? goodsWheel._product.et.et : ''} ${goodsWheel._product.dia?.dia && !goodsWheel._product.dia.dia?.includes(',')  ? goodsWheel._product.dia.dia : ''}`
             //`${(params.category) ?? null}`
           ]}
           />
@@ -630,24 +612,24 @@ const GoodsPage = observer(() => {
         <TabsGoodsCard
             onChangeTab={handleChangeTab}
             itemTab={[{id:'1',
-            titleGoodsTab: "ВСЕ ПРО ТОВАР",
+            titleGoodsTab: t('goodsPage.tab_title_about'),
             value:"vseProTovar", 
             checked: changeTabGoods,
             reviewCount:0,
             },{id:'2',
-            titleGoodsTab:"ХАРАКТЕРИСТИКИ",
+            titleGoodsTab:t('goodsPage.tab_title_character'),
             value:"charakteristiki", 
             checked: changeTabGoods,
             reviewCount:0,
             }, {id:'3',
-            titleGoodsTab:"ВІДГУКИ", 
+            titleGoodsTab:t('goodsPage.tab_title_reviews'), 
             value:"vidguki",
             checked: changeTabGoods,
             reviewCount: goodsTyre?._product?.reviews?.length ??
             goodsWheel?._product?.reviews?.length
             ?? 0,
             }, {id:'4',
-            titleGoodsTab:"ПИТАННЯ ТА ВІДПОВІДІ",
+            titleGoodsTab:t('goodsPage.tab_title_questions'),
             value:"pitannja",
             checked: changeTabGoods,
             reviewCount: goodsWheel?._product?.question?.length ?? 
@@ -684,10 +666,11 @@ const GoodsPage = observer(() => {
             }
           {changeTabGoods === "vidguki" ?
             <div className='tabReviewsActive'>
+              <p/>
               <div className='preReview'>
                 {goodsTyre?._product?.tyre_brand?.brand ?
                 <span>
-                  Відгуки про шини {
+                  {t('goodsPage.review_tyres')} {
                   goodsTyre?._product.tyre_brand.brand 
                   + '' 
                   + goodsTyre?._product.tyre_model.model
@@ -697,7 +680,7 @@ const GoodsPage = observer(() => {
                 }
                 {goodsWheel?._product?.wheel_brand?.brand ?
                 <span>
-                  Відгуки про диски {
+                  {t('goodsPage.review_wheels')} {
                   goodsWheel?._product.wheel_brand.brand 
                   + '' 
                   + goodsWheel?._product.wheel_model.model
@@ -706,7 +689,7 @@ const GoodsPage = observer(() => {
                 : null 
                 } 
                 <ButtonAction 
-                  props={'Написати відгук'}
+                  props={t('goodsPage.review_create')}
                   eventItem={openToCreateReview}
                 />
               </div>
@@ -805,13 +788,13 @@ const GoodsPage = observer(() => {
       </div>
       {goodsTyre?.model ?
       <div className={paramsModel ? 'allSizeModelNone' : 'allSizeModel'}>
-        <span>Усі розміри моделі {goodsTyre?.model ?? ''}</span>
+        <span>{t('goodsPage.all_size_model')} {goodsTyre?.model ?? ''}</span>
         <AllTyreModelSize sizeTyresList={allParamsModel}/>
       </div>
       : null  
       }
       <div className={paramsModel ? 'allModelBrandNone' : 'allModelBrand'}>
-        <span>Усі моделі бренда {goodsTyre?.brand ?? goodsWheel?.brand ?? ''}</span>
+        <span>{t('goodsPage.all_size_brand')} {goodsTyre?.brand ?? goodsWheel?.brand ?? ''}</span>
         <AllModelBrand 
           brand={goodsTyre?._product?.tyre_brand?.brand ?? goodsWheel?._product?.wheel_brand?.brand}
           modelBrandList={allModelsBrand ?? []}

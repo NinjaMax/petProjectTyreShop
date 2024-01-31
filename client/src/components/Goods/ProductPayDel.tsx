@@ -1,11 +1,14 @@
 import React from 'react';
 import '../../css/Goods/ProductPayDel.css'; 
+import { useTranslation } from 'react-i18next';
 
 const ProductPayDel = () => {
+    const { t, i18n } = useTranslation();
+
     return (
         <div className='productPayDelBox'>
             <div>
-                <h5>Доставляємо</h5>
+                <h5>{t('productPerDay.delivery')}</h5>
                 <div className='productPayDelBlock'>
                     <span className='productPayDelNovaPoshta'>
                         <img src='/iconsDelivery/nova_Poshta_2022_logo.png' 
@@ -14,7 +17,7 @@ const ProductPayDel = () => {
                             alt='deliveryNova'
                         />
                         <span className='tooltipProductPayDelNova'>
-                            Термін доставки 1-3 дні від 60 грн/од
+                            {t('productPerDay.nova_poshta_tooltip')}
                         </span>
                     </span>
                     <span className='productPayDelDelivery'>
@@ -24,25 +27,24 @@ const ProductPayDel = () => {
                             alt='deliveryDelivery'
                         />
                         <span className='tooltipProductPayDelDelivery'>
-                            Термін доставки 1-3 дні від 40 грн/од
+                            {t('productPerDay.delivery_tooltip')}
                         </span>
                     </span>
                     <span className='productPayDelPickUp'>
-                        Самовивіз
+                        {t('productPerDay.take_off')}
                         <img src='/iconsDelivery/warehouse_55.png' 
                             width={48}
                             height={48}
                             alt='deliveryPickUp'
                         />
                         <span className='tooltipProductPayDelPickUp'>
-                            Можливість самовивозу зі складу в м.Харків. 
-                            Детальніше дізнатися у менеджера з продажу. 
+                            {t('productPerDay.take_off_tooltip')}
                         </span>
                     </span>
                 </div>   
             </div>
             <div>
-                <h5>Приймаємо</h5>
+                <h5>{t('productPerDay.accept')}</h5>
                 <div className='productPayDelBlock'>    
                     <span className='productPayDelCash'>
                         <img src='./iconPayment/cash_48_b.png' 
@@ -51,7 +53,7 @@ const ProductPayDel = () => {
                             alt='cash'
                         />
                         <span className='tooltipProductPayDelCash'>
-                        Можливість оплати готівкою
+                        {t('productPerDay.accept_cash_tooltip')}
                         </span>
                     </span>
                     <span className='productPayDelBank'>
@@ -61,7 +63,7 @@ const ProductPayDel = () => {
                             alt='merchant'
                         />
                         <span className='tooltipProductPayDelBank'>
-                        Можливість оплати по Безготівковому розрахунку
+                        {t('productPerDay.accept_invoic_tooltip')}
                         </span>
                     </span>
                     <span className='productPayDelVisa'>
@@ -71,7 +73,7 @@ const ProductPayDel = () => {
                             alt='card'
                         />
                         <span className='tooltipProductPayDelVisaMaster'>
-                        Можливість оплати картками VISA MASTERCARD
+                        {t('productPerDay.accept_visa_tooltip')}
                         </span>
                     </span>
                     <span className='productPayDelPrivat'>
@@ -81,7 +83,7 @@ const ProductPayDel = () => {
                             alt='cardPrivat'
                         />
                         <span className='tooltipProductPayDelPrivat'>
-                        Можливість оплати картками Приватбанку
+                        {t('productPerDay.accept_privat_tooltip')}
                         </span>
                     </span>
                     <span className='productPayDelMono'>
@@ -91,36 +93,36 @@ const ProductPayDel = () => {
                             alt='monobank'
                         />
                         <span className='tooltipProductPayDelMono'>
-                        Можливість оплати картками Monobank
+                        {t('productPerDay.accept_mono_tooltip')}
                         </span>
                     </span>
                 </div>   
             </div>
             <div>
-                <h5>Надаємо</h5>
+                <h5>{t('productPerDay.provide')}</h5>
                 <div className='productPayDelBlock'>
                     <span className='productPayDelGaranty'>
-                        Гарантію на товари до 3 років
+                        {t('productPerDay.provide_garanty')}
                         <span className='tooltipProductPayDelGaranty'>
-                        Гарантія від виробника
+                        {t('productPerDay.provide_garanty_tooltip')}
                         </span>
                     </span>
                     <span className='productPayDelReturn'>
-                        Повернення /обмін протягом 14 днів
+                        {t('productPerDay.provide_return')}
                         <span className='tooltipProductPayDelReturn'>
-                        Повернення протягом 14 днів (якщо товар не єксплуатувався)
+                        {t('productPerDay.provide_return_tooltip')}
                         </span>
                     </span>
                     <span className='productPayDelBonus'>
-                        Бонуси
+                        {t('productPerDay.provide_bonuse')}
                         <span className='tooltipProductPayDelBonus'>
-                        Нараховуємо бонуси після покупки на всі групи товарів які можна використати при наступній покупці 
+                        {t('productPerDay.provide_bonus_tooltip')}
                         </span>
                     </span>
                     <span className='productPayDeSertificate'>
-                        Сертіфікати на розширенні гарантіі
+                        {t('productPerDay.provide_sert')}
                         <span className='tooltipProductPayDeSertificate'>
-                        Надаємо сертіфікати на розширену гарантію до товарів
+                        {t('productPerDay.provide_sert_tooltip')}
                         </span>
                     </span>
                 </div>  

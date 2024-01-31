@@ -6,12 +6,14 @@ import { TyreSeasons } from '../../services/enum/PropsTyreSeason';
 import { seasonCar, typeCar } from '../../services/tyresPropsService';
 import { typeWheels } from '../../services/wheelsProps.service';
 import { homologationByCar } from '../../services/homologation';
+import { useTranslation } from 'react-i18next';
 
 const PropsCardIcons = ({type, type_wheel, season, homologation}:IProps) => {
     const [showType, setShowType]   = useState<string>(TyreType.NO_TYPE);
     const [showSeason, setShowSeason] = useState<string>(TyreSeasons.NOSEASON_SEASON);
     const [showWheelsType, setShowWheelsType] = useState<string>(TyreSeasons.NOSEASON_SEASON);
     const [showHomologation, setShowHomologation] = useState<string>(TyreType.NO_TYPE);
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         let isSetFlag = false;
@@ -54,7 +56,7 @@ const PropsCardIcons = ({type, type_wheel, season, homologation}:IProps) => {
             <div className='propsCardIcons'>
                 <img className='propsCarImg' src={showType} alt='typesCar'/>  
                 <span className="tooltipTextCardIcons">
-                Тип транспорту: {type?.vehicle_type_ua}
+                Тип транспорта: {i18n.resolvedLanguage === 'uk' ? type?.vehicle_type_ua : type?.vehicle_type}
                 </span>
             </div>
             : 
@@ -68,7 +70,7 @@ const PropsCardIcons = ({type, type_wheel, season, homologation}:IProps) => {
             <div className='propsCardIcons'>
                 <img className='propsCarImg' src={showWheelsType} alt='seasons'/>
                 <span className="tooltipTextCardIcons">
-                Тип диску: {type_wheel?.type} диск
+                Тип диска: {type_wheel?.type} диск
                 </span>
             </div>
             : null 
@@ -77,7 +79,7 @@ const PropsCardIcons = ({type, type_wheel, season, homologation}:IProps) => {
             <div className='propsCardIcons'>
                 <img className='propsCarImg' src={showSeason} alt='seasons'/>
                 <span className="tooltipTextCardIcons">
-                Сезон: {season?.season_ua} шина
+                Сезон: {i18n.resolvedLanguage === 'uk' ? season?.season_ua : season?.season} шина
                 </span>
             </div>
             : 
@@ -91,7 +93,10 @@ const PropsCardIcons = ({type, type_wheel, season, homologation}:IProps) => {
             <div className='propsCardIcons'>
                 <img className='propsCarImg' src={showHomologation} alt='homologation'/>
                 <span className="tooltipTextCardIconsHom">
-                Омологація-рекомендовані автовиробником для марки автомобіля.
+                {i18n.resolvedLanguage === 'uk' ? 
+                    'Омологація-рекомендовані автовиробником для марки транспорту' : 
+                    'Омологация - рекомендация автопроизводителем для марки транспорта'
+                }
                 </span>
             </div>
             : 

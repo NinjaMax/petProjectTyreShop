@@ -501,9 +501,10 @@ export class TyresService {
                 ? {
                     model: TyreSeason,
                     where: {
-                      season_ua: {
-                        [Op.in]: season.split(','),
-                      },
+                      [Op.or]: [{ season_ua: {[Op.in]: season.split(',')}}, { season: {[Op.in]: season.split(',')}}],
+                      // season_ua: {
+                      //   [Op.in]: season.split(','),
+                      // },
                     },
                   }
                 : { model: TyreSeason },
@@ -529,9 +530,10 @@ export class TyresService {
                 ? {
                     model: TyreVehicleType,
                     where: {
-                      vehicle_type_ua: {
-                        [Op.in]: type.split(','),
-                      },
+                      [Op.or]: [{ vehicle_type_ua: {[Op.in]: season.split(',')}}, { vehicle_type: {[Op.in]: season.split(',')}}],
+                      // vehicle_type_ua: {
+                      //   [Op.in]: type.split(','),
+                      // },
                     },
                   }
                 : { model: TyreVehicleType },
@@ -679,9 +681,10 @@ export class TyresService {
                 ? {
                     model: TyreSeason,
                     where: {
-                      season_ua: {
-                        [Op.in]: season.split(','),
-                      },
+                      [Op.or]: [{ season_ua: {[Op.in]: season.split(',')}}, { season: {[Op.in]: season.split(',')}}],
+                      // season_ua: {
+                      //   [Op.in]: season.split(','),
+                      // },
                     },
                   }
                 : { model: TyreSeason },
@@ -707,9 +710,10 @@ export class TyresService {
                 ? {
                     model: TyreVehicleType,
                     where: {
-                      vehicle_type_ua: {
-                        [Op.in]: type.split(','),
-                      },
+                      [Op.or]: [{ vehicle_type_ua: {[Op.in]: season.split(',')}}, { vehicle_type: {[Op.in]: season.split(',')}}],
+                      // vehicle_type_ua: {
+                      //   [Op.in]: type.split(','),
+                      // },
                     },
                   }
                 : { model: TyreVehicleType },
@@ -860,9 +864,10 @@ export class TyresService {
                 ? {
                     model: TyreSeason,
                     where: {
-                      season_ua: {
-                        [Op.in]: season.split(','),
-                      },
+                      [Op.or]: [{ season_ua: {[Op.in]: season.split(',')}}, { season: {[Op.in]: season.split(',')}}],
+                      // season_ua: {
+                      //   [Op.in]: season.split(','),
+                      // },
                     },
                   }
                 : { model: TyreSeason },
@@ -888,9 +893,10 @@ export class TyresService {
                 ? {
                     model: TyreVehicleType,
                     where: {
-                      vehicle_type_ua: {
-                        [Op.in]: type.split(','),
-                      },
+                      [Op.or]: [{ vehicle_type_ua: {[Op.in]: season.split(',')}}, { vehicle_type: {[Op.in]: season.split(',')}}],
+                      // vehicle_type_ua: {
+                      //   [Op.in]: type.split(','),
+                      // },
                     },
                   }
                 : { model: TyreVehicleType },
@@ -1041,9 +1047,8 @@ export class TyresService {
                 ? {
                     model: TyreSeason,
                     where: {
-                      season_ua: {
-                        [Op.in]: season.split(','),
-                      },
+                      [Op.or]: [{ season_ua: {[Op.in]: season.split(',')}}, { season: {[Op.in]: season.split(',')}}],
+                      //season_ua: {[Op.in]: season.split(',')},
                     },
                   }
                 : { model: TyreSeason },
@@ -1069,9 +1074,10 @@ export class TyresService {
                 ? {
                     model: TyreVehicleType,
                     where: {
-                      vehicle_type_ua: {
-                        [Op.in]: type.split(','),
-                      },
+                      [Op.or]: [{ vehicle_type_ua: {[Op.in]: season.split(',')}}, { vehicle_type: {[Op.in]: season.split(',')}}],
+                      // vehicle_type_ua: {
+                      //   [Op.in]: type.split(','),
+                      // },
                     },
                   }
                 : { model: TyreVehicleType },
@@ -1222,9 +1228,10 @@ export class TyresService {
                 ? {
                     model: TyreSeason,
                     where: {
-                      season_ua: {
-                        [Op.in]: season.split(','),
-                      },
+                      [Op.or]: [{ season_ua: {[Op.in]: season.split(',')}}, { season: {[Op.in]: season.split(',')}}],
+                      // season_ua: {
+                      //   [Op.in]: season.split(','),
+                      // },
                     },
                   }
                 : { model: TyreSeason },
@@ -1250,9 +1257,10 @@ export class TyresService {
                 ? {
                     model: TyreVehicleType,
                     where: {
-                      vehicle_type_ua: {
-                        [Op.in]: type.split(','),
-                      },
+                      [Op.or]: [{ vehicle_type_ua: {[Op.in]: season.split(',')}}, { vehicle_type: {[Op.in]: season.split(',')}}],
+                      // vehicle_type_ua: {
+                      //   [Op.in]: type.split(','),
+                      // },
                     },
                   }
                 : { model: TyreVehicleType },

@@ -9,13 +9,14 @@ import { FormValuesQuestion } from './types/QuestionCreate.type';
 import QuestionCreate from './QuestionCreate';
 import QuestionCard from './QuestionCard';
 import { createQuestion, getAllQuestionsModel } from '../../restAPI/restGoodsApi';
+import { useTranslation } from 'react-i18next';
 
 const Question = observer(() => {
   const [createQuestions, setCreateQuestions] = useState<boolean>(false);  
   const { goodsTyre, goodsWheel, page, customer} = useContext<any | null>(Context);
-  //const [activeQuestion, setActiveQuestion] = useState<boolean>(false);
   const [dataQuestion, setDataQuestion] = useState<{} | null>(null);
   const [dataQuestionsList, setDataQuestionsList] = useState<any[] | null>(null);
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     let isMounted = false;
@@ -27,7 +28,6 @@ const Question = observer(() => {
     let i: number = 0; 
     while (taskQuestion.length > i) {
       if (!isMounted && taskQuestion[i] === createQuestion && dataQuestion) {
-        console.log('QUESTION_DATA: ', dataQuestion);
         if (dataQuestion) {
           const createQuestionOne: any = await taskQuestion[i](
           dataQuestion,
@@ -82,8 +82,8 @@ const Question = observer(() => {
 <div className='question'>
       <div className='questionContainer'>
         <div className='questionTitle' >
-          <span>Питання клієнтів </span>
-          <ButtonAction props={'Задати питання'}
+          <span>{t('questions.customers_questions')} </span>
+          <ButtonAction props={t('questions.ask_questions')}
             eventItem={onCreateQuestions}
           /> 
         </div>
@@ -97,7 +97,7 @@ const Question = observer(() => {
             />
           </div>
           )
-        : <span className='questionNo'>Не має покищо жодного питання</span>
+        : <span className='questionNo'>{t('questions.no_questions')}</span>
         } 
         <div className=
           'questionCreateModalActive'>

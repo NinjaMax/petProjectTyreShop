@@ -25,12 +25,22 @@ const CatalogTyresPage = observer(() => {
   const [reviewGoodsData, setReviewGoodsData] = useState<any[] | null>();
   const [prevBtnReview, setPrevBtnReview] = useState<number>(0);
   const [nextBtnReview, setNextBtnReview] = useState<number>(0);
+  const [langState, setLangState] = useState<string>('ua');
   const params = useParams<any>();
   const location = useLocation();
   const history = useHistory();
   const [stateFilter, setStateFilter]=useState<boolean>(false);
   const { t, i18n } = useTranslation();
   
+  useEffect(() => {
+    if (i18n.resolvedLanguage === 'uk') {
+      setLangState('uk');
+    }
+    if (i18n.resolvedLanguage === 'ru') {
+      setLangState('ru');
+    } 
+  },[i18n.resolvedLanguage]);
+
   useEffect(() => {
     let isMountedReview = false;
     const getTyresPathUrl = async () => {
@@ -252,7 +262,9 @@ const CatalogTyresPage = observer(() => {
             setHightFilter?.push(item.height.height),
             setDiameterFilter?.push(item.diameter.diameter),
             setBrandFilter?.push(item.tyre_brand.brand),
-            setSeasonFilter?.push(i18n.resolvedLanguage === 'uk' ? item.season.season_ua : item.season.season)
+            //setSeasonFilter?.push(item.season.season_ua)
+            setSeasonFilter?.push(langState === 'uk' ? item.season.season_ua : item.season.season)
+            //setSeasonFilter?.push(i18n.resolvedLanguage === 'uk' ? item.season.season_ua : item.season.season)
             )
           })
           if (filter.width) {
@@ -464,7 +476,8 @@ const CatalogTyresPage = observer(() => {
     filter.season, 
     filter.brands, 
     location.pathname, 
-    i18n.resolvedLanguage
+    langState
+    //i18n.resolvedLanguage
   ]);
 
   useEffect(() =>{
@@ -486,7 +499,9 @@ const CatalogTyresPage = observer(() => {
         
         tyreFilterGoods.rows.map((item: any) => 
         { return (
-            setVehicleTypeFilter?.push(i18n.resolvedLanguage === 'uk' ? item.vehicle_type.vehicle_type_ua : item.vehicle_type.vehicle_type),
+            setVehicleTypeFilter?.push(langState === 'uk' ? item.vehicle_type.vehicle_type_ua : item.vehicle_type.vehicle_type),  
+            //setVehicleTypeFilter?.push(item.vehicle_type.vehicle_type_ua),
+            //setVehicleTypeFilter?.push(i18n.resolvedLanguage === 'uk' ? item.vehicle_type.vehicle_type_ua : item.vehicle_type.vehicle_type),
             setSpeedIndexFilter?.push(item.speed_index.speed_index_with_desc),
             setLoadIndexFilter?.push(item.load_index.load_index_with_desc)
           )
@@ -498,9 +513,15 @@ const CatalogTyresPage = observer(() => {
             ))
           )
         } else {
-          goodsTyre?.setVehicleType(
-            Array.from(new Set([...setVehicleTypeFilter, i18n.resolvedLanguage === 'uk' ? 'вантажні шини' : 'грузовые шины']))
+          // goodsTyre?.setVehicleType(
+          //   Array.from(new Set([...setVehicleTypeFilter, 'вантажні шини']))
+          // )
+            goodsTyre?.setVehicleType(
+            Array.from(new Set([...setVehicleTypeFilter, langState === 'uk' ? 'вантажні шини' : 'грузовые шины']))
           )
+          // goodsTyre?.setVehicleType(
+          //   Array.from(new Set([...setVehicleTypeFilter, i18n.resolvedLanguage === 'uk' ? 'вантажні шини' : 'грузовые шины']))
+          // )
         }
         if (filter.speed_index) {
           goodsTyre?.setSpeedIndex(
@@ -663,7 +684,8 @@ const CatalogTyresPage = observer(() => {
     filter.speed_index, 
     filter.load_index, 
     location.pathname, 
-    i18n.resolvedLanguage
+    langState
+    //i18n.resolvedLanguage
   ]);
 
   useEffect(() =>{
@@ -1215,7 +1237,10 @@ const CatalogTyresPage = observer(() => {
       setStateFilter(false);
     }
   };
-  
+
+  console.log('FILTER_SEASON: ', filter.season);
+  console.log('LANG_STATE: ', langState);
+
   return (
     <div className='catalogTyres'
       onClick={closeFilter}

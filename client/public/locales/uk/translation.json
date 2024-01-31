@@ -79,7 +79,7 @@
         "category_wheels": "Диски"
     },
     "catalogPage" : {
-        "bread_crumbs_site": "Інтернет-магазин SkyParts",
+        "bread_crumbs_site": "Інтернет-магазин SKYPARTS",
         "bread_crumbs_tyre": "Шини",
         "bread_crumbs_wheel": "Диски",
         "review_title_custm": "Відгуки покупців",
@@ -143,5 +143,96 @@
     },
     "reviewStore" : {
         "grade" : "Оцінка:"
+    },
+    "reviewGoods" : {
+        "rating_goods" : "Рейтинг товара:", 
+        "driver_expirience" : "Водійський досвід",
+        "review" : "Відгук про товар:",
+        "review_positive" : "Переваги:",
+        "review_negative" : "Недоліки:" 
+    },
+    "goodsPage" : {
+        "tab_title_about" : "ВСЕ ПРО ТОВАР",
+        "tab_title_character" : "ХАРАКТЕРИСТИКИ",
+        "tab_title_reviews" : "ВІДГУКИ",
+        "tab_title_questions" : "ПИТАННЯ ТА ВІДПОВІДІ",
+        "review_create" : "Написати відгук",
+        "review_tyres" : "Відгуки про шини",
+        "review_wheels" : "Відгуки про диски",
+        "all_size_model" : "Усі розміри моделі",
+        "all_size_brand" : "Усі моделі бренда",
+        "bread_crumbs_site": "Інтернет-магазин SKYPARTS",
+        "bread_crumbs_tyre": "Шини",
+        "bread_crumbs_wheel": "Диски"
+    },
+    "goodsAboutProd" : {
+        "info" : "Шини", 
+        "review" : " відгук",
+        "reviews" : " відгуків",
+        "available" : "в наявності",
+        "ends" : "закінчується",
+        "country" : "Країна виробник",
+        "bonuses" : "бонусів",
+        "for_review" : "за відгук",
+        "all_tyres" : "Всі шини",
+        "not_available" : "немає в наявності",
+        "buy" : "КУПИТИ",
+        "from" : "від",
+        "not_available_big": "НЕМАЄ В НАЯВНОСТІ",
+        "show_similar_goods": "ПОКАЗАТИ СХОЖІ ТОВАРИ",
+        "fast_order": "Швидке замовлення",
+        "garanty_skysafe": "Гарантія SKYSAFE", 
+        "show_all_variant" : "ПОКАЗАТИ ВСІ ВАРІАНТИ", 
+        "added_to_favorite" : "Додано в обране", 
+        "add_to_favorite" : "Додати в обране", 
+        "added_compare" : "Додано в порівняння", 
+        "add_to_compare" : "Додати в порівняння"
+    }, 
+    "productPerDay" : {
+        "delivery" : "Доставляємо", 
+        "nova_poshta_tooltip" : "Термін доставки 1-3 дні від 60 грн/од",
+        "delivery_tooltip" : "Термін доставки 1-3 дні від 40 грн/од",
+        "take_off" : "Самовивіз",
+        "take_off_tooltip" : "Можливість самовивозу зі складу в м.Харків Детальніше дізнатися у менеджера з продажу",
+        "accept" : "Приймаємо",
+        "accept_cash_tooltip" : "Можливість оплати готівкою",
+        "accept_invoic_tooltip" : "Можливість оплати по Безготівковому розрахунку",
+        "accept_visa_tooltip" : "Можливість оплати картками VISA MASTERCARD",
+        "accept_privat_tooltip" : "Можливість оплати картками Приватбанку",
+        "accept_mono_tooltip" : "Можливість оплати картками Monobank",
+        "provide" : "Надаємо",
+        "provide_garanty": "Гарантію на товари до 3 років",
+        "provide_garanty_tooltip": "Гарантія від виробника",
+        "provide_return": "Повернення /обмін протягом 14 днів",
+        "provide_return_tooltip": "Повернення протягом 14 днів (якщо товар не єксплуатувався)",
+        "provide_bonuse": "Бонуси",
+        "provide_bonus_tooltip" : "Нараховуємо бонуси після покупки на всі групи товарів які можна використати при наступній покупці",
+        "provide_sert" : "Сертіфікати на розширенні гарантіі", 
+        "provide_sert_tooltip" : "Надаємо сертіфікати на розширену гарантію до товарів"
+    },
+    "reviewGoodsOverall" : {
+        "rating_model" : "Рейтинг моделі", 
+        "avarage_score" : "середня оцінка на основі",
+        "reviews" : "відгуків",
+        "controll_grip" : "Керованість на сухій дорозі",
+        "controll_wet" : "Керованість на мокрій дорозі",
+        "controll_snow" : "Керованість на снігу",
+        "conrtoll_ice" : "Керованість на льду",
+        "traction" : "Проходимість",
+        "thearweard" : "Зносостійкість",
+        "price_quality" : "Ціна/Якість"
+    },
+    "reviewBrandOverall" : {
+        "rating_brand" : "Рейтинг бренда", 
+        "avarage_score" : "середня оцінка на основі",
+        "reviews" : "відгуків",
+        "avarage_score_winter" : "середня оцінка Зимових моделей",
+        "avarage_score_summer" : "середня оцінка Літніх моделей",
+        "avarage_score_allseason" : "середня оцінка Всесезонних моделей"
+    },
+    "questions" : {
+        "customers_questions" : "Питання клієнтів", 
+        "ask_questions" : "Задати питання",
+        "no_questions" : "Не має покищо жодного питання"
     }
 }

@@ -79,7 +79,7 @@
     "category_wheels": "Диски"
   },
   "catalogPage" : {
-    "bread_crumbs_site":  "Интернет-магазин SkyParts",
+    "bread_crumbs_site":  "Интернет-магазин SKYPARTS",
     "bread_crumbs_tyre":  "Шины",
     "bread_crumbs_wheel": "Диски",
     "review_title_custm": "Отзывы покупателей",
@@ -148,5 +148,96 @@
   },
   "reviewStore" : {
     "grade" : "Оценка:"
-  }
+  },
+  "reviewGoods" : {
+    "rating_goods" : "Рейтинг товара: ",
+    "driver_expirience" :  "Водительский стаж",
+    "review" : "Отзыв про товар:",
+    "review_positive" : "Преимущества:",
+    "review_negative" : "Недостатки:"
+  },
+  "goodsPage" : {
+    "tab_title_about" : "ВСЕ ПРО ТОВАР",
+    "tab_title_character" : "ХАРАКТЕРИСТИКИ",
+    "tab_title_reviews" : "ОТЗЫВЫ",
+    "tab_title_questions" : "ВОПРОСЫ И ОТВЕТЫ",
+    "review_create" : "Написать отзыв",
+    "review_tyres" : "Отзывы про шины",
+    "review_wheels" : "Отзывы про диски",
+    "all_size_model" : "Все размеры модели",
+    "all_size_brand" : "Все модели бренда",
+    "bread_crumbs_site": "Интернет-магазин SKYPARTS",
+    "bread_crumbs_tyre": "Шины",
+    "bread_crumbs_wheel": "Диски"
+  },
+  "goodsAboutProd" : {
+    "info" : "Шины",
+    "review" : "отзыв",
+    "reviews" : " отзывов",
+    "available" : "в наличии",
+    "ends" : "заканчивается",
+    "country" : "Страна производитель",
+    "bonuses" : "бонусов",
+    "for_review" : "За отзыв",
+    "all_tyres" : "Все шины",
+    "not_available" : "нет в наличии",
+    "buy" : "КУПИТЬ",
+    "from" : "от",
+    "not_available_big": "НЕТ В НАЛИЧИИ",
+    "show_similar_goods": "ПОКАЗАТЬ ПОХОЖИЕ ТОВАРЫ",
+    "fast_order": "Быстрый заказ",
+    "garanty_skysafe": "Гарантия SKYSAFE",
+    "show_all_variant" : "ПОКАЗАТЬ ВСЕ ВАРИАНТЫ",
+    "added_to_favorite" : "Добавлено в избранные",
+    "add_to_favorite" : "Добавить в избранные",
+    "added_compare" : "Добавлено в сравнение",
+    "add_to_compare" : "Добавить к сравнению"
+  },
+  "productPerDay" : {
+    "delivery" : "Доставляем",
+    "nova_poshta_tooltip" : "Сроки доставки 1-3 дня от 60грн/ед",
+    "delivery_tooltip" : "Сроки доставки 1-3 дня от 40грн/ед",
+    "take_off" : "Самовывоз",
+    "take_off_tooltip" : "Возможность самовывоза со склада в г. Харьков Детали узнавайте у менеджера по продажам",
+    "accept" : "Принимаем",
+    "accept_cash_tooltip" : "Возможность оплаты наличными",
+    "accept_invoic_tooltip" : "Возможность оплаты по безналичному расчету",
+    "accept_visa_tooltip" : "Возможность оплаты картами VISA MASTERCARD",
+    "accept_privat_tooltip" : "Возможность оплаты картами Приватбанка",
+    "accept_mono_tooltip" : "Возможность оплаты картами Monobank",
+    "provide" : "Предоставляем",
+    "provide_garanty": "Гарантию на товары до 3 лет",
+    "provide_garanty_tooltip": "Гарантия производителя",
+    "provide_return": "Возврат обмен в течении 14 дней",
+    "provide_return_tooltip": "Возврат в течении 14 дней если товар не эксплуатировался",
+    "provide_bonuse": "Бонусы",
+    "provide_bonus_tooltip" : "Начисляем бонусы после покупки на все группы товаров, которые можно использовать при следующей покупке",
+    "provide_sert" : "Сертификаты и расширение гарантии",
+    "provide_sert_tooltip" : "Предоставляем сертификаты на расширенную гарантию к товарам"
+  },
+  "reviewGoodsOverall" : {
+    "rating_model" : "Рейтинг модели",
+    "avarage_score" : "средняя оценка на основании",
+    "reviews" : "отзывов",
+    "controll_grip" : "Управляемость на сухой дороге",
+    "controll_wet" : "Управляемость на мокрой дороге",
+    "controll_snow" : "Управляемость на снегу",
+    "conrtoll_ice" : "Управляемость на льду",
+    "traction" : "Проходимость",
+    "thearweard" : "Износостойкость",
+    "price_quality" : "Цена/Качество"
+  },
+  "reviewBrandOverall" : {
+    "rating_brand" : "Рейтинг бренда",
+    "avarage_score" : "средняя оценка на основании",
+    "reviews" : "отзывов",
+    "avarage_score_winter" : "средняя оценка Зимних моделей",
+    "avarage_score_summer" : "средняя оценка Летних моделей",
+    "avarage_score_allseason" : "средняя оценка Всесезонных моделей"
+  },
+  "questions" : {
+    "customers_questions" : "Вопросы клиентов",
+    "ask_questions" : "Задать вопросы",
+    "no_questions" : "Нет на данный момент вопросов"
+}
 }

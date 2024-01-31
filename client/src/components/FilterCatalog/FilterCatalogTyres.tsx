@@ -83,7 +83,7 @@ const FilterCatalogTyres = observer((
             page.setLoadMore(0);
             page.setOffset(0);
         }
-        if (e.target.name === 'Діаметр' || 'Диаметр') {
+        if (e.target.name === ('Діаметр' || 'Диаметр')) {
             filter.setDiameter(e.target.value);
             filter.setChipDiameter(
                 Array.from(

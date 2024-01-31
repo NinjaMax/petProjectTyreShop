@@ -4,6 +4,7 @@ import Rating from '../ux/Rating';
 import brandImg from '../../assets/img/continental_logo.png';
 import RatingOptions from '../ux/RatingOptions';
 import { tyreBrandLogo } from '../../services/tyreBrandImg.service';
+import { useTranslation } from 'react-i18next';
 
 interface IReviewBrand {
     avgBrand?:number; 
@@ -24,11 +25,12 @@ const ReviewsBrandOverall = ({
     brandName,
     typeGoods
 }: IReviewBrand) => {
-    console.log('RATING_BRAND_AVG: ',avgBrand)
+    const { t, i18n } = useTranslation();
+
     return (
         <div className="reviewsBrand">
             <div className='reviewBrandList'>
-                <span className='reviewBrandTitle'>Рейтинг бренда</span>
+                <span className='reviewBrandTitle'>{t('reviewBrandOverall.rating_brand')}</span>
                 <p/>
                 <span className='reviewBrandName'>{brandName}</span>
                 <img src={tyreBrandLogo(brandName)} alt='brandImg'/>
@@ -36,12 +38,12 @@ const ReviewsBrandOverall = ({
                     numScore={avgBrand ?? 0}
                     disabled={true}
                 /> 
-                <span>середня оцінка на основі {countReviewBrand} відгуків.</span>  
+                <span>{t('reviewBrandOverall.avarage_score')} {countReviewBrand} {t('reviewBrandOverall.reviews')}</span>  
             </div>
             {typeGoods ?
             <div className='reviewBrandList'>
                 <RatingOptions 
-                    nameRating={'середня оцінка Зимових моделей'}
+                    nameRating={t('reviewBrandOverall.avarage_score_winter')}
                 >
                     <Rating 
                         numScore={ratingWinter ?? 0}
@@ -54,7 +56,7 @@ const ReviewsBrandOverall = ({
             {typeGoods ?
             <div className='reviewBrandList'>
                 <RatingOptions 
-                    nameRating={'середня оцінка Літніх моделей'}
+                    nameRating={t('reviewBrandOverall.avarage_score_summer')}
                 >
                     <Rating 
                         numScore={ratingSummer ?? 0}
@@ -67,7 +69,7 @@ const ReviewsBrandOverall = ({
             {typeGoods ?
             <div className='reviewBrandList'>
                 <RatingOptions 
-                    nameRating={'середня оцінка Всесезонних моделей'}
+                    nameRating={t('reviewBrandOverall.avarage_score_allseason')}
                 >
                     <Rating 
                         numScore={ratingAllseason ?? 0}
@@ -78,7 +80,6 @@ const ReviewsBrandOverall = ({
             : null
             }
         </div>
-        
     );
 };
 

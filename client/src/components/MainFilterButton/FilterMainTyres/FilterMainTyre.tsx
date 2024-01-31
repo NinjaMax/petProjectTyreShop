@@ -53,14 +53,14 @@ const FilterMainTyre = observer((
             setStateWidth(!stateWidth);
             filterOpenCloseAction(!filterState);
         }
-        if (e.target.name === 'Профіль' || 'Профиль') {
+        if (e.target.name === ('Профіль' || 'Профиль')) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setHeight(e.target.value);
             setStateHeight(!stateHeight);
             filterOpenCloseAction(!filterState);
         }
-        if (e.target.name === 'Діаметр' || 'Диаметр') {
+        if (e.target.name === ('Діаметр' || 'Диаметр')) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setDiameter(e.target.value);
@@ -111,12 +111,12 @@ const FilterMainTyre = observer((
             filter.setWidth(null);
             filter.setWidth_id(null);
         }
-        if (e.target.getAttribute('data-name') === 'Профіль' || 'Профиль') {
+        if (e.target.getAttribute('data-name') === ('Профіль' || 'Профиль')) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setHeight(null);
         }
-        if (e.target.getAttribute('data-name') === 'Діаметр' || 'Диаметр') {
+        if (e.target.getAttribute('data-name') === ('Діаметр' || 'Диаметр')) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setDiameter(null);

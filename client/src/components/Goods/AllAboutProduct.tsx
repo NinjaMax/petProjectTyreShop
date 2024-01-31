@@ -22,6 +22,7 @@ import Modal from '../modal/Modal';
 import CheckOrder from '../modal/CheckOrder';
 import { ICheckOrderItem } from '../catalogs/types/CheckOrder.type';
 import { createStringUrl } from '../../services/stringUrl';
+import { useTranslation } from 'react-i18next';
 
 const AllAboutProduct = observer(({
     goods, 
@@ -33,7 +34,7 @@ const AllAboutProduct = observer(({
     const[guardChecked, setGuardChecked] = useState<boolean>(false);
     const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem[] | null>([]);
     const [active, setActive] = useState<boolean>(false);
-    // const param = useParams<any>();
+    const { t, i18n } = useTranslation();
     const {page, customer} = useContext<any>(Context);
 
     const checkedGuards = (e: any) => {
@@ -150,7 +151,7 @@ const AllAboutProduct = observer(({
             <div className='allAboutProductInfo'>
                 {goods?.tyre_brand ?
                     <div className='productInfoName'>{
-                        paramsModel ? 'Шини ' + goods?.tyre_brand?.brand + ' ' + goods?.tyre_model?.model 
+                        paramsModel ? t('goodsAboutProd.info') + goods?.tyre_brand?.brand + ' ' + goods?.tyre_model?.model 
                         : goods?.full_name
                         }
                     </div> : null
@@ -171,7 +172,7 @@ const AllAboutProduct = observer(({
                     />
                     <a className='productInfoRatingLink' href='/#'>
                         {countModelReview ?? 0} 
-                        {countModelReview === 1 ? ' відгук' : ' відгуків'}
+                        {countModelReview === 1 ? t('goodsAboutProd.review') : t('goodsAboutProd.reviews')}
                     </a>
                     
                     {goods?.tyre_brand?.brand ?
@@ -190,12 +191,12 @@ const AllAboutProduct = observer(({
                     { goods?.stock?.reduce((sum: any, current: any) => (sum + current.stock), 0) > 4 ?
                     <div className='productInfoCodeStock'>
                         <i className="fas fa-check"></i>
-                        в наявності
+                        {t('goodsAboutProd.available')}
                     </div>
                     :
                     <div className='productInfoCodeStockExclam'>
                         <i className="fas fa-exclamation"></i>
-                        закінчується
+                        {t('goodsAboutProd.ends')}
                     </div>
                     }
                 </div>
@@ -208,8 +209,8 @@ const AllAboutProduct = observer(({
                         type={goods?.vehicle_type}
                         season={goods?.season}
                     />
-                    <a href={`/tyres/${createStringUrl(goods?.vehicle_type?.vehicle_type_ua)}`}>{goods?.vehicle_type?.vehicle_type_ua}</a>
-                    <a href={`/tyres/${createStringUrl(goods?.season?.season_ua)}`}>{goods?.season?.season_ua}</a>
+                    <a href={`/tyres/${createStringUrl(i18n.resolvedLanguage === 'uk' ? goods?.vehicle_type?.vehicle_type_ua : goods?.vehicle_type?.vehicle_type)}`}>{i18n.resolvedLanguage === 'uk' ? goods?.vehicle_type?.vehicle_type_ua : goods?.vehicle_type?.vehicle_type}</a>
+                    <a href={`/tyres/${createStringUrl(i18n.resolvedLanguage === 'uk' ? goods?.season?.season_ua : goods?.season?.season)}`}>{i18n.resolvedLanguage === 'uk' ? goods?.season?.season_ua : goods?.season?.season}</a>
                     </>
                     :
                     <img src='iconsSeasons/noSeason.png' alt='noProd'/>
@@ -219,7 +220,7 @@ const AllAboutProduct = observer(({
                 <>
                 <div className="productInfoCountry">
                     <FlagsIcon 
-                        title='Країна виробник'
+                        title={t('goodsAboutProd.country')}
                         country={goods?.country.country_manufacturer_ua} 
                         year={goods?.year}
                     />
@@ -233,7 +234,7 @@ const AllAboutProduct = observer(({
                         title='Бонуси'
                     />
                     {goods?.price ?
-                        <span className='tyresCardBonusText'>{`+${(goods?.price[0]?.price! * 0.01).toFixed()} бонусів`}</span> 
+                        <span className='tyresCardBonusText'>{`+${(goods?.price[0]?.price! * 0.01).toFixed()} ${t('goodsAboutProd.bonuses')}`}</span> 
                         : null
                     }
                     <a href='/'>SKYBONUS</a>
@@ -247,9 +248,10 @@ const AllAboutProduct = observer(({
                         title='Бонуси'
                     />
                     <span className='tyresCardBonusText'>
-                        +100 бонусів
+                        +100 {t('goodsAboutProd.bonuses')}
                     </span>
-                    <span className='tyresCardBonusTextReview'> за відгук 
+                    <span className='tyresCardBonusTextReview'> {t('goodsAboutProd.for_review')}
+                            { i18n.resolvedLanguage === 'uk' ?
                             <span className='tooltipCardBonusText'>
                                <> Нараховуємо єдиноразово 100 бонусів за відгук.<br/> 
                                 Що треба зробити:<br/>
@@ -258,7 +260,17 @@ const AllAboutProduct = observer(({
                                 -протягом 14 днів після отримання товару залишити відгук про товар <br/>
                                 -повідомити менеджера будь яким способом
                                 </>
+                            </span> :
+                            <span className='tooltipCardBonusText'>
+                               <> Начисляем единоразово 100 бонусов за отклик.<br/> 
+                               Что нужно сделать:<br/>
+                               купить товар с пометкой "100 бонусов за отзыв" на сайте skyparts.com.ua
+                                <br/>
+                                -в течение 14 дней после получения товара оставить отзыв о товаре <br/>
+                                -сообщить менеджеру любым способом
+                                </>
                             </span>
+                            }
                     </span>
                     </div>
                     : null
@@ -269,7 +281,7 @@ const AllAboutProduct = observer(({
                 : 
                 <>
                 <a href={'/tyres/' + createStringUrl(goods?.tyre_brand?.brand)}>
-                    Всі шини { goods?.tyre_brand?.brand}
+                    {t('goodsAboutProd.all_tyres')} { goods?.tyre_brand?.brand}
                 </a>
                 <a href={`/tyres/${createStringUrl(goods?.season?.season_ua)}/${createStringUrl(goods?.tyre_brand?.brand)}`}>
                     Вся {goods?.season?.season_ua} шина { goods?.tyre_brand?.brand}
@@ -323,7 +335,7 @@ const AllAboutProduct = observer(({
                 {paramsModel ?
                 <div className="productInfoPrice">
                 {paramsModel && paramsModelPrice && paramsModelPrice[0]?.tyres && goods?.price[0].price ? 
-                    <span>{'від ' + 
+                    <span>{t('goodsAboutProd.from') + 
                     paramsModelPrice[0]?.tyres[0]?.price[0]?.price
                     //paramsModelPrice[0]?.wheels[0]?.price[0]?.price 
                     } 
@@ -331,7 +343,7 @@ const AllAboutProduct = observer(({
                     </span>
                     : 
                     paramsModelPrice && paramsModelPrice[0]?.wheels ?
-                    <span>{'від ' + 
+                    <span>{t('goodsAboutProd.from') + 
                     //paramsModelPrice[0]?.tyres[0]?.price[0]?.price ??
                     paramsModelPrice[0]?.wheels[0]?.price[0]?.price 
                     } 
@@ -345,7 +357,7 @@ const AllAboutProduct = observer(({
                 }
                 {goods?.price?.reduce((sum: any, current: any) => sum + current.price, 0) === 0 ? 
                     <div className="productInfoPrice">
-                        немає в наявності
+                        {t('goodsAboutProd.not_available')}
                     </div>
                     : null 
                 }
@@ -354,7 +366,7 @@ const AllAboutProduct = observer(({
                 <div className='btnGoodsBox'>
                     {goods?.price?.reduce((sum: any, current: any) => sum + current.price, 0) ?
                     <ButtonAction 
-                        props={"КУПИТИ"} 
+                        props={t('goodsAboutProd.buy')} 
                         widthBtn={280} 
                         eventItem={() => checkOrders(
                             goods, 
@@ -368,14 +380,14 @@ const AllAboutProduct = observer(({
                     /> :
                     <div>
                     <ButtonAction 
-                        props={"НЕМАЄ В НАЯВНОСТІ"} 
+                        props={t('goodsAboutProd.not_available_big')} 
                         widthBtn={280} 
                         //eventItem={''}
                         active={true}
                     />
                     <p/>
                     <ButtonAction 
-                        props={"ПОКАЗАТИ СХОЖІ ТОВАРИ"} 
+                        props={t('goodsAboutProd.show_similar_goods')} 
                         widthBtn={280} 
                         eventItem={moveToSimilarGoods}
                     /> 
@@ -385,7 +397,7 @@ const AllAboutProduct = observer(({
                 <div className='btnGoodsBoxTwo'>
                     <input type="tel" placeholder='+38(номер телефона)'/>
                     <ButtonAction 
-                        props={"Швидке замовлення"} 
+                        props={t('goodsAboutProd.fast_order')} 
                         widthBtn={230} 
                         eventItem={undefined}
                     />
@@ -394,14 +406,14 @@ const AllAboutProduct = observer(({
                     <CheckboxBtn 
                     onChange={checkedGuards}
                     value={"garantia"} 
-                    titleCheckbox={"Гарантія SKYSAFE"} 
+                    titleCheckbox={t('goodsAboutProd.garanty_skysafe')} 
                     imageSrc={guardChecked ? './iconGuard/guard_64_b.png' : './iconGuard/guard_64_g.png'}/>   
                 </div>
                 </>
                 : 
                 <div className='btnGoodsBox'>
                     <ButtonAction 
-                        props={"ПОКАЗАТИ ВСІ ВАРІАНТИ"} 
+                        props={t('goodsAboutProd.show_all_variant')} 
                         widthBtn={280} 
                         eventItem={moveToAllSamples}
                     />      
@@ -420,7 +432,7 @@ const AllAboutProduct = observer(({
                         <span className='additionalToolsLabelText'>
                         {page.favoritesCount?.length !== 0 &&
                             page.favoritesCount?.find((item: string) => item === goods?.id) ?
-                            'Додано в обране': 'Додати в обране'
+                            t('goodsAboutProd.added_to_favorite') : t('goodsAboutProd.add_to_favorite')
                         }
                         </span> 
                     </span>
@@ -435,7 +447,7 @@ const AllAboutProduct = observer(({
                         <span className='additionalToolsLabelText'>
                         { page.comparisonCount?.length !== 0 &&
                             page.comparisonCount?.find((item: string) => item === goods?.id) ?
-                           'Додано в порівняння' : 'Додати в порівняння'
+                           t('goodsAboutProd.added_compare') : t('goodsAboutProd.add_to_compare')
                         }
                         </span>  
                     </span>    
@@ -465,12 +477,18 @@ const AllAboutProduct = observer(({
                     />
                     : null
                 }
-                
+                { i18n.resolvedLanguage === 'uk' ?
                 <div className='attentionGoods'>
                     ЗВЕРНІТЬ УВАГУ
                     При покупці менше 4-х одиниць товару вартість може бути вище зазначеної. Бувають випадки, коли у нас немає можливості продати менше 4-х одиниць товару.
-                    У випадку якщо на складі, у потрібному місті, товару зараз немає - до його вартості додається вартість доставки.
+                    У випадку якщо на складі, у потрібному місті, товару зараз немає - до його вартості додається вартість доставки
+                </div> :
+                <div className='attentionGoods'>
+                    ОБРАТИТЕ ВНИМАНИЕ
+                    При покупке менее 4-х единиц товара стоимость может быть выше указанной. Бывают случаи, когда у нас нет возможности продать менее 4 единиц товара.
+                    В случае если на складе, в нужном городе, товара сейчас нет – к его стоимости прибавляется стоимость доставки
                 </div>
+                }
             </div>
         </div>
     );

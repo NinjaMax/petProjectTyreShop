@@ -9,6 +9,7 @@ import { IReviewGoods } from './interfaces/ReviewGoods.interface';
 import { yieldToMain } from '../../restAPI/postTaskAdmin';
 import { likesTyreReview } from '../../restAPI/restGoodsApi';
 import { createStringUrl } from '../../services/stringUrl';
+import { useTranslation } from 'react-i18next';
 
 interface IReviewsGoods {
     productFullName: string;
@@ -37,7 +38,8 @@ const ReviewsGoods = ({
     const [dislikeChoose, setDislikeChoose] = useState<number>(0);
     const [thumbUp, setThumbUp] = useState<boolean | null>(null);
     const [thumbDown, setThumbDown] = useState<boolean | null>(null);
-    
+    const { t, i18n } = useTranslation();
+
     useEffect(() => {
         let isMounted = false;
         const setThumbs = async () => {
@@ -110,7 +112,7 @@ const ReviewsGoods = ({
                         {reviewEntity.name}
                     </div>
                     <div className='ratingGoodsReview'>
-                        <span>Рейтинг товара:</span>
+                        <span>{t('reviewGoods.rating_goods')}</span>
                          <Rating 
                             id={'id_review_' + reviewEntity.id_review}
                             numScore={
@@ -128,10 +130,10 @@ const ReviewsGoods = ({
                         }
                     </div>
                     <div className='reviewGoodsExpier'>
-                        <span>Водійський досвід {reviewEntity.driver_experience} років</span>
+                        <span>{t('reviewGoods.driver_expirience')} {reviewEntity.driver_experience} років</span>
                     </div>
                     <div className='addedGoodsReview'>
-                        <span>Відгук о товарі: </span> 
+                        <span>{t('reviewGoods.review')} </span> 
                         <a href={createStringUrl(productFullName)}>
                         {productFullName}
                         </a>
@@ -140,11 +142,11 @@ const ReviewsGoods = ({
                         {reviewEntity.description}
                     </div>
                     <div className='reviewPositive'>
-                        <span>Переваги: </span>
+                        <span>{t('reviewGoods.review_positive')} </span>
                         {reviewEntity.positive}
                     </div>
                     <div className='reviewNegative'>
-                        <span>Недоліки: </span>
+                        <span>{t('reviewGoods.review_negative')} </span>
                         {reviewEntity.negative}
                     </div>
                     <div className='dateGoodsReview'>
