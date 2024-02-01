@@ -84,7 +84,7 @@ const CardList = ({goods, forOrder, priceItem, countEvent, checkOrders}: ICard) 
                         nameRating='Список карт'
                     />
                     <a className='reviewLink' href='/#'>
-                        {goods?.reviewCount ?? goods?.reviews?.length} відгуків
+                        {goods?.reviewCount ?? goods?.reviews?.length} {t('card.reviews')}
                     </a>
                 </div>
                 <div className="tyresCardCodeList">
@@ -102,7 +102,7 @@ const CardList = ({goods, forOrder, priceItem, countEvent, checkOrders}: ICard) 
                 {!forOrder ?
                     <div className="tyresCardCountryList">
                         <FlagsIcon
-                            title='Країна виробник:'
+                            title={t('card.title_country')}
                             country={i18n.resolvedLanguage === 'uk' ? goods?.country.country_manufacturer_ua : goods?.country.country_manufacturer} 
                             year={goods?.year}
                         />
@@ -153,7 +153,7 @@ const CardList = ({goods, forOrder, priceItem, countEvent, checkOrders}: ICard) 
                     }
                     {goods?.price?.reduce((sum: any, current: any) => sum + current.price, 0) === 0 ? 
                         <div className="tyresCardPriceItem">
-                            немає в наявності
+                            {t('card.not_available')}
                         </div>
                         : null 
                     }
@@ -168,7 +168,7 @@ const CardList = ({goods, forOrder, priceItem, countEvent, checkOrders}: ICard) 
                 <div className='buttonBuyCardList'>
                 {goods?.price?.reduce((sum: any, current: any) => sum + current.price, 0) ?
                     <ButtonAction 
-                        props={"КУПИТИ"} 
+                        props={t('card.buy')} 
                         widthBtn={160} 
                         eventItem={() => {
                             checkOrders!(
@@ -184,7 +184,7 @@ const CardList = ({goods, forOrder, priceItem, countEvent, checkOrders}: ICard) 
                     />
                     : 
                     <ButtonAction 
-                        props={"НЕМАЄ"} 
+                        props={t('card.no')} 
                         widthBtn={160} 
                         eventItem={checkOrders}
                         active={true}

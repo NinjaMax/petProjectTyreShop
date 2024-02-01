@@ -28,6 +28,7 @@ import { IDapertmentDelivery } from './types/DepartmentDelivery.type';
 import { cargoTypesDelivery } from '../../services/cargoTypesDelivery';
 import { tyresCarDiameterDelivery, tyresCargoDiameterDelivery } from '../../services/tyresDiameterDelivery';
 import { IbasketData } from './types/BasketData.type';
+import { useTranslation } from 'react-i18next';
 
 const BasketOrder = observer(() => {
     const {customer, page} = useContext<any | null>(Context);
@@ -56,6 +57,7 @@ const BasketOrder = observer(() => {
     const [deliverySum, setDeliverySum] = useState<number | null>(0);
     const [payMethod, setPayMethod] = useState<string | null>();
     const [getIdOrder, setGetIdOrder] = useState<number>();
+    const { t, i18n } = useTranslation();
 
     useEffect(() => window.scrollTo(0, 0), []);
 
@@ -114,7 +116,7 @@ const BasketOrder = observer(() => {
             (item: any) => item.MainDescription === getCitySup.city_ua);
             dataSupplier.citySender = dataSupByCity?.DeliveryCity;
         }
-        if (depart?.delivery === 'Делівері') {
+        if (depart?.delivery === 'Delivery') {
             let dataSupByCity0 = citySupDelivery?.data?.find(
             (item: any) => item.name === getCitySup.city_ua); 
             dataSupplier.citySender = dataSupByCity0?.id ?? '16617df3-a42a-e311-8b0d-00155d037960';
@@ -125,7 +127,7 @@ const BasketOrder = observer(() => {
         dataSupplier.warehouseReceiver = depart?.delivery_dep_ref; //new
         dataSupplier.goodsCost = String(taskGetSupplier[i].price * taskGetSupplier[i].quantity);
 
-        if (redeliveryCost === 'Зворотній платіж (Післяплата)') {
+        if (redeliveryCost === t('basketOrder.method_back_pay_title')) {
             dataSupplier.redeliveryCost = 
             String(taskGetSupplier[i].price * taskGetSupplier[i].quantity);  
         } else {
@@ -146,29 +148,29 @@ const BasketOrder = observer(() => {
             let wheelsDiameterRef = wheelsDiameter(taskGetSupplier[i].diameter);
             dataSupplier.goodsDescription = wheelsDiameterRef;
         }
-        if (goodsTypeRefDelivery === "Cargo" && depart?.delivery === 'Делівері') {
+        if (goodsTypeRefDelivery === "Cargo" && depart?.delivery === 'Delivery') {
             console.log('CARGO_TYPE');
         }
-        if (goodsTypeRefDelivery === "Battery" && depart?.delivery === 'Делівері') {
+        if (goodsTypeRefDelivery === "Battery" && depart?.delivery === 'Delivery') {
             console.log('Battery_TYPE');
         }
-        if (goodsTypeRefDelivery === "TiresWheelsCar" && taskGetSupplier[i].category.toLowerCase() === "легковые шины" && depart?.delivery === 'Делівері') {
+        if (goodsTypeRefDelivery === "TiresWheelsCar" && taskGetSupplier[i].category.toLowerCase() === "легковые шины" && depart?.delivery === 'Delivery') {
             let tyreDiameterRef = tyresCarDiameterDelivery(taskGetSupplier[i].diameter);
             dataSupplier.goodsDescription = tyreDiameterRef;
         }
-        if (goodsTypeRefDelivery === "TiresWheelsCargo" && taskGetSupplier[i].category.toLowerCase() === "грузовые шины" && depart?.delivery === 'Делівері') {
+        if (goodsTypeRefDelivery === "TiresWheelsCargo" && taskGetSupplier[i].category.toLowerCase() === "грузовые шины" && depart?.delivery === 'Delivery') {
             let tyreDiameterRefCargo = tyresCargoDiameterDelivery(taskGetSupplier[i].diameter);
             dataSupplier.goodsDescription = tyreDiameterRefCargo;
         }
         if (goodsTypeRefDelivery === "TiresWheelsCar" && taskGetSupplier[i].category.toLowerCase() === "диски"
-        && depart?.delivery === 'Делівері' && taskGetSupplier[i].diameter !== '17.5' && taskGetSupplier[i].diameter !== '19.5' 
+        && depart?.delivery === 'Delivery' && taskGetSupplier[i].diameter !== '17.5' && taskGetSupplier[i].diameter !== '19.5' 
         && taskGetSupplier[i].diameter < 21
         ) {
             let wheelsDiameterRef = tyresCarDiameterDelivery(taskGetSupplier[i].diameter);
             dataSupplier.goodsDescription = wheelsDiameterRef;
         }
         if (goodsTypeRefDelivery === "TiresWheelsCar" && taskGetSupplier[i].category.toLowerCase() === "диски"
-        && depart?.delivery === 'Делівері' && (taskGetSupplier[i].diameter > 19 || taskGetSupplier[i].diameter !== '17.5')
+        && depart?.delivery === 'Delivery' && (taskGetSupplier[i].diameter > 19 || taskGetSupplier[i].diameter !== '17.5')
         ) {
             let wheelsDiameterRefCargo = tyresCargoDiameterDelivery(taskGetSupplier[i].diameter);
             dataSupplier.goodsDescription = wheelsDiameterRefCargo;
@@ -196,7 +198,7 @@ const BasketOrder = observer(() => {
                 );
             }
         }
-        if (taskGetSupplier[i] && dataSupplier && depart?.delivery === 'Делівері') {
+        if (taskGetSupplier[i] && dataSupplier && depart?.delivery === 'Delivery') {
             let getCalcDelivery = await getCalcPriceDelivery(dataSupplier);
             if (getCalcDelivery.status === true) {
                 setCostDelivery(oldCalc => {
@@ -260,12 +262,12 @@ const BasketOrder = observer(() => {
             
             setBasketData(prevData => { return {
                 ...prevData,
-                pay_view: 'Зворотній платіж (Післяплата)',
+                pay_view: t('basketOrder.method_back_pay_title'),
             }
             });
-            setPayMethod('Зворотній платіж (Післяплата)');
+            setPayMethod(t('basketOrder.method_back_pay_title'));
         }
-        if (!isMounted && !payMethod && delivery === 'Делівері') {
+        if (!isMounted && !payMethod && delivery === 'Delivery') {
             
             setBasketData(prevData => { return {
                 ...prevData,
@@ -290,7 +292,7 @@ const BasketOrder = observer(() => {
             }
             });
         };
-        if (!isMounted && costDelivery && delivery === 'Делівері') {
+        if (!isMounted && costDelivery && delivery === 'Delivery') {
             setDeliverySum(Number(
                 (32 + ( goodsBasket?.reduce((sum, current) => ( sum + current.total), 0)) * 0.00001 +
                (costDelivery?.reduce((sum: number, current: number) => ( sum + current), 0))
@@ -325,7 +327,7 @@ const BasketOrder = observer(() => {
             }
             });
         };
-        if (!isMounted && delivery === 'Делівері') {
+        if (!isMounted && delivery === 'Delivery') {
             setSumOverall(
                 [Number(sumGoods), Number(deliverySum)]
             );
@@ -360,7 +362,7 @@ const BasketOrder = observer(() => {
             }
             });
         };
-        if (!isMounted && delivery === 'Делівері' && dopGarantySum) {
+        if (!isMounted && delivery === 'Delivery' && dopGarantySum) {
             setSumOverall(
                 [Number(sumGoods), Number(deliverySum), Number(dopGarantySum)]
             );
@@ -406,7 +408,7 @@ const BasketOrder = observer(() => {
             });
         };
         if (!isMounted && delivery === 'Нова Пошта' && 
-        (payMethod === 'Карта/Терминал (LiqPay)' || payMethod === 'Безготівковий розрахунок')) {
+        (payMethod === 'Карта/Терминал (LiqPay)' || payMethod === t('basketOrder.method_pay_invoice'))) {
             setSumOverall(
                 [Number(sumGoods), Number(deliverySum), Number(commisionPay)]
             );
@@ -421,8 +423,8 @@ const BasketOrder = observer(() => {
             }
             });
         };
-        if (!isMounted && delivery === 'Делівері' && 
-        (payMethod === 'Карта/Терминал (LiqPay)' || payMethod === 'Безготівковий розрахунок')) {
+        if (!isMounted && delivery === 'Delivery' && 
+        (payMethod === 'Карта/Терминал (LiqPay)' || payMethod === t('basketOrder.method_pay_invoice'))) {
             setSumOverall(
                 [Number(sumGoods), Number(deliverySum), Number(commisionPay)]
             );
@@ -437,7 +439,7 @@ const BasketOrder = observer(() => {
             }
             });
         };
-        if (!isMounted && !delivery  && (payMethod === 'Карта/Терминал (LiqPay)' || payMethod === 'Безготівковий розрахунок')) {
+        if (!isMounted && !delivery  && (payMethod === 'Карта/Терминал (LiqPay)' || payMethod === t('basketOrder.method_pay_invoice'))) {
             setSumOverall(
                 [Number(sumGoods), Number(deliverySum), Number(commisionPay)]
             );
@@ -453,7 +455,7 @@ const BasketOrder = observer(() => {
             });
         };
         if (!isMounted && delivery === 'Нова Пошта' && dopGarantySum &&
-        (payMethod === 'Карта/Терминал (LiqPay)' || payMethod === 'Безготівковий розрахунок')) {
+        (payMethod === 'Карта/Терминал (LiqPay)' || payMethod === t('basketOrder.method_pay_invoice'))) {
             setSumOverall(
                 [Number(sumGoods), Number(deliverySum), Number(commisionPay), Number(dopGarantySum)]
             );
@@ -469,8 +471,8 @@ const BasketOrder = observer(() => {
                 }
             );
         };
-        if (!isMounted && delivery === 'Делівері' && dopGarantySum &&
-        (payMethod === 'Карта/Терминал (LiqPay)' || payMethod === 'Безготівковий розрахунок')) {
+        if (!isMounted && delivery === 'Delivery' && dopGarantySum &&
+        (payMethod === 'Карта/Терминал (LiqPay)' || payMethod === t('basketOrder.method_pay_invoice'))) {
             setSumOverall(
                 [Number(sumGoods), Number(deliverySum), Number(commisionPay), Number(dopGarantySum)]
             );
@@ -521,7 +523,7 @@ const BasketOrder = observer(() => {
             const deliverySelect = e.currentTarget.getAttribute('data-select');
             setCostNovaPoshta([]);
             setCostDelivery([]);
-            if (delivery === 'Делівері' || delivery === 'Нова Пошта') {
+            if (delivery === 'Delivery' || delivery === 'Нова Пошта') {
                 setChooseCity(' ');
                 setInputCity(' '); 
                 setDataDepartmentDelivery(undefined);
@@ -532,16 +534,16 @@ const BasketOrder = observer(() => {
             setDeliverySum(null);
             setPayMethod(null);
             setDelivery(deliverySelect);
-            if (deliverySelect === "Делівері" && !delivery) {
+            if (deliverySelect === "Delivery" && !delivery) {
                 setChooseCity(' ');
                 setInputCity(' ');
             }
             const updateBasketDelivery = await updateBasket(
                 {...basketData,
-                    pay_view: deliverySelect === "Делівері" ?
+                    pay_view: deliverySelect === "Delivery" ?
                     'Карта/Терминал (LiqPay)'
                     : deliverySelect === "Нова Пошта" ? 
-                    'Зворотній платіж (Післяплата)'
+                    t('basketOrder.method_back_pay_title')
                     : null,
                     delivery: deliverySelect,
                     id_basket: basketData?.id_basket, 
@@ -550,11 +552,11 @@ const BasketOrder = observer(() => {
             if (updateBasketDelivery?.status === 200) {
                 setBasketData({...updateBasketDelivery?.data})  
             }
-            console.log('CHOOSE_DELIVERY: ', deliverySelect);
+            //console.log('CHOOSE_DELIVERY: ', deliverySelect);
             // if (deliverySelect === "Нова Пошта" || 
-            //     deliverySelect === "Делівері") {
-            if (deliverySelect === "Нова Пошта" || deliverySelect === "Делівері") {
-                console.log('CALCULATE_DELIVERY')
+            //     deliverySelect === "Delivery") {
+            if (deliverySelect === "Нова Пошта" || deliverySelect === "Delivery") {
+                //console.log('CALCULATE_DELIVERY')
                 basketSupplierGoods(updateBasketDelivery?.data, updateBasketDelivery?.data.pay_view);
             }
         } catch (error) {
@@ -569,8 +571,8 @@ const BasketOrder = observer(() => {
             setCostNovaPoshta([]);
             setCostDelivery([]);
             setPayMethod(e.currentTarget.getAttribute('data-select'));
-            if (e.currentTarget.getAttribute('data-select') !== 'Зворотній платіж (Післяплата)' || 
-            e.currentTarget.getAttribute('data-select') !== 'Готівкою') {
+            if (e.currentTarget.getAttribute('data-select') !== t('basketOrder.method_back_pay_title') || 
+            e.currentTarget.getAttribute('data-select') !== ('Готівкою' || 'Наличными')) {
                 //setCommitionPay((Number((sumGoods! * 0.015).toFixed())));
                 const updateBasketPay = await updateBasket(
                 {...basketData,
@@ -581,7 +583,7 @@ const BasketOrder = observer(() => {
                 if (updateBasketPay?.status === 200) {
                 setBasketData({...updateBasketPay?.data});  
                 }
-                if (delivery !== "Самовивіз") {
+                if (delivery !== ("Самовивіз" || "Самовывоз")) {
                     basketSupplierGoods(updateBasketPay?.data, updateBasketPay?.data.pay_view);
                 }
             } else {
@@ -595,7 +597,7 @@ const BasketOrder = observer(() => {
                 if (updateBasketPay?.status === 200) {
                     setBasketData({...updateBasketPay?.data});  
                 }
-                if (delivery !== "Самовивіз") {
+                if (delivery !== ("Самовивіз" || "Самовывоз")) {
                    basketSupplierGoods(updateBasketPay?.data, updateBasketPay?.data.pay_view); 
                 }
             }
@@ -833,7 +835,7 @@ const BasketOrder = observer(() => {
                     });
                     basketData?.basket_storage?.forEach( async(item: CreateGoods):Promise<any> => {
                         let goodsToOrder = await createGoodsToOrderBasket(item, createOrder?.data?.id_order!); 
-                        console.log('ADD_GOODS_TO_ORDER: ', goodsToOrder)
+                        //console.log('ADD_GOODS_TO_ORDER: ', goodsToOrder)
                         await addGoodsToOrder(goodsToOrder);
                     });
                     if(createOrder?.data?.id_order) {
@@ -858,9 +860,9 @@ const BasketOrder = observer(() => {
         }
     };
 
-    console.log('BASKET_DATA: ', basketData);
-    console.log('DELIVERY_DATA: ', delivery);
-    console.log("DEPARTURE_DATA: ", departListNovaPoshta);
+    // console.log('BASKET_DATA: ', basketData);
+    // console.log('DELIVERY_DATA: ', delivery);
+    // console.log("DEPARTURE_DATA: ", departListNovaPoshta);
 
     return (
         <div>
@@ -868,44 +870,42 @@ const BasketOrder = observer(() => {
         <div className='basketOrder'
             onClick={cancelCityList}
         >
-            <span> Оформлення замовлення</span>
+            <span> {t('basketOrder.title_create_order')}</span>
             <ErrorsNotif 
                 active={getError} 
                 setActive={setGetError}
             >
-                {`Треба заповнити усі обов'язкові поля для оформлення замовлення: телефон, ім'я, місто. 
-                    Або виникла інша помилка.`
-                }
+                {t('basketOrder.basket_error')}
             </ErrorsNotif>
             <div className='basketColmLeft'>
-                <span>Данні замовлення</span>
+                <span>{t('basketOrder.basket_data')}</span>
                 <div className='basketColmItemLeft'>
-                    <span>Прізвище ім'я та по батькові *</span>
+                    <span>{t('basketOrder.name')}</span>
                     <InputDataText 
                         dataText={basketData?.name ?? ''}
                         inputText={inputNameAction}
                         inputItem={{
                         name:'basketOrderName',
-                        discr:"введіть прізвище ім'я по батькові",
+                        discr:t('basketOrder.name_description'),
                         max:"40", size:"30"
                         }}
                     />   
                 </div>
                 <div className='basketColmItemLeft'>
-                    <span>Номер телефону *</span>
+                    <span>{t('basketOrder.phone')}</span>
                     <InputDataTel 
                         dataTel={basketData?.phone}
                         onAccept={acceptInput} 
                     />  
                 </div>
                 <div className='basketColmItemLeft'>
-                    <span>Ваш email адрес</span>
+                    <span>{t('basketOrder.email')}</span>
                     <InputDataText 
                         dataEmail={basketData?.email ?? ''}
                         inputText={inputEmailAction}
                         inputItem={{
                             name:'basketOrderEmail',
-                            discr:"введіть ваш email адрес ---@---",
+                            discr:t('basketOrder.enter_email'),
                             max:"40", size:"30"
                             }}
                         />     
@@ -914,26 +914,26 @@ const BasketOrder = observer(() => {
                     onClick={(e:any) => e.stopPropagation()}
                 >
                     <label className='basketInputSearchCityLabel'>
-                        місто *
+                        {t('basketOrder.city')}
                     </label>
                     <input 
                         id="city-search"
                         className='basketInputSearchCity'
                         type="search"  
                         name="q"
-                        placeholder='Введіть місто'
+                        placeholder={t('basketOrder.enter_city')}
                         value={chooseCity ?? basketData?.city_delivery! ?? ''}
                         onChange={cityInputActive}
                     />
-                    {cityList?.length === 0 && chooseCity && delivery !== 'Делівері' ?
+                    {cityList?.length === 0 && chooseCity && delivery !== 'Delivery' ?
                     <div className='basketOrderNotes'>
-                        {'* недоступна послуга в данному місті'}
+                        {t('basketOrder.city_not_available')}
                     </div>
                     : null
                     }
-                    {cityListDelivery?.length === 0 && chooseCity && !departListDelivery && delivery === 'Делівері' ?
+                    {cityListDelivery?.length === 0 && chooseCity && !departListDelivery && delivery === 'Delivery' ?
                     <div className='basketOrderNotes'>
-                        {'* недоступна послуга в данному місті'}
+                        {t('basketOrder.city_not_available')}
                     </div>
                     : null
                     }
@@ -942,7 +942,7 @@ const BasketOrder = observer(() => {
                     className='basketCityList' 
                     onClick={(e:any) => e.stopPropagation()}       
                 > 
-                    {cityListActive && delivery !== "Делівері" ?
+                    {cityListActive && delivery !== "Delivery" ?
                         cityListActive && cityList?.map((city: ICity) =>
                         <div className='basketCityListItem'
                             data-delivery={city.DeliveryCity}
@@ -962,7 +962,7 @@ const BasketOrder = observer(() => {
                         )
                         : null
                     }
-                    {cityListActive && delivery === "Делівері" ?
+                    {cityListActive && delivery === "Delivery" ?
                         cityListActive && cityListDelivery?.map((city: ICityDel) =>
                         <div className='basketCityListItem'
                             data-delivery={city.id}
@@ -984,21 +984,21 @@ const BasketOrder = observer(() => {
                     }
                 </div>     
                 <div className='basketColmItemLeft'>
-                    <span>Спосіб одержання (доставка):</span>
+                    <span>{t('basketOrder.method_receiving')}</span>
                     { takeOut ?
                     <SelectRadio 
                         radioData={{
                             value: "samoviviz",
-                            radioName: "Самовивіз",
+                            radioName: t('basketOrder.take_off'),
                             name: "delivery",    
                         }} 
-                        addOptions={delivery === "Самовивіз" ?? false}
+                        addOptions={delivery === ("Самовивіз" || "Самовывоз") ?? false}
                         direction={"column"} 
                         activeOptions={checkedRadioDelivery}
                         disabled={chooseCity ? false : true}
                     >
-                        { delivery === "Самовивіз" ?    
-                        "Доступно для самовивізу в м. Харків. Деталі повідомить менеджер" 
+                        { delivery === ("Самовивіз" || "Самовывоз") ?    
+                        t('basketOrder.take_off_available')
                         : null} 
                     </SelectRadio> 
                     : null 
@@ -1024,10 +1024,9 @@ const BasketOrder = observer(() => {
                                 onChange={chooseDepartEvent}
                             >
                                 <option value=''>
-                                    --віберіть відділення--
+                                    {t('basketOrder.choose_department')}
                                 </option>
                         {chooseCity && departListNovaPoshta?.map((depart: IDepart) =>
-                                
                                 <option 
                                     //style={{'width': '130px'} as React.CSSProperties}
                                     //className='basketSelectDepartOption'
@@ -1047,15 +1046,15 @@ const BasketOrder = observer(() => {
                     <SelectRadio 
                         radioData={{
                             value: "delivery", 
-                            radioName: "Делівері",
+                            radioName: "Delivery",
                             name: "delivery",
                         }} 
-                        addOptions={delivery === "Делівері" ?? false}
+                        addOptions={delivery === "Delivery" ?? false}
                         direction={"column"} 
                         activeOptions={checkedRadioDelivery}
                         disabled={false}
                     >
-                    {delivery === "Делівері" && chooseCity ?    
+                    {delivery === "Delivery" && chooseCity ?    
                         <div 
                             className='basketDepartList' 
                             onClick={(e:any) => e.stopPropagation()}       
@@ -1065,7 +1064,7 @@ const BasketOrder = observer(() => {
                                 onChange={chooseDepartEvent}
                             >
                                 <option value=''>
-                                    --віберіть відділення--
+                                    {t('basketOrder.review')}
                                 </option>
                             {chooseCity && departListDelivery?.map(
                                 (depart: IDapertmentDelivery) =>
@@ -1085,11 +1084,11 @@ const BasketOrder = observer(() => {
                     </SelectRadio>
                 </div>
                 <div className='basketColmItemLeft'>
-                    <span>Спосіб оплати:</span>
+                    <span>{t('basketOrder.method_pay')}</span>
                     <SelectRadio 
                         radioData={{
                             value: "gotivka", 
-                            radioName: "Готівкою",
+                            radioName: t('basketOrder.method_pay_cash'),
                             name: "pay",
                         }} 
                         addOptions={""}
@@ -1134,7 +1133,7 @@ const BasketOrder = observer(() => {
                     <SelectRadio 
                         radioData={{
                             value: "bezgotivka", 
-                            radioName: "Безготівковий розрахунок",
+                            radioName: t('basketOrder.method_pay_invoice'),
                             name: "pay",
                         }} 
                         addOptions={""}
@@ -1143,21 +1142,21 @@ const BasketOrder = observer(() => {
                             delivery &&
                             chooseCity ? false :true
                         }
-                        checked={payMethod === "Безготівковий розрахунок" ? true : false}
+                        checked={payMethod === t('basketOrder.method_pay_invoice') ? true : false}
                         activeOptions={checkedRadioPayment}
                     >
-                        <img src={payMethod === "Безготівковий розрахунок" ? 
+                        <img src={payMethod === t('basketOrder.method_pay_invoice') ? 
                             './iconPayment/merchant_48_b.png' : './iconPayment/merchant_48_g.png'} 
                             width={35}
                             height={35}
-                            title='Безготівка'
+                            title={t('basketOrder.method_pay_invoice')}
                             alt='merchant'
                         />
                     </SelectRadio>
                     <SelectRadio 
                         radioData={{
                             value: "nalogka", 
-                            radioName: "Зворотній платіж (Післяплата)",
+                            radioName: t('basketOrder.method_back_pay_title'),
                             name: "pay",
                         }} 
                         addOptions={""}
@@ -1166,25 +1165,25 @@ const BasketOrder = observer(() => {
                             delivery === "Нова Пошта" &&
                             chooseCity ? false :true
                         }
-                        checked={payMethod === "Зворотній платіж (Післяплата)" ? true : false}
+                        checked={payMethod === t('basketOrder.method_back_pay_title') ? true : false}
                         activeOptions={checkedRadioPayment}
                     >
-                        <img src={payMethod === "Зворотній платіж (Післяплата)" ? 
+                        <img src={payMethod === t('basketOrder.method_back_pay_title') ? 
                             './iconPayment/money_back_48_b.png' : './iconPayment/money_back_48_g.png'} 
                             width={35}
                             height={35}
-                            title='Післяплата'
+                            title={t('basketOrder.method_back_pay_title')}
                             alt='money_back'
                         />
                         <div className='basketOrderNotes'>
-                            {delivery !== "Нова Пошта" ? '*послуга недоступна' : null}
+                            {delivery !== "Нова Пошта" ? t('basketOrder.method_not_available') : null}
                         </div>
                     </SelectRadio>
                 </div> 
             </div>
             <div className='basketColmRight'>
-                <span>Товар і ціна 
-                остаточна сумма замовлення
+                <span>
+                    {t('basketOrder.goods_price_sum')}
                 </span>
                 <div className='basketColmRightListGoods'>
                     {goodsBasket?.length !== 0 ? goodsBasket?.map((item: any) =>
@@ -1211,8 +1210,8 @@ const BasketOrder = observer(() => {
                     { customer.isAuth ? 
                     <>
                     <CheckboxBtn 
-                        value={'Використати SKY BONUS'} 
-                        titleCheckbox={'Використати SKY BONUS'} 
+                        value={t('basketOrder.use_sky_bonus')}
+                        titleCheckbox={t('basketOrder.use_sky_bonus')} 
                         imageSrc={ bonusUser ?
                             'iconBonus/skyBonus_48_b.png' :
                             'iconBonus/skyBonus_48_g.png'
@@ -1222,7 +1221,7 @@ const BasketOrder = observer(() => {
                     { bonusUser ?
                     <input
                         className='basketOrderInputBonus'
-                        placeholder='Вказати інше значення'
+                        placeholder={t('basketOrder.set_another_options')}
                         onChange={useNewBonusActive}
                     />
                     : null
@@ -1235,52 +1234,52 @@ const BasketOrder = observer(() => {
                             'iconGuard/guard_64_b.png' :
                             'iconGuard/guard_64_g.png' 
                         } 
-                        titleCheckbox={'Додаткова гарантія SKY SAFE'} 
+                        titleCheckbox={t('basketOrder.dop_garanty_sky')}
                         onChange={dopGarantyActive}
                     />
                     {dopGarantySum ?
                     <span className='basketOrderDopGar'>{dopGarantySum} &#8372;</span>
                     : null}
-                    <span className='tooltipBasketOrderDopGar'>Додаткова розширена гарантія на пошкодження, дефекти або збільшення сроку основної гарантіі</span>
+                    <span className='tooltipBasketOrderDopGar'>{t('basketOrder.dop_garanty_sky_tooltip')}</span>
                 </div>
                 <div className='totalCount'>
                     { sumGoods && goodsBasket ?
                         <span>
-                        <span>Сумма за товари у кількості</span>
-                        <span> { goodsBasket?.reduce((sum, current) => ( sum + current.quantity), 0)} од: </span> 
+                        <span>{t('basketOrder.sum_goods_quantity')}</span>
+                        <span> { goodsBasket?.reduce((sum, current) => ( sum + current.quantity), 0)} {t('basketOrder.quantity')} </span> 
                         <span className='basketOrderSumGoods'> {sumGoods}&#8372;</span> 
                         </span>
                         : null
                     }
-                    <span className='basketOrderSkyBonus' >Нараховано SKY BONUS: {}
-                            <span className='basketOrderGetBonusText'>{sumGoods! > 20000 ? (sumGoods! * 0.01).toFixed() : (sumGoods! * 0.02).toFixed()} </span>
+                    <span className='basketOrderSkyBonus' >{t('basketOrder.calculate_bonus')} {}
+                            <span className='basketOrderGetBonusText'>{(sumGoods! * 0.01).toFixed()} </span>
                         <img 
                             src='iconBonus/skyBonus_48_b.png'
                             width={35}
                             height={35}
                             alt='skyBonus'
                         />
-                        <span className='tooltipBasketOrderSkyBonus'>Бонуси які будуть нараховані після покупки. 1 бонус дорівнює 1 грн. Бонусами можна скористатися при наступних покупках як знижкою. </span>
+                        <span className='tooltipBasketOrderSkyBonus'>{t('basketOrder.calculate_bonus_tooltip')} </span>
                     </span>
                     
                     {dopGarantySum ?
-                        <span>Додаткова Гарантія: <span className='basketOrderDopGar'>{dopGarantySum}&#8372;</span></span>
+                        <span>{t('basketOrder.dop_garanty')} <span className='basketOrderDopGar'>{dopGarantySum}&#8372;</span></span>
                         : null
                     }
                     {delivery === "Нова Пошта" && chooseCity?.length! > 1 && deliverySum! > 32 ?
-                        <span>Доставка (Нова Пошта): {}
+                        <span>{t('basketOrder.delivery_np')} {}
                             <span className='basketOrderDelPrice'>{deliverySum} &#8372;</span>
                         </span>
                         : null
                     }
-                    {delivery === "Делівері" && chooseCity?.length! > 1 && deliverySum! > 32 ?
-                        <span>Доставка (Делівері): {}
+                    {delivery === "Delivery" && chooseCity?.length! > 1 && deliverySum! > 32 ?
+                        <span>{t('basketOrder.delivery_del')} {}
                             <span className='basketOrderDelPrice'>{deliverySum} &#8372;</span>
                         </span>
                         : null
                     }
                     {commisionPay && (payMethod === "Безготівковий розрахунок" || payMethod === "Карта/Терминал (LiqPay)" ) ?
-                        <span>Комісія платіжної системи: {} 
+                        <span>{t('basketOrder.comission_cost')} {} 
                             <span className='basketOrderComissionPrice'>
                             {commisionPay}&#8372;
                             </span>
@@ -1288,16 +1287,15 @@ const BasketOrder = observer(() => {
                         : null
                     }
                     { !bonusUser ?
-                        <span>Всього: <span className='basketOrderPriceOver'>
+                        <span>{t('basketOrder.overall')} <span className='basketOrderPriceOver'>
                             {sumOverall?.reduce((sum: number, current: number) => ( sum + current), 0)}&#8372;</span>
                         </span> :
                         <>
-                        <span>Всього:
+                        <span>{t('basketOrder.overall')}
                         <span className='basketOrderOldPrice'> {
                             sumOverall?.reduce((sum: number, current: number) => ( sum + current), 0)
                             }&#8372;
                         </span>
-                            
                         </span>
                         <span className='basketOrderNewPrice'>
                             {sumOverall?.reduce((sum: number, current: number) => ( sum + current), 0) - bonusUser}
@@ -1307,10 +1305,10 @@ const BasketOrder = observer(() => {
                     }
                 </div>
                 <div className='basketColmItemRight'>
-                    <label htmlFor="commentsOrder">Додати коментар до замовлення:</label>
+                    <label htmlFor="commentsOrder">{t('basketOrder.add_comment_to_order')}</label>
                     <textarea id="commentsOrder" 
                         name="commentsOrder"
-                        placeholder='Залишити коментар для замовлення'
+                        placeholder={t('basketOrder.add_comment_to_order_place')}
                         rows={5} 
                         cols={80}
                         onChange={notesAction}
@@ -1318,7 +1316,7 @@ const BasketOrder = observer(() => {
                     </textarea>
                 </div>
                 <ButtonAction 
-                    props={"Оформити замовлення"} 
+                    props={t('basketOrder.create_order')} 
                     widthBtn={250} 
                     eventItem={createOrderAction}
                 />
@@ -1328,24 +1326,18 @@ const BasketOrder = observer(() => {
                 <div className='noBasketGoods'> 
                     {getIdOrder ?
                         <span className='basketOrderIsOver'>
-                            Ви оформили та підтвердили замовлення,
-                            Замовлення № {getIdOrder },
-                            Очікуйте інформацію про готовність та статус замовлення.
-                            Дякуємо за покупку!
+                            {t('basketOrder.order_added', { order_id: getIdOrder})}
                             <p/>
-                            <a href='/'>На головну</a>
+                            <a href='/'>{t('basketOrder.back_to_main_page')}</a>
                         </span>
                         :
-                        <span className='basketOrderIsOver'>НАЖАЛЬ КОРЗИНА ПОРОЖНЯ =\</span>   
+                        <span className='basketOrderIsOver'>{t('basketOrder.empty_basket')} </span>   
                     }
                     <SuccessNotif 
                     active={newOrder} 
                     setActive={setNewOrder}
                     >
-                    {   `Ви оформили та підтвердили, 
-                     Ваше замовлення №${getIdOrder}. Очікуйте інформацію про готовність та статус замовлення.
-                        Дякуємо за покупку!`
-                    }   
+                    {t('basketOrder.basket_modal_succes', { order_id: getIdOrder})}
                     </SuccessNotif>   
                 </div>
             }

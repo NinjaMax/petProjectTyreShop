@@ -7,6 +7,7 @@ import { observer } from 'mobx-react-lite';
 import { Context } from '../../context/Context';
 import Rating from '../ux/Rating';
 import { FormValues } from './types/ReviewTyreCreate.type';
+import { useTranslation } from 'react-i18next';
 
 interface IReviewTyreCreate {
     onSubmitReviewTyre(arg0: any): void;
@@ -24,9 +25,10 @@ const ReviewCreate = observer(({
       } = useForm<FormValues>({
         criteriaMode: 'all',
     });
+    const { t, i18n } = useTranslation();
     
     useEffect(() => {
-        register("rating_overall", { required: "Вкажіть рейтинг.",
+        register("rating_overall", { required: 'Вкажіть рейтинг / Укажите рейтинг',
             valueAsNumber: true,
         });
         if (goodsTyre.ratingList.rating_overall) {
@@ -44,13 +46,13 @@ const ReviewCreate = observer(({
 
     return (
     <div className='reviewTyreCreate'>
-        <h4>Залишити відгук</h4>
-        <span>Мої оцінки товару</span>
+        <h4>{t('reviewCreate.review_add')}</h4>
+        <span>{t('reviewCreate.avarage_score')}</span>
         <form onSubmit={handleSubmit(onSubmitReviewTyre)}>
         <div className='reviewRatingList'>
             <div className='reviewRatingListItems'>
                 <RatingOptions 
-                    nameRating={'Загальна оцінка'} 
+                    nameRating={t('reviewCreate.rating_overall')} 
                 >
                 <Rating 
                     numScore={goodsTyre.ratingList.rating_overall ??
@@ -64,7 +66,7 @@ const ReviewCreate = observer(({
             {goodsTyre._product ?
             <div className='reviewRatingListItems'>
                 <RatingOptions 
-                    nameRating={'Керованість на сухій дорозі'}
+                    nameRating={t('reviewCreate.controll_grip')}
                 >
                     <Rating 
                         numScore={goodsTyre.ratingList.rating_dry_road}
@@ -78,7 +80,7 @@ const ReviewCreate = observer(({
             {goodsTyre._product  ?
             <div className='reviewRatingListItems'>
                 <RatingOptions 
-                    nameRating={'Керованість на мокрій дорозі'} 
+                    nameRating={t('reviewCreate.controll_wet')} 
                 >
                     <Rating 
                         numScore={goodsTyre.ratingList.rating_wet_road}
@@ -92,7 +94,7 @@ const ReviewCreate = observer(({
             {goodsTyre._product  ?
             <div className='reviewRatingListItems'>
                 <RatingOptions
-                    nameRating={'Керованість на снігу'} 
+                    nameRating={t('reviewCreate.controll_snow')} 
                 >
                     <Rating 
                         numScore={goodsTyre.ratingList.rating_snow_road}
@@ -106,7 +108,7 @@ const ReviewCreate = observer(({
             {goodsTyre._product  ?
             <div className='reviewRatingListItems'>
                 <RatingOptions 
-                    nameRating={'Керованість на льду'} 
+                    nameRating={t('reviewCreate.conrtoll_ice')} 
                 >
                     <Rating 
                         numScore={goodsTyre.ratingList.rating_ice_road}
@@ -120,7 +122,7 @@ const ReviewCreate = observer(({
             {goodsTyre._product  ?
             <div className='reviewRatingListItems'>
                 <RatingOptions 
-                    nameRating={'Проходимість'} 
+                    nameRating={t('reviewCreate.traction')} 
                 >
                     <Rating 
                         numScore={goodsTyre.ratingList.rating_cross_country}
@@ -134,7 +136,7 @@ const ReviewCreate = observer(({
             {goodsTyre._product  ?
             <div className='reviewRatingListItems'>
                 <RatingOptions 
-                    nameRating={'Зносостійкість'} 
+                    nameRating={t('reviewCreate.thearweard')} 
                 >
                     <Rating 
                         numScore={goodsTyre.ratingList.rating_treadwear}
@@ -148,7 +150,7 @@ const ReviewCreate = observer(({
             {goodsTyre._product  ?
             <div className='reviewRatingListItems'>
                 <RatingOptions 
-                    nameRating={'Ціна/Якість'} 
+                    nameRating={t('reviewCreate.price_quality')} 
                 >
                     <Rating 
                         numScore={goodsTyre.ratingList.rating_price_quality}
@@ -163,31 +165,31 @@ const ReviewCreate = observer(({
         <p/>
         <div className='reviewInputRatingBox'>
         <div className='reviewInputRating'>
-            <label htmlFor='reviewTyre'>Відгук</label>
+            <label htmlFor='reviewTyre'>{t('reviewCreate.review')}</label>
             <textarea 
                 id="reviewTyre"
                 rows={5}
                 cols={30}
                 maxLength={200}
-                placeholder='Написати відгук'
+                placeholder={t('reviewCreate.write_review')}
                 {...register("description", 
-                    { required: "Напишіть відгук.", 
+                    { required: t('reviewCreate.writte_review_required'), 
                     maxLength: 200 })
                 }
             />
-            <label htmlFor='negativeReview'>Недоліки</label>
+            <label htmlFor='negativeReview'>{t('reviewCreate.negative')}</label>
             <textarea 
                 id="negativeReview" 
-                placeholder='Недоліки'
+                placeholder={t('reviewCreate.negative')}
                 maxLength={120}
                 {...register("negative", 
                 { required: false, maxLength: 120 })
             }
             />
-            <label  htmlFor='positiveReview'>Переваги</label>
+            <label  htmlFor='positiveReview'>{t('reviewCreate.positive')}</label>
             <textarea 
                 id="positiveReview" 
-                placeholder='Переваги'
+                placeholder={t('reviewCreate.positive')}
                 maxLength={120}
                 {...register("positive", 
                 { required: false, maxLength: 120 })
@@ -196,7 +198,7 @@ const ReviewCreate = observer(({
             <div className='reviewInputRatingCar'>
                 <input 
                     type="text" 
-                    placeholder='Марка авто'
+                    placeholder={t('reviewCreate.auto_mark')}
                     maxLength={120}
                     {...register("car", 
                     { required: false, maxLength: 120 })
@@ -204,7 +206,7 @@ const ReviewCreate = observer(({
                 /> 
                 <input 
                     type="text" 
-                    placeholder='Водійський стаж'
+                    placeholder={t('reviewCreate.driver_expirience')}
                     maxLength={3}
                     {...register("driver_experience", 
                     { required: false, maxLength: 3 })
@@ -213,17 +215,17 @@ const ReviewCreate = observer(({
             </div>
             <input 
                 type="text" 
-                placeholder="Ваше ім'я"
+                placeholder={t('reviewCreate.name')}
                 defaultValue={customer._customer?.name ?? customer._customer?.sub?.name ?? ''}
                 {...register("name", 
-                    { required: "Треба заповнити ім'я.", maxLength: 50,
+                    { required: t('reviewCreate.name_required'), maxLength: 50,
                     minLength: 2
                 })
                 }
             />
             <input 
                 type="text" 
-                placeholder='Електронная пошта' 
+                placeholder={t('reviewCreate.email')} 
                 {...register("email", 
                     { required: false, maxLength: 100 })
                 }
@@ -233,7 +235,7 @@ const ReviewCreate = observer(({
         <p/>
         <ButtonAction 
             type={"submit"}
-            props={'Зберегти відгук'}
+            props={t('reviewCreate.save_review')}
         /> 
         <div className='reviewTyreErrorsBox'>
         {errors?.name && 
@@ -257,4 +259,4 @@ const ReviewCreate = observer(({
   )
 });
 
-export default ReviewCreate
+export default ReviewCreate;

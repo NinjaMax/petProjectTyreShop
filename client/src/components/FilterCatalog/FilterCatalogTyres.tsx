@@ -72,7 +72,7 @@ const FilterCatalogTyres = observer((
             page.setLoadMore(0);
             page.setOffset(0);
         }
-        if (e.target.name === ('Профіль' || 'Профиль')) {
+        if (e.target.name === t('filterCatalogTyre.filter_height_title')) {
             filter.setHeight(e.target.value);
             filter.setChipHeight(
                 Array.from(
@@ -83,7 +83,7 @@ const FilterCatalogTyres = observer((
             page.setLoadMore(0);
             page.setOffset(0);
         }
-        if (e.target.name === ('Діаметр' || 'Диаметр')) {
+        if (e.target.name === t('filterCatalogTyre.filter_diameter_title')) {
             filter.setDiameter(e.target.value);
             filter.setChipDiameter(
                 Array.from(
@@ -122,7 +122,7 @@ const FilterCatalogTyres = observer((
             filter.setChipSeason(Array.from(
                 new Set([...filter.chipSeason])));
         }
-        if (e.target.name === ('Тип транспорту' || 'Тип транспорта') && e.target.checked) {
+        if (e.target.name === t('filterCatalogTyre.filter_vehicle_type_title') && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             if (e.target.value === 'вантажні шини') {
@@ -164,7 +164,7 @@ const FilterCatalogTyres = observer((
                 ); 
             }
              
-        } else if (e.target.name === ('Тип транспорту' || 'Тип транспорта')) {
+        } else if (e.target.name === t('filterCatalogTyre.filter_vehicle_type_title')) {
             const cancelVehicleType = filter.chipVehicleType.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipVehicleTypeItem(cancelVehicleType);
@@ -185,42 +185,42 @@ const FilterCatalogTyres = observer((
             filter.setChipStudded(Array.from(
                 new Set([...filter.chipStudded])));
         }
-        if (e.target.name === ('Індекс швидкості' || 'Индекс скорости') && e.target.checked) {
+        if (e.target.name === t('filterCatalogTyre.filter_speed_index_title') && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setChipSpeedIndex(
                 Array.from(
                     new Set([...filter.chipSpeedIndex, e.target.value]))
             );     
-        } else if (e.target.name === ('Індекс швидкості' || 'Индекс скорости')) {
+        } else if (e.target.name === t('filterCatalogTyre.filter_speed_index_title')) {
             const cancelSpeedIndex = filter.chipSpeedIndex.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipSpeedIndexItem(cancelSpeedIndex);
             filter.setChipSpeedIndex(Array.from(
                 new Set([...filter.chipSpeedIndex])));
         }
-        if (e.target.name === ('Індекс навантаження' || 'Индекс нагрузки') && e.target.checked) {
+        if (e.target.name === t('filterCatalogTyre.filter_load_index_title') && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setChipLoadIndex(
                 Array.from(
                     new Set([...filter.chipLoadIndex, e.target.value]))
             );     
-        } else if (e.target.name === ('Індекс навантаження' || 'Индекс нагрузки') && e.target.checked) {
+        } else if (e.target.name === t('filterCatalogTyre.filter_load_index_title') && e.target.checked) {
             const cancelLoadIndex = filter.chipLoadIndex.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipLoadIndexItem(cancelLoadIndex);
             filter.setChipLoadIndex(Array.from(
                 new Set([...filter.chipLoadIndex])));
         }
-        if (e.target.name === ('Омологація' || 'Омологация') && e.target.checked) {
+        if (e.target.name === t('filterCatalogTyre.filter_homologation_title') && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setChipHomologation(
                 Array.from(
                     new Set([...filter.chipHomologation, e.target.value]))
             );     
-        } else if (e.target.name === ('Омологація' || 'Омологация')) {
+        } else if (e.target.name === t('filterCatalogTyre.filter_homologation_title')) {
             const cancelHomologation = filter.chipHomologation.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipHomologationItem(cancelHomologation);
@@ -241,14 +241,14 @@ const FilterCatalogTyres = observer((
             filter.setChipRunFlat(Array.from(
                 new Set([...filter.chipRunFlat])));
         }
-        if (e.target.name === ('Високонагруженість' || 'Високонагруженость') && e.target.checked) {
+        if (e.target.name === t('filterCatalogTyre.filter_reinforced_title') && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setChipReinforced(
                 Array.from(
                     new Set([...filter.chipReinforced, e.target.value]))
             );     
-        } else if (e.target.name === ('Високонагруженість' || 'Високонагруженость')) {
+        } else if (e.target.name === t('filterCatalogTyre.filter_reinforced_title')) {
             const cancelReinforced = filter.chipReinforced.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipReinforcedItem(cancelReinforced);
@@ -274,7 +274,7 @@ const FilterCatalogTyres = observer((
             filter.setWidth(null);
             filter.removeChipWidthItem();
         }
-        if (e.target.getAttribute('data-name') === ('Профіль' || 'Профиль')) {
+        if (e.target.getAttribute('data-name') === t('filterCatalogTyre.filter_height_title')) {
             page.setLoadMore(0);
             page.setOffset(0);
             for( let key in params) {
@@ -286,7 +286,7 @@ const FilterCatalogTyres = observer((
             filter.removeChipHeightItem();
             params.height = undefined;
         }
-        if (e.target.getAttribute('data-name') === ('Діаметр' || 'Диаметр')) {
+        if (e.target.getAttribute('data-name') === t('filterCatalogTyre.filter_diameter_title')) {
             page.setLoadMore(0);
             page.setOffset(0);
             for( let key in params) {
@@ -323,7 +323,7 @@ const FilterCatalogTyres = observer((
                 new Set([...filter.chipSeason])));
             filter.setSeason(filter.chipSeason.join(','));
         }
-        if (e.target.getAttribute('data-name') === ('Тип транспорту' || 'Тип транспорта')) {
+        if (e.target.getAttribute('data-name') === t('filterCatalogTyre.filter_vehicle_type_title')) {
             page.setLoadMore(0);
             page.setOffset(0);
             if (e.target.getAttribute('data-chipname') === ('вантажні шини' || 'грузовые шины')) {
@@ -385,7 +385,7 @@ const FilterCatalogTyres = observer((
                 new Set([...filter.chipStudded])));
             filter.setStudded(filter.chipStudded.join(','));
         }
-        if (e.target.getAttribute('data-name') === ('Індекс швидкості' || 'Индекс скорости')) {
+        if (e.target.getAttribute('data-name') === t('filterCatalogTyre.filter_speed_index_title')) {
             page.setLoadMore(0);
             page.setOffset(0);
             for( let key in params) {
@@ -398,7 +398,7 @@ const FilterCatalogTyres = observer((
                 new Set([...filter.chipSpeedIndex])));
             filter.setSpeedIndex(filter.chipSpeedIndex.join(','));
         }
-        if (e.target.getAttribute('data-name') === ('Індекс навантаження' || 'Индекс нагрузки')) {
+        if (e.target.getAttribute('data-name') === t('filterCatalogTyre.filter_load_index_title')) {
             page.setLoadMore(0);
             page.setOffset(0);
             for( let key in params) {
@@ -411,7 +411,7 @@ const FilterCatalogTyres = observer((
                 new Set([...filter.chipLoadIndex])));
             filter.setLoadIndex(filter.chipLoadIndex.join(','));
         }
-        if (e.target.getAttribute('data-name') === ('Омологація' || 'Омологация')) {
+        if (e.target.getAttribute('data-name') === t('filterCatalogTyre.filter_homologation_title')) {
             page.setLoadMore(0);
             page.setOffset(0);
             for( let key in params) {
@@ -437,7 +437,7 @@ const FilterCatalogTyres = observer((
                 new Set([...filter.chipRunFlat])));
             filter.setRunFlat(filter.chipRunFlat.join(','));
         }
-        if (e.target.getAttribute('data-name') === ('Високонагруженість' || 'Високонагруженость')) {
+        if (e.target.getAttribute('data-name') === t('filterCatalogTyre.filter_reinforced_title')) {
             page.setLoadMore(0);
             page.setOffset(0);
             for( let key in params) {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../../css/Goods/YouWatched.css';
 import TyresCard from '../cards/Card';
 import { getTyresByIdParam, getWheelsByIdParam } from '../../restAPI/restGoodsApi';
-
+import { useTranslation } from 'react-i18next';
 
 type WatchedType = {
     checkOrders?(arg0: any, ...arg:any[]): Promise<void | undefined>;
@@ -10,7 +10,8 @@ type WatchedType = {
 
 const YouWatched = ({checkOrders}:WatchedType) => {
     const [watchedList, setWatchedList] = useState<any[]>([]);
- 
+    const { t } = useTranslation();
+
     useEffect(() => {
         let isMounted = false;
         const getGoodsId: string = 
@@ -40,7 +41,7 @@ const YouWatched = ({checkOrders}:WatchedType) => {
 
     return (
         <div>
-            <h3>Ви дивились</h3>
+            <h3>{t('youWatched.watched')}</h3>
             <div className='youWatched'>
             {watchedList ? 
             watchedList.map((item) => 

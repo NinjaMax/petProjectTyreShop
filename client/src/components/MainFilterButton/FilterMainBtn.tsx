@@ -5,6 +5,7 @@ import ChipOptions from './ChipOptions';
 import { IFilterMainBtn } from './interfaces/FilterMainBtn.interface';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../../context/Context';
+import { useTranslation } from 'react-i18next';
 
 const FilterMainBtn = observer(({
   children, 
@@ -18,7 +19,8 @@ const FilterMainBtn = observer(({
 }: IFilterMainBtn
 ) => {
   const {filter, goodsTyre} = useContext<any | null>(Context);
-  
+  const { t, i18n } = useTranslation();
+
   const filterClick = () => {
     if (filterState) {
       filterAction!(false);
@@ -35,7 +37,7 @@ const FilterMainBtn = observer(({
         goodsTyre.setWidth(filter.widthSearch);
       }
     }
-    if (e.target.name === 'Профіль') {
+    if (e.target.name === t('filterMainTyre.filter_height_title')) {
       if (e.target.value.length !==0) {
         const newGoodsTyreHeight = goodsTyre._height.filter(
           (itemSearch: any) => (
@@ -45,7 +47,7 @@ const FilterMainBtn = observer(({
         goodsTyre.setHeight(filter.heightSearch);
       }
     }
-    if (e.target.name === 'Діаметр') {
+    if (e.target.name === t('filterMainTyre.filter_diameter_title')) {
       if (e.target.value.length !==0) {
         const newGoodsTyreDiameter = goodsTyre._diameter.filter(
           (itemSearch: any) => (

@@ -3,19 +3,19 @@ import '../../css/Goods/ModelSection.css';
 import TyresCardList from '../cards/CardList';
 
 type IModalSection ={
+    title: string,
     modelGoods?:any[] | null,
     modelName?:string,
     checkOrders?(arg0: any, ...arg:any[]): Promise<void | undefined>;
 };
 
-const ModelSection = ({modelGoods, modelName, checkOrders}: IModalSection) => {
+const ModelSection = ({modelGoods, modelName, title, checkOrders}: IModalSection) => {
    
     const [tabSearchMod, setTabSearchMod] = useState<string| null | undefined>();
     const [tabIndexModel, setTabIndexModel] = useState<string>('0');
    
     useEffect(() => {
         if (modelGoods) {
-            //console.log('MODEL_GOODS: ', modelGoods![+tabIndexModel]?.diameter)
             setTabSearchMod(modelGoods![+tabIndexModel].diameter);
         }
     },[modelGoods, tabIndexModel]);
@@ -25,13 +25,11 @@ const ModelSection = ({modelGoods, modelName, checkOrders}: IModalSection) => {
         setTabIndexModel(e.currentTarget.getAttribute('data-index'));
     };
 
-    //console.log('MODEL_GOODS: ', modelGoods);
-
-  return (
+    return (
     <div className="modelSectionActive">
         <div className='modelSectionData'>
             <div className='modelSectionItemsTitle'>
-                <div>Варіанти розмірів шин {modelName}:</div>
+                <div>{title} {modelName}:</div>
             </div>
                 <div className='modelSectionItemsLines'>
                     {modelGoods?.length !== 0 ? 

@@ -151,7 +151,7 @@ const AllAboutProduct = observer(({
             <div className='allAboutProductInfo'>
                 {goods?.tyre_brand ?
                     <div className='productInfoName'>{
-                        paramsModel ? t('goodsAboutProd.info') + goods?.tyre_brand?.brand + ' ' + goods?.tyre_model?.model 
+                        paramsModel ? t('goodsAboutProd.info') + ' ' + goods?.tyre_brand?.brand + ' ' + goods?.tyre_model?.model 
                         : goods?.full_name
                         }
                     </div> : null
@@ -221,7 +221,7 @@ const AllAboutProduct = observer(({
                 <div className="productInfoCountry">
                     <FlagsIcon 
                         title={t('goodsAboutProd.country')}
-                        country={goods?.country.country_manufacturer_ua} 
+                        country={i18n.resolvedLanguage === 'uk' ? goods?.country?.country_manufacturer_ua : goods?.country?.country_manufacturer} 
                         year={goods?.year}
                     />
                 </div>

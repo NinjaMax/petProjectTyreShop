@@ -8,6 +8,7 @@ import { ICheckOrderItem } from '../catalogs/types/CheckOrder.type';
 import { getBasketOrder, removeBasketStorageGoods, updateBasketStorageGoods } from '../../restAPI/restGoodsApi';
 import { Context } from '../../context/Context';
 import { observer } from 'mobx-react-lite';
+import { useTranslation } from 'react-i18next';
 
 type CheckOrderItem = {
 
@@ -167,7 +168,7 @@ type CheckOrderItem = {
 const CheckOrder = observer(({orderItem}:any) => {
     const [checkItems, setCheckItems] = useState<any[]>([]);
     const {page} = useContext<any | null>(Context);
-
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         let isMounted = false;
@@ -249,7 +250,7 @@ const CheckOrder = observer(({orderItem}:any) => {
 
     return (
         <div className='checkOrderContainer'>
-                <div className='checkOrderTitle'>Кошик</div>
+                <div className='checkOrderTitle'>{t('checkOrder.basket')}</div>
                 { checkItems?.length !== 0 ?
                 <div>
                 <div className='checkOrder'>
@@ -279,10 +280,10 @@ const CheckOrder = observer(({orderItem}:any) => {
                 </div>
                 <ButtonAction 
                     eventItem={goToBasket}
-                    props={'Оформити замовлення'}
+                    props={t('checkOrder.form_order')}
                 />  
                 </div>
-                : <div className='checkOrderTitleNoGoods'>Немає товарів для замовлення</div>
+                : <div className='checkOrderTitleNoGoods'>{t('checkOrder.no_goods_to_order')}</div>
                 }  
         </div>       
     );

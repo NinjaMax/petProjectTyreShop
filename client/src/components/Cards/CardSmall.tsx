@@ -6,6 +6,7 @@ import Rating from '../ux/Rating';
 import { createStringUrl } from '../../services/stringUrl';
 import { useHistory } from 'react-router-dom';
 import { MAIN_ROUTE } from '../../utils/consts';
+import { useTranslation } from 'react-i18next';
 
 interface IProductSmall {
     product?: {
@@ -37,6 +38,7 @@ interface IProductSmall {
 
 const CardSmall = ({product, rating, checkOrders}:IProductSmall) => {
     const history = useHistory();
+    const { t, i18n } = useTranslation();
 
     const addGoodsId = () => {
         const toStringUrl = createStringUrl(product?.full_name);
@@ -150,7 +152,7 @@ const CardSmall = ({product, rating, checkOrders}:IProductSmall) => {
                 }
                 {restStock ?
                     <ButtonAction 
-                        props={"КУПИТИ"} 
+                        props={t('card.buy')} 
                         widthBtn={180} 
                         eventItem={() => checkOrders!(
                             product, 
@@ -164,7 +166,7 @@ const CardSmall = ({product, rating, checkOrders}:IProductSmall) => {
                     />
                     : 
                     <ButtonAction 
-                        props={"НЕМАЄ"} 
+                        props={t('card.no')} 
                         widthBtn={180} 
                         eventItem={checkOrders}
                         active={true}

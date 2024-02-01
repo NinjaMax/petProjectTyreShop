@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { FormValuesQuestion } from './types/QuestionCreate.type';
 import { Context } from '../../context/Context';
 import { observer } from 'mobx-react-lite';
+import { useTranslation } from 'react-i18next';
 
 interface IQuestionCreate {
     onSubmitQuestion(arg0: any): void;
@@ -12,6 +13,7 @@ interface IQuestionCreate {
 
 const QuestionCreate = observer(({onSubmitQuestion}: IQuestionCreate) => {
     const { customer} = useContext<any | null>(Context);
+    const { t, i18n } = useTranslation();
     const {
         register, 
         handleSubmit,
@@ -20,48 +22,39 @@ const QuestionCreate = observer(({onSubmitQuestion}: IQuestionCreate) => {
       } = useForm<FormValuesQuestion>({
         criteriaMode: 'all',
     });
-    
-    // useEffect(() => {
-    //     register("rating_overall", { required: "Обов'язково вкажіть рейтинг",
-    //         valueAsNumber: true,
-    //     });
-        // if (goodsTyre.ratingList.rating_overall) {
-        //     setValue('rating_overall', goodsTyre.ratingList.rating_overall)  
-        // }
-    // },[goodsTyre.ratingList.rating_overall, register, setValue]);
 
-  return (
+    return (
     <div className='questionCreate'>
-        <h4>Залишити питання</h4>
+        <h4>{t('questionsCreate.add_questions')}</h4>
         <form onSubmit={handleSubmit(onSubmitQuestion)}>
         <p/>
         <div className='questionCreateBox'>
         <div className='questionCreateInput'>
-            <label htmlFor='questionCreate'>Питання</label>
+            <label htmlFor='questionCreate'>{t('questionsCreate.questions')}</label>
             <textarea 
                 id="questionCreate"
                 rows={5}
                 cols={30}
                 maxLength={200}
-                placeholder='Написати відгук'
+                placeholder={t('questionsCreate.write_questions')}
                 {...register("description", 
-                    { required: "Напишіть відгук", 
+                    { required: t('questionsCreate.write_questions_required'), 
                     maxLength: 200 })
                 }
             />
             <input 
                 type="text" 
-                placeholder="Ваше ім'я"
+                placeholder={t('questionsCreate.name')}
                 defaultValue={customer._customer?.name ?? customer._customer?.sub?.name ?? ''}
                 {...register("name", 
-                    { required: "Треба заповнити ім'я", maxLength: 50,
+                    { required: t('questionsCreate.name_required'), maxLength: 50,
                     minLength: 2
                 })
                 }
             />
             <input 
                 type="text" 
-                placeholder='Електронная пошта' 
+                placeholder={t('questionsCreate.email')} 
                 {...register("email", 
                     { required: false, maxLength: 100 })
                 }
@@ -71,7 +64,7 @@ const QuestionCreate = observer(({onSubmitQuestion}: IQuestionCreate) => {
         <p/>
         <ButtonAction 
             type={"submit"}
-            props={'Зберегти питання'}
+            props={t('questionsCreate.save_questions')}
         /> 
         {errors?.name && 
             <span className='questionCreateErrors'>
