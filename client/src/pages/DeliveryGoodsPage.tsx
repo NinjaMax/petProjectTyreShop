@@ -7,17 +7,18 @@ import ReviewsMain from '../components/reviews/ReviewsMain';
 import ReviewsGoods from '../components/reviews/ReviewsGoods';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { Context } from '../context/Context';
-import { createStringUrl } from '../services/stringUrl';
+import { createRuStringFromUrl, createStringUrl, createUaStringFromUrl } from '../services/stringUrl';
 import { CATALOG_TYRES_ROUTE, DELIVERY_GOODS_ROUTE } from '../utils/consts';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { getTyresOffsetMain, getTyresReviewLimit, getTyresWithCatOffset, getTyresWithoutOffset, getTyresWithoutOffsetProps } from '../restAPI/restGoodsApi';
 import MapDelivery from '../components/maps/MapDelivery';
 import { getCityInRegionNovaPoshta, getWareHousesNovaPoshta } from '../restAPI/restNovaPoshtaAPI';
-import {regionDelivery, regionNovaPoshata} from '../services/regionServiceDelivery';
+import {regionDataRu, regionDataUa, regionDelivery, regionNovaPoshata} from '../services/regionServiceDelivery';
 import SpinnerCarRot from '../components/spinners/SpinnerCarRot';
 import { getCityInRegionDelivery, getWareHousesDelivery } from '../restAPI/restDeliveryAPI';
 import ButtonPrevNext from '../components/buttons/ButtonPrevNext';
 import { tyreSeasonCat, tyreVehicleTypeCat } from '../services/tyresCatService';
+import { useTranslation } from 'react-i18next';
 
 type ICityMarkerData = {
   Area: string,
@@ -56,8 +57,6 @@ const DeliveryGoodsPage = () => {
   const {goodsTyre, filter} = useContext<any | null>(Context);
   const {page} = useContext<any | null>(Context);
   const params = useParams<any>();
-  const location = useLocation();
-  const history = useHistory();
   const [reviewGoodsData, setReviewGoodsData] = useState<any[] | null>();
   const [prevBtnReview, setPrevBtnReview] = useState<number>(0);
   const [nextBtnReview, setNextBtnReview] = useState<number>(0);
@@ -74,7 +73,51 @@ const DeliveryGoodsPage = () => {
   const [stateFilter, setStateFilter]=useState<boolean>(false);
   const [region, setRegion] = useState<string>();
   const [tabDelivery, setTabDelivery] = useState<string>('Нова Пошта');
-  
+  const [langState, setLangState] = useState<string>('ua');
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    if (i18n.resolvedLanguage === 'uk') {
+      setLangState('uk');
+    }
+    if (i18n.resolvedLanguage === 'ru') {
+      setLangState('ru');
+    } 
+  },[i18n.resolvedLanguage]);
+
+  useEffect(() => {
+    let isMounted = false;
+    const loadUrl = async() => {
+      const getRegionItem = localStorage.getItem('regionData')?.split(',');
+      const getUrlArr = params.region.split('-');
+      const createUaString = createUaStringFromUrl(params.region)
+      console.log('STRING_UA: ', createUaString);
+      if (!isMounted && !getRegionItem) {
+        //const getCyrillicFromUrl = langState === 'uk' ? createUaStringFromUrl(params.region.toUpperCase().slice(0,1) + params.region.slice(1, params.region.length)).split(' ') : createRuStringFromUrl(params.region.toUpperCase().slice(0,1) + params.region.slice(1, params.region.length)).split(' ')
+        const getRegionUaData = regionDataUa(getUrlArr[1]);
+        const getRegionRuData = regionDataRu(getUrlArr[1]);
+        if (getRegionUaData && langState === 'uk') {
+          localStorage.setItem('regionData', getRegionUaData);
+        }
+        if (getRegionRuData && langState === 'ru') {
+          localStorage.setItem('regionData', getRegionRuData);
+          // const dataRegionRu = getRegionRuData.split(',');
+          // setCityRegion(dataRegionRu[0]);
+          // setRegion(dataRegionRu[1]);
+          // setCityCenterRegion(dataRegionRu[0]);
+          
+        }
+        // if () {
+
+        // }
+      }
+    };
+    loadUrl();
+    return () => {
+        isMounted = true;
+    };
+  },[langState, params.region]);
+
   useEffect(() =>{
     let isMounted = false;
     const loadCatalogTyre = async() => {
@@ -98,7 +141,7 @@ const DeliveryGoodsPage = () => {
             filter.reinforced ?? '',
             filter.sort,
           );
-        console.log('CAT_TYRE: ', tyreFilterGoodsId)
+        //console.log('CAT_TYRE: ', tyreFilterGoodsId)
         goodsTyre?.setTotalCount(tyreFilterGoodsId.count);
         //goodsTyre?.setTyres(tyreFilterGoodsId.rows);
         console.timeEnd('GET_REQUEST_TYRE_CATALOG');
@@ -164,7 +207,7 @@ const DeliveryGoodsPage = () => {
             setHightFilter?.push(item.height.height),
             setDiameterFilter?.push(item.diameter.diameter),
             setBrandFilter?.push(item.tyre_brand.brand),
-            setSeasonFilter?.push(item.season.season_ua)
+            setSeasonFilter?.push(langState === 'uk' ? item.season.season_ua : item.season.season)
             )
           })
           if (filter.width) {
@@ -375,6 +418,7 @@ const DeliveryGoodsPage = () => {
     filter.diameter, 
     filter.season, 
     filter.brands, 
+    langState
   ]);
 
 
@@ -397,7 +441,7 @@ const DeliveryGoodsPage = () => {
 
           tyreFilterGoods.rows.map((item: any) => 
           { return (
-            setVehicleTypeFilter?.push(item.vehicle_type.vehicle_type_ua),
+            setVehicleTypeFilter?.push(langState === 'uk' ? item.vehicle_type.vehicle_type_ua : item.vehicle_type.vehicle_type),
             setSpeedIndexFilter?.push(item.speed_index.speed_index_with_desc),
             setLoadIndexFilter?.push(item.load_index.load_index_with_desc)
             )
@@ -410,7 +454,7 @@ const DeliveryGoodsPage = () => {
             )
           } else {
             goodsTyre?.setVehicleType(
-              Array.from(new Set([...setVehicleTypeFilter, 'вантажні шини']))
+              Array.from(new Set([...setVehicleTypeFilter, langState === 'uk' ? 'вантажні шини' : 'грузовые шины']))
             )
           }
           if (filter.speed_index) {
@@ -575,6 +619,7 @@ const DeliveryGoodsPage = () => {
     filter.vehicle_type,
     filter.speed_index,
     filter.load_index,
+    langState
   ]);
 
   useEffect(() =>{
@@ -670,20 +715,21 @@ const DeliveryGoodsPage = () => {
 
   useEffect(() => {
     let isMounted = false;
+    const getUrlArr = params.region.split('-');
+    const transformRegion: string | undefined = regionDataUa(getUrlArr[1]);
+    const regionData: string[] | undefined = transformRegion?.split(',')
     const loadRegionData = async() => {
       if(!isMounted) {
         const getRegionItem = localStorage.getItem('regionData')?.split(',');
         if (getRegionItem) {
-          setCityRegion(getRegionItem[0]);
           setRegion(getRegionItem[1]);
-          setCityCenterRegion(getRegionItem[2]);
           const getRefRegionNP = regionNovaPoshata(getRegionItem[1]);
           setNovaPoshtaRegion(getRefRegionNP);
           const getRefRegionDelivery = regionDelivery(getRegionItem[1]);
           setDeliveryRegion(getRefRegionDelivery);
         }
       } 
-      if (!isMounted && novaPoshtaRegion && cityRegion) {
+      if (!isMounted && novaPoshtaRegion && regionData) {
         try {
           let regionCityList: any[] | null = [];
           let regionFilteredCityList: any[] | null = [];
@@ -691,7 +737,7 @@ const DeliveryGoodsPage = () => {
 
           let getCountRegionCity: any = await getCityInRegionNovaPoshta(novaPoshtaRegion, 1);
           const countPage = Math.ceil(getCountRegionCity?.info.totalCount / 150);
-     
+          
           if (countPage > 1) {
             for (let index = 1; index <= countPage; index++) {
               let getRegionCity: any = await getCityInRegionNovaPoshta(novaPoshtaRegion, index);
@@ -701,33 +747,73 @@ const DeliveryGoodsPage = () => {
             let getRegionCity: any = await getCityInRegionNovaPoshta(novaPoshtaRegion, 1);
             regionCityList.push(...getRegionCity.data);
           }
-          
-          for (let index = 0; index < regionCityList.length; index++) {
-            let getCityWareHouse = await getWareHousesNovaPoshta(
-            {
-              MainDescription: regionCityList[index].Description,
-              DeliveryCity :''
-            });
-            
-            if (getCityWareHouse.info.totalCount !== 0 && getCityWareHouse.data.length !== 0 &&
-              getCityWareHouse.data[0].SettlementAreaDescription === region &&
-              getCityWareHouse.data[0].SettlementRef === regionCityList[index].Ref
+          //console.log('REGION_CITY_LIST: ', regionCityList)
+          if (langState === 'uk') {
+            for (let index = 0; index < regionCityList.length; index++) {
+              let getCityWareHouse = await getWareHousesNovaPoshta(
+              {
+                MainDescription: regionCityList[index].Description,
+                DeliveryCity :''
+              });
+              //console.log('WAREHOUSE_NP__LIST: ', getCityWareHouse)
+              if (getCityWareHouse.info.totalCount !== 0 && getCityWareHouse.data.length !== 0 &&
+                getCityWareHouse.data[0].SettlementAreaDescription === regionData![1] &&
+                getCityWareHouse.data[0].SettlementRef === regionCityList[index].Ref
               ) {
-              regionFilteredCityList.push(regionCityList[index]);
-              let cityRef = regionCityList[index].Ref;
-              let getCityDepart = getCityWareHouse.data.filter((item: any) => item.CityDescription === cityRegion 
-                && item.SettlementAreaDescription === region && item.SettlementRef === cityRef
-              );
-              if (getCityDepart.length > 0) {
-                cityDepartData.push(...getCityDepart);
+                regionFilteredCityList.push(regionCityList[index]);
+                let cityRef = regionCityList[index].Ref;
+                let getCityDepart = getCityWareHouse.data.filter((item: any) => createStringUrl(item.CityDescription.toLowerCase()) === getUrlArr[0] 
+                  && item.SettlementAreaDescription === regionData![1] && item.SettlementRef === cityRef
+                );
+                if (getCityDepart.length > 0) {
+                  cityDepartData.push(...getCityDepart);
+                }
               }
-            }
-            
-          };
-          const getCityMarkerData = regionFilteredCityList.find((item: any) => item.Description === cityRegion);
-          setCityMarkerData(getCityMarkerData);
-          setNovaPoshtaCityInRegion([...regionFilteredCityList]);
-          setNovaPoshtaWareHouseList([...cityDepartData]);
+            };
+            //console.log('REGION_FILTERED_NP__LIST: ', regionFilteredCityList)
+            const getCityMarkerData = regionFilteredCityList.find((item: any) => createStringUrl(item.Description.toLowerCase()) === getUrlArr[0]);
+            setCityRegion(getCityMarkerData.Description);
+            setCityCenterRegion(getCityMarkerData.Description);
+            setCityMarkerData(getCityMarkerData);
+            setNovaPoshtaCityInRegion([...regionFilteredCityList]);
+            setNovaPoshtaWareHouseList([...cityDepartData]);
+          }
+          if (langState === 'ru') {
+            for (let index = 0; index < regionCityList.length; index++) {
+              let getCityWareHouse = await getWareHousesNovaPoshta(
+              {
+                MainDescription: regionCityList[index].DescriptionRu,
+                DeliveryCity :''
+              });
+              //console.log('WAREHOUSE_NP__LIST: ', getCityWareHouse)
+              if (getCityWareHouse.info.totalCount !== 0 && getCityWareHouse.data.length !== 0 &&
+                getCityWareHouse.data[0].SettlementAreaDescription === regionData![1] &&
+                getCityWareHouse.data[0].SettlementRef === regionCityList[index].Ref
+              ) {
+                regionFilteredCityList.push(regionCityList[index]);
+                let cityRef = regionCityList[index].Ref;
+                let getCityDepart = getCityWareHouse.data.filter((item: any) => createStringUrl(item.CityDescriptionRu.toLowerCase()) === getUrlArr[0] 
+                  && item.SettlementAreaDescription === regionData![1] && item.SettlementRef === cityRef
+                );
+                if (getCityDepart.length > 0) {
+                  cityDepartData.push(...getCityDepart);
+                }
+              }
+            };
+            //console.log('REGION_FILTERED_NP__LIST: ', regionFilteredCityList)
+            const getCityMarkerData = regionFilteredCityList.find((item: any) => createStringUrl(item.DescriptionRu.toLowerCase()) === getUrlArr[0]);
+            //console.log('CITY_MARKET_DATA: ', getCityMarkerData);
+            setCityRegion(getCityMarkerData.DescriptionRu);
+            setCityCenterRegion(getCityMarkerData.DescriptionRu);
+            setCityMarkerData(getCityMarkerData);
+            setNovaPoshtaCityInRegion([...regionFilteredCityList]);
+            setNovaPoshtaWareHouseList([...cityDepartData]);
+          }
+          // console.log('REGION_FILTERED_NP__LIST: ', regionFilteredCityList)
+          // const getCityMarkerData = regionFilteredCityList.find((item: any) => item.Description === regionData![0]);
+          // setCityMarkerData(getCityMarkerData);
+          // setNovaPoshtaCityInRegion([...regionFilteredCityList]);
+          // setNovaPoshtaWareHouseList([...cityDepartData]);
           
           regionCityList = null;
           regionFilteredCityList = null;
@@ -736,28 +822,109 @@ const DeliveryGoodsPage = () => {
           console.log('NOVAPOSHTA_SET_REGION_ERROR: ', error);
         }
       }   
-      if (!isMounted && deliveryRegion && cityRegion) {
+      if (!isMounted && deliveryRegion && regionData) {
         try {
           let getCountRegionCityD: any = await getCityInRegionDelivery(deliveryRegion);
+          //console.log('DELIVERY_CITY_LIST: ', getCountRegionCityD)
           if (getCountRegionCityD.status === true) {
-            let cityPresent = getCountRegionCityD.data.find((item: any) => item.name === cityRegion);
+            let cityPresent = getCountRegionCityD.data.find((item: any) => item.name === regionData![0]);
             if (cityPresent) {
               let getCityWareHouseDel = await getWareHousesDelivery(
                 cityPresent.id
               );
+              //console.log('DELIVERY_CITYWAREHOSE_LIST: ', getCityWareHouseDel.data)
               setDeliveryWareHouseList(getCityWareHouseDel.data);
             }
           };        
         } catch (error) {
           console.log('DELIVERY_SET_REGION_ERROR: ', error);
         }
-      }  
+      } 
+      // if (!isMounted && novaPoshtaRegion && !regionData) {
+      //   try {
+      //     let regionCityList: any[] | null = [];
+      //     let regionFilteredCityList: any[] | null = [];
+      //     let cityDepartData: any[] | null = [];
+
+      //     let getCountRegionCity: any = await getCityInRegionNovaPoshta(novaPoshtaRegion, 1);
+      //     const countPage = Math.ceil(getCountRegionCity?.info.totalCount / 150);
+          
+      //     if (countPage > 1) {
+      //       for (let index = 1; index <= countPage; index++) {
+      //         let getRegionCity: any = await getCityInRegionNovaPoshta(novaPoshtaRegion, index);
+      //         regionCityList.push(...getRegionCity.data);
+      //       }
+      //     } else {
+      //       let getRegionCity: any = await getCityInRegionNovaPoshta(novaPoshtaRegion, 1);
+      //       regionCityList.push(...getRegionCity.data);
+      //     }
+          
+      //     for (let index = 0; index < regionCityList.length; index++) {
+      //       let getCityWareHouse = await getWareHousesNovaPoshta(
+      //       {
+      //         MainDescription: langState === 'uk' ? regionCityList[index].Description : regionCityList[index].DescriptionRu,
+      //         DeliveryCity :''
+      //       });
+            
+      //       if (getCityWareHouse.info.totalCount !== 0 && getCityWareHouse.data.length !== 0 &&
+      //         getCityWareHouse.data[0].SettlementAreaDescription === region &&
+      //         getCityWareHouse.data[0].SettlementRef === regionCityList[index].Ref
+      //         ) {
+      //         regionFilteredCityList.push(regionCityList[index]);
+      //         let cityRef = regionCityList[index].Ref;
+      //         let getCityDepart = getCityWareHouse.data.filter((item: any) => item.CityDescription === cityRegion 
+      //           && item.SettlementAreaDescription === region && item.SettlementRef === cityRef
+      //         );
+      //         if (getCityDepart.length > 0) {
+      //           cityDepartData.push(...getCityDepart);
+      //         }
+      //       }
+      //     };
+      //     const getCityMarkerData = regionFilteredCityList.find((item: any) => item.Description === cityRegion);
+      //     setCityMarkerData(getCityMarkerData);
+      //     setNovaPoshtaCityInRegion([...regionFilteredCityList]);
+      //     setNovaPoshtaWareHouseList([...cityDepartData]);
+          
+      //     regionCityList = null;
+      //     regionFilteredCityList = null;
+      //     cityDepartData = null;       
+      //   } catch (error) {
+      //     console.log('NOVAPOSHTA_SET_REGION_ERROR: ', error);
+      //   }
+      // }   
+      // if (!isMounted && deliveryRegion && !regionData) {
+      //   try {
+      //     let getCountRegionCityD: any = await getCityInRegionDelivery(deliveryRegion);
+      //     console.log('DELIVERY_CITY_LIST: ', getCountRegionCityD)
+      //     if (getCountRegionCityD.status === true) {
+      //       let cityPresent = getCountRegionCityD.data.find((item: any) => item.name === cityRegion);
+      //       if (cityPresent) {
+      //         let getCityWareHouseDel = await getWareHousesDelivery(
+      //           cityPresent.id
+      //         );
+      //         console.log('DELIVERY_CITYWAREHOSE_LIST: ', getCityWareHouseDel.data)
+      //         setDeliveryWareHouseList(getCityWareHouseDel.data);
+      //       }
+      //     };        
+      //   } catch (error) {
+      //     console.log('DELIVERY_SET_REGION_ERROR: ', error);
+      //   }
+      // }  
+      localStorage.removeItem('regionData'); 
     }
     loadRegionData();
     return () => {
         isMounted = true;
     };
-  },[cityRegion, deliveryRegion, novaPoshtaRegion, region]);
+  },[
+    cityCenterRegion, 
+    cityRegion, 
+    deliveryRegion, 
+    novaPoshtaRegion, 
+    params.region, 
+    region,
+    langState
+  ]);
 
   useEffect(() => {
     let isMounted = false;
@@ -824,6 +991,12 @@ const DeliveryGoodsPage = () => {
     setTabDelivery(e.target.textContent);
   };
 
+  // console.log('NOVA_POSHTA_WAREHOUSE_LIST: ', novaPoshtaWareHouseList);
+  // console.log('DELIVERY_WAREHOUSE_LIST: ', deliveryWareHouseList);
+  // console.log('CITY_REGION: ', cityRegion);
+  // console.log('CITY_CENTER_REGION: ', cityCenterRegion);
+  // console.log('REGION: ', region);
+
   return (
     <div className='deliveryGoodsPage'
     onClick={closeFilter}
@@ -831,23 +1004,23 @@ const DeliveryGoodsPage = () => {
       <div className='aDev'>
         <BreadCrumbs 
           route={['/','/delivery-pay', '/delivery']} 
-          hrefTitle={['Інтернет-магазин SkyParts','Доставка оплата', `Доставка шин в ${cityRegion}`]}
+          hrefTitle={['Інтернет-магазин SkyParts','Доставка оплата', `Доставка шин в ${cityRegion ?? ''}`]}
         /> 
       </div>
       <div className='hDev'>
-        <h2>Купити шини {cityRegion}</h2> 
+        <h2>{t('deliveryPage.buy_tyres')} {cityRegion ?? ''}</h2> 
         {cityRegion && cityRegion === cityCenterRegion ?
         <span 
           className='deliveryGoodsPageHtitle' 
           onClick={moveToDeliveriRegion}
         >
-          Доставка шин в інші міста {region}
+          {t('deliveryPage.delivery_to_another_cities')} {region}
         </span> 
         : <span 
             className='deliveryGoodsPageHtitle' 
             onClick={moveToDeliveriRegion}
           >
-          Доставка шин в інші областя України
+          {t('deliveryPage.delivery_to_another_regions')}
           </span>
         }
       </div>
@@ -861,7 +1034,7 @@ const DeliveryGoodsPage = () => {
         <CatalogTyres/>
       </div>
       <div className='gDev'>
-        <h3> Способи доставки шин в {cityRegion} </h3> 
+        <h3>{t('deliveryPage.methods_delivery')} {cityRegion} </h3> 
       </div>
       {cityMarkerData && novaPoshtaWareHouseList ?
       <div className='dDev'>
@@ -875,7 +1048,7 @@ const DeliveryGoodsPage = () => {
           />
           </div> : null
         }
-        { tabDelivery === 'Делівері' ?
+        { tabDelivery === 'Delivery' ?
           <div className='deliveryGoodsMap'>
           <MapDelivery 
             centerPosition={[Number(cityMarkerData?.Latitude), Number(cityMarkerData?.Longitude)]}
@@ -902,13 +1075,13 @@ const DeliveryGoodsPage = () => {
             }
             {deliveryWareHouseList ?
             <span 
-              className={ tabDelivery === 'Делівері' ?
+              className={ tabDelivery === 'Delivery' ?
                 'deliveryGoodsDeliveryChooseBtn active' :
                 'deliveryGoodsDeliveryChooseBtn'
               }
               onClick={chooseDelivery}
             >
-              Делівері
+              Delivery
             </span>
             : null 
             }
@@ -929,16 +1102,16 @@ const DeliveryGoodsPage = () => {
                 }
                 onClick={markerClick}
                 data-choose={item.SiteKey} 
-                data-position={[Number(item.Latitude),Number(item.Longitude),item.Description,'тел: '+ item.Phone]} 
+                data-position={[Number(item.Latitude),Number(item.Longitude),langState === 'uk' ? item.Description : item.DescriptionRu,'тел: '+ item.Phone]} 
               >
-                {item.Description}<br/> тел: {item.Phone}
+                {langState === 'uk' ? item.Description : item.DescriptionRu}<br/> тел: {item.Phone}
               </li>
             </ul>  
           </div>
           ))
           : null
           }
-          {deliveryWareHouseList && tabDelivery === 'Делівері' ? 
+          {deliveryWareHouseList && tabDelivery === 'Delivery' ? 
           deliveryWareHouseList.map((item: any) => (
           <div 
             className='deliveryGoodsDepartData'
@@ -969,8 +1142,8 @@ const DeliveryGoodsPage = () => {
       }
       <div className='eDev'>
       {cityRegion && cityRegion === cityCenterRegion ?
-        <h3>Доставка шин в інші міста {region}</h3> 
-        : <h3>Доставка шин в інші областя України</h3>
+        <h3>{t('deliveryPage.delivery_to_another_cities')} {region}</h3> 
+        : <h3>{t('deliveryPage.delivery_to_another_regions')}</h3>
       }
       <div className='deliveryGoodsCityInRegion'>
       {region && cityRegion === cityCenterRegion ? 
@@ -982,12 +1155,12 @@ const DeliveryGoodsPage = () => {
           <li>
           <a 
             href={DELIVERY_GOODS_ROUTE + '/' + 
-            createStringUrl(`${item.Description} ${region}`)}
-            data-region={`${item.Description},${region},${cityRegion}`}
+            createStringUrl(`${langState === 'uk' ? item.Description : item.DescriptionRu} ${region}`)}
+            data-region={`${langState === 'uk' ? item.Description : item.DescriptionRu},${region},${cityRegion}`}
             onClick={addDeliveryLink}
-            title={`Доставка шин дисків акб автохіміі в ${item.Description}`}
+            title={`Доставка шин дисків акб автохіміі в ${langState === 'uk' ? item.Description : item.DescriptionRu}`}
           >
-            {item.Description}
+            {langState === 'uk' ? item.Description : item.DescriptionRu}
           </a>
           </li>
         </ul>
@@ -1000,114 +1173,114 @@ const DeliveryGoodsPage = () => {
         <ul>
         <li>
           <a href={DELIVERY_GOODS_ROUTE + '/' + 
-            createStringUrl('Сімферопіль АРК')}
-            data-region='Сімферопіль,АРК,Сімферопіль'
+            createStringUrl(t('deliveryPage.vinnica_string'))}
+            data-region={t('deliveryPage.vinnica_region')}
             onClick={addDeliveryLink}
-            title='Доставка шин дисків акб автохіміі в АРК'
+            title={t('deliveryPage.vinnica_title')}
           >
-            Шини в АРК
+            {t('deliveryPage.tyre')} в {t('deliveryPage.cremea_obl')}
           </a>
         </li>
         <li>
           <a href={DELIVERY_GOODS_ROUTE + '/' + 
-            createStringUrl('Вінниця Вінницька область')}
-            data-region='Вінниця,Вінницька область,Вінниця'
+            createStringUrl(t('deliveryPage.vinnica_string'))}
+            data-region={t('deliveryPage.vinnica_region')}
             onClick={addDeliveryLink}
-            title='Доставка шин дисків акб автохіміі в Вінницю'
+            title={t('deliveryPage.vinnica_title')}
           >
-            Шини в Вінниці
+           {t('deliveryPage.tyre')} в {t('deliveryPage.vinnicka_obl')}
           </a>
         </li>
         <li>
           <a href={DELIVERY_GOODS_ROUTE + '/' + 
-            createStringUrl('Луцьк Волинська область')}
-            data-region='Луцьк,Волинська область,Луцьк'
+            createStringUrl(t('deliveryPage.volinska_string'))}
+            data-region={t('deliveryPage.volinska_region')}
             onClick={addDeliveryLink}
-            title='Доставка шин дисків акб автохіміі в Луцьку'
+            title={t('deliveryPage.volinska_title')}
           >
-            Шини в Луцьку
+            {t('deliveryPage.tyre')} в {t('deliveryPage.volinska_obl')}
           </a>
         </li>
         <li>
           <a href={DELIVERY_GOODS_ROUTE + '/' + 
-            createStringUrl('Дніпро Дніпропетровська область')}
-            data-region='Дніпро,Дніпропетровська область,Дніпро'
+            createStringUrl(t('deliveryPage.dniprovska_string'))}
+            data-region={t('deliveryPage.dniprovska_region')}
             onClick={addDeliveryLink}
-            title='Доставка шин дисків акб автохіміі в Дніпрі'
+            title={t('deliveryPage.dniprovska_title')}
           >
-            Шини в Дніпрі
+            {t('deliveryPage.tyre')} в {t('deliveryPage.dniprovska_obl')}
           </a>
         </li>
         <li>
           <a href={DELIVERY_GOODS_ROUTE + '/' + 
-            createStringUrl('Краматорськ Донецька область')}
-            data-region='Краматорськ,Донецька область,Краматорськ'
+            createStringUrl(t('deliveryPage.donecka_string'))}
+            data-region={t('deliveryPage.donecka_region')}
             onClick={addDeliveryLink}
-            title='Доставка шин дисків акб автохіміі в Краматорську'
+            title={t('deliveryPage.donecka_title')}
           >
-            Шини в Краматорську
+            {t('deliveryPage.tyre')} в {t('deliveryPage.donecka_obl')}
           </a>
         </li>
         <li>
           <a href={DELIVERY_GOODS_ROUTE + '/' + 
-            createStringUrl('Житомир Житомирська область')}
-            data-region='Житомир,Житомирська область,Житомир'
+            createStringUrl(t('deliveryPage.gitomirska_string'))}
+            data-region={t('deliveryPage.gitomirska_region')}
             onClick={addDeliveryLink}
-            title='Доставка шин дисків акб автохіміі в Житомирі'
+            title={t('deliveryPage.gitomirska_title')}
           >
-            Шини в Житомирі
+            {t('deliveryPage.tyre')} в {t('deliveryPage.gitomirska_obl')}
           </a>
         </li>
         <li>
           <a href={DELIVERY_GOODS_ROUTE + '/' + 
-            createStringUrl('Ужгород Закарпатська область')}
-            data-region='Ужгород,Закарпатська область,Ужгород'
+            createStringUrl(t('deliveryPage.zakarpat_string'))}
+            data-region={t('deliveryPage.zakarpat_region')}
             onClick={addDeliveryLink}
-            title='Доставка шин дисків акб автохіміі в Ужгороді'
+            title={t('deliveryPage.zakarpat_title')}
           >
-            Шини в Ужгороді
+            {t('deliveryPage.tyre')} в {t('deliveryPage.zakarpat_obl')}
           </a>
         </li>
           <li>
             <a href={DELIVERY_GOODS_ROUTE + '/' + 
-              createStringUrl('Запоріжжя Запорізька область')}
-              data-region='Запоріжжя,Запорізька область,Запоріжжя'
+              createStringUrl(t('deliveryPage.zaporogs_string'))}
+              data-region={t('deliveryPage.zaporogs_region')}
               onClick={addDeliveryLink}
-              title='Доставка шин дисків акб автохіміі в Запоріжжі'
+              title={t('deliveryPage.zaporogs_title')}
             >
-              Шини в Запоріжжі
+              {t('deliveryPage.tyre')} в {t('deliveryPage.zaporogs_obl')}
             </a>
           </li>
         </ul>
         <ul className='deliveryPageRegionListUl'>
           <li>
             <a href={DELIVERY_GOODS_ROUTE + '/' + 
-              createStringUrl('Івано-Франківськ Івано-Франківська область')}
-              data-region='Івано-Франківськ,Івано-Франківська область,Івано-Франківськ'
+              createStringUrl(t('deliveryPage.ivanofr_string'))}
+              data-region={t('deliveryPage.ivanofr_region')}
               onClick={addDeliveryLink}
-              title='Доставка шин дисків акб автохіміі в Івано-Франківську'
+              title={t('deliveryPage.ivanofr_title')}
             >
-              Шини в Івано-Франківську
+              {t('deliveryPage.tyre')} в {t('deliveryPage.ivanofr_obl')}
             </a>
           </li>
           <li>
             <a href={DELIVERY_GOODS_ROUTE + '/' + 
-              createStringUrl('Київ Київська область')}
-              data-region='Київ,Київська область,Київ'
+              createStringUrl(t('deliveryPage.kiivska_string'))}
+              data-region={t('deliveryPage.kiivska_region')}
               onClick={addDeliveryLink}
-              title='Доставка шин дисків акб автохіміі в Київі'
+              title={t('deliveryPage.kiivska_title')}
             >
-              Шини в Київі
+              {t('deliveryPage.tyre')} в {t('deliveryPage.kiivska_obl')}
             </a>
           </li>
           <li>
             <a href={DELIVERY_GOODS_ROUTE + '/' + 
-              createStringUrl('Кропивницький Кіровоградська область')}
-              data-region='Кропивницький,Кіровоградська область,Кропивницький'
+              createStringUrl(t('deliveryPage.kirovogr_string'))}
+              data-region={t('deliveryPage.kirovogr_region')}
               onClick={addDeliveryLink}
-              title='Доставка шин дисків акб автохіміі в Кропивницькому'
+              title={t('deliveryPage.kirovogr_title')}
             >
-              Шини в Кропивницькомі
+              {t('deliveryPage.tyre')} в {t('deliveryPage.kirovogr_obl')}
             </a>
           </li>
           <li>
@@ -1123,134 +1296,134 @@ const DeliveryGoodsPage = () => {
           </li>
           <li>
             <a href={DELIVERY_GOODS_ROUTE + '/' + 
-              createStringUrl('Львів Львівська область')}
-              data-region='Львів,Львівська область,Львів'
+              createStringUrl(t('deliveryPage.lvivska_string'))}
+              data-region={t('deliveryPage.lvivska_region')}
               onClick={addDeliveryLink}
-              title='Доставка шин дисків акб автохіміі в Львові'
+              title={t('deliveryPage.lvivska_title')}
             >
-              Шини в Львові
+              {t('deliveryPage.tyre')} в {t('deliveryPage.lvivska_obl')}
             </a>
           </li>
           <li>
             <a href={DELIVERY_GOODS_ROUTE + '/' + 
-              createStringUrl('Миколаїв Миколаївська область')}
-              data-region='Миколаїв,Миколаївська область,Миколаїв'
+              createStringUrl(t('deliveryPage.mikolaivska_string'))}
+              data-region={t('deliveryPage.mikolaivska_region')}
               onClick={addDeliveryLink}
-              title='Доставка шин дисків акб автохіміі в Миколаїві'
+              title={t('deliveryPage.mikolaivska_title')}
             >
-              Шини в Миколаїві
+              {t('deliveryPage.tyre')} в {t('deliveryPage.mikolaivska_obl')}
             </a>
           </li>
           <li>
             <a href={DELIVERY_GOODS_ROUTE + '/' + 
-              createStringUrl('Одеса Одеська область')}
-              data-region='Одеса,Одеська область,Одеса'
+              createStringUrl(t('deliveryPage.odeska_string'))}
+              data-region={t('deliveryPage.odeska_region')}
               onClick={addDeliveryLink}
-              title='Доставка шин дисків акб автохіміі в Одесі'
+              title={t('deliveryPage.odeska_title')}
             >
-              Шини в Одесі
+              {t('deliveryPage.tyre')} в {t('deliveryPage.odeska_obl')}
             </a>
           </li>
           <li>
             <a href={DELIVERY_GOODS_ROUTE + '/' + 
-              createStringUrl('Полтава Полтавська область')}
-              data-region='Полтава,Полтавська область,Полтава'
+              createStringUrl(t('deliveryPage.poltavska_string'))}
+              data-region={t('deliveryPage.poltavska_region')}
               onClick={addDeliveryLink}
-              title='Доставка шин дисків акб автохіміі в Полтаві'
+              title={t('deliveryPage.poltavska_title')}
             >
-              Шини в Полтаві
+              {t('deliveryPage.tyre')} в {t('deliveryPage.poltavska_obl')}
             </a>
           </li>
         </ul>
         <ul className='deliveryPageRegionListUl'>
           <li>
             <a href={DELIVERY_GOODS_ROUTE + '/' + 
-              createStringUrl('Рівне Рівненська область')}
-              data-region='Рівне,Рівненська область,Рівне'
+              createStringUrl(t('deliveryPage.rivenska_string'))}
+              data-region={t('deliveryPage.rivenska_region')}
               onClick={addDeliveryLink}
-              title='Доставка шин дисків акб автохіміі в Рівне'
+              title={t('deliveryPage.rivenska_title')}
             >
-              Шини в Рівне
+              {t('deliveryPage.tyre')} в {t('deliveryPage.rivenska_obl')}
             </a>
           </li>
           <li>
             <a href={DELIVERY_GOODS_ROUTE + '/' + 
-              createStringUrl('Суми Сумська область')}
-              data-region='Суми,Сумська область,Суми'
+              createStringUrl(t('deliveryPage.sumska_string'))}
+              data-region={t('deliveryPage.sumska_region')}
               onClick={addDeliveryLink}
-              title='Доставка шин дисків акб автохіміі в Сумах'
+              title={t('deliveryPage.sumska_title')}
             >
-              Шини в Сумах
+              {t('deliveryPage.tyre')} в {t('deliveryPage.sumska_obl')}
             </a>
           </li>
           <li>
             <a href={DELIVERY_GOODS_ROUTE + '/' + 
-              createStringUrl('Тернопіль Тернопільська область')}
-              data-region='Тернопіль,Тернопільська область,Тернопіль'
+              createStringUrl(t('deliveryPage.ternopilska_string'))}
+              data-region={t('deliveryPage.ternopilska_region')}
               onClick={addDeliveryLink}
-              title='Доставка шин дисків акб автохіміі в Тернополі'
+              title={t('deliveryPage.ternopilska_title')}
             >
-              Шини а Тернополі
+              {t('deliveryPage.tyre')} в {t('deliveryPage.ternopilska_obl')}
             </a>
           </li>
           <li>
             <a href={DELIVERY_GOODS_ROUTE + '/' + 
-              createStringUrl('Харків Харківська область')}
-              data-region='Харків,Харківська область,Харків'
+              createStringUrl(t('deliveryPage.kharkiv_string'))}
+              data-region={t('deliveryPage.kharkiv_region')}
               onClick={addDeliveryLink}
-              title='Доставка шин дисків акб автохіміі в Харкові'
+              title={t('deliveryPage.kharkiv_title')}
             >
-              Шини в Харкові
+              {t('deliveryPage.tyre')} в {t('deliveryPage.kharkiv_obl')}
             </a>
           </li>
           <li>
             <a href={DELIVERY_GOODS_ROUTE + '/' + 
-              createStringUrl('Херсон Херсонська область')}
-              data-region='Херсон,Херсонська область,Херсон'
+              createStringUrl(t('deliveryPage.kherson_string'))}
+              data-region={t('deliveryPage.kherson_region')}
               onClick={addDeliveryLink}
-              title='Доставка шин дисків акб автохіміі в Херсоні'
+              title={t('deliveryPage.kherson_title')}
             >
-              Шини в Херсоні
+              {t('deliveryPage.tyre')} в {t('deliveryPage.kherson_obl')}
             </a>
           </li>
           <li>
             <a href={DELIVERY_GOODS_ROUTE + '/' + 
-              createStringUrl('Хмельницький Хмельницька область')}
-              data-region='Хмельницький,Хмельницька область,Хмельницький'
+              createStringUrl(t('deliveryPage.khmeln_string'))}
+              data-region={t('deliveryPage.khmeln_region')}
               onClick={addDeliveryLink}
-              title='Доставка шин дисків акб автохіміі в Хмельницькому'
+              title={t('deliveryPage.khmeln_title')}
             >
-              Шини в Хмельницькому
+              {t('deliveryPage.tyre')} в {t('deliveryPage.khmeln_obl')}
             </a>
           </li>
           <li>
             <a href={DELIVERY_GOODS_ROUTE + '/' + 
-              createStringUrl('Черкаси Черкаська область')}
-              data-region='Черкаси,Черкаська область,Черкаси'
+              createStringUrl(t('deliveryPage.cherkas_string'))}
+              data-region={t('deliveryPage.cherkas_region')}
               onClick={addDeliveryLink}
-              title='Доставка шин дисків акб автохіміі в Черкасах'
+              title={t('deliveryPage.cherkas_title')}
             >
-              Шини в Черкасах
+              {t('deliveryPage.tyre')} в {t('deliveryPage.cherkas_obl')}
             </a>
           </li>
           <li>
             <a href={DELIVERY_GOODS_ROUTE + '/' + 
-              createStringUrl('Чернівці Чернівецька область')}
-              data-region='Чернівці,Чернівецька область,Чернівці'
+              createStringUrl(t('deliveryPage.chernivec_string'))}
+              data-region={t('deliveryPage.chernivec_region')}
               onClick={addDeliveryLink}
-              title='Доставка шин дисків акб автохіміі в Чернівцях'
+              title={t('deliveryPage.chernivec_title')}
             >
-              Шини в Чернівцях
+              {t('deliveryPage.tyre')} в {t('deliveryPage.chernivec_obl')}
             </a>
           </li>
           <li>
             <a href={DELIVERY_GOODS_ROUTE + '/' + 
-              createStringUrl('Чернігів Чернігівська область')}
-              data-region='Чернігів,Чернігівська область,Чернігів'
+              createStringUrl(t('deliveryPage.chernigiv_string'))}
+              data-region={t('deliveryPage.chernigiv_region')}
               onClick={addDeliveryLink}
-              title='Доставка шин дисків акб автохіміі в Чернігові'
+              title={t('deliveryPage.chernigiv_title')}
             >
-              Шини в Чернігові
+              {t('deliveryPage.tyre')} в {t('deliveryPage.chernigiv_obl')}
             </a>
           </li>
         </ul>
@@ -1261,7 +1434,7 @@ const DeliveryGoodsPage = () => {
       </div>
       <div className='fDev'>
         <ReviewsMain 
-          props={'Відгуки кліентів'} 
+          props={t('deliveryPage.review_customers')} 
           prevBtnAction={prevBtnReviewGoods} 
           nextBtnAction={nextBtnReviewGoods}    
           buttonPosition={{
@@ -1288,7 +1461,7 @@ const DeliveryGoodsPage = () => {
             : 
             <div className='mainAfterReviews' >
               <a className='mainLinkReview'
-                href='/review'>Дивитися всі відгуки про магазин
+                href='/review'>{t('deliveryPage.look_at_all_review')}
               </a>
             </div>
           }

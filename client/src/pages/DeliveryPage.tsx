@@ -15,7 +15,7 @@ const DeliveryPage = () => {
   return (
     <div className='deliveryPageContainer'>
       <h2>
-        Доставка і оплата{t('deliveryPage.title')}
+        {t('deliveryPage.title')}
       </h2>
       <div className='deliveryPageBox'>
         {i18n.resolvedLanguage === 'uk' ?
@@ -58,256 +58,256 @@ const DeliveryPage = () => {
           <ul className='deliveryPageRegionListUl'>
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Сімферопіль АРК')}
-                data-region='Сімферопіль,АРК,Сімферопіль'
+                createStringUrl(t('deliveryPage.cremea_string'))}
+                data-region={t('deliveryPage.cremea_region')}
                 onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в АРК'
+                title={t('deliveryPage.cremea_title')}
               >
-                АРК
+                {t('deliveryPage.cremea_obl')}
               </a>
             </li>
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Вінниця Вінницька область')}
-                data-region='Вінниця,Вінницька область,Вінниця'
+                createStringUrl(t('deliveryPage.vinnica_string'))}
+                data-region={t('deliveryPage.vinnica_region')}
                 onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Вінницька область'
+                title={t('deliveryPage.vinnica_title')}
               >
-                Вінницька область
+                {t('deliveryPage.vinnicka_obl')}
               </a>
             </li>
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Луцьк Волинська область')}
-                data-region='Луцьк,Волинська область,Луцьк'
+                createStringUrl(t('deliveryPage.volinska_string'))}
+                data-region={t('deliveryPage.volinska_region')}
                 onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Волинська область'
+                title={t('deliveryPage.volinska_title')}
               >
-                Волинська область
+                {t('deliveryPage.volinska_obl')}
               </a>
             </li>
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Дніпро Дніпропетровська область')}
-                data-region='Дніпро,Дніпропетровська область,Дніпро'
+                createStringUrl(t('deliveryPage.dniprovska_string'))}
+                data-region={t('deliveryPage.dniprovska_region')}
                 onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Дніпропетровська область'
+                title={t('deliveryPage.dniprovska_title')}
               >
-                Дніпропетровська область
+                {t('deliveryPage.dniprovska_obl')}
               </a>
             </li>
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Краматорськ Донецька область')}
-                data-region='Краматорськ,Донецька область,Краматорськ'
+                createStringUrl(t('deliveryPage.donecka_string'))}
+                data-region={t('deliveryPage.donecka_region')}
                 onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Донецька область'
+                title={t('deliveryPage.donecka_title')}
               >
-                Донецька область
+                {t('deliveryPage.donecka_obl')}
               </a>
             </li>
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Житомир Житомирська область')}
-                data-region='Житомир,Житомирська область,Житомир'
+                createStringUrl(t('deliveryPage.gitomirska_string'))}
+                data-region={t('deliveryPage.gitomirska_region')}
                 onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Житомирська область'
+                title={t('deliveryPage.gitomirska_title')}
               >
-                Житомирська область
+                {t('deliveryPage.gitomirska_obl')}
               </a>
             </li>
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Ужгород Закарпатська область')}
-                data-region='Ужгород,Закарпатська область,Ужгород'
+                createStringUrl(t('deliveryPage.zakarpat_string'))}
+                data-region={t('deliveryPage.zakarpat_region')}
                 onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Закарпатська область'
+                title={t('deliveryPage.zakarpat_title')}
               >
-                Закарпатська область
+                {t('deliveryPage.zakarpat_obl')}
               </a>
             </li>
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Запоріжжя Запорізька область')}
-                data-region='Запоріжжя,Запорізька область,Запоріжжя'
+                createStringUrl(t('deliveryPage.zaporogs_string'))}
+                data-region={t('deliveryPage.zaporogs_region')}
                 onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Запорізька область'
+                title={t('deliveryPage.zaporogs_title')}
               >
-                Запорізька область
-              </a>
-            </li>
-          </ul>
-          <ul className='deliveryPageRegionListUl'>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Івано-Франківськ Івано-Франківська область')}
-                data-region='Івано-Франківськ,Івано-Франківська область,Івано-Франківськ'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Івано-Франківська область'
-              >
-                Івано-Франківська область
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Київ Київська область')}
-                data-region='Київ,Київська область,Київ'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Київська область'
-              >
-                Київська область
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Кропивницький Кіровоградська область')}
-                data-region='Кропивницький,Кіровоградська область,Кропивницький'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Кіровоградська область'
-              >
-                Кіровоградська область
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Луганськ Луганська область')}
-                data-region='Луганськ,Луганська область,Луганськ'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Луганська область'
-              >
-                Луганська область
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Львів Львівська область')}
-                data-region='Львів,Львівська область,Львів'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Львівська область'
-              >
-                Львівська область
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Миколаїв Миколаївська область')}
-                data-region='Миколаїв,Миколаївська область,Миколаїв'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Миколаївська область'
-              >
-                Миколаївська область
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Одеса Одеська область')}
-                data-region='Одеса,Одеська область,Одеса'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Одеська область'
-              >
-                Одеська область
-              </a>
-            </li>
-            <li>
-              <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Полтава Полтавська область')}
-                data-region='Полтава,Полтавська область,Полтава'
-                onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Полтавська область'
-              >
-                Полтавська область
+                {t('deliveryPage.zaporogs_obl')}
               </a>
             </li>
           </ul>
           <ul className='deliveryPageRegionListUl'>
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Рівне Рівненська область')}
-                data-region='Рівне,Рівненська область,Рівне'
+                createStringUrl(t('deliveryPage.ivanofr_string'))}
+                data-region={t('deliveryPage.ivanofr_region')}
                 onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Рівненська область'
+                title={t('deliveryPage.ivanofr_title')}
               >
-                Рівненська область
+                {t('deliveryPage.ivanofr_obl')}
               </a>
             </li>
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Суми Сумська область')}
-                data-region='Суми,Сумська область,Суми'
+                createStringUrl(t('deliveryPage.kiivska_string'))}
+                data-region={t('deliveryPage.kiivska_region')}
                 onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Сумська область'
+                title={t('deliveryPage.kiivska_title')}
               >
-                Сумська область
+                {t('deliveryPage.kiivska_obl')}
               </a>
             </li>
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Тернопіль Тернопільська область')}
-                data-region='Тернопіль,Тернопільська область,Тернопіль'
+                createStringUrl(t('deliveryPage.kirovogr_string'))}
+                data-region={t('deliveryPage.kirovogr_region')}
                 onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Тернопільська область'
+                title={t('deliveryPage.kirovogr_title')}
               >
-                Тернопільська область
+                {t('deliveryPage.kirovogr_obl')}
               </a>
             </li>
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Харків Харківська область')}
-                data-region='Харків,Харківська область,Харків'
+                createStringUrl(t('deliveryPage.lygansk_string'))}
+                data-region={t('deliveryPage.lygansk_region')}
                 onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Харківська область'
+                title={t('deliveryPage.lygansk_title')}
               >
-                Харківська область
+                {t('deliveryPage.lygansk_obl')}
               </a>
             </li>
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Херсон Херсонська область')}
-                data-region='Херсон,Херсонська область,Херсон'
+                createStringUrl(t('deliveryPage.lvivska_string'))}
+                data-region={t('deliveryPage.lvivska_region')}
                 onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Херсонська область'
+                title={t('deliveryPage.lvivska_title')}
               >
-                Херсонська область
+                {t('deliveryPage.lvivska_obl')}
               </a>
             </li>
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Хмельницький Хмельницька область')}
-                data-region='Хмельницький,Хмельницька область,Хмельницький'
+                createStringUrl(t('deliveryPage.mikolaivska_string'))}
+                data-region={t('deliveryPage.mikolaivska_region')}
                 onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Хмельницька область'
+                title={t('deliveryPage.mikolaivska_title')}
               >
-                Хмельницька область
+                {t('deliveryPage.mikolaivska_obl')}
               </a>
             </li>
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Черкаси Черкаська область')}
-                data-region='Черкаси,Черкаська область,Черкаси'
+                createStringUrl(t('deliveryPage.odeska_string'))}
+                data-region={t('deliveryPage.odeska_region')}
                 onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Черкаська область'
+                title={t('deliveryPage.odeska_title')}
               >
-                Черкаська область
+                {t('deliveryPage.odeska_obl')}
               </a>
             </li>
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Чернівці, Чернівецька область')}
-                data-region='Чернівці,Чернівецька область,Чернівці'
+                createStringUrl(t('deliveryPage.poltavska_string'))}
+                data-region={t('deliveryPage.poltavska_region')}
                 onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Чернівецька область'
+                title={t('deliveryPage.poltavska_title')}
               >
-                Чернівецька область
+                {t('deliveryPage.poltavska_obl')}
+              </a>
+            </li>
+          </ul>
+          <ul className='deliveryPageRegionListUl'>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl(t('deliveryPage.rivenska_string'))}
+                data-region={t('deliveryPage.rivenska_region')}
+                onClick={addDeliveryLink}
+                title={t('deliveryPage.rivenska_title')}
+              >
+                {t('deliveryPage.rivenska_obl')}
               </a>
             </li>
             <li>
               <a href={DELIVERY_GOODS_ROUTE + '/' + 
-                createStringUrl('Чернігів, Чернігівська область')}
-                data-region='Чернігів,Чернігівська область,Чернігів'
+                createStringUrl(t('deliveryPage.sumska_string'))}
+                data-region={t('deliveryPage.sumska_region')}
                 onClick={addDeliveryLink}
-                title='Доставка шин дисків акб автохіміі в Чернігівська область'
+                title={t('deliveryPage.sumska_title')}
               >
-                Чернігівська область
+                {t('deliveryPage.sumska_obl')}
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl(t('deliveryPage.ternopilska_string'))}
+                data-region={t('deliveryPage.ternopilska_region')}
+                onClick={addDeliveryLink}
+                title={t('deliveryPage.ternopilska_title')}
+              >
+                {t('deliveryPage.ternopilska_obl')}
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl(t('deliveryPage.kharkiv_string'))}
+                data-region={t('deliveryPage.kharkiv_region')}
+                onClick={addDeliveryLink}
+                title={t('deliveryPage.kharkiv_title')}
+              >
+                {t('deliveryPage.kharkiv_obl')}
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl(t('deliveryPage.kherson_string'))}
+                data-region={t('deliveryPage.kherson_region')}
+                onClick={addDeliveryLink}
+                title={t('deliveryPage.kherson_title')}
+              >
+                {t('deliveryPage.kherson_obl')}
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl(t('deliveryPage.khmeln_string'))}
+                data-region={t('deliveryPage.khmeln_region')}
+                onClick={addDeliveryLink}
+                title={t('deliveryPage.khmeln_title')}
+              >
+                {t('deliveryPage.khmeln_obl')}
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl(t('deliveryPage.cherkas_string'))}
+                data-region={t('deliveryPage.cherkas_region')}
+                onClick={addDeliveryLink}
+                title={t('deliveryPage.cherkas_title')}
+              >
+                {t('deliveryPage.cherkas_obl')}
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl(t('deliveryPage.chernivec_string'))}
+                data-region={t('deliveryPage.chernivec_region')}
+                onClick={addDeliveryLink}
+                title={t('deliveryPage.chernivec_title')}
+              >
+                {t('deliveryPage.chernivec_obl')}
+              </a>
+            </li>
+            <li>
+              <a href={DELIVERY_GOODS_ROUTE + '/' + 
+                createStringUrl(t('deliveryPage.chernigiv_string'))}
+                data-region={t('deliveryPage.chernigiv_region')}
+                onClick={addDeliveryLink}
+                title={t('deliveryPage.chernigiv_title')}
+              >
+                {t('deliveryPage.chernigiv_obl')}
               </a>
             </li>
           </ul>

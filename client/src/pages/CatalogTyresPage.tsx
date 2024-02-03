@@ -500,8 +500,6 @@ const CatalogTyresPage = observer(() => {
         tyreFilterGoods.rows.map((item: any) => 
         { return (
             setVehicleTypeFilter?.push(langState === 'uk' ? item.vehicle_type.vehicle_type_ua : item.vehicle_type.vehicle_type),  
-            //setVehicleTypeFilter?.push(item.vehicle_type.vehicle_type_ua),
-            //setVehicleTypeFilter?.push(i18n.resolvedLanguage === 'uk' ? item.vehicle_type.vehicle_type_ua : item.vehicle_type.vehicle_type),
             setSpeedIndexFilter?.push(item.speed_index.speed_index_with_desc),
             setLoadIndexFilter?.push(item.load_index.load_index_with_desc)
           )

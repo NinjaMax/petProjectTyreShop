@@ -141,6 +141,7 @@
     flex-wrap: wrap;
     max-height: 600px;
     width: 100%;
+    overflow-y: auto;
 }
 
 .deliveryGoodsCityInRegion ul {
@@ -179,12 +180,18 @@
     .deliveryGoodsPage {
         max-width: 1400px;
     }
+    /* .deliveryGoodsCityInRegion {
+        max-width: 1300px;
+    } */
 }
 
 @media only screen and (max-width: 1440px) {
     .deliveryGoodsPage {
         max-width: 1000px;
     }
+    /* .deliveryGoodsCityInRegion {
+        max-width: 900px;
+    } */
 }
 
 @media only screen and (max-width: 1075px) {
