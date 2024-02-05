@@ -156,11 +156,10 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                 <div className="tyresCardCountry">
                     <FlagsIcon 
                         title={t('card.title_country')}
-                        country={i18n.resolvedLanguage === 'uk' ? goods?.country.country_manufacturer_ua : goods?.country.country_manufacturer} 
+                        country={i18n.resolvedLanguage === 'uk' ? goods?.country?.country_manufacturer_ua : goods?.country?.country_manufacturer} 
                         year={goods?.year}
                     />
                 </div>
-
                 <div className='tyresCardBonus'>
                    <img src='/iconBonus/skyBonus_48_b.png' 
                     width={30}

@@ -18,6 +18,7 @@ import { CATALOG_TYRES_ROUTE, CATALOG_WHEELS_ROUTE } from '../utils/consts';
 import { createStringUrl } from '../services/stringUrl';
 import { typeWheelsCat } from '../services/wheelsProps.service';
 import { useTranslation } from 'react-i18next';
+import SeoCatalogTags from '../components/seoTags/SeoTags';
 
 const CatalogTyresPage = observer(() => {
   const {goodsTyre, goodsWheel, filter} = useContext<any | null>(Context);
@@ -1236,13 +1237,23 @@ const CatalogTyresPage = observer(() => {
     }
   };
 
-  console.log('FILTER_SEASON: ', filter.season);
-  console.log('LANG_STATE: ', langState);
+  //console.log('FILTER_SEASON: ', filter.season);
+  //console.log('LANG_STATE: ', langState);
+  console.log('LOCATION: ', location);
 
   return (
     <div className='catalogTyres'
       onClick={closeFilter}
     >
+      <SeoCatalogTags 
+        paramSeason={''} 
+        paramVehicleType={''} 
+        paramCategory={''} 
+        param={params}
+        paramBrand={''} 
+        lang={''} 
+        url={location}        
+      />
       <div className='a'>
         {location.pathname.includes('tyres') ?
           <BreadCrumbs 

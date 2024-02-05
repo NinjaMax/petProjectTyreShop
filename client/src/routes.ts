@@ -96,8 +96,8 @@ export const publicRoutes = [
     Component: CatalogTyresPage
   },
   {
-    path: CATALOG_WHEELS_ROUTE + 
-    '/:ru?/:type?/:brands?/:width?/:diameter?/:boltcount?/:pcd?/:et?/:dia?',
+    path: '/:ru?' + CATALOG_WHEELS_ROUTE + 
+    '/:type?/:brands?/:width?/:diameter?/:boltcount?/:pcd?/:et?/:dia?',
     exact: true,
     Component: CatalogTyresPage
   },
