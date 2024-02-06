@@ -14,7 +14,7 @@ import AllTyreModelSize from '../components/goods/AllTyreModelSize';
 import AllModelBrand from '../components/goods/AllModelBrand';
 import ProductPayDel from '../components/goods/ProductPayDel';
 import YouWatched from '../components/goods/YouWatched';
-import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
+import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
 import { NOT_FOUND_ROUTE } from '../utils/consts';
 import { 
   addGoodsToBasket,
@@ -70,6 +70,7 @@ import { ICheckOrderItem } from '../components/catalogs/types/CheckOrder.type';
 import CheckOrder from '../components/modal/CheckOrder';
 import { useMediaQuery } from 'react-responsive';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet';
 
 type ILikeTyreType = {
   id_review: number;
@@ -100,6 +101,7 @@ const GoodsPage = observer(() => {
   const isMobileProduct = useMediaQuery({ query: '(max-width: 1440px)' });
   const { t, i18n } = useTranslation();
   const history =  useHistory();
+  const location = useLocation();
   const params = useParams<any>();
   let match = useRouteMatch<any>('/:goodsItem');
 
@@ -585,6 +587,8 @@ const GoodsPage = observer(() => {
     }
   }
 
+  console.log('GOODS: ', goodsTyre?._product?.full_name);
+
   return (
     <div className='goodsCard'>
       <div className='goodsBreadCrumbs'>
@@ -609,6 +613,40 @@ const GoodsPage = observer(() => {
       <div className={changeTabGoods === "vseProTovar" ? 
         'tabGoods' : 'tabGoodsActive'}
       >
+        { goodsTyre._product ?
+        <Helmet>
+            <title>{t('goods.goods_tyre_title', {full_name: goodsTyre._product.full_name, interpolation: { escapeValue: false }})}</title>
+            <meta
+                name="description"
+                content={t('goods.goods_tyre_description', {full_name: goodsTyre._product.full_name, interpolation: { escapeValue: false }})}
+            />
+            <meta
+                name="keywords"
+                content={t('goods.goods_tyre_keywords', {full_name: goodsTyre._product.full_name, interpolation: { escapeValue: false }})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + location.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + location.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + location.pathname}/>
+        </Helmet>
+        : null
+        }
+        { goodsWheel._product ?
+        <Helmet>
+            <title>{t('goods.goods_wheel_title', {full_name: goodsTyre._product.full_name, interpolation: { escapeValue: false }})}</title>
+            <meta
+                name="description"
+                content={t('goods.goods_wheel_description', {full_name: goodsTyre._product.full_name, interpolation: { escapeValue: false }})}
+            />
+            <meta
+                name="keywords"
+                content={t('goods.goods_wheel_keywords', {full_name: goodsTyre._product.full_name, interpolation: { escapeValue: false }})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + location.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + location.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + location.pathname}/>
+        </Helmet>
+        : null
+        }
         <TabsGoodsCard
             onChangeTab={handleChangeTab}
             itemTab={[{id:'1',

@@ -19,6 +19,7 @@ import { getCityInRegionDelivery, getWareHousesDelivery } from '../restAPI/restD
 import ButtonPrevNext from '../components/buttons/ButtonPrevNext';
 import { tyreSeasonCat, tyreVehicleTypeCat } from '../services/tyresCatService';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet';
 
 type ICityMarkerData = {
   Area: string,
@@ -57,6 +58,7 @@ const DeliveryGoodsPage = () => {
   const {goodsTyre, filter} = useContext<any | null>(Context);
   const {page} = useContext<any | null>(Context);
   const params = useParams<any>();
+  const location = useLocation();
   const [reviewGoodsData, setReviewGoodsData] = useState<any[] | null>();
   const [prevBtnReview, setPrevBtnReview] = useState<number>(0);
   const [nextBtnReview, setNextBtnReview] = useState<number>(0);
@@ -990,13 +992,7 @@ const DeliveryGoodsPage = () => {
     setMarkerState(null);
     setTabDelivery(e.target.textContent);
   };
-
-  // console.log('NOVA_POSHTA_WAREHOUSE_LIST: ', novaPoshtaWareHouseList);
-  // console.log('DELIVERY_WAREHOUSE_LIST: ', deliveryWareHouseList);
-  // console.log('CITY_REGION: ', cityRegion);
-  // console.log('CITY_CENTER_REGION: ', cityCenterRegion);
-  // console.log('REGION: ', region);
-
+  
   return (
     <div className='deliveryGoodsPage'
     onClick={closeFilter}
@@ -1024,6 +1020,23 @@ const DeliveryGoodsPage = () => {
           </span>
         }
       </div>
+      { cityRegion ?
+        <Helmet>
+            <title>{t('deliveryMetaData.delivery_title', {city: cityRegion, region: region})}</title>
+            <meta
+                name="description"
+                content={t('deliveryMetaData.delivery_description', {city: cityRegion, region: region})}
+            />
+            <meta
+                name="keywords"
+                content={t('deliveryMetaData.delivery_keywords', {city: cityRegion, region: region})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + location.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + location.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + location.pathname}/>
+        </Helmet>
+        : null
+        }
       <div className='bDev'>
         <FilterCatalogTyres
           filterState={stateFilter} 

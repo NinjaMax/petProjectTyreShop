@@ -1,6 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
+import { createUaStringFromUrl, translateToRu } from '../../services/stringUrl';
 
 type SeaoTag = {
     paramSeason: string;
@@ -311,7 +312,7 @@ const SeoCatalogTags = ({
         </Helmet>
         : null
         }
-        {param && ( param.season === 's-g' || param.season === 's-kh') && !param.brands && !param.type && url.pathname?.includes('/tyres') ?
+        {param && (param.season === 's-g' || param.season === 's-kh') && !param.brands && !param.type && url.pathname?.includes('/tyres') ?
         <Helmet>
             <title>{t('seoCatalog.tyre_agri_title')}</title>
             <meta
@@ -465,7 +466,7 @@ const SeoCatalogTags = ({
         : null
         }
 
-        {param && (param.season === 'lіtnya' || param.season === 'letnyaya') && !param.brands && (param.studded === 'legkovantazhnii' || param.studded === 'legkogruzovo') && url.pathname?.includes('/tyres') ?
+        {param && (param.season === 'lіtnya' || param.season === 'letnyaya') && !param.brands && (param.studded === 'legkovantazhnii' || param.studded === 'legkogruzovoi') && url.pathname?.includes('/tyres') ?
         <Helmet>
             <title>{t('seoCatalog.tyre_van_summer_title')}</title>
             <meta
@@ -482,7 +483,7 @@ const SeoCatalogTags = ({
         </Helmet>
         : null
         }
-        {param && (param.season === 'zimova' || param.season === 'zimnyaya') && !param.brands && (param.studded === 'legkovantazhnii' || param.studded === 'legkogruzovo') && url.pathname?.includes('/tyres') ?
+        {param && (param.season === 'zimova' || param.season === 'zimnyaya') && !param.brands && (param.studded === 'legkovantazhnii' || param.studded === 'legkogruzovoi') && url.pathname?.includes('/tyres') ?
         <Helmet>
             <title>{t('seoCatalog.tyre_van_winter_title')}</title>
             <meta
@@ -499,7 +500,7 @@ const SeoCatalogTags = ({
         </Helmet>
         : null
         }
-        {param && (param.season === 'vsesezonna' || param.season === 'vsesezonnaya') && !param.brands && (param.studded === 'legkovantazhnii' || param.studded === 'legkogruzovo') && url.pathname?.includes('/tyres') ?
+        {param && (param.season === 'vsesezonna' || param.season === 'vsesezonnaya') && !param.brands && (param.studded === 'legkovantazhnii' || param.studded === 'legkogruzovoi') && url.pathname?.includes('/tyres') ?
         <Helmet>
             <title>{t('seoCatalog.tyre_van_allseason_title')}</title>
             <meta
@@ -509,6 +510,690 @@ const SeoCatalogTags = ({
             <meta
                 name="keywords"
                 content={t('seoCatalog.tyre_van_allseason_keywords')}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && param.season && !param.brands && !param.studded && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_title', {brand: param.season.slice(0, 1).toUpperCase() + param.season.slice(1, param.season.length), 
+                brand_translated: translateToRu(param.season)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_description', {brand: param.season.slice(0, 1).toUpperCase() + param.season.slice(1, param.season.length), 
+                    brand_translated: translateToRu(param.season)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_keywords', {brand: param.season.slice(0, 1).toUpperCase() + param.season.slice(1, param.season.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'legkovoi' || param.season === 'legkovii')  && param.studded && !param.brands && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_passeng_title', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_passeng_description', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_passeng_keywords', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'pozashlyakhovik' || param.season === 'vnedorozhnik')  && param.studded && !param.brands && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_suv_title', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_suv_description', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_suv_keywords', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'legkovantazhnii' || param.season === 'legkogruzovo')  && param.studded && !param.brands && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_van_title', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_van_description', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_van_keywords', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'vantazhnі-shini' || param.season === 'gruzovie-shini') && param.studded && !param.brands && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_truck_title', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_truck_description', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_truck_keywords', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 's-g' || param.season === 's-kh') && param.studded && !param.brands && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_sh_title', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_sh_description', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_sh_keywords', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'іndustrіalna' || param.season === 'industrialnaya') && param.studded && !param.brands && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_industry_title', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_industry_description', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_industry_keywords', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'karerna' || param.season === 'karernaya') && param.studded && !param.brands && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_career_title', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_career_description', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_career_keywords', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && param.season === 'moto' && param.studded && !param.brands && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_moto_title', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_moto_description', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_moto_keywords', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'lіtnya' || param.season === 'letnyaya') && param.studded && !param.brands && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_summer_title', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_summer_description', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_summer_keywords', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'zimova' || param.season === 'zimnyaya') && param.studded && !param.brands && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_winter_title', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_winter_description', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_winter_keywords', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'vsesezonna' || param.season === 'vsesezonnaya') && param.studded && !param.brands && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_allseason_title', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_allseason_winter_description', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_allseason_winter_keywords', {brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'lіtnya' || param.season === 'letnyaya') && (param.studded === 'legkovoi' || param.studded === 'legkovii') && param.type && !param.brands && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_summer_passeng_title', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_summer_passeng_description', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_summer_passeng_keywords', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'zimova' || param.season === 'zimnyaya') && (param.studded === 'legkovoi' || param.studded === 'legkovii') && param.type && !param.brands && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_winter_passeng_title', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_winter_passeng_description', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_winter_passeng_keywords', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'vsesezonna' || param.season === 'vsesezonnaya') && (param.studded === 'legkovoi' || param.studded === 'legkovii') && param.type && !param.brands && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_allseason_passeng_title', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_allseason_passeng_winter_description', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_allseason_passeng_winter_keywords', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'lіtnya' || param.season === 'letnyaya') && (param.studded === 'pozashlyakhovik' || param.studded === 'vnedorozhnik') && param.type && !param.brands && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_summer_suv_title', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_summer_suv_description', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_summer_suv_keywords', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'zimova' || param.season === 'zimnyaya') && (param.studded === 'pozashlyakhovik' || param.studded === 'vnedorozhnik') && param.type && !param.brands && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_winter_suv_title', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_winter_suv_description', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_winter_suv_keywords', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'vsesezonna' || param.season === 'vsesezonnaya') && (param.studded === 'pozashlyakhovik' || param.studded === 'vnedorozhnik') && param.type && !param.brands && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_allseason_suv_title', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_allseason_suv_winter_description', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_allseason_suv_winter_keywords', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'lіtnya' || param.season === 'letnyaya') && (param.studded === 'legkovantazhnii' || param.studded === 'legkogruzovoi') && param.type && !param.brands && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_summer_van_title', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_summer_van_description', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_summer_van_keywords', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'zimova' || param.season === 'zimnyaya') && (param.studded === 'legkovantazhnii' || param.studded === 'legkogruzovoi') && param.type && !param.brands && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_winter_van_title', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_winter_van_description', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_winter_van_keywords', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'vsesezonna' || param.season === 'vsesezonnaya') && (param.studded === 'legkovantazhnii' || param.studded === 'legkogruzovoi') && param.type && !param.brands && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_allseason_van_title', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_allseason_van_winter_description', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_allseason_van_winter_keywords', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'vsesezonna' || param.season === 'vsesezonnaya') && (param.studded === 'vantazhnі-shini' || param.studded === 'gruzovie-shini') && param.type && !param.brands && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_allseason_truck_title', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}</title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_allseason_truck_winter_description', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_allseason_truck_winter_keywords', {brand: param.type.slice(0, 1).toUpperCase() + param.type.slice(1, param.type.length)})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'lіtnya' || param.season === 'letnyaya') && param.studded && param.type?.includes('w') && param.brands?.includes('h') && param.width?.includes('r') && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_summer_size_title', 
+                {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: param.brands.slice(1, param.studded.length),
+                    diameter: param.width.toUpperCase()
+                })}
+            </title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_summer_size_description', {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: param.brands.slice(1, param.studded.length),
+                    diameter: param.width.toUpperCase()
+                })}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_summer_size_keywords', {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: param.brands.slice(1, param.studded.length),
+                    diameter: param.width.toUpperCase()
+                })}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'zimova' || param.season === 'zimnyaya') && param.studded && param.type?.includes('w') && param.brands?.includes('h') && param.width?.includes('r') && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_winter_size_title', 
+                {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: param.brands.slice(1, param.studded.length),
+                    diameter: param.width.toUpperCase()
+                })}
+            </title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_winter_size_description', {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: param.brands.slice(1, param.studded.length),
+                    diameter: param.width.toUpperCase()
+                })}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_winter_size_keywords', {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: param.brands.slice(1, param.studded.length),
+                    diameter: param.width.toUpperCase()
+                })}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'vsesezonna' || param.season === 'vsesezonnaya') && param.studded && param.type?.includes('w') && param.brands?.includes('h') && param.width?.includes('r') && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_allseason_size_title', 
+                {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: param.brands.slice(1, param.studded.length),
+                    diameter: param.width.toUpperCase()
+                })}
+            </title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_allseason_size_description', {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: param.brands.slice(1, param.studded.length),
+                    diameter: param.width.toUpperCase()
+                })}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_allseason_size_keywords', {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: param.brands.slice(1, param.studded.length),
+                    diameter: param.width.toUpperCase()
+                })}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'lіtnya' || param.season === 'letnyaya') && param.studded && param.type?.includes('w') && param.brands?.includes('h') && !param.width && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_summer_size_title', 
+                {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: param.brands.slice(1, param.studded.length),
+                    diameter: ''
+                })}
+            </title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_summer_size_description', {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: param.brands.slice(1, param.studded.length),
+                    diameter: ''
+                })}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_summer_size_keywords', {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: param.brands.slice(1, param.studded.length),
+                    diameter: ''
+                })}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'zimova' || param.season === 'zimnyaya') && param.studded && param.type?.includes('w') && param.brands?.includes('h') && !param.width && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_winter_size_title', 
+                {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: param.brands.slice(1, param.studded.length),
+                    diameter: ''
+                })}
+            </title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_winter_size_description', {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: param.brands.slice(1, param.studded.length),
+                    diameter: ''
+                })}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_winter_size_keywords', {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: param.brands.slice(1, param.studded.length),
+                    diameter: ''
+                })}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'vsesezonna' || param.season === 'vsesezonnaya') && param.studded && param.type?.includes('w') && param.brands?.includes('h') && !param.width && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_allseason_size_title', 
+                {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: param.brands.slice(1, param.studded.length),
+                    diameter: ''
+                })}
+            </title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_allseason_size_description', {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: param.brands.slice(1, param.studded.length),
+                    diameter: ''
+                })}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_allseason_size_keywords', {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: param.brands.slice(1, param.studded.length),
+                    diameter: ''
+                })}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+
+
+        {param && (param.season === 'lіtnya' || param.season === 'letnyaya') && param.studded && param.type?.includes('w') && !param.brands && !param.width && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_summer_size_title', 
+                {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: '',
+                    diameter: ''
+                })}
+            </title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_summer_size_description', {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: '',
+                    diameter: ''
+                })}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_summer_size_keywords', {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: '',
+                    diameter: ''
+                })}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'zimova' || param.season === 'zimnyaya') && param.studded && param.type?.includes('w') && !param.brands && !param.width && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_winter_size_title', 
+                {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: '',
+                    diameter: ''
+                })}
+            </title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_winter_size_description', {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: '',
+                    diameter: ''
+                })}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_winter_size_keywords', {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: '',
+                    diameter: ''
+                })}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'vsesezonna' || param.season === 'vsesezonnaya') && param.studded && param.type?.includes('w') && !param.brands && !param.width && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_allseason_size_title', 
+                {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: '',
+                    diameter: ''
+                })}
+            </title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_allseason_size_description', {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: '',
+                    diameter: ''
+                })}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_allseason_size_keywords', {
+                    brand: param.studded.slice(0, 1).toUpperCase() + param.studded.slice(1, param.studded.length),
+                    width: param.type.slice(1, param.studded.length),
+                    height: '',
+                    diameter: ''
+                })}
             />
             <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
             <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>

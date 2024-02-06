@@ -51,3 +51,16 @@ export const createUaStringFromUrl = (itemString: string | undefined): string =>
 
   return exampleUaCyr;
 };
+
+export const translateToRu = (itemString: string | undefined): string => {
+  const cyrillicToTranslit = new (CyrillicToTranslit as any)();
+
+  const translateRuCyr = 
+  cyrillicToTranslit.reverse(
+    itemString , { preset: "Ru" }
+  ).toLowerCase()
+  .replace(/[-/()^+]{1}/g, ' ')
+  .replace(/-{2,}/g, ' ');
+
+  return translateRuCyr.slice(0, 1).toUpperCase() + translateRuCyr.slice(1, translateRuCyr.length);
+};
