@@ -10,20 +10,21 @@
     padding-left: 50px;
     margin: 15px;
 }
+
 .newsMainBoxList {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     flex-wrap:wrap; 
-    /* gap: 30px; */
     width: 100%;
-    /* margin-left: 33px; */
 }
+
 .newsMainBoxList a {
     text-decoration: none;
     margin: 15px;
 }
+
 .columnNewsBox {
     width: 410px;
     height: 350px;
@@ -45,6 +46,7 @@
     padding: 8px;
     height: 100px;
 }
+
 .columnNewsBoxDate {
     padding-left: 8px;
 }
@@ -87,6 +89,7 @@
     height: 225px;
     border-radius:5px 5px 0px 0px;
 }
+
 .containerTabNewsBox:active {
     display: block;
 }

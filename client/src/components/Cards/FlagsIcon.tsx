@@ -36,12 +36,14 @@ const FlagsIcon = ({country, year, title}:Iflag) => {
                     className='imgFlag' 
                     src={showFlag}
                     alt="flags"
+                    loading='lazy'
                 />     
                 :
                 <img 
                     className='noImgFlag' 
-                    src='/iconFlags/empty_flag_48.png'
+                    src='/iconFlags/empty_flag_48.webp'
                     alt="flags"
+                    loading='lazy'
                 />   
                 }
                 { showFlag ?

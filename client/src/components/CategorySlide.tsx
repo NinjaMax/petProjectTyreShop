@@ -1,21 +1,16 @@
 import React from 'react';
 import '../css/CategorySlide.css';
-import summerCat from '../assets/img/summer_tyres1.png';
-import winterCat from '../assets/img/winter_tyres1.png';
-import allseasonCat from '../assets/img/all_seasonstyre1_300.png';
-//import akbCat from '../assets/img/akbCatImg300_200.png';
-import wheelsCat from '../assets/img/wheelsImg300_200_3_blugrey.png';
 import { useTranslation } from 'react-i18next';
 
 const CategorySlide = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
     
   return (
         <div>
             <div className="rowCategoreSlider">
                 <div className="columnCategorySlider">
                   <a href='/tyres/lіtnya'>
-                    <img src={summerCat} 
+                    <img src='img/summer_tyres1.webp' 
                       className="hover-shadow" 
                       alt='categorySlider'/>
                     <div className='contentCategorySlider'>
@@ -25,7 +20,7 @@ const CategorySlide = () => {
                 </div>
                 <div className="columnCategorySlider">
                   <a href='/tyres/zimova'>
-                    <img src={winterCat}
+                    <img src='img/winter_tyres1.webp'
                       className="hover-shadow" 
                       alt='categorySlider'
                     />
@@ -36,7 +31,7 @@ const CategorySlide = () => {
                 </div>
                 <div className="columnCategorySlider">
                   <a href='/tyres/vsesezonna'>
-                    <img src={allseasonCat} 
+                    <img src='img/all_seasonstyre1_300.webp' 
                       className="hover-shadow" 
                       alt='categorySlider'
                     />
@@ -47,10 +42,10 @@ const CategorySlide = () => {
                 </div>
                 <div className="columnCategorySlider">
                   <a href='/wheels'>
-                    <img src={wheelsCat} 
+                    <img src='img/wheelsImg300_200_3_blugrey.webp' 
                       className="hover-shadow" 
                       alt='categorySlider'
-                    />
+                    />  
                     <div className='contentCategorySlider'>
                       <h2>{t('categorySlyder.category_wheels')}</h2>
                     </div>

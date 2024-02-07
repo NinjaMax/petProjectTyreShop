@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../css/Goods/WheelMarking.css';
-import tyreMarkingWinter from '../../assets/icons/infoTyreMarking/wheel_diameter_3.png';
+//import tyreMarkingWinter from '../../assets/icons/infoTyreMarking/wheel_diameter_3.png';
 
 type IWheelMarket = {
     brand?: string;
@@ -13,7 +13,7 @@ type IWheelMarket = {
 const WheelMarking = ({brand, param, width, diameter, boltCount}:IWheelMarket ) => {
     return (
         <div className='wheelMarkingBox'>
-            <img id='imgwheelMarking' src={tyreMarkingWinter}  alt='tyreMarking'/>
+            <img id='imgwheelMarking' src={'wheel_diameter_3.webp'}  alt='tyreMarking'/>
             <div className='wheelMarkingBrandName'><span>{brand}</span></div> 
             <div className='wheelMarkingTyreSize'><span>{param}</span></div> 
             <div className='wheelMarkingWidth'><span>{width}

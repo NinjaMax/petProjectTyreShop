@@ -9,8 +9,6 @@
     justify-content: center;
     gap: 20px;
     flex-wrap: wrap;
-    /* background-color: #ccc;
-    border-radius: 25px; */
 }
 
 .brandListMainItem {
@@ -19,32 +17,19 @@
     align-items: center;
     background-color: #ccc;
     border-radius: 25px;
-    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
     padding: 3px;
     text-decoration: none;
     text-decoration-color: #6666;
 }
-/* .brandListMainItem a {
-    text-decoration: none;
-    text-decoration-color: #6666;
-} */
 
 .brandListMainItem:hover {
-    /* display: flex;
-    flex-direction: column;
-    align-items: center; */
     background-color: #cccc;
-    /*border-radius: 25px; */
-    /* box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2); */
     cursor: pointer;
     color: orange;
 }
 
-
-
 .imgBrandListMain {
-    width: 180px;   /*basic 180px*/
-    height: 42px; /* basic 62px*/
-    /* border-radius: 25px; */
+    width: 180px; 
+    height: 42px; 
     padding: 4px;
 }

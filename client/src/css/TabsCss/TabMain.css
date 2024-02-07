@@ -77,7 +77,7 @@
     linear-gradient(45deg, rgb(199, 195, 244, 0.5), rgb(158, 185, 211, 0.5) 50%),
     /* url("../../assets/img/tyreBlueBackground_1.png"); */
     /* url("../../assets/img/tyres_tab_main.png"); */
-    url("../../assets/img/tyres_tab_main_1.png"); 
+    url("/public/img/tyres_tab_main_1.webp"); 
     /* url("../../assets/img/tyres_tab_main_2.png"); */ /*??????*/
     /* url("../../assets/img/tyres_tab_main_3.png"); */
     /* url("../../assets/img/tyres_tab_main_4.png"); */
@@ -87,21 +87,21 @@
     background-image:
     linear-gradient(45deg, rgb(199, 195, 244, 0.5), rgb(158, 185, 211, 0.5) 50%),
     /* url("../../assets/img/wheelBackgroundBlue_1.png"); */
-    url("../../assets/img/wheels_tab_main.png");
+    url("/public/img/wheels_tab_main.webp");
 }
 
 .tablinksWheel:focus, .tabMainFilterBattery {
     background-image:
     linear-gradient(45deg, rgb(199, 195, 244, 0.5), rgb(158, 185, 211, 0.5) 50%),
     /* url("../../assets/img/wheelBackgroundBlue_1.png"); */
-    url("../../assets/img/battery_tab_main_1.png");
+    url("/public/img/battery_tab_main_1.webp");
 }
 
 .tablinksWheel:focus, .tabMainFilterOil {
     background-image:
     linear-gradient(45deg, rgb(199, 195, 244, 0.5), rgb(158, 185, 211, 0.5) 50%),
     /* url("../../assets/img/wheelBackgroundBlue_1.png"); */
-    url("../../assets/img/wheels_tab_main.png");
+    url("/public/img/wheels_tab_main.webp");
 }
 
 .tabContentMain {

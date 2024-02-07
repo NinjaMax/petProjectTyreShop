@@ -7,15 +7,17 @@ interface IButtonAction {
     eventItem?:(arg0: any)=> void;
     active?: boolean;
     type?: "button" | "submit" | "reset" | undefined;
+    id?: string;
 }
 
 const ButtonAction = (
-    {props, widthBtn, active, type, eventItem}: IButtonAction
+    {props, widthBtn, active, type, id, eventItem}: IButtonAction
     ) => {
     return (
         <div >
             <button 
-            id='buttonAction' 
+            id={id} 
+            className='buttonAction'
             type={type}
             style={{["--widthBtn" as any]: widthBtn}}
             disabled={active}

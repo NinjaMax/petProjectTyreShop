@@ -26,37 +26,37 @@
     width: 30px;
     height: 30px;
     cursor: pointer;
-    content: url('../../../public/iconThumbs/thumbs_up.png');
+    content: url('/public/iconThumbs/thumbs_up.webp');
     vertical-align:middle;
 }
 .thumbs .upThumb:hover {
     cursor: pointer;
-    content: url('../../../public/iconThumbs/thumbs_up_hover.png');    
+    content: url('/public/iconThumbs/thumbs_up_hover.webp');    
 }
 .thumbs .upThumb:active {
     transition-duration: 2s;
     animation: 1.5s ease-in-out 0s normal none infinite running trambling-animation;
     cursor: pointer;
-    content: url('../../../public/iconThumbs/thumbs_up_filled.png'); 
+    content: url('/public/iconThumbs/thumbs_up_filled.webp'); 
 }
 
 .thumbs .downThumb {
     width: 30px;
     height: 30px;
     cursor: pointer;
-    content: url('../../../public/iconThumbs/thumbs_down.png');
+    content: url('/public/iconThumbs/thumbs_down.webp');
     vertical-align:middle;
 }
 .thumbs .downThumb:hover {
     cursor: pointer;
-    content: url('../../../public/iconThumbs/thumbs_down_hover.png');    
+    content: url('/public/iconThumbs/thumbs_down_hover.webp');    
 }
 .thumbs .downThumb:active {
     transition-duration: 2s;
     /* transition-timing-function: 2.5s; */
     animation: 1.5s ease-in-out 0s normal none infinite running trambling-animation;
     cursor: pointer;
-    content: url('../../../public/iconThumbs/thumbs_down_filled.png'); 
+    content: url('/public/iconThumbs/thumbs_down_filled.webp'); 
 }
 
 @keyframes trambling-animation {
@@ -76,7 +76,7 @@
     height: 30px;
     cursor: pointer;
     vertical-align:middle;
-    content: url('../../../public/iconThumbs/thumbs_down_checked.png');    
+    content: url('/public/iconThumbs/thumbs_down_checked.webp');    
 }
 
 .thumbs .upThumbChecked {
@@ -84,5 +84,5 @@
     height: 30px;
     cursor: pointer;
     vertical-align:middle;
-    content: url('../../../public/iconThumbs/thumbs_up_checked.png');    
+    content: url('/public/iconThumbs/thumbs_up_checked.webp');    
 }

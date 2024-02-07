@@ -32,7 +32,8 @@ import { getCompare, getFavorites, getSession } from '../../restAPI/restGoodsApi
 import CompareGoods from '../ux/CompareGoods';
 import { COMPARISON_ROUTE, DELIVERY_ROUTE, FAVORITES_ROUTE } from '../../utils/consts';
 import { useMediaQuery } from 'react-responsive';
-//import i18n from '../../i18n';
+//import logoMain  from './logoSky180.webp'; 
+//logoSky180.webp
 import { useTranslation } from 'react-i18next';
 
 const locales: any = {
@@ -290,7 +291,10 @@ const NavBar = observer(() => {
         : null
       }
       <a href='/'>
-        <img src='/logoSky180.png' alt='logoShop'/>
+        <img 
+          loading='eager'
+          src='logoSky180.webp' alt='logoShop'
+        />
       </a>
       {isMobile ? 
         <ButtonSearch isSearched={false} 

@@ -10,7 +10,9 @@ const ButtonSearch = ({clickSearchBtn, isSearched}: IButtonSearch) => {
     
     return (
         <div>
-            <button className="btnSearch"
+            <button 
+            name='searchButton'
+            className="btnSearch"
             onClick={clickSearchBtn}
             >{isSearched ? 'Пошук' : ''}<i className='fa fa-search'></i>
             </button>        

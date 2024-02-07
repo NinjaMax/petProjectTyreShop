@@ -1,10 +1,5 @@
 import React from 'react';
 import '../../css/FilterMain/ContentFilterInfo.css';
-import imgMarkerA from '../../assets/icons/infoTyreMarking/tyreMarkerA.png';
-import imgMarkerB from '../../assets/icons/infoTyreMarking/tyreMarkerB.png';
-import imgMarkerC from '../../assets/icons/infoTyreMarking/tyreMarkerC.png';
-import imgMarketD from '../../assets/icons/infoTyreMarking/tyreMarkerD.png';
-import imgMarketE from '../../assets/icons/infoTyreMarking/tyreMarkerE.png';
 
 interface IContentInfo {
     infoMarking: string | boolean;
@@ -25,7 +20,7 @@ const ContentFilterInfo = ({infoMarking, width, setActive}: IContentInfo) => {
             <h5>Як дізнатися розмір шини?</h5>
             <h5>Маркування на боковині.</h5>
             <div>
-                <img src={imgMarkerA} alt='infoFilterImg'/>
+                <img src={'tyreMarkerA.webp'} alt='infoFilterImg'/>
                 <div className='textMarker'>
                 <span>А. ШИРИНА ШИНИ</span>
                 <span>Ширина шини в міліметрах, виміряна від одніеї боковини до іншої.</span>   
@@ -38,7 +33,7 @@ const ContentFilterInfo = ({infoMarking, width, setActive}: IContentInfo) => {
             <h5>Як дізнатися розмір шини?</h5>
             <h5>Маркування на боковині.</h5>
             <div>
-                <img src={imgMarkerB} alt='infoFilterImg'/>
+                <img src={'tyreMarkerB.webp'} alt='infoFilterImg'/>
                 <div className='textMarker'>
                 <span>В. СПІВВІДНОШЕННЯ СТОРІН (Профіль або висота шини)</span>
                 <span>
@@ -56,7 +51,7 @@ const ContentFilterInfo = ({infoMarking, width, setActive}: IContentInfo) => {
             <h5>Як дізнатися розмір шини?</h5>
             <h5>Маркування на боковині.</h5>
             <div>
-                <img src={imgMarkerC} alt='infoFilterImg'/>
+                <img src={'tyreMarkerC.webp'} alt='infoFilterImg'/>
                 <div className='textMarker'>
                 <span>С. ДІАМЕТР ДИСКА</span>
                 <span>Діаметр (висота) диска в дюймах</span>    
@@ -69,7 +64,7 @@ const ContentFilterInfo = ({infoMarking, width, setActive}: IContentInfo) => {
             <h5>Як дізнатися розмір шини?</h5>
             <h5>Маркування на боковині.</h5>
             <div>
-                <img src={imgMarketD} alt='infoFilterImg'/>
+                <img src={'tyreMarkerD.webp'} alt='infoFilterImg'/>
                 <div className='textMarker'>
                 <span>D. ІНДЕКС НАВАНТАЖЕННЯ</span>
                 <span>Індекс навантаження - це максимальна вага (в кг), 
@@ -85,7 +80,7 @@ const ContentFilterInfo = ({infoMarking, width, setActive}: IContentInfo) => {
             <h5>Як дізнатися розмір шини?</h5>
             <h5>Маркування на боковині.</h5>
             <div>
-                <img src={imgMarketE} alt='infoFilterImg'/>
+                <img src={'tyreMarkerE.webp'} alt='infoFilterImg'/>
                 <div className='textMarker'>
                 <span>E.Індекс ШВИДКОСТІ</span>
                 <span>Індекс швидкості - це максимальна швидкість (в км/год),

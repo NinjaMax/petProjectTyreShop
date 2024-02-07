@@ -3,7 +3,7 @@ import '../css/FooterCss/Footer.css';
 import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   return (
   
@@ -12,7 +12,13 @@ const Footer = () => {
       <section className="footerSocialSection">
         <p/>
         <div className='footerLogo'>
-          <img width={160} height={62}  src='/logoSky180.png' alt='logoShop'/>
+          <img 
+            width={160} 
+            height={62}  
+            src='/logoSky180.webp' 
+            alt='logoShop'
+            loading='lazy'
+          />
         </div>
         <div className="me-5 d-none d-lg-block">
           <p/>

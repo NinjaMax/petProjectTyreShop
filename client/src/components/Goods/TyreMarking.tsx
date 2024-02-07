@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../css/Goods/TyreMarking.css';
-import tyreMarkingWinter from '../../assets/img/imgTyreMarking/euroMarkingWinter.png';
+//import tyreMarkingWinter from '../../assets/img/imgTyreMarking/euroMarkingWinter.png';
 
 type ITyreMarket = {
     brand?: string,
@@ -13,7 +13,7 @@ type ITyreMarket = {
 const TyreMarking = ({brand, param, tyreMarkFuel, tyreMarkWet, tyreMarkNoise}:ITyreMarket ) => {
     return (
         <div className='tyreMarkingBox'>
-            <img id='imgTyreMarking' src={tyreMarkingWinter}  alt='tyreMarking'/>
+            <img id='imgTyreMarking' src={'euroMarkingWinter.webp'}  alt='tyreMarking'/>
             <div className='tyreMarkingBrandName'><span>{brand}</span></div> 
             <div className='tyreMarkingTyreSize'><span>{param}</span></div> 
             <div className='tyreMarkingFuelCount'><span>{tyreMarkFuel}</span></div>

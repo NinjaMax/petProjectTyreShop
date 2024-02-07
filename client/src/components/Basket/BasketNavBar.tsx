@@ -43,10 +43,10 @@ const BasketNavBar = observer(({setActive}: IBasketNav) => {
     <div className='basketNav' onClick={setActive}>
       {page.basketCount !== 0 ?  
         <a href='/basket'>   
-          <img id='imgBasketNav' src={'/iconsCart/shopping_cart_full_94.png'}  alt='basketNav'/>
+          <img id='imgBasketNav' src={'/iconsCart/shopping_cart_full_94.webp'}  alt='basketNav'/>
         </a>
         :
-        <img id='imgBasketNav' src={'/iconsCart/shopping_cart_94.png'}  alt='basketNav'/>
+        <img id='imgBasketNav' src={'/iconsCart/shopping_cart_94.webp'}  alt='basketNav'/>
       }
     {page.basketCount !== 0 ?
       <div className='basketNavCount'>

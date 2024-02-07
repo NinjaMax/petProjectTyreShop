@@ -1,13 +1,14 @@
-import React, { useContext, useEffect, useState, } from 'react';
+import React, { useContext, useEffect, useState, Suspense, lazy } from 'react';
 import {BrowserRouter} from 'react-router-dom';
-import AppRouter from './components/AppRouter';
-import Footer from './components/Footer';
-import NavBar from './components/navBar/NavBar';
-import Announcement from './components/Announcement';
 import { observer } from 'mobx-react-lite';
 import { Context } from './context/Context';
 import SpinnerCarRot from './components/spinners/SpinnerCarRot';
 import { getCurUser } from './restAPI/restUsersApi';
+
+const AppRouter = lazy(() => import('./components/AppRouter'));
+const Footer= lazy(() => import('./components/Footer'));
+const NavBar = lazy(() => import('./components/navBar/NavBar'));
+const Announcement = lazy(() => import('./components/Announcement'));
 
 const App = observer(() => {
   const {user} = useContext<any | null>(Context);
@@ -17,7 +18,7 @@ const App = observer(() => {
       getCurUser().then(
         (dataUser) => {
           if(dataUser) {
-            console.log('ISUSER: ', dataUser)
+            //console.log('ISUSER: ', dataUser)
             user.setUser(dataUser);
             user.setIsAuth(true)
           }
@@ -30,11 +31,14 @@ const App = observer(() => {
 
   return (
     <BrowserRouter >
-         <Announcement/>
-         <NavBar />
-         <AppRouter />
-         <Footer/>
+      <Suspense fallback={<SpinnerCarRot/>}>
+        <Announcement/>
+        <NavBar />
+        <AppRouter />
+        <Footer/>
+      </Suspense>
     </BrowserRouter>
+
   );
 });
 

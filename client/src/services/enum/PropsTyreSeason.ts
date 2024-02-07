@@ -1,7 +1,7 @@
 export enum TyreSeasons {
-    SUMMER_SEASON = '/iconsSeasons/seasonSummer.png',
-    WINTER_SEASON = '/iconsSeasons/seasonWinter.png',
-    ALLSEASON_SEASON = '/iconsSeasons/seasonAll.png',
-    NOSEASON_SEASON = '/iconsSeasons/noSeason.png',
+    SUMMER_SEASON = '/iconsSeasons/seasonSummer.webp',
+    WINTER_SEASON = '/iconsSeasons/seasonWinter.webp',
+    ALLSEASON_SEASON = '/iconsSeasons/seasonAll.webp',
+    NOSEASON_SEASON = '/iconsSeasons/noSeason.webp',
 };
 

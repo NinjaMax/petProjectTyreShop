@@ -34,13 +34,11 @@
 .navbar img {
   width: 162px;
   height: 62px;
-  /*margin-left: 50px;*/
   cursor: pointer;
 }
   
-  /* Links inside the navbar */
+/* Links inside the navbar */
 .navbar .anchorBtn {
-  /*float: left;*/
   font-size: 16px;
   font-family: var(--main-font-family);
   color: #444B54;
@@ -49,8 +47,8 @@
   text-decoration: none;
   border-radius:2px;
 }
-  
-  /* Add a red background color to navbar links on hover */
+
+/* Add a red background color to navbar links on hover */
 .navbar .anchorBtn:hover {
   border: #71C2FF solid;
   border-width:0 0 5px 0;
@@ -116,6 +114,12 @@
 }
 .navbarPhoneBox:hover .navbarPhoneBtnUp {
   display: inline;
+}
+
+.navbarLanguageBox button {
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 2560px) { 

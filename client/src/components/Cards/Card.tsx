@@ -91,28 +91,37 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
         <div className="tyresCard">
             <div >
                 {typeCard === 'tyre' ?
-                <a id='tyresName'
+                <a id={goods?.id + '_good'}
                     className='cardLinkProduct'
                     onClick={addGoodsId} 
                     href={'/' + createStringUrl(goods?.full_name)}
                 >
-                 <img id='imgTyres' src={'/tyre/autotyrespilotspotps2.png'} alt="imgCards" /> 
+                <img id='imgTyres' 
+                    src={'/tyre/autotyrespilotspotps2.webp'} 
+                    alt="imgCards"
+                    loading='lazy' 
+                /> 
                 </a>
                  : null  
                 }
                 {typeCard === 'wheel'?
-                <a id='tyresName'
+                <a id={goods?.id + '_product'}
                     className='cardLinkProduct'
                     onClick={addGoodsId} 
                     href={'/' + createStringUrl(goods?.full_name)}
                 >
-                    <img id='imgTyres' src={'/disk/vossen_cvt_gloss_graphite-16325-a.png'} alt="imgCards" /> 
+                    <img 
+                        id='imgTyres' 
+                        src={'/disk/vossen_cvt_gloss_graphite-16325-a.webp'} 
+                        alt="imgCards"
+                        loading='lazy' 
+                    /> 
                 </a>
                  : null  
                 }
                 <p/>
                 <div className='tyresCardLinkName'>
-                <a id='tyresName'
+                <a id={goods?.id + '_product'}
                     className='cardLinkProduct'
                     onClick={addGoodsId} 
                     href={'/' + createStringUrl(goods?.full_name)}
@@ -161,11 +170,12 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                     />
                 </div>
                 <div className='tyresCardBonus'>
-                   <img src='/iconBonus/skyBonus_48_b.png' 
+                   <img src='/iconBonus/skyBonus_48_b.webp' 
                     width={30}
                     height={30}
                     alt='bonus'
                     title='Бонуси'
+                    loading='lazy'
                     />
                 <span className='tyresCardBonusText'>{`+${(goods?.price[0]?.price! * 0.01).toFixed()} ${t('card.bonus')}`}</span> 
                 </div>
@@ -218,6 +228,7 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                 }
                 { restStockCard ?
                     <ButtonAction 
+                        id={goods?.id + '_buy'}
                         props={t('card.buy')} 
                         widthBtn={260} 
                         eventItem={() => {
@@ -234,6 +245,7 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                     />
                     : 
                     <ButtonAction 
+                        id={goods?.id + '_buy'}
                         props={t('card.not_available_big')} 
                         widthBtn={260} 
                         eventItem={checkOrders}

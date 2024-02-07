@@ -1,8 +1,6 @@
 .basketOrder {
     display: grid;
     grid-template-columns: 36% 61.8%;
-    /* grid-template-columns: repeat(2, 48%); */
-    /* border:2px solid yellow; */
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     gap: 20px;
@@ -10,10 +8,10 @@
     overflow: hidden;
     margin-left: 45px;
     margin-right: 45px;
-    /* margin-top: 10px; */
     margin-bottom: 45px;
     padding: 15px;
 }
+
 .noBasketGoods {
     display: inline-block;
     font-family: var(--main-font-family);
@@ -31,6 +29,7 @@
     padding: 40px;
     color: #444B54;
 }
+
 .basketOrderInputBonus {
     border: solid 2px #9999;
     border-radius: 10px;
@@ -40,6 +39,7 @@
     font-family: var(--main-font-family);
     margin: 3px;
 }
+
 .basketColmLeft {
     grid-column: 1/1;
     display: flex;
@@ -49,6 +49,7 @@
     margin-left: 20px;
     width: 100%;
 }
+
 .basketColmRight {
     grid-column: 2/2;
     overflow: hidden;
@@ -58,6 +59,7 @@
     gap: 5px;
     width: 100%;
 }
+
 .basketColmRightListGoods {
     display: flex;
     flex-direction: column;
@@ -67,15 +69,15 @@
     padding-bottom: 20px;
     padding-left: 12px;
     padding-right: 10px;
-    /* max-width: 850px; */
     width: 100%;
     max-height: 350px;
     overflow-y: auto;
 }
+
 .basketColmRightListGoods .itemGoodsBasket {
     display:inline-flex;
-    
 }
+
 .basketColmRightClose {
     text-align: center;
     position: relative;
@@ -93,15 +95,18 @@
     content: "✖";
     color: black;
 }
+
 .basketColmRightClose:hover {
     cursor: pointer;
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
 }
+
 .basketColmRightCheckbox {
     margin: 10px;
     width: 300px;
     position: relative;
 }
+
 .basketColmRightCheckbox .tooltipBasketOrderDopGar {
     visibility: hidden;
     width: 120px;
@@ -112,7 +117,6 @@
     border-radius: 6px;
     font-size:small; 
     font-weight: normal;
-    /* Position the tooltip text */
     position: absolute;
     z-index: 1;
     bottom: -32%;
@@ -137,6 +141,7 @@
     opacity: 1;
     cursor: pointer;
 }
+
 .basketColmItemLeft {
     display: flex;
     flex-direction: column;
@@ -144,6 +149,7 @@
     gap: 3px;
     width: 100%;
 }
+
 .basketCityList {
     display: flex;
     flex-direction: column;
@@ -159,12 +165,14 @@
     z-index: 99;
     width: 100%;
 }
+
 .basketCityList .basketCityListItem {
     cursor: pointer;
     width: 550px;
     border-radius: 6px;
     padding: 2px;
 }
+
 .basketCityList .basketCityListItem:hover {
     background-color: #ccc;
     animation: cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -194,6 +202,7 @@
     appearance: none;
     border-radius: 10px;
 }
+
 .basketDepartList::after {
     content: "▼";
     font-size: 1rem;
@@ -213,7 +222,6 @@
 .basketSelectDepart {
     appearance: none;
     cursor: pointer;
-    /* width: 100%; */
     font-family: var(--main-font-family);
     color: #444B54;
     font-size:16px;
@@ -239,6 +247,7 @@
     background-color: #ffff;
     appearance: none;
 }
+
 .basketDepartListDel::after {
     content: "▼";
     font-size: 1rem;
@@ -247,12 +256,14 @@
     position: absolute;
     z-index: 9;
 }
+
 .basketDepartListDel .basketDepartListItem {
     cursor: pointer;
     width: 100%;
     border-radius: 6px;
     padding: 2px;
 }
+
 .basketSelectDepartDel {
     appearance: none;
     cursor: pointer;
@@ -280,6 +291,7 @@
     align-items:flex-start;
     gap: 3px;
 }
+
 .basketColmItemRight #commentsOrder {
     font-family: var(--main-font-family);
     font-size: medium;
@@ -297,17 +309,20 @@
     margin: 10px;
     gap: 5px;
 }
+
 .basketOrderPriceOver {
     display: inline-block;
     color: #444B54;
     font-size:larger;
 }
+
 .basketOrderIsOver {
     font-family: var(--main-font-family);
     color: #444B54;
     font-size:larger;
     font-weight: bold;
 }
+
 .basketOrderOldPrice {
     text-decoration:line-through;
     color: #444B54;
@@ -315,6 +330,7 @@
     text-decoration-color: red;
     text-decoration-thickness: 2.5px;
 }
+
 .basketOrderNewPrice {
     color: #444B54;
     font-size:larger;   
@@ -326,11 +342,13 @@
     color: #444B54;
     font-size:large;
 }
+
 .basketOrderSumGoods {
     display: inline-block;
     color: #444B54;
     font-size:larger;
 }
+
 .basketOrderComissionPrice {
     display: inline-block;
     color: #444B54;
@@ -342,6 +360,7 @@
     color: #444B54;
     font-size:large;
 }
+
 .basketOrderSkyBonus {
     position: relative;
 }
@@ -366,7 +385,6 @@
     border-radius: 6px;
     font-size:small; 
     font-weight: normal;
-    /* Position the tooltip text */
     position: absolute;
     z-index: 1;
     bottom: -185%;
@@ -398,7 +416,6 @@
     padding: 3px;
     width: 100%;
     z-index: 9;
-    /* font-weight:bolder; */
     font-size: 16px;
     font-family: var(--main-font-family);
 }

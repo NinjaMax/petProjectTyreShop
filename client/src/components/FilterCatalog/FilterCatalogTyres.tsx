@@ -744,8 +744,8 @@ const FilterCatalogTyres = observer((
                             'не шип'
                             : studdedItem} 
                         imageSrc={studdedItem.length === 0 ?
-                            '/iconsSigns/imagesNoThorn_1_64.png' :
-                            '/iconsSigns/imagesThorn_1_64.png'
+                            '/iconsSigns/imagesNoThorn_1_64.webp' :
+                            '/iconsSigns/imagesThorn_1_64.webp'
                         }
                         /> 
                        )) : null
@@ -895,7 +895,7 @@ const FilterCatalogTyres = observer((
                         value={speedIndexItem} 
                         titleName={t('filterCatalogTyre.filter_speed_index_title')}
                         titleCheckbox={speedIndexItem} 
-                        imageSrc={'/iconsSigns/speed_limit_64.png'}
+                        imageSrc={'/iconsSigns/speed_limit_64.webp'}
                     />  )) : null
                     }
                     <p/>
@@ -924,7 +924,7 @@ const FilterCatalogTyres = observer((
                         value={loadIndexItem} 
                         titleName={t('filterCatalogTyre.filter_load_index_title')}
                         titleCheckbox={loadIndexItem} 
-                        imageSrc={'/iconsSigns/load_limit_1_64_empty.png'}
+                        imageSrc={'/iconsSigns/load_limit_1_64_empty.webp'}
                     /> 
                     ))
                      : null

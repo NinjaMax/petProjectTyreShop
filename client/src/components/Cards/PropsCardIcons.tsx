@@ -64,11 +64,17 @@ const PropsCardIcons = ({type, type_wheel, season, homologation}:IProps) => {
                 className='noPropsCarImg' 
                 src='/iconFlags/empty_flag_48.png'
                 alt="flags"
+                loading='lazy'
             />   
             }
             {type_wheel ?
             <div className='propsCardIcons'>
-                <img className='propsCarImg' src={showWheelsType} alt='seasons'/>
+                <img 
+                    className='propsCarImg' 
+                    src={showWheelsType} 
+                    alt='seasons'
+                    loading='lazy'
+                />
                 <span className="tooltipTextCardIcons">
                 Тип диска: {type_wheel?.type} диск
                 </span>
@@ -85,13 +91,19 @@ const PropsCardIcons = ({type, type_wheel, season, homologation}:IProps) => {
             : 
             <img 
                 className='noPropsCarImg' 
-                src='/iconFlags/empty_flag_48.png'
+                src='/iconFlags/empty_flag_48.webp'
                 alt="flags"
+                loading='lazy'
             />     
             }
             {homologation?.homologation?.length !== 0 && !type_wheel ?
             <div className='propsCardIcons'>
-                <img className='propsCarImg' src={showHomologation} alt='homologation'/>
+                <img 
+                    className='propsCarImg' 
+                    src={showHomologation} 
+                    alt='homologation'
+                    loading='lazy'
+                />
                 <span className="tooltipTextCardIconsHom">
                 {i18n.resolvedLanguage === 'uk' ? 
                     'Омологація-рекомендовані автовиробником для марки транспорту' : 
@@ -102,8 +114,9 @@ const PropsCardIcons = ({type, type_wheel, season, homologation}:IProps) => {
             : 
             <img 
                 className='noPropsCarImg' 
-                src='/iconFlags/empty_flag_48.png'
+                src='/iconFlags/empty_flag_48.webp'
                 alt="flags"
+                loading='lazy'
             />     
             }
         </div>

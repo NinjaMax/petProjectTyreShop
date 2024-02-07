@@ -1,10 +1,10 @@
 import React from 'react';
 import '../css/Slider.css';
-import sliderOne from '../assets/michelintyres.jpg';
-import sliderBoxTopImg from '../assets/pexelsJaePark.jpg';
-import sliderBoxBottomImg from '../assets/pexelsVincenzoMalagoli.jpg';
+//import sliderOne from '../assets/michelintyres.jpg';
+//import sliderBoxTopImg from '../assets/pexelsJaePark.jpg';
+//import sliderBoxBottomImg from '../assets/pexelsVincenzoMalagoli.jpg';
 import DotSite from './ux/DotSite';
-import ButtonPrevNext from './buttons/ButtonPrevNext';
+//import ButtonPrevNext from './buttons/ButtonPrevNext';
 
 const Slider = () => {
     return (
@@ -13,7 +13,7 @@ const Slider = () => {
           <div id='sliderOne' className="mySlides fade">
             <div className="numbertext">1 / 3</div>
             <a href='/'>
-              <img src="/sliders/winter_tire_offer_with_logo_842_385.png" alt='sliderOne'/>
+              <img src="/sliders/winter_tire_offer_with_logo_842_385.webp" alt='sliderOne'/>
             </a>
           </div>
           <div id="sliderTwo"className="mySlides fade">
@@ -35,7 +35,7 @@ const Slider = () => {
           <DotSite/>
         </div>
         <div className='sliderImgBoxTop'>
-          <img id='imgSliderBoxTop' src="/sliders/continental_offer_bonus_700_390.png" alt='sliderBoxTop'/>
+          <img id='imgSliderBoxTop' src="/sliders/continental_offer_bonus_700_390.webp" alt='sliderBoxTop'/>
         </div> 
         {/* <div className='sliderImgBoxTop'>
           <img id='imgSliderBoxTop' src="/sliders/michelin_tyres_offer_700_473.png" alt='sliderBoxTop'/>

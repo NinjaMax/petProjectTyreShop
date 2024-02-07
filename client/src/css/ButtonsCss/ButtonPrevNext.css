@@ -22,7 +22,6 @@
   position: relative;
   left: calc(var(--positLeft) * 1px);
   top: calc(var(--positTopLeft) * 1px);
-  /*border-radius: 3px 0 0 3px;*/
 }
   
 /* On hover, add a black background color with a little bit see-through */
@@ -54,48 +53,52 @@
 @media only screen and (max-width: 1024px) { 
   .nextButton {
     right: -83%;
-    /* top: -130px; */
   } 
   .prevButton {
     left: 4%;
-    /* top: calc(var(--positTopLeft) * 1px); */
   }
 }
 
 @media only screen and (max-width: 768px) { 
   .nextButton {
-    right: -79%;
-    /* top: -130px; */
+    left: 200px;
+    top: 0px;
   } 
   .prevButton {
-    left: -2%;
-    /* top: calc(var(--positTopLeft) * 1px); */
+    left: 130px;
+    top: 0px;
   }
 } 
 
 @media only screen and (max-width: 425px) { 
   .nextButton {
-    right: -78%;
+    left: 185px;
+    top: 0px;
   } 
   .prevButton {
-    left: -3%;
+    left: 105px;
+    top: 0px;
   }
 }
 
 @media only screen and (max-width: 375px) { 
   .nextButton {
-    right: -76%;
+    left: 160px;
+    top: 0px;
   } 
   .prevButton {
-    left: -3%;
+    left: 90px;
+    top: 0px;
   }
 } 
 
 @media only screen and (max-width: 320px) { 
   .nextButton {
-    right: -75%;
+    left: 140px;
+    top: 0px;
   } 
   .prevButton {
-    left: -6%;
+    left: 70px;
+    top: 0px;
   }
 } 

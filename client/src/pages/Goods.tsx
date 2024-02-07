@@ -586,8 +586,10 @@ const GoodsPage = observer(() => {
         console.log('BASKET_ERROR: ',error);
     }
   }
+  console.log('GOODS_PRODUCT: ', goodsTyre?._product);
+  console.log('GOODS: ', goodsTyre?._product?.tyre_brand?.brand + ' ' + goodsTyre?._product?.tyre_model?.model);
+  console.log('GOODS_PARAM: ', params)
 
-  console.log('GOODS: ', goodsTyre?._product?.full_name);
 
   return (
     <div className='goodsCard'>
@@ -613,7 +615,7 @@ const GoodsPage = observer(() => {
       <div className={changeTabGoods === "vseProTovar" ? 
         'tabGoods' : 'tabGoodsActive'}
       >
-        { goodsTyre._product ?
+        { goodsTyre._product && !paramsModel?
         <Helmet>
             <title>{t('goods.goods_tyre_title', {full_name: goodsTyre._product.full_name, interpolation: { escapeValue: false }})}</title>
             <meta
@@ -623,6 +625,23 @@ const GoodsPage = observer(() => {
             <meta
                 name="keywords"
                 content={t('goods.goods_tyre_keywords', {full_name: goodsTyre._product.full_name, interpolation: { escapeValue: false }})}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + location.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + location.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + location.pathname}/>
+        </Helmet>
+        : null
+        }
+        { goodsTyre._product && paramsModel ?
+        <Helmet>
+            <title>{t('goodsModel.goods_tyre_title', {model: goodsTyre?._product?.tyre_brand?.brand + ' ' + goodsTyre?._product?.tyre_model?.model, interpolation: { escapeValue: false }})}</title>
+            <meta
+                name="description"
+                content={t('goodsModel.goods_tyre_description', {model: goodsTyre?._product?.tyre_brand?.brand + ' ' + goodsTyre?._product?.tyre_model?.model, interpolation: { escapeValue: false }})}
+            />
+            <meta
+                name="keywords"
+                content={t('goodsModel.goods_tyre_keywords', {model: goodsTyre?._product?.tyre_brand?.brand + ' ' + goodsTyre?._product?.tyre_model?.model, interpolation: { escapeValue: false }})}
             />
             <link rel="canonical" href={process.env.REACT_APP_CORS! + location.pathname}/>
             <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + location.pathname}/>

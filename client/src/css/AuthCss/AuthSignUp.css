@@ -1,5 +1,4 @@
 * {box-sizing: border-box}
-
 /* style the container */
 .containerAuthSignUp {
   position: relative;
@@ -10,7 +9,6 @@
 
 .titleAuthSignUp {
   text-align: center;
-  /*padding-left: 1rem;*/
   font-size: 20px;
   font-family: var(--main-font-family);
   font-weight: bold;
@@ -29,8 +27,7 @@
   font-size: 17px;
   font-family: var(--main-font-family);
   line-height: 20px;
-  text-decoration: none; /* remove underline from anchors */
-  /*color: #fff;*/
+  text-decoration: none; 
 }
 
 .btnAuthSignUp {
@@ -60,14 +57,11 @@
   font-family: var(--main-font-family);
   line-height: 20px;
   text-decoration: none;
- 
 }
-
 
 .btnAuthSignUp:hover {
   opacity: 1;
   color:#ccc;
-
 }
 
 /* style the submit button */
@@ -88,7 +82,6 @@ input[type=submit]:hover {
   align-items: center;
   gap: 5px;
   width: 100%;
-  /*margin: auto;*/
   padding: 0 50px;
   margin-top: 6px;
 }
@@ -98,7 +91,6 @@ input[type=submit]:hover {
   display: flex;
   flex-direction: row;
   gap: 5px;
-  
 }
 
 /* vertical line */
@@ -109,9 +101,6 @@ input[type=submit]:hover {
   transform: translate(-50%);
   height: 175px;
 }
-
-/* text inside the vertical line */
-
 
 /* hide some text on medium and large screens */
 .hide-md-lg {

@@ -1,8 +1,8 @@
 * {box-sizing: border-box}
 .authFormAdmin {
-    width: 350px;
-    margin: auto;
-    text-align: center;
+  width: 350px;
+  margin: auto;
+  text-align: center;
 }
 /* style the container */
 .containerAuthAdmin {
@@ -11,10 +11,8 @@
   background-color: #fff;
   padding: 30px;
 }
-
 .titleAuthForm {
   text-align: center;
-  /*padding-left: 1rem;*/
   font-size: 20px;
   font-family: var(--main-font-family);
   font-weight: bold;
@@ -33,10 +31,8 @@
   font-size: 17px;
   font-family: var(--main-font-family);
   line-height: 20px;
-  text-decoration: none; /* remove underline from anchors */
-  /*color: #fff;*/
+  text-decoration: none; 
 }
-
 .btnAuthAdmin {
   width: 100%;
   padding: 12px;
@@ -53,7 +49,6 @@
   background-color: #666;
   cursor: pointer;
 }
-
 .inputAuthAdmin {
   border: 2px solid #ccc;
   width: 100%;
@@ -66,64 +61,46 @@
   font-family: var(--main-font-family);
   line-height: 20px;
   text-decoration: none;
- 
 }
-
-
 .btnAuthAdmin:hover {
   opacity: 1;
   color:#ccc;
-
 }
-
-/* add appropriate colors to fb, twitter and google buttons */
 .fb {
   background-color: #3B5998;
   color: white;
 }
-
 .twitter {
   background-color: #55ACEE;
   color: white;
 }
-
 .google {
   background-color: #dd4b39;
   color: white;
 }
-
-/* style the submit button */
 input[type=submit] {
   background-color: #4CAF50;
   color: white;
   cursor: pointer;
 }
-
 input[type=submit]:hover {
   background-color: #45a049;
 }
 
-/* Two-column layout */
 .colAuthAdmin {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 5px;
   width: 100%;
-  /*margin: auto;*/
   padding: 0 50px;
   margin-top: 6px;
 }
-
-/* Clear floats after the columns */
 .rowAuthAdmin {
   display: flex;
   flex-direction: row;
   gap: 5px;
-  
 }
-
-/* vertical line */
 .vl {
   position: absolute;
   top:50%;
@@ -131,22 +108,14 @@ input[type=submit]:hover {
   transform: translate(-50%);
   height: 175px;
 }
-
-/* text inside the vertical line */
-
-
-/* hide some text on medium and large screens */
 .hide-md-lg {
   display: none;
 }
-
-/* bottom container */
 .bottomContainerAdmin {
   text-align: center;
   background-color: #666;
   border-radius: 0px 0px 4px 4px;
 }
-
 /* Responsive layout - when the screen is less than 650px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 650px) {
   .colAuthAdmin {
