@@ -9,33 +9,50 @@ const BrandsListMain = () => {
             <a className='brandListMainItem' href='/tyres/goodyear'>
                 <img className='imgBrandListMain' 
                 src={tyreBrandLogo('Goodyear')}
+                loading='lazy'
+                decoding='async'
                 alt='goodyearimg'
                 />
                 GoodYear
             </a>
             <a className='brandListMainItem' href='/tyres/continental'>
                 <img className='imgBrandListMain' 
-                src={tyreBrandLogo('Continental')} alt='imgContinental'/>
+                src={tyreBrandLogo('Continental')} 
+                loading='lazy' 
+                decoding='async'
+                alt='imgContinental'/>
                 Continental
             </a>
             <a className='brandListMainItem' href='/tyres/hankook'>
                 <img className='imgBrandListMain' 
-                src={tyreBrandLogo('Hankook')} alt='imgHankook'/>
+                src={tyreBrandLogo('Hankook')} 
+                loading='lazy'
+                decoding='async'
+                alt='imgHankook'/>
                 Hankook
             </a>
             <a className='brandListMainItem' href='/tyres/bridgestone'>
                 <img className='imgBrandListMain' 
-                src={tyreBrandLogo('Bridgestone')} alt='imgBridgestone'/>
+                src={tyreBrandLogo('Bridgestone')} 
+                loading='lazy'
+                decoding='async'
+                alt='imgBridgestone'/>
                 Bridgestone
             </a>
             <a className='brandListMainItem' href='/tyres/nokian'>
                 <img className='imgBrandListMain' 
-                src={tyreBrandLogo('Nokian')} alt='imgNokian'/>
+                src={tyreBrandLogo('Nokian')} 
+                loading='lazy'
+                decoding='async'
+                alt='imgNokian'/>
                 Nokian
             </a>
             <a className='brandListMainItem' href='/tyres/michelin'>
                 <img className='imgBrandListMain' 
-                src={tyreBrandLogo('Michelin')} alt='imgMichelin'/>
+                src={tyreBrandLogo('Michelin')} 
+                loading='lazy'
+                decoding='async'
+                alt='imgMichelin'/>
                 Michelin
             </a>
         {/* <div className='brandListMainItem'>

@@ -59,7 +59,12 @@ const CardSmall = ({product, rating, checkOrders}:IProductSmall) => {
                         onClick={addGoodsId} 
                         href={'/' + createStringUrl(product?.full_name)}
                     >
-                        <img id='imgTyresSmall' src={'/tyre/autotyrespilotspotps2.png'} alt="tyreSmall" />
+                        <img 
+                            id='imgTyresSmall' 
+                            src={'/tyre/autotyrespilotspotps2.webp'} 
+                            loading='lazy'
+                            alt="tyreSmall" 
+                        />
                     </a>
                     : null
                 }
@@ -69,7 +74,12 @@ const CardSmall = ({product, rating, checkOrders}:IProductSmall) => {
                         onClick={addGoodsId} 
                         href={'/' + createStringUrl(product?.full_name)}
                     >
-                        <img id='imgTyresSmall' src={'/tyre/autotyrespilotspotps2.png'} alt="tyreSmall" />
+                        <img 
+                            id='imgTyresSmall' 
+                            src={'/tyre/autotyrespilotspotps2.webp'} 
+                            loading='lazy'
+                            alt="tyreSmall" 
+                        />
                     </a>
                     : null
                 }

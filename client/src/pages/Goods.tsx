@@ -617,14 +617,14 @@ const GoodsPage = observer(() => {
       >
         { goodsTyre._product && !paramsModel?
         <Helmet>
-            <title>{t('goods.goods_tyre_title', {full_name: goodsTyre._product.full_name, interpolation: { escapeValue: false }})}</title>
+            <title>{t('goods.goods_tyre_title', {full_name: goodsTyre?._product?.full_name, interpolation: { escapeValue: false }})}</title>
             <meta
                 name="description"
-                content={t('goods.goods_tyre_description', {full_name: goodsTyre._product.full_name, interpolation: { escapeValue: false }})}
+                content={t('goods.goods_tyre_description', {full_name: goodsTyre?._product?.full_name, interpolation: { escapeValue: false }})}
             />
             <meta
                 name="keywords"
-                content={t('goods.goods_tyre_keywords', {full_name: goodsTyre._product.full_name, interpolation: { escapeValue: false }})}
+                content={t('goods.goods_tyre_keywords', {full_name: goodsTyre?._product?.full_name, interpolation: { escapeValue: false }})}
             />
             <link rel="canonical" href={process.env.REACT_APP_CORS! + location.pathname}/>
             <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + location.pathname}/>
@@ -651,14 +651,14 @@ const GoodsPage = observer(() => {
         }
         { goodsWheel._product ?
         <Helmet>
-            <title>{t('goods.goods_wheel_title', {full_name: goodsTyre._product.full_name, interpolation: { escapeValue: false }})}</title>
+            <title>{t('goods.goods_wheel_title', {full_name: goodsTyre?._product?.full_name, interpolation: { escapeValue: false }})}</title>
             <meta
                 name="description"
-                content={t('goods.goods_wheel_description', {full_name: goodsTyre._product.full_name, interpolation: { escapeValue: false }})}
+                content={t('goods.goods_wheel_description', {full_name: goodsTyre?._product?.full_name, interpolation: { escapeValue: false }})}
             />
             <meta
                 name="keywords"
-                content={t('goods.goods_wheel_keywords', {full_name: goodsTyre._product.full_name, interpolation: { escapeValue: false }})}
+                content={t('goods.goods_wheel_keywords', {full_name: goodsTyre?._product?.full_name, interpolation: { escapeValue: false }})}
             />
             <link rel="canonical" href={process.env.REACT_APP_CORS! + location.pathname}/>
             <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + location.pathname}/>

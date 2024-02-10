@@ -1,23 +1,36 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, Suspense, lazy} from 'react';
 import '../css/Main.css';
-import Slider from '../components/Slider';
-import CategorySlide from '../components/CategorySlide';
-import TabProdMain from '../components/tabs/TabProdMain';
-import Benefits from '../components/Benefits';
-import ReviewsMain from '../components/reviews/ReviewsMain';
-import TabMain from '../components/tabs/TabMain';
-import NewsMainBox from '../components/news/NewsMainBox';
-import ReviewStore from '../components/reviews/ReviewStore';
+//import Slider from '../components/Slider';
+//import CategorySlide from '../components/CategorySlide';
+//import TabProdMain from '../components/tabs/TabProdMain';
+//import Benefits from '../components/Benefits';
+//import ReviewsMain from '../components/reviews/ReviewsMain';
+//import TabMain from '../components/tabs/TabMain';
+//import NewsMainBox from '../components/news/NewsMainBox';
+//import ReviewStore from '../components/reviews/ReviewStore';
 import { Context } from '../context/Context';
 import { getAllArticlesLimit, getAllOrdersLeader, getAllStoreReviewLimit, getTyresById, getTyresOffsetMain, getTyresWithoutOffset, getWheelsById, getWheelsMainOffset, getWheelsWithoutOffset } from '../restAPI/restGoodsApi';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
-import BrandsListMain from '../components/BrandsListMain';
-import PromotionBox from '../components/PromotionBox';
-import ButtonPrevNext from '../components/buttons/ButtonPrevNext';
+//import BrandsListMain from '../components/BrandsListMain';
+//import PromotionBox from '../components/PromotionBox';
+//import ButtonPrevNext from '../components/buttons/ButtonPrevNext';
 import { useMediaQuery } from 'react-responsive';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
+import SpinnerCarRot from '../components/spinners/SpinnerCarRot';
+
+const Slider = lazy(() => import('../components/Slider'));
+const CategorySlide = lazy(() => import('../components/CategorySlide'));
+const TabProdMain = lazy(() => import('../components/tabs/TabProdMain'));
+const Benefits = lazy(() => import('../components/Benefits'));
+const ReviewsMain = lazy(() => import('../components/reviews/ReviewsMain'));
+const TabMain = lazy(() => import('../components/tabs/TabMain'));
+const NewsMainBox = lazy(() => import('../components/news/NewsMainBox'));
+const ReviewStore = lazy(() => import('../components/reviews/ReviewStore'));
+const BrandsListMain = lazy(() => import('../components/BrandsListMain'));
+const PromotionBox = lazy(() => import('../components/PromotionBox'));
+const ButtonPrevNext = lazy(() => import('../components/buttons/ButtonPrevNext'));
 
 const Main = observer(() => {
   const {goodsTyre, goodsWheel, filter} = useContext<any | null>(Context);
@@ -462,6 +475,7 @@ const Main = observer(() => {
         <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru'}/>
       </Helmet>
       }
+      <Suspense fallback={<SpinnerCarRot/>}>
       {!isMobileMain ?
         <Slider/>
         : null
@@ -528,16 +542,18 @@ const Main = observer(() => {
         </ReviewsMain>
       </div>
       <ButtonPrevNext 
-        prevBtnLeft={20} 
-        prevTop={-130} 
-        nextBtnRight={-72.9} 
-        nextTop={-130}    
+        prevBtnLeft={200} 
+        prevTop={-200} 
+        nextBtnRight={-1125} 
+        nextTop={-195}    
         leftClickActive={prevBtnReviewStore} 
         rightClickActive={nextBtnReviewStore}
       />
       <NewsMainBox 
         isNewsPage={false}
-        articlesArr={articlesAll}/>
+        articlesArr={articlesAll}
+      />
+      </Suspense>
     </div>   
   );
 });

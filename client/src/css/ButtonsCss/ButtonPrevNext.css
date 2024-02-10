@@ -1,6 +1,6 @@
 .prevButton, .nextButton {
   cursor: pointer;
-  position: absolute;
+  /* position: absolute; */
   width: auto;
   margin-top: -30px;
   padding: 12px 20px 12px 20px;
@@ -32,11 +32,11 @@
 
 @media only screen and (max-width: 2560px) { 
   .nextButton {
-    right: calc(var(--positRight) * 1%);
+    right: calc(var(--positRight) * 1px);
     top: calc(var(--positTopRight) * 1px);
   }
   .prevButton {
-    left: calc(var(--positLeft) * 1%);
+    left: calc(var(--positLeft) * 1px);
     top: calc(var(--positTopLeft) * 1px);
   }
 } 
@@ -61,44 +61,44 @@
 
 @media only screen and (max-width: 768px) { 
   .nextButton {
-    left: 200px;
+    left: 65%;
     top: 0px;
   } 
   .prevButton {
-    left: 130px;
+    left: 18%;
     top: 0px;
   }
 } 
 
 @media only screen and (max-width: 425px) { 
   .nextButton {
-    left: 185px;
+    left: 60%;
     top: 0px;
   } 
   .prevButton {
-    left: 105px;
+    left: 15%;
     top: 0px;
   }
 }
 
 @media only screen and (max-width: 375px) { 
   .nextButton {
-    left: 160px;
+    left: 60%;
     top: 0px;
   } 
   .prevButton {
-    left: 90px;
+    left: 15%;
     top: 0px;
   }
 } 
 
 @media only screen and (max-width: 320px) { 
   .nextButton {
-    left: 140px;
+    left: 60%;
     top: 0px;
   } 
   .prevButton {
-    left: 70px;
+    left: 15%;
     top: 0px;
   }
 } 

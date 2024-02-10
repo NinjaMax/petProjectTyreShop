@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../../css/TabsCss/TabMain.css';
-import PopularSizeTyre from '../popularGoods/PopularSizeTyre';
-import PopularRequests from '../popularGoods/PopularRequests';
+//import PopularSizeTyre from '../popularGoods/PopularSizeTyre';
+//import PopularRequests from '../popularGoods/PopularRequests';
 import FilterMainTyre from '../mainFilterButton/filterMainTyres/FilterMainTyre';
 import FilterMainWheel from '../mainFilterButton/filterMainTyres/FilterMainWheel';
 
@@ -28,22 +28,7 @@ const TabMain = ({filterMainState, filterStateAction, getFilterTitle}: ITabMain)
             setFilterTWheelState(true);
             setFilterTyreState(false);
         }
-        // if (filterState === 'АКБ') {
-        //     setFilterBatteryState(true);
-        //     setFilterTWheelState(true);
-        //     setFilterTyreState(false);
-        // }
-        // if () {
-
-        // }
-        // if () {
-
-        // }
     },[filterState]);
-
-    // const filterStateAction = () => {
-    //     setFilterOpenClose(!filterOpenClose);
-    // };
 
     const handleSetFilterState = (e: any) => {
         setFilterState(e.currentTarget.value);
@@ -51,12 +36,30 @@ const TabMain = ({filterMainState, filterStateAction, getFilterTitle}: ITabMain)
     };
 
     return (
+
     <div className={
     filterState === 'ШИНИ' ? 'tabMainFilterTyre' : 
     filterState === 'ДИСКИ' ?  'tabMainFilterWheel' : 
     filterState === 'АКБ' ? 'tabMainFilterBattery' : 
-    'tabMainFilterTyre'
-    }>
+    'tabMainFilterTyre'}
+    //style={{backgroundImage:`url("/img/tyres_tab_main_1.webp")`} as React.CSSProperties}
+    >
+        <img
+            fetchpriority="high"
+            className='tabCoverImg'
+            src="img/tyres_tab_main_1.webp" 
+            // srcSet="img/tyres_tab_main_1_tablet.webp 768w"
+            sizes='(max-width: 2560px) 1440px,
+                    (max-width: 1440px) 1440px,
+                    (max-width: 1024px) 1024px,
+                    (max-width: 768px) 768px,
+                    (max-width: 580px) 580px,
+                    (max-width: 425px) 425px,
+                    (max-width: 400px) 400px,
+                    (max-width: 375px) 375px,
+                    (max-width: 320px) 320px, 100vw'
+            alt='tyres_tab_main'
+        /> 
         <div className="tabMain">
             <button className="tablinksTyres" 
                 value={'ШИНИ'}       
@@ -81,7 +84,7 @@ const TabMain = ({filterMainState, filterStateAction, getFilterTitle}: ITabMain)
             
         </div>
         {filterTyreState ?
-        <div id="filterMain" className="tabContentMain">
+        <div id="filterMainTyre" className="tabContentMain">
             <FilterMainTyre 
                 filterState={filterMainState}
                 filterOpenCloseAction={filterStateAction}
@@ -90,7 +93,7 @@ const TabMain = ({filterMainState, filterStateAction, getFilterTitle}: ITabMain)
         : null
         }
         {filterWheeleState ?
-        <div id="filterMain" className="tabContentMain">
+        <div id="filterMainWheel" className="tabContentMain">
             <FilterMainWheel 
                 filterState={filterMainState}
                 filterOpenCloseAction={filterStateAction}           
@@ -114,7 +117,7 @@ const TabMain = ({filterMainState, filterStateAction, getFilterTitle}: ITabMain)
             </div>
         </div>        */}
     </div>
-
+    
     );
 };
 

@@ -35,8 +35,7 @@ const SeoCatalogTags = ({
     url,
     lang
 }:SeaoTag) => {
-    const { t, i18n } = useTranslation();
-    console.log('PARAMS: ', param);
+    const { t } = useTranslation();
 
     return (
         <>
@@ -1201,7 +1200,7 @@ const SeoCatalogTags = ({
         </Helmet>
         : null
         }
-                {param && (param.season === 'lіtnya' || param.season === 'letnyaya') && param.studded?.includes('w') && param.type?.includes('h') && param.brands?.includes('r') && url.pathname?.includes('/tyres') ?
+        {param && (param.season === 'lіtnya' || param.season === 'letnyaya') && param.studded?.includes('w') && param.type?.includes('h') && param.brands?.includes('r') && url.pathname?.includes('/tyres') ?
         <Helmet>
             <title>{t('seoCatalog.tyre_summer_size_title', 
                 {
@@ -1283,6 +1282,71 @@ const SeoCatalogTags = ({
             <meta
                 name="keywords"
                 content={t('seoCatalog.tyre_allseason_size_keywords', {
+                    width: param.studded.slice(1, param.studded.length),
+                    height: param.type.slice(1, param.studded.length),
+                    diameter: param.brands.toUpperCase()
+                })}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+        {param && (param.season === 'vsesezonna' || param.season === 'vsesezonnaya') && param.studded?.includes('w') && param.type?.includes('h') && param.brands?.includes('r') && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_allseason_size_title', 
+                {
+                    width: param.studded.slice(1, param.studded.length),
+                    height: param.type.slice(1, param.studded.length),
+                    diameter: param.brands.toUpperCase()
+                })}
+            </title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_allseason_size_description', {
+                    width: param.studded.slice(1, param.studded.length),
+                    height: param.type.slice(1, param.studded.length),
+                    diameter: param.brands.toUpperCase()
+                })}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_allseason_size_keywords', {
+                    width: param.studded.slice(1, param.studded.length),
+                    height: param.type.slice(1, param.studded.length),
+                    diameter: param.brands.toUpperCase()
+                })}
+            />
+            <link rel="canonical" href={process.env.REACT_APP_CORS! + url.pathname}/>
+            <link rel="alternate" hrefLang='ru' href={process.env.REACT_APP_CORS + '/ru' + url.pathname}/>
+            <link rel="alternate" hrefLang='uk' href={process.env.REACT_APP_CORS! + url.pathname}/>
+        </Helmet>
+        : null
+        }
+         {param && param.season && param.studded?.includes('w') && param.type?.includes('h') && param.brands?.includes('r') && url.pathname?.includes('/tyres') ?
+        <Helmet>
+            <title>{t('seoCatalog.tyre_brand_size_title', 
+                {   
+                    brand: param.season.slice(0, 1).toUpperCase() + param.season.slice(1, param.season.length),
+                    width: param.studded.slice(1, param.studded.length),
+                    height: param.type.slice(1, param.studded.length),
+                    diameter: param.brands.toUpperCase()
+                })}
+            </title>
+            <meta
+                name="description"
+                content={t('seoCatalog.tyre_brand_size_description', {
+                    brand: param.season.slice(0, 1).toUpperCase() + param.season.slice(1, param.season.length),
+                    width: param.studded.slice(1, param.studded.length),
+                    height: param.type.slice(1, param.studded.length),
+                    diameter: param.brands.toUpperCase()
+                })}
+            />
+            <meta
+                name="keywords"
+                content={t('seoCatalog.tyre_brand_size_keywords', {
+                    brand: param.season.slice(0, 1).toUpperCase() + param.season.slice(1, param.season.length),
                     width: param.studded.slice(1, param.studded.length),
                     height: param.type.slice(1, param.studded.length),
                     diameter: param.brands.toUpperCase()

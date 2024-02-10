@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { Context } from './context/Context';
 import SpinnerCarRot from './components/spinners/SpinnerCarRot';
 import { getCurUser } from './restAPI/restUsersApi';
+//import AppRouter from './components/AppRouter';
 
 const AppRouter = lazy(() => import('./components/AppRouter'));
 const Footer= lazy(() => import('./components/Footer'));

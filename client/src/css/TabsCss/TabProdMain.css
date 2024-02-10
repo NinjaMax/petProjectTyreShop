@@ -9,7 +9,12 @@
 }
 
 .tabContentProdMain {
-    display: '';
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
     padding: 14px 12px;
     border: 1px solid #ccc;
     border-top: none;

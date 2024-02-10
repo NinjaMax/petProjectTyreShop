@@ -116,9 +116,9 @@ const PromotionBox = observer(({
             {itemsArray ?
             <ButtonPrevNext 
                 prevTop={-275} 
-                prevBtnLeft={-1}
+                prevBtnLeft={-5}
                 nextTop={-275}
-                nextBtnRight={-60}
+                nextBtnRight={-1260}
                 leftClickActive={prevButtonEvent}
                 rightClickActive={nextButtonEvent}
             />

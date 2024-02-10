@@ -292,8 +292,9 @@ const NavBar = observer(() => {
       }
       <a href='/'>
         <img 
-          loading='eager'
-          src='logoSky180.webp' alt='logoShop'
+          fetchpriority="high"
+          src='/logoSky180.webp' 
+          alt='logoShop'
         />
       </a>
       {isMobile ? 

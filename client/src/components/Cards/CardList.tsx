@@ -68,7 +68,12 @@ const CardList = ({goods, forOrder, priceItem, countEvent, checkOrders}: ICard) 
             onClick={() => console.log('CLICK_CARD_LIST')}
             //onClick={(e: any) => e.stopPropagation()}
         >
-            <img id='imgTyresList' src={'/tyre/autotyrespilotspotps2.png'} alt="tyres" />
+            <img 
+                id='imgTyresList' 
+                src={'/tyre/autotyrespilotspotps2.png'} 
+                alt="cardsList"
+                loading='lazy' 
+            />
             <div className='tyresCardListBox'>    
                 <a  id='nameCardList' 
                     onClick={addGoodsId} 
@@ -103,7 +108,7 @@ const CardList = ({goods, forOrder, priceItem, countEvent, checkOrders}: ICard) 
                     <div className="tyresCardCountryList">
                         <FlagsIcon
                             title={t('card.title_country')}
-                            country={i18n.resolvedLanguage === 'uk' ? goods?.country.country_manufacturer_ua : goods?.country.country_manufacturer} 
+                            country={i18n.resolvedLanguage === 'uk' ? goods?.country?.country_manufacturer_ua : goods?.country?.country_manufacturer} 
                             year={goods?.year}
                         />
                     </div>

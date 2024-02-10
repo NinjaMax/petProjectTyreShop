@@ -19,7 +19,7 @@ type IReviewStoreData = {
 };
 
 const ReviewStore = ({storeData}: IReviewStoreData) => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     return (
     <div className='reviewStore'>  
@@ -27,7 +27,9 @@ const ReviewStore = ({storeData}: IReviewStoreData) => {
             <div className="mySlidesStoreReview">
                 <div className="authorStoreReview">
                     <img className='avatarImgStore' 
-                        src={storeData?.customer_pictures ?? './customer64.png'} 
+                        loading='lazy'
+                        decoding='async'
+                        src={storeData?.customer_pictures ?? './customer64.webp'} 
                         alt='avatarUser'
                     /> 
                     {storeData?.name}

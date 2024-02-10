@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, Suspense, lazy } from 'react';
 import '../css/CatalogTyresPage.css';
 import { observer } from 'mobx-react-lite';
-import CatalogTyres from '../components/catalogs/CatalogTyres';
-import FilterCatalogTyres from '../components/filterCatalog/FilterCatalogTyres';
-import ReviewsMain from '../components/reviews/ReviewsMain';
-import ReviewsGoods from '../components/reviews/ReviewsGoods';
+//import CatalogTyres from '../components/catalogs/CatalogTyres';
+//import FilterCatalogTyres from '../components/filterCatalog/FilterCatalogTyres';
+//import ReviewsMain from '../components/reviews/ReviewsMain';
+//import ReviewsGoods from '../components/reviews/ReviewsGoods';
 import BreadCrumbs from '../components/BreadCrumbs';
 //import CyrillicToTranslit from 'cyrillic-to-translit-js';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
@@ -12,13 +12,21 @@ import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { getTyresOffsetMain, getTyresReviewLimit, getTyresWithCatOffset, getTyresWithoutOffset, getTyresWithoutOffsetProps, getWheelsReviewLimit, getWheelsWithCatOffset, getWheelsWithoutOffset} from '../restAPI/restGoodsApi';
 import { Context } from '../context/Context';
 import { tyreSeasonCat, tyreVehicleTypeCat } from '../services/tyresCatService';
-import CatalogWheels from '../components/catalogs/CatalogWheels';
-import FilterCatalogWheels from '../components/filterCatalog/FilterCatalogWheels';
+//import CatalogWheels from '../components/catalogs/CatalogWheels';
+//import FilterCatalogWheels from '../components/filterCatalog/FilterCatalogWheels';
 import { CATALOG_TYRES_ROUTE, CATALOG_WHEELS_ROUTE } from '../utils/consts';
 import { createStringUrl } from '../services/stringUrl';
 import { typeWheelsCat } from '../services/wheelsProps.service';
 import { useTranslation } from 'react-i18next';
 import SeoCatalogTags from '../components/seoTags/SeoTags';
+import SpinnerCarRot from '../components/spinners/SpinnerCarRot';
+
+const CatalogTyres = lazy(() => import('../components/catalogs/CatalogTyres'));
+const CatalogWheels = lazy(() => import('../components/catalogs/CatalogWheels'));
+const FilterCatalogTyres = lazy(() => import('../components/filterCatalog/FilterCatalogTyres'));
+const FilterCatalogWheels = lazy(() => import('../components/filterCatalog/FilterCatalogWheels'));
+const ReviewsMain = lazy(() => import('../components/reviews/ReviewsMain'));
+const ReviewsGoods = lazy(() => import('../components/reviews/ReviewsGoods'));
 
 const CatalogTyresPage = observer(() => {
   const {goodsTyre, goodsWheel, filter} = useContext<any | null>(Context);
@@ -179,7 +187,7 @@ const CatalogTyresPage = observer(() => {
     let isMounted = false;
     const loadCatalogTyre = async() => {
       if (!isMounted && location.pathname.includes('tyres')) {
-        console.time('GET_REQUEST_TYRE_CATALOG');
+        //console.time('GET_REQUEST_TYRE_CATALOG');
         let tyreFilterGoodsId: any = await getTyresWithCatOffset(
             page.limit,
             page.offset,
@@ -198,9 +206,9 @@ const CatalogTyresPage = observer(() => {
             filter.reinforced ?? '',
             filter.sort,
           );
-        console.log('CAT_TYRE: ', tyreFilterGoodsId)
+        
         goodsTyre?.setTotalCount(tyreFilterGoodsId.count);
-        console.timeEnd('GET_REQUEST_TYRE_CATALOG');
+        //console.timeEnd('GET_REQUEST_TYRE_CATALOG');
         page.loadMore > 0  ? goodsTyre?.setTyres(
           [...goodsTyre._tyres, 
             ...tyreFilterGoodsId.rows] 
@@ -241,7 +249,7 @@ const CatalogTyresPage = observer(() => {
     let isMounted = false;
     const loadMainFilterTyreTask = async () => {
       if(!isMounted && location.pathname.includes('tyres')) {
-        console.time('GET_REQUEST_TYRE_FROM_DATA_BASE');
+        //console.time('GET_REQUEST_TYRE_FROM_DATA_BASE');
         let tyreFilterGoods: any = await getTyresOffsetMain(
             filter.width,
             filter.height,
@@ -250,7 +258,7 @@ const CatalogTyresPage = observer(() => {
             filter.brands,
             'ASC',
           );
-          console.timeEnd('GET_REQUEST_TYRE_FROM_DATA_BASE');
+          //console.timeEnd('GET_REQUEST_TYRE_FROM_DATA_BASE');
           let setWidthFilter:any[] | null = [];
           let setHightFilter:any[] | null = [];
           let setDiameterFilter:any[] | null = [];
@@ -485,7 +493,7 @@ const CatalogTyresPage = observer(() => {
     let isMounted = false;
     const loadPropsTyreTask = async() => {
       if(!isMounted && location.pathname.includes('tyres')) {
-        console.time('GET_REQUEST_TYRE_PROPS')
+        //console.time('GET_REQUEST_TYRE_PROPS')
         let tyreFilterGoods: any = await getTyresWithoutOffset(
           filter.price ?? '',
           filter.vehicle_type ?? '',
@@ -493,7 +501,7 @@ const CatalogTyresPage = observer(() => {
           filter.load_index ?? '',
           'ASC',
         );
-        console.timeEnd('GET_REQUEST_TYRE_PROPS')
+        //console.timeEnd('GET_REQUEST_TYRE_PROPS')
         let setVehicleTypeFilter: any[] | null  = [];
         let setSpeedIndexFilter: any[] | null  = [];
         let setLoadIndexFilter: any[] | null  = [];
@@ -691,7 +699,7 @@ const CatalogTyresPage = observer(() => {
     let isMounted = false;
     const loadPropsTyreHeightTask = async() => {
       if(!isMounted && location.pathname.includes('tyres')) {
-        console.time('GET_REQUEST_TYRE_PROPS')
+        //console.time('GET_REQUEST_TYRE_PROPS')
         let tyreHeightFilterGoods: any = await getTyresWithoutOffsetProps(
           filter.studded ?? '',
           filter.run_flat ?? '',
@@ -699,7 +707,7 @@ const CatalogTyresPage = observer(() => {
           filter.reinforced ?? '',
           'ASC',
         );
-        console.timeEnd('GET_REQUEST_TYRE_PROPS')
+        //console.timeEnd('GET_REQUEST_TYRE_PROPS')
         let setHomologationFilter: any[] | null  = [];
         let setReinforcedFilter: any[] | null  = [];
         let setRunFlatFilter: any[] | null  = [];
@@ -807,7 +815,7 @@ const CatalogTyresPage = observer(() => {
       let i:number = 0;
       while(taskLoad.length > i) {
         if (!isMounted && taskLoad[i] === getWheelsWithCatOffset && location.pathname.includes('wheels')) {
-          console.time('GET_REQUEST_WHEELS_CATALOG');
+          //console.time('GET_REQUEST_WHEELS_CATALOG');
           let wheelFilterGoods: any = await taskLoad[i](
             page.limit,
             page.offset,
@@ -825,7 +833,7 @@ const CatalogTyresPage = observer(() => {
             filter.pcd2 ?? '',
             filter.sort,
           );
-          console.timeEnd('GET_REQUEST_WHEELS_CATALOG');
+          //console.timeEnd('GET_REQUEST_WHEELS_CATALOG');
           page.loadMore > 0 ? goodsWheel?.setWheels(
             [...goodsWheel._wheels, 
               ...wheelFilterGoods] 
@@ -876,7 +884,7 @@ const CatalogTyresPage = observer(() => {
       let i:number = 0;
       while(taskLoad.length > i) {
         if (!isMounted && taskLoad[i] === getWheelsWithoutOffset && location.pathname.includes('wheels')) {
-          console.time('GET_REQUEST_WHEELS_PROPS');
+          //console.time('GET_REQUEST_WHEELS_PROPS');
           let wheelFilterGoods: any = await taskLoad[i](
             filter.width ?? '',
             filter.diameter ?? '',
@@ -892,7 +900,7 @@ const CatalogTyresPage = observer(() => {
             filter.pcd2 ?? '',
             filter.sort,
           );
-          console.timeEnd('GET_REQUEST_WHEELS_PROPS');
+          //console.timeEnd('GET_REQUEST_WHEELS_PROPS');
           let setWidthFilter:any[] | null  = [];
           let setDiameterFilter:any[] | null  = [];
           let setBrandFilter:any[] | null  = [];
@@ -1239,7 +1247,7 @@ const CatalogTyresPage = observer(() => {
 
   //console.log('FILTER_SEASON: ', filter.season);
   //console.log('LANG_STATE: ', langState);
-  console.log('LOCATION: ', location);
+  //console.log('LOCATION: ', location);
 
   return (
     <div className='catalogTyres'
@@ -1274,6 +1282,7 @@ const CatalogTyresPage = observer(() => {
         : null  
         }
         </div>
+        <Suspense fallback={<SpinnerCarRot/>}>
         <div className='b'>
         {location.pathname.includes('tyres') ?
           <FilterCatalogTyres
@@ -1393,7 +1402,8 @@ const CatalogTyresPage = observer(() => {
           }
         </div>
         <div className='e'>
-        </div>  
+        </div> 
+        </Suspense> 
     </div>
   );
 });

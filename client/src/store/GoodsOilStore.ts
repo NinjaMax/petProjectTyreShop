@@ -6,19 +6,13 @@ export default class GoodsOilStore {
     _oils: {}[];
     constructor() {  
          this._types = [
-            // {id: 1, name: 'Легковые'},
-            // {id: 2, name: 'Микроавтобус'},
-            // {id: 3, name: 'Внедорожник'}               
+           
         ];
         this._brands = [
-            // {id: 1, name: 'Michelin'},
-            // {id: 2, name: 'Bridgestone'},
-            // {id: 3, name: 'Continental'}
+
         ];
         this._oils = [
-            // {id: 1, name: 'Легковые', price: 1500, rating: 5, info:"Шины легковые", img: 'https://tshina.ua/upload/iblock/f65/Winter-icept-iz2-w616.png'},
-            // {id: 2, name: 'Микроавтобус',  price: 1500, rating: 5, info:"Шины легковые", img: 'https://tshina.ua/upload/iblock/f65/Winter-icept-iz2-w616.png'},
-            // {id: 3, name: 'Внедорожник',  price: 1500, rating: 5, info:"Шины легковые", img: 'https://tshina.ua/upload/iblock/f65/Winter-icept-iz2-w616.png'}
+          
         ];
         makeAutoObservable(this, {});
     }

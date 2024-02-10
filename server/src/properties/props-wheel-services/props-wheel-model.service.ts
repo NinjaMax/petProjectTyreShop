@@ -14,9 +14,9 @@ import { WheelBoltCountPcd } from '../entities/wheels/wheel-boltCountPcd.model';
 import { WheelDia } from '../entities/wheels/wheel-dia.model';
 import { WheelEt } from '../entities/wheels/wheel-et.model';
 import { WheelDiameter } from '../entities/wheels/wheel-diameter.model';
-import { ReviewTyres } from '../../reviews/entities/review-tyres.model';
 import { Question } from '../../questions/entities/question.entity';
 import { PriceWheels } from '../../prices/entities/price-wheels.model';
+import { ReviewWheels } from '../../reviews/entities/review-wheels.model';
 
 @Injectable()
 export class PropsWheelModelService {
@@ -134,6 +134,7 @@ export class PropsWheelModelService {
           this.stringService.createStringUrl(item.model) ===
             brand_and_model.split('-').slice(2, getBrandModel.length).join('-'),
       );
+      console.log('GET_WHEEL: ', getWheelByModel);
       if (getWheelByModel) {
         const wheelsAllByModels = await this.wheelModelRepository.findOne({
           where: {
@@ -150,7 +151,7 @@ export class PropsWheelModelService {
                 { model: WheelDia},
                 { model: WheelEt},
                 { model: WheelDiameter},
-                { model: ReviewTyres },
+                { model: ReviewWheels },
                 { model: Question },
                 { model: PriceWheels }
               ],

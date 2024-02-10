@@ -50,7 +50,7 @@ const BasketNavBar = observer(({setActive}: IBasketNav) => {
       }
     {page.basketCount !== 0 ?
       <div className='basketNavCount'>
-        <span className= {!customer ? 'basketNavCountNum' : 'basketNavCountNum active'}>
+        <span className= 'basketNavCountNum'>
           {page.basketCount}
         </span>
       </div>

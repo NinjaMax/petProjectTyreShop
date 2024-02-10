@@ -21,7 +21,6 @@
     font-weight: bold;
     position: relative;
     font-family: var(--main-font-family);
-    color: #ffff;
     top: -50px;
     right: -38%;
     border: #ccc 1px solid;
@@ -31,8 +30,4 @@
     font-weight: bold;
     font-size: medium;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-}
-
-.basketNavCountNum .active {
-    right: 2%;
 }

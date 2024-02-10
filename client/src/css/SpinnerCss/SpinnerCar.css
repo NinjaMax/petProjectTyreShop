@@ -1,60 +1,35 @@
 .spinner {
-    /* height: 300px;
-    width: 300px; */
-    /* border: #000 solid; */
-    text-align: center;
-    vertical-align: middle;
-    /* animation: DrawLine 1.6s both infinite alternate linear; */
-    
-    /* animation: rotate 1.2s linear 0s infinite; */
-  }
-  .path {
-    /*transform-origin: top left;*/
-    /*animation: rotate 1.2s linear 0s infinite;*/
-    /*transform: translateX(50px);*/
-    /* animation: Rotate 2.4s both infinite linear; */
-    animation:  1s linear 0.2s infinite running rise;
-    /*animation: 2s linear 0.5s infinite running slidein;*/
-    /*animation: 3s ease-in 1s infinite both running slidein;*/
-    fill: #000;
-    stroke: #000;
-    stroke-width: 50;
-    height: 60px;
-    width: 60px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: auto;
+}
+.path {
+  animation:  1s linear 0.2s infinite running rise;
+  fill: #000;
+  stroke: #000;
+  stroke-width: 50;
+  height: 60px;
+  width: 60px;
+}
 
-  /* @keyframes Rotate {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(-360deg);
-    }
-  } 
-    @keyframes DrawLine {
-    0% {
-      stroke-dasharray: 126 0;
-    } 
-      100% {
-      stroke-dasharray: 126 0;
-    }
-  }  */
-
-  @keyframes rise {
-    from {
-      transform: translateX(-180vh);
-    }
-    to {
-      transform: translateX(180vh);
-    }
+@keyframes rise {
+  from {
+    transform: translateX(-180vh);
   }
+  to {
+    transform: translateX(180vh);
+  }
+}
   
-  @keyframes bounce {
-    from {
-      transform: translateX(-50vw);
-    }
-    to {
-      transform: translateX(50vw);
-    }
+@keyframes bounce {
+  from {
+    transform: translateX(-50vw);
   }
+  to {
+    transform: translateX(50vw);
+  }
+}
   

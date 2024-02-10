@@ -39,6 +39,7 @@
   "include": [
     "src",
     "src/**/*",
-    "src/index.d.ts"
+    "src/index.d.ts",
+    //"img_custome.d.ts"
   ]
 }
