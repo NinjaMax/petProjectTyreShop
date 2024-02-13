@@ -13,6 +13,8 @@ const CategorySlide = () => {
                     <img src='img/summer_tyres1.webp' 
                       loading='lazy'
                       decoding='async'
+                      width={300}
+                      height={200}
                       className="hover-shadow" 
                       alt='categorySlider'/>
                     <div className='contentCategorySlider'>
@@ -25,6 +27,8 @@ const CategorySlide = () => {
                     <img src='img/winter_tyres1.webp'
                       loading='lazy'
                       decoding='async'
+                      width={300}
+                      height={200}
                       className="hover-shadow" 
                       alt='categorySlider'
                     />
@@ -38,6 +42,8 @@ const CategorySlide = () => {
                     <img src='img/all_seasonstyre1_300.webp' 
                       loading='lazy'
                       decoding='async'
+                      width={300}
+                      height={200}
                       className="hover-shadow" 
                       alt='categorySlider'
                     />
@@ -51,6 +57,8 @@ const CategorySlide = () => {
                     <img src='img/wheelsImg300_200_3_blugrey.webp' 
                       loading='lazy'
                       decoding='async'
+                      width={300}
+                      height={200}
                       className="hover-shadow" 
                       alt='categorySlider'
                     />  

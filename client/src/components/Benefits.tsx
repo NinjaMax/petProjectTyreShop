@@ -12,6 +12,8 @@ const Benefits = () => {
                     <img src='onlineSupport100.webp' 
                         loading='lazy'
                         decoding='async' 
+                        width={100}
+                        height={100}
                         alt="OnlineSupport"
                     />
                     <p><span>{t('benefitsBox.online_support_head')}</span></p>
@@ -20,7 +22,9 @@ const Benefits = () => {
                 <div className="containerBenefit">
                     <img src='fastDelivery100.webp' 
                         loading='lazy'
-                        decoding='async' 
+                        decoding='async'
+                        width={100}
+                        height={100} 
                         alt="FastDelivery" 
                     />
                     <p><span>{t('benefitsBox.online_delivery_head')}</span></p>
@@ -30,6 +34,8 @@ const Benefits = () => {
                     <img src='handshake100.webp' 
                         loading='lazy'
                         decoding='async' 
+                        width={100}
+                        height={100}
                         alt="Handshake" 
                     />
                     <p><span>{t('benefitsBox.online_handshake_head')}</span></p>

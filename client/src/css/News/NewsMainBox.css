@@ -18,6 +18,7 @@
     align-items: center;
     flex-wrap:wrap; 
     width: 100%;
+    content-visibility: auto;
 }
 
 .newsMainBoxList a {
@@ -38,6 +39,7 @@
     background-color:#9EB9D3;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     overflow: hidden;
+    content-visibility: auto;
 }
 
 .columnNewsBoxContent {

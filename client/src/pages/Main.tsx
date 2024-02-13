@@ -50,7 +50,7 @@ const Main = observer(() => {
     let isMounted = false;
     const loadMainTyreTask = async () => {
       if(!isMounted) {
-        console.time('GET_REQUEST_TYRE_FROM_DATA_BASE');
+        //console.time('GET_REQUEST_TYRE_FROM_DATA_BASE');
         let tyreFilterGoods: any = await getTyresOffsetMain(
           chooseFilterState === 'ШИНИ' ? filter.width : '',
           chooseFilterState === 'ШИНИ' ? filter.height : '',
@@ -60,7 +60,7 @@ const Main = observer(() => {
             //filter.price,
             filter.sort,
           );
-          console.timeEnd('GET_REQUEST_TYRE_FROM_DATA_BASE');
+          //console.timeEnd('GET_REQUEST_TYRE_FROM_DATA_BASE');
 
           let setWidthFilter:any[] | null = [];
           let setHightFilter:any[] | null = [];
@@ -182,7 +182,7 @@ const Main = observer(() => {
       let i:number = 0;
       while(taskLoad.length > i) {
         if(!isMounted && taskLoad[i] === getWheelsMainOffset) {
-          console.time('GET_REQUEST_WHEEL_FROM_DATA_BASE');
+          //console.time('GET_REQUEST_WHEEL_FROM_DATA_BASE');
           let wheelFilterGoods: any = await taskLoad[i](
             chooseFilterState === 'ДИСКИ' ? filter.width : '',
             chooseFilterState === 'ДИСКИ' ? filter.diameter : '',
@@ -191,7 +191,7 @@ const Main = observer(() => {
             chooseFilterState === 'ДИСКИ' ? filter.type : '',
             filter.sort,
           );
-          console.timeEnd('GET_REQUEST_WHEEL_FROM_DATA_BASE');
+          //console.timeEnd('GET_REQUEST_WHEEL_FROM_DATA_BASE');
           let setWidthFilter:any[] | null = [];
           let setDiameterFilter:any[] | null = [];
           let setBrandFilter:any[] | null = [];

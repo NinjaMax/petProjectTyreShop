@@ -44,7 +44,8 @@ const NewsItemPage = () => {
         </div>
         <div>
             <img 
-                loading='lazy'
+                //loading='lazy'
+                fetchpriority='low'
                 width={1290}
                 src={process.env.REACT_APP_HOST + '/imageArticle/' + article?.articles_pictures}
                 alt='imgArticle'

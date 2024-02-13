@@ -62,7 +62,7 @@ const NavBar = observer(() => {
   const [isEmptyCompare, setIsEmptyCompare] = useState<boolean>(false);
   const isMobile = useMediaQuery({ query: '(max-width: 426px)' });
   const { t, i18n } = useTranslation();
-
+  
   useEffect(() => {
     let isUser = false;
     const socialSignIn = async () => {

@@ -2,11 +2,23 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="/public/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#000000" />
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+    <!-- <script async src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" integrity="sha512-F5QTlBqZlvuBEs9LQPqc1iZv2UMxcVXezbHzomzS6Df4MZMClge/8+gXrKw2fl5ysdk4rWjR0vKS7NNkfymaBQ==" crossorigin="anonymous" referrerpolicy="no-referrer" data-auto-a11y="true"></script> -->
+    
+    <!-- <link rel="stylesheet" href="fontawesome.min.css"/> -->
+    <link rel="preconnect" href="https://localhost:4000">
+    <link rel="preload" fetchpriority="high" as="image" href='sliders/continental_offer_bonus_700_390.webp' type="image/webp" />
+    <link rel="preload" fetchpriority="high" as="image" href='img/tyres_tab_main_1.webp' type="image/webp" />
+    <link rel="preload" fetchpriority="high" as="image" href='./logoSky180.webp' type="image/webp" />
+    <script async type='text/javascript'>
+      //<![CDATA[ 
+      function loadCSS(e, t, n) { "use strict"; var i = window.document.createElement("link"); var o = t || window.document.getElementsByTagName("script")[0]; i.rel = "stylesheet"; i.href = e; i.media = "only x"; o.parentNode.insertBefore(i, o); setTimeout(function () { i.media = n || "all" }) }loadCSS("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css");
+      //]]> 
+    </script>
     
     <!-- <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
@@ -30,9 +42,7 @@
      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
      crossorigin=""
     /> -->
-    <link rel="preload" fetchpriority="high" as="image" href='sliders/continental_offer_bonus_700_390.webp' type="image/webp" />
-    <link rel="preload" fetchpriority="high" as="image" href='img/tyres_tab_main_1.webp' type="image/webp" />
-    <link rel="preload" fetchpriority="high" as="image" href='/logoSky180.webp' type="image/webp" />
+    
     <!-- Make sure you put this AFTER Leaflet's CSS -->
     <!-- <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="

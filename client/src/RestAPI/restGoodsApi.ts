@@ -97,41 +97,21 @@ const getWheelsWithCatOffset = async (
 }
 
 const getTyresWithoutOffset = async (
-    // width: string,
-    // height: string,
-    // diameter: string,
-    // season: string,
-    // brand: string,
     price: string,
     type: string,
     speed_index: string,
     load_index: string,
-    //studded: string,
-    // run_flat: string,
-    // homologation: string,
-    // reinforced: string,
     sort: string,
     ) => {
     const {data} = await $hostGet.get('tyres/no-offset', 
     {params: {
-        // width: width,
-        // height: height,
-        // diameter: diameter,
-        // season: season,
-        // brand: brand,
         price: price,
         type: type,
         speed_index: speed_index,
         load_index: load_index,
-        //studded: studded,
-        //run_flat: run_flat,
-        //homologation: homologation,
-        //reinforce: reinforced,
         sort: sort,
         }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_OFFSET9: ', data )
     return data;
 }
 
@@ -160,14 +140,6 @@ const getTyresOffsetMain = async (
     diameter: string,
     season: string,
     brand: string,
-    //price: string,
-    // type: string,
-    // speed_index: string,
-    // load_index: string,
-    // studded: string,
-    // run_flat: string,
-    // homologation: string,
-    // reinforced: string,
     sort: string,
     ) => {
     const {data} = await $hostGet.get('tyres/main-offset', 
@@ -177,19 +149,9 @@ const getTyresOffsetMain = async (
         diameter: diameter,
         season: season,
         brand: brand,
-        //price: price,
-        // type: type,
-        // speed_index: speed_index,
-        // load_index: load_index,
-        // studded: studded,
-        // run_flat: run_flat,
-        // homologation: homologation,
-        // reinforce: reinforced,
         sort: sort,
         }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_OFFSET9: ', data )
     return data;
 }
 
@@ -231,22 +193,16 @@ const getTyresWithCatOffset = async (
         sort: sort,
         }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_OFFSET9: ', data )
     return data;
 }
 
 const getAllOrdersLeader = async () => {
     const {data} = await $hostGet.get('/orders/all/order-leader')
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
 const getSession = async () => {
     const {data} = await $hostGet.get('/session')
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -256,9 +212,6 @@ const getCompareGoods = async (compareArr: any) =>
         comparison: compareArr
     }).catch(error => {
         console.log(error)
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
-    //return data;
 });  
 
 const getFavoritesGoods = async (favoriteArr: any) => 
@@ -267,142 +220,79 @@ const getFavoritesGoods = async (favoriteArr: any) =>
         favorite: favoriteArr
     }).catch(error => {
         console.log(error)
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
-    //return data;
 });  
 
 const getFavorites = async () => {
     const {data} = await $hostGet.get('/customers/get-favorites')
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
 const getCompare = async () => {
     const {data} = await $hostGet.get('/customers/get-comparison')
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
 const clearCompare = async () => {
     const {data} = await $hostGet.delete('/customers/clear-comparison')
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
 const clearFavorites = async () => {
     const {data} = await $hostGet.delete('/customers/clear-favorites')
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
 const getStorageByIdParam = async (id_storage:number) => {
     const {data} = await $hostGet.get(`storage/idparam/${id_storage ?? '0'}`,
-     //{params: {id: id}}
     )
     return data;
 }
     
 const getTyresAll = async () => {
     const {data} = await $hostGet.get('tyres')
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
 const getWheelsAll = async () => {
     const {data} = await $hostGet.get('/wheels/all')
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
 const getTyresById = async (id:string) => {
     const {data} = await $hostGet.get('tyres/id',
      {params: {id: id}})
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
 const getTyresByModel = async (brand_and_model:string) => {
     const {data} = await $hostGet.get('properties/tyres/by-model',
      {params: {brand_and_model: brand_and_model}})
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
 const getWheelsByModel = async (brand_and_model:string) => {
     const {data} = await $hostGet.get('properties/wheel/by-model',
      {params: {brand_and_model: brand_and_model}})
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
 const getWheelsById = async (id:string) => {
     const {data} = await $hostGet.get('/wheels/id',
      {params: {id: id}})
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
 const getTyresByIdParam = async (id:string) => {
     const {data} = await $hostGet.get(`tyres/paramid/${id ?? '0'}`,
-     //{params: {id: id}}
     )
     return data;
 }
 
 const getWheelsByIdParam = async (id:string) => {
     const {data} = await $hostGet.get(`wheels/paramid/${id ?? '0'}`,
-     //{params: {id: id}}
     )
     return data;
 }
-
-// const getTyresCountAll = async (
-//     width: string,
-//     height: string,
-//     diameter: string,
-//     season: string,
-//     brand: string,
-//     price: string,
-//     type: string,
-//     speed_index: string,
-//     load_index: string,
-//     studded: string,
-//     run_flat: string,
-//     homologation: string,
-//     reinforced: string,
-// ) => {
-//     const {data} = await $hostGet.get('tyres/count/all',
-//     {params: {
-//         width: width,
-//         height: height,
-//         diameter: diameter,
-//         season: season,
-//         brand: brand,
-//         price: price,
-//         type: type,
-//         speed_index: speed_index,
-//         load_index: load_index,
-//         studded: studded,
-//         run_flat: run_flat,
-//         homologation: homologation,
-//         reinforce: reinforced,
-//     }
-//     })
-//     //localStorage.setItem('token', data.token)
-//     //console.log('GET_TYRES_BY_ID: ', data )
-//     return data;
-// }
 
 const getTyresBrandByName = async (
     brand: string,
@@ -452,8 +342,6 @@ const getTyresParamsByBrandAndSeason = async (
         season: season ?? '',
     }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -467,8 +355,6 @@ const getTyresParamsBySeason = async (
         season: season ?? '',
     }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -488,8 +374,6 @@ const getWheelsParamsBy = async (
         diameter: diameter ?? '',
     }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -511,8 +395,6 @@ const getWheelsParamsByBrand = async (
         diameter: diameter ?? ''
     }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -524,8 +406,6 @@ const getAllTyresModelByBrand = async (
         brand: id_brand ?? 0,
     }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -537,8 +417,6 @@ const getAllWheelsModelByBrand = async (
         brand: id_brand ?? 0,
     }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -550,8 +428,6 @@ const getAllTyresParamsByModel = async (
         model: id_model ?? 0,
     }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -563,8 +439,6 @@ const getAllTyresDiametersByModel = async (
         model: id_model ?? 0,
     }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -576,8 +450,6 @@ const getAllWheelsDiametersByModel = async (
         model: id_model ?? 0,
     }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -589,8 +461,6 @@ const getAllWheelsDiametersByBrand = async (
         brand: id_brand ?? 0,
     }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -678,15 +548,11 @@ const addGoodsToBasket = async (
 
 const getBasketOrder = async () => {
     const {data} = await $hostGet.get('/basket/by-session')
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
 const getBasketById = async (id: number) => {
     const {data} = await $hostGet.get(`/basket/by-id/${id ?? ''}`)
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -721,7 +587,6 @@ await $hostPost.patch('/basket/update',
 
 const updateBasketStorageGoods = async (
     data: any, 
-    //basketStorageId: number
 ) => 
 await $hostPost.patch('/basket/update/basketstorage', data)
 .catch(error => {
@@ -773,7 +638,6 @@ const createTyreReview = async (
     id_season: number,
     id_customer?: number, 
     customer_pictures?: string,   
-    //rating_overall?: number,
     rating_dry_road?:number,
     rating_wet_road?: number,
     rating_snow_road?: number,
@@ -843,8 +707,6 @@ const getTyresModelRatingAvg = async (id_model: number) => {
     const {data} = await $hostGet.get(
         `/ratings/tyres/bymodel/${id_model ?? 0}`,
     )
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -852,8 +714,6 @@ const getWheelsModelRatingAvg = async (id_model: number) => {
     const {data} = await $hostGet.get(
         `/ratings/wheels/bymodel/${id_model ?? 0}`,
     )
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -861,8 +721,6 @@ const getTyresBrandRatingAvg = async (id_brand: number) => {
     const {data} = await $hostGet.get(
         `/ratings/tyres/bybrand/${id_brand ?? 0}`,
     )
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -870,8 +728,6 @@ const getWheelsBrandRatingAvg = async (id_brand: number) => {
     const {data} = await $hostGet.get(
         `/ratings/wheels/bybrand/${id_brand ?? 0}`,
     )
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -885,8 +741,6 @@ const getTyresBrandRatingAvgSeason = async (
         id_season: id_season ?? 0,
     }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -900,8 +754,6 @@ const getTyresRatingAvgIdAndIdmodel = async (
         id_model: id_model ?? 0,
     }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -915,8 +767,6 @@ const getWheelsRatingAvgIdAndIdmodel = async (
         id_model: id_model ?? 0,
     }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -928,8 +778,6 @@ const getTyresCountReviewByBrand = async (
         id_brand: id_brand ?? 0,
     }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -941,8 +789,6 @@ const getWheelsCountReviewByBrand = async (
         id_brand: id_brand ?? 0,
     }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -954,8 +800,6 @@ const getTyresCountReviewByModel = async (
         id_model: id_model ?? 0,
     }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -967,8 +811,6 @@ const getWheelsCountReviewByModel = async (
         id_model: id_model ?? 0,
     }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -994,8 +836,6 @@ const createStoreReview = async (
 
 const getAllStoreReview = async () => {
     const {data} = await $hostGet.get('/reviews-store/allstores')
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -1009,8 +849,6 @@ const getAllStoreReviewLimit = async (
         offset: offset ?? '0',
     }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -1024,8 +862,6 @@ const getTyresReviewLimit = async (
         offset: offset ?? '0',
     }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -1039,29 +875,21 @@ const getWheelsReviewLimit = async (
         offset: offset ?? '0',
     }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
 const getArticlesId = async (id: number) => {
     const {data} = await $hostGet.get(`/articles/${id}`)
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
 const getArticlesImage = async (imageName: string) => {
     const {data} = await $hostGet.get(`/public/imageArticle/${imageName}`)
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
 const getAllArticles = async () => {
     const {data} = await $hostGet.get('/articles/all')
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -1075,8 +903,6 @@ const getAllArticlesLimit = async (
         offset: offset ?? '0',
     }
     })
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -1108,8 +934,6 @@ const getAllQuestionsModel = async (id_model: number) => {
     const {data} = await $hostGet.get(
         `/questions/all-bymodel/${id_model ?? 0}`
         )
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
 
@@ -1117,135 +941,19 @@ const getSupplierById = async (id_supplier: number) => {
     const {data} = await $hostGet.get(
         `/suppliers/byid/${id_supplier ?? 0}`,
     )
-    //localStorage.setItem('token', data.token)
-    //console.log('GET_TYRES_BY_ID: ', data )
     return data;
 }
-
-// const getTyresBrandPropsAll = async () => {
-//     const {data} = await $hostGet.get('properties/allbrands')
-//     //localStorage.setItem('token', data.token)
-//     //console.log('GET_TYRES_BY_ID: ', data )
-//     return data;
-// }
-
-// const getTyresDiameterPropsAll = async () => {
-//     const {data} = await $hostGet.get('properties/alldiameter')
-//     //localStorage.setItem('token', data.token)
-//     //console.log('GET_TYRES_BY_ID: ', data )
-//     return data;
-// }
-
-// const getTyresHeightPropsAll = async () => {
-//     const {data} = await $hostGet.get('properties/allheight')
-//     //localStorage.setItem('token', data.token)
-//     //console.log('GET_TYRES_BY_ID: ', data )
-//     return data;
-// }
-
-// const getTyresHomologationPropsAll = async () => {
-//     const {data} = await $hostGet.get('properties/allhomologation')
-//     //localStorage.setItem('token', data.token)
-//     //console.log('GET_TYRES_BY_ID: ', data )
-//     return data;
-// }
-
-// const getTyresLoadIndexPropsAll = async () => {
-//     const {data} = await $hostGet.get('properties/allloadindex')
-//     //localStorage.setItem('token', data.token)
-//     //console.log('GET_TYRES_BY_ID: ', data )
-//     return data;
-// }
-
-// const getTyresModelPropsAll = async () => {
-//     const {data} = await $hostGet.get('properties/allmodels')
-//     //localStorage.setItem('token', data.token)
-//     //console.log('GET_TYRES_BY_ID: ', data )
-//     return data;
-// }
-
-// const getTyresReinforcedPropsAll = async () => {
-//     const {data} = await $hostGet.get('properties/allreinforced')
-//     //localStorage.setItem('token', data.token)
-//     //console.log('GET_TYRES_BY_ID: ', data )
-//     return data;
-// }
-
-// const getTyresRunFlatPropsAll = async () => {
-//     const {data} = await $hostGet.get('properties/allrunflat')
-//     //localStorage.setItem('token', data.token)
-//     //console.log('GET_TYRES_BY_ID: ', data )
-//     return data;
-// }
-
-// const getTyresSpeedIndexPropsAll = async () => {
-//     const {data} = await $hostGet.get('properties/allspeedindex')
-//     //localStorage.setItem('token', data.token)
-//     //console.log('GET_TYRES_BY_ID: ', data )
-//     return data;
-// }
-
-// const getTyresStuddedPropsAll = async () => {
-//     const {data} = await $hostGet.get('properties/allstudded')
-//     //localStorage.setItem('token', data.token)
-//     //console.log('GET_TYRES_BY_ID: ', data )
-//     return data;
-// }
-
-// const getTyresVehicleTypePropsAll = async () => {
-//     const {data} = await $hostGet.get('properties/allvehicletype')
-//     //localStorage.setItem('token', data.token)
-//     //console.log('GET_TYRES_BY_ID: ', data )
-//     return data;
-// }
-
-// const getTyresWidthPropsAll = async () => {
-//     const {data} = await $hostGet.get('properties/allwidth')
-//     //localStorage.setItem('token', data.token)
-//     //console.log('GET_TYRES_BY_ID: ', data )
-//     return data;
-// }
-
-// const getTyresSeasonPropsAll = async () => {
-//     const {data} = await $hostGet.get('properties/allseasons')
-//     //localStorage.setItem('token', data.token)
-//     //console.log('GET_TYRES_BY_ID: ', data )
-//     return data;
-// }
 
 export {
     getTyresOffsetMain,
     getTyresWithoutOffset,
     getTyresWithCatOffset,
     getTyresWithoutOffsetProps,
-    //getTyresWithoutOffsetDiameter,
-    // getTyresWithoutOffsetSeason,
-    // getTyresWithoutOffsetBrand,
-    // getTyresWithoutOffsetType,
-    // getTyresWithoutOffsetSpeed,
-    // getTyresWithoutOffsetLoad,
-    // getTyresWithoutOffsetStudded,
-    // getTyresWithoutOffsetRunFlat,
-    // getTyresWithoutOffsetHomologation,
-    // getTyresWithoutOffsetReinforce,
     getTyresById,
     getTyresAll,
     getWheelsAll,
     getTyresReviewLimit,
     getTyresByIdParam,
-    // getTyresBrandPropsAll,
-    // getTyresDiameterPropsAll,
-    // getTyresHeightPropsAll,
-    // getTyresHomologationPropsAll,
-    // getTyresLoadIndexPropsAll,
-    // getTyresModelPropsAll,
-    // getTyresReinforcedPropsAll,
-    // getTyresRunFlatPropsAll,
-    // getTyresSpeedIndexPropsAll,
-    // getTyresStuddedPropsAll,
-    // getTyresVehicleTypePropsAll,
-    // getTyresWidthPropsAll,
-    // getTyresSeasonPropsAll,
     createTyreReview,
     getTyresModelRatingAvg,
     getTyresBrandRatingAvg,

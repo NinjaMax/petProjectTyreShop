@@ -3,7 +3,7 @@ import '../../css/Goods/ProductPayDel.css';
 import { useTranslation } from 'react-i18next';
 
 const ProductPayDel = () => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     return (
         <div className='productPayDelBox'>
@@ -11,7 +11,9 @@ const ProductPayDel = () => {
                 <h5>{t('productPerDay.delivery')}</h5>
                 <div className='productPayDelBlock'>
                     <span className='productPayDelNovaPoshta'>
-                        <img src='/iconsDelivery/nova_Poshta_2022_logo.png' 
+                        <img 
+                            loading='lazy'
+                            src='/iconsDelivery/nova_Poshta_2022_logo.webp' 
                             width={90}
                             height={40}
                             alt='deliveryNova'
@@ -21,7 +23,9 @@ const ProductPayDel = () => {
                         </span>
                     </span>
                     <span className='productPayDelDelivery'>
-                        <img src='/iconsDelivery/delivery_logo.png' 
+                        <img 
+                            loading='lazy'
+                            src='/iconsDelivery/delivery_logo.webp' 
                             width={85}
                             height={37}
                             alt='deliveryDelivery'
@@ -32,7 +36,9 @@ const ProductPayDel = () => {
                     </span>
                     <span className='productPayDelPickUp'>
                         {t('productPerDay.take_off')}
-                        <img src='/iconsDelivery/warehouse_55.png' 
+                        <img 
+                            loading='lazy'
+                            src='/iconsDelivery/warehouse_55.webp' 
                             width={48}
                             height={48}
                             alt='deliveryPickUp'
@@ -47,7 +53,9 @@ const ProductPayDel = () => {
                 <h5>{t('productPerDay.accept')}</h5>
                 <div className='productPayDelBlock'>    
                     <span className='productPayDelCash'>
-                        <img src='./iconPayment/cash_48_b.png' 
+                        <img 
+                            loading='lazy'
+                            src='./iconPayment/cash_48_b.webp' 
                             width={48}
                             height={48}
                             alt='cash'
@@ -57,7 +65,9 @@ const ProductPayDel = () => {
                         </span>
                     </span>
                     <span className='productPayDelBank'>
-                        <img src='./iconPayment/merchant_48_b.png' 
+                        <img 
+                            loading='lazy'
+                            src='./iconPayment/merchant_48_b.webp' 
                             width={48}
                             height={48}
                             alt='merchant'
@@ -67,7 +77,9 @@ const ProductPayDel = () => {
                         </span>
                     </span>
                     <span className='productPayDelVisa'>
-                        <img src='./iconPayment/cardVisaMaster.png' 
+                        <img 
+                            loading='lazy'
+                            src='./iconPayment/cardVisaMaster.webp' 
                             width={85}
                             height={30}
                             alt='card'
@@ -77,7 +89,9 @@ const ProductPayDel = () => {
                         </span>
                     </span>
                     <span className='productPayDelPrivat'>
-                        <img src='./iconPayment/pay24.png' 
+                        <img 
+                            loading='lazy'
+                            src='./iconPayment/pay24.webp' 
                             width={75}
                             height={30}
                             alt='cardPrivat'
@@ -87,7 +101,9 @@ const ProductPayDel = () => {
                         </span>
                     </span>
                     <span className='productPayDelMono'>
-                        <img src='./iconPayment/monobank_logo_100.png' 
+                        <img 
+                            loading='lazy'
+                            src='./iconPayment/monobank_logo_100.webp' 
                             width={40}
                             height={40}
                             alt='monobank'

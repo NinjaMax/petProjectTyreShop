@@ -7,7 +7,7 @@ import { NEWS_ROUTE } from '../../utils/consts';
 import { useTranslation } from 'react-i18next';
 
 const NewsMainBox = ({articlesArr, isNewsPage}: IArticle ) => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     const openArticle = (e:any) => {
         localStorage.setItem('newsId', e.currentTarget.getAttribute('data-value'));
@@ -25,7 +25,14 @@ const NewsMainBox = ({articlesArr, isNewsPage}: IArticle ) => {
             >
             <div className="newsMainBoxListItem" key={article.id_articles}>
                 <div className="columnNewsBox">
-                    <img width={1290} src={process.env.REACT_APP_HOST + '/imageArticle/' + article?.articles_pictures} alt='imageNews'/>
+                    <img 
+                        width={410}
+                        height={225}
+                        loading='lazy'
+                        decoding='async' 
+                        src={process.env.REACT_APP_HOST + '/imageArticle/' + article?.articles_pictures} 
+                        alt='imageNews'
+                    />
                     <div className='columnNewsBoxContent'>
                         <h2>{article.title}</h2>
                     </div>  

@@ -3,6 +3,7 @@
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
+    content-visibility: auto;
   }
   
   .rowCategoreSlider:after {
