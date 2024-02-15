@@ -41,7 +41,7 @@ const News = () => {
     <div className='newsBox'>
         <BreadCrumbs route={['НОВИНИ']} hrefTitle={['НОВИНИ']}/>
         <div className='newsContainer'>
-        {articlesAll ? 
+        {Array.isArray(articlesAll) ? 
             <NewsMainBox 
                 isNewsPage={true}
                 articlesArr={articlesAll} 

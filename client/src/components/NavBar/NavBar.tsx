@@ -293,7 +293,7 @@ const NavBar = observer(() => {
       <a href='/'>
         <img 
           fetchpriority="high"
-          src='/logoSky180.webp' 
+          src='img_main/logoSky180.webp' 
           alt='logoShop'
         />
       </a>
@@ -334,22 +334,22 @@ const NavBar = observer(() => {
       <NavBarSearch searchBtn={searchBtn} clickSearchBtn={clickSearchBtn}/>
     :null
     }
-    {page.favoritesCount.length !== 0 ?
+    {page?.favoritesCount?.length !== 0 ?
     <a href={FAVORITES_ROUTE}>
-      <FavoriteGoods countFavorite={page.favoritesCount.length ?? 0}/>
+      <FavoriteGoods countFavorite={page?.favoritesCount?.length ?? 0}/>
     </a>
     :
     <div onClick={openFavorite}>
-      <FavoriteGoods countFavorite={page.favoritesCount.length ?? 0}/>
+      <FavoriteGoods countFavorite={page?.favoritesCount?.length ?? 0}/>
     </div>
     }
     {page.comparisonCount.length !== 0 ?
     <a href={COMPARISON_ROUTE}>
-      <CompareGoods countCompare={page.comparisonCount.length ?? 0} /> 
+      <CompareGoods countCompare={page.comparisonCount?.length ?? 0} /> 
     </a>
     :
     <div onClick={openCompare}>
-      <CompareGoods countCompare={page.comparisonCount.length ?? 0} /> 
+      <CompareGoods countCompare={page.comparisonCount?.length ?? 0} /> 
     </div>
     }
     <div className='navbarLanguageBox'>
@@ -366,7 +366,7 @@ const NavBar = observer(() => {
         ))}
       </div>
     </div>
-    {customer._isAuth ?
+    {customer?._isAuth === 'true' ?
       <AuthView logOutUser={logOutUser}/>
       : <span className='enterAuthNavBar' onClick={authActive}>
            {t('navBar.auth_link')}

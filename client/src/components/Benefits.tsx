@@ -9,7 +9,7 @@ const Benefits = () => {
         <div>
             <div className='benefitsBox'>
                 <div className="containerBenefit">
-                    <img src='onlineSupport100.webp' 
+                    <img src='img_main/onlineSupport100.webp' 
                         loading='lazy'
                         decoding='async' 
                         width={100}
@@ -20,7 +20,7 @@ const Benefits = () => {
                     {t('benefitsBox.online_support_text')}
                 </div>
                 <div className="containerBenefit">
-                    <img src='fastDelivery100.webp' 
+                    <img src='img_main/fastDelivery100.webp' 
                         loading='lazy'
                         decoding='async'
                         width={100}
@@ -31,12 +31,12 @@ const Benefits = () => {
                     {t('benefitsBox.online_delivery_text')}
                 </div>
                 <div className="containerBenefit">
-                    <img src='handshake100.webp' 
+                    <img src='img_main/handshake100.webp' 
                         loading='lazy'
                         decoding='async' 
                         width={100}
                         height={100}
-                        alt="Handshake" 
+                        alt="handshake" 
                     />
                     <p><span>{t('benefitsBox.online_handshake_head')}</span></p>
                     <p>{t('benefitsBox.online_handshake_text')}</p>

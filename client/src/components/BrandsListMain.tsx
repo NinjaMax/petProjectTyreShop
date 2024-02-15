@@ -5,7 +5,7 @@ import { tyreBrandLogo } from '../services/tyreBrandImg.service';
 const BrandsListMain = () => {
   return (
     <div className='brandListMainContainer'>
-    <div className='brandListMainBox'>
+        <div className='brandListMainBox'>
             <a className='brandListMainItem' href='/tyres/goodyear'>
                 <img className='imgBrandListMain' 
                 src={tyreBrandLogo('Goodyear')}
@@ -55,27 +55,7 @@ const BrandsListMain = () => {
                 alt='imgMichelin'/>
                 Michelin
             </a>
-        {/* <div className='brandListMainItem'>
-            <img className='imgBrandListMain' 
-            src=''/>
-            <span>Toyo</span>
         </div>
-        <div className='brandListMainItem'>
-            <img className='imgBrandListMain' 
-            src=''/>
-            <span>Lassa</span>
-        </div>
-        <div className='brandListMainItem'>
-            <img className='imgBrandListMain' 
-            src=''/>
-            <span>Nexen</span>
-        </div>
-        <div className='brandListMainItem'>
-            <img className='imgBrandListMain' 
-            src=''/>
-            <span>Premiorri</span>
-        </div> */}
-    </div>
     </div>
   )
 }

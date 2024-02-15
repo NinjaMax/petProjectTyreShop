@@ -49,7 +49,7 @@ if (rootElement.hasChildNodes()) {
       isLoading: true, 
     }}>
       <App/>
-    </Context.Provider>,
+    </Context.Provider>
   );
 }
 

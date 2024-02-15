@@ -23,7 +23,7 @@ const BasketNavBar = observer(({setActive}: IBasketNav) => {
         if (!isMounted && taskProduct[i] === getBasketOrder) {
           const getBasket: any = await taskProduct[i]();
           if (getBasket) {
-            page.setBasketCount(getBasket?.basket_storage.reduce(
+            page.setBasketCount(getBasket?.basket_storage?.reduce(
               (sum: number, current: any) => (sum + current.quantity),0)
             ); 
           }

@@ -29,7 +29,7 @@ const ReviewStore = ({storeData}: IReviewStoreData) => {
                     <img className='avatarImgStore' 
                         loading='lazy'
                         decoding='async'
-                        src={storeData?.customer_pictures ?? './customer64.webp'} 
+                        src={storeData?.customer_pictures ?? 'img_main/customer64.webp'} 
                         alt='avatarUser'
                     /> 
                     {storeData?.name}

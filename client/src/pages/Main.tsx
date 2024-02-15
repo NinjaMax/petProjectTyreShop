@@ -68,7 +68,7 @@ const Main = observer(() => {
           let setBrandFilter:any[] | null = [];
           let setSeasonFilter :any[] | null = [];
           
-          tyreFilterGoods?.rows.map((item: any) =>
+          tyreFilterGoods?.rows?.map((item: any) =>
           { return (
             setWidthFilter?.push(item.width.width),
             setHightFilter?.push(item.height.height),
@@ -198,7 +198,7 @@ const Main = observer(() => {
           let setBoltCountFilter :any[] | null = [];
           let setTypeFilter :any[] | null = [];
  
-          wheelFilterGoods.rows.map((item: any) => 
+          wheelFilterGoods?.rows?.map((item: any) => 
           { return (
             setWidthFilter?.push(item.width.width),
             setDiameterFilter?.push(item.diameter.diameter),
@@ -312,7 +312,7 @@ const Main = observer(() => {
           String(1),
           String(nextBtnReview)
         );
-        if (getAllReviewStore) {
+        if (getAllReviewStore && getAllReviewStore?.length > 0) {
           setReviewStoreAll(getAllReviewStore);
         }
       }
@@ -328,24 +328,25 @@ const Main = observer(() => {
     const getLeadersOrder = async () => {
       //if (!isMountedLeader && (prevBtnLeader || nextBtnLeader)) {
       if (!isMountedLeader) {
-        let getOrdersLeader: any = await getAllOrdersLeader();
-        //console.log('GET_LEADERS: ', getOrdersLeader);
-        getOrdersLeader.forEach( async(item: any) => {
-          const getTyre = await getTyresById(item.id);
-          const getWheel = await getWheelsById(item.id);
-          if (getTyre) {
-            getTyre.typeCard = 'tyre';
-            setLeaderOrder(
-              oldLeader=> Array.from(new Set([...oldLeader!, getTyre]))
+        let getOrdersLeader: any[] | undefined = await getAllOrdersLeader();
+        if (Array.isArray(getOrdersLeader) && getOrdersLeader?.length > 0) {
+          getOrdersLeader?.forEach( async(item: any) => {
+            const getTyre = await getTyresById(item.id);
+            const getWheel = await getWheelsById(item.id);
+            if (getTyre) {
+              getTyre.typeCard = 'tyre';
+              setLeaderOrder(
+                oldLeader=> Array.from(new Set([...oldLeader!, getTyre]))
               );
-          }
-          if (getWheel) {
-            getWheel.typeCard = 'wheel';
-            setLeaderOrder(
-            oldLeader => Array.from(new Set([...oldLeader!, getWheel])));
-          }
-        });
-      }
+            }
+            if (getWheel) {
+              getWheel.typeCard = 'wheel';
+              setLeaderOrder(
+              oldLeader => Array.from(new Set([...oldLeader!, getWheel])));
+            }
+          });
+        };
+      };
     };
     getLeadersOrder();
     return () => {
@@ -526,9 +527,9 @@ const Main = observer(() => {
           buttonPosition={undefined}
         >
         <div >
-          {reviewStoreAll?.length !== 0 ? 
+          {Array.isArray(reviewStoreAll) && reviewStoreAll?.length > 0 ?
           reviewStoreAll?.map((item: any) =>
-          <div key={item.id_review_store + '_review'}>
+          <div key={item?.id_review_store + '_review'}>
             <ReviewStore storeData={item}/>
           </div>
           )

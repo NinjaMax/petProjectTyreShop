@@ -17,7 +17,7 @@ const NewsMainBox = ({articlesArr, isNewsPage}: IArticle ) => {
         <div className='newsMainBox'>
             <div className='newsTitle'>{t('newsMainBox.news_box_title')}</div>
             <div className="newsMainBoxList">
-            {articlesArr ? articlesArr.map((article: IArticleItem) => (
+            {Array.isArray(articlesArr) ? articlesArr.map((article: IArticleItem) => (
             <a href={NEWS_ROUTE + '/' + createStringUrl(article.title.slice(0, article.title.length - 1))} 
                 key={article.id_articles}
                 data-value={article.id_articles} 

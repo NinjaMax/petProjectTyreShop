@@ -223,7 +223,7 @@ import { SmsFlyApiModule } from './sms-fly-api/sms-fly-api.module';
       inject: [ConfigService],
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
+      rootPath: join(__dirname, '..', '..', '/client/dist'),
     }),
     TyresModule,
     WheelsModule,

@@ -1,5 +1,7 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
 const path = require('path');
+const webpack = require('webpack');
+//const json5 = require('json5');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
@@ -10,53 +12,49 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const isProduction = process.env.NODE_ENV === 'production';
 console.log('IS_PODUCTION: ', isProduction);
+
 const stylesHandler = isProduction ? MiniCssExtractPlugin.loader : 'style-loader';
 
 const config = {
     entry: './src/index.tsx',
     devtool: 'inline-source-map',
-    context: __dirname,
-    //target: 'node',
- 
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].bundle.js',
-        //publicPath: '/',
-        //publicPath: "/",
+        publicPath: "/",
+        assetModuleFilename: '[name][ext]',
         clean: true,
     },
     devServer: {
-        //contentBase: path.join(__dirname, "public"),
-        //static: './dist',
-        //static: path.join(__dirname, 'dist'),
         static: {
-            directory: path.join(__dirname, 'dist'),
-            publicPath: '/',
+            directory: path.join(__dirname, 'public'),
         },
         historyApiFallback: true,
-        //contentBase: path.join(__dirname, 'dist'),
         open: true,
         compress: true,
         host: 'localhost',
         port: 3000,
         hot: true,
         allowedHosts: ['https://localhost:4000', 'https://localhost:3000'],
+        client: {
+            overlay: {
+                errors: true,
+                warnings: true,
+            },
+        },
         server: {
             type: 'https',
             options: {   
                 key: './cert.key',
                 cert: './cert.crt',
-                // passphrase: 'webpack-dev-server',
-                // requestCert: true,
             }  
         } 
     },
     plugins: [
         new ForkTsCheckerWebpackPlugin(),
-
         new HtmlWebpackPlugin({
             template: './public/index.html',
-            title: isProduction ? 'Production' : 'Development',
+            //title: isProduction ? 'Production' : 'Development',
             filename: 'index.html',
             favicon: './public/favicon.ico'
         }),
@@ -64,53 +62,46 @@ const config = {
             filename: "[path][base].gz",
             //filename: '[path].gz[query]',
             algorithm: 'gzip',
-            test: /\.(js|css|html|svg)$/,
+            test: /\.(js|jsx|ts|tsx|css|html|svg)$/,
             threshold: 8192,
             minRatio: 0.8
             }),
         new BrotliPlugin({
             asset: '[path].br[query]',
             filename: "[path][base].br",
-            test: /\.(js|css|html|svg)$/,
+            test: /\.(js|jsx|ts|tsx|css|html|svg)$/,
             threshold: 10240,
             minRatio: 0.8
             }),
-        new BundleAnalyzerPlugin()
-        // Add your plugins here
-        // Learn more about plugins from https://webpack.js.org/configuration/plugins/
+        new webpack.DefinePlugin({
+            'process.env.REACT_APP_HOST_PORT': JSON.stringify(4000),
+            'process.env.REACT_APP_HOST': JSON.stringify('https://localhost:4000'),
+            'process.env.REACT_APP_CORS': JSON.stringify('https://localhost:3000'),
+            'process.env.REACT_APP_CORS_PORT': JSON.stringify(3000),
+            'process.env.REACT_APP_ADMIN_PATH': JSON.stringify('https://localhost:3000/admin'),
+            'process.env.REACT_APP_NOVA_POSHTA_API': JSON.stringify('https://api.novaposhta.ua'),
+            'process.env.REACT_APP_NOVA_POSHTA_API_KEY': JSON.stringify('09e9681869e82e412dcea97b1b65972c'),
+            'process.env.REACT_APP_DELIVERY_API': JSON.stringify('https://www.delivery-auto.com/api/v4/Public'),
+            'process.env.REACT_APP_DELIVERY_API_KEY': JSON.stringify('6e9a78307c331a3a9ac51285769ccacd'),
+            'process.env.SKIP_PREFLIGHT_CHECK': JSON.stringify(true),
+        })
     ],
     module: {
         rules: [
             {
                 test: /\.(ts|tsx)$/i,
-                //use: 'ts-loader',
                 exclude: /node_modules/,
                 loader: 'ts-loader',
-                // options: {
-                //     compilerOptions: {
-                //       noEmit: false,
-                //     },
-                // },
             },
             {
                 test: /\.css$/i,
                 use: [stylesHandler, 'css-loader', 'postcss-loader'],
             },
             {
-                test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif|webp|ico)$/i,
-                type: 'asset/resource',
-                generator: {
-                    emit: false,
-                },
+                test: /\.(ts|tsx)$/,
+                exclude: /node_modules/,
+                use: "babel-loader",
             },
-            // {
-            //     test: /\.(js|jsx|ts|tsx)$/,
-            //     exclude: /node_modules/,
-            //     use: ["babel-loader"],
-            // },
-
-            // Add your rules for custom modules here
-            // Learn more about loaders from https://webpack.js.org/loaders/
         ],
     },
     resolve: {

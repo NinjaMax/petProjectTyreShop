@@ -15,7 +15,7 @@ const Footer = () => {
           <img 
             width={160} 
             height={62}  
-            src='/logoSky180.webp' 
+            src='img_main/logoSky180.webp' 
             alt='logoShop'
             loading='lazy'
           />

@@ -281,7 +281,7 @@ export class WheelsService {
             type +
             sort +
             'main',
-          3600,
+          86400,
           JSON.stringify(wheelsAllWithoutLimitMain),
         );
         return wheelsAllWithoutLimitMain;
@@ -477,7 +477,7 @@ export class WheelsService {
             pcd2 +
             sort +
             'wheel_props',
-          1200,
+          3600,
           JSON.stringify(wheelsAllWithoutLimitC),
         );
         return wheelsAllWithoutLimitC;
@@ -686,7 +686,7 @@ export class WheelsService {
           pcd2 +
           sort +
           'catalog',
-          1200,
+          3600,
           JSON.stringify(wheelsAllWithLimitCat.rows.splice(offset, limit)),
         );
         return wheelsAllWithLimitCat.rows.splice(offset, limit);
@@ -847,7 +847,7 @@ export class WheelsService {
           pcd2 +
           sort +
           'catalog',
-          1200,
+          3600,
           JSON.stringify(wheelsAllWithCatLimitDesc.rows.splice(offset, limit)),
         );
         return wheelsAllWithCatLimitDesc.rows.splice(offset, limit);
@@ -1008,7 +1008,7 @@ export class WheelsService {
           pcd2 +
           sort +
           'catalog',
-          1200,
+          3600,
           JSON.stringify(wheelsAllWithCatLimitOld.rows.splice(offset, limit)),
         );
         return wheelsAllWithCatLimitOld.rows.splice(offset, limit);
@@ -1169,7 +1169,7 @@ export class WheelsService {
           pcd2 +
           sort +
           'catalog',
-          1200,
+          3600,
           JSON.stringify(wheelsAllWithCatLimitTitle.rows.splice(offset, limit)),
         );
         return wheelsAllWithCatLimitTitle.rows.splice(offset, limit);
@@ -1330,7 +1330,7 @@ export class WheelsService {
           pcd2 +
           sort +
           'catalog',
-          1200,
+          3600,
           JSON.stringify(wheelsAllWithCatLimitRating.rows.splice(offset, limit)),
         );
         return wheelsAllWithCatLimitRating.rows.splice(offset, limit);

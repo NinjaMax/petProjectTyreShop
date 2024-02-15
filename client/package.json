@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.23.9",
+    "@babel/plugin-transform-runtime": "^7.23.9",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.23.9",
+    "@babel/preset-react": "^7.23.3",
+    "@babel/preset-typescript": "^7.23.3",
+    "@babel/runtime": "^7.23.9",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
@@ -51,7 +58,9 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "set HTTPS=true&&set SSL_CRT_FILE=cert.crt&&set SSL_KEY_FILE=cert.key&& webpack-dev-server",
+    "start-server": "node server.js",
+    "start-react": "set HTTPS=true&&set SSL_CRT_FILE=cert.crt&&set SSL_KEY_FILE=cert.key&& react-scripts start",
+    "start-dev": "webpack-serve",
     "build": "webpack --mode=production --node-env=production",
     "test": "react-scripts --openssl-legacy-provider test",
     "eject": "react-scripts eject",
@@ -95,7 +104,9 @@
     "compression-webpack-plugin": "^11.0.0",
     "css-loader": "^6.10.0",
     "css-minimizer-webpack-plugin": "^6.0.0",
+    "csv-loader": "^3.0.5",
     "html-webpack-plugin": "^5.6.0",
+    "json5": "^2.2.3",
     "mini-css-extract-plugin": "^2.8.0",
     "postcss-loader": "^8.1.0",
     "style-loader": "^3.3.4",
@@ -105,7 +116,9 @@
     "webpack": "^5.90.1",
     "webpack-bundle-analyzer": "^4.10.1",
     "webpack-cli": "^5.0.2",
-    "webpack-dev-server": "^4.15.1"
+    "webpack-dev-server": "^4.15.1",
+    "xml-loader": "^1.2.1"
   },
-  "description": "My webpack project"
+  "description": "My webpack project",
+  "homepage": "."
 }
