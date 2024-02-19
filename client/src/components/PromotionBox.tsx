@@ -1,13 +1,13 @@
-import React, { Fragment, useContext, useState } from 'react';
+import { Fragment, Suspense, lazy, useContext, useState } from 'react';
 import '../css/PromotionBox.css';
 import Card from './cards/Card';
 import ButtonPrevNext from './buttons/ButtonPrevNext';
 import Modal from './modal/Modal';
-import CheckOrder from './modal/CheckOrder';
 import { ICheckOrderItem } from './catalogs/types/CheckOrder.type';
 import { Context } from '../context/Context';
 import { addGoodsToBasket, createBasket, getBasketById, getStorageByIdParam } from '../restAPI/restGoodsApi';
 import { observer } from 'mobx-react-lite';
+import SpinnerCarRot from './spinners/SpinnerCarRot';
 
 type IPromoBox = {
     itemsArray: any[] | null;
@@ -16,6 +16,8 @@ type IPromoBox = {
     prevBtn:number;
     nextBtn: number;
 };
+
+const CheckOrder = lazy(() => import('./modal/CheckOrder'));
 
 const PromotionBox = observer(({
     itemsArray, 
@@ -124,10 +126,11 @@ const PromotionBox = observer(({
             />
             : null
             }
-
-            <Modal active={active} setActive={setActive}>
-                <CheckOrder orderItem={checkOrderItem}/> 
-            </Modal> 
+            <Suspense fallback={<SpinnerCarRot/>}>
+                <Modal active={active} setActive={setActive}>
+                    <CheckOrder orderItem={checkOrderItem}/> 
+                </Modal> 
+            </Suspense>
         </div>
     );
 });

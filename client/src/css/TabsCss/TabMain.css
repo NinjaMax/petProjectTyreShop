@@ -1,41 +1,24 @@
-/* Style the tab */
 .tabMainFilterTyre {
     width: 100%;
-    height: 250px;
-    background-image:none;
-    overflow: hidden;
-}
-
-.tabMainFilterTyre img {
     height: 100%;
-    width: 100%;
 }
-  
 .tabCoverImg {
     object-fit: cover;
-}
-
-.tabMainFilterWheel {
-    width: 100%;
-    height: 250px;
-    background-image:none;
-}
-
-.tabMainFilterWheel img {
     height: 100%;
     width: 100%;
 }
-
+.tabMainFilterWheel {
+    width: 100%;
+    height: 100%;
+}
 .tabMainFilterBattery {
     width: 100%;
-    height: 250px;
-    background-image:none;
+    height: 100%;
 }
-
 .tabMain {
-    position: absolute;
-    bottom: -10px;
-    right: 38.5%;
+    position: relative;
+    bottom: 100%;
+    right: 0%;
     overflow: hidden;
     font-family: var(--main-font-family);
     margin: 10px 10px 10px 10px;
@@ -45,8 +28,6 @@
     gap: 25px;
     padding: 8px;
 }
-
-/* Style the buttons that are used to open the tab content */
 .tabMain button {
     background-color: #ddd;
     border: none;
@@ -59,12 +40,9 @@
     height: 50px;
     border-radius:15px;
 }
-
-/* Change background color of buttons on hover */
 .tabMain button:hover {
     background-color: #fff;
 }
-
 .tablinksTyres:hover .arrowTabTyres, 
 .tablinksWheel:hover .arrowTabWheels, 
 .tablinksAkb:hover .arrowTabAkb, 
@@ -72,47 +50,38 @@
     visibility: visible;
     opacity: 1;
 }
-
 .tabMain button:focus {
     background-color: #ccc;
     border-width: 5px 5px 5px 5px;
 }
-
 .tablinksTyres:focus, .tabMainFilterTyre {
     background-image:
     linear-gradient(45deg, rgb(199, 195, 244, 0.5), rgb(158, 185, 211, 0.5) 50%);
-    /* url("/public/img/tyres_tab_main_1.webp");  */
 }
-
 .tablinksWheel:focus, .tabMainFilterWheel {
     background-image:
     linear-gradient(45deg, rgb(199, 195, 244, 0.5), rgb(158, 185, 211, 0.5) 50%);
-    /* url("/public/img/wheels_tab_main.webp"); */
 }
 
 .tablinksWheel:focus, .tabMainFilterBattery {
     background-image:
     linear-gradient(45deg, rgb(199, 195, 244, 0.5), rgb(158, 185, 211, 0.5) 50%);
-    /* url("/public/img/battery_tab_main_1.webp"); */
 }
 
 .tablinksWheel:focus, .tabMainFilterOil {
     background-image:
     linear-gradient(45deg, rgb(199, 195, 244, 0.5), rgb(158, 185, 211, 0.5) 50%);
-    /* url("/public/img/wheels_tab_main.webp"); */
 }
-
 .tabContentMain {
-    position: absolute;
-    bottom: -110px;
-    right: 20%;
-    display: '';
+    position: relative;
+    bottom: 100%;
+    right: 0%;
     padding: 6px 12px;
     border-top: none;
     border-left: none;
     border-right: none;
+    height: 100%;
 }
-
 .popularContainer .titlePopular {
     text-align: center;
     font-family: var(--main-font-family);
@@ -123,7 +92,6 @@
     border-radius:10px;
     width:fit-content;
 }
-
 .popularSpan {
     margin: 3px;
     display: flex;
@@ -131,14 +99,12 @@
     justify-content: center;
     gap: 6px;
 }
-
 .popularContainer {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items:center;
 }
-
 .popularBox {
     display: flex;
     flex-direction: row;
@@ -160,49 +126,100 @@
   
 @media only screen and (max-width: 1440px) { 
     .tabMainFilterTyre {
-        height: 250px;
+        max-height: 250px;
         max-width: 1440px;
     }
     
     .tabMainFilterWheel {
         max-height: 250px;
         max-width: 1440px;
+    }
+    .tabContentMain {
+        max-height: 200px;
     }
 } 
   
 @media only screen and (max-width: 1024px) { 
     .tabMainFilterTyre {
-        max-height: 250px;
+        min-height: 300px;
         max-width: 1024px;
     }
     
     .tabMainFilterWheel {
-        max-height: 250px;
+        min-height: 300px;
         max-width: 1024px;
+    }
+    .tabCoverImg {
+        min-height: 300px;
+    }
+    .tabContentMain {
+        height: 200px;
+    }
+} 
+
+@media only screen and (max-width: 795px) { 
+    .tabMainFilterTyre {
+        min-height: 335px;
+        max-width: 795px;
+    }
+    
+    .tabMainFilterWheel {
+        min-height: 335px;
+        max-width: 795px;
+    }
+    .tabCoverImg {
+        min-height: 335px;
+    }
+    .tabContentMain {
+        min-height: 250px;
     }
 } 
 
 @media only screen and (max-width: 768px) { 
     .tabMainFilterTyre {
-        height: 250px;
+        max-height: 320px;
         max-width: 768px;
     }
     
     .tabMainFilterWheel {
-        height: 250px;
+        max-height: 320px;
         max-width: 768px;
     }
-  } 
+    .tabCoverImg {
+        min-height: 335px;
+    }
+    .tabContentMain {
+        min-height: 335px;
+    }
+} 
   
 @media only screen and (max-width: 580px) {
     .tabMainFilterTyre {
-        min-height: 335px;
+        min-height: 350px;
         max-width: 580px;
     }
     
     .tabMainFilterWheel {
-        min-height: 335px;
+        min-height: 350px;
         max-width: 580px;
+    }
+    .tabCoverImg .tabContentMain {
+        min-height: 350px;
+    }
+} 
+
+@media only screen and (max-width: 500px) {
+    .tabMainFilterTyre {
+        min-height: 390px;
+        max-width: 500px;
+    }
+    
+    .tabMainFilterWheel {
+        min-height: 390px;
+        max-width: 500px;
+    }
+    .tabCoverImg .tabContentMain {
+        min-height: 390px;
     }
 } 
 
@@ -216,41 +233,66 @@
         height: 350px;
         max-width: 425px;
     }
+    .tabCoverImg .tabContentMain {
+        min-height: 350px;
+    }
 } 
 
 @media only screen and (max-width: 400px) { 
     .tabMainFilterTyre {
-        min-height: 410px;
+        min-height: 450px;
         max-width: 400px;
     }
     
     .tabMainFilterWheel {
-        min-height: 410px;
+        min-height: 450px;
         max-width: 400px;
+    }
+    .tabCoverImg .tabContentMain {
+        min-height: 450px;
     }
 } 
 
 @media only screen and (max-width: 375px) { 
     .tabMainFilterTyre {
-        min-height: 460px;
+        min-height: 480px;
+        max-width: 375px;
+    }
+    .tabMainFilterWheel {
+        min-height: 480px;
+        max-width: 375px;
+    }
+    .tabCoverImg .tabContentMain {
+        min-height: 480px;
+    }
+
+} 
+@media only screen and (max-width: 340px) { 
+    .tabMainFilterTyre {
+        min-height: 630px;
         max-width: 375px;
     }
     
     .tabMainFilterWheel {
-        min-height: 460px;
+        min-height: 630px;
         max-width: 375px;
+    }
+    .tabCoverImg .tabContentMain {
+        min-height: 630px;
     }
 } 
-
 @media only screen and (max-width: 320px) { 
     .tabMainFilterTyre {
-        min-height: 460px;
+        min-height: 630px;
         max-width: 320px;
     }
     
     .tabMainFilterWheel {
-        min-height: 460px;
+        min-height: 630px;
         max-width: 320px;
+    }
+    .tabCoverImg .tabContentMain {
+        min-height: 630px;
     }
 } 
 

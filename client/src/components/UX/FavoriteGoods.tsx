@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import imgFavorite from '../../assets/icons/heart_64BlueClear.png';
+import { useContext } from 'react';
 import '../../css/UXcss/FovoriteGoods.css';
 import { Context } from '../../context/Context';
 
@@ -25,7 +24,6 @@ const FavoriteGoods = ({countFavorite}: IFavoriteCount) => {
             </span>  
               : null
             }
-            {/* <img id='favoriteGoodsImg' src={imgFavorite} alt='imgFavorite'/> */}
         </div>
     );
 };

@@ -1,7 +1,6 @@
-// Generated using webpack-cli https://github.com/webpack/webpack-cli
 const path = require('path');
 const webpack = require('webpack');
-//const json5 = require('json5');
+const TerserPlugin = require("terser-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
@@ -59,17 +58,19 @@ const config = {
             favicon: './public/favicon.ico'
         }),
         new CompressionPlugin({
-            filename: "[path][base].gz",
+            //filename: "[path][base].gz",
+            filename: "[base].gz",
             //filename: '[path].gz[query]',
             algorithm: 'gzip',
-            test: /\.(js|jsx|ts|tsx|css|html|svg)$/,
+            test: /\.(js|jsx|ts|tsx|css|html|svg|webp)$/,
             threshold: 8192,
             minRatio: 0.8
             }),
         new BrotliPlugin({
             asset: '[path].br[query]',
-            filename: "[path][base].br",
-            test: /\.(js|jsx|ts|tsx|css|html|svg)$/,
+            //filename: "[path][base].br",
+            filename: "[base].br",
+            test: /\.(js|jsx|ts|tsx|css|html|svg|webp)$/,
             threshold: 10240,
             minRatio: 0.8
             }),
@@ -98,6 +99,10 @@ const config = {
                 use: [stylesHandler, 'css-loader', 'postcss-loader'],
             },
             {
+                test: /\.(woff2?|eot|ttf|otf)$/i,
+                type: 'asset/resource',
+            },
+            {
                 test: /\.(ts|tsx)$/,
                 exclude: /node_modules/,
                 use: "babel-loader",
@@ -109,7 +114,11 @@ const config = {
     },
     optimization: {
         //runtimeChunk: true,
+        minimize: true,
+        mergeDuplicateChunks: true,
+        removeEmptyChunks: true,
         minimizer: [
+            new TerserPlugin(),
             new CssMinimizerPlugin()
         ],
     },

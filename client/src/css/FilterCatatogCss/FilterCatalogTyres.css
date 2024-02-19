@@ -8,11 +8,17 @@
 
 .filterCatalogTyresHeader {
     display: flex;
-    width: 150px;
+    width: 250px; 
+    /* width: 250px; */
     flex-direction: row;
     gap: 5px;
     align-items:center;
     justify-content: space-around;
+    background-color: #ffff;
+    position: sticky;
+    top:0px;
+    z-index: 9999;
+    padding: 5px;
 }
 
 .filterTyresOption {
@@ -26,7 +32,6 @@
 }
 
 .checkBoxBtnOn {
-    /* appearance: none; */
     position: absolute;
     cursor: pointer;
     background-color: #71C2FF;
@@ -38,8 +43,8 @@
     margin: auto;
     width: 100px;
     height: auto;
-    /* top: 68%; */
     right:-105px;
+    top: 40%;
 }
 .checkBoxBtnOn:hover {
     background-color: #9C93D1;
@@ -48,7 +53,7 @@
     background-color: #9EB9D3;
 }
 .season {
-    top: 31%;
+    top: 42%;
 }
 .brands {
     top: 70%;
@@ -63,17 +68,67 @@
     top: 65%;
 }
 .loadIndex {
-    top: 68%;
-}
-.homologation {
-    top: 75%;
-}
-.runFlat {
     top: 70%;
 }
-.reinforced {
+.homologation {
     top: 76%;
+}
+.runFlat {
+    top: 75%;
+}
+.reinforced {
+    top: 90%;
 }
 .boltCount {
     top: 76%;
+}
+/* @media only screen and (max-width: 2560px) { 
+    .checkBoxBtnOn {
+        position: sticky;
+        top: 95%;
+        z-index: 9999;
+    }
+}
+@media only screen and (max-width: 1440px) { 
+    .checkBoxBtnOn {
+        position: sticky;
+        top: 95%;
+        z-index: 9999;
+    }
+}
+@media only screen and (max-width: 1024px) { 
+    .checkBoxBtnOn {
+        position: sticky;
+        top: 95%;
+        z-index: 9999;
+    }
+} */
+@media only screen and (max-width: 768px) { 
+    .checkBoxBtnOn {
+        position: sticky;
+        top: 95%;
+        z-index: 9999;
+    }
+}
+@media only screen and (max-width: 425px) { 
+    .checkBoxBtnOn {
+        position: sticky;
+        top: 90%;
+        right: 0px;
+        z-index: 9999;
+    }
+}
+@media only screen and (max-width: 375px) { 
+    .checkBoxBtnOn {
+        position: sticky;
+        top: 95%;
+        z-index: 9999;
+    }
+}
+@media only screen and (max-width: 320px) { 
+    .checkBoxBtnOn {
+        position: sticky;
+        top: 95%;
+        z-index: 9999;
+    }
 }

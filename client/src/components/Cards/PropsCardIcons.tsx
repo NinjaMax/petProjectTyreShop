@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../../css/CardsCss/PropsCardIcon.css';
 import { IProps } from '../../services/types/PropsGoods.type';
 import { TyreType } from '../../services/enum/PropsTyreType';
@@ -13,7 +13,7 @@ const PropsCardIcons = ({type, type_wheel, season, homologation}:IProps) => {
     const [showSeason, setShowSeason] = useState<string>(TyreSeasons.NOSEASON_SEASON);
     const [showWheelsType, setShowWheelsType] = useState<string>(TyreSeasons.NOSEASON_SEASON);
     const [showHomologation, setShowHomologation] = useState<string>(TyreType.NO_TYPE);
-    const { t, i18n } = useTranslation();
+    const { i18n } = useTranslation();
 
     useEffect(() => {
         let isSetFlag = false;
@@ -59,13 +59,7 @@ const PropsCardIcons = ({type, type_wheel, season, homologation}:IProps) => {
                 Тип транспорта: {i18n.resolvedLanguage === 'uk' ? type?.vehicle_type_ua : type?.vehicle_type}
                 </span>
             </div>
-            : 
-            <img 
-                className='noPropsCarImg' 
-                src='/iconFlags/empty_flag_48.png'
-                alt="flags"
-                loading='lazy'
-            />   
+            : null
             }
             {type_wheel ?
             <div className='propsCardIcons'>
@@ -88,13 +82,7 @@ const PropsCardIcons = ({type, type_wheel, season, homologation}:IProps) => {
                 Сезон: {i18n.resolvedLanguage === 'uk' ? season?.season_ua : season?.season} шина
                 </span>
             </div>
-            : 
-            <img 
-                className='noPropsCarImg' 
-                src='/iconFlags/empty_flag_48.webp'
-                alt="flags"
-                loading='lazy'
-            />     
+            : null
             }
             {homologation?.homologation?.length !== 0 && !type_wheel ?
             <div className='propsCardIcons'>
@@ -111,13 +99,7 @@ const PropsCardIcons = ({type, type_wheel, season, homologation}:IProps) => {
                 }
                 </span>
             </div>
-            : 
-            <img 
-                className='noPropsCarImg' 
-                src='/iconFlags/empty_flag_48.webp'
-                alt="flags"
-                loading='lazy'
-            />     
+            : null 
             }
         </div>
     );

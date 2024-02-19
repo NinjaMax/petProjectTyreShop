@@ -1,4 +1,3 @@
-import React from 'react';
 import '../../css/SelectCss/CheckboxBtn.css';
 
 interface ICheckBoxBtn {
@@ -18,8 +17,7 @@ const CheckboxBtn = ({
     titleName,
     onChange
     }: ICheckBoxBtn) => {
-
-    return (
+        return (
         <div>
             <label className="containerCheckbox">
                 {imageSrc ? 
@@ -27,7 +25,7 @@ const CheckboxBtn = ({
                         titleName === 'Виліт ET' ? 'imgWheelEt': 
                         titleName === 'Діаметр ступиці DIA' ? 'imgWheelDia':
                         titleName === 'Міжболтова відстань' ? 'imgWheelPCD'
-                        : 'imgThorn'
+                        : 'imgCheckBox'
                     }
                     title={
                         titleName === 'Виліт ET' ?
@@ -39,7 +37,20 @@ const CheckboxBtn = ({
                         ""
                     } 
                     src={imageSrc}
-                    alt='imgThorn'/> 
+                    loading='lazy'
+                    decoding='async'
+                    width={30}
+                    height={30}
+                    sizes='(max-width: 2560px) 30px,
+                    (max-width: 1440px) 30px,
+                    (max-width: 1024px) 30px,
+                    (max-width: 768px) 30px,
+                    (max-width: 580px) 30px,
+                    (max-width: 425px) 30px,
+                    (max-width: 400px) 30px,
+                    (max-width: 375px) 30px,
+                    (max-width: 320px) 30px'
+                    alt='imgCheckbox'/> 
                     : null
                 } 
                     {titleCheckbox}

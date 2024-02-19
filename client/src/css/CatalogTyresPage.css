@@ -10,12 +10,12 @@
     grid-gap:5px;
     margin-left: 30px;
     margin-right: 30px;
-    padding: 5px;
+    /* padding: 5px; */
 }
 
 .a {
     grid-area: a;
-    width: 100%;
+    /* width: 100%; */
 }
 
 .b {
@@ -34,7 +34,7 @@
     justify-content:center;
     gap: 10px;
     padding: 18px 18px 25px 18px; */
-    width: 100%;
+    /* width: 100%; */
 }
 
 .e {
@@ -336,7 +336,7 @@
         flex-direction: row;
         justify-content:center;
         gap: 10px;
-        padding: 18px 18px 25px 18px;
+        padding: 18px 10px 25px 10px;
     }   
     
     .e {

@@ -1,11 +1,9 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import '../../css/CardsCss/TyresCard.css';
 import FlagsIcon from './FlagsIcon';
 import PropsCardIcons from './PropsCardIcons';
 import Rating from '../ux/Rating';
 import OptionsTyreBox from './OptionsTyreBox';
-//import tyres from '../../assets/autotyrespilotspotps2.png';
-import wheels from '../../assets/vossen_cvt_gloss_graphite-16325-a.png';
 import ButtonAction from '../buttons/ButtonAction';
 import { ICard } from './interfaces/Card.interface';
 import { MAIN_ROUTE } from '../../utils/consts';
@@ -98,8 +96,18 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                 >
                 <img id='imgTyres' 
                     src={'/tyre/autotyrespilotspotps2.webp'} 
+                    width={200}
+                    height={200} 
+                    sizes='(max-width: 2560px) 200px,
+                        (max-width: 1440px) 200px,
+                        (max-width: 1024px) 200px,
+                        (max-width: 768px) 200px,
+                        (max-width: 425px) 200px,
+                        (max-width: 375px) 200px,
+                        (max-width: 320px) 200px, 100vw'
                     alt="imgCards"
-                    loading='lazy' 
+                    loading='lazy'
+                    decoding='async' 
                 /> 
                 </a>
                  : null  
@@ -113,8 +121,18 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                     <img 
                         id='imgTyres' 
                         src={'/disk/vossen_cvt_gloss_graphite-16325-a.webp'} 
+                        width={200}
+                        height={200}
+                        sizes='(max-width: 2560px) 200px,
+                        (max-width: 1440px) 200px,
+                        (max-width: 1024px) 200px,
+                        (max-width: 768px) 200px,
+                        (max-width: 425px) 200px,
+                        (max-width: 375px) 200px,
+                        (max-width: 320px) 200px, 100vw'
                         alt="imgCards"
                         loading='lazy' 
+                        decoding='async' 
                     /> 
                 </a>
                  : null  
@@ -161,13 +179,15 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                         homologation={goods?.homologation}
                     />
                 </div>
-                {/* {typeCard === 'tyre' ? */}
                 <div className="tyresCardCountry">
+                {typeCard === 'tyre' ?    
                     <FlagsIcon 
                         title={t('card.title_country')}
                         country={i18n.resolvedLanguage === 'uk' ? goods?.country?.country_manufacturer_ua : goods?.country?.country_manufacturer} 
                         year={goods?.year}
-                    />
+                    /> 
+                    : null
+                }
                 </div>
                 <div className='tyresCardBonus'>
                    <img src='/iconBonus/skyBonus_48_b.webp' 

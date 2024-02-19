@@ -1,20 +1,9 @@
-import React, { useContext, useEffect, useState, Suspense, lazy} from 'react';
+import { useContext, useEffect, useState, Suspense, lazy} from 'react';
 import '../css/Main.css';
-//import Slider from '../components/Slider';
-//import CategorySlide from '../components/CategorySlide';
-//import TabProdMain from '../components/tabs/TabProdMain';
-//import Benefits from '../components/Benefits';
-//import ReviewsMain from '../components/reviews/ReviewsMain';
-//import TabMain from '../components/tabs/TabMain';
-//import NewsMainBox from '../components/news/NewsMainBox';
-//import ReviewStore from '../components/reviews/ReviewStore';
 import { Context } from '../context/Context';
-import { getAllArticlesLimit, getAllOrdersLeader, getAllStoreReviewLimit, getTyresById, getTyresOffsetMain, getTyresWithoutOffset, getWheelsById, getWheelsMainOffset, getWheelsWithoutOffset } from '../restAPI/restGoodsApi';
+import { getAllArticlesLimit, getAllOrdersLeader, getAllStoreReviewLimit, getTyresById, getTyresOffsetMain, getWheelsById, getWheelsMainOffset } from '../restAPI/restGoodsApi';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
-//import BrandsListMain from '../components/BrandsListMain';
-//import PromotionBox from '../components/PromotionBox';
-//import ButtonPrevNext from '../components/buttons/ButtonPrevNext';
 import { useMediaQuery } from 'react-responsive';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
@@ -496,26 +485,6 @@ const Main = observer(() => {
           itemsArray={leaderOrder} 
         />
       </TabProdMain>
-      {/* <div onClick={e => e.stopPropagation()}>
-      <TabProdMain titleTab='РЕКОМЕНДУЄМО'>
-        <PromotionBox 
-          prevButtonEvent={() => console.log('PREV_BTN_REC')}
-          nextButtonEvent={() => console.log('NEXT_BTN_REC')}
-          prevBtn={0}
-          nextBtn={4}
-          itemsArray={leaderOrder}/>
-      </TabProdMain>
-      </div>
-      <div onClick={e => e.stopPropagation()}>
-      <TabProdMain titleTab='НОВИНКИ'>
-        <PromotionBox 
-          prevButtonEvent={() => console.log('PREV_BTN_NOV')}
-          nextButtonEvent={() => console.log('NEXT_BTN_NOV')}
-          prevBtn={0}
-          nextBtn={4}
-          itemsArray={leaderOrder}/>
-      </TabProdMain>
-      </div> */}
       <Benefits/>
       <CategorySlide/>
       <div className='mainReviewsBox'>

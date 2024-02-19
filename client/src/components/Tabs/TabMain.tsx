@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../../css/TabsCss/TabMain.css';
-//import PopularSizeTyre from '../popularGoods/PopularSizeTyre';
-//import PopularRequests from '../popularGoods/PopularRequests';
 import FilterMainTyre from '../mainFilterButton/filterMainTyres/FilterMainTyre';
 import FilterMainWheel from '../mainFilterButton/filterMainTyres/FilterMainWheel';
+import { Context } from '../../context/Context';
 
 interface ITabMain {
     filterStateAction(arg0:any):void;
@@ -12,7 +11,7 @@ interface ITabMain {
 }
 
 const TabMain = ({filterMainState, filterStateAction, getFilterTitle}: ITabMain) => {
-    const [filterOpenClose, setFilterOpenClose] = useState<boolean>(false);
+    const {filter} = useContext<any | null>(Context);
     const [filterState, setFilterState] = useState<string>('ШИНИ');
     const [filterTyreState, setFilterTyreState] = useState<boolean>(false);
     const [filterWheeleState, setFilterTWheelState] = useState<boolean>(false);
@@ -31,24 +30,34 @@ const TabMain = ({filterMainState, filterStateAction, getFilterTitle}: ITabMain)
     },[filterState]);
 
     const handleSetFilterState = (e: any) => {
+        filter.setWidth('');
+        filter.setHeight('');
+        filter.setDiameter('');
+        filter.setSeason('');
+        filter.setBrands('');
+        filter.setChipWidth([]);
+        filter.setChipHeight([]);
+        filter.setChipDiameter([]);
+        filter.setChipSeason([]);
+        filter.setChipBrands([]);
         setFilterState(e.currentTarget.value);
         getFilterTitle(e.currentTarget.value);
     };
 
     return (
-
     <div className={
     filterState === 'ШИНИ' ? 'tabMainFilterTyre' : 
     filterState === 'ДИСКИ' ?  'tabMainFilterWheel' : 
     filterState === 'АКБ' ? 'tabMainFilterBattery' : 
     'tabMainFilterTyre'}
-    //style={{backgroundImage:`url("/img/tyres_tab_main_1.webp")`} as React.CSSProperties}
-    >
+    >   
+        {filterState === 'ШИНИ' ?
         <img
-            fetchpriority="high"
+            fetchpriority='high'
             className='tabCoverImg'
             src="img/tyres_tab_main_1.webp" 
-            // srcSet="img/tyres_tab_main_1_tablet.webp 768w"
+            srcSet="img/tyres_tab_main_1.webp 1440w,
+                img/tyres_tab_main_1_mobile.webp 580w"
             sizes='(max-width: 2560px) 1440px,
                     (max-width: 1440px) 1440px,
                     (max-width: 1024px) 1024px,
@@ -59,7 +68,27 @@ const TabMain = ({filterMainState, filterStateAction, getFilterTitle}: ITabMain)
                     (max-width: 375px) 375px,
                     (max-width: 320px) 320px, 100vw'
             alt='tyres_tab_main'
-        /> 
+        /> : null 
+        }
+        {filterState === 'ДИСКИ'  ?
+        <img
+            fetchpriority='high'
+            className='tabCoverImg'
+            src="img/wheels_tab_main.webp" 
+            srcSet="img/wheels_tab_main.webp 1440w,
+                img/tyres_tab_main_1_mobile.webp 580w"
+            sizes='(max-width: 2560px) 1440px,
+                    (max-width: 1440px) 1440px,
+                    (max-width: 1024px) 1024px,
+                    (max-width: 768px) 768px,
+                    (max-width: 580px) 580px,
+                    (max-width: 425px) 425px,
+                    (max-width: 400px) 400px,
+                    (max-width: 375px) 375px,
+                    (max-width: 320px) 320px, 100vw'
+            alt='tyres_tab_main'
+        /> : null 
+        }
         <div className="tabMain">
             <button className="tablinksTyres" 
                 value={'ШИНИ'}       
@@ -101,21 +130,6 @@ const TabMain = ({filterMainState, filterStateAction, getFilterTitle}: ITabMain)
         </div> 
         : null
         }
-        
-        {/* <div className='popularContainer'>
-            <div className='popularSpan'>
-                <div className='titlePopular'>Популярні розміри</div>
-                <div className='popularBox'>
-                    <PopularSizeTyre/>   
-                </div>
-            </div>
-            <div className='popularSpan'>
-                <div className='titlePopular'>Популярні діаметри</div>
-                <div className='popularBox'>
-                    <PopularDiametrTyre/>
-                </div> 
-            </div>
-        </div>        */}
     </div>
     
     );

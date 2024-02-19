@@ -1,4 +1,3 @@
-import React from 'react';
 import '../css/CategorySlide.css';
 import { useTranslation } from 'react-i18next';
 
@@ -15,8 +14,15 @@ const CategorySlide = () => {
                       decoding='async'
                       width={300}
                       height={200}
+                      sizes='(max-width: 2560px) 300px,
+                      (max-width: 1440px) 300px,
+                      (max-width: 1024px) 300px,
+                      (max-width: 768px) 300px,
+                      (max-width: 425px) 300px,
+                      (max-width: 375px) 280px,
+                      (max-width: 320px) 280px, 100vw'
                       className="hover-shadow" 
-                      alt='categorySlider'/>
+                      alt='categorySliderSummer'/>
                     <div className='contentCategorySlider'>
                       <h2>{t('categorySlyder.category_summer_tyre')}</h2>
                     </div>
@@ -29,8 +35,15 @@ const CategorySlide = () => {
                       decoding='async'
                       width={300}
                       height={200}
+                      sizes='(max-width: 2560px) 300px,
+                        (max-width: 1440px) 300px,
+                        (max-width: 1024px) 300px,
+                        (max-width: 768px) 300px,
+                        (max-width: 425px) 300px,
+                        (max-width: 375px) 280px,
+                        (max-width: 320px) 280px, 100vw'
                       className="hover-shadow" 
-                      alt='categorySlider'
+                      alt='categorySliderWinter'
                     />
                     <div className='contentCategorySlider'>
                       <h2>{t('categorySlyder.category_winter_tyre')}</h2>
@@ -44,8 +57,15 @@ const CategorySlide = () => {
                       decoding='async'
                       width={300}
                       height={200}
+                      sizes='(max-width: 2560px) 300px,
+                        (max-width: 1440px) 300px,
+                        (max-width: 1024px) 300px,
+                        (max-width: 768px) 300px,
+                        (max-width: 425px) 300px,
+                        (max-width: 375px) 280px,
+                        (max-width: 320px) 280px, 100vw'
                       className="hover-shadow" 
-                      alt='categorySlider'
+                      alt='categorySliderAll'
                     />
                     <div className='contentCategorySlider'>
                       <h2>{t('categorySlyder.category_allseason_tyre')}</h2>
@@ -59,8 +79,15 @@ const CategorySlide = () => {
                       decoding='async'
                       width={300}
                       height={200}
+                      sizes='(max-width: 2560px) 300px,
+                        (max-width: 1440px) 300px,
+                        (max-width: 1024px) 300px,
+                        (max-width: 768px) 300px,
+                        (max-width: 425px) 300px,
+                        (max-width: 375px) 280px,
+                        (max-width: 320px) 280px, 100vw'
                       className="hover-shadow" 
-                      alt='categorySlider'
+                      alt='categorySliderWheel'
                     />  
                     <div className='contentCategorySlider'>
                       <h2>{t('categorySlyder.category_wheels')}</h2>

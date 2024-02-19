@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import '../../css/FilterCatatogCss/FilterCatalogTyres.css';
 import FilterMainBtn from '../mainFilterButton/FilterMainBtn';
 import CheckboxBtn from '../select/CheckboxBtn';
@@ -9,7 +9,6 @@ import { Context } from '../../context/Context';
 import { observer } from 'mobx-react-lite';
 import { seasonCar, typeCar } from '../../services/tyresPropsService';
 import { useHistory, useParams } from 'react-router-dom';
-import { tyreSeasonCat, tyreVehicleTypeCat } from '../../services/tyresCatService';
 import { createStringUrl } from '../../services/stringUrl';
 import { homologationByCar } from '../../services/homologation';
 import { CATALOG_TYRES_ROUTE } from '../../utils/consts';
@@ -39,7 +38,7 @@ const FilterCatalogTyres = observer((
     const [stateReinforced, setStateReinforced]=useState<boolean>(false);
     const [isOpenFilter, setIsOpenFilter]=useState<boolean>(false);
     const isMobileFilterTyre = useMediaQuery({ query: '(max-width: 1075px)' });
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const params = useParams<any>();
     const history = useHistory();
 
@@ -206,7 +205,7 @@ const FilterCatalogTyres = observer((
                 Array.from(
                     new Set([...filter.chipLoadIndex, e.target.value]))
             );     
-        } else if (e.target.name === t('filterCatalogTyre.filter_load_index_title') && e.target.checked) {
+        } else if (e.target.name === t('filterCatalogTyre.filter_load_index_title')) {
             const cancelLoadIndex = filter.chipLoadIndex.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipLoadIndexItem(cancelLoadIndex);
@@ -608,11 +607,13 @@ const FilterCatalogTyres = observer((
         <div className='filterCatalogTyres'>
             <div className='filterCatalogTyresHeader'>
             {isMobileFilterTyre ? 
-                <i className={isOpenFilter ? 
-                "fas fa-times fa-2x"
-                : "fas fa-bars fa-2x"}
-                onClick={openFilterInMobile}
-                ></i> 
+                <div className='filterCatalogTyresMobile'>
+                    <i className={isOpenFilter ? 
+                        "fas fa-times fa-2x"
+                        : "fas fa-bars fa-2x"}
+                        onClick={openFilterInMobile}
+                    ></i> 
+                </div>
             : null
             }
                 <span>
@@ -628,7 +629,7 @@ const FilterCatalogTyres = observer((
                     deleteChip={handleDeleteChange}
                     width={247.4} 
                     titleFilter={'Ширина'} 
-                    contentInfo={'A'}>
+                    contentInfo={isMobileFilterTyre ? false : 'A'}>
                     {goodsTyre._width ? 
                         goodsTyre._width.map((widthItem: any) => (
                        <SelectFilterList 
@@ -650,7 +651,7 @@ const FilterCatalogTyres = observer((
                     deleteChip={handleDeleteChange}
                     width={247.4} 
                     titleFilter={t('filterCatalogTyre.filter_height_title')} 
-                    contentInfo={'B'}>
+                    contentInfo={isMobileFilterTyre ? false : 'B' }>
                     {goodsTyre._height ? 
                         goodsTyre._height.map((heightItem: any) => (
                     <SelectFilterList
@@ -671,7 +672,7 @@ const FilterCatalogTyres = observer((
                     deleteChip={handleDeleteChange}
                     width={247.4} 
                     titleFilter={t('filterCatalogTyre.filter_diameter_title')} 
-                    contentInfo={'C'}>
+                    contentInfo={isMobileFilterTyre ? false : 'C'}>
                     { goodsTyre._diameter ? 
                         goodsTyre._diameter.map(
                             (diameterItem: any) => (
@@ -686,6 +687,7 @@ const FilterCatalogTyres = observer((
                     />  )) : null
                     }
                 </FilterMainBtn>
+
                 <Accordion 
                     titleName={'Сезон'}
                     chipItem={filter.season}
@@ -693,13 +695,6 @@ const FilterCatalogTyres = observer((
                     filterAction={filterSeasonClick}
                     filterState={stateSeason}
                 >
-                { filter._chipSeason.length !== 0 && stateSeason ?
-                  <button 
-                    className='checkBoxBtnOn season'
-                    onClick={filterSeasonAdd}
-                  >{t('filterCatalogTyre.filter_show_btn')}</button> 
-                  : null 
-                } 
                     <span>Сезон:</span>
                     {goodsTyre._season ?
                         goodsTyre._season.map(
@@ -711,11 +706,20 @@ const FilterCatalogTyres = observer((
                         onChange={handleChange} 
                         titleName={'Сезон'}
                         titleCheckbox={seasonItem} 
-                        imageSrc={seasonCar(seasonItem)}/>
+                        imageSrc={seasonCar(seasonItem)}
+                    />
                         )): null  
                     }
+  
                     <p/>
                 </Accordion>
+                {filter._chipSeason.length !== 0 && stateSeason ?
+                    <button 
+                        className='checkBoxBtnOn season'
+                        onClick={filterSeasonAdd}
+                    >{t('filterCatalogTyre.filter_show_btn')}</button> 
+                    : null 
+                } 
                 { filter._chipStudded.length !== 0 && stateStudded ?
                   <button 
                     className='checkBoxBtnOn studded'
@@ -754,13 +758,6 @@ const FilterCatalogTyres = observer((
                 </Accordion>
                 : null
                 }
-                { filter._chipBrands.length !== 0 && stateBrand ?
-                  <button 
-                    className='checkBoxBtnOn brands'
-                    onClick={filterBrandAdd}
-                  >{t('filterCatalogTyre.filter_show_btn')}</button> 
-                  : null 
-                }
                 <FilterMainBtn 
                     filterAction={filterBrandClick}
                     filterState={stateBrand}
@@ -783,17 +780,17 @@ const FilterCatalogTyres = observer((
                     />  )) : null
                     }
                 </FilterMainBtn>
+                { filter._chipBrands.length !== 0 && stateBrand ?
+                  <button 
+                    className='checkBoxBtnOn brands'
+                    onClick={filterBrandAdd}
+                  >{t('filterCatalogTyre.filter_show_btn')}</button> 
+                  : null 
+                }
                 <PriceRange
                     filterAction={filterPriceRange}
                     filterActionShown={filterPriceAdd}
-                /> 
-                { filter._chipVehicleType.length !== 0 && stateVehicleType ?
-                  <button 
-                    className='checkBoxBtnOn vehicleType'
-                    onClick={filterVehicleTypeAdd}
-                  >{t('filterCatalogTyre.filter_show_btn')}</button> 
-                  : null 
-                }               
+                />               
                 <Accordion 
                     titleName={t('filterCatalogTyre.filter_vehicle_type_title')}
                     chipItem={filter.vehicle_type.split(',').filter(
@@ -828,6 +825,13 @@ const FilterCatalogTyres = observer((
                         )) : null
                     }
                 </Accordion>
+                { filter._chipVehicleType.length !== 0 && stateVehicleType ?
+                  <button 
+                    className='checkBoxBtnOn vehicleType'
+                    onClick={filterVehicleTypeAdd}
+                  >{t('filterCatalogTyre.filter_show_btn')}</button> 
+                  : null 
+                } 
                 {filter._chipVehicleType.includes('вантажні шини' || 'грузовые шины') ?
                 <Accordion 
                     titleName={t('filterCatalogTyre.filter_axis_view_title')}
@@ -864,19 +868,12 @@ const FilterCatalogTyres = observer((
                         checked={filter._chipVehicleType.includes(vehicleItem)} 
                         onChange={handleChange}
                         titleName={t('filterCatalogTyre.filter_vehicle_type_title')}  
-                        titleCheckbox={ vehicleItem} 
+                        titleCheckbox={ vehicleItem}
                         imageSrc={typeCar(vehicleItem)}/>
                         )) : null
                     }
                 </Accordion>
                 : null
-                }
-                { filter._chipSpeedIndex.length !== 0 && stateSpeedIndex ?
-                  <button 
-                    className='checkBoxBtnOn speedIndex'
-                    onClick={filterSpeedIndexAdd}
-                  >{t('filterCatalogTyre.filter_show_btn')}</button> 
-                  : null 
                 }
                 <Accordion 
                     titleName={t('filterCatalogTyre.filter_speed_index_title')}
@@ -900,13 +897,13 @@ const FilterCatalogTyres = observer((
                     }
                     <p/>
                 </Accordion>
-                { filter._chipLoadIndex.length !== 0 && stateLoadIndex ?
+                { filter._chipSpeedIndex.length !== 0 && stateSpeedIndex ?
                   <button 
-                    className='checkBoxBtnOn loadIndex'
-                    onClick={filterLoadIndexAdd}
+                    className='checkBoxBtnOn speedIndex'
+                    onClick={filterSpeedIndexAdd}
                   >{t('filterCatalogTyre.filter_show_btn')}</button> 
                   : null 
-                }    
+                }
                 <Accordion 
                     titleName={t('filterCatalogTyre.filter_load_index_title')}
                     chipItem={filter.load_index}
@@ -919,7 +916,7 @@ const FilterCatalogTyres = observer((
                             (loadIndexItem: any) => (
                     <CheckboxBtn 
                         key={loadIndexItem}
-                        checked={filter.chipLoadIndex.includes(loadIndexItem)} 
+                        checked={filter._chipLoadIndex.includes(loadIndexItem)} 
                         onChange={handleChange} 
                         value={loadIndexItem} 
                         titleName={t('filterCatalogTyre.filter_load_index_title')}
@@ -931,13 +928,13 @@ const FilterCatalogTyres = observer((
                     }
                     <p/>
                 </Accordion>
-                { filter._chipHomologation.length !== 0 && stateHomologation ?
+                { filter._chipLoadIndex.length !== 0 && stateLoadIndex ?
                   <button 
-                    className='checkBoxBtnOn homologation'
-                    onClick={filterHomologationAdd}
+                    className='checkBoxBtnOn loadIndex'
+                    onClick={filterLoadIndexAdd}
                   >{t('filterCatalogTyre.filter_show_btn')}</button> 
                   : null 
-                }
+                }    
                 <Accordion 
                     titleName={t('filterCatalogTyre.filter_homologation_title')}
                     chipItem={filter.homologation}
@@ -962,10 +959,10 @@ const FilterCatalogTyres = observer((
                     }
                     <p/>
                 </Accordion>
-                { filter._chipRunFlat.length !== 0 && stateRunFlat ?
+                { filter._chipHomologation.length !== 0 && stateHomologation ?
                   <button 
-                    className='checkBoxBtnOn runFlat'
-                    onClick={filterRunFlatAdd}
+                    className='checkBoxBtnOn homologation'
+                    onClick={filterHomologationAdd}
                   >{t('filterCatalogTyre.filter_show_btn')}</button> 
                   : null 
                 }
@@ -992,10 +989,10 @@ const FilterCatalogTyres = observer((
                     }
                     <p/>
                 </Accordion>
-                { filter._chipReinforced.length !== 0 && stateReinforced ?
+                { filter._chipRunFlat.length !== 0 && stateRunFlat ?
                   <button 
-                    className='checkBoxBtnOn reinforced'
-                    onClick={filterReinforcedAdd}
+                    className='checkBoxBtnOn runFlat'
+                    onClick={filterRunFlatAdd}
                   >{t('filterCatalogTyre.filter_show_btn')}</button> 
                   : null 
                 }
@@ -1023,6 +1020,13 @@ const FilterCatalogTyres = observer((
                     }
                     <p/>
                 </Accordion>
+                { filter._chipReinforced.length !== 0 && stateReinforced ?
+                  <button 
+                    className='checkBoxBtnOn reinforced'
+                    onClick={filterReinforcedAdd}
+                  >{t('filterCatalogTyre.filter_show_btn')}</button> 
+                  : null 
+                }
             </div>  
             : null
             }     

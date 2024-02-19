@@ -4,10 +4,27 @@
     justify-content:center;
     margin-left: 100px;
     margin-right: 100px;
-    width: 100%;
-    
+    width: 100%; 
 }
-
+:root {
+    --main-font-family:'Open Sans', sans-serif;
+}
+.mainAfterReviews {
+    display:inline-block;
+    margin: 25px;
+    padding: 20px;
+    height: 150px;
+}
+.mainLinkReview {
+    text-decoration:underline;
+    font-weight: 700;
+    font-size: 18px;
+    font-family: var(--main-font-family);
+    text-decoration-color: #6666;
+}
+.mainReviewsBox {
+    width: 100%;
+}
 @media (max-width: 2560px) { 
     .main {
         max-width: 1440px;
@@ -15,7 +32,61 @@
         margin-right: auto;
     } 
 } 
+@media (max-width: 1440px) { 
+    .main {
+        max-width: 1440px;
+    } 
+} 
 
+@media (max-width: 1024px) { 
+    .main {
+        max-width: 1024px;
+    } 
+    .mainReviewsBox {
+        max-width: 1024px;
+    }
+} 
+@media (max-width: 768px) { 
+    .main {
+        max-width: 768px;
+    } 
+    .mainReviewsBox {
+        max-width: 768px;
+    }
+} 
+
+@media (max-width: 425px) { 
+    .main {
+        max-width: 425px;
+    } 
+    .mainReviewsBox {
+        max-width: 425px;
+    }
+} 
+@media (max-width: 375px) { 
+    .main {
+        max-width: 375px;
+    } 
+    .mainReviewsBox {
+        max-width: 375px;
+    }
+} 
+
+@media (max-width: 320px) { 
+    .main {
+        max-width: 320px;
+    } 
+    .mainReviewsBox {
+        max-width: 320px;
+    }
+} 
+/* @media (max-width: 2560px) { 
+    .main {
+        max-width: 1440px;
+        margin-left: auto;
+        margin-right: auto;
+    } 
+} 
 @media (min-width: 1440px) { 
     .main {
         min-width: 1024px;
@@ -63,32 +134,4 @@
     .mainReviewsBox {
         min-width: 300px;
     }
-} 
-
-:root {
-    --main-font-family:'Open Sans', sans-serif;
-    /*font-family: 'Open Sans', sans-serif;*/
-    /*font-family: 'Ubuntu', sans-serif;*/
-}
-
-.mainAfterReviews {
-    display:inline-block;
-    margin: 25px;
-    padding: 20px;
-    height: 150px;
-}
-
-.mainLinkReview {
-    text-decoration:underline;
-    font-weight: 700;
-    font-size: 18px;
-    font-family: var(--main-font-family);
-    text-decoration-color: #6666;
-}
-.mainReviewsBox {
-    /* display: flex;
-    flex-direction: row;
-    justify-content: center;
-    height: 250px; */
-    width: 100%;
-}
+}  */

@@ -1,17 +1,14 @@
-import React, {useContext, useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import '../../../css/FilterMain/FilterMainTyres/FilterMainTyre.css';
-import imageThorn from '../../../assets/icons/imagesThorn_1.png';
 import FilterMainBtn from '../FilterMainBtn';
 import ButtonAction from '../../buttons/ButtonAction';
 import CheckboxBtn from '../../select/CheckboxBtn';
 import SelectFilterList from '../../select/SelectFilterList';
-import SelectFilter from '../../select/SelectFilter';
 import { Context } from '../../../context/Context';
 import { observer } from 'mobx-react-lite';
-import { seasonCar, typeCar } from '../../../services/tyresPropsService';
 import FilterMainBtnWheel from '../FIlterMainBtnWheel';
-import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { typeWheelsMainG } from '../../../services/wheelsProps.service';
 
 interface IFilterMainWheels {
     handleChange?(args0: any): void;
@@ -27,7 +24,7 @@ const FilterMainWheel = observer((
     const [stateBoltCount, setStateBoltCount]=useState(false);
     const [stateBrand, setStateBrand]=useState(false);
     const [stateType, setStateType]=useState(false);
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     
     useEffect(() => {
         if(!filterState) {
@@ -48,7 +45,7 @@ const FilterMainWheel = observer((
             setStateWidth(!stateWidth);
             filterOpenCloseAction(!filterState);
         }
-        if (e.target.name === 'Діаметр' || 'Диаметр') {
+        if (e.target.name === t('filterMainWheel.filter_diameter_title')) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setDiameter(e.target.value);
@@ -72,14 +69,14 @@ const FilterMainWheel = observer((
             );
             filter.setBrands(filter.chipBrands.join(',')); 
         }
-        if (e.target.name === ('Кількість болтів' || 'Кол-во болтов') && e.target.checked) {
+        if (e.target.name === t('filterMainWheel.filter_boltCount_title') && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setChipBoltCount(
                 Array.from(new Set([...filter.chipBoltCount, e.target.value]))
             );
             filter.setBoltCount(filter.chipBoltCount.join(','));     
-        } else if (e.target.name === 'Кількість болтів' || 'Кол-во болтов') {
+        } else if (e.target.name === t('filterMainWheel.filter_boltCount_title')) {
             const cancelSeason = filter.chipBoltCount.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipBoltCountdItem(cancelSeason);
@@ -110,7 +107,7 @@ const FilterMainWheel = observer((
             page.setOffset(0);
             filter.setWidth(null);
         }
-        if (e.target.getAttribute('data-name') === 'Діаметр' || 'Диаметр') {
+        if (e.target.getAttribute('data-name') === t('filterMainWheel.filter_diameter_title')) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setDiameter(null);
@@ -123,7 +120,7 @@ const FilterMainWheel = observer((
                 new Set([...filter.chipBrands])));
             filter.setBrands(filter.chipBrands.join(','));
         }
-        if (e.target.getAttribute('data-name') === 'Кількість болтів' || 'Кол-во болтов') {
+        if (e.target.getAttribute('data-name') === t('filterMainWheel.filter_boltCount_title')) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.removeChipBoltCountdItem(e.target.getAttribute('data-index'));
@@ -284,7 +281,7 @@ const FilterMainWheel = observer((
                     onChange={handleChange}
                     titleName={'Тип диска'}  
                     titleCheckbox={vehicleItem} 
-                    imageSrc={typeCar(vehicleItem)}/>
+                    imageSrc={typeWheelsMainG(vehicleItem)}/>
                     )) : null
                 }
             <p/>

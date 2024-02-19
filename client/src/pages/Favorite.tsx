@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import '../css/Pages/Favorite.css';
 import CardList from '../components/cards/CardList';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
@@ -18,18 +18,10 @@ import Modal from '../components/modal/Modal';
 import CheckOrder from '../components/modal/CheckOrder';
 
 const Favorite = () => {
-    // const location = useLocation();
-    // const history = useHistory();
     const {page, customer} = useContext<any | null>(Context);
-    const [getFavoriteList, setGetFavoriteList] = useState<any[]>([]);
-    const [tyreSearchMod, setTyreSearchMod] = useState<[] | null>(null);
-    const [wheelSearchMod, setWheelSearchMod] = useState<[] | null>(null);
-    const [oilSearchMod, setOilSearchMod] = useState<[] | null>(null);
-    const [batterySearchMod, setBatterySearchMod] = useState<[] | null>(null);
     const [favoriteTyres, setFavoriteTyres] = useState<any[] | null>([]);
     const [favoriteWheels, setFavoriteWheels] = useState<any[] | null>([]);
     const [tabSearchMod, setTabSearchMod] = useState<string>('Шини');
-    const [tabSearchModWheel, setTabSearchModWheel] = useState<[]>([]);
     const [tabSearchModOil, setTabSearchModOil] = useState<[]>([]);
     const [tabSearchModBattery, setTabSearchModBattery] = useState<[]>([]);
     const [active, setActive] = useState(false);

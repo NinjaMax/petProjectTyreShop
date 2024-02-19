@@ -1,17 +1,12 @@
-import React, {useContext, useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import '../../../css/FilterMain/FilterMainTyres/FilterMainTyre.css';
-import imageThorn from '../../../assets/icons/imagesThorn_1.png';
 import FilterMainBtn from '../FilterMainBtn';
 import ButtonAction from '../../buttons/ButtonAction';
 import CheckboxBtn from '../../select/CheckboxBtn';
 import SelectFilterList from '../../select/SelectFilterList';
-import SelectFilter from '../../select/SelectFilter';
 import { Context } from '../../../context/Context';
 import { observer } from 'mobx-react-lite';
-import { seasonCar } from '../../../services/tyresPropsService';
-import { createStringUrl } from '../../../services/stringUrl';
-import { Link, Redirect, generatePath, useHistory, useParams } from 'react-router-dom';
-import { CATALOG_TYRES_ROUTE, MAIN_ROUTE } from '../../../utils/consts';
+import { seasonCarMainG } from '../../../services/tyresPropsService';
 import { useTranslation } from 'react-i18next';
 
 interface IFilterMainTyres {
@@ -28,7 +23,7 @@ const FilterMainTyre = observer((
     const [stateDiameter, setStateDiameter]=useState<boolean>(false);
     const [stateBrand, setStateBrand]=useState<boolean>(false);
     const [stateSeason, setStateSeason]=useState<boolean>(false);
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     useEffect(() => {
         if(!filterState) {
@@ -41,9 +36,6 @@ const FilterMainTyre = observer((
     },[filterState])
 
     const handleChange = (e: any) => {
-        //const idProperty = e.target.id;
-        // console.log('FILTER_NAME: ', e.target.name);
-        // console.log('FILTER_CHOOSE: ', e.target.value);
         if (e.target.name === 'Ширина') {
             //console.log('ID', e.target.id);
             page.setLoadMore(0);
@@ -264,7 +256,7 @@ const FilterMainTyre = observer((
                     onChange={handleChange} 
                     titleName={'Сезон'}
                     titleCheckbox={seasonItem} 
-                    imageSrc={seasonCar(seasonItem)}/>
+                    imageSrc={seasonCarMainG(seasonItem)}/>
                 )): null  
             }
             <p/>

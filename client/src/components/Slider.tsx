@@ -1,11 +1,5 @@
-import React from 'react';
 import '../css/Slider.css';
-//import sliderOne from '../assets/michelintyres.jpg';
-//import sliderBoxTopImg from '../assets/pexelsJaePark.jpg';
-//import sliderBoxBottomImg from '../assets/pexelsVincenzoMalagoli.jpg';
 import DotSite from './ux/DotSite';
-//import sliderConti from '../../public/sliders/continental_offer_bonus_700_390.webp';
-//import ButtonPrevNext from './buttons/ButtonPrevNext';
 
 const Slider = () => {
     return (
@@ -13,10 +7,22 @@ const Slider = () => {
         <div className="slideShowContainer">
           <div id='sliderOne' className="mySlides fade">
             <div className="numbertext">1 / 3</div>
-            <a href={'/'} rel="preload" type="image/webp">
+            <a href={'/'}>
               <img 
                 fetchpriority="high"
                 src="sliders/winter_tire_offer_with_logo_842_385.webp" 
+                width={700}
+                height={360}
+                srcSet='sliders/winter_tire_offer_with_logo_842_385.webp 700w' 
+                sizes='(max-width: 2560px) 1440px,
+                        (max-width: 1440px) 1440px,
+                        (max-width: 1024px) 1024px,
+                        (max-width: 768px) 768px,
+                        (max-width: 580px) 580px,
+                        (max-width: 425px) 425px,
+                        (max-width: 400px) 400px,
+                        (max-width: 375px) 375px,
+                        (max-width: 320px) 320px, 100vw'
                 alt='sliderOne'
               />
             </a> 
@@ -43,16 +49,19 @@ const Slider = () => {
           {/* <a href={'/'} > */}
           <img id='imgSliderBoxTop' 
             fetchpriority="high"
-            src="sliders/continental_offer_bonus_700_390.webp" 
-            // sizes='(max-width: 2560px) 1440px,
-            //         (max-width: 1440px) 1440px,
-            //         (max-width: 1024px) 1024px,
-            //         (max-width: 768px) 768px,
-            //         (max-width: 580px) 580px,
-            //         (max-width: 425px) 425px,
-            //         (max-width: 400px) 400px,
-            //         (max-width: 375px) 375px,
-            //         (max-width: 320px) 320px, 100vw'
+            width={700}
+            height={360}
+            src="sliders/continental_offer_bonus_700_390.webp"
+            srcSet='sliders/continental_offer_bonus_700_390.webp 700w' 
+            sizes='(max-width: 2560px) 1440px,
+                    (max-width: 1440px) 1440px,
+                    (max-width: 1024px) 1024px,
+                    (max-width: 768px) 768px,
+                    (max-width: 580px) 580px,
+                    (max-width: 425px) 425px,
+                    (max-width: 400px) 400px,
+                    (max-width: 375px) 375px,
+                    (max-width: 320px) 320px, 100vw'
             alt='sliderBoxTop'
           />
           {/* </a> */}

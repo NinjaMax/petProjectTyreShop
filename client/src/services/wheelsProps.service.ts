@@ -17,6 +17,22 @@ const typeWheels = (type_wheels: string | undefined | any) => {
     }
 }
 
+const typeWheelsMainG = (type_wheels: string | undefined | any) => {
+    switch (type_wheels) {
+        case 'стальной':
+        case 'стальний':
+            return WheelType.STALNOI_TYPE_MAIN_G;
+        case 'литой':
+        case 'литий':
+            return WheelType.LEGKOSPLAV_TYPE_MAIN_G;
+        case 'кованый':
+        case 'кований':
+            return WheelType.KOVANIY_TYPE_MAIN_G;
+        default:
+            return WheelType.NO_TYPE;
+    }
+}
+
 const typeWheelsCat = (type_wheels_cat: string | undefined) => {
     switch (type_wheels_cat) {
         case 'stalnij':
@@ -43,5 +59,6 @@ const typeWheelsCat = (type_wheels_cat: string | undefined) => {
 
 export {
     typeWheels,
-    typeWheelsCat
+    typeWheelsCat,
+    typeWheelsMainG
 }

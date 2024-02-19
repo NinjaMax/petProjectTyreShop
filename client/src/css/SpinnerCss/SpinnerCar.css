@@ -32,4 +32,61 @@
     transform: translateX(50vw);
   }
 }
+
+@media only screen and (max-width: 2560px) { 
+  .spinner {
+    max-width: 2560px;
+  } 
+  .spinner svg{
+    max-width: 2560px;
+  } 
+} 
+@media only screen and (max-width: 1440px) { 
+  .spinner {
+    max-width: 1440px;
+  } 
+  .spinner svg{
+    max-width: 1440px;
+  } 
+} 
+@media only screen and (max-width: 1024px) { 
+  .spinner {
+    max-width: 1024px;
+  } 
+  .spinner svg{
+    max-width: 1024px;
+  } 
+} 
+@media only screen and (max-width: 768px) { 
+  .spinner {
+    max-width: 768px;
+  } 
+  .spinner svg{
+    max-width: 768px;
+  } 
+} 
+@media only screen and (max-width: 425px) { 
+  .spinner {
+    max-width: 425px;
+  } 
+  .spinner svg{
+    max-width: 425px;
+  } 
+} 
+@media only screen and (max-width: 375px) { 
+  .spinner {
+    max-width: 375px;
+  } 
+  .spinner svg{
+    max-width: 375px;
+  } 
+} 
+@media only screen and (max-width: 320px) { 
+  .spinner {
+    max-width: 320px;
+  } 
+  .spinner svg{
+    max-width: 320px;
+  } 
+} 
   

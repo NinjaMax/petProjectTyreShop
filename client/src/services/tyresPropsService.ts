@@ -63,7 +63,24 @@ const seasonCar = (season_vehicle: string | undefined | any) => {
     }
 }
 
+const seasonCarMainG = (season_vehicle: string | undefined | any) => {
+    switch (season_vehicle) {
+        case 'летняя':
+        case 'літня':
+            return TyreSeasons.SUMMER_SEASON_MAIN_G;
+        case 'зимняя':
+        case 'зимова':
+            return TyreSeasons.WINTER_SEASON_MAIN_G;
+        case 'всесезонная':
+        case 'всесезонна':
+            return TyreSeasons.ALLSEASON_SEASON_MAIN_G;
+        default:
+            return TyreSeasons.NOSEASON_SEASON;
+    }
+}
+
 export {
     typeCar,
-    seasonCar
+    seasonCar,
+    seasonCarMainG
 }

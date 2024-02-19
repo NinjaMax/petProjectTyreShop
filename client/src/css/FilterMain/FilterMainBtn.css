@@ -111,27 +111,28 @@
 
 @media only screen and (max-width: 425px) { 
     .contentOptionsFilterMainBtn {
-        width: 208px;
+        width: 205px;
     }
     .dropdownContentFilterMainBtnRound {
-        width: 208px;
-        left: -11%;
+        width: 205px;
+        left: -15%;
     }
     #myInputFilterBtn {
-        width: 208px;
+        width: 205px;
     }
 } 
 
 @media only screen and (max-width: 375px) { 
     .contentOptionsFilterMainBtn {
-        width: 208px;
+        width: 205px;
     }
     .dropdownContentFilterMainBtnRound {
-        width: 208px;
-        left: -19%;
+        width: 205px;
+        /* left: -20%; */
+        left: auto;
     }
     #myInputFilterBtn {
-        width: 208px;
+        width: 205px;
     }
 } 
   

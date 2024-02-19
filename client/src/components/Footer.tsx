@@ -1,4 +1,3 @@
-import React from 'react';
 import '../css/FooterCss/Footer.css';
 import { useTranslation } from 'react-i18next';
 
@@ -13,11 +12,19 @@ const Footer = () => {
         <p/>
         <div className='footerLogo'>
           <img 
+            src='/img_main/logoSky180.webp' 
+            loading='lazy'
+            decoding='async'
             width={160} 
             height={62}  
-            src='img_main/logoSky180.webp' 
-            alt='logoShop'
-            loading='lazy'
+            sizes='(max-width: 2560px) 180px,
+            (max-width: 1440px) 180px,
+            (max-width: 1024px) 180px,
+            (max-width: 768px) 180px,
+            (max-width: 425px) 180px,
+            (max-width: 375px) 180px,
+            (max-width: 320px) 180px, 100vw'
+            alt='logoShopFooter'
           />
         </div>
         <div className="me-5 d-none d-lg-block">

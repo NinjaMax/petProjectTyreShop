@@ -1,16 +1,7 @@
-import React, {useContext, useState, useEffect} from 'react';
+import {useContext, useState, useEffect, lazy, Suspense} from 'react';
 import '../../css/NavBarCss/NavBar.css';
 import { observer } from 'mobx-react-lite';
-import ButtonSearch from '../buttons/ButtonSearch';
-import BasketNavBar from '../basket/BasketNavBar';
-import AuthView from '../auth/AuthView';
-import NavBarDropTyres from './NavBarDropTyres';
-import AuthForm from '../auth/AuthForm';
-import FavoriteGoods from '../ux/FavoriteGoods';
-import Modal from '../modal/Modal';
-import NavBarSearch from '../searchForm/NavBarSearch';
 import { Context } from '../../context/Context';
-import AuthConfirmTel from '../auth/AuthConfirmTel';
 import { 
   preSignUpUser, 
   matchPassSms, 
@@ -25,16 +16,24 @@ import {
   signInTwitter,
   getTwitterCurUser
 } from '../../restAPI/restUsersApi';
-import AuthSignUp from '../auth/AuthSignUp';
 import { yieldToMain } from '../../restAPI/yieldMain';
-import NavBarDropWheels from './NavBarDropWheels';
 import { getCompare, getFavorites, getSession } from '../../restAPI/restGoodsApi';
-import CompareGoods from '../ux/CompareGoods';
 import { COMPARISON_ROUTE, DELIVERY_ROUTE, FAVORITES_ROUTE } from '../../utils/consts';
 import { useMediaQuery } from 'react-responsive';
-//import logoMain  from './logoSky180.webp'; 
-//logoSky180.webp
 import { useTranslation } from 'react-i18next';
+
+const NavBarSearch = lazy(() => import('../searchForm/NavBarSearch'));
+const AuthConfirmTel = lazy(() => import('../auth/AuthConfirmTel'));
+const AuthSignUp = lazy(() => import('../auth/AuthSignUp'));
+const NavBarDropWheels = lazy(() => import('./NavBarDropWheels'));
+const CompareGoods = lazy(() => import('../ux/CompareGoods'));
+const Modal = lazy(() => import('../modal/Modal'));
+const ButtonSearch =  lazy(() => import('../buttons/ButtonSearch'));
+const BasketNavBar =  lazy(() => import('../basket/BasketNavBar'));
+const AuthView = lazy(() => import('../auth/AuthView'));
+const NavBarDropTyres = lazy(() => import('./NavBarDropTyres'));
+const AuthForm = lazy(() => import('../auth/AuthForm'));
+const FavoriteGoods = lazy(() => import('../ux/FavoriteGoods'));
 
 const locales: any = {
   uk: { title: 'Укр' },
@@ -281,6 +280,7 @@ const NavBar = observer(() => {
  
   return (
   <div className="navbar">
+    <Suspense fallback={<span>Loading...</span>}>
     <div className='navBarLogoBox'>
       {isMobile ? 
         <i className={isOpenMobileBar ? 
@@ -293,7 +293,18 @@ const NavBar = observer(() => {
       <a href='/'>
         <img 
           fetchpriority="high"
-          src='img_main/logoSky180.webp' 
+          src='/img_main/logoSky180.webp' 
+          width={162}
+          height={62}
+          sizes='(max-width: 2560px) 162px,
+                  (max-width: 1440px) 162px,
+                  (max-width: 1024px) 162px,
+                  (max-width: 768px) 162px,
+                  (max-width: 580px) 162px,
+                  (max-width: 425px) 162px,
+                  (max-width: 400px) 162px,
+                  (max-width: 375px) 162px,
+                  (max-width: 320px) 162px, 100vw'
           alt='logoShop'
         />
       </a>
@@ -430,6 +441,7 @@ const NavBar = observer(() => {
     </>
     : null
     }
+    </Suspense>
   </div>
   );
 });
