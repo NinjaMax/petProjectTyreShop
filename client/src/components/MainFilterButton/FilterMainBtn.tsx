@@ -19,7 +19,7 @@ const FilterMainBtn = observer(({
 }: IFilterMainBtn
 ) => {
   const {filter, goodsTyre} = useContext<any | null>(Context);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const filterClick = () => {
     if (filterState) {

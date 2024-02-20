@@ -1,3 +1,4 @@
+import React from 'react';
 import '../../css/SelectCss/CheckboxBtn.css';
 
 interface ICheckBoxBtn {

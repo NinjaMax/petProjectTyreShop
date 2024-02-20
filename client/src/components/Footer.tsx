@@ -1,3 +1,4 @@
+import React from 'react';
 import '../css/FooterCss/Footer.css';
 import { useTranslation } from 'react-i18next';
 

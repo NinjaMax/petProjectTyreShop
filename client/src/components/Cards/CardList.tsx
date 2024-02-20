@@ -3,8 +3,6 @@ import '../../css/CardsCss/TyresCardList.css';
 import FlagsIcon from './FlagsIcon';
 import PropsCardIcons from './PropsCardIcons';
 import Rating from '../ux/Rating';
-//import tyres from '../../assets/autotyrespilotspotps2.png';
-// import ButtonAction from '../buttons/ButtonAction';
 import CountBtnOrder from '../ux/CountBtnOrder';
 import { ICard } from './interfaces/Card.interface';
 import { useHistory } from 'react-router-dom';
@@ -70,7 +68,7 @@ const CardList = ({goods, forOrder, priceItem, countEvent, checkOrders}: ICard) 
         >
             <img 
                 id='imgTyresList' 
-                src={'/tyre/autotyrespilotspotps2.png'} 
+                src={'/tyre/autotyrespilotspotps2.webp'} 
                 alt="cardsList"
                 loading='lazy' 
             />

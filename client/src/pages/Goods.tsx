@@ -1,19 +1,5 @@
-import React, { Fragment, useContext, useEffect, useState} from 'react';
+import React, { Fragment, Suspense, lazy, useContext, useEffect, useState} from 'react';
 import '../css/Goods.css';
-import BreadCrumbs from '../components/BreadCrumbs';
-import TabsGoodsCard from '../components/tabs/TabsGoodsCard';
-import Benefits from '../components/Benefits';
-import AllAboutProduct from '../components/goods/AllAboutProduct';
-import PropertiesGoods from '../components/goods/PropertiesGoods';
-import ReviewBrandOverall from '../components/reviews/ReviewsBrandOverall';
-import ReviewGoodsOverall from '../components/reviews/ReviewGoodsOverall';
-import ReviewsGoods from '../components/reviews/ReviewsGoods';
-import SimilarGoods from '../components/goods/SimilarGoods';
-import TyreCardSmall from '../components/cards/CardSmall';
-import AllTyreModelSize from '../components/goods/AllTyreModelSize';
-import AllModelBrand from '../components/goods/AllModelBrand';
-import ProductPayDel from '../components/goods/ProductPayDel';
-import YouWatched from '../components/goods/YouWatched';
 import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
 import { NOT_FOUND_ROUTE } from '../utils/consts';
 import { 
@@ -55,28 +41,44 @@ import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../context/Context';
 import { createStringUrl } from '../services/stringUrl';
-import ButtonAction from '../components/buttons/ButtonAction';
-import Modal from '../components/modal/Modal';
-import ReviewCreate from '../components/reviews/ReviewCreate';
 import { IReviewGoods } from '../components/reviews/interfaces/ReviewGoods.interface';
 import { IRatingAvg } from './types/RatingModelAvg.type';
 import { IRatingBrandAvg } from './types/RatingBrandAvg.type';
 import { IRatingSeasonAvg } from './types/RatingBrandSeason.type';
 import { FormValues } from '../components/reviews/types/ReviewTyreCreate.type';
-import ModelSection from '../components/goods/ModelSection';
-import Question from '../components/question/Questions';
-import PropertiesWheelGoods from '../components/goods/PropertiesWheelGoods';
 import { ICheckOrderItem } from '../components/catalogs/types/CheckOrder.type';
-import CheckOrder from '../components/modal/CheckOrder';
 import { useMediaQuery } from 'react-responsive';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
+import SpinnerCarRot from '../components/spinners/SpinnerCarRot';
 
 type ILikeTyreType = {
   id_review: number;
   likeCount: number;
   dislikeCount: number;
 };
+
+const BreadCrumbs = lazy(() => import('../components/BreadCrumbs'));
+const TabsGoodsCard = lazy(() => import('../components/tabs/TabsGoodsCard'));
+const Benefits = lazy(() => import('../components/Benefits'));
+const AllAboutProduct = lazy(() => import('../components/goods/AllAboutProduct'));
+const PropertiesGoods = lazy(() => import('../components/goods/PropertiesGoods'));
+const ReviewBrandOverall = lazy(() => import('../components/reviews/ReviewsBrandOverall'));
+const ReviewGoodsOverall = lazy(() => import('../components/reviews/ReviewGoodsOverall'));
+const ReviewsGoods = lazy(() => import('../components/reviews/ReviewsGoods'));
+const SimilarGoods = lazy(() => import('../components/goods/SimilarGoods'));
+const TyreCardSmall = lazy(() => import('../components/cards/CardSmall'));
+const AllModelBrand = lazy(() => import('../components/goods/AllModelBrand'));
+const ProductPayDel = lazy(() => import('../components/goods/ProductPayDel'));
+const YouWatched = lazy(() => import('../components/goods/YouWatched'));
+const AllTyreModelSize = lazy(() => import('../components/goods/AllTyreModelSize'));
+const ButtonAction = lazy(() => import('../components/buttons/ButtonAction'));
+const Modal = lazy(() => import('../components/modal/Modal'));
+const ReviewCreate = lazy(() => import('../components/reviews/ReviewCreate'));
+const ModelSection = lazy(() => import('../components/goods/ModelSection'));
+const Question = lazy(() => import('../components/question/Questions'));
+const PropertiesWheelGoods = lazy(() => import('../components/goods/PropertiesWheelGoods'));
+const CheckOrder = lazy(() => import('../components/modal/CheckOrder'));
 
 const GoodsPage = observer(() => {
   const {goodsTyre, goodsWheel, page, customer} = useContext<any | null>(Context);
@@ -586,13 +588,10 @@ const GoodsPage = observer(() => {
         console.log('BASKET_ERROR: ',error);
     }
   }
-  console.log('GOODS_PRODUCT: ', goodsTyre?._product);
-  console.log('GOODS: ', goodsTyre?._product?.tyre_brand?.brand + ' ' + goodsTyre?._product?.tyre_model?.model);
-  console.log('GOODS_PARAM: ', params)
-
 
   return (
     <div className='goodsCard'>
+      <Suspense fallback={<SpinnerCarRot/>}>
       <div className='goodsBreadCrumbs'>
       {goodsTyre._product ?
         <BreadCrumbs 
@@ -896,6 +895,7 @@ const GoodsPage = observer(() => {
           <CheckOrder orderItem={checkOrderItem}/> 
         </Modal> 
       </div>  
+      </Suspense>
     </div>
   );
 });

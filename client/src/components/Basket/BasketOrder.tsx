@@ -501,7 +501,8 @@ const BasketOrder = observer(() => {
         dopGarantySum, 
         goodsBasket, 
         payMethod, 
-        sumGoods
+        sumGoods,
+        t
     ]);
 
     const acceptInput = async (value: string, mask: {
@@ -860,10 +861,6 @@ const BasketOrder = observer(() => {
         }
     };
 
-    // console.log('BASKET_DATA: ', basketData);
-    // console.log('DELIVERY_DATA: ', delivery);
-    // console.log("DEPARTURE_DATA: ", departListNovaPoshta);
-
     return (
         <div>
         { page.basketCount !== 0 && !getIdOrder ?   
@@ -1100,7 +1097,7 @@ const BasketOrder = observer(() => {
                         activeOptions={checkedRadioPayment}
                     >
                         <img src={payMethod === "Готівкою" ? 
-                        './iconPayment/cash_48_b.png' : './iconPayment/cash_48_g.png'} 
+                        '/iconPayment/cash_48_b.webp' : '/iconPayment/cash_48_g.webp'} 
                         width={35}
                         height={35}
                         title='Готівка'
@@ -1123,7 +1120,7 @@ const BasketOrder = observer(() => {
                         activeOptions={checkedRadioPayment}
                     >
                         <img src={payMethod === "Карта/Терминал (LiqPay)" ? 
-                        './iconPayment/credit_card_48_b.png' : './iconPayment/credit_card_48_g.png'} 
+                        '/iconPayment/credit_card_48_b.webp' : '/iconPayment/credit_card_48_g.webp'} 
                         width={35}
                         height={35}
                         title='кредитна карта'
@@ -1146,7 +1143,7 @@ const BasketOrder = observer(() => {
                         activeOptions={checkedRadioPayment}
                     >
                         <img src={payMethod === t('basketOrder.method_pay_invoice') ? 
-                            './iconPayment/merchant_48_b.png' : './iconPayment/merchant_48_g.png'} 
+                            '/iconPayment/merchant_48_b.webp' : '/iconPayment/merchant_48_g.webp'} 
                             width={35}
                             height={35}
                             title={t('basketOrder.method_pay_invoice')}
@@ -1169,7 +1166,7 @@ const BasketOrder = observer(() => {
                         activeOptions={checkedRadioPayment}
                     >
                         <img src={payMethod === t('basketOrder.method_back_pay_title') ? 
-                            './iconPayment/money_back_48_b.png' : './iconPayment/money_back_48_g.png'} 
+                            '/iconPayment/money_back_48_b.webp' : '/iconPayment/money_back_48_g.webp'} 
                             width={35}
                             height={35}
                             title={t('basketOrder.method_back_pay_title')}
@@ -1213,8 +1210,8 @@ const BasketOrder = observer(() => {
                         value={t('basketOrder.use_sky_bonus')}
                         titleCheckbox={t('basketOrder.use_sky_bonus')} 
                         imageSrc={ bonusUser ?
-                            'iconBonus/skyBonus_48_b.png' :
-                            'iconBonus/skyBonus_48_g.png'
+                            '/iconBonus/skyBonus_48_b.webp' :
+                            '/iconBonus/skyBonus_48_g.webp'
                         }
                         onChange={useBonusActive}
                     />
@@ -1231,8 +1228,8 @@ const BasketOrder = observer(() => {
                     <CheckboxBtn 
                         value={'Додаткова гарантія SKY SAFE'}
                         imageSrc={ dopGarantySum ? 
-                            'iconGuard/guard_64_b.png' :
-                            'iconGuard/guard_64_g.png' 
+                            '/iconGuard/guard_64_b.webp' :
+                            '/iconGuard/guard_64_g.webp' 
                         } 
                         titleCheckbox={t('basketOrder.dop_garanty_sky')}
                         onChange={dopGarantyActive}
@@ -1254,7 +1251,7 @@ const BasketOrder = observer(() => {
                     <span className='basketOrderSkyBonus' >{t('basketOrder.calculate_bonus')} {}
                             <span className='basketOrderGetBonusText'>{(sumGoods! * 0.01).toFixed()} </span>
                         <img 
-                            src='iconBonus/skyBonus_48_b.png'
+                            src='/iconBonus/skyBonus_48_b.webp'
                             width={35}
                             height={35}
                             alt='skyBonus'
@@ -1334,8 +1331,8 @@ const BasketOrder = observer(() => {
                         <span className='basketOrderIsOver'>{t('basketOrder.empty_basket')} </span>   
                     }
                     <SuccessNotif 
-                    active={newOrder} 
-                    setActive={setNewOrder}
+                        active={newOrder} 
+                        setActive={setNewOrder}
                     >
                     {t('basketOrder.basket_modal_succes', { order_id: getIdOrder})}
                     </SuccessNotif>   

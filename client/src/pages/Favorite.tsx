@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import React, { Suspense, lazy, useContext, useEffect, useState } from 'react'
 import '../css/Pages/Favorite.css';
 import CardList from '../components/cards/CardList';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
@@ -14,8 +14,10 @@ import {
 } from '../restAPI/restGoodsApi';
 import { Context } from '../context/Context';
 import { ICheckOrderItem } from '../components/catalogs/types/CheckOrder.type';
-import Modal from '../components/modal/Modal';
-import CheckOrder from '../components/modal/CheckOrder';
+import { useTranslation } from 'react-i18next';
+
+const Modal = lazy(() => import('../components/modal/Modal'));
+const CheckOrder = lazy(() => import('../components/modal/CheckOrder'));
 
 const Favorite = () => {
     const {page, customer} = useContext<any | null>(Context);
@@ -26,6 +28,7 @@ const Favorite = () => {
     const [tabSearchModBattery, setTabSearchModBattery] = useState<[]>([]);
     const [active, setActive] = useState(false);
     const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem[] | null>([]);
+    const { t } = useTranslation();
 
     useEffect(() => {
         let isMounted = false;
@@ -62,8 +65,8 @@ const Favorite = () => {
       },[page])
 
     const searchTabModChange = (e: any) => {
-        if (e.target.title === 'Шини') {
-            setTabSearchMod('Шини');
+        if (e.target.title === t('reviewStorePage.reviewStoreClient')) {
+            setTabSearchMod(t('reviewStorePage.reviewStoreClient'));
         }
         if (e.target.title === 'Диски') {
             setTabSearchMod('Диски');
@@ -151,18 +154,18 @@ const Favorite = () => {
                 tabSearchModBattery?.length !== 0 ?
                 <div className='outputDataFavorite'>
                     <div className='outputDataFavoriteItemsTitle'>
-                        <div>Обрані товари:</div>
+                        <div>{t('favoritePage.favoriteGoods')}</div>
                     </div>
                     <div className='outputDataFavoriteItemsLines'>
                         {favoriteTyres?.length !== 0 ? 
                         <div className='outputDataFavoriteItems'>
                         <span 
-                            title='Шини'
-                            className={tabSearchMod === 'Шини' ? 
+                            title={t('favoritePage.cleanFavoriteGoods')}
+                            className={tabSearchMod === t('favoritePage.cleanFavoriteGoods') ? 
                             'activatedFavoriteTitle':
                             'titleFavoriteSearch' }
                             onClick={searchTabModChange}
-                        >Шини 
+                        >{t('favoritePage.cleanFavoriteGoods')} 
                         {favoriteTyres ?
                             <span className='countFavoriteSearch'>
                                 {favoriteTyres?.length}
@@ -225,12 +228,12 @@ const Favorite = () => {
                         <div className='titleFavoriteClear'
                             onClick={clearFavoritesGoods}
                         >
-                            Очистити обрані товари
+                            {t('favoritePage.cleanFavoriteGoods')}Очистити обрані товари
                         </div>
                     </div>
                     <p/>
                     <div className='outputDataFavoriteItemsBox'>
-                        {favoriteTyres && tabSearchMod === 'Шини' ? 
+                        {favoriteTyres && tabSearchMod === t('favoritePage.favoriteTypeTyre') ? 
                         favoriteTyres?.map((goods:any) => (                    
                         <div 
                             className='outputDataFavoriteItemsList' 
@@ -291,11 +294,13 @@ const Favorite = () => {
                         : null
                         } 
                     </div>
+                    <Suspense fallback={<span>....</span>}>
                     <Modal active={active} setActive={setActive}>
                         <CheckOrder orderItem={checkOrderItem}/> 
                     </Modal> 
+                    </Suspense>
                 </div>
-            : <div className='noFavoritesGoods'>НЕ ДОДАНО ОБРАНИХ ТОВАРІВ.</div>
+            : <div className='noFavoritesGoods'>{t('favoritePage.noGoodsAdded')}</div>
             }
         </div>
     )

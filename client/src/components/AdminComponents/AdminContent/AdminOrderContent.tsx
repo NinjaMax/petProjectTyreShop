@@ -1,6 +1,5 @@
-import React, {useContext, useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminOrderContent.css';
-import ButtonSearch from '../../buttons/ButtonSearch';
 import ModalAdmin from '../../modal/ModalAdmin';
 import AdminFormOrder from '../adminModalForm/AdminModalFormOrder';
 import AdminModalOrderSup from '../adminModalForm/AdminModalOrderSup';
@@ -9,7 +8,7 @@ import { IAdminOrder } from './interfaces/AdminOrder.interface';
 import { IOrdersItem } from './types/OrderItem.type';
 import { FixedSizeList  as List } from 'react-window';
 import SpinnerCarRot from '../../spinners/SpinnerCarRot';
-import { addCommentsToOrder, addGoodsToSaleOrder, createToSaleOrder, updateOrder } from '../../../restAPI/restAdminAPI';
+import { addCommentsToOrder, addGoodsToSaleOrder, createToSaleOrder} from '../../../restAPI/restAdminAPI';
 import { Context } from '../../../context/Context';
 
 const AdminOrderContent = (

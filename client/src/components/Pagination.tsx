@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import '../css/Pagination.css';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../context/Context';

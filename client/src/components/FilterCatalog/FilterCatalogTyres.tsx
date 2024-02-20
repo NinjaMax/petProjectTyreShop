@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import '../../css/FilterCatatogCss/FilterCatalogTyres.css';
 import FilterMainBtn from '../mainFilterButton/FilterMainBtn';
 import CheckboxBtn from '../select/CheckboxBtn';

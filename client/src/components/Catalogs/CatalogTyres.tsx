@@ -174,11 +174,11 @@ const CatalogTyres = observer(() => {
                 <div>{t('catalogTyre.popular_request')}
                     <PopularRequests
                         entityLink={[
-                        { link: '/tyres/lіtnya/w195/h65/r15', title: '195/65 R15 літо'},
-                        { link: '/tyres/legkovantazhnii', title: ' шини для мікроавтобуса'},
-                        { link: '/tyres/zimova/w205/h55/r16', title: 'зимние шини 205/55 R16'},
-                        { link: '/tyres/goodyear/w215/h65/r16', title: 'шини Goodyear 215/65 R16'},
-                        { link: '/tyres/zimova/w195/h65/r15', title: '195/65 R15 зима'},
+                        { link: i18n.resolvedLanguage === 'uk' ? '/tyres/lіtnya/w195/h65/r15' : 'ru/tyres/lіtnya/w195/h65/r15', title: '195/65 R15 літо'},
+                        { link: i18n.resolvedLanguage === 'uk' ? '/tyres/legkovantazhnii' : 'ru/tyres/legkovantazhnii', title: ' шини для мікроавтобуса'},
+                        { link: i18n.resolvedLanguage === 'uk' ? '/tyres/zimova/w205/h55/r16' : 'ru/tyres/zimova/w205/h55/r16', title: 'зимние шини 205/55 R16'},
+                        { link: i18n.resolvedLanguage === 'uk' ? '/tyres/goodyear/w215/h65/r16' : 'ru/tyres/goodyear/w215/h65/r16', title: 'шини Goodyear 215/65 R16'},
+                        { link: i18n.resolvedLanguage === 'uk' ? '/tyres/zimova/w195/h65/r15' : 'ru/tyres/zimova/w195/h65/r15', title: '195/65 R15 зима'},
                         ]}
                     />
                 </div>

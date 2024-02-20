@@ -1,4 +1,3 @@
-import React from 'react';
 import '../css/Pages/CarSelect.css';
 import { Helmet } from 'react-helmet';
 

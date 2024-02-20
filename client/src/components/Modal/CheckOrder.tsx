@@ -1,8 +1,7 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../../css/Modal/CheckOrder.css';
 import ButtonAction from '../buttons/ButtonAction';
 import TyresCardList from '../cards/CardList';
-import { ICheckTyreModal } from './types/CheckTyreItem.type';
 import { useHistory } from 'react-router-dom';
 import { ICheckOrderItem } from '../catalogs/types/CheckOrder.type';
 import { getBasketOrder, removeBasketStorageGoods, updateBasketStorageGoods } from '../../restAPI/restGoodsApi';

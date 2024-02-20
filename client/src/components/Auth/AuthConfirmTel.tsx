@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import SpinnerCarRot from '../spinners/SpinnerCarRot';
 import SpinnerWait from '../spinners/SpinnerWait';
 import Timer from '../timer/Timer';
 import { useForm } from 'react-hook-form';

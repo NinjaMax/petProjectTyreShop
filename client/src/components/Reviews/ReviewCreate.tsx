@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import '../../css/Reviews/ReviewCreateTyre.css';
 import RatingOptions from '../ux/RatingOptions';
 import ButtonAction from '../buttons/ButtonAction';

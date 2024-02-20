@@ -1,3 +1,4 @@
+import React from 'react';
 import '../css/Slider.css';
 import DotSite from './ux/DotSite';
 
@@ -18,11 +19,7 @@ const Slider = () => {
                         (max-width: 1440px) 1440px,
                         (max-width: 1024px) 1024px,
                         (max-width: 768px) 768px,
-                        (max-width: 580px) 580px,
-                        (max-width: 425px) 425px,
-                        (max-width: 400px) 400px,
-                        (max-width: 375px) 375px,
-                        (max-width: 320px) 320px, 100vw'
+                        (max-width: 580px) 580px, 100vw'
                 alt='sliderOne'
               />
             </a> 
@@ -49,7 +46,7 @@ const Slider = () => {
           {/* <a href={'/'} > */}
           <img id='imgSliderBoxTop' 
             fetchpriority="high"
-            width={700}
+            width={695}
             height={360}
             src="sliders/continental_offer_bonus_700_390.webp"
             srcSet='sliders/continental_offer_bonus_700_390.webp 700w' 
@@ -57,11 +54,7 @@ const Slider = () => {
                     (max-width: 1440px) 1440px,
                     (max-width: 1024px) 1024px,
                     (max-width: 768px) 768px,
-                    (max-width: 580px) 580px,
-                    (max-width: 425px) 425px,
-                    (max-width: 400px) 400px,
-                    (max-width: 375px) 375px,
-                    (max-width: 320px) 320px, 100vw'
+                    (max-width: 580px) 580px, 100vw'
             alt='sliderBoxTop'
           />
           {/* </a> */}

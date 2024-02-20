@@ -1,20 +1,23 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { Suspense, lazy, useContext, useEffect, useState } from 'react';
 import '../css/Pages/ReviewStorePage.css';
-import BreadCrumbs from '../components/BreadCrumbs';
-import ButtonAction from '../components/buttons/ButtonAction';
-import ReviewStore from '../components/reviews/ReviewStore';
 import Modal from '../components/modal/Modal';
-import ReviewStoreCreate from '../components/reviews/ReviewStoreCreate';
 import { Context } from '../context/Context';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { FormValuesStore } from '../components/reviews/types/ReviewStoreCreate.type';
 import { createStoreReview, getAllStoreReview } from '../restAPI/restGoodsApi';
+import { useTranslation } from 'react-i18next';
+
+const BreadCrumbs = lazy(() => import('../components/BreadCrumbs'));
+const ButtonAction = lazy(() => import('../components/buttons/ButtonAction'));
+const ReviewStore = lazy(() => import('../components/reviews/ReviewStore'));
+const ReviewStoreCreate = lazy(() => import('../components/reviews/ReviewStoreCreate'));
 
 const ReviewStorePage = () => {
   const {goodsTyre, customer} = useContext<any | null>(Context);
   const [activeStore, setActiveStore] = useState<boolean>(false);
   const [dataReviewStore, setDataReviewStore] = useState<{} | null>(null);
   const [dataStoreList, setDataStoreList] = useState<any[] | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     let isMounted = false;
@@ -74,11 +77,12 @@ const ReviewStorePage = () => {
 
   return (
     <div className='reviewStorePage'>
+      <Suspense fallback={<span>....</span>}>
       <BreadCrumbs route={['/','/tyres']} hrefTitle={['Home','Tyres']}/>
       <div className='reviewStorePageContainer'>
         <div className='reviewStorePageTitle' >
-          <span>Відгуки клієнтів про інтернет магазин</span>
-          <ButtonAction props={'Додати відгук'}
+          <span>{t('reviewStorePage.reviewStoreClient')}</span>
+          <ButtonAction props={t('reviewStorePage.addReviewStore')}
             eventItem={onCreateRevieStore}
           /> 
         </div>
@@ -96,6 +100,7 @@ const ReviewStorePage = () => {
             <ReviewStoreCreate onSubmitReviewStore={onSubmitReviewStore}/>
           </Modal>
       </div>
+      </Suspense>
     </div>
   )
 }

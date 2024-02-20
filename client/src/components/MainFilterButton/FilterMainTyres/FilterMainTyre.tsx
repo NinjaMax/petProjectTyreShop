@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import '../../../css/FilterMain/FilterMainTyres/FilterMainTyre.css';
 import FilterMainBtn from '../FilterMainBtn';
 import ButtonAction from '../../buttons/ButtonAction';
@@ -23,7 +23,7 @@ const FilterMainTyre = observer((
     const [stateDiameter, setStateDiameter]=useState<boolean>(false);
     const [stateBrand, setStateBrand]=useState<boolean>(false);
     const [stateSeason, setStateSeason]=useState<boolean>(false);
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         if(!filterState) {
@@ -157,7 +157,6 @@ const FilterMainTyre = observer((
     const pickUp = () => {
         //localStorage.removeItem('filterTyreUrl');
         localStorage.setItem('filterTyreUrl', `${filter.season}/${filter.brands}/${filter.width}/${filter.height}/${filter.diameter}`);
-
         document.location.assign('/tyres');
     };
     

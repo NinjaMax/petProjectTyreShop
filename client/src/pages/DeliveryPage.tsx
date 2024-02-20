@@ -1,6 +1,5 @@
 import React from 'react';
 import '../css/Pages/DeliveryPage.css';
-import MapDelivery from '../components/maps/MapDelivery';
 import { createStringUrl } from '../services/stringUrl';
 import { DELIVERY_GOODS_ROUTE } from '../utils/consts';
 import { useTranslation } from 'react-i18next';

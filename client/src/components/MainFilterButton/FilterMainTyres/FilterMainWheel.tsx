@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import '../../../css/FilterMain/FilterMainTyres/FilterMainTyre.css';
 import FilterMainBtn from '../FilterMainBtn';
 import ButtonAction from '../../buttons/ButtonAction';
@@ -24,7 +24,7 @@ const FilterMainWheel = observer((
     const [stateBoltCount, setStateBoltCount]=useState(false);
     const [stateBrand, setStateBrand]=useState(false);
     const [stateType, setStateType]=useState(false);
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     
     useEffect(() => {
         if(!filterState) {

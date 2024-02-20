@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import { Suspense, lazy, useEffect, useState} from 'react';
 import '../css/Admin.css';
 import { getTyresAdmin, 
         getWheelsAdmin, 
@@ -20,53 +20,27 @@ import { getTyresAdmin,
     } from '../restAPI/restAdminAPI';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { observer } from 'mobx-react-lite';
-import { Context } from '../context/Context';
-import AdminHeader from '../components/adminComponents/AdminHeader';
-import AdminMainContent from '../components/adminComponents/AdminMainContent';
-import AdminProfile from '../components/adminComponents/AdminProfile';
-import AdminSideBar from '../components/adminComponents/AdminSideBar';
-import AdminCashBoxContent from '../components/adminComponents/adminContent/AdminCashBoxContent';
-import AdminCustomersContent from '../components/adminComponents/adminContent/AdminCustomersContent';
-import AdminGoodsContent from '../components/adminComponents/adminContent/AdminGoodsContent';
-import AdminOptionContent from '../components/adminComponents/adminContent/AdminOptionContent';
-import AdminOrderContent from '../components/adminComponents/adminContent/AdminOrderContent';
-import AdminOrderSupContent from '../components/adminComponents/adminContent/AdminOrderSupContent';
-import AdminPayExpensesContent from '../components/adminComponents/adminContent/AdminPayExpensesContent';
-import AdminPayIncomesContent from '../components/adminComponents/adminContent/AdminPayIncomesContent';
-import AdminReportsContent from '../components/adminComponents/adminContent/AdminReportsContent';
-import AdminSalesContent from '../components/adminComponents/adminContent/AdminSalesContent';
-import AdminSupplierContent from '../components/adminComponents/adminContent/AdminSupplierContent';
-import AdminUploaderContent from '../components/adminComponents/adminContent/AdminUploaderContent';
-import AdminUsersContent from '../components/adminComponents/adminContent/AdminUsersContent';
-//import { postTask } from '../restAPI/postTaskAdmin';
-//import { scheduler } from 'timers/promises';
+import SpinnerCarRot from '../components/spinners/SpinnerCarRot';
 
-//import { StockTyre } from './interfaces/stockTyre.interface';
-
-//interface IAdmin {
-    // data?: [];
-    // result?: void | any;
-    //props:[[], ...[][]];
-    // customer?:[] | null;
-    // comments?:[] | null;
-    // storage?:[] | null;
-    // sideBarItem?: string;
-    // tyreData?:[] | null;
-    // tyreStockData?:[] | null;
-    // tyrePriceData?:[] | null;
-    // wheelData?:[] | null;
-    // wheelStockData?:[] | null;
-    // wheelPriceData?:[] | null;
-    // customers?:[] | null;
-    // commentData?:[] | null;
-    // commentId?:[] | null;
-    // orderAllData?:[] | null;
-    // storageAll?:[] | null;
-    //result.data: [];
-//}
+const AdminHeader = lazy(() => import('../components/adminComponents/AdminHeader'));
+const AdminMainContent = lazy(() => import('../components/adminComponents/AdminMainContent'));
+const AdminProfile = lazy(() => import('../components/adminComponents/AdminProfile'));
+const AdminSideBar = lazy(() => import('../components/adminComponents/AdminSideBar'));
+const AdminCashBoxContent = lazy(() => import('../components/adminComponents/adminContent/AdminCashBoxContent'));
+const AdminCustomersContent = lazy(() => import('../components/adminComponents/adminContent/AdminCustomersContent'));
+const AdminGoodsContent = lazy(() => import('../components/adminComponents/adminContent/AdminGoodsContent'));
+const AdminOptionContent = lazy(() => import('../components/adminComponents/adminContent/AdminOptionContent'));
+const AdminOrderContent = lazy(() => import('../components/adminComponents/adminContent/AdminOrderContent'));
+const AdminOrderSupContent = lazy(() => import('../components/adminComponents/adminContent/AdminOrderSupContent'));
+const AdminPayExpensesContent = lazy(() => import('../components/adminComponents/adminContent/AdminPayExpensesContent'));
+const AdminPayIncomesContent = lazy(() => import('../components/adminComponents/adminContent/AdminPayIncomesContent'));
+const AdminReportsContent = lazy(() => import('../components/adminComponents/adminContent/AdminReportsContent'));
+const AdminSalesContent = lazy(() => import('../components/adminComponents/adminContent/AdminSalesContent'));
+const AdminSupplierContent = lazy(() => import('../components/adminComponents/adminContent/AdminSupplierContent'));
+const AdminUploaderContent = lazy(() => import('../components/adminComponents/adminContent/AdminUploaderContent'));
+const AdminUsersContent = lazy(() => import('../components/adminComponents/adminContent/AdminUsersContent'));
 
 const Admin = observer(() => {
-    const {user} = useContext<any | null>(Context);
     const [sideBarItem, setSideBarItem] = useState<string>("golovna");
     const [tyreData, setTyreData] = useState(null);
     const [wheelData, setWheelData] = useState(null);
@@ -218,13 +192,10 @@ const Admin = observer(() => {
             console.log('ERROR_ORDER_SUP_COMMENTS_DATA: ', error);    
         }
     };
-    // console.log('USERS: ', users);
-    // console.log('CUSTOMERS: ',customers);
-    //console.log('ORDERS: ', orderAllData);
-
 
     return (
         <div className='adminPageMain'>
+            <Suspense fallback={<SpinnerCarRot/>}>
             <div className='profileAdmin'>
                 <AdminProfile/>
             </div>
@@ -330,7 +301,8 @@ const Admin = observer(() => {
                 {sideBarItem === 'nalashtuvania' ?
                     <AdminOptionContent />
                 : null} 
-            </div>            
+            </div>
+            </Suspense>            
         </div>
     );
 });

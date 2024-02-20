@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import '../../css/CardsCss/TyresCard.css';
 import FlagsIcon from './FlagsIcon';
 import PropsCardIcons from './PropsCardIcons';
@@ -92,7 +92,7 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                 <a id={goods?.id + '_good'}
                     className='cardLinkProduct'
                     onClick={addGoodsId} 
-                    href={'/' + createStringUrl(goods?.full_name)}
+                    href={i18n.resolvedLanguage === 'uk' ?  '/' : '/ru/' + createStringUrl(goods?.full_name)}
                 >
                 <img id='imgTyres' 
                     src={'/tyre/autotyrespilotspotps2.webp'} 
@@ -116,7 +116,7 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                 <a id={goods?.id + '_product'}
                     className='cardLinkProduct'
                     onClick={addGoodsId} 
-                    href={'/' + createStringUrl(goods?.full_name)}
+                    href={i18n.resolvedLanguage === 'uk' ? '/' : '/ru/' + createStringUrl(goods?.full_name)}
                 >
                     <img 
                         id='imgTyres' 

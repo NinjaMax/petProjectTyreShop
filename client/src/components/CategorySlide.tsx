@@ -1,3 +1,4 @@
+import React from 'react';
 import '../css/CategorySlide.css';
 import { useTranslation } from 'react-i18next';
 

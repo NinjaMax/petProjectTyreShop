@@ -1,26 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Mochiy+Pop+P+One&family=Montserrat&family=Oswald:wght@300&family=Varela+Round&family=ZCOOL+KuaiLe&display=swap');
-
-/* body {
-  background: #2B3246;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Varela Round', sans-serif;
-  font-size: 1.5em;
-} */
 .notification {
   opacity: 0;
   transition: 0.3s all linear;
   height: 20px;
 }
-
 .notificationActive {
-  /* position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%); */
-
   display: flex;
+  font-family: var(--main-font-family);
   justify-content: center;
   align-items: center; 
   position: fixed;
@@ -35,20 +20,15 @@
   opacity: 1;
   transition: 0.3s all linear;
 }
-
 .notificationBox {  
   transform: scale(0.5);
   transition: 0.3s all linear;
 }
-
 .notificationBox.active {
   transform: scale(1);
   background-color:#fefefe;
-  /*border: 1px solid #ccc; */
   border-radius: 10px;
   padding: 20px;
-
-  /* border-radius: 8px; */
   max-width: 520px;
   max-height: 100px;
   text-align: left;
@@ -57,19 +37,14 @@
   align-items: center;
   gap: 5px;
   padding: 10px;
-  /* background-color: #2B3246; */
   cursor:pointer;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  /* box-shadow:  9px 9px 18px #262c3e,
-    -9px -9px 18px #30384e; */
   color: rgb(255, 10, 1);
   margin: 20px;
 }
-
 .notificationBox.active i {
   margin: 15px;
 }
-
 .check {
   border-radius: 8px;
   width: 220px;
@@ -88,11 +63,9 @@
   background-color: rgba(147, 209, 117, 0.50);
   transition:0.5s;
 }
-
 .color {
   animation: color 2s linear infinite;
 }
-
 .info {
   border-radius: 8px;
   width: 220px;
@@ -104,22 +77,16 @@
   background-color: #2B3246;
   cursor:pointer;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  /* box-shadow:  9px 9px 18px #262c3e,
-    -9px -9px 18px #30384e; */
   color: rgb(82, 125, 243);
   margin: 20px;
 }
-
 .spin {
   animation: spin 2s linear infinite;
 }
-
-.info:hover
-{
+.info:hover {
   background-color: rgba(82, 125, 243, 0.50);
   transition:0.5s;
 }
-
 .warning {
   border-radius: 8px;
   width: 220px;
@@ -134,12 +101,10 @@
   color: rgb(247, 149, 72);
   margin: 20px;
 }
-
 .warning:hover{
   background-color: rgba(247, 149, 73, 0.50);
   transition:0.5s;
 }
-
 .rotate {
   animation: rotate 2s linear infinite;
 }
@@ -157,14 +122,10 @@
   color: rgb(255, 10, 1);
   margin: 20px;
 }
-
-.danger:hover
-{
+.danger:hover {
   background-color: rgba(255, 10, 1, 0.33);
   transition:0.5s;
 }
-
-
 .shine {
   animation: shine 2s linear infinite;
 }
@@ -176,7 +137,6 @@
     transform: rotate(360deg);
   }
 }
-
 @keyframes color {
   50% {
    color: green
@@ -185,7 +145,6 @@
     color: #0ad406;
   }
 }
-
 @keyframes rotate {
  0% {
     transform: rotate(0deg);
@@ -200,11 +159,9 @@
     transform: rotate(-90deg);
   }
 }
-
 @keyframes shine {
   0% {
    color: red;
-   /* color: #2B3246; */
   }
   50% {
     text-shadow:
@@ -215,7 +172,6 @@
       0 0 80px red;
   }
 }
-
 .notificationTextError {
   font-family: var(--main-font-family);
   padding: 5px;
@@ -226,11 +182,6 @@
   padding: 5px;
   color:#444B54;
 }
-/* .modalWindow {
-  opacity: 0;
-  transition: 0.3s all linear;
-}
-
 .modalWindowActive {
   display: flex;
   justify-content: center;
@@ -247,12 +198,10 @@
   opacity: 1;
   transition: 0.3s all linear;
 }
-
 .modalWindowBox {  
   transform: scale(0.5);
   transition: 0.3s all linear;
 }
-
 .modalWindowBox.active {
   transform: scale(1);
   background-color:#fefefe;
@@ -260,15 +209,55 @@
   border-radius: 10px;
   padding: 20px;
 }
-
 .closeModalBtn {
   float: right;
   border: none;
   cursor: pointer;
 }
-
 .closeModalBtn span {
   font-size: 22px;
   font-family: var(--main-font-family);
   font-weight: bold;
-} */
+}
+
+@media only screen and (max-width: 2560px){
+  .notificationActive {
+      max-width: 2560px;
+  }
+}
+
+@media only screen and (max-width: 1440px){
+  .notificationActive {
+      max-width: 1440px;
+  }
+}
+
+@media only screen and (max-width: 1024px){
+  .notificationActive {
+      max-width: 1024px;
+  }
+}
+
+@media only screen and (max-width: 768px){
+  .notificationActive {
+      max-width: 768px;
+  }
+}
+
+@media only screen and (max-width: 425px){
+  .notificationActive {
+      max-width: 425px;
+  }
+}
+
+@media only screen and (max-width: 375px){
+  .notificationActive {
+      max-width: 320px;
+  }
+}
+
+@media only screen and (max-width: 320px){
+  .notificationActive {
+      max-width: 320px;
+  }
+}

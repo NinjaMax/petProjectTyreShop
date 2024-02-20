@@ -1,4 +1,4 @@
-import {useContext, useState, useEffect, lazy, Suspense} from 'react';
+import React, {useContext, useState, useEffect, lazy, Suspense} from 'react';
 import '../../css/NavBarCss/NavBar.css';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../../context/Context';
@@ -290,7 +290,7 @@ const NavBar = observer(() => {
         ></i> 
         : null
       }
-      <a href='/'>
+      <a href={i18n.resolvedLanguage === 'uk' ? '/' : '/ru'}>
         <img 
           fetchpriority="high"
           src='/img_main/logoSky180.webp' 

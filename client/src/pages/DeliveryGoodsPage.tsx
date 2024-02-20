@@ -1,58 +1,25 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { Suspense, lazy, useContext, useEffect, useState } from 'react';
 import '../css/Pages/DeliveryGoodsPage.css';
-import BreadCrumbs from '../components/BreadCrumbs';
-import FilterCatalogTyres from '../components/filterCatalog/FilterCatalogTyres';
-import CatalogTyres from '../components/catalogs/CatalogTyres';
-import ReviewsMain from '../components/reviews/ReviewsMain';
-import ReviewsGoods from '../components/reviews/ReviewsGoods';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { Context } from '../context/Context';
-import { createRuStringFromUrl, createStringUrl, createUaStringFromUrl } from '../services/stringUrl';
-import { CATALOG_TYRES_ROUTE, DELIVERY_GOODS_ROUTE } from '../utils/consts';
-import { yieldToMain } from '../restAPI/postTaskAdmin';
+import { createStringUrl, createUaStringFromUrl } from '../services/stringUrl';
+import { DELIVERY_GOODS_ROUTE } from '../utils/consts';
 import { getTyresOffsetMain, getTyresReviewLimit, getTyresWithCatOffset, getTyresWithoutOffset, getTyresWithoutOffsetProps } from '../restAPI/restGoodsApi';
-import MapDelivery from '../components/maps/MapDelivery';
 import { getCityInRegionNovaPoshta, getWareHousesNovaPoshta } from '../restAPI/restNovaPoshtaAPI';
 import {regionDataRu, regionDataUa, regionDelivery, regionNovaPoshata} from '../services/regionServiceDelivery';
 import SpinnerCarRot from '../components/spinners/SpinnerCarRot';
 import { getCityInRegionDelivery, getWareHousesDelivery } from '../restAPI/restDeliveryAPI';
-import ButtonPrevNext from '../components/buttons/ButtonPrevNext';
 import { tyreSeasonCat, tyreVehicleTypeCat } from '../services/tyresCatService';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
+import { ICityMarkerData } from './types/CityMarket.type';
 
-type ICityMarkerData = {
-  Area: string,
-  AreaDescription: string,
-  AreaDescriptionRu: string,
-  AreaDescriptionTranslit: string,
-  Delivery1: string,
-  Delivery2: string,
-  Delivery3: string,
-  Delivery4: string,
-  Delivery5: string,
-  Delivery6: string,
-  Delivery7: string,
-  Description: string,
-  DescriptionRu: string,
-  DescriptionTranslit: string,
-  Index1: string,
-  Index2: string,
-  IndexCOATSU1: string,
-  Latitude: string,
-  Longitude: string,
-  Ref: string,
-  Region: string,
-  RegionsDescription: string,
-  RegionsDescriptionRu: string,
-  RegionsDescriptionTranslit: string,
-  SettlementType: string,
-  SettlementTypeDescription: string,
-  SettlementTypeDescriptionRu: string,
-  SettlementTypeDescriptionTranslit: string,
-  SpecialCashCheck:number,
-  Warehouse: string,
-};
+const BreadCrumbs = lazy(() => import('../components/BreadCrumbs'));
+const FilterCatalogTyres = lazy(() => import('../components/filterCatalog/FilterCatalogTyres'));
+const CatalogTyres = lazy(() => import('../components/catalogs/CatalogTyres'));
+const ReviewsMain = lazy(() => import('../components/reviews/ReviewsMain'));
+const ReviewsGoods = lazy(() => import('../components/reviews/ReviewsGoods'));
+const MapDelivery = lazy(() => import('../components/maps/MapDelivery'));
 
 const DeliveryGoodsPage = () => {
   const {goodsTyre, filter} = useContext<any | null>(Context);
@@ -103,15 +70,7 @@ const DeliveryGoodsPage = () => {
         }
         if (getRegionRuData && langState === 'ru') {
           localStorage.setItem('regionData', getRegionRuData);
-          // const dataRegionRu = getRegionRuData.split(',');
-          // setCityRegion(dataRegionRu[0]);
-          // setRegion(dataRegionRu[1]);
-          // setCityCenterRegion(dataRegionRu[0]);
-          
         }
-        // if () {
-
-        // }
       }
     };
     loadUrl();
@@ -811,12 +770,6 @@ const DeliveryGoodsPage = () => {
             setNovaPoshtaCityInRegion([...regionFilteredCityList]);
             setNovaPoshtaWareHouseList([...cityDepartData]);
           }
-          // console.log('REGION_FILTERED_NP__LIST: ', regionFilteredCityList)
-          // const getCityMarkerData = regionFilteredCityList.find((item: any) => item.Description === regionData![0]);
-          // setCityMarkerData(getCityMarkerData);
-          // setNovaPoshtaCityInRegion([...regionFilteredCityList]);
-          // setNovaPoshtaWareHouseList([...cityDepartData]);
-          
           regionCityList = null;
           regionFilteredCityList = null;
           cityDepartData = null;       
@@ -842,76 +795,6 @@ const DeliveryGoodsPage = () => {
           console.log('DELIVERY_SET_REGION_ERROR: ', error);
         }
       } 
-      // if (!isMounted && novaPoshtaRegion && !regionData) {
-      //   try {
-      //     let regionCityList: any[] | null = [];
-      //     let regionFilteredCityList: any[] | null = [];
-      //     let cityDepartData: any[] | null = [];
-
-      //     let getCountRegionCity: any = await getCityInRegionNovaPoshta(novaPoshtaRegion, 1);
-      //     const countPage = Math.ceil(getCountRegionCity?.info.totalCount / 150);
-          
-      //     if (countPage > 1) {
-      //       for (let index = 1; index <= countPage; index++) {
-      //         let getRegionCity: any = await getCityInRegionNovaPoshta(novaPoshtaRegion, index);
-      //         regionCityList.push(...getRegionCity.data);
-      //       }
-      //     } else {
-      //       let getRegionCity: any = await getCityInRegionNovaPoshta(novaPoshtaRegion, 1);
-      //       regionCityList.push(...getRegionCity.data);
-      //     }
-          
-      //     for (let index = 0; index < regionCityList.length; index++) {
-      //       let getCityWareHouse = await getWareHousesNovaPoshta(
-      //       {
-      //         MainDescription: langState === 'uk' ? regionCityList[index].Description : regionCityList[index].DescriptionRu,
-      //         DeliveryCity :''
-      //       });
-            
-      //       if (getCityWareHouse.info.totalCount !== 0 && getCityWareHouse.data.length !== 0 &&
-      //         getCityWareHouse.data[0].SettlementAreaDescription === region &&
-      //         getCityWareHouse.data[0].SettlementRef === regionCityList[index].Ref
-      //         ) {
-      //         regionFilteredCityList.push(regionCityList[index]);
-      //         let cityRef = regionCityList[index].Ref;
-      //         let getCityDepart = getCityWareHouse.data.filter((item: any) => item.CityDescription === cityRegion 
-      //           && item.SettlementAreaDescription === region && item.SettlementRef === cityRef
-      //         );
-      //         if (getCityDepart.length > 0) {
-      //           cityDepartData.push(...getCityDepart);
-      //         }
-      //       }
-      //     };
-      //     const getCityMarkerData = regionFilteredCityList.find((item: any) => item.Description === cityRegion);
-      //     setCityMarkerData(getCityMarkerData);
-      //     setNovaPoshtaCityInRegion([...regionFilteredCityList]);
-      //     setNovaPoshtaWareHouseList([...cityDepartData]);
-          
-      //     regionCityList = null;
-      //     regionFilteredCityList = null;
-      //     cityDepartData = null;       
-      //   } catch (error) {
-      //     console.log('NOVAPOSHTA_SET_REGION_ERROR: ', error);
-      //   }
-      // }   
-      // if (!isMounted && deliveryRegion && !regionData) {
-      //   try {
-      //     let getCountRegionCityD: any = await getCityInRegionDelivery(deliveryRegion);
-      //     console.log('DELIVERY_CITY_LIST: ', getCountRegionCityD)
-      //     if (getCountRegionCityD.status === true) {
-      //       let cityPresent = getCountRegionCityD.data.find((item: any) => item.name === cityRegion);
-      //       if (cityPresent) {
-      //         let getCityWareHouseDel = await getWareHousesDelivery(
-      //           cityPresent.id
-      //         );
-      //         console.log('DELIVERY_CITYWAREHOSE_LIST: ', getCityWareHouseDel.data)
-      //         setDeliveryWareHouseList(getCityWareHouseDel.data);
-      //       }
-      //     };        
-      //   } catch (error) {
-      //     console.log('DELIVERY_SET_REGION_ERROR: ', error);
-      //   }
-      // }  
       localStorage.removeItem('regionData'); 
     }
     loadRegionData();
@@ -997,6 +880,7 @@ const DeliveryGoodsPage = () => {
     <div className='deliveryGoodsPage'
     onClick={closeFilter}
     >
+      <Suspense fallback={<SpinnerCarRot/>}>
       <div className='aDev'>
         <BreadCrumbs 
           route={['/','/delivery-pay', '/delivery']} 
@@ -1481,6 +1365,7 @@ const DeliveryGoodsPage = () => {
           </div>
         </ReviewsMain>
       </div>
+      </Suspense>
     </div>
   )
 }

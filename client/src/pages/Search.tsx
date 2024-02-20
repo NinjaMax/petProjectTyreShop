@@ -1,7 +1,5 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { Suspense, lazy, useContext, useEffect, useState } from 'react';
 import '../css/Pages/Search.css';
-import Pagination from '../components/Pagination';
-import LoadMoreGoods from '../components/ux/LoadMoreGoods';
 import { useHistory, useLocation } from 'react-router-dom';
 import { addGoodsToBasket, createBasket, getBasketById, getStorageByIdParam, getTyresAll, getWheelsAll } from '../restAPI/restGoodsApi';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
@@ -9,8 +7,12 @@ import Card from '../components/cards/Card';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../context/Context';
 import { ICheckOrderItem } from '../components/catalogs/types/CheckOrder.type';
-import Modal from '../components/modal/Modal';
-import CheckOrder from '../components/modal/CheckOrder';
+import { useTranslation } from 'react-i18next';
+
+const Pagination = lazy(() => import('../components/Pagination'));
+const LoadMoreGoods = lazy(() => import('../components/ux/LoadMoreGoods'));
+const Modal = lazy(() => import('../components/modal/Modal'));
+const CheckOrder = lazy(() => import('../components/modal/CheckOrder'));
 
 const Search = observer(() => {
     const {page, customer, goodsTyre, goodsWheel} = useContext<any | null>(Context);
@@ -18,8 +20,6 @@ const Search = observer(() => {
     const [inputSearch, setInputSearch] = useState<string | null>('');
     const [tyreSearch, setTyreSearch] = useState<[] | null>(null);
     const [wheelSearch, setWheelSearch] = useState<[] | null>(null);
-    const [oilSearch, setOilSearch] = useState<[] | null>(null);
-    const [batterySearch, setBatterySearch] = useState<[] | null>(null);
     const [tabSearch, setTabSearch] = useState<string>('');
     const [tabSearchTyre, setTabSearchTyre] = useState<any[]>([]);
     const [tabSearchWheel, setTabSearchWheel] = useState<any[]>([]);
@@ -28,6 +28,7 @@ const Search = observer(() => {
     const [active, setActive] = useState(false);
     const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem[] | null>([]);
     const history = useHistory();
+    const { t } = useTranslation();
 
     function useQuery() {
         const { search } = useLocation();
@@ -136,8 +137,8 @@ const Search = observer(() => {
     };
 
     const searchTabChange = (e: any) => {
-        if (e.target.title === 'Шини') {
-            setTabSearch('Шини');
+        if (e.target.title === t('search.typeTyre')) {
+            setTabSearch(t('search.typeTyre'));
         }
         if (e.target.title === 'Диски') {
             setTabSearch('Диски');
@@ -166,16 +167,11 @@ const Search = observer(() => {
     try {
         setActive(!active);
         if (!active) {
-            // console.log("STORAGE_ITEM", storageItem);
-            // console.log("PRICE_STOCK_ITEM", priceStockIndex);
             const getStorage = await getStorageByIdParam(storageItem);
             const basket: any = await createBasket({
                 id_customer: customer.customer?.id, 
                 storage: getStorage.storage
             });
-            // console.log('GET_STORAGE: ', getStorage);
-            // console.log('ITEM: ', item);
-            // console.log('CREATE_BASKET_ID_BASKET: ', basket?.data);
             if(basket?.status === 201) {
                 const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
                 const addTobasket: any = await addGoodsToBasket(
@@ -194,7 +190,6 @@ const Search = observer(() => {
                 item.reviews.length,
                 item.diameter.diameter,
                 ); 
-                //console.log('ADD_BASK: ', addTobasket);
                 if (addTobasket?.status === 201) {
                     const updateBasketStorage = await getBasketById(basket.data.id_basket);
                     setCheckOrderItem(
@@ -204,19 +199,17 @@ const Search = observer(() => {
                         updateBasketStorage?.basket_storage.reduce(
                             (sum: any, current: any) => (sum + current.quantity),0)
                     );
-                // console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
-                // console.log('ADD_TO_BASKET: ', addTobasket?.data); 
                 }  
             }
         }
     } catch (error) {
         console.log('BASKET_ERROR: ', error);
     }
-  }
+    }
 
     return (
     <div className='searchContainer'>
-        <h2>Пошук товарів</h2>
+        <h2>{t('search.searchTitle')}</h2>
         <input 
             className='inputSearchContatiner'
             defaultValue={query.get('q') ?? ''}
@@ -224,30 +217,31 @@ const Search = observer(() => {
                 (e: any) => setInputTextSearch(e.target.value)
             }
             type="text" 
-            placeholder="Пошук..." 
-            name="search"/>
+            placeholder={t('search.placeHolder')}
+            name="search"
+        />
         <button 
             className='searchBtnContainer'
             onClick={inputSetsearch}
         >
-            Шукати
+            {t('search.searchButton')}
         </button>
         
         <p/>
         <span className='countAllGoods'>
-            Знайдено товарів:
+        {t('search.foundGoods')}
         </span>
             <div className="btnSearchTabContainer">
                 {tabSearchTyre?.length !== 0 ? 
                 <span  
-                    title='Шини'
-                    className={tabSearch === 'Шини' ? 
+                    title={t('search.typeTyre')}
+                    className={tabSearch === t('search.typeTyre') ? 
                     'activeBtn' :
                     'btnCatalogSearch'
                     }
                     onClick={searchTabChange}
                 > 
-                    Шини
+                    {t('search.typeTyre')}
                     <span className='countSearchPage'>
                         {goodsTyre.totalCount} 
                     </span>
@@ -298,12 +292,12 @@ const Search = observer(() => {
                     </span>
                 </span>
                 : null}
-                <span>Допомогти у підборі? </span>
-                <span>Як підібрати?</span>  
+                <span>{t('search.helpTosearch')}</span>
+                <span>{t('search.howTosearch')}</span>  
             </div>
             <p/>
             <div className='outputDataSearchBox'>
-                {tabSearchTyre && tabSearch === 'Шини' ? 
+                {tabSearchTyre && tabSearch === t('search.typeTyre') ? 
                 tabSearchTyre.map(
                     (goods: any) => (                    
                 <div className='outputDataSearchList' 
@@ -372,8 +366,10 @@ const Search = observer(() => {
                 tabSearch === 'Акб' || 
                 tabSearch === 'Масло' ?
              <div className='searchPagination'>
+            <Suspense fallback={<span>...</span>}>
                 <LoadMoreGoods loadMore={loadMoreGoods}/> 
-                <Pagination/>    
+                <Pagination/>  
+            </Suspense> 
             </div> 
             : null
             }
@@ -383,15 +379,17 @@ const Search = observer(() => {
             tabSearchBattery?.length !== 0
             ? null :
             <span>
-                Товари не знайдено. 
+                {t('search.noGoodsFound')} 
                 {inputSearch ? 
-                `Ви шукали товари: ${inputSearch}` : null
+                `${t('search.youLooked')} ${inputSearch}` : null
                 }
             </span>
             }
+            <Suspense fallback={<span>...</span>}>
             <Modal active={active} setActive={setActive}>
                 <CheckOrder orderItem={checkOrderItem}/> 
             </Modal> 
+            </Suspense>
     </div>
   )
 })

@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import '../../css/FilterMain/ChipOptions.css';
-//import { observer } from 'mobx-react-lite';
 
 interface IChipOptions {
     props: any | null | undefined;

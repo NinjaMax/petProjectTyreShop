@@ -29,7 +29,7 @@ import { ADMIN_ROUTE, ADMIN_AUTH_ROUTE, BASKET_ROUTE, CATALOG_TYRES_ROUTE,
 
 const Admin = lazy(() => import('../pages/Admin'));
 const AdminAuth = lazy(() => import('../components/auth/AdminAuth'));
-const Auth = lazy(() => import('../pages/Auth'));
+//const Auth = lazy(() => import('../pages/Auth'));
 const Basket = lazy(() => import('../pages/Basket'));
 const CatalogTyresPage = lazy(() => import('../pages/CatalogTyresPage'));
 const Contact = lazy(() => import('../pages/Contact'));
@@ -306,7 +306,7 @@ const AppRouter = observer(() => {
                 component={Favorite} 
                 exact={true}
             />
-            <Route 
+            {/* <Route 
                 path={LOGIN_ROUTE} 
                 component={Auth} 
                 exact={true}
@@ -315,7 +315,7 @@ const AppRouter = observer(() => {
                 path={REGISTRATION_ROUTE} 
                 component={Auth} 
                 exact={true}
-            />
+            /> */}
             <Route 
                 path={'/:ru?' + CONTACT_ROUTE} 
                 component={Contact} 

@@ -1,4 +1,4 @@
-import { Fragment, Suspense, lazy, useContext, useState } from 'react';
+import React, { Fragment, Suspense, lazy, useContext, useState } from 'react';
 import '../css/PromotionBox.css';
 import Card from './cards/Card';
 import ButtonPrevNext from './buttons/ButtonPrevNext';

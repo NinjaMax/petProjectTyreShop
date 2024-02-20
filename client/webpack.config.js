@@ -113,10 +113,13 @@ const config = {
         extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
     },
     optimization: {
-        //runtimeChunk: true,
+        runtimeChunk: true,
         minimize: true,
         mergeDuplicateChunks: true,
         removeEmptyChunks: true,
+        splitChunks: {
+            chunks: 'all',
+        },
         minimizer: [
             new TerserPlugin(),
             new CssMinimizerPlugin()

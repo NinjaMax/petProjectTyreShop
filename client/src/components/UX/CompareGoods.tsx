@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import '../../css/UXcss/CompareGoods.css';
 import { Context } from '../../context/Context';
 

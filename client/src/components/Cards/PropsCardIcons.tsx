@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../css/CardsCss/PropsCardIcon.css';
 import { IProps } from '../../services/types/PropsGoods.type';
 import { TyreType } from '../../services/enum/PropsTyreType';

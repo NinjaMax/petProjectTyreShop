@@ -1,19 +1,12 @@
 import React, { useContext, useEffect, useState, Suspense, lazy } from 'react';
 import '../css/CatalogTyresPage.css';
 import { observer } from 'mobx-react-lite';
-//import CatalogTyres from '../components/catalogs/CatalogTyres';
-//import FilterCatalogTyres from '../components/filterCatalog/FilterCatalogTyres';
-//import ReviewsMain from '../components/reviews/ReviewsMain';
-//import ReviewsGoods from '../components/reviews/ReviewsGoods';
 import BreadCrumbs from '../components/BreadCrumbs';
-//import CyrillicToTranslit from 'cyrillic-to-translit-js';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import { getTyresOffsetMain, getTyresReviewLimit, getTyresWithCatOffset, getTyresWithoutOffset, getTyresWithoutOffsetProps, getWheelsReviewLimit, getWheelsWithCatOffset, getWheelsWithoutOffset} from '../restAPI/restGoodsApi';
 import { Context } from '../context/Context';
 import { tyreSeasonCat, tyreVehicleTypeCat } from '../services/tyresCatService';
-//import CatalogWheels from '../components/catalogs/CatalogWheels';
-//import FilterCatalogWheels from '../components/filterCatalog/FilterCatalogWheels';
 import { CATALOG_TYRES_ROUTE, CATALOG_WHEELS_ROUTE } from '../utils/consts';
 import { createStringUrl } from '../services/stringUrl';
 import { typeWheelsCat } from '../services/wheelsProps.service';
@@ -100,7 +93,7 @@ const CatalogTyresPage = observer(() => {
           }
           localStorage.removeItem('filterTyreUrl');
           const tyrePathFromMainPage: string | undefined = 
-          `${CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/${createStringUrl(getMainFilterItem![0])}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(getMainFilterItem![1])}` : ''}${filter.width ? `/w${createStringUrl(getMainFilterItem![2])}` : ''}${filter.height ? `/h${createStringUrl(getMainFilterItem![3])}` : ''}${filter.diameter ? `/r${createStringUrl(getMainFilterItem![4])}` : ''}`;
+          `${langState === 'uk' ? CATALOG_TYRES_ROUTE : 'ru' + CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/${createStringUrl(getMainFilterItem![0])}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(getMainFilterItem![1])}` : ''}${filter.width ? `/w${createStringUrl(getMainFilterItem![2])}` : ''}${filter.height ? `/h${createStringUrl(getMainFilterItem![3])}` : ''}${filter.diameter ? `/r${createStringUrl(getMainFilterItem![4])}` : ''}`;
           history.push(
             tyrePathFromMainPage, 
           );
@@ -111,7 +104,7 @@ const CatalogTyresPage = observer(() => {
     return () => {
       isMountedReview = true;
     };
-  },[filter, history, location.pathname]);
+  },[filter, history, location.pathname, langState]);
 
   useEffect(() => {
     let isMountedReview = false;
@@ -170,7 +163,7 @@ const CatalogTyresPage = observer(() => {
           localStorage.removeItem('filterWheelUrl');
         
           const wheelCatalogPath: string | undefined = 
-          `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(getMainFilterItemW![0])}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(getMainFilterItemW![1])}` : ''}${filter.width ? `/w${createStringUrl(getMainFilterItemW![2])}` : ''}${filter.diameter ? `/r${createStringUrl(getMainFilterItemW![4])}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(getMainFilterItemW![3])}` : '' }`;
+          `${langState === 'uk' ? CATALOG_WHEELS_ROUTE : 'ru' + CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(getMainFilterItemW![0])}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(getMainFilterItemW![1])}` : ''}${filter.width ? `/w${createStringUrl(getMainFilterItemW![2])}` : ''}${filter.diameter ? `/r${createStringUrl(getMainFilterItemW![4])}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(getMainFilterItemW![3])}` : '' }`;
           history.push(
             wheelCatalogPath, 
           );
@@ -181,13 +174,12 @@ const CatalogTyresPage = observer(() => {
     return () => {
       isMountedReview = true;
     };
-  },[filter, history, location.pathname]);
+  },[filter, history, location.pathname, langState]);
 
   useEffect(() =>{
     let isMounted = false;
     const loadCatalogTyre = async() => {
       if (!isMounted && location.pathname.includes('tyres')) {
-        //console.time('GET_REQUEST_TYRE_CATALOG');
         let tyreFilterGoodsId: any = await getTyresWithCatOffset(
             page.limit,
             page.offset,
@@ -208,7 +200,6 @@ const CatalogTyresPage = observer(() => {
           );
         
         goodsTyre?.setTotalCount(tyreFilterGoodsId.count);
-        //console.timeEnd('GET_REQUEST_TYRE_CATALOG');
         page.loadMore > 0  ? goodsTyre?.setTyres(
           [...goodsTyre._tyres, 
             ...tyreFilterGoodsId.rows] 
@@ -249,7 +240,6 @@ const CatalogTyresPage = observer(() => {
     let isMounted = false;
     const loadMainFilterTyreTask = async () => {
       if(!isMounted && location.pathname.includes('tyres')) {
-        //console.time('GET_REQUEST_TYRE_FROM_DATA_BASE');
         let tyreFilterGoods: any = await getTyresOffsetMain(
             filter.width,
             filter.height,
@@ -258,7 +248,6 @@ const CatalogTyresPage = observer(() => {
             filter.brands,
             'ASC',
           );
-          //console.timeEnd('GET_REQUEST_TYRE_FROM_DATA_BASE');
           let setWidthFilter:any[] | null = [];
           let setHightFilter:any[] | null = [];
           let setDiameterFilter:any[] | null = [];
@@ -271,9 +260,7 @@ const CatalogTyresPage = observer(() => {
             setHightFilter?.push(item.height.height),
             setDiameterFilter?.push(item.diameter.diameter),
             setBrandFilter?.push(item.tyre_brand.brand),
-            //setSeasonFilter?.push(item.season.season_ua)
             setSeasonFilter?.push(langState === 'uk' ? item.season.season_ua : item.season.season)
-            //setSeasonFilter?.push(i18n.resolvedLanguage === 'uk' ? item.season.season_ua : item.season.season)
             )
           })
           if (filter.width) {
@@ -486,14 +473,12 @@ const CatalogTyresPage = observer(() => {
     filter.brands, 
     location.pathname, 
     langState
-    //i18n.resolvedLanguage
   ]);
 
   useEffect(() =>{
     let isMounted = false;
     const loadPropsTyreTask = async() => {
       if(!isMounted && location.pathname.includes('tyres')) {
-        //console.time('GET_REQUEST_TYRE_PROPS')
         let tyreFilterGoods: any = await getTyresWithoutOffset(
           filter.price ?? '',
           filter.vehicle_type ?? '',
@@ -501,7 +486,6 @@ const CatalogTyresPage = observer(() => {
           filter.load_index ?? '',
           'ASC',
         );
-        //console.timeEnd('GET_REQUEST_TYRE_PROPS')
         let setVehicleTypeFilter: any[] | null  = [];
         let setSpeedIndexFilter: any[] | null  = [];
         let setLoadIndexFilter: any[] | null  = [];
@@ -520,15 +504,9 @@ const CatalogTyresPage = observer(() => {
             ))
           )
         } else {
-          // goodsTyre?.setVehicleType(
-          //   Array.from(new Set([...setVehicleTypeFilter, 'вантажні шини']))
-          // )
             goodsTyre?.setVehicleType(
             Array.from(new Set([...setVehicleTypeFilter, langState === 'uk' ? 'вантажні шини' : 'грузовые шины']))
           )
-          // goodsTyre?.setVehicleType(
-          //   Array.from(new Set([...setVehicleTypeFilter, i18n.resolvedLanguage === 'uk' ? 'вантажні шини' : 'грузовые шины']))
-          // )
         }
         if (filter.speed_index) {
           goodsTyre?.setSpeedIndex(
@@ -692,14 +670,12 @@ const CatalogTyresPage = observer(() => {
     filter.load_index, 
     location.pathname, 
     langState
-    //i18n.resolvedLanguage
   ]);
 
   useEffect(() =>{
     let isMounted = false;
     const loadPropsTyreHeightTask = async() => {
       if(!isMounted && location.pathname.includes('tyres')) {
-        //console.time('GET_REQUEST_TYRE_PROPS')
         let tyreHeightFilterGoods: any = await getTyresWithoutOffsetProps(
           filter.studded ?? '',
           filter.run_flat ?? '',
@@ -707,7 +683,6 @@ const CatalogTyresPage = observer(() => {
           filter.reinforced ?? '',
           'ASC',
         );
-        //console.timeEnd('GET_REQUEST_TYRE_PROPS')
         let setHomologationFilter: any[] | null  = [];
         let setReinforcedFilter: any[] | null  = [];
         let setRunFlatFilter: any[] | null  = [];
@@ -1245,10 +1220,6 @@ const CatalogTyresPage = observer(() => {
     }
   };
 
-  //console.log('FILTER_SEASON: ', filter.season);
-  //console.log('LANG_STATE: ', langState);
-  //console.log('LOCATION: ', location);
-
   return (
     <div className='catalogTyres'
       onClick={closeFilter}
@@ -1265,7 +1236,7 @@ const CatalogTyresPage = observer(() => {
       <div className='a'>
         {location.pathname.includes('tyres') ?
           <BreadCrumbs 
-            route={['/','/tyres', `${filter.season && !filter.season?.includes(',') && !filter.brands ? createStringUrl(filter.season):''}`, `${filter.brands && !filter.brands.includes(',') ?  createStringUrl(filter.brands) : ''}`,`${filter.brands && !filter.brands.includes(',') && filter.season ? `${createStringUrl(filter.season)}/${createStringUrl(filter.brands)}`:''}`,`${params.season ?? null}${params.studded ?? null}${params.type ?? null}${params.brands ?? null}${params.width ?? null}${params.height ?? null}${params.diameter ?? null}${params.loadindex ?? null}${params.speedindex ?? null}${params.reinforced ?? null}${params.om ?? null}`]} 
+            route={[i18n.resolvedLanguage === 'uk' ? '/' : '/ru','/tyres', `${filter.season && !filter.season?.includes(',') && !filter.brands ? createStringUrl(filter.season):''}`, `${filter.brands && !filter.brands.includes(',') ?  createStringUrl(filter.brands) : ''}`,`${filter.brands && !filter.brands.includes(',') && filter.season ? `${createStringUrl(filter.season)}/${createStringUrl(filter.brands)}`:''}`,`${params.season ?? null}${params.studded ?? null}${params.type ?? null}${params.brands ?? null}${params.width ?? null}${params.height ?? null}${params.diameter ?? null}${params.loadindex ?? null}${params.speedindex ?? null}${params.reinforced ?? null}${params.om ?? null}`]} 
             hrefTitle={
               [t('catalogPage.bread_crumbs_site'),t('catalogPage.bread_crumbs_tyre'), `${filter.season && !filter.season.includes(',') && !filter.brands ? `${t('catalogPage.bread_crumbs_tyre')} ${filter.season}` : ''}`, filter.brands && !filter.brands.includes(',') ? `${t('catalogPage.bread_crumbs_tyre')} ${filter.brands}` : '', filter.brands && !filter.brands.includes(',') && filter.season ? `${t('catalogPage.bread_crumbs_tyre')} ${filter.season} ${filter.brands}` : '', `${t('catalogPage.bread_crumbs_tyre')} ${filter.vehicle_type && !filter.vehicle_type.includes(',') ? filter.vehicle_type : ''} ${filter.season && !filter.season.includes(',') ? filter.season : ''} ${filter.studded && !filter.studded.includes(',') ? filter.studded : ''} ${filter.brands && !filter.brands.includes(',') ? filter.brands : ''} ${filter.width ? filter.width : ''} ${filter.height ? '/' + filter.height : ''} ${filter.diameter ? 'R' + filter.diameter : '' } ${filter.load_index && !filter.load_index.includes(',') ? filter.load_index : ''} ${filter.speed_index && !filter.speed_index.includes(',') ? filter.speed_index : ''} ${filter.reinforced && !filter.reinforced.includes(',') ? filter.reinforced : ''} ${filter.homologation && !filter.homologation.includes(',')  ? filter.homologation : ''}`
           ]}
@@ -1274,7 +1245,7 @@ const CatalogTyresPage = observer(() => {
         }
         {location.pathname.includes('wheels') ?
           <BreadCrumbs 
-            route={['/','/wheels',`${params.type ?? null}`,`${filter.brands && !filter.brands.includes(',') ?  createStringUrl(filter.brands) : null}`,`${params.type ?? null}${params.brands ?? null}${params.width ?? null}${params.diameter ?? null}${params.boltcount ?? null}${params.pcd ?? null}${params.et ?? null}${params.dia ?? null}`]} 
+            route={[i18n.resolvedLanguage === 'uk' ? '/' : '/ru','/wheels',`${params.type ?? null}`,`${filter.brands && !filter.brands.includes(',') ?  createStringUrl(filter.brands) : null}`,`${params.type ?? null}${params.brands ?? null}${params.width ?? null}${params.diameter ?? null}${params.boltcount ?? null}${params.pcd ?? null}${params.et ?? null}${params.dia ?? null}`]} 
             hrefTitle={
               [t('catalogPage.bread_crumbs_site'),t('catalogPage.bread_crumbs_wheel'), filter.type && !filter.type.includes(',') ? `${filter.type}` : '', filter.brands && !filter.brands.includes(',') ? `${filter.type} ${filter.brands}` : '', `Диски ${filter.type.includes(',') ? filter.type : ''} ${filter.brands && !filter.brands.includes(',') ? filter.brands : ''} ${filter.width ? 'W' + filter.width : ''} ${filter.diameter ? 'R' + filter.diameter : '' } ${filter.bolt_count && !filter.bolt_count.includes(',') ? filter.bolt_count : ''} ${filter.pcd && !filter.pcd.includes(',') ? 'PCD' + filter.pcd : ''} ${filter.et && !filter.et.includes(',') ? 'ET' + filter.et : ''} ${filter.dia && !filter.dia.includes(',') ? 'DIA' + filter.dia : ''}`
           ]}

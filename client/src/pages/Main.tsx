@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, Suspense, lazy} from 'react';
+import React, { useContext, useEffect, useState, Suspense, lazy} from 'react';
 import '../css/Main.css';
 import { Context } from '../context/Context';
 import { getAllArticlesLimit, getAllOrdersLeader, getAllStoreReviewLimit, getTyresById, getTyresOffsetMain, getWheelsById, getWheelsMainOffset } from '../restAPI/restGoodsApi';

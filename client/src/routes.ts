@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { lazyLoad } from './services/lazyLoad';
+//import { lazyLoad } from './services/lazyLoad';
 import { ADMIN_ROUTE, ADMIN_AUTH_ROUTE, BASKET_ROUTE, CATALOG_TYRES_ROUTE, 
   LOGIN_ROUTE, REGISTRATION_ROUTE, GOODS_ROUTE, 
   MAIN_ROUTE, CONTACT_ROUTE, SEARCH_ROUTE, NOT_FOUND_ROUTE, 
@@ -39,7 +39,7 @@ import { ADMIN_ROUTE, ADMIN_AUTH_ROUTE, BASKET_ROUTE, CATALOG_TYRES_ROUTE,
 
 const Admin = lazy(() => import('./pages/Admin'));
 const AdminAuth = lazy(() => import('./components/auth/AdminAuth'));
-const Auth = lazy(() => import('./pages/Auth'));
+//const Auth = lazy(() => import('./pages/Auth'));
 const Basket = lazy(() => import('./pages/Basket'));
 const CatalogTyresPage = lazy(() => import('./pages/CatalogTyresPage'));
 const Contact = lazy(() => import('./pages/Contact'));
@@ -280,28 +280,16 @@ export const publicRoutes = [
     //Component: './pages/Favorite'
     Component: Favorite
   },
-  {
-    path: LOGIN_ROUTE,
-    exact: true,
-    // lazy: async () => {
-    //   let { Auth }: any = await import('./pages/Auth')
-    //   return { Component: Auth }
-    // }, 
-    //Component: lazyLoad('./pages/Auth', 'Auth') 
-    //Component: './pages/Auth'
-    Component: Auth
-  },
-  {
-    path: REGISTRATION_ROUTE,
-    exact: true,
-    // lazy: async () => {
-    //   let { Auth }: any = await import('./pages/Auth')
-    //   return { Component: Auth }
-    // }, 
-    //Component: lazyLoad('./pages/Auth', 'Auth') 
-    //Component: './pages/Auth'
-    Component: Auth
-  },
+  // {
+  //   path: LOGIN_ROUTE,
+  //   exact: true,
+  //   Component: Auth
+  // },
+  // {
+  //   path: REGISTRATION_ROUTE,
+  //   exact: true,
+  //   Component: Auth
+  // },
   {
     path: '/:ru?' + CONTACT_ROUTE,
     exact: true,

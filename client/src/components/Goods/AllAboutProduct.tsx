@@ -1,9 +1,5 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import '../../css/Goods/AllAboutProduct.css';
-// import productImage from './tyre/autotyrespilotspotps2.png';
-// import wheelProduct from '../../assets/vossen_cvt_gloss_graphite-16325-a.png';
-// import heartImg from '../../assets/icons/heart_64BlueClear.png';
-// import scaleImg from '../../assets/icons/scales50.png';
 import ButtonAction from '../buttons/ButtonAction';
 import Rating from '../ux/Rating';
 import PropsCardIcons from '../cards/PropsCardIcons';
@@ -11,7 +7,6 @@ import FlagsIcon from '../cards/FlagsIcon';
 import CheckboxBtn from '../select/CheckboxBtn';
 import TyreMarking from './TyreMarking';
 import SocialMediaLinks from '../socialMedia/SocialMediaLinks';
-//import { useParams } from 'react-router-dom';
 import { Context } from '../../context/Context';
 import { ICard } from '../cards/interfaces/Card.interface';
 import { observer } from 'mobx-react-lite';
@@ -138,13 +133,27 @@ const AllAboutProduct = observer(({
         <div className='allAboutProduct'>
             {goods?.tyre_brand ?
              <div className='allProductImgBox'>
-                <img id='productImgGoods' src={'/tyre/autotyrespilotspotps2.png'} alt='productImg'/>   
+                <img id='productImgGoods' 
+                    src={'/tyre/autotyrespilotspotps2.webp'} 
+                    width={400}
+                    height={400}
+                    loading='lazy'
+                    decoding='async'
+                    alt='productImg'
+                />   
             </div>
             : null   
             }
             {goods?.wheel_brand ?
              <div className='allProductImgBox'>
-                <img id='productImgGoods' src={'/disk/vossen_cvt_gloss_graphite-16325-a.png'} alt='productImg'/>   
+                <img id='productImgGoods' 
+                    src={'/disk/vossen_cvt_gloss_graphite-16325-a.webp'} 
+                    width={400}
+                    height={400}
+                    loading='lazy'
+                    decoding='async'
+                    alt='productImg'
+                />   
             </div>  
             : null 
             }
@@ -213,7 +222,7 @@ const AllAboutProduct = observer(({
                     <a href={`/tyres/${createStringUrl(i18n.resolvedLanguage === 'uk' ? goods?.season?.season_ua : goods?.season?.season)}`}>{i18n.resolvedLanguage === 'uk' ? goods?.season?.season_ua : goods?.season?.season}</a>
                     </>
                     :
-                    <img src='iconsSeasons/noSeason.png' alt='noProd'/>
+                    <img src='/iconsSeasons/noSeason.webp' alt='noProd'/>
                     }
                 </div>
                 {!paramsModel ?
@@ -227,7 +236,7 @@ const AllAboutProduct = observer(({
                 </div>
                 <div className='productBonus'>
                     <>
-                    <img src='./iconBonus/skyBonus_48_b.png' 
+                    <img src='/iconBonus/skyBonus_48_b.webp' 
                         width={30}
                         height={30}
                         alt='bonus'
@@ -241,7 +250,7 @@ const AllAboutProduct = observer(({
                     {goods?.price && goods?.price[0].price > 500 ? 
                     <div className='productBonusReview'>
                     <img 
-                        src='./iconBonus/skyBonus_48_b.png' 
+                        src='/iconBonus/skyBonus_48_b.webp' 
                         width={30}
                         height={30}
                         alt='bonus'
@@ -382,7 +391,6 @@ const AllAboutProduct = observer(({
                     <ButtonAction 
                         props={t('goodsAboutProd.not_available_big')} 
                         widthBtn={280} 
-                        //eventItem={''}
                         active={true}
                     />
                     <p/>
@@ -407,7 +415,7 @@ const AllAboutProduct = observer(({
                     onChange={checkedGuards}
                     value={"garantia"} 
                     titleCheckbox={t('goodsAboutProd.garanty_skysafe')} 
-                    imageSrc={guardChecked ? './iconGuard/guard_64_b.png' : './iconGuard/guard_64_g.png'}/>   
+                    imageSrc={guardChecked ? '/iconGuard/guard_64_b.webp' : '/iconGuard/guard_64_g.webp'}/>   
                 </div>
                 </>
                 : 
