@@ -9,7 +9,6 @@
 .filterCatalogTyresHeader {
     display: flex;
     width: 250px; 
-    /* width: 250px; */
     flex-direction: row;
     gap: 5px;
     align-items:center;

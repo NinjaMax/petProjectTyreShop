@@ -176,7 +176,9 @@
     "options_size_model" : "Варианты типоразмеров"
   },
   "goodsAboutProd" : {
-    "info" : "Шины",
+    "ukraine" : "украина",
+    "infoTyre" : "Шины",
+    "shareLink" : "Шины диски автотовары Украина Харьков Днепр Киев. Skyparts.com.ua",
     "review" : "отзыв",
     "reviews" : " отзывов",
     "available" : "в наличии",

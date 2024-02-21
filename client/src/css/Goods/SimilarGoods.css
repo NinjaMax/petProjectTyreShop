@@ -1,16 +1,13 @@
 .similarGoodsContainer {
     display: block;
 }
-
 .similarGoods {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items:flex-start;
+    align-items:center;
     gap: 10px;
-
 }
-
 .similarText {
     font-size: 20px;
     font-family: var(--main-font-family);

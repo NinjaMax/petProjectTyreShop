@@ -1,11 +1,3 @@
-/* .tyreMarkingBox {
-    position: relative;
-} */
-#imgTyreMarking {
-    width:300px;
-
-}
-
 .tyreMarkingFuelCount span {
     position: relative;
     top: 485px;
@@ -14,9 +6,7 @@
     font-family: var(--main-font-family);
     font-weight: bold;
     color: black;
-
 }
-
 .tyreMarkingWetCount span {
     position: absolute;
     top: 486px;
@@ -36,7 +26,6 @@
     font-weight: bold;
     color: black;
 }
-
 .tyreMarkingTyreSize span {
     position: relative;
     bottom: 378px;
@@ -46,7 +35,6 @@
     font-weight: bold;
     color: black;
 }
-
 .tyreMarkingBrandName span {
     position: relative;
     bottom: 383px;
@@ -55,5 +43,14 @@
     font-family: var(--main-font-family);
     font-weight: bold;
     color: black;
+}
+
+@media only screen and (max-width: 320px) {
+    .tyreMarkingBox {
+        max-width: 300px;
+    }
+    #imgTyreMarking {
+        max-width: 280px;
+    }
 }
 

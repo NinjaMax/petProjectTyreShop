@@ -6,7 +6,7 @@
     grid-template-columns:120px 620px;
     gap:5px;
     overflow:hidden;
-    padding: 1em;
+    padding: 5px;
     pointer-events: all;
     border-radius: 8px;
     background-color:#fff;
@@ -85,8 +85,10 @@
 
 .propsCardList {
     grid-area: propsCardList;
-    display: inline;
-    width: 120px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 145px;
     max-height: 45px;
     text-align: justify;
     vertical-align: top;

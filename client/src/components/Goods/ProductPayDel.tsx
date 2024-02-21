@@ -13,6 +13,7 @@ const ProductPayDel = () => {
                     <span className='productPayDelNovaPoshta'>
                         <img 
                             loading='lazy'
+                            decoding='async'
                             src='/iconsDelivery/nova_Poshta_2022_logo.webp' 
                             width={90}
                             height={40}
@@ -25,6 +26,7 @@ const ProductPayDel = () => {
                     <span className='productPayDelDelivery'>
                         <img 
                             loading='lazy'
+                            decoding='async'
                             src='/iconsDelivery/delivery_logo.webp' 
                             width={85}
                             height={37}
@@ -38,6 +40,7 @@ const ProductPayDel = () => {
                         {t('productPerDay.take_off')}
                         <img 
                             loading='lazy'
+                            decoding='async'
                             src='/iconsDelivery/warehouse_55.webp' 
                             width={48}
                             height={48}
@@ -55,7 +58,8 @@ const ProductPayDel = () => {
                     <span className='productPayDelCash'>
                         <img 
                             loading='lazy'
-                            src='./iconPayment/cash_48_b.webp' 
+                            decoding='async'
+                            src='/iconPayment/cash_48_b.webp' 
                             width={48}
                             height={48}
                             alt='cash'
@@ -67,7 +71,8 @@ const ProductPayDel = () => {
                     <span className='productPayDelBank'>
                         <img 
                             loading='lazy'
-                            src='./iconPayment/merchant_48_b.webp' 
+                            decoding='async'
+                            src='/iconPayment/merchant_48_b.webp' 
                             width={48}
                             height={48}
                             alt='merchant'
@@ -79,7 +84,8 @@ const ProductPayDel = () => {
                     <span className='productPayDelVisa'>
                         <img 
                             loading='lazy'
-                            src='./iconPayment/cardVisaMaster.webp' 
+                            decoding='async'
+                            src='/iconPayment/cardVisaMaster.webp' 
                             width={85}
                             height={30}
                             alt='card'
@@ -91,7 +97,8 @@ const ProductPayDel = () => {
                     <span className='productPayDelPrivat'>
                         <img 
                             loading='lazy'
-                            src='./iconPayment/pay24.webp' 
+                            decoding='async'
+                            src='/iconPayment/pay24.webp' 
                             width={75}
                             height={30}
                             alt='cardPrivat'
@@ -103,7 +110,8 @@ const ProductPayDel = () => {
                     <span className='productPayDelMono'>
                         <img 
                             loading='lazy'
-                            src='./iconPayment/monobank_logo_100.webp' 
+                            decoding='async'
+                            src='/iconPayment/monobank_logo_100.webp' 
                             width={40}
                             height={40}
                             alt='monobank'

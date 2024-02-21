@@ -416,12 +416,7 @@ const NavBar = observer(() => {
       </Modal> 
       :null
     }
-    {isEmptyBasket ?
-      <Modal active={isEmptyBasket} setActive={openBasket}>
-        <span>{t('navBar.basket_is_empty')} &nbsp;</span>
-      </Modal> 
-      :null
-    }
+
     {isEmptyFavorite ?
       <Modal active={isEmptyFavorite} setActive={openFavorite}>
         <span>{t('navBar.no_favorite_goods')} &nbsp;</span>
@@ -442,6 +437,12 @@ const NavBar = observer(() => {
     : null
     }
     </Suspense>
+    {isEmptyBasket ?
+      <Modal active={isEmptyBasket} setActive={openBasket}>
+        <span>{t('navBar.basket_is_empty')} &nbsp;</span>
+      </Modal> 
+      :null
+    }
   </div>
   );
 });

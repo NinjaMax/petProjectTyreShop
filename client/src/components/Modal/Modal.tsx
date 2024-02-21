@@ -11,11 +11,11 @@ const Modal = (
         {active, setActive, children}: IModal
     ) => {
     return (
-    
-            <div className={active? 'modalWindowActive': 'modalWindow'}
-                onClick={()=>{setActive(false)}}>
+        <div className={active? 'modalWindowActive': 'modalWindow'}
+            onClick={()=>{setActive(false)}}
+        >
             <div className= {active? 'modalWindowBox active': 'modalWindowBox'} 
-                onClick={(e)=>e.stopPropagation()}>
+                onClick={e => e.stopPropagation()}>
                 <button className='closeModalBtn' 
                     onClick={()=>{setActive(false)}}>
                     <span>&#10006;</span>
@@ -24,6 +24,5 @@ const Modal = (
             </div>       
         </div> 
     );
-
 }
 export default Modal;

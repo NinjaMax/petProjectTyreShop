@@ -4,19 +4,16 @@
     justify-content: flex-start;
     gap: 3px;
     flex-wrap: wrap;
-    /*max-width: 650px;*/
-    /* height: 650px; */
-    /* border:3px solid blue; */
     padding: 3px;
     font-family: var(--main-font-family);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     background-color: #ffff;
+    /* content-visibility: auto; */
 }
 .allProductImgBox {
     width: 450px;
     height: 450px;
-    /* border:3px solid greenyellow; */
 }
 
 #productImgGoods {
@@ -28,11 +25,7 @@
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    /* border:3px solid red; */
     padding: 25px;
-    /* width: 575px; */
-    /* width: 100%; */
-    /*height: 50px;*/
     gap:8px;
 }
 
@@ -90,7 +83,6 @@
 }
 
 .productInfoCodeStockNotAval {
-    /* background-color: #71C2FF; */
     border-radius: 20px;
     padding: 5px;
     font-family: var(--main-font-family);
@@ -130,7 +122,6 @@
 .productRightgBox {
     width: 380px;
     overflow: hidden;
-    /* border:3px solid goldenrod; */
     padding: 10px;
 }
 
@@ -232,6 +223,7 @@
 }
 
 .attentionGoods {
+    width: 100%;
     margin-top: 10px;
     font-size: 14px;
     font-family: var(--main-font-family);
@@ -362,7 +354,7 @@
         height: 400px;
     }
     .productRightgBox {
-        max-width: 500px;
+        max-width: 325px;
     }
 
     .allAboutProductInfo {
@@ -374,7 +366,6 @@
     .allProductImgBox {
         width: 450px;
         height: 450px;
-        /* border:3px solid greenyellow; */
     }
     
     #productImgGoods {
@@ -386,15 +377,14 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
-        width: 650px;
+        max-width: 650px;
         overflow: hidden;
-        /* border:3px solid goldenrod; */
         padding: 10px;
         gap: 15px;
     }
 
     .attentionGoods {
-        width: 300px;
+        max-width: 300px;
         margin-top: 10px;
         font-size: 14px;
         font-family: var(--main-font-family);
@@ -409,7 +399,6 @@
     .allProductImgBox {
         width: 450px;
         height: 450px;
-        /* border:3px solid greenyellow; */
     }
     
     #productImgGoods {
@@ -423,7 +412,6 @@
         justify-content: center;
         width: 650px;
         overflow: hidden;
-        /* border:3px solid goldenrod; */
         padding: 10px;
         gap: 15px;
     }
@@ -454,9 +442,9 @@
 
     .productRightgBox {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: center;
-        flex-wrap: wrap;
+        /* flex-wrap: wrap; */
         max-width: 650px;
         overflow: hidden;
         /* border:3px solid goldenrod; */
@@ -542,6 +530,10 @@
 
     .allAboutProduct {
         justify-content: center;
+    }
+    .productRightgBox {
+        max-width: 290px;
+        padding: 0px;
     }
 }
 

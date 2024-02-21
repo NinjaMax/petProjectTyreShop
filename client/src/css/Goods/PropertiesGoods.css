@@ -2,29 +2,22 @@
     display:flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 1em;
+    padding: 15px;
     width: 100%;
     gap: 10px;
-    /* margin-left: 50px; */
     border-radius:0px 0px 8px 8px;
-    /*position:absolute;*/
     background-color:#fff;
-    /*box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);*/
     font-family: var(--main-font-family);
-
 }
-
 .tooltiPropertiesGoods {
     position: relative;
     display: inline-block;
-    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+    border-bottom: 1px dotted black;
     font-size: 16px;
 }
-
 .tooltiPropertiesGoodsText {
     width: 100%;
 }
-
 .tooltiPropertiesGoods .tooltiTextPropertiesGoods {
     visibility: hidden;
     width: 120px;
@@ -34,7 +27,6 @@
     font-size: 13px;
     padding: 5px 0;
     border-radius: 6px;
-    /* Position the tooltip text */
     position: absolute;
     z-index: 1;
     top: -70%;
@@ -42,19 +34,52 @@
     opacity: 0;
     transition: opacity 0.3s;
 }
-/* Tooltip arrow */
 .tooltiPropertiesGoods .tooltiTextPropertiesGoods::after {
     content: " ";
     position: absolute;
     top: 50%;
-    right: 100%; /* To the right of the tooltip */
+    right: 100%; 
     margin-top: -5px;
     border-width: 5px;
     border-style: solid;
     border-color: transparent #555 transparent transparent;
 }
-/* Show the tooltip text when you mouse over the tooltip container */
 .tooltiPropertiesGoods:hover .tooltiTextPropertiesGoods {
     visibility: visible;
     opacity: 1;
+}
+@media only screen and (max-width: 2560px) {
+    .propertiesGoods {
+        max-width: 1410px;
+    }
+}
+@media only screen and (max-width: 1440px) {
+    .propertiesGoods {
+        max-width: 994px;
+    }
+}
+@media only screen and (max-width: 1024px) {
+    .propertiesGoods {
+        max-width: 738px;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .propertiesGoods {
+        max-width: 395px;
+    }
+}
+@media only screen and (max-width: 425px) {
+    .propertiesGoods {
+        max-width: 345px;
+    }
+}
+@media only screen and (max-width: 375px) {
+    .propertiesGoods {
+        max-width: 290px;
+    }
+}
+@media only screen and (max-width: 320px) {
+    .propertiesGoods {
+        max-width: 290px;
+    }
 }

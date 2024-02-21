@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import '../../css/Reviews/ReviewsGoods.css';
-//import customerReview from '../../assets/icons/customer64.png';
 import ButtonPrevNext from '../buttons/ButtonPrevNext';
 import Rating from '../ux/Rating';
 import Thumbs from '../ux/Thumbs';
@@ -27,8 +26,6 @@ const ReviewsGoods = ({
     rating,
     reviewEntity,
     reviewExtend,
-    //setLikeReview,
-    // setThumbDown,
     btnLeft,
     btnRight}: IReviewsGoods
     ) => {
@@ -103,9 +100,14 @@ const ReviewsGoods = ({
             <div className="reviewsGoodsContainer">
                 <div className="mySlidesGoodsReview">
                     <div className="authorGoodsReview">
-                        <img className='userImg' src={
+                        <img className='userImg' 
+                        loading='lazy'
+                        decoding='async'
+                        width={35}
+                        height={35}
+                        src={
                             reviewEntity?.customer_pictures ??
-                            './customer64.png'
+                            '/img_main/customer64.webp'
                             } 
                             alt='avatarUser'
                         /> 

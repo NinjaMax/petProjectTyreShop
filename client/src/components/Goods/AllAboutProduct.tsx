@@ -18,6 +18,8 @@ import CheckOrder from '../modal/CheckOrder';
 import { ICheckOrderItem } from '../catalogs/types/CheckOrder.type';
 import { createStringUrl } from '../../services/stringUrl';
 import { useTranslation } from 'react-i18next';
+import { useHistory, useLocation } from 'react-router-dom';
+import { MAIN_ROUTE } from '../../utils/consts';
 
 const AllAboutProduct = observer(({
     goods, 
@@ -29,6 +31,7 @@ const AllAboutProduct = observer(({
     const[guardChecked, setGuardChecked] = useState<boolean>(false);
     const [checkOrderItem, setCheckOrderItem] = useState<ICheckOrderItem[] | null>([]);
     const [active, setActive] = useState<boolean>(false);
+    const location = useLocation<any>();
     const { t, i18n } = useTranslation();
     const {page, customer} = useContext<any>(Context);
 
@@ -128,6 +131,7 @@ const AllAboutProduct = observer(({
             console.log('BASKET_ERROR: ',error);
         }
     }
+    console.log('HISTORY: ', window.location)
 
     return (
         <div className='allAboutProduct'>
@@ -160,7 +164,7 @@ const AllAboutProduct = observer(({
             <div className='allAboutProductInfo'>
                 {goods?.tyre_brand ?
                     <div className='productInfoName'>{
-                        paramsModel ? t('goodsAboutProd.info') + ' ' + goods?.tyre_brand?.brand + ' ' + goods?.tyre_model?.model 
+                        paramsModel ? t('goodsAboutProd.infoTyre') + ' ' + goods?.tyre_brand?.brand + ' ' + goods?.tyre_model?.model 
                         : goods?.full_name
                         }
                     </div> : null
@@ -462,7 +466,22 @@ const AllAboutProduct = observer(({
                 </div>
                 : null
                 }
-                <SocialMediaLinks/> 
+                {goods?.tyre_brand ? 
+                    <SocialMediaLinks 
+                        urlCurrent={ i18n.resolvedLanguage === 'uk' ? window.location.origin + location.pathname : window.location.origin + '/ru' + location.pathname} 
+                        hashtag={`${t('goodsAboutProd.infoTyre')}${goods?.tyre_brand?.brand}#${t('goodsAboutProd.infoTyre')}${t('goodsAboutProd.ukraine')}#skyparts`} 
+                        quoteLink={t('goodsAboutProd.shareLink')}
+                    /> 
+                    : null
+                }
+                {goods?.wheel_brand ? 
+                    <SocialMediaLinks 
+                        urlCurrent={i18n.resolvedLanguage === 'uk' ? window.location.origin + location.pathname : window.location.origin + '/ru' + location.pathname} 
+                        hashtag={`диски${goods?.wheel_brand?.brand}#диски${t('goodsAboutProd.ukraine')}#skyparts`} 
+                        quoteLink={t('goodsAboutProd.shareLink')}
+                    /> 
+                    : null
+                }
                 <Modal active={active} setActive={setActive}>
                     <CheckOrder orderItem={checkOrderItem}/> 
                 </Modal> 

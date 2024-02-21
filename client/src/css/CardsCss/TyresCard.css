@@ -5,7 +5,8 @@
     margin: auto;
     text-align: center;
     overflow:hidden;
-    padding: 1em;
+    padding: 5px;
+    /* padding: 1em; */
     pointer-events: all;
     border-radius: 8px;
 

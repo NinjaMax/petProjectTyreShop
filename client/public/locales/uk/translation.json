@@ -171,7 +171,9 @@
         "options_size_model" : "Варіанти типорозмірів"
     },
     "goodsAboutProd" : {
-        "info" : "Шини", 
+        "ukraine" : "україна",
+        "infoTyre" : "Шини", 
+        "shareLink" : "Шини диски автотовари Україна Харків Дніпро Київ Skyparts.com.ua",
         "review" : " відгук",
         "reviews" : " відгуків",
         "available" : "в наявності",

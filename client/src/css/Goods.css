@@ -133,7 +133,6 @@
   justify-content: center;
   align-items:center;
   gap: 15px;
-  /* margin: 15px; */
   margin-left: auto;
   margin-right: auto;
   width: 100%;
@@ -184,7 +183,7 @@
     text-align: center;
   }
 
-  .similarGoods {
+  .similarGoodsGoods {
     grid-area: 6 / 1 / 6 / 4;
     max-width: 1000px;
   }
@@ -280,7 +279,7 @@
     text-align: center;
   }
 
-  .similarGoods {
+  .similarGoodsGoods {
     grid-area: 6 / 1 / 6 / 4;
     max-width: 800px;
   }
@@ -375,7 +374,7 @@
     text-align: center;
   }
 
-  .similarGoods {
+  .similarGoodsGoods {
     grid-area: 6 / 1 / 6 / 4;
     max-width: 768px;
   }
@@ -455,7 +454,7 @@
     max-width: 425px;
   }
   .productPayDelGoodsNext {
-    grid-area: 4 / 1 / 4 / 4;
+    grid-area: 4 / 1 / 4 / 5;
     text-align: center;
     max-width: 425px;
   }
@@ -466,36 +465,36 @@
   }
 
   .goodsBenefitsNext {
-    grid-area: 5 / 1 / 5 / 4;
+    grid-area: 5 / 1 / 5 / 5;
     text-align: center;
   }
 
-  .similarGoods {
-    grid-area: 6 / 1 / 6 / 4;
+  .similarGoodsGoods {
+    grid-area: 6 / 1 / 6 / 5;
     max-width: 425px;
   }
   .similarGoodsModel {
-    grid-area: 7 / 1 / 7 / 4;
+    grid-area: 7 / 1 / 7 / 5;
     max-width: 425px;
   }
 
   .allSizeModel {
-    grid-area: 8 / 1 / 8 / 4;
+    grid-area: 8 / 1 / 8 / 5;
     max-width: 425px;
   }
   
   .allModelBrand {
-    grid-area: 9 / 1 / 9 / 4;
+    grid-area: 9 / 1 / 9 / 5;
     max-width: 425px;
   }
   
   .youWatched {
-    grid-area: 10 / 1 / 10 / 4;
+    grid-area: 10 / 1 / 10 / 5;
     max-width: 425px;
   }
   
   .youWatchedModel {
-    grid-area: 8 / 1 / 8 / 4;
+    grid-area: 8 / 1 / 8 / 5;
     max-width: 425px;
   }
   .smallCardNext {
@@ -505,7 +504,7 @@
     display: none;
   }
   .goodsModalBox {
-    grid-area: 11 / 1 / 11 / 4;
+    grid-area: 11 / 1 / 11 / 5;
     height: 30px;
     max-width: 375px;
   }
@@ -537,7 +536,7 @@
     
   }
   .tabGoodsActive {
-    grid-area: 2 / 1 / 4 / 4;
+    grid-area: 2 / 1 / 4 / 5;
     max-width: 375px;
   }
 
@@ -551,7 +550,7 @@
     max-width: 375px;
   }
   .productPayDelGoodsNext {
-    grid-area: 4 / 1 / 4 / 4;
+    grid-area: 4 / 1 / 4 / 5;
     text-align: center;
     max-width: 375px;
   }
@@ -562,37 +561,37 @@
   }
 
   .goodsBenefitsNext {
-    grid-area: 5 / 1 / 5 / 4;
+    grid-area: 5 / 1 / 5 / 5;
     text-align: center;
     max-width: 375px;
   }
 
-  .similarGoods {
-    grid-area: 6 / 1 / 6 / 4;
+  .similarGoodsGoods {
+    grid-area: 6 / 1 / 6 / 5;
     max-width: 375px;
   }
   .similarGoodsModel {
-    grid-area: 7 / 1 / 7 / 4;
+    grid-area: 7 / 1 / 7 / 5;
     max-width: 375px;
   }
 
   .allSizeModel {
-    grid-area: 8 / 1 / 8 / 4;
+    grid-area: 8 / 1 / 8 / 5;
     max-width: 375px;
   }
   
   .allModelBrand {
-    grid-area: 9 / 1 / 9 / 4;
+    grid-area: 9 / 1 / 9 / 5;
     max-width: 375px;
   }
   
   .youWatched {
-    grid-area: 10 / 1 / 10 / 4;
+    grid-area: 10 / 1 / 10 / 5;
     max-width: 375px;
   }
   
   .youWatchedModel {
-    grid-area: 8 / 1 / 8 / 4;
+    grid-area: 8 / 1 / 8 / 5;
     max-width: 375px;
   }
   .smallCardNext {
@@ -602,12 +601,12 @@
     display: none;
   }
   .goodsModalBox {
-    grid-area: 11 / 1 / 11 / 4;
+    grid-area: 11 / 1 / 11 / 5;
     height: 30px;
     max-width: 320px;
   }
   .goodsModalBoxModel {
-    grid-area: 9 / 1 / 9 / 4;
+    grid-area: 9 / 1 / 9 / 5;
     height: 30px;
     max-width: 320px;
   }
@@ -634,7 +633,7 @@
     
   }
   .tabGoodsActive {
-    grid-area: 2 / 1 / 4 / 4;
+    grid-area: 2 / 1 / 4 / 5;
     max-width: 320px;
   }
 
@@ -648,7 +647,7 @@
     max-width: 320px;
   }
   .productPayDelGoodsNext {
-    grid-area: 4 / 1 / 4 / 4;
+    grid-area: 4 / 1 / 4 / 5;
     text-align: center;
     max-width: 320px;
   }
@@ -659,37 +658,37 @@
   }
 
   .goodsBenefitsNext {
-    grid-area: 5 / 1 / 5 / 4;
+    grid-area: 5 / 1 / 5 / 5;
     text-align: center;
     max-width: 320px;
   }
 
-  .similarGoods {
-    grid-area: 6 / 1 / 6 / 4;
+  .similarGoodsGoods {
+    grid-area: 6 / 1 / 6 / 5;
     max-width: 320px;
   }
   .similarGoodsModel {
-    grid-area: 7 / 1 / 7 / 4;
+    grid-area: 7 / 1 / 7 / 5;
     max-width: 320px;
   }
 
   .allSizeModel {
-    grid-area: 8 / 1 / 8 / 4;
+    grid-area: 8 / 1 / 8 / 5;
     max-width: 320px;
   }
   
   .allModelBrand {
-    grid-area: 9 / 1 / 9 / 4;
+    grid-area: 9 / 1 / 9 / 5;
     max-width: 320px;
   }
   
   .youWatched {
-    grid-area: 10 / 1 / 10 / 4;
+    grid-area: 10 / 1 / 10 / 5;
     max-width: 320px;
   }
   
   .youWatchedModel {
-    grid-area: 8 / 1 / 8 / 4;
+    grid-area: 8 / 1 / 8 / 5;
     max-width: 320px;
   }
   .smallCardNext {
@@ -699,12 +698,12 @@
     display: none;
   }
   .goodsModalBox {
-    grid-area: 11 / 1 / 11 / 4;
+    grid-area: 11 / 1 / 11 / 5;
     height: 30px;
     max-width: 305px;
   }
   .goodsModalBoxModel {
-    grid-area: 9 / 1 / 9 / 4;
+    grid-area: 9 / 1 / 9 / 5;
     height: 30px;
     max-width: 305px;
   }
@@ -768,7 +767,7 @@
     max-width: 305px;
   }
   
-  .similarGoods {
+  .similarGoodsGoods {
     /* grid-area: 6 / 1 / 6 / 4; */
     grid-area: 6 / 1 / 6 / 1;
     max-width: 305px;

@@ -3,7 +3,6 @@
     transition: 0.3s all linear;
     height: 20px;
 }
-
 .modalWindowActive {
     display: flex;
     justify-content: center;
@@ -20,12 +19,10 @@
     opacity: 1;
     transition: 0.3s all linear;
 }
-
 .modalWindowBox {  
     transform: scale(0.5);
     transition: 0.3s all linear;
 }
-
 .modalWindowBox.active {
     transform: scale(1);
     background-color:#fefefe;
@@ -33,57 +30,69 @@
     border-radius: 10px;
     padding: 20px;
 }
-
 .closeModalBtn {
     float: right;
     border: none;
     cursor: pointer;
 }
-
 .closeModalBtn span {
     font-size: 22px;
     font-family: var(--main-font-family);
     font-weight: bold;
 }
-
 @media only screen and (max-width: 2560px){
     .modalWindowBox.active {
         max-width: 1100px;
     }
+    .modalWindowActive {
+        max-width: 2560px;
+    }
 }
-
 @media only screen and (max-width: 1440px){
     .modalWindowBox.active {
         max-width: 1000px;
     }
+    .modalWindowActive {
+        max-width: 1440px;
+    }
 }
-
 @media only screen and (max-width: 1024px){
     .modalWindowBox.active {
         max-width: 700px;
     }
+    .modalWindowActive {
+        max-width: 1024px;
+    }
 }
-
 @media only screen and (max-width: 768px){
     .modalWindowBox.active {
         max-width: 400px;
     }
+    .modalWindowActive {
+        max-width: 768px;
+    }
 }
-
 @media only screen and (max-width: 425px){
     .modalWindowBox.active {
         max-width: 340px;
     }
+    .modalWindowActive {
+        max-width: 425px;
+    }
 }
-
 @media only screen and (max-width: 375px){
     .modalWindowBox.active {
         max-width: 300px;
     }
+    .modalWindowActive {
+        max-width: 375px;
+    }
 }
-
 @media only screen and (max-width: 320px){
     .modalWindowBox.active {
         max-width: 300px;
+    }
+    .modalWindowActive {
+        max-width: 320px;
     }
 }

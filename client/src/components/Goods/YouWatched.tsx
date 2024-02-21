@@ -42,7 +42,7 @@ const YouWatched = ({checkOrders}:WatchedType) => {
     return (
         <div>
             <h3>{t('youWatched.watched')}</h3>
-            <div className='youWatched'>
+            <div className='youWatchedBox'>
             {watchedList ? 
             watchedList.map((item) => 
             <div className='youWatchedItem' key={item.id}>    

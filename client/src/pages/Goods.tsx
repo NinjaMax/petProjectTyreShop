@@ -510,8 +510,8 @@ const GoodsPage = observer(() => {
     setChangeTabGoods(e.target.value);
   }
   const openToCreateReview = () => {
-    setCreateReview(!createReview);
-    //if(dataReview) {
+    if (changeTabGoods === "vidguki") {
+      setCreateReview(!createReview);
       setDataReview(null);
       goodsTyre.setRatingList({
         rating_overall: 0,
@@ -523,7 +523,7 @@ const GoodsPage = observer(() => {
         rating_treadwear:0,
         rating_price_quality:0,
       });
-    //}
+    }
   };
 
   const submitDataReview = (data: FormValues) => {
@@ -723,7 +723,7 @@ const GoodsPage = observer(() => {
           {changeTabGoods === "vidguki" ?
             <div className='tabReviewsActive'>
               <p/>
-              <div className='preReview'>
+              <div className='preReview' onClick={e => e.stopPropagation()}>
                 {goodsTyre?._product?.tyre_brand?.brand ?
                 <span>
                   {t('goodsPage.review_tyres')} {
@@ -743,7 +743,7 @@ const GoodsPage = observer(() => {
                   }
                 </span> 
                 : null 
-                } 
+                }
                 <ButtonAction 
                   props={t('goodsPage.review_create')}
                   eventItem={openToCreateReview}
@@ -838,7 +838,7 @@ const GoodsPage = observer(() => {
           checkOrders={checkOrders}
         />
       </div>
-      <div className={paramsModel ? 'similarGoodsNone' : 'similarGoods'}>
+      <div className={paramsModel ? 'similarGoodsNone' : 'similarGoodsGoods'}>
         <SimilarGoods 
           title={t('goodsPage.similar_goods')}
           similarGoodsList={similarGoods}
@@ -886,11 +886,11 @@ const GoodsPage = observer(() => {
         }
       </div>
       <div className={paramsModel ? 'goodsModalBoxModel' : 'goodsModalBox'}>
-        <Modal active={createReview} setActive={openToCreateReview}>
+        <Modal active={createReview} setActive={setCreateReview}>
           <ReviewCreate 
             onSubmitReviewTyre={submitDataReview}
           />
-        </Modal> 
+        </Modal>
         <Modal active={active} setActive={setActive}>
           <CheckOrder orderItem={checkOrderItem}/> 
         </Modal> 

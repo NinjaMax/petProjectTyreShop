@@ -86,13 +86,40 @@ h2 {
   justify-content: center;
   align-items: center;
 }
-
+@media only screen and (max-width: 2560px) {
+  .spinerCatalogGoodsLoad {
+    max-width: 1050px;
+    max-height: 600px;
+  }
+}
+@media only screen and (max-width: 1440px) {
+  .spinerCatalogGoodsLoad {
+    max-width: 1050px;
+    max-height: 600px;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .spinerCatalogGoodsLoad {
+    max-width: 600px;
+    max-height: 600px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .spinerCatalogGoodsLoad {
+    max-width: 400px;
+    max-height: 600px;
+  }
+}
 @media only screen and (max-width: 425px) {
   .popularCatalogTyre {
     max-width: 380px;
   }
   .cataloTyresImg {
     max-width: 380px;
+  }
+  .spinerCatalogGoodsLoad {
+    max-width: 360px;
+    max-height: 500px;
   }
 }
 
@@ -104,15 +131,22 @@ h2 {
   .cataloTyresImg {
     max-width: 375px;
   }
+  .spinerCatalogGoodsLoad {
+    max-width: 360px;
+    max-height: 500px;
+  }
 }
 
 @media only screen and (max-width: 375px) {
   .popularCatalogTyre {
     max-width: 320px;
   }
-
   .cataloTyresImg {
     max-width: 320px;
+  }
+  .spinerCatalogGoodsLoad {
+    max-width: 300px;
+    max-height: 500px;
   }
 }
 
@@ -120,8 +154,11 @@ h2 {
   .popularCatalogTyre {
     max-width: 300px;
   }
-
   .cataloTyresImg {
     max-width: 280px;
+  }
+  .spinerCatalogGoodsLoad {
+    max-width: 360px;
+    max-height: 500px;
   }
 }

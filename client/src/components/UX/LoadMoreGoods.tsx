@@ -9,7 +9,7 @@ const LoadMoreGoods = observer(({loadMore}: any) => {
   return (
     <div className='loadMoreGoods'
         onClick={loadMore}>
-        <i className='fa fa-refresh'></i>
+        <i className="fas fa-redo-alt"></i>
             <span>{t('loadMore.title')}</span>
     </div>
   )
