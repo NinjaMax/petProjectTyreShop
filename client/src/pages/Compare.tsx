@@ -38,22 +38,17 @@ const Compare = observer(() => {
                 if(Array.isArray(curFavorites)){
                     curFavorites.forEach(async (element: string) => {      
                     let newTyresCompare: any = await getTyresById(element);
-                   //console.log("TYRES_COMPARE: ", newTyresCompare);
                     if(newTyresCompare) {
                         let compareRatingModel = await getTyresModelRatingAvg(newTyresCompare.id_model);
-                        
-                        //console.log("COMPARE_RATING: ", compareRatingModel);
                         newTyresCompare.ratingAvg = compareRatingModel[0];
                         setCompareTyres(oldCompare => [...oldCompare!, newTyresCompare]);
                     }
                     let newWheelsCompare: any = await getWheelsById(element);
-                    //console.log("WHEELS_COMPARE: ", newWheelsCompare);
                     if(newWheelsCompare){
                        let compareWheelRatingModel = await getWheelsModelRatingAvg(newWheelsCompare.id_model);
                         newWheelsCompare.ratingAvg = compareWheelRatingModel[0];
                         setCompareWheel(oldCompare => [...oldCompare!, newWheelsCompare]); 
                     }
-                    //setRatingModelAvg(oldCompareRating => [...oldCompareRating!, compareRatingModel]);
                     });
                 }
             }
@@ -104,7 +99,6 @@ const Compare = observer(() => {
                     id_customer: customer.customer?.id, 
                     storage: getStorageComp.storage
                 });
-                //console.log('CREATE_BASKET_ID_BASKET: ', basket.data.id_basket);
                 if(basket?.status === 201) {
                     const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
                     const addTobasket: any = await addGoodsToBasket(
@@ -123,7 +117,6 @@ const Compare = observer(() => {
                     item.reviews.length,
                     item.diameter.diameter,
                     ); 
-                    //console.log('ADD_BASK: ', addTobasket);
                     if (addTobasket?.status === 201) {
                         const updateBasketStorage = await getBasketById(basket.data.id_basket);
                         setCheckOrderItem(
@@ -133,8 +126,6 @@ const Compare = observer(() => {
                             updateBasketStorage?.basket_storage.reduce(
                                 (sum: any, current: any) => (sum + current.quantity),0)
                         );
-                    //console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
-                    //console.log('ADD_TO_BASKET: ', addTobasket?.data); 
                     }  
                 }
             }
@@ -142,7 +133,6 @@ const Compare = observer(() => {
             console.log('BASKET_ERROR: ',error);
         }
     }
-
 
   return (
     <div id="myOverlay" className="overlayCompareActive">

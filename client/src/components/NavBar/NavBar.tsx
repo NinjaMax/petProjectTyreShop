@@ -21,6 +21,7 @@ import { getCompare, getFavorites, getSession } from '../../restAPI/restGoodsApi
 import { COMPARISON_ROUTE, DELIVERY_ROUTE, FAVORITES_ROUTE } from '../../utils/consts';
 import { useMediaQuery } from 'react-responsive';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 
 const NavBarSearch = lazy(() => import('../searchForm/NavBarSearch'));
 const AuthConfirmTel = lazy(() => import('../auth/AuthConfirmTel'));
@@ -61,7 +62,8 @@ const NavBar = observer(() => {
   const [isEmptyCompare, setIsEmptyCompare] = useState<boolean>(false);
   const isMobile = useMediaQuery({ query: '(max-width: 426px)' });
   const { t, i18n } = useTranslation();
-  
+  const history = useHistory<any>();
+
   useEffect(() => {
     let isUser = false;
     const socialSignIn = async () => {
@@ -274,10 +276,19 @@ const NavBar = observer(() => {
 
   const chooseLanguage = (e: any) => {
     const langChoose: string = e.target.value;
-    i18n.changeLanguage(langChoose);
-    document.location.reload();
+    console.log(langChoose);
+    if (langChoose === 'ru') {
+      i18n.changeLanguage(langChoose);
+      history.replace('/ru' + document.location.pathname);
+      document.location.reload();
+    }
+    if (langChoose === 'uk') {
+      i18n.changeLanguage(langChoose);
+      history.replace(document.location.pathname.slice(3, document.location.pathname.length));
+      document.location.reload();
+    }
   };
- 
+
   return (
   <div className="navbar">
     <Suspense fallback={<span>Loading...</span>}>

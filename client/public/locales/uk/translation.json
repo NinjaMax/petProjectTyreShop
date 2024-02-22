@@ -143,6 +143,21 @@
         "filter_diameter_title" : "Діаметр",
         "filter_btn_name" : "ПІДІБРАТИ"
     },
+    "filterCatalogWheel" : {
+        "count_title" : "Кількість:",
+        "filter_title" : "Фільтр Дисків ",
+        "filter_diameter_title" : "Діаметр",
+        "filter_show_btn" : "Показати",
+        "filter_wheel_type" : "Тип диска", 
+        "filter_bolt_count_title" : "Кількість болтів", 
+        "filter_color" : "Колір", 
+        "filter_dia" : "Діаметр ступиці DIA",
+        "filter_et" : "Виліт ET", 
+        "filter_pcd" : "Міжболтова відстань",
+        "filter_pcd2" : "Додаткове міжболтове PCD2",
+        "filter_boltCount_pcd" : "Болти і відстань",
+        "filter_btn_name" : "ПІДІБРАТИ"
+    },
     "reviewStore" : {
         "grade" : "Оцінка:"
     },

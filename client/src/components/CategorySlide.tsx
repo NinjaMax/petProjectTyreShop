@@ -3,13 +3,13 @@ import '../css/CategorySlide.css';
 import { useTranslation } from 'react-i18next';
 
 const CategorySlide = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
     
   return (
         <div>
             <div className="rowCategoreSlider">
                 <div className="columnCategorySlider">
-                  <a href='/tyres/lіtnya'>
+                  <a href={i18n.resolvedLanguage === 'uk' ? '/tyres/lіtnya' : '/ru/tyres/letnyaya'}>
                     <img src='img/summer_tyres1.webp' 
                       loading='lazy'
                       decoding='async'
@@ -30,7 +30,7 @@ const CategorySlide = () => {
                   </a>
                 </div>
                 <div className="columnCategorySlider">
-                  <a href='/tyres/zimova'>
+                  <a href={i18n.resolvedLanguage === 'uk' ? '/tyres/zimova' : '/ru/tyres/zimnyaya'}>
                     <img src='img/winter_tyres1.webp'
                       loading='lazy'
                       decoding='async'
@@ -52,7 +52,7 @@ const CategorySlide = () => {
                   </a> 
                 </div>
                 <div className="columnCategorySlider">
-                  <a href='/tyres/vsesezonna'>
+                  <a href={i18n.resolvedLanguage === 'uk' ? '/tyres/vsesezonna' : '/ru/tyres/vsesezonnaya'}>
                     <img src='img/all_seasonstyre1_300.webp' 
                       loading='lazy'
                       decoding='async'

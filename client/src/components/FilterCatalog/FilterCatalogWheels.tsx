@@ -12,6 +12,7 @@ import { createStringUrl } from '../../services/stringUrl';
 import { typeWheels } from '../../services/wheelsProps.service';
 import { CATALOG_WHEELS_ROUTE } from '../../utils/consts';
 import { useMediaQuery } from 'react-responsive';
+import { useTranslation } from 'react-i18next';
 
 interface IFilterCatTyres {
     handleChange?(args0: any): void;
@@ -35,9 +36,16 @@ const FilterCatalogWheels = observer((
     const [stateBoltCountPcd, setStateBoltCountPcd]=useState<boolean>(false);
     const [isOpenFilter, setIsOpenFilter]=useState<boolean>(false);
     const isMobileFilterTyre = useMediaQuery({ query: '(max-width: 1075px)' });
+    const { t, i18n } = useTranslation();
     const params = useParams<any>();
     const history = useHistory();
     
+    useEffect(() => {
+        if (params.ru === 'ru') {
+            i18n.changeLanguage('ru');
+        }
+    },[i18n, params.ru]);
+
     useEffect(() => {
         if(!filterState) {
             setStateWidth(false);
@@ -67,7 +75,7 @@ const FilterCatalogWheels = observer((
             page.setLoadMore(0);
             page.setOffset(0);
         }
-        if (e.target.name === 'Діаметр') {
+        if (e.target.name === t("filterCatalogWheel.filter_diameter_title")) {
             filter.setDiameter(e.target.value);
             filter.setChipDiameter(
                 Array.from(
@@ -92,119 +100,119 @@ const FilterCatalogWheels = observer((
             filter.setChipBrands(Array.from(
                 new Set([...filter.chipBrands])));
         }
-        if (e.target.name === 'Кількість болтів' && e.target.checked) {
+        if (e.target.name === t("filterCatalogWheel.filter_bolt_count_title") && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setChipBoltCount(
                 Array.from(
                     new Set([...filter.chipBoltCount, e.target.value]))
             );     
-        } else if (e.target.name === 'Кількість болтів') {
+        } else if (e.target.name === t("filterCatalogWheel.filter_bolt_count_title")) {
             const cancelSeason = filter.chipBoltCount.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipBoltCountdItem(cancelSeason);
             filter.setChipBoltCount(Array.from(
                 new Set([...filter.chipBoltCount])));
         }
-        if (e.target.name === 'Тип диска' && e.target.checked) {
+        if (e.target.name === t("filterCatalogWheel.filter_wheel_type") && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setChipType(
                 Array.from(
                     new Set([...filter.chipType, e.target.value]))
             );     
-        } else if (e.target.name === 'Тип диска') {
+        } else if (e.target.name === t("filterCatalogWheel.filter_wheel_type")) {
             const cancelVehicleType = filter.chipType.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipTypeItem(cancelVehicleType);
             filter.setChipType(Array.from(
                 new Set([...filter.chipType])));
         }
-        if (e.target.name === 'Колір' && e.target.checked) {
+        if (e.target.name === t("filterCatalogWheel.filter_color") && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setChipColor(
                 Array.from(
                     new Set([...filter.chipColor, e.target.value]))
             );     
-        } else if (e.target.name === 'Колір') {
+        } else if (e.target.name === t("filterCatalogWheel.filter_color")) {
             const cancelStudded = filter.chipColor.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipColorItem(cancelStudded);
             filter.setChipColor(Array.from(
                 new Set([...filter.chipColor])));
         }
-        if (e.target.name === 'Діаметр ступиці' && e.target.checked) {
+        if (e.target.name === t("filterCatalogWheel.filter_dia") && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setChipDia(
                 Array.from(
                     new Set([...filter.chipDia, e.target.value]))
             );     
-        } else if (e.target.name === 'Діаметр ступиці') {
+        } else if (e.target.name === t("filterCatalogWheel.filter_dia")) {
             const cancelSpeedIndex = filter.chipDia.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipDiaItem(cancelSpeedIndex);
             filter.setChipDia(Array.from(
                 new Set([...filter.chipDia])));
         }
-        if (e.target.name === 'Виліт ET' && e.target.checked) {
+        if (e.target.name === t("filterCatalogWheel.filter_et") && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setChipEt(
                 Array.from(
                     new Set([...filter.chipEt, e.target.value]))
             );     
-        } else if (e.target.name === 'Виліт ET') {
+        } else if (e.target.name === t("filterCatalogWheel.filter_et")) {
             const cancelLoadIndex = filter.chipEt.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipEtItem(cancelLoadIndex);
             filter.setChipEt(Array.from(
                 new Set([...filter.chipEt])));
         }
-        if (e.target.name === 'Міжболтова відстань' && e.target.checked) {
+        if (e.target.name === t("filterCatalogWheel.filter_pcd") && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setChipPcd(
                 Array.from(
                     new Set([...filter.chipPcd, e.target.value]))
             );     
-        } else if (e.target.name === 'Міжболтова відстань') {
+        } else if (e.target.name === t("filterCatalogWheel.filter_pcd")) {
             const cancelHomologation = filter.chipPcd.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipPcdItem(cancelHomologation);
             filter.setChipPcd(Array.from(
                 new Set([...filter.chipPcd])));
         }
-        if (e.target.name === 'Додаткове міжболтове PCD2' && e.target.checked) {
+        if (e.target.name === t("filterCatalogWheel.filter_pcd2") && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setChipPcd2(
                 Array.from(
                     new Set([...filter.chipPcd2, e.target.value]))
             );     
-        } else if (e.target.name === 'Додаткове міжболтове PCD2') {
+        } else if (e.target.name === t("filterCatalogWheel.filter_pcd2")) {
             const cancelRunFlat = filter.chipPcd2.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipPcd2Item(cancelRunFlat);
             filter.setChipPcd2(Array.from(
                 new Set([...filter.chipPcd2])));
         }
-        if (e.target.name === 'Болти і відстань' && e.target.checked) {
+        if (e.target.name === t("filterCatalogWheel.filter_boltCount_pcd") && e.target.checked) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.setChipBoltCountPcd(
                 Array.from(
                     new Set([...filter.chipBoltCountPcd, e.target.value]))
             );     
-        } else if (e.target.name === 'Болти і відстань') {
+        } else if (e.target.name === t("filterCatalogWheel.filter_boltCount_pcd")) {
             const cancelReinforced = filter.chipBoltCountPcd.findIndex(
                 (item: string) => item === e.target.value);
             filter.removeChipBoltCountPcdItem(cancelReinforced);
             filter.setChipBoltCountPcd(Array.from(
                 new Set([...filter.chipBoltCountPcd])));
         }
-        const wheelCatalogPath: string | undefined = 
+        const wheelCatalogPath: string | undefined = i18n.resolvedLanguage === 'uk' && !params.ru ? '' : '/ru' +
           `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(filter.type)}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${createStringUrl(filter.width)}` : ''}${filter.diameter ? `/r${createStringUrl(filter.diameter)}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(filter.bolt_count)}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${filter.pcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${filter.et}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${filter.dia}` : '' }`;
           history.push(
             wheelCatalogPath, 
@@ -223,7 +231,7 @@ const FilterCatalogWheels = observer((
             filter.setWidth(null);
             filter.removeChipWidthItem();
         }
-        if (e.target.getAttribute('data-name') === 'Діаметр') {
+        if (e.target.getAttribute('data-name') === t("filterCatalogWheel.filter_diameter_title")) {
             page.setLoadMore(0);
             page.setOffset(0);
             for( let key in params) {
@@ -247,7 +255,7 @@ const FilterCatalogWheels = observer((
                 new Set([...filter.chipBrands])));
             filter.setBrands(filter.chipBrands.join(','));
         }
-        if (e.target.getAttribute('data-name') === 'Кількість болтів') {
+        if (e.target.getAttribute('data-name') === t("filterCatalogWheel.filter_bolt_count_title")) {
             page.setLoadMore(0);
             page.setOffset(0);
             for( let key in params) {
@@ -260,7 +268,7 @@ const FilterCatalogWheels = observer((
                 new Set([...filter.chipBoltCount])));
             filter.setBoltCount(filter.chipBoltCount.join(','));
         }
-        if (e.target.getAttribute('data-name') === 'Тип диска') {
+        if (e.target.getAttribute('data-name') === t("filterCatalogWheel.filter_wheel_type")) {
             page.setLoadMore(0);
             page.setOffset(0);
             for( let key in params) {
@@ -273,7 +281,7 @@ const FilterCatalogWheels = observer((
                 new Set([...filter.chipType])));
             filter.setType(filter.chipType.join(','));
         }
-        if (e.target.getAttribute('data-name') === 'Колір') {
+        if (e.target.getAttribute('data-name') === t("filterCatalogWheel.filter_color")) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.removeChipColorItem(e.target.getAttribute('data-index'));
@@ -281,7 +289,7 @@ const FilterCatalogWheels = observer((
                 new Set([...filter.chipColor])));
             filter.setColor(filter.chipColor.join(','));
         }
-        if (e.target.getAttribute('data-name') === 'Діаметр ступиці DIA') {
+        if (e.target.getAttribute('data-name') === t("filterCatalogWheel.filter_dia")) {
             page.setLoadMore(0);
             page.setOffset(0);
             for( let key in params) {
@@ -294,7 +302,7 @@ const FilterCatalogWheels = observer((
                 new Set([...filter.chipDia])));
             filter.setDia(filter.chipDia.join(','));
         }
-        if (e.target.getAttribute('data-name') === 'Виліт ET') {
+        if (e.target.getAttribute('data-name') === t("filterCatalogWheel.filter_et")) {
             page.setLoadMore(0);
             page.setOffset(0);
             for( let key in params) {
@@ -307,7 +315,7 @@ const FilterCatalogWheels = observer((
                 new Set([...filter.chipEt])));
             filter.setEt(filter.chipEt.join(','));
         }
-        if (e.target.getAttribute('data-name') === 'Міжболтова відстань') {
+        if (e.target.getAttribute('data-name') === t("filterCatalogWheel.filter_pcd")) {
             page.setLoadMore(0);
             page.setOffset(0);
             for( let key in params) {
@@ -320,7 +328,7 @@ const FilterCatalogWheels = observer((
                 new Set([...filter.chipPcd])));
             filter.setPcd(filter.chipPcd.join(','));
         }
-        if (e.target.getAttribute('data-name') === 'Додаткове міжболтове PCD2') {
+        if (e.target.getAttribute('data-name') === t("filterCatalogWheel.filter_pcd2")) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.removeChipPcd2Item(e.target.getAttribute('data-index'));
@@ -328,7 +336,7 @@ const FilterCatalogWheels = observer((
                 new Set([...filter.chipPcd2])));
             filter.setPcd2(filter.chipPcd2.join(','));
         }
-        if (e.target.getAttribute('data-name') === 'Болти і відстань') {
+        if (e.target.getAttribute('data-name') === t("filterCatalogWheel.filter_boltCount_pcd")) {
             page.setLoadMore(0);
             page.setOffset(0);
             filter.removeChipBoltCountPcdItem(e.target.getAttribute('data-index'));
@@ -336,7 +344,7 @@ const FilterCatalogWheels = observer((
                 new Set([...filter.chipBoltCountPcd])));
             filter.setBoltCountPcd(filter.chipBoltCountPcd.join(','));
         }
-        const wheelCatalogPath: string | undefined = 
+        const wheelCatalogPath: string | undefined = i18n.resolvedLanguage === 'uk' && !params.ru ? '' : '/ru' +
         `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(filter.type)}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${createStringUrl(filter.width)}` : ''}${filter.diameter ? `/r${createStringUrl(filter.diameter)}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(filter.bolt_count)}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${filter.pcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${filter.et}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${filter.dia}` : '' }`;
         history.push(
           wheelCatalogPath, 
@@ -345,7 +353,7 @@ const FilterCatalogWheels = observer((
     const filterBrandAdd = () => {
         filter.setBrands(filter.chipBrands.join(','));
         setStateBrand(!stateBrand);
-        const wheelCatalogPath: string | undefined = 
+        const wheelCatalogPath: string | undefined = i18n.resolvedLanguage === 'uk' && !params.ru ? '' : '/ru' +
         `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(filter.type)}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${createStringUrl(filter.width)}` : ''}${filter.diameter ? `/r${createStringUrl(filter.diameter)}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(filter.bolt_count)}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${filter.pcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${filter.et}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${filter.dia}` : '' }`;
         history.push(
           wheelCatalogPath, 
@@ -354,7 +362,7 @@ const FilterCatalogWheels = observer((
     const filterBoltCountAdd = () => {
         filter.setBoltCount(filter.chipBoltCount.join(','));
         setStateBoltCount(!stateBoltCount);
-        const wheelCatalogPath: string | undefined = 
+        const wheelCatalogPath: string | undefined = i18n.resolvedLanguage === 'uk' && !params.ru ? '' : '/ru' +
         `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(filter.type)}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${createStringUrl(filter.width)}` : ''}${filter.diameter ? `/r${createStringUrl(filter.diameter)}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(filter.bolt_count)}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${filter.pcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${filter.et}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${filter.dia}` : '' }`;
         history.push(
           wheelCatalogPath, 
@@ -363,7 +371,7 @@ const FilterCatalogWheels = observer((
     const filterTypeAdd = () => {
         filter.setType(filter.chipType.join(','));
         setStateType(!stateType);
-        const wheelCatalogPath: string | undefined = 
+        const wheelCatalogPath: string | undefined = i18n.resolvedLanguage === 'uk' && !params.ru ? '' : '/ru' +
         `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(filter.type)}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${createStringUrl(filter.width)}` : ''}${filter.diameter ? `/r${createStringUrl(filter.diameter)}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(filter.bolt_count)}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${filter.pcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${filter.et}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${filter.dia}` : '' }`;
         history.push(
           wheelCatalogPath, 
@@ -372,7 +380,7 @@ const FilterCatalogWheels = observer((
     const filterColorAdd = () => {
         filter.setColor(filter.chipColor.join(','));
         setStateColor(!stateColor);
-        const wheelCatalogPath: string | undefined = 
+        const wheelCatalogPath: string | undefined = i18n.resolvedLanguage === 'uk' && !params.ru ? '' : '/ru' +
         `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(filter.type)}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${createStringUrl(filter.width)}` : ''}${filter.diameter ? `/r${createStringUrl(filter.diameter)}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(filter.bolt_count)}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${filter.pcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${filter.et}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${filter.dia}` : '' }`;
         history.push(
           wheelCatalogPath, 
@@ -381,7 +389,7 @@ const FilterCatalogWheels = observer((
     const filterDiaAdd = () => {
         filter.setDia(filter.chipDia.join(','));
         setStateDia(!stateDia);
-        const wheelCatalogPath: string | undefined = 
+        const wheelCatalogPath: string | undefined = i18n.resolvedLanguage === 'uk' && !params.ru ? '' : '/ru' +
         `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(filter.type)}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${createStringUrl(filter.width)}` : ''}${filter.diameter ? `/r${createStringUrl(filter.diameter)}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(filter.bolt_count)}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${filter.pcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${filter.et}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${filter.dia}` : '' }`;
         history.push(
           wheelCatalogPath, 
@@ -390,7 +398,7 @@ const FilterCatalogWheels = observer((
     const filterEtAdd = () => {
         filter.setEt(filter.chipEt.join(','));
         setStateEt(!stateEt);
-        const wheelCatalogPath: string | undefined = 
+        const wheelCatalogPath: string | undefined = i18n.resolvedLanguage === 'uk' && !params.ru ? '' : '/ru' +
         `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(filter.type)}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${createStringUrl(filter.width)}` : ''}${filter.diameter ? `/r${createStringUrl(filter.diameter)}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(filter.bolt_count)}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${filter.pcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${filter.et}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${filter.dia}` : '' }`;
         history.push(
           wheelCatalogPath, 
@@ -399,7 +407,7 @@ const FilterCatalogWheels = observer((
     const filterPcdAdd = () => {
         filter.setPcd(filter.chipPcd.join(','));
         setStatePcd(!statePcd);
-        const wheelCatalogPath: string | undefined = 
+        const wheelCatalogPath: string | undefined = i18n.resolvedLanguage === 'uk' && !params.ru ? '' : '/ru' +
         `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(filter.type)}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${createStringUrl(filter.width)}` : ''}${filter.diameter ? `/r${createStringUrl(filter.diameter)}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(filter.bolt_count)}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${filter.pcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${filter.et}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${filter.dia}` : '' }`;
         history.push(
           wheelCatalogPath, 
@@ -408,7 +416,7 @@ const FilterCatalogWheels = observer((
     const filterPcd2Add = () => {
         filter.setPcd2(filter.chipPcd2.join(','));
         setStatePcd2(!statePcd2);
-        const wheelCatalogPath: string | undefined = 
+        const wheelCatalogPath: string | undefined = i18n.resolvedLanguage === 'uk' && !params.ru ? '' : '/ru' +
         `${CATALOG_WHEELS_ROUTE}${filter.type && !filter.type.includes(',') ? `/${createStringUrl(filter.type)}` : '' }${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${createStringUrl(filter.width)}` : ''}${filter.diameter ? `/r${createStringUrl(filter.diameter)}` : ''}${filter.bolt_count && !filter.bolt_count.includes(',') ? `/${createStringUrl(filter.bolt_count)}` : '' }${filter.pcd && !filter.pcd.includes(',') ? `/pcd${filter.pcd}` : '' }${filter.et && !filter.et.includes(',') ? `/et${filter.et}` : '' }${filter.dia && !filter.dia.includes(',') ? `/dia${filter.dia}` : '' }`;
         history.push(
           wheelCatalogPath, 
@@ -494,7 +502,7 @@ const FilterCatalogWheels = observer((
             : null
             }
                 <span>
-                 Фільтр Дисків   
+                 {t("filterCatalogWheel.filter_title")}  
                 </span>
             </div>
             <div className='filterWheelsOption'>
@@ -526,14 +534,14 @@ const FilterCatalogWheels = observer((
                     chipItem={filter._diameter}
                     deleteChip={handleDeleteChange}
                     width={247.4} 
-                    titleFilter={'Діаметр'} 
+                    titleFilter={t("filterCatalogWheel.filter_diameter_title")} 
                     contentInfo={'WheelDiameter'}>
                     { goodsWheel._diameter ? 
                         goodsWheel._diameter.map(
                             (diameterItem: any) => (
                     <SelectFilterList
                         key={diameterItem}
-                        nameFilter={'Діаметр'}
+                        nameFilter={t("filterCatalogWheel.filter_diameter_title")}
                         value={diameterItem} 
                         items={diameterItem} 
                         checked={filter._diameter} 
@@ -546,17 +554,17 @@ const FilterCatalogWheels = observer((
                   <button 
                     className='checkBoxWheelBtnOn boltCount'
                     onClick={filterBoltCountAdd}
-                  >Показати</button> 
+                  >{t("filterCatalogWheel.filter_show_btn")}</button> 
                   : null 
                 } 
                 <Accordion 
-                    titleName={'Кількість болтів'}
+                    titleName={t("filterCatalogWheel.filter_bolt_count_title")}
                     chipItem={filter.bolt_count}
                     deleteChip={handleDeleteChange}
                     filterAction={filterBoltCountClick}
                     filterState={stateBoltCount}
                 >
-                    <span>Кількість:</span>
+                    <span>{t("filterCatalogWheel.count_title")}</span>
                     {goodsWheel._bolt_count ?
                         goodsWheel._bolt_count.map(
                             (color: any, index: number) => (
@@ -565,7 +573,7 @@ const FilterCatalogWheels = observer((
                         value={color} 
                         checked={filter._chipBoltCount.includes(color)} 
                         onChange={handleChange} 
-                        titleName={'Кількість болтів'}
+                        titleName={t("filterCatalogWheel.filter_bolt_count_title")}
                         titleCheckbox={color} 
                         //imageSrc={seasonCar(color)}
                         />
@@ -577,11 +585,11 @@ const FilterCatalogWheels = observer((
                   <button 
                     className='checkBoxWheelBtnOn wheelColor'
                     onClick={filterColorAdd}
-                  >Показати</button> 
+                  >{t("filterCatalogWheel.filter_show_btn")}</button> 
                   : null 
                 }
                 <Accordion 
-                    titleName={'Колір'}
+                    titleName={t("filterCatalogWheel.filter_color")}
                     chipItem={filter.color}
                     deleteChip={handleDeleteChange}
                     filterAction={filterColorClick}
@@ -595,7 +603,7 @@ const FilterCatalogWheels = observer((
                         checked={filter._chipColor.includes(color)} 
                         onChange={handleChange} 
                         value={color} 
-                        titleName={'Колір'}
+                        titleName={t("filterCatalogWheel.filter_color")}
                         titleCheckbox={color} 
                         // imageSrc={color.length === 0 ?
                         //     './iconsSigns/imagesNoThorn_1_64.png' :
@@ -610,7 +618,7 @@ const FilterCatalogWheels = observer((
                   <button 
                     className='checkBoxWheelBtnOn brands'
                     onClick={filterBrandAdd}
-                  >Показати</button> 
+                  >{t("filterCatalogWheel.filter_show_btn")}</button> 
                   : null 
                 }
                 <FilterMainBtnWheel 
@@ -643,11 +651,11 @@ const FilterCatalogWheels = observer((
                   <button 
                     className='checkBoxWheelBtnOn wheelType'
                     onClick={filterTypeAdd}
-                  >Показати</button> 
+                  >{t("filterCatalogWheel.filter_show_btn")}</button> 
                   : null 
                 }               
                 <Accordion 
-                    titleName={'Тип диска'}
+                    titleName={t("filterCatalogWheel.filter_wheel_type")}
                     chipItem={filter._type}
                     deleteChip={handleDeleteChange}
                     filterAction={filterTypeClick}
@@ -661,7 +669,7 @@ const FilterCatalogWheels = observer((
                         value={vehicleItem}
                         checked={filter._chipType.includes(vehicleItem)} 
                         onChange={handleChange}
-                        titleName={'Тип диска'}  
+                        titleName={t("filterCatalogWheel.filter_wheel_type")}  
                         titleCheckbox={vehicleItem} 
                         imageSrc={typeWheels(vehicleItem)}/>
                         )) : null
@@ -671,11 +679,11 @@ const FilterCatalogWheels = observer((
                   <button 
                     className='checkBoxWheelBtnOn dia'
                     onClick={filterDiaAdd}
-                  >Показати</button> 
+                  >{t("filterCatalogWheel.filter_show_btn")}</button> 
                   : null 
                 }
                 <Accordion 
-                    titleName={'Діаметр ступиці DIA'}
+                    titleName={t("filterCatalogWheel.filter_dia")}
                     chipItem={filter.dia}
                     deleteChip={handleDeleteChange}
                     filterAction={filterDiaClick}
@@ -689,9 +697,9 @@ const FilterCatalogWheels = observer((
                         checked={filter._chipDia.includes(dia)} 
                         onChange={handleChange} 
                         value={dia} 
-                        titleName={'Діаметр ступиці DIA'}
+                        titleName={t("filterCatalogWheel.filter_dia")}
                         titleCheckbox={dia} 
-                        imageSrc={'./iconsWheelFilter/wheel_dia_bolt.png'}
+                        imageSrc={'/iconsWheelFilter/wheel_dia_bolt.webp'}
                     />  )) : null
                     }
                     <p/>
@@ -700,11 +708,11 @@ const FilterCatalogWheels = observer((
                   <button 
                     className='checkBoxWheelBtnOn et'
                     onClick={filterEtAdd}
-                  >Показати</button> 
+                  >{t("filterCatalogWheel.filter_show_btn")}</button> 
                   : null 
                 }    
                 <Accordion 
-                    titleName={'Виліт ET'}
+                    titleName={t("filterCatalogWheel.filter_et")}
                     chipItem={filter.et}
                     deleteChip={handleDeleteChange}
                     filterAction={filterEtClick}
@@ -718,9 +726,9 @@ const FilterCatalogWheels = observer((
                         checked={filter.chipEt.includes(et)} 
                         onChange={handleChange} 
                         value={et} 
-                        titleName={'Виліт ET'}
+                        titleName={t("filterCatalogWheel.filter_et")}
                         titleCheckbox={et} 
-                        imageSrc={'./iconsWheelFilter/wheel_et_bolt.png'}
+                        imageSrc={'/iconsWheelFilter/wheel_et_bolt.webp'}
                     /> 
                     ))
                      : null
@@ -731,11 +739,11 @@ const FilterCatalogWheels = observer((
                   <button 
                     className='checkBoxWheelBtnOn pcd'
                     onClick={filterPcdAdd}
-                  >Показати</button> 
+                  >{t("filterCatalogWheel.filter_show_btn")}</button> 
                   : null 
                 }
                 <Accordion 
-                    titleName={'Міжболтова відстань'}
+                    titleName={t("filterCatalogWheel.filter_pcd")}
                     chipItem={filter.pcd}
                     deleteChip={handleDeleteChange}
                     filterAction={filterPcdClick}
@@ -749,9 +757,9 @@ const FilterCatalogWheels = observer((
                         checked={filter._chipPcd.includes(pcd)} 
                         onChange={handleChange} 
                         value={pcd} 
-                        titleName={'Міжболтова відстань'}
+                        titleName={t("filterCatalogWheel.filter_pcd")}
                         titleCheckbox={pcd} 
-                        imageSrc={'./iconsWheelFilter/wheel_pcd_bolt.png'}
+                        imageSrc={'/iconsWheelFilter/wheel_pcd_bolt.webp'}
                     /> 
                     ))
                      : null
@@ -762,11 +770,11 @@ const FilterCatalogWheels = observer((
                   <button 
                     className='checkBoxWheelBtnOn pcd2'
                     onClick={filterPcd2Add}
-                  >Показати</button> 
+                  >{t("filterCatalogWheel.filter_show_btn")}</button> 
                   : null 
                 }
                 <Accordion 
-                    titleName={'Додаткове міжболтове PCD2'}
+                    titleName={t("filterCatalogWheel.filter_pcd2")}
                     chipItem={filter.pcd2}
                     deleteChip={handleDeleteChange}
                     filterAction={filterPcd2Click}
@@ -779,7 +787,7 @@ const FilterCatalogWheels = observer((
                         checked={filter._chipPcd2.includes(pcd2)} 
                         onChange={handleChange} 
                         value={pcd2}
-                        titleName={"Додаткове міжболтове PCD2"} 
+                        titleName={t("filterCatalogWheel.filter_pcd2")} 
                         titleCheckbox={pcd2} 
                         imageSrc={''}
                     /> 
@@ -792,11 +800,11 @@ const FilterCatalogWheels = observer((
                   <button 
                     className='checkBoxWheelBtnOn boltCountPcd'
                     onClick={filterBoltCountPcddAdd}
-                  >Показати</button> 
+                  >{t("filterCatalogWheel.filter_show_btn")}</button> 
                   : null 
                 }
                 <Accordion 
-                    titleName={'Болти і відстань'}
+                    titleName={t("filterCatalogWheel.filter_boltCount_pcd")}
                     chipItem={filter.bolt_count_pcd}
                     deleteChip={handleDeleteChange}
                     filterAction={filterBoltCountPcdClick}
@@ -810,7 +818,7 @@ const FilterCatalogWheels = observer((
                         checked={filter._chipBoltCountPcd.includes(bolt_count_pcd)} 
                         onChange={handleChange} 
                         value={bolt_count_pcd}
-                        titleName={'Болти і відстань'} 
+                        titleName={t("filterCatalogWheel.filter_boltCount_pcd")} 
                         titleCheckbox={bolt_count_pcd} 
                         imageSrc={''}
                     /> 

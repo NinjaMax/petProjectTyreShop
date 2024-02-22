@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import '../../css/CardsCss/TyreCardSmall.css';
 import ButtonAction from '../buttons/ButtonAction';
-//import tyres from '../../assets/autotyrespilotspotps2.png';
 import Rating from '../ux/Rating';
 import { createStringUrl } from '../../services/stringUrl';
 import { useHistory } from 'react-router-dom';
@@ -57,7 +56,7 @@ const CardSmall = ({product, rating, checkOrders}:IProductSmall) => {
                     <a
                         className='tyresSmallLinkProduct'
                         onClick={addGoodsId} 
-                        href={'/' + createStringUrl(product?.full_name)}
+                        href={i18n.resolvedLanguage === 'uk' ? '/' + createStringUrl(product?.full_name) : '/ru/' + createStringUrl(product?.full_name)}
                     >
                         <img 
                             id='imgTyresSmall' 
@@ -72,7 +71,7 @@ const CardSmall = ({product, rating, checkOrders}:IProductSmall) => {
                     <a
                         className='tyresSmallLinkProduct'
                         onClick={addGoodsId} 
-                        href={'/' + createStringUrl(product?.full_name)}
+                        href={i18n.resolvedLanguage === 'uk' ? '/' + createStringUrl(product?.full_name) : '/ru/' + createStringUrl(product?.full_name)}
                     >
                         <img 
                             id='imgTyresSmall' 
@@ -89,7 +88,7 @@ const CardSmall = ({product, rating, checkOrders}:IProductSmall) => {
                 <a
                     className='tyresSmallLinkProduct'
                     onClick={addGoodsId} 
-                    href={'/' + createStringUrl(product?.full_name)}
+                    href={i18n.resolvedLanguage === 'uk' ? '/' + createStringUrl(product?.full_name) : '/ru/' + createStringUrl(product?.full_name)}
                 >
                 {product?.tyre_brand ?    
                     product?.full_name

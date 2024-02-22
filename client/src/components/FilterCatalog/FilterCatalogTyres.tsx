@@ -38,9 +38,15 @@ const FilterCatalogTyres = observer((
     const [stateReinforced, setStateReinforced]=useState<boolean>(false);
     const [isOpenFilter, setIsOpenFilter]=useState<boolean>(false);
     const isMobileFilterTyre = useMediaQuery({ query: '(max-width: 1075px)' });
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const params = useParams<any>();
     const history = useHistory();
+
+    useEffect(() => {
+        if (params.ru === 'ru') {
+            i18n.changeLanguage('ru');
+        }
+    },[i18n, params.ru]);
 
     useEffect(() => {
         if(!filterState) {
@@ -254,7 +260,7 @@ const FilterCatalogTyres = observer((
             filter.setChipReinforced(Array.from(
                 new Set([...filter.chipReinforced])));
         }
-        const tyreCatalogPath: string | undefined = 
+        const tyreCatalogPath: string | undefined = i18n.resolvedLanguage === 'uk' ? '' : '/ru' +
           `${CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/${createStringUrl(filter.season)}` : '' }${filter.studded && !filter.studded.includes(',') ? `/${createStringUrl(filter.studded)}` : '' }${filter.vehicle_type && !filter.vehicle_type.includes(',') ? `/${createStringUrl(filter.vehicle_type)}` : ''}${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${filter.width }` : ''}${filter.height ? `/h${filter.height}` : ''}${filter.diameter ? `/r${filter.diameter}` : ''}${filter.load_index && !filter.load_index.includes(',') ? `/li-${createStringUrl(filter.load_index)}` : '' }${filter.speed_index && !filter.speed_index.includes(',') ? `/si-${createStringUrl(filter.speed_index)}` : '' }${filter.reinforced && !filter.reinforced.includes(',') ? `/xl-${createStringUrl(filter.reinforced)}` : '' }${filter.homologation && !filter.homologation.includes(',') ? `/om-${createStringUrl(filter.homologation)}` : '' }`;
           history.push(
             tyreCatalogPath, 
@@ -449,7 +455,7 @@ const FilterCatalogTyres = observer((
                 new Set([...filter.chipReinforced])));
             filter.setReinforced(filter.chipReinforced.join(','));
         }
-        const tyreCatalogPathType: string | undefined = 
+        const tyreCatalogPathType: string | undefined = i18n.resolvedLanguage === 'uk' && !params.ru ? '' : '/ru' +
         `${CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/${createStringUrl(filter.season)}` : '' }${filter.studded && !filter.studded.includes(',') ? `/${createStringUrl(filter.studded)}` : '' }${filter.vehicle_type && !filter.vehicle_type.includes(',') && !filter.vehicle_type.includes(`кар'єрна`) ? `/${createStringUrl(filter.vehicle_type)}` : filter._chipVehicleType.includes('вантажні шини' || 'універсальна' || 'рульова' || 'ведуча'|| 'причіпна') ? `/${createStringUrl('вантажні шини')}`: !filter.vehicle_type.includes(',') && filter.vehicle_type.includes(`кар'єрна`) ? `/${createStringUrl('карерна')}` : ''}${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${filter.width }` : ''}${filter.height ? `/h${filter.height}` : ''}${filter.diameter ? `/r${filter.diameter}` : ''}${filter.load_index && !filter.load_index.includes(',') ? `/li-${createStringUrl(filter.load_index)}` : '' }${filter.speed_index && !filter.speed_index.includes(',') ? `/si-${createStringUrl(filter.speed_index)}` : '' }${filter.reinforced && !filter.reinforced.includes(',') ? `/xl-${createStringUrl(filter.reinforced)}` : '' }${filter.homologation && !filter.homologation.includes(',') ? `/om-${createStringUrl(filter.homologation)}` : '' }`;
         history.push(
           tyreCatalogPathType, 
@@ -458,7 +464,7 @@ const FilterCatalogTyres = observer((
     const filterBrandAdd = () => {
         filter.setBrands(filter.chipBrands.join(','));
         setStateBrand(!stateBrand);
-        const tyreCatalogPathBrand: string | undefined = 
+        const tyreCatalogPathBrand: string | undefined = i18n.resolvedLanguage === 'uk' && !params.ru ? '' : '/ru' +
           `${CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/${createStringUrl(filter.season)}` : '' }${filter.studded && !filter.studded.includes(',') ? `/${createStringUrl(filter.studded)}` : '' }${filter.vehicle_type && !filter.vehicle_type.includes(',') ? `/${createStringUrl(filter.vehicle_type)}` : ''}${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${filter.width }` : ''}${filter.height ? `/h${filter.height}` : ''}${filter.diameter ? `/r${filter.diameter}` : ''}${filter.load_index && !filter.load_index.includes(',') ? `/li-${createStringUrl(filter.load_index)}` : '' }${filter.speed_index && !filter.speed_index.includes(',') ? `/si-${createStringUrl(filter.speed_index)}` : '' }${filter.reinforced && !filter.reinforced.includes(',') ? `/xl-${createStringUrl(filter.reinforced)}` : '' }${filter.homologation && !filter.homologation.includes(',') ? `/om-${createStringUrl(filter.homologation)}` : '' }`;
           history.push(
             tyreCatalogPathBrand, 
@@ -467,7 +473,7 @@ const FilterCatalogTyres = observer((
     const filterSeasonAdd = () => {
         filter.setSeason(filter.chipSeason.join(','));
         setStateSeason(!stateSeason);
-        const tyreCatalogPathSeason: string | undefined = 
+        const tyreCatalogPathSeason: string | undefined = i18n.resolvedLanguage === 'uk' && !params.ru ? '' : '/ru' +
           `${CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/${createStringUrl(filter.season)}` : '' }${filter.studded && !filter.studded.includes(',') ? `/${createStringUrl(filter.studded)}` : '' }${filter.vehicle_type && !filter.vehicle_type.includes(',') ? `/${createStringUrl(filter.vehicle_type)}` : ''}${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${filter.width }` : ''}${filter.height ? `/h${filter.height}` : ''}${filter.diameter ? `/r${filter.diameter}` : ''}${filter.load_index && !filter.load_index.includes(',') ? `/li-${createStringUrl(filter.load_index)}` : '' }${filter.speed_index && !filter.speed_index.includes(',') ? `/si-${createStringUrl(filter.speed_index)}` : '' }${filter.reinforced && !filter.reinforced.includes(',') ? `/xl-${createStringUrl(filter.reinforced)}` : '' }${filter.homologation && !filter.homologation.includes(',') ? `/om-${createStringUrl(filter.homologation)}` : '' }`;
           history.push(
             tyreCatalogPathSeason, 
@@ -476,7 +482,7 @@ const FilterCatalogTyres = observer((
     const filterVehicleTypeAdd = () => {
         filter.setVehicleType(filter.chipVehicleType.join(','));
         setStateVehicleType(!stateVehicleType);
-        const tyreCatalogPathType: string | undefined = 
+        const tyreCatalogPathType: string | undefined = i18n.resolvedLanguage === 'uk' && !params.ru ? '' : '/ru' +
           `${CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/${createStringUrl(filter.season)}` : '' }${filter.studded && !filter.studded.includes(',') ? `/${createStringUrl(filter.studded)}` : '' }${filter.vehicle_type && !filter.vehicle_type.includes(',') && !filter.vehicle_type.includes(`кар'єрна`) ? `/${createStringUrl(filter.vehicle_type)}` : filter._chipVehicleType.includes('вантажні шини' || 'універсальна' || 'рульова' || 'ведуча'|| 'причіпна') ? `/${createStringUrl('вантажні шини')}`: !filter.vehicle_type.includes(',') && filter.vehicle_type.includes(`кар'єрна`) ? `/${createStringUrl('карерна')}` : ''}${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${filter.width }` : ''}${filter.height ? `/h${filter.height}` : ''}${filter.diameter ? `/r${filter.diameter}` : ''}${filter.load_index && !filter.load_index.includes(',') ? `/li-${createStringUrl(filter.load_index)}` : '' }${filter.speed_index && !filter.speed_index.includes(',') ? `/si-${createStringUrl(filter.speed_index)}` : '' }${filter.reinforced && !filter.reinforced.includes(',') ? `/xl-${createStringUrl(filter.reinforced)}` : '' }${filter.homologation && !filter.homologation.includes(',') ? `/om-${createStringUrl(filter.homologation)}` : '' }`;
           history.push(
             tyreCatalogPathType, 
@@ -485,7 +491,7 @@ const FilterCatalogTyres = observer((
     const filterStuddedAdd = () => {
         filter.setStudded(filter.chipStudded.join(','));
         setStateStudded(!stateStudded);
-        const tyreCatalogPathStud: string | undefined = 
+        const tyreCatalogPathStud: string | undefined = i18n.resolvedLanguage === 'uk' && !params.ru ? '' : '/ru' +
           `${CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/${createStringUrl(filter.season)}` : '' }${filter.studded && !filter.studded.includes(',') ? `/${createStringUrl(filter.studded)}` : '' }${filter.vehicle_type && !filter.vehicle_type.includes(',') ? `/${createStringUrl(filter.vehicle_type)}` : ''}${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${filter.width }` : ''}${filter.height ? `/h${filter.height}` : ''}${filter.diameter ? `/r${filter.diameter}` : ''}${filter.load_index && !filter.load_index.includes(',') ? `/li-${createStringUrl(filter.load_index)}` : '' }${filter.speed_index && !filter.speed_index.includes(',') ? `/si-${createStringUrl(filter.speed_index)}` : '' }${filter.reinforced && !filter.reinforced.includes(',') ? `/xl-${createStringUrl(filter.reinforced)}` : '' }${filter.homologation && !filter.homologation.includes(',') ? `/om-${createStringUrl(filter.homologation)}` : '' }`;
           history.push(
             tyreCatalogPathStud, 
@@ -494,7 +500,7 @@ const FilterCatalogTyres = observer((
     const filterSpeedIndexAdd = () => {
         filter.setSpeedIndex(filter.chipSpeedIndex.join(','));
         setStateSpeedIndex(!stateSpeedIndex);
-        const tyreCatalogPathSi: string | undefined = 
+        const tyreCatalogPathSi: string | undefined = i18n.resolvedLanguage === 'uk' && !params.ru ? '' : '/ru' +
           `${CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/${createStringUrl(filter.season)}` : '' }${filter.studded && !filter.studded.includes(',') ? `/${createStringUrl(filter.studded)}` : '' }${filter.vehicle_type && !filter.vehicle_type.includes(',') ? `/${createStringUrl(filter.vehicle_type)}` : ''}${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${filter.width }` : ''}${filter.height ? `/h${filter.height}` : ''}${filter.diameter ? `/r${filter.diameter}` : ''}${filter.load_index && !filter.load_index.includes(',') ? `/li-${createStringUrl(filter.load_index)}` : '' }${filter.speed_index && !filter.speed_index.includes(',') ? `/si-${createStringUrl(filter.speed_index)}` : '' }${filter.reinforced && !filter.reinforced.includes(',') ? `/xl-${createStringUrl(filter.reinforced)}` : '' }${filter.homologation && !filter.homologation.includes(',') ? `/om-${createStringUrl(filter.homologation)}` : '' }`;
           history.push(
             tyreCatalogPathSi, 
@@ -503,7 +509,7 @@ const FilterCatalogTyres = observer((
     const filterLoadIndexAdd = () => {
         filter.setLoadIndex(filter.chipLoadIndex.join(','));
         setStateLoadIndex(!stateLoadIndex);
-        const tyreCatalogPathLi: string | undefined = 
+        const tyreCatalogPathLi: string | undefined = i18n.resolvedLanguage === 'uk' && !params.ru ? '' : '/ru' +
           `${CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/${createStringUrl(filter.season)}` : '' }${filter.studded && !filter.studded.includes(',') ? `/${createStringUrl(filter.studded)}` : '' }${filter.vehicle_type && !filter.vehicle_type.includes(',') ? `/${createStringUrl(filter.vehicle_type)}` : ''}${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${filter.width }` : ''}${filter.height ? `/h${filter.height}` : ''}${filter.diameter ? `/r${filter.diameter}` : ''}${filter.load_index && !filter.load_index.includes(',') ? `/li-${createStringUrl(filter.load_index)}` : '' }${filter.speed_index && !filter.speed_index.includes(',') ? `/si-${createStringUrl(filter.speed_index)}` : '' }${filter.reinforced && !filter.reinforced.includes(',') ? `/xl-${createStringUrl(filter.reinforced)}` : '' }${filter.homologation && !filter.homologation.includes(',') ? `/om-${createStringUrl(filter.homologation)}` : '' }`;
           history.push(
             tyreCatalogPathLi, 
@@ -512,7 +518,7 @@ const FilterCatalogTyres = observer((
     const filterHomologationAdd = () => {
         filter.setHomologation(filter.chipHomologation.join(','));
         setStateHomologation(!stateHomologation);
-        const tyreCatalogPathOm: string | undefined = 
+        const tyreCatalogPathOm: string | undefined = i18n.resolvedLanguage === 'uk' && !params.ru ? '' : '/ru' +
           `${CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/${createStringUrl(filter.season)}` : '' }${filter.studded && !filter.studded.includes(',') ? `/${createStringUrl(filter.studded)}` : '' }${filter.vehicle_type && !filter.vehicle_type.includes(',') ? `/${createStringUrl(filter.vehicle_type)}` : ''}${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${filter.width }` : ''}${filter.height ? `/h${filter.height}` : ''}${filter.diameter ? `/r${filter.diameter}` : ''}${filter.load_index && !filter.load_index.includes(',') ? `/li-${createStringUrl(filter.load_index)}` : '' }${filter.speed_index && !filter.speed_index.includes(',') ? `/si-${createStringUrl(filter.speed_index)}` : '' }${filter.reinforced && !filter.reinforced.includes(',') ? `/xl-${createStringUrl(filter.reinforced)}` : '' }${filter.homologation && !filter.homologation.includes(',') ? `/om-${createStringUrl(filter.homologation)}` : '' }`;
           history.push(
             tyreCatalogPathOm, 
@@ -521,7 +527,7 @@ const FilterCatalogTyres = observer((
     const filterRunFlatAdd = () => {
         filter.setRunFlat(filter.chipRunFlat.join(','));
         setStateRunFlat(!stateRunFlat);
-        const tyreCatalogPathRf: string | undefined = 
+        const tyreCatalogPathRf: string | undefined = i18n.resolvedLanguage === 'uk' && !params.ru ? '' : '/ru' +
           `${CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/${createStringUrl(filter.season)}` : '' }${filter.studded && !filter.studded.includes(',') ? `/${createStringUrl(filter.studded)}` : '' }${filter.vehicle_type && !filter.vehicle_type.includes(',') ? `/${createStringUrl(filter.vehicle_type)}` : ''}${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${filter.width }` : ''}${filter.height ? `/h${filter.height}` : ''}${filter.diameter ? `/r${filter.diameter}` : ''}${filter.load_index && !filter.load_index.includes(',') ? `/li-${createStringUrl(filter.load_index)}` : '' }${filter.speed_index && !filter.speed_index.includes(',') ? `/si-${createStringUrl(filter.speed_index)}` : '' }${filter.reinforced && !filter.reinforced.includes(',') ? `/xl-${createStringUrl(filter.reinforced)}` : '' }${filter.homologation && !filter.homologation.includes(',') ? `/om-${createStringUrl(filter.homologation)}` : '' }`;
           history.push(
             tyreCatalogPathRf, 
@@ -530,7 +536,7 @@ const FilterCatalogTyres = observer((
     const filterReinforcedAdd = () => {
         filter.setReinforced(filter.chipReinforced.join(','));
         setStateReinforced(!stateReinforced);
-        const tyreCatalogPathXl: string | undefined = 
+        const tyreCatalogPathXl: string | undefined = i18n.resolvedLanguage === 'uk' && !params.ru ? '' : '/ru' +
           `${CATALOG_TYRES_ROUTE}${filter.season && !filter.season.includes(',') ? `/${createStringUrl(filter.season)}` : '' }${filter.studded && !filter.studded.includes(',') ? `/${createStringUrl(filter.studded)}` : '' }${filter.vehicle_type && !filter.vehicle_type.includes(',') ? `/${createStringUrl(filter.vehicle_type)}` : ''}${filter.brands && !filter.brands.includes(',') ? `/${createStringUrl(filter.brands)}` : ''}${filter.width ? `/w${filter.width }` : ''}${filter.height ? `/h${filter.height}` : ''}${filter.diameter ? `/r${filter.diameter}` : ''}${filter.load_index && !filter.load_index.includes(',') ? `/li-${createStringUrl(filter.load_index)}` : '' }${filter.speed_index && !filter.speed_index.includes(',') ? `/si-${createStringUrl(filter.speed_index)}` : '' }${filter.reinforced && !filter.reinforced.includes(',') ? `/xl-${createStringUrl(filter.reinforced)}` : '' }${filter.homologation && !filter.homologation.includes(',') ? `/om-${createStringUrl(filter.homologation)}` : '' }`;
           history.push(
             tyreCatalogPathXl, 

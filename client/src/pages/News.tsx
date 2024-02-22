@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import '../css/Pages/News.css';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
-import { IArticleItem } from '../components/news/types/ArticleItem.types';
+//import { IArticleItem } from '../components/news/types/ArticleItem.types';
 import NewsMainBox from '../components/news/NewsMainBox';
 import { getAllArticles } from '../restAPI/restGoodsApi';
 import BreadCrumbs from '../components/BreadCrumbs';

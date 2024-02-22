@@ -1,6 +1,6 @@
 import React, { Fragment, Suspense, lazy, useContext, useEffect, useState} from 'react';
 import '../css/Goods.css';
-import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { NOT_FOUND_ROUTE } from '../utils/consts';
 import { 
   addGoodsToBasket,
@@ -105,7 +105,6 @@ const GoodsPage = observer(() => {
   const history =  useHistory();
   const location = useLocation();
   const params = useParams<any>();
-  let match = useRouteMatch<any>('/:goodsItem');
 
   useEffect(() => {
     let isMounted = false;
@@ -260,14 +259,6 @@ const GoodsPage = observer(() => {
         setRatingWinterAvg(getRatingWinter[0]);
         setRatingAllSeasonAvg(getRatingAllSeason[0]);
       }
-      // if (!isMounted && taskProduct[i] === getTyresCountReviewByBrand && goodsTyre._product.id_brand) {
-      //   const getCountBrand: any = await taskProduct[i](goodsTyre._product.id_brand);
-      //   setReviewCountBrand(getCountBrand);
-      // }
-      // if (!isMounted && taskProduct[i] === getWheelsCountReviewByBrand && goodsWheel._product.id_brand) {
-      //   const getCountWheelBrand: any = await taskProduct[i](goodsWheel._product.id_brand);
-      //   setReviewCountBrand(getCountWheelBrand);
-      // }
       if (!isMounted && taskProduct[i] === getTyresCountReviewByModel && goodsTyre?._product?.id_model) {
         const getCountModel: any = await taskProduct[i](goodsTyre?._product?.id_model);
         setReviewCountModel(getCountModel);
@@ -339,7 +330,6 @@ const GoodsPage = observer(() => {
           goodsTyre?._product?.tyre_brand?.brand,
           goodsTyre?._product?.season?.season_ua,
         );
-        //console.log('SIMILAR_BRAND_GOODS_PARAMS: ', getTyresParamsByBrandSeason);
         setSimilarBrandGoods(getTyresParamsByBrandSeason);
       }
       if (!isMounted && taskProduct[i] === getWheelsParamsByBrand 
@@ -352,7 +342,6 @@ const GoodsPage = observer(() => {
           goodsWheel?._product?.et.et,
           goodsWheel?._product?.diameter.diameter,
         );
-        //console.log('SIMILAR_BRAND_GOODS_PARAMS: ', getWheelsParamsByBrand);
         setSimilarBrandGoods(getWheelsParamsByBrand);
       }
       if (!isMounted && taskProduct[i] === getTyresParamsBySeason 
@@ -361,7 +350,6 @@ const GoodsPage = observer(() => {
           goodsTyre?._product?.params.params,
           goodsTyre?._product?.season.season_ua,
         );
-        //console.log('SIMILAR_GOODS_PARAMS: ', getTyresParamsBySeason);
         setSimilarGoods(getTyresParamsBySeason);
       }
       if (!isMounted && taskProduct[i] === getWheelsParamsBy 
@@ -375,7 +363,6 @@ const GoodsPage = observer(() => {
           goodsWheel?._product?.et.et,
           goodsWheel?._product?.diameter.diameter,
         );
-        //console.log('SIMILAR_GOODS_PARAMS: ', getWheelsParamsBy);
         setSimilarGoods(getWheelsParamsBy);
       }
       if (!isMounted && taskProduct[i] === getAllTyresModelByBrand 
@@ -383,7 +370,6 @@ const GoodsPage = observer(() => {
         const getTyresModelByBrand: any = await taskProduct[i](
           goodsTyre?._product?.id_brand,
         );
-        //console.log('ALL_TYRES_MODEL_BY_BRAND: ', getTyresModelByBrand);
         setAllModelsBrand(getTyresModelByBrand);
       }
       if (!isMounted && taskProduct[i] === getAllWheelsModelByBrand 
@@ -391,7 +377,6 @@ const GoodsPage = observer(() => {
         const getWheelsModelByBrand: any = await taskProduct[i](
           goodsWheel?._product?.id_brand,
         );
-        //console.log('ALL_WHEELS_MODEL_BY_BRAND: ', getWheelsModelByBrand);
         setAllModelsBrand(getWheelsModelByBrand);
       }
       if (!isMounted && taskProduct[i] === getAllTyresParamsByModel 
@@ -399,7 +384,6 @@ const GoodsPage = observer(() => {
         const getTyresParamsByModel: any = await taskProduct[i](
           goodsTyre?._product?.id_model,
         );
-        //console.log('ALL_TYRES_MODEL_PARAMS: ', getTyresParamsByModel);
         setAllParamsModel(getTyresParamsByModel);
       }
       if (!isMounted && taskProduct[i] === getAllTyresDiametersByModel 
@@ -407,7 +391,6 @@ const GoodsPage = observer(() => {
         const getTyresDiametersByModel: any = await taskProduct[i](
           goodsTyre._product.id_model,
         );
-        //console.log('ALL_TYRES_MODEL_PARAMS_DIAMETER: ', getTyresDiametersByModel);
         setAllDiametersModel(getTyresDiametersByModel);
       }
       if (!isMounted && taskProduct[i] === getAllWheelsDiametersByBrand 
@@ -415,7 +398,6 @@ const GoodsPage = observer(() => {
         const getWheelsDiametersByBrand: any = await taskProduct[i](
           goodsWheel?._product?.id_brand,
         );
-        //console.log('ALL_WHEEL_MODEL_PARAMS_DIAMETER: ', getWheelsDiametersByBrand);
         setAllDiametersModel(getWheelsDiametersByBrand);
       }
       const task = taskProduct.shift();
@@ -453,12 +435,11 @@ const GoodsPage = observer(() => {
           const getTyreModelUrl = createStringUrl(
             goodsTyre._product?.tyre_brand?.brand + '-' 
             + goodsTyre._product?.tyre_model?.model);
-          //console.log('PRODUCT_STRING_URL:', getTyreUrl);
-          if (match?.params.goodsItem !== getTyreUrl && 
-            match?.params.goodsItem !== getTyreModelUrl) {
+          if (params.goodsItem !== getTyreUrl && 
+            params.goodsItem !== getTyreModelUrl) {
             history.push(NOT_FOUND_ROUTE);
           }
-          if (match?.params.goodsItem === getTyreModelUrl) {
+          if (params.goodsItem === getTyreModelUrl) {
             setParamsModel(true);
           }
         }
@@ -468,12 +449,11 @@ const GoodsPage = observer(() => {
           const getWheelBrandUrl = createStringUrl(
             goodsWheel._product?.wheel_brand?.brand + '-' 
             + goodsWheel._product?.wheel_model?.model);
-          //console.log('PRODUCT_STRING_URL:', getTyreUrl);
-          if (match?.params.goodsItem !== getWheelUrl && 
-            match?.params.goodsItem !== getWheelBrandUrl) {
+          if (params.goodsItem !== getWheelUrl && 
+            params.goodsItem !== getWheelBrandUrl) {
             history.push(NOT_FOUND_ROUTE);
           }
-          if (match?.params.goodsItem === getWheelBrandUrl) {
+          if (params.goodsItem === getWheelBrandUrl) {
             setParamsModel(true);
           }
         }
@@ -496,16 +476,9 @@ const GoodsPage = observer(() => {
     goodsWheel._product?.wheel_brand?.brand, 
     goodsWheel._product?.wheel_model?.model, 
     history, 
-    match?.params.goodsItem
+    params.goodsItem
   ]) ;
-  //console.log('LOCATION_PATH:', history.location.hash);
-  // const tumbUpAction = () => {
-  //   setThumbUp(!thumbUp);
-  // };
 
-  // const tumbDownAction = () => {
-  //   setThumbDown(!thumbDown);
-  // };  
   const handleChangeTab = (e: any) => {
     setChangeTabGoods(e.target.value);
   }
@@ -537,53 +510,43 @@ const GoodsPage = observer(() => {
     priceStockIndex: number,
     ) => {
     try {
-        setActive(!active);
-        if (!active) {
-            // console.log('ITEM: ', item);
-            // console.log("RATING_ITEM", ratingModel);
-            // console.log("STORAGE_ITEM", storageItem);
-            // console.log("PRICE_STOCK_INDEX", priceStockIndex);
-            const getStorage = await getStorageByIdParam(storageItem);
-            const basket: any = await createBasket({
-                id_customer: customer.customer?.id, 
-                storage: getStorage.storage
-            });
-            // console.log('GET_STORAGE: ', getStorage);
-            
-            // console.log('CREATE_BASKET_ID_BASKET: ', basket?.data);
-            if(basket?.status === 201) {
-                const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
-                const addTobasket: any = await addGoodsToBasket(
-                +item.id,
-                item.id_cat,
-                checkItem?.quantity ? checkItem?.quantity + 4 : 4,
-                item.price[priceStockIndex].price_wholesale,
-                item.price[priceStockIndex]?.price,
-                item.stock[priceStockIndex]?.id_supplier ?? item.price[priceStockIndex].id_supplier,
-                item.stock[priceStockIndex]?.id_storage ?? item.price[priceStockIndex].id_supplier,
-                item.category?.category,
-                basket.data.id_basket,
-                item.full_name,
-                item.season?.season_ua ?? null,
-                ratingModel?.avgRatingModel ?? 0,
-                item.reviews.length,
-                item.diameter.diameter,
-                ); 
-                //console.log('ADD_BASK: ', addTobasket);
-                if (addTobasket?.status === 201) {
-                    const updateBasketStorage = await getBasketById(basket.data.id_basket);
-                    setCheckOrderItem(
-                        [...updateBasketStorage?.basket_storage]
-                    );
-                    page.setBasketCount(
-                        updateBasketStorage?.basket_storage.reduce(
-                            (sum: any, current: any) => (sum + current.quantity),0)
-                    );
-                // console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
-                // console.log('ADD_TO_BASKET: ', addTobasket?.data); 
-                }  
-            }
+      setActive(!active);
+      if (!active) {
+        const getStorage = await getStorageByIdParam(storageItem);
+        const basket: any = await createBasket({
+          id_customer: customer.customer?.id, 
+          storage: getStorage.storage
+        });
+        if(basket?.status === 201) {
+          const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
+          const addTobasket: any = await addGoodsToBasket(
+            +item.id,
+            item.id_cat,
+            checkItem?.quantity ? checkItem?.quantity + 4 : 4,
+            item.price[priceStockIndex].price_wholesale,
+            item.price[priceStockIndex]?.price,
+            item.stock[priceStockIndex]?.id_supplier ?? item.price[priceStockIndex].id_supplier,
+            item.stock[priceStockIndex]?.id_storage ?? item.price[priceStockIndex].id_supplier,
+            item.category?.category,
+            basket.data.id_basket,
+            item.full_name,
+            item.season?.season_ua ?? null,
+            ratingModel?.avgRatingModel ?? 0,
+            item.reviews.length,
+            item.diameter.diameter,
+          ); 
+          if (addTobasket?.status === 201) {
+            const updateBasketStorage = await getBasketById(basket.data.id_basket);
+            setCheckOrderItem(
+              [...updateBasketStorage?.basket_storage]
+            );
+            page.setBasketCount(
+              updateBasketStorage?.basket_storage.reduce(
+                (sum: any, current: any) => (sum + current.quantity),0)
+            );
+          }  
         }
+      }
     } catch (error) {
         console.log('BASKET_ERROR: ',error);
     }
@@ -595,14 +558,14 @@ const GoodsPage = observer(() => {
       <div className='goodsBreadCrumbs'>
       {goodsTyre._product ?
         <BreadCrumbs 
-          route={['/','/tyres', `${createStringUrl(goodsTyre._product.tyre_brand?.brand) ?? ''}`, `${goodsTyre._product.season?.season_ua ? `${createStringUrl(i18n.resolvedLanguage === 'uk' ? goodsTyre._product.season?.season_ua : goodsTyre?._product?.season?.season)}/${createStringUrl(goodsTyre._product.tyre_brand?.brand)}` : ''}`,`${createStringUrl(goodsTyre._product.tyre_brand?.brand) ?? null}-${createStringUrl(goodsTyre._product.tyre_model?.model) ?? null}`,`${createStringUrl(params.season) ?? null}${createStringUrl(params.studded) ?? null}${createStringUrl(i18n.resolvedLanguage === 'uk' ? goodsTyre._product.vehicle_type?.vehicle_type_ua : goodsTyre?._product?.vehicle_type?.vehicle_type) ?? null}${createStringUrl(goodsTyre._product.tyre_brand?.brand) ?? null} ${createStringUrl(goodsTyre._product.width?.width) ?? null}${createStringUrl(goodsTyre._product.height?.height) ?? null}${createStringUrl(goodsTyre._product.diameter?.diameter) ?? null}${createStringUrl(goodsTyre._product.load_index?.load_index) ?? null}${createStringUrl(goodsTyre._product.speed_index?.speed_index) ?? null}${createStringUrl(goodsTyre._product.reinforce?.reinforce) ?? null}${createStringUrl(goodsTyre._product.homologation?.homologation) ?? null}`]} 
+          route={[i18n.resolvedLanguage === 'uk' ? '/' : '/ru' , i18n.resolvedLanguage === 'uk' ? '/tyres' : '/ru/tyres', `${createStringUrl(goodsTyre._product.tyre_brand?.brand) ?? ''}`, `${goodsTyre._product.season?.season_ua ? `${createStringUrl(i18n.resolvedLanguage === 'uk' ? goodsTyre._product.season?.season_ua : goodsTyre?._product?.season?.season)}/${createStringUrl(goodsTyre._product.tyre_brand?.brand)}` : ''}`,`${createStringUrl(goodsTyre._product.tyre_brand?.brand) ?? null}-${createStringUrl(goodsTyre._product.tyre_model?.model) ?? null}`,`${createStringUrl(params.season) ?? null}${createStringUrl(params.studded) ?? null}${createStringUrl(i18n.resolvedLanguage === 'uk' ? goodsTyre._product.vehicle_type?.vehicle_type_ua : goodsTyre?._product?.vehicle_type?.vehicle_type) ?? null}${createStringUrl(goodsTyre._product.tyre_brand?.brand) ?? null} ${createStringUrl(goodsTyre._product.width?.width) ?? null}${createStringUrl(goodsTyre._product.height?.height) ?? null}${createStringUrl(goodsTyre._product.diameter?.diameter) ?? null}${createStringUrl(goodsTyre._product.load_index?.load_index) ?? null}${createStringUrl(goodsTyre._product.speed_index?.speed_index) ?? null}${createStringUrl(goodsTyre._product.reinforce?.reinforce) ?? null}${createStringUrl(goodsTyre._product.homologation?.homologation) ?? null}`]} 
           hrefTitle={[t('goodsPage.bread_crumbs_site'),t('goodsPage.bread_crumbs_tyre'), `${goodsTyre._product.tyre_brand?.brand && !goodsTyre._product.tyre_brand?.brand?.includes(',') ? `${t('goodsPage.bread_crumbs_tyre')} ${goodsTyre._product.tyre_brand?.brand}` : ''}`, goodsTyre._product.tyre_brand?.brand ? `${t('goodsPage.bread_crumbs_tyre')} ${i18n.resolvedLanguage === 'uk' ? goodsTyre._product.season.season_ua : goodsTyre?._product?.season.season} ${goodsTyre._product.tyre_brand.brand}` : '',`${goodsTyre._product.tyre_brand?.brand ?? ''} ${goodsTyre._product.tyre_model?.model ?? ''}`, `${t('goodsPage.bread_crumbs_tyre')} ${goodsTyre._product.vehicle_type?.vehicle_type_ua && !goodsTyre._product.vehicle_type.vehicle_type_ua?.includes(',') ? (i18n.resolvedLanguage === 'uk' ? goodsTyre._product.vehicle_type.vehicle_type_ua : goodsTyre?._product?.vehicle_type.vehicle_type) : ''} ${goodsTyre._product.season?.season_ua && !goodsTyre._product.season.season_ua?.includes(',') ? (i18n.resolvedLanguage === 'uk' ? goodsTyre._product.season.season_ua : goodsTyre?._product?.season.season) : ''} ${goodsTyre._product.studded?.studded && !goodsTyre._product.studded.studded?.includes(',') ? goodsTyre._product.studded.studded : ''} ${goodsTyre._product.tyre_brand?.brand && !goodsTyre._product.tyre_brand.brand?.includes(',') ? goodsTyre._product.tyre_brand.brand : ''}  ${goodsTyre._product.tyre_model?.model && !goodsTyre._product.tyre_model.model?.includes(',') ? goodsTyre._product.tyre_model.model : ''}${goodsTyre._product.width?.width ? goodsTyre._product.width.width : ''} ${goodsTyre._product.height?.height ? '/' + goodsTyre._product.height.height : ''} ${goodsTyre._product.diameter?.diameter ? 'R' + goodsTyre._product.diameter.diameter : '' } ${goodsTyre._product.load_index?.load_index && !goodsTyre._product.load_index.load_index?.includes(',') ? goodsTyre._product.load_index.load_index : ''} ${goodsTyre._product.speed_index?.speed_index && !goodsTyre._product.speed_index.speed_index?.includes(',') ? goodsTyre._product.speed_index.speed_index : ''} ${goodsTyre._product.reinforce?.reinforce && !goodsTyre._product.reinforce.reinforce?.includes(',') ? goodsTyre._product.reinforce.reinforce : ''} ${goodsTyre._product.homologation?.homologation && !goodsTyre._product.homologation.homologation?.includes(',')  ? goodsTyre._product.homologation.homologation : ''}`]}
         />
         : null  
         }
         {goodsWheel._product ?
           <BreadCrumbs 
-            route={['/','/wheels',`${goodsWheel._product.wheel_brand?.brand && !goodsWheel._product.wheel_brand?.brand.includes(',') ?  createStringUrl(goodsWheel._product.wheel_brand?.brand) : null}`,`${createStringUrl(goodsWheel._product.type?.type) ?? null}/${createStringUrl(goodsWheel._product.wheel_brand?.brand) ?? null}`,`${createStringUrl(goodsWheel._product.type?.type) ?? null}${createStringUrl(goodsWheel._product.wheel_brand?.brand) ?? null}${createStringUrl(goodsWheel._product.width?.width) ?? null}${createStringUrl(goodsWheel._product.diameter?.diameter) ?? null}${createStringUrl(goodsWheel._product.bolt_count?.bolt_count) ?? null}${createStringUrl(goodsWheel._product.pcd?.pcd) ?? null}${createStringUrl(goodsWheel._product.et?.et) ?? null}${createStringUrl(goodsWheel._product.dia?.dia) ?? null}`]} 
+            route={[i18n.resolvedLanguage === 'uk' ? '/' : '/ru', i18n.resolvedLanguage === 'uk' ? '/wheels' : '/ru/wheels',`${goodsWheel._product.wheel_brand?.brand && !goodsWheel._product.wheel_brand?.brand.includes(',') ?  createStringUrl(goodsWheel._product.wheel_brand?.brand) : null}`,`${createStringUrl(goodsWheel._product.type?.type) ?? null}/${createStringUrl(goodsWheel._product.wheel_brand?.brand) ?? null}`,`${createStringUrl(goodsWheel._product.type?.type) ?? null}${createStringUrl(goodsWheel._product.wheel_brand?.brand) ?? null}${createStringUrl(goodsWheel._product.width?.width) ?? null}${createStringUrl(goodsWheel._product.diameter?.diameter) ?? null}${createStringUrl(goodsWheel._product.bolt_count?.bolt_count) ?? null}${createStringUrl(goodsWheel._product.pcd?.pcd) ?? null}${createStringUrl(goodsWheel._product.et?.et) ?? null}${createStringUrl(goodsWheel._product.dia?.dia) ?? null}`]} 
             hrefTitle={
               [t('goodsPage.bread_crumbs_site'),t('goodsPage.bread_crumbs_wheel'),  `${goodsWheel._product.wheel_brand?.brand && !goodsWheel._product.wheel_brand?.brand?.includes(',') ? `Диски ${goodsWheel._product.wheel_brand?.brand}` : ''}`, goodsWheel._product.wheel_brand?.brand ? `Диск ${goodsWheel._product.type?.type} ${goodsWheel._product.wheel_brand.brand}` : '',`${goodsWheel._product.wheel_brand?.brand ?? ''} ${goodsWheel._product.wheel_model?.model ?? ''}`, `Диски ${goodsWheel._product.wheel_type?.wheel_type && !goodsWheel._product.wheel_type?.type?.includes(',') ? goodsWheel._product.wheel_type.type : ''} ${goodsWheel._product.wheel_brand?.brand && !goodsWheel._product.wheel_brand.brand?.includes(',') ? goodsWheel._product.wheel_brand.brand : ''}  ${goodsWheel._product.wheel_model?.model && !goodsWheel._product.wheel_model.model?.includes(',') ? goodsWheel._product.wheel_model.model : ''} ${goodsWheel._product.width?.width ? goodsWheel._product.width.width : ''} ${goodsWheel._product.diameter?.diameter ? 'R' + goodsWheel._product.diameter.diameter : '' } ${goodsWheel._product.bolt_count?.bolt_count && !goodsWheel._product.bolt_count.bolt_count?.includes(',') ? goodsWheel._product.bolt_count.bolt_count : ''} ${goodsWheel._product.pcd?.pcd && !goodsWheel._product.pcd.pcd?.includes(',') ? goodsWheel._product.pcd.pcd : ''} ${goodsWheel._product.et?.et && !goodsWheel._product.et.et?.includes(',') ? goodsWheel._product.et.et : ''} ${goodsWheel._product.dia?.dia && !goodsWheel._product.dia.dia?.includes(',')  ? goodsWheel._product.dia.dia : ''}`
             //`${(params.category) ?? null}`

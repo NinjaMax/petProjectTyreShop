@@ -10,7 +10,6 @@
     padding: 20px;
     width: 100%;
 }
-
 .contactPageBox {
     display: flex;
     flex-direction: row;
@@ -18,12 +17,10 @@
     justify-content:space-around;
     flex-wrap: wrap;
     gap: 20px;
-    
-
+}   
 .contactPageTitle {
     font-weight: bold;
 }
-
 .contactPageAddress {
     display: flex;
     flex-direction: column;
@@ -31,8 +28,6 @@
     gap: 8px;
     padding: 8px;
 }
-}
-
 .contactPagePhone {
     display: flex;
     flex-direction: column;
@@ -40,7 +35,6 @@
     gap: 8px;
     padding: 8px;
 }
-
 .contactPageSocial {
     display: flex;
     flex-direction: column;
@@ -48,7 +42,6 @@
     gap: 8px;
     padding: 8px;
 }
-
 .contactPageSchedule {
     display: flex;
     flex-direction: column;
@@ -56,7 +49,6 @@
     gap: 8px;
     padding: 8px;
 }
-
 @media only screen and (max-width: 2560px) {
     .contactPageContainer {
         max-width: 1400px;
@@ -64,31 +56,31 @@
 }
 @media only screen and (max-width: 1440px) {
     .contactPageContainer {
-        max-width: 1000px;
+        max-width: 996px;
     }
 }
 @media only screen and (max-width: 1024px) {
     .contactPageContainer {
-        max-width: 750px;
+        max-width: 728px;
     }
 }
 @media only screen and (max-width: 768px) {
     .contactPageContainer {
-        max-width: 420px;
+        max-width: 385px;
     }
 }
 @media only screen and (max-width: 425px) {
     .contactPageContainer {
-        max-width: 370px;
+        max-width: 335px;
     }
 }
 @media only screen and (max-width: 375px) {
     .contactPageContainer {
-        max-width: 300px;
+        max-width: 280px;
     }
 }
 @media only screen and (max-width: 320px) {
     .contactPageContainer {
-        max-width: 300px;
+        max-width: 280px;
     }
 }

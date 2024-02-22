@@ -43,9 +43,7 @@ const CatalogTyres = observer(() => {
            if (!isMounted && filter.brands && !filter.brands.includes(',')) {
                 try {
                     const getBrandsIdTyre = await getTyresBrandByName(filter.brands);
-                    //console.log('GET_TYRE_BRAND: ', getBrandsIdTyre);
                     const getTyresRatingBrand = await getTyresBrandRatingAvg(getBrandsIdTyre.id_brand);
-                    //console.log('GET_RATING_TYRE_BRAND: ', getTyresRatingBrand);
                     if (getTyresRatingBrand) {
                         setTyreRatingAvr(getTyresRatingBrand);
                     }

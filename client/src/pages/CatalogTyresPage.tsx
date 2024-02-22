@@ -459,7 +459,7 @@ const CatalogTyresPage = observer(() => {
     }
     loadMainFilterTyreTask();
     return () => {
-        isMounted = true;
+      isMounted = true;
     };
   },
   [
@@ -790,7 +790,6 @@ const CatalogTyresPage = observer(() => {
       let i:number = 0;
       while(taskLoad.length > i) {
         if (!isMounted && taskLoad[i] === getWheelsWithCatOffset && location.pathname.includes('wheels')) {
-          //console.time('GET_REQUEST_WHEELS_CATALOG');
           let wheelFilterGoods: any = await taskLoad[i](
             page.limit,
             page.offset,
@@ -808,7 +807,6 @@ const CatalogTyresPage = observer(() => {
             filter.pcd2 ?? '',
             filter.sort,
           );
-          //console.timeEnd('GET_REQUEST_WHEELS_CATALOG');
           page.loadMore > 0 ? goodsWheel?.setWheels(
             [...goodsWheel._wheels, 
               ...wheelFilterGoods] 
@@ -848,7 +846,6 @@ const CatalogTyresPage = observer(() => {
     location.pathname
   ]);
 
-
   useEffect(() =>{
     let isMounted = false;
     const loadPropsWheelTask = async() => {
@@ -859,7 +856,6 @@ const CatalogTyresPage = observer(() => {
       let i:number = 0;
       while(taskLoad.length > i) {
         if (!isMounted && taskLoad[i] === getWheelsWithoutOffset && location.pathname.includes('wheels')) {
-          //console.time('GET_REQUEST_WHEELS_PROPS');
           let wheelFilterGoods: any = await taskLoad[i](
             filter.width ?? '',
             filter.diameter ?? '',
@@ -875,7 +871,6 @@ const CatalogTyresPage = observer(() => {
             filter.pcd2 ?? '',
             filter.sort,
           );
-          //console.timeEnd('GET_REQUEST_WHEELS_PROPS');
           let setWidthFilter:any[] | null  = [];
           let setDiameterFilter:any[] | null  = [];
           let setBrandFilter:any[] | null  = [];
@@ -887,7 +882,6 @@ const CatalogTyresPage = observer(() => {
           let setPcdFilter :any[] | null  = [];
           let setPcd2Filter :any[] | null  = [];
           let setTypeFilter :any[] | null  = [];
-          
           goodsWheel?.setTotalCount(wheelFilterGoods.rows.length);
           wheelFilterGoods.rows.map((item: any) => 
           { return (
@@ -1236,7 +1230,7 @@ const CatalogTyresPage = observer(() => {
       <div className='a'>
         {location.pathname.includes('tyres') ?
           <BreadCrumbs 
-            route={[i18n.resolvedLanguage === 'uk' ? '/' : '/ru','/tyres', `${filter.season && !filter.season?.includes(',') && !filter.brands ? createStringUrl(filter.season):''}`, `${filter.brands && !filter.brands.includes(',') ?  createStringUrl(filter.brands) : ''}`,`${filter.brands && !filter.brands.includes(',') && filter.season ? `${createStringUrl(filter.season)}/${createStringUrl(filter.brands)}`:''}`,`${params.season ?? null}${params.studded ?? null}${params.type ?? null}${params.brands ?? null}${params.width ?? null}${params.height ?? null}${params.diameter ?? null}${params.loadindex ?? null}${params.speedindex ?? null}${params.reinforced ?? null}${params.om ?? null}`]} 
+            route={[i18n.resolvedLanguage === 'uk' ? '/' : '/ru', i18n.resolvedLanguage === 'uk' ? '/tyres': '/ru/tyres', `${filter.season && !filter.season?.includes(',') && !filter.brands ? createStringUrl(filter.season):''}`, `${filter.brands && !filter.brands.includes(',') ?  createStringUrl(filter.brands) : ''}`,`${filter.brands && !filter.brands.includes(',') && filter.season ? `${createStringUrl(filter.season)}/${createStringUrl(filter.brands)}`:''}`,`${params.season ?? null}${params.studded ?? null}${params.type ?? null}${params.brands ?? null}${params.width ?? null}${params.height ?? null}${params.diameter ?? null}${params.loadindex ?? null}${params.speedindex ?? null}${params.reinforced ?? null}${params.om ?? null}`]} 
             hrefTitle={
               [t('catalogPage.bread_crumbs_site'),t('catalogPage.bread_crumbs_tyre'), `${filter.season && !filter.season.includes(',') && !filter.brands ? `${t('catalogPage.bread_crumbs_tyre')} ${filter.season}` : ''}`, filter.brands && !filter.brands.includes(',') ? `${t('catalogPage.bread_crumbs_tyre')} ${filter.brands}` : '', filter.brands && !filter.brands.includes(',') && filter.season ? `${t('catalogPage.bread_crumbs_tyre')} ${filter.season} ${filter.brands}` : '', `${t('catalogPage.bread_crumbs_tyre')} ${filter.vehicle_type && !filter.vehicle_type.includes(',') ? filter.vehicle_type : ''} ${filter.season && !filter.season.includes(',') ? filter.season : ''} ${filter.studded && !filter.studded.includes(',') ? filter.studded : ''} ${filter.brands && !filter.brands.includes(',') ? filter.brands : ''} ${filter.width ? filter.width : ''} ${filter.height ? '/' + filter.height : ''} ${filter.diameter ? 'R' + filter.diameter : '' } ${filter.load_index && !filter.load_index.includes(',') ? filter.load_index : ''} ${filter.speed_index && !filter.speed_index.includes(',') ? filter.speed_index : ''} ${filter.reinforced && !filter.reinforced.includes(',') ? filter.reinforced : ''} ${filter.homologation && !filter.homologation.includes(',')  ? filter.homologation : ''}`
           ]}
@@ -1245,7 +1239,7 @@ const CatalogTyresPage = observer(() => {
         }
         {location.pathname.includes('wheels') ?
           <BreadCrumbs 
-            route={[i18n.resolvedLanguage === 'uk' ? '/' : '/ru','/wheels',`${params.type ?? null}`,`${filter.brands && !filter.brands.includes(',') ?  createStringUrl(filter.brands) : null}`,`${params.type ?? null}${params.brands ?? null}${params.width ?? null}${params.diameter ?? null}${params.boltcount ?? null}${params.pcd ?? null}${params.et ?? null}${params.dia ?? null}`]} 
+            route={[i18n.resolvedLanguage === 'uk' ? '/' : '/ru', i18n.resolvedLanguage === 'uk' ? '/wheels' : '/ru/wheels',`${params.type ?? null}`,`${filter.brands && !filter.brands.includes(',') ?  createStringUrl(filter.brands) : null}`,`${params.type ?? null}${params.brands ?? null}${params.width ?? null}${params.diameter ?? null}${params.boltcount ?? null}${params.pcd ?? null}${params.et ?? null}${params.dia ?? null}`]} 
             hrefTitle={
               [t('catalogPage.bread_crumbs_site'),t('catalogPage.bread_crumbs_wheel'), filter.type && !filter.type.includes(',') ? `${filter.type}` : '', filter.brands && !filter.brands.includes(',') ? `${filter.type} ${filter.brands}` : '', `Диски ${filter.type.includes(',') ? filter.type : ''} ${filter.brands && !filter.brands.includes(',') ? filter.brands : ''} ${filter.width ? 'W' + filter.width : ''} ${filter.diameter ? 'R' + filter.diameter : '' } ${filter.bolt_count && !filter.bolt_count.includes(',') ? filter.bolt_count : ''} ${filter.pcd && !filter.pcd.includes(',') ? 'PCD' + filter.pcd : ''} ${filter.et && !filter.et.includes(',') ? 'ET' + filter.et : ''} ${filter.dia && !filter.dia.includes(',') ? 'DIA' + filter.dia : ''}`
           ]}

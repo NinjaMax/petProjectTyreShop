@@ -144,8 +144,18 @@
     "filter_btn_name" : "ПОДОБРАТЬ"
   },
   "filterCatalogWheel" : {
-    "filter_boltCount_title" : "Кол-во болтов",
+    "count_title" : "Количество",
+    "filter_title" : "Фильтр Дисков",
     "filter_diameter_title" : "Диаметр",
+    "filter_show_btn" : "Показать",
+    "filter_wheel_type" : "Тип диска", 
+    "filter_bolt_count_title" : "Количество болтов", 
+    "filter_color" :  "Цвет",
+    "filter_dia" : "Диаметр ступицы DIA",
+    "filter_et" :  "Вылет ET",
+    "filter_pcd" : "Межболтовое расстояние",
+    "filter_pcd2" : "Доп-е межболтовое PCD2",
+    "filter_boltCount_pcd" : "Болты и расстояние",
     "filter_btn_name" : "ПОДОБРАТЬ"
   },
   "reviewStore" : {

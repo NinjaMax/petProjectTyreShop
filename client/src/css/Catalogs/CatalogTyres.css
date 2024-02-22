@@ -1,17 +1,14 @@
 .catalogTyres {
   font-family: var(--main-font-family);
 }
-
 h1 {
   font-size: 50px;
   font-family: var(--main-font-family);
   word-break: break-all;
 }
-
 h2 {
   margin-left: 8px;
 }
-
 .rowCatalogTyres {
   display: flex;
   flex-direction:row;
@@ -19,8 +16,6 @@ h2 {
   align-items: center;
   flex-wrap: wrap;
 }
-
-/* Style the buttons */
 .btnCatalog {
   border: none;
   outline: none;
@@ -28,39 +23,29 @@ h2 {
   background-color: white;
   cursor: pointer;
 }
-
-/* Add a grey background color on mouse-over */
 .btnCatalog:hover {
   background-color: #ddd;
 }
-
-/* Add a dark background color to the active button */
 .btnCatalog.active {
   background-color: #666;
   color: white;
 }
-
 .btnContainerCatalogTyres {
   display: flex;
   justify-content: space-around;
   align-items:baseline;
   gap: 3px;
 }
-
 .popularCatalogTyre {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-    /*justify-content:center;*/
-    /*align-items:flex-start;*/
   margin: 3px;
   width: 100%;
 }
-
 .popularCatalogTyre .span {
   width: fit-content;
 }
-
 .sortBtnCatalog {
   display: flex;
   flex-direction: row;
@@ -70,7 +55,6 @@ h2 {
   gap: 5px;
   font-family: var(--main-font-family);
 }
-
 .pagePagCatalog {
   display: flex;
   flex-direction: column;
@@ -122,7 +106,6 @@ h2 {
     max-height: 500px;
   }
 }
-
 @media only screen and (max-width: 380px) {
   .popularCatalogTyre {
     max-width: 375px;
@@ -136,7 +119,6 @@ h2 {
     max-height: 500px;
   }
 }
-
 @media only screen and (max-width: 375px) {
   .popularCatalogTyre {
     max-width: 320px;
@@ -149,7 +131,6 @@ h2 {
     max-height: 500px;
   }
 }
-
 @media only screen and (max-width: 320px) {
   .popularCatalogTyre {
     max-width: 300px;

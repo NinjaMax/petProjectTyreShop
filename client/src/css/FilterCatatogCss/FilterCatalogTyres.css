@@ -3,9 +3,7 @@
     flex-direction: column;
     align-items: center;
     gap: 3px;
-    /* border: 2px solid palevioletred; */
 }
-
 .filterCatalogTyresHeader {
     display: flex;
     width: 250px; 
@@ -14,11 +12,9 @@
     align-items:center;
     justify-content: space-around;
     background-color: #ffff;
-    position: sticky;
     top:0px;
     padding: 5px;
 }
-
 .filterTyresOption {
     position: relative;
     display: flex;
@@ -28,7 +24,6 @@
     gap:2px;
     font-family: var(--main-font-family);
 }
-
 .checkBoxBtnOn {
     position: absolute;
     cursor: pointer;
@@ -80,53 +75,49 @@
 .boltCount {
     top: 76%;
 }
-/* @media only screen and (max-width: 2560px) { 
-    .checkBoxBtnOn {
-        position: sticky;
-        top: 95%;
-        z-index: 9999;
-    }
-}
-@media only screen and (max-width: 1440px) { 
-    .checkBoxBtnOn {
-        position: sticky;
-        top: 95%;
-        z-index: 9999;
-    }
-}
 @media only screen and (max-width: 1024px) { 
-    .checkBoxBtnOn {
+    .filterCatalogTyresHeader {
         position: sticky;
-        top: 95%;
-        z-index: 9999;
-    }
-} */
-@media only screen and (max-width: 768px) { 
-    .checkBoxBtnOn {
-        position: sticky;
-        top: 95%;
         z-index: 9999;
     }
 }
+@media only screen and (max-width: 768px) { 
+    .filterCatalogTyresHeader {
+        position: sticky;
+        z-index: 9999;
+    }
+} 
 @media only screen and (max-width: 425px) { 
-    .checkBoxBtnOn {
+    .checkBoxBtnOn  {
         position: sticky;
         top: 90%;
         right: 0px;
         z-index: 9999;
     }
+    .filterCatalogTyresHeader {
+        position: sticky;
+        z-index: 9999;
+    }
 }
 @media only screen and (max-width: 375px) { 
-    .checkBoxBtnOn {
+    .checkBoxBtnOn .filterCatalogTyresHeader {
         position: sticky;
         top: 95%;
         z-index: 9999;
     }
+    .filterCatalogTyresHeader {
+        position: sticky;
+        z-index: 9999;
+    }
 }
 @media only screen and (max-width: 320px) { 
-    .checkBoxBtnOn {
+    .checkBoxBtnOn .filterCatalogTyresHeader .filterCatalogTyresHeader {
         position: sticky;
         top: 95%;
+        z-index: 9999;
+    }
+    .filterCatalogTyresHeader {
+        position: sticky;
         z-index: 9999;
     }
 }

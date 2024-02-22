@@ -2,7 +2,7 @@ import React, { Suspense, lazy, useContext, useEffect, useState } from 'react';
 import '../css/Pages/DeliveryGoodsPage.css';
 import { useLocation, useParams } from 'react-router-dom';
 import { Context } from '../context/Context';
-import { createStringUrl, createUaStringFromUrl } from '../services/stringUrl';
+import { createStringUrl } from '../services/stringUrl';
 import { DELIVERY_GOODS_ROUTE } from '../utils/consts';
 import { getTyresOffsetMain, getTyresReviewLimit, getTyresWithCatOffset, getTyresWithoutOffset, getTyresWithoutOffsetProps } from '../restAPI/restGoodsApi';
 import { getCityInRegionNovaPoshta, getWareHousesNovaPoshta } from '../restAPI/restNovaPoshtaAPI';
@@ -59,10 +59,7 @@ const DeliveryGoodsPage = () => {
     const loadUrl = async() => {
       const getRegionItem = localStorage.getItem('regionData')?.split(',');
       const getUrlArr = params.region.split('-');
-      const createUaString = createUaStringFromUrl(params.region)
-      console.log('STRING_UA: ', createUaString);
       if (!isMounted && !getRegionItem) {
-        //const getCyrillicFromUrl = langState === 'uk' ? createUaStringFromUrl(params.region.toUpperCase().slice(0,1) + params.region.slice(1, params.region.length)).split(' ') : createRuStringFromUrl(params.region.toUpperCase().slice(0,1) + params.region.slice(1, params.region.length)).split(' ')
         const getRegionUaData = regionDataUa(getUrlArr[1]);
         const getRegionRuData = regionDataRu(getUrlArr[1]);
         if (getRegionUaData && langState === 'uk') {
@@ -83,7 +80,6 @@ const DeliveryGoodsPage = () => {
     let isMounted = false;
     const loadCatalogTyre = async() => {
       if (!isMounted) {
-        console.time('GET_REQUEST_TYRE_CATALOG');
         let tyreFilterGoodsId: any = await getTyresWithCatOffset(
             page.limit,
             page.offset,
@@ -102,10 +98,7 @@ const DeliveryGoodsPage = () => {
             filter.reinforced ?? '',
             filter.sort,
           );
-        //console.log('CAT_TYRE: ', tyreFilterGoodsId)
         goodsTyre?.setTotalCount(tyreFilterGoodsId.count);
-        //goodsTyre?.setTyres(tyreFilterGoodsId.rows);
-        console.timeEnd('GET_REQUEST_TYRE_CATALOG');
         page.loadMore > 0  ? goodsTyre?.setTyres(
           [...goodsTyre._tyres, 
             ...tyreFilterGoodsId.rows] 
@@ -145,7 +138,6 @@ const DeliveryGoodsPage = () => {
     let isMounted = false;
     const loadMainFilterTyreTask = async () => {
       if(!isMounted) {
-        console.time('GET_REQUEST_TYRE_FROM_DATA_BASE');
         let tyreFilterGoods: any = await getTyresOffsetMain(
             filter.width,
             filter.height,
@@ -154,8 +146,6 @@ const DeliveryGoodsPage = () => {
             filter.brands,
             'ASC',
           );
-          console.timeEnd('GET_REQUEST_TYRE_FROM_DATA_BASE');
-
           let setWidthFilter:any[] | null = [];
           let setHightFilter:any[] | null = [];
           let setDiameterFilter:any[] | null = [];
@@ -382,12 +372,10 @@ const DeliveryGoodsPage = () => {
     langState
   ]);
 
-
   useEffect(() =>{
     let isMounted = false;
     const loadPropsTyreTask = async() => {
         if(!isMounted) {
-          console.time('GET_REQUEST_TYRE_PROPS')
           let tyreFilterGoods: any = await getTyresWithoutOffset(
             filter.price ?? '',
             filter.vehicle_type ?? '',
@@ -395,11 +383,9 @@ const DeliveryGoodsPage = () => {
             filter.load_index ?? '',
             'ASC',
           );
-          console.timeEnd('GET_REQUEST_TYRE_PROPS')
           let setVehicleTypeFilter: any[] | null  = [];
           let setSpeedIndexFilter: any[] | null  = [];
           let setLoadIndexFilter: any[] | null  = [];
-
           tyreFilterGoods.rows.map((item: any) => 
           { return (
             setVehicleTypeFilter?.push(langState === 'uk' ? item.vehicle_type.vehicle_type_ua : item.vehicle_type.vehicle_type),
@@ -448,7 +434,6 @@ const DeliveryGoodsPage = () => {
           setSpeedIndexFilter = null;
           setLoadIndexFilter = null;
         }
-      //}
       for (let key in params) {
         if (params[key] && !filter.season && filter.chipSeason.length === 0 ) {
           const tyreCatSeason = tyreSeasonCat(params[key]);
@@ -587,7 +572,6 @@ const DeliveryGoodsPage = () => {
     let isMounted = false;
     const loadPropsTyreHeightTask = async() => {
         if(!isMounted) {
-          console.time('GET_REQUEST_TYRE_PROPS')
           let tyreHeightFilterGoods: any = await getTyresWithoutOffsetProps(
             filter.studded ?? '',
             filter.run_flat ?? '',
@@ -595,12 +579,10 @@ const DeliveryGoodsPage = () => {
             filter.reinforced ?? '',
             'ASC',
           );
-          console.timeEnd('GET_REQUEST_TYRE_PROPS')
           let setHomologationFilter: any[] | null  = [];
           let setReinforcedFilter: any[] | null  = [];
           let setRunFlatFilter: any[] | null  = [];
           let setStuddedFilter: any[] | null  = [];
-          
           tyreHeightFilterGoods.rows.map((item: any) => 
           { return (
             setHomologationFilter?.push(item.homologation.homologation),
@@ -708,7 +690,6 @@ const DeliveryGoodsPage = () => {
             let getRegionCity: any = await getCityInRegionNovaPoshta(novaPoshtaRegion, 1);
             regionCityList.push(...getRegionCity.data);
           }
-          //console.log('REGION_CITY_LIST: ', regionCityList)
           if (langState === 'uk') {
             for (let index = 0; index < regionCityList.length; index++) {
               let getCityWareHouse = await getWareHousesNovaPoshta(
@@ -716,7 +697,6 @@ const DeliveryGoodsPage = () => {
                 MainDescription: regionCityList[index].Description,
                 DeliveryCity :''
               });
-              //console.log('WAREHOUSE_NP__LIST: ', getCityWareHouse)
               if (getCityWareHouse.info.totalCount !== 0 && getCityWareHouse.data.length !== 0 &&
                 getCityWareHouse.data[0].SettlementAreaDescription === regionData![1] &&
                 getCityWareHouse.data[0].SettlementRef === regionCityList[index].Ref
@@ -731,7 +711,6 @@ const DeliveryGoodsPage = () => {
                 }
               }
             };
-            //console.log('REGION_FILTERED_NP__LIST: ', regionFilteredCityList)
             const getCityMarkerData = regionFilteredCityList.find((item: any) => createStringUrl(item.Description.toLowerCase()) === getUrlArr[0]);
             setCityRegion(getCityMarkerData.Description);
             setCityCenterRegion(getCityMarkerData.Description);
@@ -746,7 +725,6 @@ const DeliveryGoodsPage = () => {
                 MainDescription: regionCityList[index].DescriptionRu,
                 DeliveryCity :''
               });
-              //console.log('WAREHOUSE_NP__LIST: ', getCityWareHouse)
               if (getCityWareHouse.info.totalCount !== 0 && getCityWareHouse.data.length !== 0 &&
                 getCityWareHouse.data[0].SettlementAreaDescription === regionData![1] &&
                 getCityWareHouse.data[0].SettlementRef === regionCityList[index].Ref
@@ -761,9 +739,7 @@ const DeliveryGoodsPage = () => {
                 }
               }
             };
-            //console.log('REGION_FILTERED_NP__LIST: ', regionFilteredCityList)
             const getCityMarkerData = regionFilteredCityList.find((item: any) => createStringUrl(item.DescriptionRu.toLowerCase()) === getUrlArr[0]);
-            //console.log('CITY_MARKET_DATA: ', getCityMarkerData);
             setCityRegion(getCityMarkerData.DescriptionRu);
             setCityCenterRegion(getCityMarkerData.DescriptionRu);
             setCityMarkerData(getCityMarkerData);
@@ -780,14 +756,12 @@ const DeliveryGoodsPage = () => {
       if (!isMounted && deliveryRegion && regionData) {
         try {
           let getCountRegionCityD: any = await getCityInRegionDelivery(deliveryRegion);
-          //console.log('DELIVERY_CITY_LIST: ', getCountRegionCityD)
           if (getCountRegionCityD.status === true) {
             let cityPresent = getCountRegionCityD.data.find((item: any) => item.name === regionData![0]);
             if (cityPresent) {
               let getCityWareHouseDel = await getWareHousesDelivery(
                 cityPresent.id
               );
-              //console.log('DELIVERY_CITYWAREHOSE_LIST: ', getCityWareHouseDel.data)
               setDeliveryWareHouseList(getCityWareHouseDel.data);
             }
           };        
@@ -883,7 +857,7 @@ const DeliveryGoodsPage = () => {
       <Suspense fallback={<SpinnerCarRot/>}>
       <div className='aDev'>
         <BreadCrumbs 
-          route={['/','/delivery-pay', '/delivery']} 
+          route={[i18n.resolvedLanguage === 'uk' ? '/' : '/ru','/delivery-pay', '/delivery']} 
           hrefTitle={['Інтернет-магазин SkyParts','Доставка оплата', `Доставка шин в ${cityRegion ?? ''}`]}
         /> 
       </div>

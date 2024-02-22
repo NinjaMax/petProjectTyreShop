@@ -78,7 +78,7 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
         } else {
             localStorage.setItem('you_watched', JSON.stringify(goods?.id,));
         }
-        history.push(
+        history.push(i18n.resolvedLanguage === 'uk' ? MAIN_ROUTE + `${toStringUrl}` : '/ru' +
             MAIN_ROUTE + `${toStringUrl}`
         );
     };
@@ -92,7 +92,7 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                 <a id={goods?.id + '_good'}
                     className='cardLinkProduct'
                     onClick={addGoodsId} 
-                    href={i18n.resolvedLanguage === 'uk' ?  '/' : '/ru/' + createStringUrl(goods?.full_name)}
+                    href={i18n.resolvedLanguage === 'uk' ?  createStringUrl(goods?.full_name) : '/ru/' + createStringUrl(goods?.full_name)}
                 >
                 <img id='imgTyres' 
                     src={'/tyre/autotyrespilotspotps2.webp'} 
@@ -116,7 +116,7 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                 <a id={goods?.id + '_product'}
                     className='cardLinkProduct'
                     onClick={addGoodsId} 
-                    href={i18n.resolvedLanguage === 'uk' ? '/' : '/ru/' + createStringUrl(goods?.full_name)}
+                    href={i18n.resolvedLanguage === 'uk' ? createStringUrl(goods?.full_name) : '/ru/' + createStringUrl(goods?.full_name)}
                 >
                     <img 
                         id='imgTyres' 
@@ -142,7 +142,7 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
                 <a id={goods?.id + '_product'}
                     className='cardLinkProduct'
                     onClick={addGoodsId} 
-                    href={'/' + createStringUrl(goods?.full_name)}
+                    href={i18n.resolvedLanguage === 'uk' ? '/' + createStringUrl(goods?.full_name) : '/ru/' + createStringUrl(goods?.full_name)}
                 >
                 {typeCard === 'tyre' ?
                     goods?.full_name

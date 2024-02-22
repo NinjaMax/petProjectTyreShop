@@ -6,39 +6,31 @@
     text-align: center;
     overflow:hidden;
     padding: 5px;
-    /* padding: 1em; */
     pointer-events: all;
     border-radius: 8px;
-
 }
-
  #imgTyres {
     width: 200px;
     height: 200px;
 }
-
 .tyresCardLinkName {
     height: 80px;
 }
-
 .tyresCard:hover {
     box-shadow: 0 0px 16px 0 rgba(0,0,0,0.2);
-    
 }
-
 .tyresCard:hover .optionsTyreBox {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     display:flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 1em;
+    padding: 5px;
     width: 300px;
     margin-left: -16px;
     border-radius:0px 0px 8px 8px;
     position:absolute;
     background-color:#fff;
 }
-
 .tyresCardPrice {
     display: flex;
     flex-direction: row;
@@ -50,7 +42,6 @@
     font-weight: bolder;
     text-align: center;
 }
-
 .tyresCardOldPrice {
     color: #444B54;
     font-family: var(--main-font-family);
@@ -60,24 +51,19 @@
     text-decoration: line-through;
     text-decoration-color: red;
 }
-
 .tyresCard .cardLinkProduct {
     text-decoration: none;
     font-size: 18px;
     font-family: var(--main-font-family);
     color: black;
 }
-
 .tyresCard .cardLinkProduct:hover {
     opacity: 0.7;
-   
 }
-
 .tyresCardCountry {
     display: inline;
     text-align: center;
 }
-
 .tyresCardBonus {
     font-family: var(--main-font-family);
     display: flex;
@@ -100,16 +86,13 @@
     justify-content: center;
     align-items:center;
     gap:5px;
-    
 }
 .ratingTyres .reviewCard {
     font-size: 15px;
     font-family: var(--main-font-family);
     color:#444;
     cursor: pointer;
-
 }
-
 .tyresCardCode {
     text-align: center;
     font-family: var(--main-font-family);

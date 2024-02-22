@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../css/FilterCatatogCss/PriceRange.css';
 import ButtonAction from '../buttons/ButtonAction';
+import { useTranslation } from 'react-i18next';
 
 interface IPriceRange {
     filterAction?(arg0: any): void;
@@ -9,16 +10,16 @@ interface IPriceRange {
 
 const PriceRange = (
     {filterAction, filterActionShown}: IPriceRange) => {
-
+    const { i18n } = useTranslation();
+    
     return (
         <div className='containerPriceRangeBox'>
-            <div> Ціновий діапазон:</div>
+            <div>{i18n.resolvedLanguage === 'uk' ? 'Ціновий діапазон:' : 'Ценовой диапазон:'}</div>
             <div className='priceRangeBox'>
                 <input 
                     type="number" 
                     name='vid'
                     placeholder='від 1000'
-                    //defaultValue={0}
                     onChange={filterAction}
                 />
                 <input 
@@ -30,7 +31,7 @@ const PriceRange = (
             </div>
             <div className='btnPriceRange'>
                 <ButtonAction 
-                    props={"Показати"} 
+                    props={i18n.resolvedLanguage === 'uk' ? "Показати" : "Показать"} 
                     widthBtn={190} 
                     eventItem={filterActionShown}
                     />    

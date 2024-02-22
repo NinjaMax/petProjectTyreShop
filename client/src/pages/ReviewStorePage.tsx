@@ -17,7 +17,7 @@ const ReviewStorePage = () => {
   const [activeStore, setActiveStore] = useState<boolean>(false);
   const [dataReviewStore, setDataReviewStore] = useState<{} | null>(null);
   const [dataStoreList, setDataStoreList] = useState<any[] | null>(null);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     let isMounted = false;
@@ -78,7 +78,7 @@ const ReviewStorePage = () => {
   return (
     <div className='reviewStorePage'>
       <Suspense fallback={<span>....</span>}>
-      <BreadCrumbs route={['/','/tyres']} hrefTitle={['Home','Tyres']}/>
+      <BreadCrumbs route={[i18n.resolvedLanguage === 'uk' ? '/' : '/ru','/reviews']} hrefTitle={[t('catalogPage.bread_crumbs_site'),'']}/>
       <div className='reviewStorePageContainer'>
         <div className='reviewStorePageTitle' >
           <span>{t('reviewStorePage.reviewStoreClient')}</span>

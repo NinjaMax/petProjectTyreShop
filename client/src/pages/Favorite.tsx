@@ -97,16 +97,11 @@ const Favorite = () => {
     try {
         setActive(!active);
         if (!active) {
-            // console.log("STORAGE_ITEM", storageItem);
-            // console.log("PRICE_STOCK_ITEM", priceStockIndex);
             const getStorage = await getStorageByIdParam(storageItem);
             const basket: any = await createBasket({
                 id_customer: customer.customer?.id, 
                 storage: getStorage.storage
             });
-            // console.log('GET_STORAGE: ', getStorage);
-            // console.log('ITEM: ', item);
-            // console.log('CREATE_BASKET_ID_BASKET: ', basket?.data);
             if(basket?.status === 201) {
                 const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
                 const addTobasket: any = await addGoodsToBasket(
@@ -125,7 +120,6 @@ const Favorite = () => {
                 item.reviews.length,
                 item.diameter.diameter,
                 ); 
-                //console.log('ADD_BASK: ', addTobasket);
                 if (addTobasket?.status === 201) {
                     const updateBasketStorage = await getBasketById(basket.data.id_basket);
                     setCheckOrderItem(
@@ -135,8 +129,6 @@ const Favorite = () => {
                         updateBasketStorage?.basket_storage.reduce(
                             (sum: any, current: any) => (sum + current.quantity),0)
                     );
-                // console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
-                // console.log('ADD_TO_BASKET: ', addTobasket?.data); 
                 }  
             }
         }

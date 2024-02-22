@@ -18,8 +18,7 @@ import CheckOrder from '../modal/CheckOrder';
 import { ICheckOrderItem } from '../catalogs/types/CheckOrder.type';
 import { createStringUrl } from '../../services/stringUrl';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
-import { MAIN_ROUTE } from '../../utils/consts';
+import { useLocation } from 'react-router-dom';
 
 const AllAboutProduct = observer(({
     goods, 
@@ -93,7 +92,6 @@ const AllAboutProduct = observer(({
                     id_customer: customer.customer?.id, 
                     storage: getStorageProd.storage
                 });
-                //console.log('CREATE_BASKET_ID_BASKET: ', basket.data.id_basket);
                 if(basket?.status === 201) {
                     const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
                     const addTobasket: any = await addGoodsToBasket(
@@ -112,7 +110,6 @@ const AllAboutProduct = observer(({
                     item.reviews.length,
                     item.diameter.diameter,
                     ); 
-                    //console.log('ADD_BASK: ', addTobasket);
                     if (addTobasket?.status === 201) {
                         const updateBasketStorage = await getBasketById(basket.data.id_basket);
                         setCheckOrderItem(
@@ -122,8 +119,6 @@ const AllAboutProduct = observer(({
                             updateBasketStorage?.basket_storage.reduce(
                                 (sum: any, current: any) => (sum + current.quantity),0)
                         );
-                    //console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
-                    //console.log('ADD_TO_BASKET: ', addTobasket?.data); 
                     }  
                 }
             }
@@ -131,7 +126,6 @@ const AllAboutProduct = observer(({
             console.log('BASKET_ERROR: ',error);
         }
     }
-    console.log('HISTORY: ', window.location)
 
     return (
         <div className='allAboutProduct'>
@@ -141,8 +135,8 @@ const AllAboutProduct = observer(({
                     src={'/tyre/autotyrespilotspotps2.webp'} 
                     width={400}
                     height={400}
-                    loading='lazy'
-                    decoding='async'
+                    //loading='lazy'
+                    //decoding='async'
                     alt='productImg'
                 />   
             </div>
@@ -222,8 +216,8 @@ const AllAboutProduct = observer(({
                         type={goods?.vehicle_type}
                         season={goods?.season}
                     />
-                    <a href={`/tyres/${createStringUrl(i18n.resolvedLanguage === 'uk' ? goods?.vehicle_type?.vehicle_type_ua : goods?.vehicle_type?.vehicle_type)}`}>{i18n.resolvedLanguage === 'uk' ? goods?.vehicle_type?.vehicle_type_ua : goods?.vehicle_type?.vehicle_type}</a>
-                    <a href={`/tyres/${createStringUrl(i18n.resolvedLanguage === 'uk' ? goods?.season?.season_ua : goods?.season?.season)}`}>{i18n.resolvedLanguage === 'uk' ? goods?.season?.season_ua : goods?.season?.season}</a>
+                    <a href={`${i18n.resolvedLanguage === 'uk' ? /tyres/ : '/ru/tyres/'}${createStringUrl(i18n.resolvedLanguage === 'uk' ? goods?.vehicle_type?.vehicle_type_ua : goods?.vehicle_type?.vehicle_type)}`}>{i18n.resolvedLanguage === 'uk' ? goods?.vehicle_type?.vehicle_type_ua : goods?.vehicle_type?.vehicle_type}</a>
+                    <a href={`${i18n.resolvedLanguage === 'uk' ? /tyres/ : '/ru/tyres/'}${createStringUrl(i18n.resolvedLanguage === 'uk' ? goods?.season?.season_ua : goods?.season?.season)}`}>{i18n.resolvedLanguage === 'uk' ? goods?.season?.season_ua : goods?.season?.season}</a>
                     </>
                     :
                     <img src='/iconsSeasons/noSeason.webp' alt='noProd'/>
@@ -293,11 +287,11 @@ const AllAboutProduct = observer(({
                 </>
                 : 
                 <>
-                <a href={'/tyres/' + createStringUrl(goods?.tyre_brand?.brand)}>
+                <a href={`${i18n.resolvedLanguage === 'uk' ? /tyres/ : '/ru/tyres/'}` + createStringUrl(goods?.tyre_brand?.brand)}>
                     {t('goodsAboutProd.all_tyres')} { goods?.tyre_brand?.brand}
                 </a>
-                <a href={`/tyres/${createStringUrl(goods?.season?.season_ua)}/${createStringUrl(goods?.tyre_brand?.brand)}`}>
-                    Вся {goods?.season?.season_ua} шина { goods?.tyre_brand?.brand}
+                <a href={`${i18n.resolvedLanguage === 'uk' ? /tyres/ : '/ru/tyres/'}${createStringUrl(goods?.season?.season_ua)}/${createStringUrl(goods?.tyre_brand?.brand)}`}>
+                    Вся {i18n.resolvedLanguage === 'uk' ? goods?.season?.season_ua : goods?.season?.season} шина { goods?.tyre_brand?.brand}
                 </a>
                 </>
                 }
@@ -350,14 +344,12 @@ const AllAboutProduct = observer(({
                 {paramsModel && paramsModelPrice && paramsModelPrice[0]?.tyres && goods?.price[0].price ? 
                     <span>{t('goodsAboutProd.from') + 
                     paramsModelPrice[0]?.tyres[0]?.price[0]?.price
-                    //paramsModelPrice[0]?.wheels[0]?.price[0]?.price 
                     } 
                     &#8372;
                     </span>
                     : 
                     paramsModelPrice && paramsModelPrice[0]?.wheels ?
                     <span>{t('goodsAboutProd.from') + 
-                    //paramsModelPrice[0]?.tyres[0]?.price[0]?.price ??
                     paramsModelPrice[0]?.wheels[0]?.price[0]?.price 
                     } 
                     &#8372;
@@ -489,8 +481,8 @@ const AllAboutProduct = observer(({
             <div className='productRightgBox'>
                 {goods?.tyre_brand ?
                   <TyreMarking
-                    brand={goods?.tyre_brand?.brand}
-                    param={goods?.params?.params}
+                    brand={paramsModel ? goods?.tyre_brand?.brand + ' ' + goods?.tyre_model?.model :  goods?.tyre_brand?.brand}
+                    param={!paramsModel ? goods?.params?.params : ''}
                 />  
                 : null
                 }
