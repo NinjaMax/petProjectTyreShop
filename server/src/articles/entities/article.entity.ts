@@ -21,5 +21,8 @@ export class Article extends Model<Article, ArticlesConfigAttr> {
   link: string;
 
   @Column({ type: DataType.STRING, unique: false, allowNull: true })
+  lang: string;
+
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
   articles_pictures: string;
 }

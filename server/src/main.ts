@@ -1,5 +1,4 @@
 import { NestFactory } from '@nestjs/core';
-//import { Logger } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { ConfigService } from './config/config.service';
 import * as fs from 'fs';
@@ -8,6 +7,7 @@ import { join } from 'path';
 import session from 'express-session';
 import RedisStore from 'connect-redis';
 import { createClient } from 'redis';
+import csurf from 'csurf';
 
 async function bootstrap() {
   try {
@@ -46,22 +46,11 @@ async function bootstrap() {
       }),
     );
     app.enableCors({
-      origin: [
-        'https://localhost:3000',
-        // 'https://localhost:3000/',
-        // 'https://localhost:3000/admin/auth',
-        // 'https://localhost:3000/admin',
-        // 'https://localhost:4000',
-        //configService.get('CORS');
-      ],
+      origin: ['https://localhost:3000'],
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
       credentials: true, // need to change false
-      // allowedHeaders: [
-      //   'Accept',
-      //   'Content-Type',
-      //   'Authorization',
-      // ]
     });
+    app.use(csurf());
     const PORT: number = +configService.get('PORT' || '5000');
     await app.listen(PORT, () => console.log(`Server Start on ${PORT}`));
   } catch (error) {
@@ -69,3 +58,4 @@ async function bootstrap() {
   }
 }
 bootstrap();
+

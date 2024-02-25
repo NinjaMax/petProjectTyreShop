@@ -16,6 +16,7 @@ const stylesHandler = isProduction ? MiniCssExtractPlugin.loader : 'style-loader
 
 const config = {
     entry: './src/index.tsx',
+    //entry: path.resolve(__dirname, 'src', 'index.tsx'),
     devtool: 'inline-source-map',
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -118,7 +119,14 @@ const config = {
         mergeDuplicateChunks: true,
         removeEmptyChunks: true,
         splitChunks: {
-            chunks: 'all',
+            //chunks: 'all',
+            cacheGroups: {
+                vendor: {
+                  test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+                  name: 'vendor',
+                  chunks: 'all',
+                },
+            },
         },
         minimizer: [
             new TerserPlugin(),

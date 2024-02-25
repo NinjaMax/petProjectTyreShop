@@ -1,4 +1,4 @@
-import { CacheStore, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { TyresModule } from './tyres/tyres.module';
 import { SuppliersModule } from './suppliers/suppliers.module';
@@ -223,7 +223,7 @@ import { SmsFlyApiModule } from './sms-fly-api/sms-fly-api.module';
       inject: [ConfigService],
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '..', '/client/dist'),
+      rootPath: join(__dirname, '..', '..', '/client/public'),
     }),
     TyresModule,
     WheelsModule,

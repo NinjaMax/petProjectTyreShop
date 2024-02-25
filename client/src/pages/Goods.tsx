@@ -112,31 +112,21 @@ const GoodsPage = observer(() => {
       const getGoodsId: string = 
       JSON.parse(localStorage.getItem('goodsId')!);
       if (!isMounted && !getGoodsId) {
-        //console.log('GET_PARAMS: ', params.goodsItem);
         const getProductByName = await getTyresByFullName(params.goodsItem);
         const getProductTyreByModel = await getTyresByModel(params.goodsItem);
         const getProductWheel = await getWheelByFullName(params.goodsItem);
         const getProductWheelByModel = await getWheelsByModel(params.goodsItem);
-        // console.log('GET_TYRE_BY_FULL_NAME: ', getProductByName);
-        // console.log('GET_TYRE_BY_MODEL: ', getProductTyreByModel);
         if (getProductByName) {
           goodsTyre.setProduct(getProductByName);
-          //localStorage.setItem('goodsId', getProductByName?.id);
-          //history.push(params.goodsItem);
         }
         if (getProductTyreByModel) {
-          //localStorage.setItem('goodsId', getProductTyreByModel?.tyres[0]?.id);
           goodsTyre.setProduct(getProductTyreByModel?.tyres[0]);
-          //history.push(params.goodsItem);
         }
         if (getProductWheel) {
           goodsWheel.setProduct(getProductWheel);
-          //history.push(params.goodsItem);
         }
         if (getProductWheelByModel) {
-          //goodsWheel.setProduct(getProductWheelByModel?.wheels[0]);
           localStorage.setItem('goodsId', getProductWheelByModel?.wheels[0]?.id);
-          //history.push(params.goodsItem);
         }
         if (!getProductByName && 
           !getProductTyreByModel && 

@@ -13,11 +13,9 @@
     border-radius: 10px;
     width: 100%;
 }
-
 .newsItemPageContainer img {
     width: 100%;
 }
-
 @media only screen and (max-width: 2560px) { 
     .newsItemPageContainer {
         max-width: 1420px;
@@ -27,12 +25,10 @@
     .newsItemPageContainer img {
         max-width: 1400px;
     }
-
     .newsItemPageContainer #text, p, h4, h3 {
         max-width: 1350px;
     }
 }
-
 @media only screen and (max-width: 1440px) { 
     .newsItemPageContainer {
         max-width: 1020px;
@@ -42,39 +38,34 @@
     .newsItemPageContainer img {
         max-width: 1000px;
     }
-
     .newsItemPageContainer #text, p, h4, h3 {
         max-width: 1000px;
     }
 }
-
 @media only screen and (max-width: 1024px) { 
     .newsItemPageContainer {
         max-width: 750px;
         margin-left: auto;
         margin-right: auto;
     }
-
     .newsItemPageContainer img {
         max-width: 720px;
     }
-
     .newsItemPageContainer #text, p, h4, h3 {
         max-width: 700px;
     }
 }
-
 @media only screen and (max-width: 768px) { 
     .newsItemPageContainer {
         max-width: 420px;
         margin-left: auto;
         margin-right: auto;
+        padding-left: 5px;
+        padding-right: 5px;
     }
-
     .newsItemPageContainer img {
         max-width: 350px;
     }
-
     .newsItemPageContainer #text, p, h4, h3 {
         max-width: 350px;
     }
@@ -82,18 +73,15 @@
         max-width: 350px;
     }
 }
-
 @media only screen and (max-width: 425px) { 
     .newsItemPageContainer {
         max-width: 350px;
         margin-left: auto;
         margin-right: auto;
     }
-
     .newsItemPageContainer img {
         max-width: 280px;
     }
-
     .newsItemPageContainer #text, p, br, h4, h3 {
         max-width: 280px;
     }
@@ -101,18 +89,15 @@
         max-width: 280px;
     }
 }
-
 @media only screen and (max-width: 375px) { 
     .newsItemPageContainer {
         max-width: 300px;
         margin-left: auto;
         margin-right: auto;
     }
-
     .newsItemPageContainer img {
         max-width: 250px;
     }
-
     .newsItemPageContainer #text, p, h4, h3, table {
         max-width: 250px;
     }
@@ -120,22 +105,18 @@
         max-width: 250px;
     }
 }
-
 @media only screen and (max-width: 320px) { 
     .newsItemPageContainer {
         max-width: 300px;
         margin-left: auto;
         margin-right: auto;
     }
-
     .newsItemPageContainer img {
         max-width: 250px;
     }
-
     .newsItemPageContainer #text, p, h4, h3 {
         max-width: 250px;
     }
-
     .newsItemPageScores {
         max-width: 250px;
     }

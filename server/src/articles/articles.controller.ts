@@ -13,8 +13,6 @@ import {
   FileTypeValidator,
   MaxFileSizeValidator,
   Query,
-  HttpException,
-  HttpStatus,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
@@ -36,7 +34,7 @@ export class ArticlesController {
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: './public/imageArticle',
+        destination: '../../../client/public/imageArticle',
         filename: ( req, file, cb) => {
           //try {
           if (!file.originalname.match(/\.(jpg|jpeg|png|gif|webp)$/)) {
@@ -73,7 +71,7 @@ export class ArticlesController {
   findAll() {
     return this.articlesService.findAllArticles();
   }
-  
+
   @Get('/all-limit')
   findAllArticlesLimit(
     @Query('limit') limit: string,

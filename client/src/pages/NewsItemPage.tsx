@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import '../css/Pages/NewsItemPage.css';
 import { getArticlesId } from '../restAPI/restGoodsApi';
+import BreadCrumbs from '../components/BreadCrumbs';
+import { useTranslation } from 'react-i18next';
 
 type ArticleItemType = {
     articles_pictures: string;
@@ -13,7 +15,8 @@ type ArticleItemType = {
 
 const NewsItemPage = () => {
     const [article, setArticle] = useState<ArticleItemType>();
-  
+    const { t, i18n } = useTranslation();
+
     useEffect(() => {
         let isMounted = false;
         const getIdNews = localStorage.getItem('newsId');
@@ -38,6 +41,8 @@ const NewsItemPage = () => {
     },[])
 
     return (
+        <div>
+            <BreadCrumbs route={[i18n.resolvedLanguage === 'uk' ? '/' : '/ru', i18n.resolvedLanguage === 'uk' ? '/news' : '/ru/news','НОВИНИ']} hrefTitle={[t('goodsPage.bread_crumbs_site'),'НОВИНИ']}/>
     <div className='newsItemPageContainer'>
         <div>
             <h2>{article?.title}</h2>
@@ -57,6 +62,7 @@ const NewsItemPage = () => {
         <div>
             {new Date(article?.createdAt).toLocaleDateString()}
         </div>
+    </div>
     </div>
   )
 }

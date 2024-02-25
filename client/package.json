@@ -75,7 +75,8 @@
     "postbuild": "react-snap"
   },
   "reactSnap": {
-    "inlineCss": true
+    "inlineCss": true,
+    "source" : "./dist"
   },
   "eslintConfig": {
     "extends": [

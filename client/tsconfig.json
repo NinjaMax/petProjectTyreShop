@@ -27,7 +27,6 @@
     "isolatedModules": true,
     "noEmit": false,
     "jsx": "react-jsx",
-    //"jsx": "preserve"
   },
 
   "exclude": [
