@@ -5,8 +5,6 @@ import { observer } from 'mobx-react-lite';
 
 const AdminProfile = observer(() => {
     const {user} = useContext<any | null>(Context);
-    // console.log('USERPROFILE: ', user._user?.sub);
-    // console.log('USER_PICTURE: ', user._user?.sub?.picture)
 
     return (
         <div className='adminProfile'>

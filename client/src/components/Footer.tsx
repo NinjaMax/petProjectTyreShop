@@ -1,10 +1,11 @@
 import React from 'react';
 import '../css/FooterCss/Footer.css';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 
 const Footer = () => {
-  const { t } = useTranslation();
-
+  const { t, i18n } = useTranslation();
+  const params = useParams<any>();
   return (
   
   <div className="footerContainer">
@@ -61,11 +62,6 @@ const Footer = () => {
           <i className="fab fa-telegram"></i>
           </a>
         </div>
-        {/* <div className='footerSocialSectionItem'>
-          <h5>
-          <a title="Wheel fitment and tire size guide and knowledge base" href="https://www.wheel-size.com">Wheel-Size.com</a>
-          </h5>
-        </div> */}
       </section>
       <section className="">
         <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
@@ -89,31 +85,25 @@ const Footer = () => {
             {t('footer.goods')}
           </h4>
           <p>
-            <a href="/tyres" className="text-reset">{t('footer.tyres')}</a>
+            <a href={i18n.resolvedLanguage === 'uk' && !params.ru ? '/tyres' : '/ru/tyres'} className="text-reset">{t('footer.tyres')}</a>
           </p>
           <p>
-            <a href="/wheels" className="text-reset">{t('footer.wheels')}</a>
+            <a href={i18n.resolvedLanguage === 'uk' && !params.ru ? '/wheels' : '/ru/wheels'} className="text-reset">{t('footer.wheels')}</a>
           </p>
           <p>
-            <a href="/#" className="text-reset">{t('footer.battery')}</a>
+            <a href={i18n.resolvedLanguage === 'uk' && !params.ru ? '/litni' : '/ru/tyres/letnyaya'} className="text-reset">{t('footer.tyres_summer')}</a>
           </p>
           <p>
-            <a href="/#" className="text-reset">{t('footer.chemy')}</a>
+            <a href={i18n.resolvedLanguage === 'uk' && !params.ru ? '/zimni' : '/ru/tyres/zimnyaya'} className="text-reset">{t('footer.tyres_winter')}</a>
           </p>
           <p>
-            <a href="/tyres/litni" className="text-reset">{t('footer.tyres_summer')}</a>
+            <a href={i18n.resolvedLanguage === 'uk' && !params.ru ? '/legkovi' : '/ru/tyres/legkovie'} className="text-reset">{t('footer.tyres_passnger')}</a>
           </p>
           <p>
-            <a href="/tyres/zimni" className="text-reset">{t('footer.tyres_winter')}</a>
+            <a href={i18n.resolvedLanguage === 'uk' && !params.ru ? '/gruzovi' : '/ru/tyres/gruzovie'} className="text-reset">{t('footer.tyres_cargo')}</a>
           </p>
           <p>
-            <a href="/tyres/legkovi" className="text-reset">{t('footer.tyres_passnger')}</a>
-          </p>
-          <p>
-            <a href="/#" className="text-reset">{t('footer.tyres_cargo')}</a>
-          </p>
-          <p>
-            <a href="/#" className="text-reset">{t('footer.tyres_spec')}</a>
+            <a href={i18n.resolvedLanguage === 'uk' && !params.ru ? "/industrialna" : "/ru/tyres/industrialnaya"} className="text-reset">{t('footer.tyres_spec')}</a>
           </p>
         </div>
       </section>
@@ -123,7 +113,7 @@ const Footer = () => {
             {t('footer.customers')}
           </h4>
           <p>
-            <a href="/delivery-pay" className="text-reset">{t('footer.delivery_pay')}</a>
+            <a href={i18n.resolvedLanguage === 'uk' && !params.ru ? '/delivery-pay': "/ru/delivery-pay"} className="text-reset">{t('footer.delivery_pay')}</a>
           </p>
           <p>
             <a href="/#" className="text-reset">{t('footer.garanty')}</a>
@@ -132,13 +122,13 @@ const Footer = () => {
             <a href="/#" className="text-reset">{t('footer.garanty_skysafe')}</a>
           </p>
           <p>
-            <a href="/contact" className="text-reset">{t('footer.contacs_link')}</a>
+            <a href={i18n.resolvedLanguage === 'uk' && !params.ru ? '/contact' : '/ru/contact'} className="text-reset">{t('footer.contacs_link')}</a>
           </p>
           <p>
-            <a href="/bonus" className="text-reset">{t('footer.bonuse')}</a>
+            <a href={i18n.resolvedLanguage === 'uk' && !params.ru ? '/bonus' : '/ru/bonus'} className="text-reset">{t('footer.bonuse')}</a>
           </p>
           <p>
-            <a href="/news" className="text-reset">{t('footer.articles')}</a>
+            <a href={i18n.resolvedLanguage === 'uk' && !params.ru ? '/news' : '/ru/news'} className="text-reset">{t('footer.articles')}</a>
           </p>
         </div>
       </section>
@@ -152,14 +142,14 @@ const Footer = () => {
             <i className="fas fa-envelope me-3"></i>
              info@example.com
           </p>
-          <p><i className="fas fa-phone me-3"></i> + 38 099 999 88 55</p>
-          <p><i className="fas fa-print me-3"></i> + 38 050 500 50 50</p>
+          <p><i className="fas fa-phone me-3"></i> + 38 099 490 00 55</p>
+          <p><i className="fas fa-print me-3"></i> + 38 096 490 00 55</p>
         </div>
       </section>
     </div>
     <div className="footerCopyPaste">
         ©2024 Copyright:
-      <a className="text-reset fw-bold" href="/#"> skyparts.com.ua</a>
+      <a className="text-reset fw-bold" href={i18n.resolvedLanguage === 'uk' ? '/' : '/ru'}> skyparts.com.ua</a>
     </div>
   </div>
 )};

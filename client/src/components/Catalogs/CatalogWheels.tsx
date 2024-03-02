@@ -147,11 +147,9 @@ const CatalogWheels = observer(() => {
     }
   };
 
-  //console.log('GOODS_WHEEL: ', goodsWheel._wheels);
-  
   return (
     <div>
-        <h2>{`Диски ${filter.type && !filter.type.includes(',')  ? `${filter.type }` : ''} ${filter.brands && !filter.brands.includes(',') ? `${filter.brands}` : ''} ${filter.width ? `W${filter.width}` : ''} ${filter.diameter ? `R${filter.diameter}` : ''} ${filter.bolt_count && !filter.bolt_count.includes(',') ? `${filter.bolt_count}` : ''} ${filter.pcd && !filter.pcd.includes(',') ? `PCD${filter.pcd}` : ''} ${filter.et && !filter.et.includes(',') ? `ET${filter.et}` : ''} ${filter.dia && !filter.dia.includes(',') ? `DIA${filter.dia}` : ''}`}</h2>
+        <h1>{`Диски ${filter.type && !filter.type.includes(',')  ? `${filter.type }` : ''} ${filter.brands && !filter.brands.includes(',') ? `${filter.brands}` : ''} ${filter.width ? `W${filter.width}` : ''} ${filter.diameter ? `R${filter.diameter}` : ''} ${filter.bolt_count && !filter.bolt_count.includes(',') ? `${filter.bolt_count}` : ''} ${filter.pcd && !filter.pcd.includes(',') ? `PCD${filter.pcd}` : ''} ${filter.et && !filter.et.includes(',') ? `ET${filter.et}` : ''} ${filter.dia && !filter.dia.includes(',') ? `DIA${filter.dia}` : ''}`}</h1>
         { filter.brands && !filter.brands.includes(',') ?
                 <div>
                     {/* <img src={tyreBrandLogo(filter.brands)} alt='tyreBrandLogo'/> */}

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminSalesContent.css';
-import ButtonSearch from '../../buttons/ButtonSearch';
 import { ISalesItem } from './types/SalesItem.type';
 import { IAdminSales } from './interfaces/AdminSales.interface';
 import { FixedSizeList  as List } from 'react-window';

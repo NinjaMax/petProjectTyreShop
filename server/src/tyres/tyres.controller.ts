@@ -13,7 +13,7 @@ import { CreateTyreDto } from './dto/create-tyre.dto';
 import { UpdateTyreDto } from './dto/update-tyre.dto';
 import { GetTyreDto } from './dto/get-tyre.dto';
 
-@Controller('tyres')
+@Controller('api/tyres')
 
 export class TyresController {
 
@@ -51,7 +51,6 @@ export class TyresController {
     @Query('diameter') diameter: string,
     @Query('season') season: string,
     @Query('brand') brand: string,
-    //@Query('price') price: string,
     @Query('sort') sort: string,
   ) {
     return this.tyresService.findAllTyresWithOffsetMain(
@@ -60,42 +59,23 @@ export class TyresController {
       diameter,
       season,
       brand,
-      //price,
       sort
     );
   }
 
   @Get('/no-offset')
   findTyresWithoutLimit(
-    //@Query('width') width: string,
-    // @Query('height') height: string,
-    // @Query('diameter') diameter: string,
-    // @Query('season') season: string,
-    // @Query('brand') brand: string,
     @Query('price') price: string,
     @Query('type') type: string,
     @Query('speed_index') speed_index: string,
     @Query('load_index') load_index: string,
-    // @Query('studded') studded: string,
-    // @Query('run_flat') run_flat: string,
-    // @Query('homologation') homologation: string,
-    // @Query('reinforce') reinforce: string,
     @Query('sort') sort: string,
   ) {
     return this.tyresService.findAllTyresWithoutOffset(
-      //width,
-      // height,
-      // diameter,
-      // season,
-      // brand,
       price,
       type,
       speed_index,
       load_index,
-      // studded,
-      // run_flat,
-      // homologation,
-      // reinforce,
       sort,
     );
   }

@@ -12,6 +12,8 @@ import csurf from 'csurf';
 async function bootstrap() {
   try {
     const httpsOptions = {
+      //key: fs.readFileSync(join(process.cwd(), '../../../ssl/private/skyparts.com.ua.key')),
+      //cert: fs.readFileSync(join(process.cwd(), '../../../ssl/cert/skyparts.com.ua.crt')),
       key: fs.readFileSync(join(process.cwd(), './config/cert.key')),
       cert: fs.readFileSync(join(process.cwd(), './config/cert.crt')),
     };
@@ -46,7 +48,7 @@ async function bootstrap() {
       }),
     );
     app.enableCors({
-      origin: ['https://localhost:3000'],
+      origin: ['https://localhost:3000', 'https://skyparts.com.ua'],
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
       credentials: true, // need to change false
     });

@@ -7,7 +7,6 @@ import {
   HasOne,
 } from 'sequelize-typescript';
 import { UsersConfigAttr } from '../interfaces/users.interface';
-import { ReviewTyres } from '../../reviews/entities/review-tyres.model';
 import { Orders } from '../../orders/entities/order.model';
 import { Basket } from '../../basket/entities/basket.model';
 import { Comments } from '../../comments/entities/comment.model';
@@ -52,9 +51,6 @@ export class Users extends Model<Users, UsersConfigAttr> {
     defaultValue: 'manager',
   })
   role: string;
-
-  // @HasMany(() => ReviewTyres, 'id_user')
-  // reviews: ReviewTyres[];
 
   @HasOne(() => Basket, 'id_user')
   basket: Basket;

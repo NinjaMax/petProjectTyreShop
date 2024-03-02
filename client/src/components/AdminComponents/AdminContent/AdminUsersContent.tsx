@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminUsersContent.css';
-import ButtonSearch from '../../buttons/ButtonSearch';
 import ModalAdmin from '../../modal/ModalAdmin';
 import AdminModalUsers from '../adminModalForm/AdminModalUsers';
 import { IUserItem } from './types/UsersItem.type';

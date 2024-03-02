@@ -788,5 +788,13 @@
         "compareGoodsReview" : " відгук",
         "compareGoodsReviews" : " відгуків",
         "compareGoodsNoGoods" : "НЕ ДОДАНО ПОРІВНЯННЯ ТОВАРІВ"
+    },
+    "contactPage" : {
+        "contacts" : "Контакти",
+        "addressStoreCity" : "Україна, м Харків", 
+        "phonesConnections" : "Зв'язатися з нами:",
+        "phonesConnectionsCity" : "Харків",
+        "messendgers" : "Месенджери:",
+        "shedule" : "Графік роботи інтернет-магазину:" 
     }
 }

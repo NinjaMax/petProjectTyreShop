@@ -3,28 +3,19 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
-  HttpCode,
-  HttpStatus,
   Req,
   Res,
-  Redirect,
-  Header,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { AuthService } from './auth.service';
-import { UserAuthDto } from './dto/user-auth.dto';
 import { SignupDto } from './dto/signUp-dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
-import { Public } from './decorators/public.decorator';
 import { LoginDto } from './dto/logIn-dto';
 import { ConfigService } from '../config/config.service';
 import { GoogleAuthService } from './socialApi/google-auth.service';
 import { FacebookAuthService } from './socialApi/facebook-auth.service';
 import { Cookies } from './decorators/cookies.decorator';
-import cors from 'cors';
 import { TwitterAuthService } from './socialApi/twitter-auth.service';
 
 @Controller('auth')
@@ -37,35 +28,16 @@ export class AuthController {
     private twitterAuthService: TwitterAuthService,
   ) {}
 
-  //@Public()
-  //@HttpCode(HttpStatus.OK)
   @Post('signup')
   async signUpCust(@Res() res: Response, @Body() signupDto: SignupDto) {
     return res.send(await this.authService.signUpCustm(res, signupDto));
-    // return res.cookie('auth_custm', tokenCutmAccess, {
-    //   maxAge: 900000,
-    //   httpOnly: true,
-    //   secure: true,
-    // });
   }
-
-  // @Get('profile')
-  // getProfile(@Req() req: Request) {
-  //   return req.user;
-  // }
 
   @Post('login')
   async loginByPhoneCustm(@Res() res: Response, @Body() loginDto: LoginDto) {
     return res.send(await this.authService.loginCustmByPhone(res, loginDto));
-    // return res.cookie('auth_custm', loginCustomer, {
-    //   maxAge: 900000,
-    //   httpOnly: true,
-    //   secure: true,
-    // });
   }
 
-  //@Public()
-  //@HttpCode(HttpStatus.OK)
   @Post('presignup')
   async preSignUpCustomer(@Body() signupDto: SignupDto) {
     return await this.authService.preSignUpCustm(signupDto);
@@ -94,7 +66,6 @@ export class AuthController {
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
   ) {
-    //const getCoockies = await req.cookies['auth_token'];
     return await this.googleAuthService.getCurrentUser(req, res, cookies);
   }
 
@@ -137,7 +108,6 @@ export class AuthController {
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
   ) {
-    //const getCoockies = await req.cookies['auth_token'];
     return await this.twitterAuthService.getCurrentTwitterUser(
       req,
       res,
@@ -151,7 +121,6 @@ export class AuthController {
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
   ) {
-    console.log('COOKIES_CUST: ', cookies);
     return await this.authService.getCurrentCustm(req, res, cookies);
   }
 
@@ -161,38 +130,20 @@ export class AuthController {
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
   ) {
-    console.log('COOKIES_CUST: ', cookies);
     return await this.authService.getCurrentCustm(req, res, cookies);
   }
 
   @Post('user/login')
-  
-  //@Header('Access-Control-Allow-Origin', 'https://localhost:3000')
-  //@Redirect('https://localhost:3000/admin', 200)
-  //@Redirect()
   async loginByPhoneUser(
     @Res({ passthrough: true }) res: Response,
     @Body() loginDto: LoginDto,
   ) {
     return await this.authService.loginUserByPhone(res, loginDto);
-    // console.log(logIn.statusCode);
-    // if (logIn.statusCode !== 200) {
-    //   //return { url: 'https://localhost:3000/admin/auth', status: 302};
-    //   return res.redirect('https://localhost:3000/admin/auth');
-    // } 
-    // else {
-    //   return logIn;
-    // }
   }
 
   @Post('user/signup')
   async signUpUser(@Res() res: Response, @Body() signupDto: SignupDto) {
     return res.send(await this.authService.signUpUser(res, signupDto));
-    // return res.cookie('auth_custm', tokenCutmAccess, {
-    //   maxAge: 900000,
-    //   httpOnly: true,
-    //   secure: true,
-    // });
   }
 
   @Get()
@@ -205,13 +156,7 @@ export class AuthController {
     return this.authService.findOne(+id);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-  //   return this.authService.update(+id, updateAuthDto);
-  //}
-
   @Delete('logout')
-  //@Redirect('https://localhost:3000')
   logOut(@Res({ passthrough: true }) res: Response) {
     res.clearCookie('auth_token', {
       httpOnly: true,

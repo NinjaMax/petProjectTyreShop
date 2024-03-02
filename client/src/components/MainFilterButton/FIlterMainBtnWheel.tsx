@@ -28,27 +28,17 @@ const FilterMainBtnWheel = observer(({
       if (e.target.value.length !==0) {
         const newGoodsTyreWidth = goodsWheel._width.filter(
           (itemSearch: any) => (
-          itemSearch.toLowerCase().includes(e.target.value)));
+          itemSearch?.toLowerCase().includes(e.target.value)));
         goodsWheel.setWidth(newGoodsTyreWidth);
       } else {
         goodsWheel.setWidth(filter.widthSearch);
       }
     }
-    // if (e.target.name === 'Профіль') {
-    //   if (e.target.value.length !==0) {
-    //     const newGoodsTyreHeight = goodsWheel._height.filter(
-    //       (itemSearch: any) => (
-    //       itemSearch.toLowerCase().includes(e.target.value)));
-    //     goodsWheel.setHeight(newGoodsTyreHeight);
-    //   } else {
-    //     goodsWheel.setHeight(filter.heightSearch);
-    //   }
-    // }
     if (e.target.name === 'Діаметр') {
       if (e.target.value.length !==0) {
         const newGoodsTyreDiameter = goodsWheel._diameter.filter(
           (itemSearch: any) => (
-          itemSearch.toLowerCase().includes(e.target.value)));
+          itemSearch?.toLowerCase().includes(e.target.value)));
         goodsWheel.setDiameter(newGoodsTyreDiameter);
       } else {
         goodsWheel.setDiameter(filter.diameterSearch);
@@ -58,7 +48,7 @@ const FilterMainBtnWheel = observer(({
       if (e.target.value.length !==0) {
         const newGoodsTyreBrand = goodsWheel._brands.filter(
           (itemSearch: any) => (
-          itemSearch.toLowerCase().includes(e.target.value)));
+          itemSearch?.toLowerCase().includes(e.target.value)));
         goodsWheel.setBrands(newGoodsTyreBrand);
       } else {
         goodsWheel.setBrands(filter.brandSearch);

@@ -77,17 +77,14 @@ const NavBar = observer(() => {
         if(!isUser && taskSocial[i] === signInGoogle) {
           let authGoogle: any = await taskSocial[i]();
           setGoogleIsAuth(authGoogle);
-          //console.log('SET_GOOGLE_AUTH: ', authGoogle)
         } 
         if (!isUser && taskSocial[i] === signInFacebook){
           let authFacebook: any = await taskSocial[i]();
           setFacebookIsAuth(authFacebook);
-          //console.log('SET_FACEBOOK_AUTH: ', authFacebook)
         }
         if (!isUser && taskSocial[i] === signInTwitter){
           let authTwitter: any = await taskSocial[i]();
           setTwitterIsAuth(authTwitter);
-          //console.log('SET_TWITTER_AUTH: ', authTwitter)
         }
         const task = taskSocial.shift();
         task();
@@ -135,16 +132,11 @@ const NavBar = observer(() => {
       while(taskFavorite.length > i) {
         if (!isMounted && taskFavorite[i] === getCompare) {
           let curComparison: any = await taskFavorite[i]();
-          //console.log('CURRENT_COMPARISON: ', curComparison)
-          //setComparisonCount(curComparison.length);
           page.setComparisonCount(curComparison);
-          
         }
         if (!isMounted && taskFavorite[i] === getFavorites) {
           let curFavorites: any = await taskFavorite[i]();
-          //console.log('CURRENT_FAVORITES: ', curFavorites)
           page.setFavoritesCount(curFavorites);
-          //setFavoritesCount(curFavorites.length);
         }
         const task = taskFavorite.shift();
         task();
@@ -194,7 +186,6 @@ const NavBar = observer(() => {
 
   const clickSearchBtn = () => {
     setSearchBtn(!searchBtn);
-    //console.log('CLOSE NAVBAR SEARCH');
   };
 
   const signActiveUp = () => {
@@ -206,16 +197,13 @@ const NavBar = observer(() => {
   };
 
   const preSignUpAuth = async (telnumber: bigint) => {
-    //console.log('TEL NUMBER: ', telnumber);
     try {
       setPhoneTel(telnumber);
       const sendPass = await preSignUpUser(telnumber);
-      //console.log('SEND SMS: ', sendPass);
       if (sendPass) {
         setPassSend(!isPassSend);
         setSmsPass(sendPass);
       } else {
-        //console.log(`Помилка номера. Або користувач з номером вже існує.`);
         setFormError(`${t('navBar.phone_number_error', { phone: telnumber })}`);
       }
     } catch (error) {
@@ -226,9 +214,6 @@ const NavBar = observer(() => {
   const matchGetPass = async (passFromTel: number) => {
     try {
       const matchPass = await matchPassSms(smsPass!, passFromTel);
-      // console.log('PASS_TEL: ', passFromTel);
-      // console.log('MATCH PASS: ', matchPass);
-      // console.log('SMS: ', smsPass)
       if (matchPass) {
         setIsMatchPass(!isMatchPass);
         setAuthConfirm(!activeAuthConfirm); 
@@ -252,7 +237,6 @@ const NavBar = observer(() => {
   const signUpCustm = async (dataSignIn: any) => {
     try {
       await signUpCustomer(dataSignIn);
-      //console.log( 'SIGN_UP_DATA: ', dataSignIn);
     } catch (error: any) {
       console.log('SIGN_UP_ERROR', error);
       setFormError(error.response.data.message);
@@ -341,13 +325,12 @@ const NavBar = observer(() => {
     <a href={DELIVERY_ROUTE} className='anchorBtn'>{t('navBar.delivery_section')}</a>
     <a href='/contact' className='anchorBtn'>{t('navBar.contact_section')}</a>
     <div className='navbarPhoneBox'>
-      <span className='navbarPhone'>067 777 77 77 
+      <span className='navbarPhone'>099 490 00 55 
         <span className='navbarPhoneBtnDown'> <i className="fa fa-caret-down"></i></span>
         <span className='navbarPhoneBtnUp'> <i className="fa fa-caret-up"></i></span>
       </span>
       <span className='navbarPhoneDropDown'>
-        <span>099 777 77 77</span>
-        <span>063 777 77 77</span>
+        <span>096 490 00 55</span>
       </span>
     </div>
     <span data-href="/">{t('navBar.more_section')}</span>

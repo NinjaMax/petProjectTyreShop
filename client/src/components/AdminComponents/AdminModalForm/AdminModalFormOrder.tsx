@@ -26,7 +26,6 @@ import { Context } from '../../../context/Context';
 import { observer } from 'mobx-react-lite';
 import { IFormOrder } from './interfaces/FormOrders.interface';
 import { CreateGoods } from './types/CreateGoods.type';
-//import { DataGoods } from './types/DataGoods.type';
 import { IModalFormOrder } from './types/FormOrders.type';
 import { StateReducer, ActionReducer, ActionType } from './types/OrderReducer.type';
 import { reducer } from './reducer/goodsReducer';

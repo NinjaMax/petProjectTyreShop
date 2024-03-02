@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminCashboxContent.css';
-import ButtonSearch from '../../buttons/ButtonSearch';
 import ModalAdmin from '../../modal/ModalAdmin';
 import AdminModalCashbox from '../adminModalForm/AdminModalCashbox';
 import { ICashboxItem } from './types/CashboxItem.type';
-import { CashboxCreate } from '../adminModalForm/types/CashboxCreate.type';
 import SpinnerCarRot from '../../spinners/SpinnerCarRot';
 
 interface ICashbox {

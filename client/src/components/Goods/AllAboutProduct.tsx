@@ -18,7 +18,7 @@ import CheckOrder from '../modal/CheckOrder';
 import { ICheckOrderItem } from '../catalogs/types/CheckOrder.type';
 import { createStringUrl } from '../../services/stringUrl';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 const AllAboutProduct = observer(({
     goods, 
@@ -33,6 +33,7 @@ const AllAboutProduct = observer(({
     const location = useLocation<any>();
     const { t, i18n } = useTranslation();
     const {page, customer} = useContext<any>(Context);
+    const params = useParams<any>();
 
     const checkedGuards = (e: any) => {
         setGuardChecked(true);
@@ -221,7 +222,7 @@ const AllAboutProduct = observer(({
                     </>
                     :
                     <img src='/iconsSeasons/noSeason.webp' alt='noProd'/>
-                    }
+                }
                 </div>
                 {!paramsModel ?
                 <>
@@ -460,17 +461,17 @@ const AllAboutProduct = observer(({
                 }
                 {goods?.tyre_brand ? 
                     <SocialMediaLinks 
-                        urlCurrent={ i18n.resolvedLanguage === 'uk' ? window.location.origin + location.pathname : window.location.origin + '/ru' + location.pathname} 
+                        urlCurrent={ window.location.origin + location.pathname} 
                         hashtag={`${t('goodsAboutProd.infoTyre')}${goods?.tyre_brand?.brand}#${t('goodsAboutProd.infoTyre')}${t('goodsAboutProd.ukraine')}#skyparts`} 
-                        quoteLink={t('goodsAboutProd.shareLink')}
+                        quoteLink={t('goodsAboutProd.shareLink') + ' ' + goods?.full_name}
                     /> 
                     : null
                 }
                 {goods?.wheel_brand ? 
                     <SocialMediaLinks 
-                        urlCurrent={i18n.resolvedLanguage === 'uk' ? window.location.origin + location.pathname : window.location.origin + '/ru' + location.pathname} 
+                        urlCurrent={window.location.origin + location.pathname} 
                         hashtag={`диски${goods?.wheel_brand?.brand}#диски${t('goodsAboutProd.ukraine')}#skyparts`} 
-                        quoteLink={t('goodsAboutProd.shareLink')}
+                        quoteLink={t('goodsAboutProd.shareLink') + ' ' + goods?.full_name}
                     /> 
                     : null
                 }

@@ -254,13 +254,13 @@ const CatalogTyresPage = observer(() => {
           let setBrandFilter:any[] | null = [];
           let setSeasonFilter :any[] | null = [];
           
-          tyreFilterGoods?.rows.map((item: any) =>
+          tyreFilterGoods?.rows?.map((item: any) =>
           { return (
-            setWidthFilter?.push(item.width.width),
-            setHightFilter?.push(item.height.height),
-            setDiameterFilter?.push(item.diameter.diameter),
-            setBrandFilter?.push(item.tyre_brand.brand),
-            setSeasonFilter?.push(langState === 'uk' ? item.season.season_ua : item.season.season)
+            setWidthFilter?.push(item?.width?.width),
+            setHightFilter?.push(item?.height?.height),
+            setDiameterFilter?.push(item?.diameter?.diameter),
+            setBrandFilter?.push(item?.tyre_brand?.brand),
+            setSeasonFilter?.push(langState === 'uk' ? item?.season?.season_ua : item?.season?.season)
             )
           })
           if (filter.width) {
@@ -352,7 +352,7 @@ const CatalogTyresPage = observer(() => {
         if (params[key] && !filter.studded && filter.chipStudded.length === 0 ) {
           const tyreStudded = goodsTyre._studded?.find(
             (studded:string) => 
-            createStringUrl(studded.toLocaleLowerCase()) === params[key]);
+            createStringUrl(studded?.toLocaleLowerCase()) === params[key]);
           if (tyreStudded) {
             filter.setStudded(tyreStudded);
             filter.setChipStudded(
@@ -372,7 +372,7 @@ const CatalogTyresPage = observer(() => {
         if (params[key] && !filter.brands && filter.chipBrands.length === 0) {
           const findBrandInSeason:string = goodsTyre._brands?.find(
             (brands:string) => 
-            createStringUrl(brands.toLocaleLowerCase()) === params[key]);
+            createStringUrl(brands?.toLocaleLowerCase()) === params[key]);
           if (findBrandInSeason) {
             filter.setBrands(findBrandInSeason);
             filter.setChipBrands(
@@ -414,7 +414,7 @@ const CatalogTyresPage = observer(() => {
         if (params[key]?.includes('li-') && !filter.load_index && filter.chipLoadIndex.length === 0) {
           const findLoadIndex = goodsTyre._load_index?.find(
             (load_index_with_desc:string) => 
-            createStringUrl(load_index_with_desc.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
+            createStringUrl(load_index_with_desc?.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
           if (findLoadIndex) {
             filter.setLoadIndex(findLoadIndex);
             filter.setChipLoadIndex(
@@ -425,7 +425,7 @@ const CatalogTyresPage = observer(() => {
         if (params[key]?.includes('si-') && !filter.speed_index && filter.chipSpeedIndex.length === 0) {
           const findSpeedIndex = goodsTyre._speed_index?.find(
             (speed_index_with_desc:string) => 
-            createStringUrl(speed_index_with_desc.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
+            createStringUrl(speed_index_with_desc?.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
           if (findSpeedIndex) {
             filter.setSpeedIndex(findSpeedIndex);
             filter.setChipSpeedIndex(
@@ -436,7 +436,7 @@ const CatalogTyresPage = observer(() => {
         if (params[key]?.includes('xl-') && !filter.reinforced && filter.chipReinforced.length === 0) {
           const findReinforcedSeason = goodsTyre._reinforced?.find(
             (reinforced:string) => 
-            createStringUrl(reinforced.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
+            createStringUrl(reinforced?.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
           if (findReinforcedSeason) {
             filter.setReinforced(findReinforcedSeason);
             filter.setChipReinforced(
@@ -447,7 +447,7 @@ const CatalogTyresPage = observer(() => {
         if (params[key]?.includes('om-') && !filter.homologation && filter.chipHomologation.length === 0) {
           const findOmSeason = goodsTyre._homologation?.find(
             (homologation:string) => 
-            createStringUrl(homologation.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
+            createStringUrl(homologation?.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
           if (findOmSeason) {
             filter.setHomologation(findOmSeason);
             filter.setChipHomologation(
@@ -490,11 +490,11 @@ const CatalogTyresPage = observer(() => {
         let setSpeedIndexFilter: any[] | null  = [];
         let setLoadIndexFilter: any[] | null  = [];
         
-        tyreFilterGoods.rows.map((item: any) => 
+        tyreFilterGoods?.rows?.map((item: any) => 
         { return (
-            setVehicleTypeFilter?.push(langState === 'uk' ? item.vehicle_type.vehicle_type_ua : item.vehicle_type.vehicle_type),  
-            setSpeedIndexFilter?.push(item.speed_index.speed_index_with_desc),
-            setLoadIndexFilter?.push(item.load_index.load_index_with_desc)
+            setVehicleTypeFilter?.push(langState === 'uk' ? item?.vehicle_type?.vehicle_type_ua : item?.vehicle_type?.vehicle_type),  
+            setSpeedIndexFilter?.push(item?.speed_index?.speed_index_with_desc),
+            setLoadIndexFilter?.push(item?.load_index?.load_index_with_desc)
           )
         });
         if (filter.vehicle_type) {
@@ -551,7 +551,7 @@ const CatalogTyresPage = observer(() => {
         if (params[key] && !filter.studded && filter.chipStudded.length === 0 ) {
           const tyreStudded = goodsTyre._studded?.find(
             (studded:string) => 
-            createStringUrl(studded.toLocaleLowerCase()) === params[key]);
+            createStringUrl(studded?.toLocaleLowerCase()) === params[key]);
           if (tyreStudded) {
             filter.setStudded(tyreStudded);
             filter.setChipStudded(
@@ -571,7 +571,7 @@ const CatalogTyresPage = observer(() => {
         if (params[key] && !filter.brands && filter.chipBrands.length === 0) {
           const findBrandInSeason:string = goodsTyre._brands?.find(
             (brands:string) => 
-            createStringUrl(brands.toLocaleLowerCase()) === params[key]);
+            createStringUrl(brands?.toLocaleLowerCase()) === params[key]);
           if (findBrandInSeason) {
             filter.setBrands(findBrandInSeason);
             filter.setChipBrands(
@@ -613,7 +613,7 @@ const CatalogTyresPage = observer(() => {
         if (params[key]?.includes('li-') && !filter.load_index && filter.chipLoadIndex.length === 0) {
           const findLoadIndex = goodsTyre._load_index?.find(
             (load_index_with_desc:string) => 
-            createStringUrl(load_index_with_desc.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
+            createStringUrl(load_index_with_desc?.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
           if (findLoadIndex) {
             filter.setLoadIndex(findLoadIndex);
             filter.setChipLoadIndex(
@@ -624,7 +624,7 @@ const CatalogTyresPage = observer(() => {
         if (params[key]?.includes('si-') && !filter.speed_index && filter.chipSpeedIndex.length === 0) {
           const findSpeedIndex = goodsTyre._speed_index?.find(
             (speed_index_with_desc:string) => 
-            createStringUrl(speed_index_with_desc.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
+            createStringUrl(speed_index_with_desc?.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
           if (findSpeedIndex) {
             filter.setSpeedIndex(findSpeedIndex);
             filter.setChipSpeedIndex(
@@ -635,7 +635,7 @@ const CatalogTyresPage = observer(() => {
         if (params[key]?.includes('xl-') && !filter.reinforced && filter.chipReinforced.length === 0) {
           const findReinforcedSeason = goodsTyre._reinforced?.find(
             (reinforced:string) => 
-            createStringUrl(reinforced.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
+            createStringUrl(reinforced?.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
           if (findReinforcedSeason) {
             filter.setReinforced(findReinforcedSeason);
             filter.setChipReinforced(
@@ -646,7 +646,7 @@ const CatalogTyresPage = observer(() => {
         if (params[key]?.includes('om-') && !filter.homologation && filter.chipHomologation.length === 0) {
           const findOmSeason = goodsTyre._homologation?.find(
             (homologation:string) => 
-            createStringUrl(homologation.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
+            createStringUrl(homologation?.toLocaleLowerCase()) === params[key]?.slice(3, params[key]?.length));
           if (findOmSeason) {
             filter.setHomologation(findOmSeason);
             filter.setChipHomologation(
@@ -688,12 +688,12 @@ const CatalogTyresPage = observer(() => {
         let setRunFlatFilter: any[] | null  = [];
         let setStuddedFilter: any[] | null  = [];
           
-        tyreHeightFilterGoods.rows.map((item: any) => 
+        tyreHeightFilterGoods?.rows?.map((item: any) => 
         { return (
-          setHomologationFilter?.push(item.homologation.homologation),
-          setReinforcedFilter?.push(item.reinforce.reinforce),
-          setRunFlatFilter?.push(item.run_flat.run_flat),
-          setStuddedFilter?.push(item.studded.studded)
+          setHomologationFilter?.push(item?.homologation?.homologation),
+          setReinforcedFilter?.push(item?.reinforce?.reinforce),
+          setRunFlatFilter?.push(item?.run_flat?.run_flat),
+          setStuddedFilter?.push(item?.studded?.studded)
           )
         });
         if (filter.studded) {
@@ -883,19 +883,19 @@ const CatalogTyresPage = observer(() => {
           let setPcd2Filter :any[] | null  = [];
           let setTypeFilter :any[] | null  = [];
           goodsWheel?.setTotalCount(wheelFilterGoods.rows.length);
-          wheelFilterGoods.rows.map((item: any) => 
+          wheelFilterGoods?.rows?.map((item: any) => 
           { return (
-            setWidthFilter?.push(item.width.width),
-            setDiameterFilter?.push(item.diameter.diameter),
-            setBrandFilter?.push(item.wheel_brand.brand),
-            setBoltCountFilter?.push(item.bolt_count.bolt_count),
-            setBoltCountPcdFilter?.push(item.bolt_count_pcd.bolt_count_pcd),
-            setColorFilter?.push(item.color.color),
-            setDiaFilter?.push(item.dia.dia),
-            setEtFilter?.push(item.et.et),
-            setPcdFilter?.push(item.pcd.pcd),
-            setPcd2Filter?.push(item.pcd2.pcd2),
-            setTypeFilter?.push(item.type.type)
+            setWidthFilter?.push(item?.width.width),
+            setDiameterFilter?.push(item?.diameter.diameter),
+            setBrandFilter?.push(item?.wheel_brand.brand),
+            setBoltCountFilter?.push(item?.bolt_count.bolt_count),
+            setBoltCountPcdFilter?.push(item?.bolt_count_pcd.bolt_count_pcd),
+            setColorFilter?.push(item?.color.color),
+            setDiaFilter?.push(item?.dia.dia),
+            setEtFilter?.push(item?.et.et),
+            setPcdFilter?.push(item?.pcd.pcd),
+            setPcd2Filter?.push(item?.pcd2.pcd2),
+            setTypeFilter?.push(item?.type.type)
             )
           })
           if (filter.width) {
@@ -1064,7 +1064,7 @@ const CatalogTyresPage = observer(() => {
       if (params[key] && !filter.brands && filter.chipBrands.length === 0) {
         const findBrandsInType = goodsWheel._brands?.find(
           (brands:string) => 
-          createStringUrl(brands.toLocaleLowerCase()) === params[key]);
+          createStringUrl(brands?.toLocaleLowerCase()) === params[key]);
         if (findBrandsInType) {
           filter.setBrands(findBrandsInType);
           filter.setChipBrands(
@@ -1130,7 +1130,7 @@ const CatalogTyresPage = observer(() => {
       if (params[key]?.includes('dia') && !filter.dia && filter.chipDia.length === 0) {
         const findDiaInType = goodsWheel._dia?.find(
           (diaItem:string) => 
-          diaItem.toLocaleLowerCase() === params[key]?.slice(3, params[key]?.length));
+          diaItem?.toLocaleLowerCase() === params[key]?.slice(3, params[key]?.length));
         if (findDiaInType) {
           filter.setDia(findDiaInType);
           filter.setChipDia(
@@ -1323,8 +1323,8 @@ const CatalogTyresPage = observer(() => {
           }
           {location.pathname.includes('wheels') ?
           <ReviewsMain 
-            props={'Відгуки кліентів'} 
-            marginText={0}
+            props={t('catalogPage.review_title_custm')} 
+            marginText={-50}
             prevBtnAction={prevBtnReviewGoods} 
             nextBtnAction={nextBtnReviewGoods}    
             buttonPosition={{

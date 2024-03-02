@@ -26,7 +26,6 @@ export class BasketController {
     @Session() session: Record<string, any>,
     @Body() createBasketDto: CreateBasketDto,
   ) {
-    //console.log('SESSION_ID: ', session.id);
     return this.basketService.createBasket(createBasketDto, session.id);
   }
 
@@ -56,10 +55,7 @@ export class BasketController {
   }
 
   @Patch('/update/basketstorage')
-  updateBasketStorage(
-    @Body() updateBasketDto: UpdateBasketDto, 
-    //basketStorageId: number
-    ){
+  updateBasketStorage(@Body() updateBasketDto: UpdateBasketDto) {
     return this.basketStorageService.updateBasketStorage(
       updateBasketDto,
       updateBasketDto.id_basket_storage

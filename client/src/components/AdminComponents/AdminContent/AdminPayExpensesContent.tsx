@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminPayExpenseContent.css';
-import ButtonSearch from '../../buttons/ButtonSearch';
 import ModalAdmin from '../../modal/ModalAdmin';
 import AdminModalPay from '../adminModalForm/AdminModalPay';
 import { IPaymentItem } from './types/PaymentItem.type';

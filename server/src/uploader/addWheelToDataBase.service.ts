@@ -53,13 +53,11 @@ export class AddWheelsToDbService {
         item['Посилання на фото'] ?? '',
         item['Дата обновления'],
       );
-
       await this.categoryService.createCategoryWheelFromPrice(
         +item['ID товара'],
         item['Категорія товару'] ?? '',
         'Диски',
       );
-
       await this.supplierService.createSupplierFromPrice(
         +item['ID Постачальника'],
         String(item['Поставщик']) === 'undefined'
@@ -68,53 +66,45 @@ export class AddWheelsToDbService {
         item['Город'] ?? '',
         item['Город (укр)'] ?? '',
       );
-
       await this.propsWheelBrandService.createWheelBrandFromPrice(
         +item['ID товара'],
         item['Бренд'] ?? '',
       );
-
       await this.propsWheelModelService.createWheelModelFromPrice(
         +item['ID товара'],
         item['ID Моделі'],
         String(item['Модель']) === 'undefined' ? '' : String(item['Модель']),
       );
-
       await this.propsWheelWidthService.createWheelWidthFromPrice(
         +item['ID товара'],
         String(item['Ширина диска']).replace(/,/g, '.') === 'undefined'
           ? ''
           : String(item['Ширина диска']).replace(/,/g, '.'),
       );
-
       await this.propsWheelPcdService.createWheelPcdFromPrice(
         +item['ID товара'],
         String(item['PCD1']).replace(/,/g, '.') === 'undefined'
           ? ''
           : String(item['PCD1']).replace(/,/g, '.'),
       );
-
       await this.propsWheelPcd2Service.createWheelPcd2FromPrice(
         +item['ID товара'],
         String(item['PCD2']).replace(/,/g, '.') === 'undefined'
           ? ''
           : String(item['PCD2']).replace(/,/g, '.'),
       );
-
       await this.propsWheelBoltCountService.createWheelBoltCountFromPrice(
         +item['ID товара'],
         String(item['Кріплення']).replace(/,/g, '.') === 'undefined'
           ? ''
           : String(item['Кріплення']).replace(/,/g, '.'),
       );
-
       await this.propsWheelBoltCountPcdService.createWheelBoltCountPcdFromPrice(
         +item['ID товара'],
         String(item['Кріплення+PCD']).replace(/,/g, '.') === 'undefined'
           ? ''
           : String(item['Кріплення+PCD']).replace(/,/g, '.'),
       );
-
       await this.propsWheelColorService.createWheelColorFromPrice(
         +item['ID товара'],
         item['ID кольору'] === '' || item['ID кольору'] === 'undefined'
@@ -123,48 +113,41 @@ export class AddWheelsToDbService {
         item['Колір'] ?? '',
         item['Колір абревіатура'] ?? '',
       );
-
       await this.propsWheelDiameter.createWheelDiameterFromPrice(
         +item['ID товара'],
         String(item['Диаметр']).replace(/,/g, '.') === 'undefined'
           ? ''
           : String(item['Диаметр']).replace(/,/g, '.'),
       );
-
       await this.propsWheelDiaService.createWheelDiaFromPrice(
         +item['ID товара'],
         String(item['DIA']).replace(/,/g, '.') === 'undefined'
           ? ''
           : String(item['DIA']).replace(/,/g, '.'),
       );
-
       await this.propsWheelEtService.createWheelEtFromPrice(
         +item['ID товара'],
         String(item['ET']).replace(/,/g, '.') === 'undefined'
           ? ''
           : String(item['ET']).replace(/,/g, '.'),
       );
-
       await this.propsWheelTypeService.createWheelTypeFromPrice(
         +item['ID товара'],
         item['ID Типу диска'] === '' || item['ID Типу диска'] === 'undefined'
-        ? Math.floor(Math.random() + 1) + '999'
+          ? Math.floor(Math.random() + 1) + '999'
           : item['ID Типу диска'],
         item['Тип диска'] ?? '',
       );
-
       await this.propsWheelSizeDigitsService.createWheelSizeDigitsFromPrice(
         +item['ID товара'],
         item['ID розміру'] ?? '',
       );
-
       await this.stockWheelService.createStockWheelFromPrice(
         +item['ID товара'],
         +item['В наличии'],
         +item['ID Постачальника'],
         item['Дата обновления'],
       );
-
       await this.priceWheelService.createPriceWheelsFromPrice(
         +item['ID товара'],
         item['Моя оптовая цена (со скидкой)'] ?? 0,
@@ -174,7 +157,6 @@ export class AddWheelsToDbService {
         +item['ID Постачальника'],
         item['Дата обновления'],
       );
-
       return 'Price added to DATA BASE';
     } catch (error) {
       throw new HttpException(

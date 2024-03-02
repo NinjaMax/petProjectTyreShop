@@ -35,7 +35,7 @@ const config = {
         host: 'localhost',
         port: 3000,
         hot: true,
-        allowedHosts: ['https://localhost:4000', 'https://localhost:3000'],
+        allowedHosts: ['https://45.94.156.155:4000', 'https://localhost:3000', 'https://skyparts.com.ua'],
         client: {
             overlay: {
                 errors: true,
@@ -77,10 +77,10 @@ const config = {
             }),
         new webpack.DefinePlugin({
             'process.env.REACT_APP_HOST_PORT': JSON.stringify(4000),
-            'process.env.REACT_APP_HOST': JSON.stringify('https://localhost:4000'),
-            'process.env.REACT_APP_CORS': JSON.stringify('https://localhost:3000'),
+            'process.env.REACT_APP_HOST': JSON.stringify('https://skyparts.com.ua:4000'),
+            'process.env.REACT_APP_CORS': JSON.stringify('https://skyparts.com.ua'),
             'process.env.REACT_APP_CORS_PORT': JSON.stringify(3000),
-            'process.env.REACT_APP_ADMIN_PATH': JSON.stringify('https://localhost:3000/admin'),
+            'process.env.REACT_APP_ADMIN_PATH': JSON.stringify('https://skyparts.com.ua/admin'),
             'process.env.REACT_APP_NOVA_POSHTA_API': JSON.stringify('https://api.novaposhta.ua'),
             'process.env.REACT_APP_NOVA_POSHTA_API_KEY': JSON.stringify('09e9681869e82e412dcea97b1b65972c'),
             'process.env.REACT_APP_DELIVERY_API': JSON.stringify('https://www.delivery-auto.com/api/v4/Public'),

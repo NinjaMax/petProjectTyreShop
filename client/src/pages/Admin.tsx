@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useState} from 'react';
+import React, { Suspense, lazy, useEffect, useState} from 'react';
 import '../css/Admin.css';
 import { getTyresAdmin, 
         getWheelsAdmin, 

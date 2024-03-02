@@ -14,7 +14,7 @@ const sendMessage = async (data: DataMessage) => {
       action: 'SENDMESSAGE',
       data: {
         recipient: data.phone,
-        channels: ['viber', 'sms'],
+        channels: ['sms'],
         viber: {
           source: 'Skyparts',
           ttl: 10,

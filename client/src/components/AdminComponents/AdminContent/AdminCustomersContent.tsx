@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminCustomersContent.css';
-import ButtonSearch from '../../buttons/ButtonSearch';
 import ModalAdmin from '../../modal/ModalAdmin';
 import { ICustomerItem } from './types/CustomerItem.type';
 import { FixedSizeList  as List } from 'react-window';

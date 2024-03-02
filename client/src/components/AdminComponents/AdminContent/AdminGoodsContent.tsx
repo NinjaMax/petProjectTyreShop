@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminGoodsContent.css';
-import ButtonSearch from '../../buttons/ButtonSearch';
 import ModalAdmin from '../../modal/ModalAdmin';
 import AdminFormOrder from '../adminModalForm/AdminModalFormOrder';
 import AdminBatteryContent from './AdminBatteryContent';

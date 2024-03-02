@@ -78,13 +78,13 @@
 @media only screen and (max-width: 1024px) { 
     .filterCatalogTyresHeader {
         position: sticky;
-        z-index: 9999;
+        z-index: 999;
     }
 }
 @media only screen and (max-width: 768px) { 
     .filterCatalogTyresHeader {
         position: sticky;
-        z-index: 9999;
+        z-index: 999;
     }
 } 
 @media only screen and (max-width: 425px) { 
@@ -92,32 +92,32 @@
         position: sticky;
         top: 90%;
         right: 0px;
-        z-index: 9999;
+        z-index: 999;
     }
     .filterCatalogTyresHeader {
         position: sticky;
-        z-index: 9999;
+        z-index: 999;
     }
 }
 @media only screen and (max-width: 375px) { 
     .checkBoxBtnOn .filterCatalogTyresHeader {
         position: sticky;
         top: 95%;
-        z-index: 9999;
+        z-index: 999;
     }
     .filterCatalogTyresHeader {
         position: sticky;
-        z-index: 9999;
+        z-index: 999;
     }
 }
 @media only screen and (max-width: 320px) { 
     .checkBoxBtnOn .filterCatalogTyresHeader .filterCatalogTyresHeader {
         position: sticky;
         top: 95%;
-        z-index: 9999;
+        z-index: 999;
     }
     .filterCatalogTyresHeader {
         position: sticky;
-        z-index: 9999;
+        z-index: 999;
     }
 }

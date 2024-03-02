@@ -120,6 +120,12 @@ export class WheelsService {
 
   async findAllWheelsAdmin() {
     try {
+      const cachedWheelsAllAdmin = await this.redisService.get(
+        'wheelsAllAdmin',
+      );
+      if (cachedWheelsAllAdmin) {
+        return cachedWheelsAllAdmin;
+      }
       const wheelsAllAdmin = await this.wheelRepository.findAll({
         include: [
           { model: Category },
@@ -131,7 +137,11 @@ export class WheelsService {
           { model: StockWheels },
         ],
       });
-
+      await this.redisService.set(
+        'wheelsAllAdmin',
+        3600,
+        JSON.stringify(wheelsAllAdmin),
+      );
       return wheelsAllAdmin;
     } catch {
       throw new HttpException(

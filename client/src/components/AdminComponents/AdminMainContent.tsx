@@ -4,7 +4,7 @@ import { Chart } from "react-google-charts";
 import AdminComment from './adminContent/AdminComment';
 import SpinnerCarRot from '../spinners/SpinnerCarRot';
 
-type AdminMainContent = {
+type AdminMainContentType = {
     comments: any [] | null;
     orders: any [] | null;
 };
@@ -19,7 +19,7 @@ interface IMainContent {
     height: string; }[]; 
 }
 
-const AdminMainContent = ({comments, orders}: AdminMainContent) => {
+const AdminMainContent = ({comments, orders}: AdminMainContentType) => {
     //const [lastComments, setLastComments] = useState<[] | null>();
     const [dataOrder, setDataOrder] = useState<any>();
     const [orderOptions, setOrderOptions] = useState<any>();

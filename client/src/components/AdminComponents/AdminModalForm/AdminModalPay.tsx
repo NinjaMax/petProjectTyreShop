@@ -81,10 +81,6 @@ const AdminModalPay = ({
         }
     };
 
-    //console.log('CASBOX: ', cashBoxes);
-    console.log('PAY_TYPE: ', payTypes);
-    console.log('PAY_VIEWS: ', payViews);
-    console.log('PAYNMENT_DATA: ', paynmentData);
     return (
         <div>
             {title}

@@ -39,7 +39,6 @@ const Main = observer(() => {
     let isMounted = false;
     const loadMainTyreTask = async () => {
       if(!isMounted) {
-        //console.time('GET_REQUEST_TYRE_FROM_DATA_BASE');
         let tyreFilterGoods: any = await getTyresOffsetMain(
           chooseFilterState === 'ШИНИ' ? filter.width : '',
           chooseFilterState === 'ШИНИ' ? filter.height : '',
@@ -49,7 +48,6 @@ const Main = observer(() => {
             //filter.price,
             filter.sort,
           );
-          //console.timeEnd('GET_REQUEST_TYRE_FROM_DATA_BASE');
 
           let setWidthFilter:any[] | null = [];
           let setHightFilter:any[] | null = [];
@@ -59,14 +57,13 @@ const Main = observer(() => {
           
           tyreFilterGoods?.rows?.map((item: any) =>
           { return (
-            setWidthFilter?.push(item.width.width),
-            setHightFilter?.push(item.height.height),
-            setDiameterFilter?.push(item.diameter.diameter),
-            setBrandFilter?.push(item.tyre_brand.brand),
-            setSeasonFilter?.push(i18n.resolvedLanguage === 'uk' ? item.season.season_ua : item.season.season)
+            setWidthFilter?.push(item?.width?.width),
+            setHightFilter?.push(item?.height?.height),
+            setDiameterFilter?.push(item?.diameter?.diameter),
+            setBrandFilter?.push(item?.tyre_brand?.brand),
+            setSeasonFilter?.push(i18n.resolvedLanguage === 'uk' ? item?.season?.season_ua : item?.season?.season)
             )
           })
-          //console.log('WIDTH', setWidthFilter);
           if (filter.width) {
             goodsTyre?.setWidth(
               Array.from(new Set(
@@ -171,7 +168,6 @@ const Main = observer(() => {
       let i:number = 0;
       while(taskLoad.length > i) {
         if(!isMounted && taskLoad[i] === getWheelsMainOffset) {
-          //console.time('GET_REQUEST_WHEEL_FROM_DATA_BASE');
           let wheelFilterGoods: any = await taskLoad[i](
             chooseFilterState === 'ДИСКИ' ? filter.width : '',
             chooseFilterState === 'ДИСКИ' ? filter.diameter : '',
@@ -180,7 +176,6 @@ const Main = observer(() => {
             chooseFilterState === 'ДИСКИ' ? filter.type : '',
             filter.sort,
           );
-          //console.timeEnd('GET_REQUEST_WHEEL_FROM_DATA_BASE');
           let setWidthFilter:any[] | null = [];
           let setDiameterFilter:any[] | null = [];
           let setBrandFilter:any[] | null = [];
@@ -189,11 +184,11 @@ const Main = observer(() => {
  
           wheelFilterGoods?.rows?.map((item: any) => 
           { return (
-            setWidthFilter?.push(item.width.width),
-            setDiameterFilter?.push(item.diameter.diameter),
-            setBrandFilter?.push(item.wheel_brand.brand),
-            setBoltCountFilter?.push(item.bolt_count.bolt_count),
-            setTypeFilter?.push(item.type.type)
+            setWidthFilter?.push(item?.width?.width),
+            setDiameterFilter?.push(item?.diameter?.diameter),
+            setBrandFilter?.push(item?.wheel_brand?.brand),
+            setBoltCountFilter?.push(item?.bolt_count?.bolt_count),
+            setTypeFilter?.push(item?.type?.type)
             )
           })
           if (filter.width) {

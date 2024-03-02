@@ -31,7 +31,7 @@ const FilterMainBtn = observer(({
       if (e.target.value.length !==0) {
         const newGoodsTyreWidth = goodsTyre._width.filter(
           (itemSearch: any) => (
-          itemSearch.toLowerCase().includes(e.target.value)));
+          itemSearch?.toLowerCase().includes(e.target.value)));
         goodsTyre.setWidth(newGoodsTyreWidth);
       } else {
         goodsTyre.setWidth(filter.widthSearch);
@@ -41,7 +41,7 @@ const FilterMainBtn = observer(({
       if (e.target.value.length !==0) {
         const newGoodsTyreHeight = goodsTyre._height.filter(
           (itemSearch: any) => (
-          itemSearch.toLowerCase().includes(e.target.value)));
+          itemSearch?.toLowerCase().includes(e.target.value)));
         goodsTyre.setHeight(newGoodsTyreHeight);
       } else {
         goodsTyre.setHeight(filter.heightSearch);
@@ -51,7 +51,7 @@ const FilterMainBtn = observer(({
       if (e.target.value.length !==0) {
         const newGoodsTyreDiameter = goodsTyre._diameter.filter(
           (itemSearch: any) => (
-          itemSearch.toLowerCase().includes(e.target.value)));
+          itemSearch?.toLowerCase().includes(e.target.value)));
         goodsTyre.setDiameter(newGoodsTyreDiameter);
       } else {
         goodsTyre.setDiameter(filter.diameterSearch);
@@ -61,7 +61,7 @@ const FilterMainBtn = observer(({
       if (e.target.value.length !==0) {
         const newGoodsTyreBrand = goodsTyre._brands.filter(
           (itemSearch: any) => (
-          itemSearch.toLowerCase().includes(e.target.value)));
+          itemSearch?.toLowerCase().includes(e.target.value)));
         goodsTyre.setBrands(newGoodsTyreBrand);
       } else {
         goodsTyre.setBrands(filter.brandSearch);

@@ -787,5 +787,13 @@
     "compareGoodsReview" : "отзыв",
     "compareGoodsReviews" : "отзывы",
     "compareGoodsNoGoods" : "НЕ ДОБАВЛЕННО СРАВНЕНИЯ ТОВАРОВ"
-  } 
+  },
+  "contactPage" : {
+    "contacts" : "Контакты",
+    "addressStoreCity" : "Украина, г Харьков",
+    "phonesConnections" : "Связаться с нами",
+    "phonesConnectionsCity" : "Харьков",
+    "messendgers" : "Месенджеры",
+    "shedule" : "График работы интернет-магазина" 
+  }
 }

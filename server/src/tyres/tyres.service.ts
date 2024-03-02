@@ -21,7 +21,6 @@ import { TyreHomologation } from '../properties/entities/tyres/tyre-homologation
 import { StockTyres } from '../stock/entities/stock-tyres.model';
 import { TyreReinforce } from '../properties/entities/tyres/tyre-reinforce.model';
 import sequelize, { Sequelize } from 'sequelize';
-//import { transaction } from 'sequelize-typescript';
 import { TyreModel } from '../properties/entities/tyres/tyre-model.model';
 import { RatingTyres } from '../ratings/entities/rating-tyres.model';
 import { ReviewTyres } from '../reviews/entities/review-tyres.model';
@@ -123,6 +122,10 @@ export class TyresService {
 
   async findAllTyresAdmin() {
     try {
+      const cachedTyresAllAdmin = await this.redisService.get('tyresAllAdmin');
+      if (cachedTyresAllAdmin) {
+        return cachedTyresAllAdmin;
+      }
       const tyresAllAdmin = await this.tyresRepository.findAll({
         include: [
           { model: TyreYear },
@@ -135,6 +138,11 @@ export class TyresService {
           { model: Category },
         ],
       });
+      await this.redisService.set(
+        'tyresAllAdmin',
+        3600,
+        JSON.stringify(tyresAllAdmin),
+      );
       return tyresAllAdmin;
     } catch {
       throw new HttpException(

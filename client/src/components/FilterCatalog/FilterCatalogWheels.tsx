@@ -505,6 +505,7 @@ const FilterCatalogWheels = observer((
                  {t("filterCatalogWheel.filter_title")}  
                 </span>
             </div>
+            {!isMobileFilterTyre || (isMobileFilterTyre && isOpenFilter) ?
             <div className='filterWheelsOption'>
                 <FilterMainBtnWheel 
                     filterAction={filterWidthClick}
@@ -827,7 +828,9 @@ const FilterCatalogWheels = observer((
                     }
                     <p/>
                 </Accordion>
-            </div>       
+            </div> 
+            : null
+            }       
         </div>
     );
 });

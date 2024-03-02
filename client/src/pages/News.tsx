@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../css/Pages/News.css';
 import { yieldToMain } from '../restAPI/postTaskAdmin';
 import NewsMainBox from '../components/news/NewsMainBox';

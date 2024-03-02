@@ -1,12 +1,18 @@
 import React from 'react';
 import '../css/BrandList/BrandListMain.css';
 import { tyreBrandLogo } from '../services/tyreBrandImg.service';
+import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 
 const BrandsListMain = () => {
-  return (
+    const params = useParams<any>();
+    const { i18n } = useTranslation();
+    
+    return (
     <div className='brandListMainContainer'>
         <div className='brandListMainBox'>
-            <a className='brandListMainItem' href='/tyres/goodyear'>
+            <a className='brandListMainItem' 
+                href={i18n.resolvedLanguage === 'uk' && !params.ru ? '/tyres/goodyear' : '/ru/tyres/goodyear'}>
                 <img className='imgBrandListMain' 
                 src={tyreBrandLogo('Goodyear')}
                 width={180}
@@ -24,7 +30,8 @@ const BrandsListMain = () => {
                 />
                 GoodYear
             </a>
-            <a className='brandListMainItem' href='/tyres/continental'>
+            <a className='brandListMainItem' 
+                href={i18n.resolvedLanguage === 'uk' && !params.ru ? '/tyres/continental' : '/ru/tyres/continental'}>
                 <img className='imgBrandListMain' 
                 src={tyreBrandLogo('Continental')} 
                 width={180}
@@ -41,7 +48,8 @@ const BrandsListMain = () => {
                 alt='imgContinental'/>
                 Continental
             </a>
-            <a className='brandListMainItem' href='/tyres/hankook'>
+            <a className='brandListMainItem' 
+                href={i18n.resolvedLanguage === 'uk' && !params.ru ? '/tyres/hankook' : '/ru/tyres/hankook'}>
                 <img className='imgBrandListMain' 
                 src={tyreBrandLogo('Hankook')} 
                 width={180}
@@ -58,7 +66,8 @@ const BrandsListMain = () => {
                 alt='imgHankook'/>
                 Hankook
             </a>
-            <a className='brandListMainItem' href='/tyres/bridgestone'>
+            <a className='brandListMainItem' 
+                href={i18n.resolvedLanguage === 'uk' && !params.ru ? '/tyres/bridgestone' : '/ru/tyres/bridgestone'}>
                 <img className='imgBrandListMain' 
                 src={tyreBrandLogo('Bridgestone')} 
                 width={180}
@@ -75,7 +84,8 @@ const BrandsListMain = () => {
                 alt='imgBridgestone'/>
                 Bridgestone
             </a>
-            <a className='brandListMainItem' href='/tyres/nokian'>
+            <a className='brandListMainItem' 
+                href={i18n.resolvedLanguage === 'uk' && !params.ru ? '/tyres/nokian' : '/ru/tyres/nokian'}>
                 <img className='imgBrandListMain' 
                 src={tyreBrandLogo('Nokian')} 
                 width={180}
@@ -92,7 +102,8 @@ const BrandsListMain = () => {
                 alt='imgNokian'/>
                 Nokian
             </a>
-            <a className='brandListMainItem' href='/tyres/michelin'>
+            <a className='brandListMainItem' 
+                href={i18n.resolvedLanguage === 'uk' && !params.ru ? '/tyres/michelin' : '/ru/tyres/michelin'}>
                 <img className='imgBrandListMain' 
                 src={tyreBrandLogo('Michelin')} 
                 width={180}

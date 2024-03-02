@@ -2,7 +2,7 @@
   font-family: var(--main-font-family);
 }
 h1 {
-  font-size: 50px;
+  font-size: 36px;
   font-family: var(--main-font-family);
   word-break: break-all;
 }
@@ -94,6 +94,9 @@ h2 {
     max-width: 400px;
     max-height: 600px;
   }
+  .rowCatalogTyres {
+    justify-content:center;
+  }
 }
 @media only screen and (max-width: 425px) {
   .popularCatalogTyre {
@@ -105,6 +108,9 @@ h2 {
   .spinerCatalogGoodsLoad {
     max-width: 360px;
     max-height: 500px;
+  }
+  .rowCatalogTyres {
+    justify-content:center;
   }
 }
 @media only screen and (max-width: 380px) {
@@ -119,6 +125,9 @@ h2 {
     max-width: 360px;
     max-height: 500px;
   }
+  .rowCatalogTyres {
+    justify-content:center;
+  }
 }
 @media only screen and (max-width: 375px) {
   .popularCatalogTyre {
@@ -131,6 +140,9 @@ h2 {
     max-width: 300px;
     max-height: 500px;
   }
+  .rowCatalogTyres {
+    justify-content:center;
+  }
 }
 @media only screen and (max-width: 320px) {
   .popularCatalogTyre {
@@ -142,5 +154,8 @@ h2 {
   .spinerCatalogGoodsLoad {
     max-width: 360px;
     max-height: 500px;
+  }
+  .rowCatalogTyres {
+    justify-content:center;
   }
 }
