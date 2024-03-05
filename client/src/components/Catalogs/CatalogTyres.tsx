@@ -224,9 +224,9 @@ const CatalogTyres = observer(() => {
                     }}
                     direction={"row"} />               
             </div>
-            {goodsTyre._tyres.length !== 0 ?
+            {goodsTyre?._tyres?.length !== 0 ?
             <div className="rowCatalogTyres">
-                {goodsTyre._tyres ? goodsTyre._tyres?.map(
+                {goodsTyre?._tyres ? goodsTyre?._tyres?.map(
                     (goods: any) => (
                  <Card
                     key={goods.id}

@@ -22,12 +22,13 @@ const App = observer(() => {
             user.setUser(dataUser);
             user.setIsAuth(true)
           }
-        }).finally(() => setLoading(false))      
+        })
+        //.finally(() => setLoading(false))      
     }, [user])
 
-    if (loading) {
-        return <SpinnerCarRot/>
-    }
+    // if (loading) {
+    //     return <SpinnerCarRot/>
+    // }
     const actionUp = () => {
       document.documentElement.scrollTo({
         top: 0,

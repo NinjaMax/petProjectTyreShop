@@ -138,7 +138,7 @@ const config = {
 module.exports = () => {
     if (isProduction) {
         config.mode = 'production';
-        config.plugins.push(new MiniCssExtractPlugin({ignoreOrder: true}));
+        config.plugins.push(new MiniCssExtractPlugin({ignoreOrder: true}, {filename: "[name].css"}));
     } else {
         config.mode = 'development';
     }

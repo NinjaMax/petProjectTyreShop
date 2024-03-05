@@ -315,8 +315,8 @@ const Main = observer(() => {
         let getOrdersLeader: any[] | undefined = await getAllOrdersLeader();
         if (Array.isArray(getOrdersLeader) && getOrdersLeader?.length > 0) {
           getOrdersLeader?.forEach( async(item: any) => {
-            const getTyre = await getTyresById(item.id);
-            const getWheel = await getWheelsById(item.id);
+            const getTyre: any = await getTyresById(item.id);
+            const getWheel: any = await getWheelsById(item.id);
             if (getTyre) {
               getTyre.typeCard = 'tyre';
               setLeaderOrder(

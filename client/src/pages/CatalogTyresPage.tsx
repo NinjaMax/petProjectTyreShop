@@ -1282,15 +1282,15 @@ const CatalogTyresPage = observer(() => {
             prevBtnAction={prevBtnReviewGoods} 
             nextBtnAction={nextBtnReviewGoods}    
             buttonPosition={{
-              prevBtnLeft: goodsTyre._tyres.length !== 0 && reviewGoodsData?.length !== 0 ? -7 
+              prevBtnLeft: goodsTyre?._tyres?.length !== 0 && reviewGoodsData?.length !== 0 ? -7 
               : reviewGoodsData?.length === 0 ? -7 
               : undefined, 
-              prevTop: goodsTyre._tyres.length !== 0 && reviewGoodsData?.length !== 0 ? -140
+              prevTop: goodsTyre?._tyres?.length !== 0 && reviewGoodsData?.length !== 0 ? -140
               : reviewGoodsData?.length === 0 ? -40 
               : undefined, 
-              nextBtnRight: goodsTyre._tyres.length !== 0 && reviewGoodsData?.length !== 0 ? -95 
+              nextBtnRight: goodsTyre?._tyres?.length !== 0 && reviewGoodsData?.length !== 0 ? -95 
               : undefined,  
-              nextTop: goodsTyre._tyres.length !== 0 && reviewGoodsData?.length !== 0 ? -140 
+              nextTop: goodsTyre?._tyres?.length !== 0 && reviewGoodsData?.length !== 0 ? -140 
               : undefined, 
             }}      
           >
@@ -1328,14 +1328,14 @@ const CatalogTyresPage = observer(() => {
             prevBtnAction={prevBtnReviewGoods} 
             nextBtnAction={nextBtnReviewGoods}    
             buttonPosition={{
-              prevBtnLeft: goodsWheel._wheels.length !== 0 ? 450
+              prevBtnLeft: goodsWheel?._wheels?.length !== 0 ? 450
               : reviewGoodsData?.length === 0 ? -7 
               : undefined,  
-              prevTop: goodsWheel._wheels.length !== 0 ? 345 
+              prevTop: goodsWheel?._wheels?.length !== 0 ? 345 
               : reviewGoodsData?.length === 0 ? -75 
               : undefined,  
-              nextBtnRight: goodsWheel._wheels.length !== 0 && reviewGoodsData?.length !== 0 ? 140 : undefined,  
-              nextTop: goodsWheel._wheels.length !== 0 && reviewGoodsData?.length !== 0 ? 345 : undefined, 
+              nextBtnRight: goodsWheel?._wheels?.length !== 0 && reviewGoodsData?.length !== 0 ? 140 : undefined,  
+              nextTop: goodsWheel?._wheels?.length !== 0 && reviewGoodsData?.length !== 0 ? 345 : undefined, 
             }}      
           >
             <div >

@@ -7,7 +7,7 @@ import { join } from 'path';
 import session from 'express-session';
 import RedisStore from 'connect-redis';
 import { createClient } from 'redis';
-import csurf from 'csurf';
+//import csurf from 'csurf';
 
 async function bootstrap() {
   try {
@@ -52,7 +52,7 @@ async function bootstrap() {
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
       credentials: true, // need to change false
     });
-    app.use(csurf());
+    //app.use(csurf());
     const PORT: number = +configService.get('PORT' || '5000');
     await app.listen(PORT, () => console.log(`Server Start on ${PORT}`));
   } catch (error) {

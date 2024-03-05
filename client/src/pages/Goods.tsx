@@ -109,38 +109,74 @@ const GoodsPage = observer(() => {
   useEffect(() => {
     let isMounted = false;
     const getProductByFullName = async () => {
+      const taskProductFullname: any[] = [
+        getTyresByFullName,
+        // getTyresByModel,
+        getWheelByFullName,
+        // getWheelsByModel
+      ];
       const getGoodsId: string = 
       JSON.parse(localStorage.getItem('goodsId')!);
-      if (!isMounted && !getGoodsId) {
-        const getProductByName = await getTyresByFullName(params.goodsItem);
-        const getProductTyreByModel = await getTyresByModel(params.goodsItem);
-        const getProductWheel = await getWheelByFullName(params.goodsItem);
-        const getProductWheelByModel = await getWheelsByModel(params.goodsItem);
-        if (getProductByName) {
-          goodsTyre.setProduct(getProductByName);
+      let i: number = 0; 
+      while (taskProductFullname.length > i) {
+        if (!isMounted && taskProductFullname[i] === getTyresByFullName && !getGoodsId && 
+            !goodsTyre?._product?.id && !paramsModel
+          ) {
+          const getProductByName = await taskProductFullname[i](params.goodsItem);
+          if (getProductByName) {
+            goodsTyre.setProduct(getProductByName);
+          } else {
+            const getProductTyreByModel = await getTyresByModel(params.goodsItem);
+            if (getProductTyreByModel) {
+              goodsTyre.setProduct(getProductTyreByModel?.tyres[0]);
+            } 
+            // else if (!getProductTyreByModel && !paramsModel){
+            //   history.push(NOT_FOUND_ROUTE);
+            // }
+          }
         }
-        if (getProductTyreByModel) {
-          goodsTyre.setProduct(getProductTyreByModel?.tyres[0]);
+        // if (!isMounted && taskProductFullname[i] === getTyresByModel && !getGoodsId && 
+        //   !goodsTyre?._product?.id_model && !paramsModel
+        // ) {
+        //   const getProductTyreByModel = await taskProductFullname[i](params.goodsItem);
+        //   if (getProductTyreByModel) {
+        //     goodsTyre.setProduct(getProductTyreByModel?.tyres[0]);
+        //   }
+        // }
+        if (!isMounted && taskProductFullname[i] === getWheelByFullName && !getGoodsId && 
+          !goodsWheel?._product?.id && !paramsModel
+        ) {
+          const getProductWheel = await taskProductFullname[i](params.goodsItem);
+          if (getProductWheel) {
+            goodsWheel.setProduct(getProductWheel);
+          } else {
+            const getProductWheelByModel = await getWheelsByModel(params.goodsItem);
+            if (getProductWheelByModel) {
+              goodsTyre.setProduct(getProductWheelByModel?.wheels[0]);
+            } 
+            // else if (!getProductWheelByModel && !paramsModel){
+            //   history.push(NOT_FOUND_ROUTE);
+            // }
+          }
         }
-        if (getProductWheel) {
-          goodsWheel.setProduct(getProductWheel);
-        }
-        if (getProductWheelByModel) {
-          localStorage.setItem('goodsId', getProductWheelByModel?.wheels[0]?.id);
-        }
-        if (!getProductByName && 
-          !getProductTyreByModel && 
-          !getProductWheel && 
-          !getProductWheelByModel) {
-            history.push(NOT_FOUND_ROUTE);
-        }
+        // if (!isMounted && taskProductFullname[i] === getWheelsByModel && !getGoodsId && 
+        //   !goodsWheel?._product?.id_model && !paramsModel
+        // ) {
+        //   const getProductWheelByModel = await taskProductFullname[i](params.goodsItem);
+        //   if (getProductWheelByModel) {
+        //     goodsWheel.setProduct(getProductWheelByModel?.wheels[0]);
+        //   }
+        // }
+        const task = taskProductFullname.shift();
+        task();
+        await yieldToMain();
       }
     };
     getProductByFullName();
     return () => {
       isMounted = true;
     };
-  },[goodsTyre, goodsWheel, history, params.goodsItem]);
+  },[goodsTyre, goodsWheel, history, params.goodsItem, paramsModel]);
   
   useEffect(() => {
     let isMounted = false;
@@ -176,13 +212,13 @@ const GoodsPage = observer(() => {
       JSON.parse(localStorage.getItem('goodsId')!);
     let i: number = 0; 
     while (taskProduct.length > i) {
-      if (!isMounted && taskProduct[i] === getTyresByIdParam) {
+      if (!isMounted && taskProduct[i] === getTyresByIdParam && getGoodsId) {
         const getProduct: any = await taskProduct[i](getGoodsId);
         if (getProduct) {
           goodsTyre.setProduct(getProduct);
         }
       }
-      if (!isMounted && taskProduct[i] === getWheelsByIdParam) {
+      if (!isMounted && taskProduct[i] === getWheelsByIdParam && getGoodsId) {
         const getProductWheel: any = await taskProduct[i](getGoodsId);
         if (getProductWheel) {
           goodsWheel.setProduct(getProductWheel);
@@ -450,6 +486,11 @@ const GoodsPage = observer(() => {
         if (history.location.hash === '#vidguki') {
           setChangeTabGoods("vidguki");
         }
+        // if (history.location.hash !== '#vidguki' && 
+        //   (!goodsWheel._product?.full_name || 
+        //   !goodsTyre._product?.full_name) && !paramsModel) {
+        //     history.push(NOT_FOUND_ROUTE);
+        // }
       }
     }
     getPathCard();
@@ -466,8 +507,17 @@ const GoodsPage = observer(() => {
     goodsWheel._product?.wheel_brand?.brand, 
     goodsWheel._product?.wheel_model?.model, 
     history, 
-    params.goodsItem
-  ]) ;
+    params.goodsItem,
+    paramsModel
+  ]);
+
+  // useEffect(() => {
+  //       if (history.location.hash !== '#vidguki' && 
+  //         (!goodsWheel._product?.full_name || 
+  //         !goodsTyre._product?.full_name) && !paramsModel) {
+  //           history.push(NOT_FOUND_ROUTE);
+  //       }
+  // },[goodsTyre._product?.full_name, goodsWheel._product?.full_name, history, paramsModel]);
 
   const handleChangeTab = (e: any) => {
     setChangeTabGoods(e.target.value);

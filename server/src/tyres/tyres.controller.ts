@@ -13,10 +13,8 @@ import { CreateTyreDto } from './dto/create-tyre.dto';
 import { UpdateTyreDto } from './dto/update-tyre.dto';
 import { GetTyreDto } from './dto/get-tyre.dto';
 
-@Controller('api/tyres')
-
+@Controller('tyres')
 export class TyresController {
-
   constructor(private readonly tyresService: TyresService) {}
 
   @Post()
