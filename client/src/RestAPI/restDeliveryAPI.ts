@@ -1,5 +1,4 @@
 import { $deliveryPost } from './index';
-import { CalcDelivery } from './types/CalcDelivery.type';
 
 const getCityInRegionDelivery = async (refRegionId: string | number) =>
   await $deliveryPost.get(`/GetAreasList?culture=uk-UA&fl_all=false&regionId=${refRegionId}&country=1`,

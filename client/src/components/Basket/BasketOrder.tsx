@@ -57,7 +57,7 @@ const BasketOrder = observer(() => {
     const [deliverySum, setDeliverySum] = useState<number | null>(0);
     const [payMethod, setPayMethod] = useState<string | null>();
     const [getIdOrder, setGetIdOrder] = useState<number>();
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     useEffect(() => window.scrollTo(0, 0), []);
 
@@ -75,7 +75,6 @@ const BasketOrder = observer(() => {
                     setBasketData({
                         ...getBasket,
                         id_customer: customer.id_customer,
-                        //name: '',
                     });
                     setGoodsBasket([...getBasket?.basket_storage.sort(
                         (a: any, b: any) => (+b.id_basket_storage) - (+a.id_basket_storage)
@@ -180,7 +179,6 @@ const BasketOrder = observer(() => {
             ref_weight: dataSupplier.goodsDescription,
             id_basket_storage: taskGetSupplier[i].id_basket_storage,
         });
-        console.log('DATA_SUP_CITY: ', dataSupCity);
         if (dataSupCity.includes('Харків') && depart?.address?.includes('м. Харків')) {
             setTakeOut(true); 
         } else {
@@ -188,7 +186,6 @@ const BasketOrder = observer(() => {
         }
         if (taskGetSupplier[i] && dataSupplier && depart?.delivery === 'Нова Пошта') {
             let getCalcNovaPoshta = await getCalcPriceNovaPoshta(dataSupplier);
-            console.log('getCalcNovaPoshta: ', getCalcNovaPoshta.data);
             if (getCalcNovaPoshta.success === true) {
                 setCostNovaPoshta(oldCalc => { 
                 return [...oldCalc!,
@@ -275,7 +272,6 @@ const BasketOrder = observer(() => {
             }
             });
             setPayMethod('Карта/Терминал (LiqPay)');
-            //setCommitionPay((Number((sumGoods! * 0.015).toFixed())));
         }
         if (!isMounted && costNovaPoshta && delivery === 'Нова Пошта') {
             setDeliverySum(Number(
@@ -553,11 +549,7 @@ const BasketOrder = observer(() => {
             if (updateBasketDelivery?.status === 200) {
                 setBasketData({...updateBasketDelivery?.data})  
             }
-            //console.log('CHOOSE_DELIVERY: ', deliverySelect);
-            // if (deliverySelect === "Нова Пошта" || 
-            //     deliverySelect === "Delivery") {
             if (deliverySelect === "Нова Пошта" || deliverySelect === "Delivery") {
-                //console.log('CALCULATE_DELIVERY')
                 basketSupplierGoods(updateBasketDelivery?.data, updateBasketDelivery?.data.pay_view);
             }
         } catch (error) {
@@ -574,7 +566,6 @@ const BasketOrder = observer(() => {
             setPayMethod(e.currentTarget.getAttribute('data-select'));
             if (e.currentTarget.getAttribute('data-select') !== t('basketOrder.method_back_pay_title') || 
             e.currentTarget.getAttribute('data-select') !== ('Готівкою' || 'Наличными')) {
-                //setCommitionPay((Number((sumGoods! * 0.015).toFixed())));
                 const updateBasketPay = await updateBasket(
                 {...basketData,
                     pay_view: e.currentTarget.getAttribute('data-select'),
@@ -637,7 +628,6 @@ const BasketOrder = observer(() => {
                 id: e.currentTarget.getAttribute('data-delivery'),
             });
             setCityListActive(false);
-        
             const updateBasketCityDelivery = await updateBasket(
                 {...basketData,
                     address: e.target.textContent,
@@ -724,7 +714,6 @@ const BasketOrder = observer(() => {
         try {
             await removeBasketStorageGoods(e.target.getAttribute('data-id'));
             const removeBasketGoods: any = await getBasketOrder();
-
             if (removeBasketGoods?.basket_storage) {
                 setGoodsBasket([...removeBasketGoods?.basket_storage.sort(
                     (a: any, b: any) => (+b.id_basket_storage) - (+a.id_basket_storage)
@@ -835,8 +824,7 @@ const BasketOrder = observer(() => {
                         goodsBasket?.find(basket => basket.id_storage === 2) ? '+' : null,
                     });
                     basketData?.basket_storage?.forEach( async(item: CreateGoods):Promise<any> => {
-                        let goodsToOrder = await createGoodsToOrderBasket(item, createOrder?.data?.id_order!); 
-                        //console.log('ADD_GOODS_TO_ORDER: ', goodsToOrder)
+                        let goodsToOrder = await createGoodsToOrderBasket(item, createOrder?.data?.id_order!);
                         await addGoodsToOrder(goodsToOrder);
                     });
                     if(createOrder?.data?.id_order) {
@@ -1025,11 +1013,8 @@ const BasketOrder = observer(() => {
                                 </option>
                         {chooseCity && departListNovaPoshta?.map((depart: IDepart) =>
                                 <option 
-                                    //style={{'width': '130px'} as React.CSSProperties}
-                                    //className='basketSelectDepartOption'
                                     key={depart?.SiteKey}
                                     title={depart?.Description}
-                                    //label={depart?.Description}
                                     value={`${depart?.Ref}//${depart?.Description}//${depart?.CityRef}`}
                                 >
                                 {depart?.Description}
@@ -1068,7 +1053,6 @@ const BasketOrder = observer(() => {
                                 <option 
                                     key={depart?.id}
                                     title={depart?.name + ', ' + depart?.address}
-                                    //label={depart?.name + ', ' + depart?.address}
                                     value={`${depart?.id}//${depart?.name + ', ' + depart?.address}//${depart?.CityId}`}
                                 >
                                 {depart?.name + ', ' + depart?.address}

@@ -25,7 +25,7 @@ const ReviewCreate = observer(({
       } = useForm<FormValues>({
         criteriaMode: 'all',
     });
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     
     useEffect(() => {
         register("rating_overall", { required: 'Вкажіть рейтинг / Укажите рейтинг',

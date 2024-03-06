@@ -1,14 +1,6 @@
-import React, { useEffect, useState } from 'react';
-//import { useForm } from 'react-hook-form';
+import React, { useState } from 'react';
 import '../../../css/AdminComponentCss/AdminContentCss/AdminUploadContent.css'
 import { uploadPriceTyreForm, uploadPriceWheelForm } from '../../../restAPI/restAdminAPI';
-
-interface IUploader {
-    register(arg:string): void;
-    handleSubmit(arg0: any):void;
-    onSubmit(arg0: {arg1: any}):void;
-    file: (string | Blob)[];
-}
 
 const AdminUploaderContent = () => {
     //const {register, handleSubmit} = useForm<IUploader>();
@@ -22,7 +14,6 @@ const AdminUploaderContent = () => {
     const [messageWheel, setMessageWheel] = useState("");
     const [messageBattery, setMessageBattery] = useState("");
     const [messageOils, setMessageOils] = useState("");
-    //const [fileInfos, setFileInfos] = useState([]);
 
     const selectFile = (event: any) => {
         setSelectedFiles(event.target.files);
@@ -31,7 +22,6 @@ const AdminUploaderContent = () => {
 
     const uploadTyrePrice = async () => {
         let currentFile = selectedFiles![0];
-        console.log('SELECTED_FILE: ', currentFile);
         setProgress(0);
         setCurrentFile(currentFile);
 
@@ -40,13 +30,7 @@ const AdminUploaderContent = () => {
           })
             .then((response:any) => {
               setMessage(response?.data);
-              console.log('RESP_DATA_MESSAGE: ',response.data)
-              console.log('RESP_DATA: ',response.data)
-              //return getFiles();
             })
-            // .then((files:any) => {
-            //   setFileInfos(files?.data);
-            // })
             .catch((error) => {
               setProgress(0);
               setMessage("Could not upload the file!");
@@ -59,7 +43,6 @@ const AdminUploaderContent = () => {
 
     const uploadWheelPrice = async () => {
         let currentFile = selectedFiles![0];
-        console.log('SELECTED_FILE: ', currentFile);
         setProgressWheel(0);
         setCurrentFile(currentFile);
 
@@ -68,13 +51,7 @@ const AdminUploaderContent = () => {
           })
             .then((response:any) => {
               setMessageWheel(response?.data);
-              console.log('RESP_DATA_MESSAGE: ',response.data)
-              console.log('RESP_DATA: ',response.data)
-              //return getFiles();
             })
-            // .then((files:any) => {
-            //   setFileInfos(files?.data);
-            // })
             .catch((error) => {
               setProgressWheel(0);
               setMessageWheel("Could not upload the file!");
@@ -89,7 +66,6 @@ const AdminUploaderContent = () => {
         <div className="uploadContainer">
             <div className='uploadItem'>
                 Завантаження Прайс Шин (csv) <i className="fas fa-file-csv"></i>
-                {/* <form method="post" encType="multipart/form-data"> */}
                 {currentFile && (
                     <div className="progress">
                         <div
@@ -108,11 +84,7 @@ const AdminUploaderContent = () => {
                         <label htmlFor="file">Виберіть Прайс в форматі CSV для завантаження </label>
                         <input 
                         type="file" 
-                        //id="file"  
-                        //multiple 
                         onChange={selectFile}
-                        //{...register("file")}
-                        //name="file"
                         accept=".csv"
                         />
                     </div>
@@ -120,7 +92,6 @@ const AdminUploaderContent = () => {
                     <button 
                     disabled={!selectedFiles}
                     onClick={uploadTyrePrice}
-                    //onSubmit={onSubmit}
                     >Завантажити</button>
                 </div>
                 <div className="alert alert-light" role="alert">
@@ -147,11 +118,7 @@ const AdminUploaderContent = () => {
                         <label htmlFor="file">Виберіть Прайс в форматі CSV для завантаження </label>
                         <input 
                         type="file" 
-                        //id="file"  
-                        //multiple 
                         onChange={selectFile}
-                        //{...register("file")}
-                        //name="file"
                         accept=".csv"
                         />
                     </div>
@@ -159,7 +126,6 @@ const AdminUploaderContent = () => {
                     <button 
                     disabled={!selectedFiles}
                     onClick={uploadWheelPrice}
-                    //onSubmit={onSubmit}
                     >Завантажити</button>
                 </div>
                 <div className="alert alert-light" role="alert">
@@ -186,11 +152,7 @@ const AdminUploaderContent = () => {
                         <label htmlFor="file">Виберіть Прайс в форматі CSV для завантаження </label>
                         <input 
                         type="file" 
-                        //id="file"  
-                        //multiple 
                         onChange={selectFile}
-                        //{...register("file")}
-                        //name="file"
                         accept=".csv"
                         />
                     </div>
@@ -198,7 +160,6 @@ const AdminUploaderContent = () => {
                     <button 
                     disabled={!selectedFiles}
                     onClick={() => console.log('ЗАГРУЗКА ПРАЙС АКБ')}
-                    //onSubmit={onSubmit}
                     >Завантажити</button>
                 </div>
                 <div className="alert alert-light" role="alert">
@@ -225,11 +186,7 @@ const AdminUploaderContent = () => {
                         <label htmlFor="file">Виберіть Прайс в форматі CSV для завантаження </label>
                         <input 
                         type="file" 
-                        //id="file"  
-                        //multiple 
                         onChange={selectFile}
-                        //{...register("file")}
-                        //name="file"
                         accept=".csv"
                         />
                     </div>
@@ -237,7 +194,6 @@ const AdminUploaderContent = () => {
                     <button 
                     disabled={!selectedFiles}
                     onClick={() => console.log('ЗАГРУЗКА ПРАЙС АВТОХІМІЯ')}
-                    //onSubmit={onSubmit}
                     >Завантажити</button>
                 </div>
                 <div className="alert alert-light" role="alert">

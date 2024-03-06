@@ -1,13 +1,6 @@
 import React, {Fragment} from 'react';
 import { TyreStockPriceRow } from './types/TyreRowStockPrice.type';
 
-// type IPriceTyreRow = {
-//     id: number;
-//     price_wholesale: number; 
-//     price: number;
-//     price_plus_delivery: number;
-// }
-
 const AdminTyreStockPriceRow = (
     {stockTyres, priceTyres}: TyreStockPriceRow
     ) => {

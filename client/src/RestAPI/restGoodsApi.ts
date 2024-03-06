@@ -442,17 +442,6 @@ const getAllTyresDiametersByModel = async (
     return data;
 }
 
-const getAllWheelsDiametersByModel = async (
-    id_model: string,
-) => {
-    const {data} = await $hostGet.get('/properties/wheels/diameter/by-model',
-    {params: {
-        model: id_model ?? 0,
-    }
-    })
-    return data;
-}
-
 const getAllWheelsDiametersByBrand = async (
     id_brand: string,
 ) => {

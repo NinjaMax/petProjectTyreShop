@@ -9,43 +9,12 @@ type AdminMainContentType = {
     orders: any [] | null;
 };
 
-interface IMainContent {
-    comments: [] | null;
-    version: number; 
-    totalCharts: number; 
-    charts: { name: string; chartType: string; data: (string | number)[][];
-    options: { title: string; subtitle?: string;};
-    width: string;
-    height: string; }[]; 
-}
-
 const AdminMainContent = ({comments, orders}: AdminMainContentType) => {
-    //const [lastComments, setLastComments] = useState<[] | null>();
     const [dataOrder, setDataOrder] = useState<any>();
     const [orderOptions, setOrderOptions] = useState<any>();
     const [dataByManager, setDataByManager] =useState<any>();
     const [byManagerOptions, setByManagerOptions] =useState<any>();
-
-    // useEffect(() => {
-    //   //if(data){
-    //     setDataCat(responseCat);
-    //     setDataManager(responseManger);
-    //     setDataOrders(responseSales);
-    //   //}
-    // }, [dataCat, dataManager, dataOrders]);
-
-    const ordersData: any[] = [
-        {createdAt: '2023-12-27T12:44:54.721Z', user: {name: 'Max'}, total_cost: 10624},
-        {createdAt: '2023-12-26T10:44:54.721Z', user: {name: 'Артем'}, total_cost: 21624},
-        {createdAt: '2023-12-26T09:44:54.721Z', user: {name: 'Max'}, total_cost: 20000},
-        {createdAt: '2023-12-26T13:44:54.721Z', user: {name: 'Артем'}, total_cost: 15020},
-        {createdAt: '2023-12-25T12:40:54.721Z', user: {name: 'Артем'}, total_cost: 10224},
-        {createdAt: '2023-12-25T12:04:54.721Z', user: {name: 'Max'}, total_cost: 8216},
-        {createdAt: '2023-12-24T12:14:50.721Z', user: {name: 'Max'}, total_cost: 9604},
-        {createdAt: '2023-12-23T12:14:50.721Z', user: {name: 'Max'}, total_cost: 21000},
-        {createdAt: '2023-12-22T12:14:50.721Z', user: {name: 'Max'}, total_cost: 7524},
-        {createdAt: '2023-12-21T12:14:50.721Z', user: {name: 'Max'}, total_cost: 11124},
-    ];
+    
     useEffect(() => {
         if (orders) {
             const ordersToChart: any[] = orders!.slice(0, 70).map(

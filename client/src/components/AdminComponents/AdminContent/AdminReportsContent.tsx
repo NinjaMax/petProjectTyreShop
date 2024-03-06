@@ -4,58 +4,25 @@ import { Chart } from "react-google-charts";
 import ButtonAction from '../../buttons/ButtonAction';
 import { getPaynmentAllBydate, getSalesAllBydate } from '../../../restAPI/restAdminAPI';
 
-type IData = { 
-    name: string; 
-    chartType: string; 
-    data: (string | number)[][]; 
-    options: { title: string; subtitle?: undefined; }; 
-    width: string; 
-    height: string; 
-}
-
-type IResponse = { 
-    version: number; 
-    totalCharts: number; 
-    charts: [ IData 
-       // { name: string; chartType: string; data: (string | number)[][]; options: { title: string; subtitle?: undefined; }; width: string; height: string; }
-    ]
-}
-
 type ProfitOverAll = {
     sumSalesAll: number;
     sumPayIncomeAll: number;
     sumPayOutcomeAll: number;
 };
 
-type DateConditions = {date_start: string | null, date_end: string | null};
-
 const AdminReportsContent = () => {
     const [activeTitle, setActiveTitle] = useState<string>('');
-    const [dataRemainderDate, setDataRemainderDate] = useState<any [] | null>();
     const [dataProfitDate, setDataProfitDate] = useState<any [] | null>();
     const [dataProfitAllDate, setDataProfitAllDate] = useState<ProfitOverAll | null>();
     const [dataSalesDate, setDataSalesDate] = useState<any [] | null>();
     const [dateCondStart, setDateCondStart] = useState<string | null>();
     const [dateCondEnd, setDateCondEnd] = useState<string | null>();
-    //const [data, setData] = useState<IResponse | null>(null);
 
-    //useEffect(() => {
-    // let getData = true;
-
-    // if(data && getData){
-    //      setData(response);
-    // }
-
-    //   return () => { getData = false;}
-
-    // }, [data]);
     const activeChartSales = async () => {
         //try {
             if (dateCondStart && dateCondEnd) {
                 if(String(activeTitle) === 'Продажі') {
-                    //console.log('CREATE_REPORT', dateCondStart, dateCondEnd);
                     const getSalesReport: any = await getSalesAllBydate(dateCondStart, dateCondEnd);
-                    //console.log('SALES_DATA: ', getSalesReport?.data);
                     if (getSalesReport?.status === 200) {
                         const salesToChart: any[] = getSalesReport?.data.rows.map(
                         (entity: any) => ({date: new Date(entity.updatedAt).toLocaleDateString(), 
@@ -68,26 +35,11 @@ const AdminReportsContent = () => {
                             return acc;
                         }, {} 
                         );
-                        // const reduceTatalCostSales = salesToChart.reduce(
-                        //     (acc: any, item: any, index: any) => 
-                        //         { 
-                        //         acc[item.date] = (acc[item.date] || 0) + item.total_cost;
-                        //         return acc;
-                        //         }
-                        //     , {} 
-                        // );
-                        //console.log('REDUCE_SALES: ', reduceSalesCount);
-                   
+                       
                         const getSales = Object.entries(reduceSalesCount);
-                        //console.log('SALES_OBJ: ', getSales);
-                        //const getTotalCostSales = Object.entries(reduceTatalCostSales);
                     
                         getSales.map((item: any) => item.push(getSalesReport?.data.count));
-                        // getSales.map((item: any, index: any) => 
-                        //     //console.log('SALES_MAP: ', item[0], getTotalCostSales[index][0]));
-                        //     item[0] === getTotalCostSales[index][0] ? 
-                        //     item.push(getTotalCostSales[index][1]) : item.push(0));
-                        //console.log('FOR_REPORT_SALES: ', getSales);
+
                         setDataSalesDate([
                             [
                                 "Дата",
@@ -99,17 +51,13 @@ const AdminReportsContent = () => {
                     }
                 }
                 if (activeTitle === 'Прибуток') {
-                    //console.log('CREATE_REPORT', dateCondStart, dateCondEnd);
                     const getPaynment: any = await getPaynmentAllBydate(dateCondStart, dateCondEnd);
                     const getSalesReportProfit: any = await getSalesAllBydate(dateCondStart, dateCondEnd);
-                    //console.log('SALES_PROFIT_DATA: ', getSalesReportProfit?.data);
-                    //console.log('PAYNMENT_PROFIT_DATA: ', getPaynment?.data);
                     if (getPaynment?.status === 200 && getSalesReportProfit?.status === 200) {
                         const salesProfToChart: any[] = [...getPaynment?.data.rows, ...getSalesReportProfit?.data.rows].map(
                             (entity: any) => ({date: new Date(entity.updatedAt).toLocaleDateString(), 
                                 count: 1, total_cost: entity?.order?.total_cost ?? 0,                        })
                             ).sort((a: any, b: any) => a.date.localeCompare(b.date));
-                        //console.log('SALES_TO_CHART: ', salesProfToChart);  
                         const paynmentIn: any[] = getPaynment?.data.rows.filter((value: any) =>
                             value.id_paytype === 1
                         ).map((items: any) => ({date: new Date(items.createdAt).toLocaleDateString(), price: items.price})
@@ -147,37 +95,23 @@ const AdminReportsContent = () => {
                         const reduceSalesnAll = salesProfToChart.reduce(
                             (acc: any, item: any) => acc + item.total_cost, 0
                         );
-                        //console.log('REDUCE_SALES: ', reduceSalesCount);
-                        //console.log('REDUCE_SALES_ALL: ', reduceSalesnAll);
-                        //console.log('REDUCE_PAYNMENT_IN: ', reducePaynmentIn);
-                        //console.log('REDUCE_PAYNMENT_IN_ALL: ', reducePaynmentinAll);
-                        //console.log('REDUCE_PAYNMENT_OUT: ', reducePaynmentOut);
-                        //console.log('REDUCE_PAYNMENT_OUT_ALL: ', reducePaynmentOutAll);
+                       
                         const getSalesProfit: any[] = Object.entries(reduceSalesCount);
                         const getPaynmentIn: any[] = Object.entries(reducePaynmentIn);
                         const getPaynmentOut: any[] = Object.entries(reducePaynmentOut);
-                        //console.log('SALES_OBJ: ', getSalesProfit);
-                        //console.log('SALES_OBJ_PAY_IN: ', getPaynmentIn);
-                        //console.log('SALES_OBJ_PAY_OUT: ', getPaynmentOut);
-                        //const getTotalCostSales = Object.entries(reduceTatalCostSales);
-                            
-                        //getSalesProfit.map((item: any) => item.push(getSalesReportProfit?.data.count));
+                
                         getSalesProfit.map((item: any, index: any) => 
-                            //console.log('SALES_MAP: ', item[0], getTotalCostSales[index][0]));
                             getPaynmentOut?.find((entity: any) => entity?.[0] === item[0]) ? 
                             item.push(getPaynmentOut?.find((entity: any) => entity?.[0] === item[0])[1]) : 
                             item.push(0)
                         );
                         
                         getSalesProfit.map((item: any, index: any) => 
-                            //console.log('SALES_MAP: ', getPaynmentIn?.find((entity: any) => entity?.[0] === item[0]) ? getPaynmentIn?.find((entity: any) => entity?.[0] === item[0])[1] : null),
-                            //console.log('SALES_MAP_PUSH: ', getPaynmentIn)
                             getPaynmentIn?.find((entity: any) => entity?.[0] === item[0]) ? 
                             item.push(getPaynmentIn?.find((entity: any) => entity?.[0] === item[0])[1]) : 
                             item.push(0)
                         );
 
-                        //console.log('FOR_REPORT_SALES: ', getSalesProfit);
                         setDataProfitDate([
                             [
                                 "Дата",
@@ -195,43 +129,23 @@ const AdminReportsContent = () => {
                     }
                 }
                 if (activeTitle === 'Залишки') {
-                    //console.log('CREATE_REPORT', dateCondStart, dateCondEnd);
-                    //const getPaynment: any = await getPaynmentAllBydate(dateCondStart, dateCondEnd);
                     const getSalesReportProfit: any = await getSalesAllBydate(dateCondStart, dateCondEnd);
-                    //console.log('SALES_PROFIT_DATA: ', getSalesReportProfit?.data);
-                    //console.log('PAYNMENT_PROFIT_DATA: ', getPaynment?.data);
                     if (getSalesReportProfit?.status === 200 && getSalesReportProfit?.status === 200) {
                         const salesProfToChart: any[] = getSalesReportProfit?.data.rows.map(
                             (entity: any) => ({date: new Date(entity.updatedAt).toLocaleDateString(), 
                                 count: 1, countAll: getSalesReportProfit?.data.count, total_cost: entity?.order?.total_cost ?? 0,                        })
                             ).sort((a: any, b: any) => a.date.localeCompare(b.date));
-                        //console.log('SALES_TO_CHART: ', salesProfToChart);   
                         const reduceSalesCount = salesProfToChart.reduce(
                             (acc: any, item: any, index: any) => { 
                                 acc[item.date] = (acc[item.date] || 0) + item.total_cost;
                                 return acc;
                             }, {} 
                         );
-                        // const reduceTatalCostSales = salesToChart.reduce(
-                        //     (acc: any, item: any, index: any) => 
-                        //         { 
-                        //         acc[item.date] = (acc[item.date] || 0) + item.total_cost;
-                        //         return acc;
-                        //         }
-                        //     , {} 
-                        // );
-                        //console.log('REDUCE_SALES: ', reduceSalesCount);
-                           
+ 
                         const getSales = Object.entries(reduceSalesCount);
-                        //console.log('SALES_OBJ: ', getSales);
-                        //const getTotalCostSales = Object.entries(reduceTatalCostSales);
                             
                         getSales.map((item: any) => item.push(getSalesReportProfit?.data.count));
-                        // getSales.map((item: any, index: any) => 
-                        //     //console.log('SALES_MAP: ', item[0], getTotalCostSales[index][0]));
-                        //     item[0] === getTotalCostSales[index][0] ? 
-                        //     item.push(getTotalCostSales[index][1]) : item.push(0));
-                        //console.log('FOR_REPORT_SALES: ', getSales);
+
                         setDataSalesDate([
                             [
                                 "Дата",
@@ -263,14 +177,8 @@ const AdminReportsContent = () => {
     };
 
     const chooseTitleReport = (e: any) => {
-        //setDateCondStart(null);
-        //setDateCondEnd(null);
         setActiveTitle(e.target.textContent);
     };
-
-    // console.log('DATE_START: ', dateCondStart);
-    // console.log('DATE_END: ', dateCondEnd);
-    // console.log('ACTIVE_TITLE: ', activeTitle);
 
     return (
         <div className='admReportContentBox'>

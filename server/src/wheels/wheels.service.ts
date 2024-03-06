@@ -220,6 +220,11 @@ export class WheelsService {
     sort: string,
   ) {
     try {
+      const setWidthFilterMain: any[] | null = [];
+      const setDiameterFilterMain: any[] | null = [];
+      const setBrandFilterMain: any[] | null = [];
+      const setBoltCountFilterMain: any[] | null = [];
+      const setTypeFilterMain: any[] | null = [];
       const cachedWheelsMain = await this.redisService.get(
         'wheel' + width + diameter + bolt_count + brand + type + sort + 'main',
       );
@@ -282,6 +287,15 @@ export class WheelsService {
                 : { model: WheelType },
             ],
           });
+        wheelsAllWithoutLimitMain?.rows?.map((item: any) => {
+          return (
+            setWidthFilterMain?.push(item?.width?.width),
+            setDiameterFilterMain?.push(item?.diameter?.diameter),
+            setBrandFilterMain?.push(item?.wheel_brand?.brand),
+            setBoltCountFilterMain?.push(item?.bolt_count?.bolt_count),
+            setTypeFilterMain?.push(item?.type?.type)
+          )
+        });
         await this.redisService.set(
           'wheel' +
             width +
@@ -292,9 +306,25 @@ export class WheelsService {
             sort +
             'main',
           86400,
-          JSON.stringify(wheelsAllWithoutLimitMain),
+          JSON.stringify({
+            rows: {
+              width: Array.from(new Set(setWidthFilterMain)),
+              diameter: Array.from(new Set(setDiameterFilterMain)),
+              brand: Array.from(new Set(setBrandFilterMain)),
+              bolt_count: Array.from(new Set(setBoltCountFilterMain)),
+              type: Array.from(new Set(setTypeFilterMain)),
+            }
+          })
         );
-        return wheelsAllWithoutLimitMain;
+        return {
+          rows: {
+            width: Array.from(new Set(setWidthFilterMain)),
+            diameter: Array.from(new Set(setDiameterFilterMain)),
+            brand: Array.from(new Set(setBrandFilterMain)),
+            bolt_count: Array.from(new Set(setBoltCountFilterMain)),
+            type: Array.from(new Set(setTypeFilterMain)),
+          }
+        };
       }
     } catch {
       throw new HttpException(
@@ -320,6 +350,17 @@ export class WheelsService {
     sort: string,
   ) {
     try {
+      const setWidthFilter: any[] | null = [];
+      const setDiameterFilter: any[] | null = [];
+      const setBrandFilter: any[] | null = [];
+      const setBoltCountFilter: any[] | null = [];
+      const setBoltCountPcdFilter: any[] | null = [];
+      const setColorFilter: any[] | null = [];
+      const setDiaFilter: any[] | null = [];
+      const setEtFilter: any[] | null = [];
+      const setPcdFilter: any[] | null = [];
+      const setPcd2Filter: any[] | null = [];
+      const setTypeFilter: any[] | null = [];
       const cachedTyres = await this.redisService.get(
           width +
           diameter +
@@ -472,6 +513,21 @@ export class WheelsService {
               ['price', 'price', 'ASC NULLS LAST'],
             ],
           });
+          wheelsAllWithoutLimitC?.rows?.map((item: any) => { 
+          return (
+            setWidthFilter?.push(item?.width.width),
+            setDiameterFilter?.push(item?.diameter.diameter),
+            setBrandFilter?.push(item?.wheel_brand.brand),
+            setBoltCountFilter?.push(item?.bolt_count.bolt_count),
+            setBoltCountPcdFilter?.push(item?.bolt_count_pcd.bolt_count_pcd),
+            setColorFilter?.push(item?.color.color),
+            setDiaFilter?.push(item?.dia.dia),
+            setEtFilter?.push(item?.et.et),
+            setPcdFilter?.push(item?.pcd.pcd),
+            setPcd2Filter?.push(item?.pcd2.pcd2),
+            setTypeFilter?.push(item?.type.type)
+          )
+        })
         await this.redisService.set(
             width +
             diameter +
@@ -488,9 +544,37 @@ export class WheelsService {
             sort +
             'wheel_props',
           3600,
-          JSON.stringify(wheelsAllWithoutLimitC),
+          JSON.stringify({
+            rows: {
+              width: Array.from(new Set(setWidthFilter)),
+              diameter: Array.from(new Set(setDiameterFilter)),
+              wheel_brand: Array.from(new Set(setBrandFilter)),
+              bolt_count: Array.from(new Set(setBoltCountFilter)),
+              bolt_count_pcd: Array.from(new Set(setBoltCountPcdFilter)),
+              color: Array.from(new Set(setColorFilter)),
+              dia: Array.from(new Set(setDiaFilter)),
+              et: Array.from(new Set(setEtFilter)),
+              pcd: Array.from(new Set(setPcdFilter)),
+              pcd2: Array.from(new Set(setPcd2Filter)),
+              type: Array.from(new Set(setTypeFilter)),
+            }
+          }),
         );
-        return wheelsAllWithoutLimitC;
+        return {
+          rows: {
+            width: Array.from(new Set(setWidthFilter)),
+            diameter: Array.from(new Set(setDiameterFilter)),
+            wheel_brand: Array.from(new Set(setBrandFilter)),
+            bolt_count: Array.from(new Set(setBoltCountFilter)),
+            bolt_count_pcd: Array.from(new Set(setBoltCountPcdFilter)),
+            color: Array.from(new Set(setColorFilter)),
+            dia: Array.from(new Set(setDiaFilter)),
+            et: Array.from(new Set(setEtFilter)),
+            pcd: Array.from(new Set(setPcdFilter)),
+            pcd2: Array.from(new Set(setPcd2Filter)),
+            type: Array.from(new Set(setTypeFilter)),
+          }
+        };
       }
     } catch {
       throw new HttpException(

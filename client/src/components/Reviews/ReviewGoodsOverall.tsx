@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 const ReviewGoodsOverall = (
     {ratingsModel, reviewCount, typeGoods}:IReviewGoodsOverall) => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     
     return (
         <div className='reviewGoodsOverall'>

@@ -59,11 +59,7 @@ const $novaPoshtaPost = axios.create({
     baseURL: process.env.REACT_APP_NOVA_POSHTA_API,
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
-      //'Access-Control-Allow-Origin': '*',
-      //'Access-Control-Allow-Origin': `${process.env.REACT_APP_CORS}`,
-      //'Access-Control-Allow-Origin': `${process.env.REACT_APP_CORS}`,
     },
-    //withCredentials: true,
   })
 
 const $deliveryPost = axios.create({
@@ -72,14 +68,6 @@ const $deliveryPost = axios.create({
       'Content-Type': 'application/json; charset=utf-8',
     },
 })
-
-// const authInterceptor = (config: any) => {
-//     config.headers.authorization = `Bearer ${localStorage.getItem('token')}`
-//     return config
-// }
-
-// $authHostPost.interceptors.request.use(authInterceptor)
-// $authHostGet.interceptors.request.use(authInterceptor)
 
 export {
     $hostPost,

@@ -45,81 +45,71 @@ const Main = observer(() => {
           chooseFilterState === 'ШИНИ' ? filter.diameter : '',
           chooseFilterState === 'ШИНИ' ? filter.season : '',
           chooseFilterState === 'ШИНИ' ? filter.brands : '',
-            //filter.price,
             filter.sort,
           );
-
-          let setWidthFilter:any[] | null = [];
-          let setHightFilter:any[] | null = [];
-          let setDiameterFilter:any[] | null = [];
-          let setBrandFilter:any[] | null = [];
           let setSeasonFilter :any[] | null = [];
           
-          tyreFilterGoods?.rows?.map((item: any) =>
+          tyreFilterGoods?.rows?.season?.map((item: any) =>
           { return (
-            setWidthFilter?.push(item?.width?.width),
-            setHightFilter?.push(item?.height?.height),
-            setDiameterFilter?.push(item?.diameter?.diameter),
-            setBrandFilter?.push(item?.tyre_brand?.brand),
-            setSeasonFilter?.push(i18n.resolvedLanguage === 'uk' ? item?.season?.season_ua : item?.season?.season)
+            setSeasonFilter?.push(i18n.resolvedLanguage === 'uk' ? item?.season_ua : item?.season)
             )
           })
           if (filter.width) {
             goodsTyre?.setWidth(
               Array.from(new Set(
-                [...goodsTyre._width, ...setWidthFilter])).sort(
-                (a: any, b: any) => a.localeCompare(b))
+                [...goodsTyre._width, ...tyreFilterGoods?.rows?.width])).sort(
+                (a: any, b: any) => a?.localeCompare(b))
             );
             filter.setWidthSearch(goodsTyre._width);
           } else {
             goodsTyre?.setWidth(
-              Array.from(new Set(setWidthFilter)).sort(
-              (a: any, b: any) => a.localeCompare(b))
+              Array.from(new Set(tyreFilterGoods?.rows?.width)).sort(
+              (a: any, b: any) => a?.localeCompare(b))
             );
             filter.setWidthSearch(goodsTyre._width);
           }
           if (filter.height) {
             goodsTyre?.setHeight(
               Array.from(new Set(
-                [...goodsTyre._height, ...setHightFilter]
+                [...goodsTyre._height, ...tyreFilterGoods?.rows?.height]
               )).sort(
-                (a: any, b: any) => a.localeCompare(b))
+                (a: any, b: any) => a?.localeCompare(b))
             );
             filter.setHeightSearch(goodsTyre._height);
           } else {
             goodsTyre?.setHeight(
-              Array.from(new Set(setHightFilter)).sort(
-                (a: any, b: any) => a.localeCompare(b))
+              Array.from(new Set(tyreFilterGoods?.rows?.height)).sort(
+                (a: any, b: any) => a?.localeCompare(b))
             );
             filter.setHeightSearch(goodsTyre._height);
           }
           if (filter.diameter) {
             goodsTyre?.setDiameter(
               Array.from(new Set(
-                [...goodsTyre._diameter, ...setDiameterFilter]
+                [...goodsTyre._diameter, ...tyreFilterGoods?.rows?.diameter]
               )).sort(
-                (a: any, b: any) => a.localeCompare(b))
+                (a: any, b: any) => a?.localeCompare(b))
             );
             filter.setDiameterSearch(goodsTyre._diameter);
           } else {
             goodsTyre?.setDiameter(
-              Array.from(new Set(setDiameterFilter)).sort(
-                (a: any, b: any) => a.localeCompare(b))
+              Array.from(new Set(tyreFilterGoods?.rows?.diameter)).sort(
+                (a: any, b: any) => a?.localeCompare(b))
             );
             filter.setDiameterSearch(goodsTyre._diameter);
           }
           if (filter.brands) {
             goodsTyre?.setBrands(
               Array.from(new Set(
-                [...goodsTyre._brands, ...setBrandFilter]
+                [...goodsTyre._brands, ...tyreFilterGoods?.rows?.brand]
               )).sort(
-                (a: any, b: any) => a.localeCompare(b))
+                (a: any, b: any) => a?.localeCompare(b))
             );
             filter.setBrandSearch(goodsTyre._brands);
           } else {
             goodsTyre?.setBrands(
-              Array.from(new Set(setBrandFilter)).sort(
-                (a, b) => a.localeCompare(b))
+              Array.from(new Set(tyreFilterGoods?.rows?.brand)).sort(
+                (a:any, b:any) => a?.localeCompare(b))
             );
             filter.setBrandSearch(goodsTyre._brands); 
           }
@@ -134,10 +124,6 @@ const Main = observer(() => {
               Array.from(new Set(setSeasonFilter))
             )
           }
-          setWidthFilter = null;
-          setHightFilter = null;
-          setDiameterFilter = null;
-          setBrandFilter = null;
           setSeasonFilter =  null;
       }
     }
@@ -176,94 +162,74 @@ const Main = observer(() => {
             chooseFilterState === 'ДИСКИ' ? filter.type : '',
             filter.sort,
           );
-          let setWidthFilter:any[] | null = [];
-          let setDiameterFilter:any[] | null = [];
-          let setBrandFilter:any[] | null = [];
-          let setBoltCountFilter :any[] | null = [];
-          let setTypeFilter :any[] | null = [];
- 
-          wheelFilterGoods?.rows?.map((item: any) => 
-          { return (
-            setWidthFilter?.push(item?.width?.width),
-            setDiameterFilter?.push(item?.diameter?.diameter),
-            setBrandFilter?.push(item?.wheel_brand?.brand),
-            setBoltCountFilter?.push(item?.bolt_count?.bolt_count),
-            setTypeFilter?.push(item?.type?.type)
-            )
-          })
           if (filter.width) {
             goodsWheel?.setWidth(
               Array.from(new Set(
-                [...goodsWheel._width, ...setWidthFilter]
+                [...goodsWheel._width, ...wheelFilterGoods?.rows?.width]
               )).sort(
-                (a: any, b: any) => a.localeCompare(b))
+                (a: any, b: any) => a?.localeCompare(b))
             );
             filter.setWidthSearch(goodsWheel._width);
           } else {
             goodsWheel?.setWidth(
-              Array.from(new Set(setWidthFilter)).sort(
-              (a: any, b: any) => a.localeCompare(b))
+              Array.from(new Set(wheelFilterGoods?.rows?.width)).sort(
+              (a: any, b: any) => a?.localeCompare(b))
             );
             filter.setWidthSearch(goodsWheel._width);
           }
           if (filter.diameter) {
             goodsWheel?.setDiameter(
               Array.from(new Set(
-                [...goodsWheel._diameter, ...setDiameterFilter]
+                [...goodsWheel._diameter, ...wheelFilterGoods?.rows?.diameter]
               )).sort(
-                (a: any, b: any) => a.localeCompare(b))
+                (a: any, b: any) => a?.localeCompare(b))
             );
             filter.setDiameterSearch(goodsWheel._diameter);
           } else {
             goodsWheel?.setDiameter(
-              Array.from(new Set(setDiameterFilter)).sort(
-                (a: any, b: any) => a.localeCompare(b))
+              Array.from(new Set(wheelFilterGoods?.rows?.diameter)).sort(
+                (a: any, b: any) => a?.localeCompare(b))
             );
             filter.setDiameterSearch(goodsWheel._diameter);
           }
           if (filter.brands) {
             goodsWheel?.setBrands(
               Array.from(new Set(
-                [...goodsWheel._brands, ...setBrandFilter]
+                [...goodsWheel._brands, ...wheelFilterGoods?.rows?.brand]
               )).sort(
-                (a: any, b: any) => a.localeCompare(b))
+                (a: any, b: any) => a?.localeCompare(b))
             );
             filter.setBrandSearch(goodsWheel._brands);
           } else {
             goodsWheel?.setBrands(
-              Array.from(new Set(setBrandFilter)).sort(
-                (a, b) => a.localeCompare(b))
+              Array.from(new Set(wheelFilterGoods?.rows?.brand)).sort(
+                (a: any, b: any) => a?.localeCompare(b))
             );
             filter.setBrandSearch(goodsWheel._brands);   
           }
           if (filter.bolt_count) {
             goodsWheel?.setBoltCount(
               Array.from(new Set(
-                [...goodsWheel._bolt_count, ...setBoltCountFilter]
+                [...goodsWheel._bolt_count, ...wheelFilterGoods?.rows?.bolt_count]
               ))
             )
           } else {
             goodsWheel?.setBoltCount(
-              Array.from(new Set(setBoltCountFilter))
+              Array.from(new Set(wheelFilterGoods?.rows?.bolt_count))
             )
             filter.setBoltCount(goodsWheel._bolt_count);
           }
           if (filter.type) {
             goodsWheel?.setType(
               Array.from(new Set(
-                [...goodsWheel._type, ...setTypeFilter]
+                [...goodsWheel._type, ...wheelFilterGoods?.rows?.type]
               ))
             )
           } else {
             goodsWheel?.setType(
-              Array.from(new Set(setTypeFilter))
+              Array.from(new Set(wheelFilterGoods?.rows?.type))
             )
           }
-          setWidthFilter = null;
-          setDiameterFilter = null;
-          setBrandFilter = null;
-          setBoltCountFilter = null;
-          setTypeFilter = null;
         }
         const task = taskLoad.shift();
         task();
@@ -310,7 +276,6 @@ const Main = observer(() => {
   useEffect(() => {
     let isMountedLeader = false;
     const getLeadersOrder = async () => {
-      //if (!isMountedLeader && (prevBtnLeader || nextBtnLeader)) {
       if (!isMountedLeader) {
         let getOrdersLeader: any[] | undefined = await getAllOrdersLeader();
         if (Array.isArray(getOrdersLeader) && getOrdersLeader?.length > 0) {

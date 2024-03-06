@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import '../../css/AuthCss/AuthView.css';
-//import userImg from './customer64.png';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../../context/Context';
 
@@ -10,9 +9,6 @@ interface IAuthView {
 
 const AuthView = observer(({logOutUser}:IAuthView) => {
     const {customer} = useContext<any | null>(Context);
-    // console.log('USER_PHONE_NAME: ', customer._customer?.sub?.name);
-    // console.log('USER_SOCIAL_NAME: ', customer._customer?.name);
-    // console.log('USER_TWITTER_DATA: ', customer._customer);
 
     return (
         <div className='authView'>

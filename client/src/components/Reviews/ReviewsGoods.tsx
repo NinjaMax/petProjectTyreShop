@@ -35,7 +35,7 @@ const ReviewsGoods = ({
     const [dislikeChoose, setDislikeChoose] = useState<number>(0);
     const [thumbUp, setThumbUp] = useState<boolean | null>(null);
     const [thumbDown, setThumbDown] = useState<boolean | null>(null);
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     useEffect(() => {
         let isMounted = false;

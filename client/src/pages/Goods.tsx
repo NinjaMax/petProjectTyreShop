@@ -52,12 +52,6 @@ import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import SpinnerCarRot from '../components/spinners/SpinnerCarRot';
 
-type ILikeTyreType = {
-  id_review: number;
-  likeCount: number;
-  dislikeCount: number;
-};
-
 const BreadCrumbs = lazy(() => import('../components/BreadCrumbs'));
 const TabsGoodsCard = lazy(() => import('../components/tabs/TabsGoodsCard'));
 const Benefits = lazy(() => import('../components/Benefits'));
@@ -111,9 +105,7 @@ const GoodsPage = observer(() => {
     const getProductByFullName = async () => {
       const taskProductFullname: any[] = [
         getTyresByFullName,
-        // getTyresByModel,
         getWheelByFullName,
-        // getWheelsByModel
       ];
       const getGoodsId: string = 
       JSON.parse(localStorage.getItem('goodsId')!);
@@ -130,19 +122,8 @@ const GoodsPage = observer(() => {
             if (getProductTyreByModel) {
               goodsTyre.setProduct(getProductTyreByModel?.tyres[0]);
             } 
-            // else if (!getProductTyreByModel && !paramsModel){
-            //   history.push(NOT_FOUND_ROUTE);
-            // }
           }
         }
-        // if (!isMounted && taskProductFullname[i] === getTyresByModel && !getGoodsId && 
-        //   !goodsTyre?._product?.id_model && !paramsModel
-        // ) {
-        //   const getProductTyreByModel = await taskProductFullname[i](params.goodsItem);
-        //   if (getProductTyreByModel) {
-        //     goodsTyre.setProduct(getProductTyreByModel?.tyres[0]);
-        //   }
-        // }
         if (!isMounted && taskProductFullname[i] === getWheelByFullName && !getGoodsId && 
           !goodsWheel?._product?.id && !paramsModel
         ) {
@@ -154,19 +135,8 @@ const GoodsPage = observer(() => {
             if (getProductWheelByModel) {
               goodsTyre.setProduct(getProductWheelByModel?.wheels[0]);
             } 
-            // else if (!getProductWheelByModel && !paramsModel){
-            //   history.push(NOT_FOUND_ROUTE);
-            // }
           }
         }
-        // if (!isMounted && taskProductFullname[i] === getWheelsByModel && !getGoodsId && 
-        //   !goodsWheel?._product?.id_model && !paramsModel
-        // ) {
-        //   const getProductWheelByModel = await taskProductFullname[i](params.goodsItem);
-        //   if (getProductWheelByModel) {
-        //     goodsWheel.setProduct(getProductWheelByModel?.wheels[0]);
-        //   }
-        // }
         const task = taskProductFullname.shift();
         task();
         await yieldToMain();
@@ -608,7 +578,6 @@ const GoodsPage = observer(() => {
             route={[i18n.resolvedLanguage === 'uk' ? '/' : '/ru', i18n.resolvedLanguage === 'uk' ? '/wheels' : '/ru/wheels',`${goodsWheel._product.wheel_brand?.brand && !goodsWheel._product.wheel_brand?.brand.includes(',') ?  createStringUrl(goodsWheel._product.wheel_brand?.brand) : null}`,`${createStringUrl(goodsWheel._product.type?.type) ?? null}/${createStringUrl(goodsWheel._product.wheel_brand?.brand) ?? null}`,`${createStringUrl(goodsWheel._product.type?.type) ?? null}${createStringUrl(goodsWheel._product.wheel_brand?.brand) ?? null}${createStringUrl(goodsWheel._product.width?.width) ?? null}${createStringUrl(goodsWheel._product.diameter?.diameter) ?? null}${createStringUrl(goodsWheel._product.bolt_count?.bolt_count) ?? null}${createStringUrl(goodsWheel._product.pcd?.pcd) ?? null}${createStringUrl(goodsWheel._product.et?.et) ?? null}${createStringUrl(goodsWheel._product.dia?.dia) ?? null}`]} 
             hrefTitle={
               [t('goodsPage.bread_crumbs_site'),t('goodsPage.bread_crumbs_wheel'),  `${goodsWheel._product.wheel_brand?.brand && !goodsWheel._product.wheel_brand?.brand?.includes(',') ? `Диски ${goodsWheel._product.wheel_brand?.brand}` : ''}`, goodsWheel._product.wheel_brand?.brand ? `Диск ${goodsWheel._product.type?.type} ${goodsWheel._product.wheel_brand.brand}` : '',`${goodsWheel._product.wheel_brand?.brand ?? ''} ${goodsWheel._product.wheel_model?.model ?? ''}`, `Диски ${goodsWheel._product.wheel_type?.wheel_type && !goodsWheel._product.wheel_type?.type?.includes(',') ? goodsWheel._product.wheel_type.type : ''} ${goodsWheel._product.wheel_brand?.brand && !goodsWheel._product.wheel_brand.brand?.includes(',') ? goodsWheel._product.wheel_brand.brand : ''}  ${goodsWheel._product.wheel_model?.model && !goodsWheel._product.wheel_model.model?.includes(',') ? goodsWheel._product.wheel_model.model : ''} ${goodsWheel._product.width?.width ? goodsWheel._product.width.width : ''} ${goodsWheel._product.diameter?.diameter ? 'R' + goodsWheel._product.diameter.diameter : '' } ${goodsWheel._product.bolt_count?.bolt_count && !goodsWheel._product.bolt_count.bolt_count?.includes(',') ? goodsWheel._product.bolt_count.bolt_count : ''} ${goodsWheel._product.pcd?.pcd && !goodsWheel._product.pcd.pcd?.includes(',') ? goodsWheel._product.pcd.pcd : ''} ${goodsWheel._product.et?.et && !goodsWheel._product.et.et?.includes(',') ? goodsWheel._product.et.et : ''} ${goodsWheel._product.dia?.dia && !goodsWheel._product.dia.dia?.includes(',')  ? goodsWheel._product.dia.dia : ''}`
-            //`${(params.category) ?? null}`
           ]}
           />
         : null  

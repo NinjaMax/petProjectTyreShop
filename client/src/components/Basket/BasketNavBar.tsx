@@ -10,7 +10,7 @@ interface IBasketNav {
 }
 
 const BasketNavBar = observer(({setActive}: IBasketNav) => {
-  const { page, customer } = useContext<any | null>(Context);
+  const { page } = useContext<any | null>(Context);
 
   useEffect(() => {
     let isMounted = false;

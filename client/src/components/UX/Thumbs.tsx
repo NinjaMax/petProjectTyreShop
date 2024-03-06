@@ -18,7 +18,6 @@ const Thumbs = ({
     dislikeState,
     likeAction,
     disLikeAction, 
-    // reviewId
 }: IThumbs) => {
 
     return (

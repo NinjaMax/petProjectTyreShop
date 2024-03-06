@@ -12,8 +12,6 @@ const AdminModalSupplier = ({allsupplier, addSupplier}:any) => {
             (supplier: any) => {
             return supplier.name.toLowerCase().includes(filterSupplierValue.toLowerCase()) || 
             supplier.id_supplier === +filterSupplierValue! 
-            //|| 
-            //supplier.phone.includes(+filterSupplierValue)
             });
             setFilterSupplier(newSupplierList); 
         } else {

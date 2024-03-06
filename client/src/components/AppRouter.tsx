@@ -4,7 +4,7 @@ import { Context } from '../context/Context';
 import { observer } from 'mobx-react-lite';
 import SpinnerCarRot from './spinners/SpinnerCarRot';
 import { ADMIN_ROUTE, ADMIN_AUTH_ROUTE, BASKET_ROUTE, CATALOG_TYRES_ROUTE, 
-  LOGIN_ROUTE, REGISTRATION_ROUTE, GOODS_ROUTE, 
+    GOODS_ROUTE, 
   MAIN_ROUTE, CONTACT_ROUTE, SEARCH_ROUTE, NOT_FOUND_ROUTE, 
   COMPARISON_ROUTE, FAVORITES_ROUTE, REVIEW_STORE_ROUTE, 
   CATALOG_WHEELS_ROUTE,
@@ -18,7 +18,6 @@ import { ADMIN_ROUTE, ADMIN_AUTH_ROUTE, BASKET_ROUTE, CATALOG_TYRES_ROUTE,
 
 const Admin = lazy(() => import('../pages/Admin'));
 const AdminAuth = lazy(() => import('../components/auth/AdminAuth'));
-//const Auth = lazy(() => import('../pages/Auth'));
 const Basket = lazy(() => import('../pages/Basket'));
 const CatalogTyresPage = lazy(() => import('../pages/CatalogTyresPage'));
 const Contact = lazy(() => import('../pages/Contact'));
@@ -150,16 +149,6 @@ const AppRouter = observer(() => {
                 component={Favorite} 
                 exact={true}
             />
-            {/* <Route 
-                path={LOGIN_ROUTE} 
-                component={Auth} 
-                exact={true}
-            />
-            <Route 
-                path={REGISTRATION_ROUTE} 
-                component={Auth} 
-                exact={true}
-            /> */}
             <Route 
                 path={'/:ru?' + CONTACT_ROUTE} 
                 component={Contact} 

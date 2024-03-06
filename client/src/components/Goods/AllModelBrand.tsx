@@ -19,18 +19,8 @@ type ItemModel = {
 const AllModelBrand = ({brand, modelBrandList}: IModelBrand) => {
 
     const addItemModel = (e: any) => {
-        // if (e.target.getAttribute('data-iditem')?.tyres) {
-        //     const tyresId = e.target.getAttribute('data-iditem')?.tyres[0].id;
-        //     localStorage.setItem('goodsId', JSON.stringify(tyresId));
-        // }
-        // if (e.target.getAttribute('data-iditem')?.wheels) {
-        //     const wheelsId = e.target.getAttribute('data-iditem')?.wheels[0].id;
-        //     localStorage.setItem('goodsId', JSON.stringify(wheelsId));
-        // }
         localStorage.setItem('goodsId', JSON.stringify(e.target.getAttribute('data-iditem')));
     };
-
-    //console.log(modelBrandList);
 
     return (
         <div className='allModelBrandsBox'>

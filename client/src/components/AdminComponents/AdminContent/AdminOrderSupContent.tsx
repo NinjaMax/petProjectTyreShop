@@ -42,7 +42,6 @@ const AdminOrderSupContent = (
         if (orderSupData) {
             setOrderSupData(null);
         }
-        //showComment(e);
         setActiveOrderSup(!activeOrderSup);
     };
 
@@ -52,7 +51,6 @@ const AdminOrderSupContent = (
                 (item:{id_order_sup: number}) => 
                     item.id_order_sup === e.currentTarget.value
                 );
-                //console.log('OrderSupInfo', orderSupInfo);
             if (orderSupInfo) {
                 orderSupInfo?.orders_sup_storage?.forEach( async (element: any): Promise<any> => {
                     await addGoodsOrderSupToStock({...element, id_contract: orderSupInfo?.id_contract});

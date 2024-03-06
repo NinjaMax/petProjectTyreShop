@@ -7,10 +7,11 @@
     <meta name="theme-color" content="#000000"/>
     <link rel="preconnect" href="/" crossorigin="use-credentials"/>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/>
-    <link rel="preload" fetchpriority="high" as="image" href='sliders/continental_offer_bonus_700_390.webp' type="image/webp"/>
-    <link rel="preload" fetchpriority="high" as="image" href='img/tyres_tab_main_1.webp' type="image/webp"/> 
-    <link rel="preload" fetchpriority="high" as="image" href='img/tyres_tab_main_1_mobile.webp' type="image/webp"/> 
-    <link rel="preload" fetchpriority="high" as="image" href='img/wheels_tab_main.webp' type="image/webp"/> 
+    <link rel="preload" fetchpriority="high" as="image" href='img/tyres_tab_main_1.webp' imagesrcset="img/tyres_tab_main_1.webp 1440w,
+    img/tyres_tab_main_1_mobile.webp 580w" imagesizes="100vw" type="image/webp"/> 
+    <!-- <link rel="preload" as="image" href='img/tyres_tab_main_1_mobile.webp' type="image/webp"/>  -->
+    <link rel="preload" as="image" fetchpriority="high" href='sliders/continental_offer_bonus_700_390.webp' type="image/webp"/>
+    <!-- <link rel="preload" fetchpriority="high" as="image" href='img/wheels_tab_main.webp' type="image/webp"/>  -->
     <link rel="preload" fetchpriority="high" as="image" href='img_main/logoSky180.webp' type="image/webp"/>
     <script type='text/javascript'>
       function loadCSS(e, t, n) { "use strict"; var i = window.document.createElement("link"); var o = t || window.document.getElementsByTagName("script")[0]; i.rel = "stylesheet"; i.href = e; i.media = "only x"; o.parentNode.insertBefore(i, o); setTimeout(function () { i.media = n || "all" }) }loadCSS("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css");

@@ -15,12 +15,10 @@ const ErrorsNotif = ({active, setActive, children}: INotification) => {
             <div 
                 className= {active ? 'notificationBox active': 'notificationBox'} 
                 onClick={(e)=>e.stopPropagation()} >
-            {/* <div className="danger">  */}
                 <i className="far fa-times-circle shine"></i>
                 <div className='notificationTextError'>
                     {children}   
                 </div>
-            {/* </div> */}
             </div>
         </div>
     );

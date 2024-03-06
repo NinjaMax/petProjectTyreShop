@@ -17,7 +17,6 @@ import {
     getAdminPriceWheelsById, 
     responseForm,
     updateOrder,
-    updateOrderStorage,
     updateOrderSup} from '../../../restAPI/restAdminAPI';
 import AdminComment from '../adminContent/AdminComment';
 import AdminModalCustomers from '../adminModalForm/AdminModalCustomers';
@@ -61,7 +60,7 @@ const AdminFormOrder = observer((
     const [disableBtn, setDisableBtn] = useState<boolean>(false);
     const [disableBtnOk, setDisableBtnOk] = useState<boolean>(true);
     const [orderStorage, setOrderStorage] = useState<any[] | undefined>([]);
-    const {register, handleSubmit, setValue, getValues, setError, formState: {errors}} = useForm();    
+    const {register, handleSubmit, setValue, getValues, formState: {errors}} = useForm();    
     const [state, dispatch] = useReducer<Reducer<StateReducer, ActionReducer>>(
         reducer, createInitialState(goodsId, getOrdersData)
     );
@@ -332,24 +331,14 @@ const AdminFormOrder = observer((
     const openCustomerForm = () => {
         setOpenCustomers(!openCustomers);
     };    
-    //const actions = useMemo(() => ({
+
     const addCustToOrder = async (e: any) => {
         const findCustomer = customer!.find(
                 (items:{id_customer:number}) => items?.id_customer === +e.currentTarget.getAttribute('data-value')
         );
-        //getCustomersById
         if (findCustomer) {
             setAddCustomer(findCustomer);  
             setOpenCustomers(!openCustomers);
-            //if (!getValues("id_customer")) {
-                // setValue("id_customer", addCustomer?.id_customer! ?? ordersData?.id_customer,
-                //  { shouldValidate: true }) 
-             //}
-             //if (!getValues("id_contract")) {
-                //  setValue("id_contract", addCustomer?.contract[0]?.id_contract! ?? ordersData?.id_contract,
-                //  { shouldValidate: true })
-             //}
-            
         }
     };
 
@@ -410,12 +399,9 @@ const AdminFormOrder = observer((
             deleteItem: itemIndex,
         });
     }; 
-    //GOOD PERFORM
+
     const onSubmit = async (data: any, e: any) => {
-        //e.preventDefault();
-        console.log('CREATE ORDER: ', data);
         try {
-            //if (!errors.id_contract || !errors.id_customer) {
             if (!orderId && state.length === 0) {
                let resultForm: any = await responseForm(data);
                 setOrderId(+resultForm.data.id_order);
@@ -429,7 +415,6 @@ const AdminFormOrder = observer((
                 let orderStorageArr: any[] | null= [];
                 let resultForm: any = await responseForm(data);
                 orderStorage?.forEach(async(itemsOrd: any, index: any): Promise<any> => {
-                    //await updateOrderStorage(itemsOrd);
                     if (itemsOrd.id && state[index].id && itemsOrd.price !== state[index].price) {
                         const addCommitTo: any = await addCommentsToOrder({
                             id_user: user._user?.sub.id_user,
@@ -446,7 +431,6 @@ const AdminFormOrder = observer((
                 console.log('GET_ORDER_DATA: ', resultForm);
                 state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
                     let resultOrder: any = await createGoodsToOrder(itemGoods, +resultForm.data.id_order!);
-                    //setOrderStorage([...resultOrder?.data?.order_storage]);
                     orderStorageArr?.push(resultOrder.data);
                     console.log('PUT_ORDER_DATA: ', resultOrder.data)
                 });
@@ -459,7 +443,6 @@ const AdminFormOrder = observer((
             }
             if(orderId && state.length > 0 && disableBtnOk === false) {
                 orderStorage?.forEach(async(itemsOrd: any, index: any): Promise<any> => {
-                    //await updateOrderStorage(itemsOrd);
                     if (itemsOrd.id && state[index].id && itemsOrd.price !== state[index].price) {
                         const addCommitTo: any = await addCommentsToOrder({
                             id_user: user._user?.sub.id_user,
@@ -472,14 +455,11 @@ const AdminFormOrder = observer((
                 });
                 orderStorage?.splice(0, orderStorage.length);
                 state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
-                    let resultOrder: any = await createGoodsToOrder(itemGoods, orderId);
-                    console.log('UPDATE_ORDER_STORAGE: ', resultOrder.data);
-                    
+                    await createGoodsToOrder(itemGoods, orderId);
                 });  
                 const newOrderDatas = await updateOrder(data, orderId);  
                 setOrdersData(newOrderDatas?.data);
                 setOrderStorage([...newOrderDatas?.data?.order_storage]);  
-                console.log('NEW_ORDER_DATA_ORDER: ', newOrderDatas?.data)  
                 alert(`Замовлення id ${orderId} збереженно,  товари оновлені.`);
             
             } 
@@ -487,9 +467,7 @@ const AdminFormOrder = observer((
                 alert("Товари не додані");
             }
             if (orderId && state.length !== 0 && disableBtnOk === true){
-                //const newStorage = () => {
                 orderStorage?.forEach(async(itemsOrd: any, index: any): Promise<any> => {
-                    //await updateOrderStorage(itemsOrd);
                     if (itemsOrd.id && state[index].id && itemsOrd.price !== state[index].price) {
                         const addCommitTo: any = await addCommentsToOrder({
                             id_user: user._user?.sub.id_user,
@@ -502,14 +480,10 @@ const AdminFormOrder = observer((
                 });
                 orderStorage?.splice(0, orderStorage.length);
                 state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
-                    let resultOrder: any = await createGoodsToOrder(itemGoods, orderId);
-                    console.log('UPDATE_ORDER_STORAGE: ', resultOrder.data);
+                    await createGoodsToOrder(itemGoods, orderId);
                    
                 });
-                //}
-                //newStorage();
                 setDisableBtnOk(true);
-                console.log('UDATE_DATA_ORDER: ', data);
                 const newOrderData = await updateOrder(data, orderId);
                 if (data.status === 'Відвантажено' &&
                     (data.delivery === 'Самовивіз' || data.delivery === 'Своя Доставка') && 
@@ -533,14 +507,8 @@ const AdminFormOrder = observer((
                 }
                 setOrdersData(newOrderData?.data);
                 setOrderStorage([...newOrderData?.data?.order_storage]);
-                console.log('NEW_ORDER_DATA_ORDER: ', newOrderData?.data)
                 alert(`Товари до замовлення id ${orderId}, оновлено.`);
             } 
-
-            // } else {
-            //     alert('Помилка! Перевірте всі необхідні данні або оновіть сторінку') 
-            // }
-            //e.stopPropagation();
         } catch (error){
             alert('Помилка! Перевірте данні або оновіть сторінку');
             console.log('ERROR_ORDER: ', error);
@@ -551,8 +519,7 @@ const AdminFormOrder = observer((
         try {
             if(orderId && orderStorage?.length !== 0) {
                 orderStorage?.forEach(async(itemsOrd): Promise<any> => {
-                    let resOrd: any = await addGoodsToOrder(itemsOrd);
-                    console.log('ON_SUBMIT_GOODS_TO_ORDER: ', resOrd.data);
+                    await addGoodsToOrder(itemsOrd);
                 })
                 alert(`Замовлення id${orderId} проведено, товари до замовлення додані і збережені `)
                 setDisableBtnOk(!disableBtnOk);
@@ -577,7 +544,6 @@ const AdminFormOrder = observer((
                 total_cost: 
                 (ordersData?.delivery_cost + ordersData?.commission_cost + orderSum * 0.1 + orderSum).toFixed() - ordersData?.bonus_decrease,
             });
-            console.log('GET_DOP_GAR: ', getValues('dop_garanty')) 
         } else {
             setValue('dop_garanty', null); 
             setValue('total_cost', (Number(ordersData?.delivery_cost ?? 0) + Number(ordersData?.commission_cost ?? 0) + 0 + orderSum ?? 0) - Number(ordersData?.bonus_decrease ?? 0));
@@ -585,7 +551,6 @@ const AdminFormOrder = observer((
                 total_cost: 
                 (ordersData?.delivery_cost + ordersData?.commission_cost + 0 + orderSum) - ordersData?.bonus_decrease,
             });
-            console.log('GET_DOP_GAR: ', getValues('dop_garanty'))
         }
     };
 
@@ -648,16 +613,6 @@ const AdminFormOrder = observer((
             console.log(error)
         }    
     };
-    //console.log('COMMENT: ', newComment);
-    //console.log('GOODS_ID: ', goodsId);
-    //console.log('ORDER_ID: ', orderId);
-    //console.log('GET_DOP_GAR: ', getValues('dop_garanty'));
-    // console.log('TOTAL_COST: ', getValues('delivery_cost'));
-    // console.log('STATE: ', state);
-    // console.log('ERRORS_FORM: ', errors);
-    // console.log('ORDERS_STORAGE : ', orderStorage);
-     //console.log('ORDER_DATA: ', ordersData);
-    // console.log('PURCHASE_PRICE: ', purchaseGoods);
 
     return (
         <div >
@@ -803,7 +758,6 @@ const AdminFormOrder = observer((
                                 placeholder="Ім'я або назва.."
                                 value={addCustomer?.name ?? ordersData?.customer?.name ?? ''}
                                 readOnly={true}
-                                //onChange={() => setAddCustomer(addCustomer)}
                             />
                             <div
                                 onClick={(e)=>e.preventDefault()}
@@ -875,7 +829,6 @@ const AdminFormOrder = observer((
                             type="search"  
                             maxLength={45}
                             placeholder="Місто.."
-                            //{...register('delivery_city')}
                             name="deliveryCityOrder"
                             onChange={cityInputActive}
                             defaultValue={ordersData?.delivery_city ?? ''}
@@ -935,7 +888,6 @@ const AdminFormOrder = observer((
                             type="search"  
                             maxLength={45}
                             placeholder="Відділення.."
-                            //{...register('delivery_city_depart')}
                             name="delivery_city_depart"
                             defaultValue={ordersData?.delivery_city_depart ?? ''}
                         />  
@@ -1244,7 +1196,6 @@ const AdminFormOrder = observer((
                         name="dopGaranty" 
                         maxLength={45}
                         placeholder="Доп гар.."
-                        //defaultValue={ordersData?.dop_garanty ?? 0}
                         defaultChecked={ordersData?.dop_garanty}
                         onChange={setDopGarantyOrder}
                     />
@@ -1269,13 +1220,10 @@ const AdminFormOrder = observer((
                         </textarea>
                     </div>
                     <div className='admFormOrderCommitChat'>
-                        {/* {comments?.length !== 0 ? */}
                           <AdminComment 
                             main={false}
                             newCommit={addNewCommit}
                             comments={comments}/>
-                        {/* //   : <span>... очікуємо коментарі ...</span>  
-                        // } */}
                     </div>  
                 </div>
                 <div className='admOrderFormGrp'>

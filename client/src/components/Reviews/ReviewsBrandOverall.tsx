@@ -1,7 +1,6 @@
 import React from 'react';
 import '../../css/Reviews/ReviewsBrandOverall.css';
 import Rating from '../ux/Rating';
-import brandImg from '../../assets/img/continental_logo.png';
 import RatingOptions from '../ux/RatingOptions';
 import { tyreBrandLogo } from '../../services/tyreBrandImg.service';
 import { useTranslation } from 'react-i18next';
@@ -25,7 +24,7 @@ const ReviewsBrandOverall = ({
     brandName,
     typeGoods
 }: IReviewBrand) => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     return (
         <div className="reviewsBrand">

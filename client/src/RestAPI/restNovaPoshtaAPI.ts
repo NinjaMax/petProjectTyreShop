@@ -67,12 +67,6 @@ const getWareHousesNovaPoshta = async (dataCity: IDapertmentNP) =>
     });
   
   const getCalcPriceNovaPoshta = async (dataCalc: CalcNovaPoshta
-    // citySender: string, 
-    // cityReceiver: string,
-    // goodsCost: string,
-    // goodsType: string,
-    // goodsQuantity: string,
-    // redeliveryCost: string,
   ) =>
   await $novaPoshtaPost.post('/v2.0/json/',
   {

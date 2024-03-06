@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import '../../css/Question/QuestionCreate.css';
 import ButtonAction from '../buttons/ButtonAction';
 import { useForm } from 'react-hook-form';
@@ -13,11 +13,10 @@ interface IQuestionCreate {
 
 const QuestionCreate = observer(({onSubmitQuestion}: IQuestionCreate) => {
     const { customer} = useContext<any | null>(Context);
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const {
         register, 
         handleSubmit,
-        //setValue,  
         formState: {errors}
       } = useForm<FormValuesQuestion>({
         criteriaMode: 'all',

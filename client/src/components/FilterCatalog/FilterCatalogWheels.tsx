@@ -606,10 +606,6 @@ const FilterCatalogWheels = observer((
                         value={color} 
                         titleName={t("filterCatalogWheel.filter_color")}
                         titleCheckbox={color} 
-                        // imageSrc={color.length === 0 ?
-                        //     './iconsSigns/imagesNoThorn_1_64.png' :
-                        //     './iconsSigns/imagesThorn_1_64.png'
-                        // }
                         /> 
                        )) : null
                     }

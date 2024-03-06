@@ -11,33 +11,18 @@ import AdminWheelStockPriceRow from './AdminWheelStockPriceRow';
 import { IGoodsContent } from './interfaces/GoodsContent.interface';
 import { TyreContent } from './types/TyreContent.type';
 import { IWheelContentItem } from './types/WheelContent.type';
-import { getTyresById } from '../../../restAPI/restGoodsApi';
 import { getAdminStockTyresByIdtyre, getAdminPriceTyresById, getAdminStockWheelByIdWheel, getAdminPriceWheelsById } from '../../../restAPI/restAdminAPI';
-//import { sortTyres } from '../../sortService/sortAdminGoods';
 
 const AdminGoodsContent = (
     {showComment, comments, props, customer, storage}:IGoodsContent) => {
     const [tyreData, wheelData] = props;
     const [chooseCat, setChooseCat] = useState<string>('Шини');
-    // const [tyreData, setTyreData] = useState(null);
-    // const [wheelData, setWheelData] = useState(null);
-    // // const [oilData, setOildata] = useState(null);
-    // // const [batteryData, setBatteryData] = useState(null);
-    //const [customers, setCustomers] = useState(null);
-    // const [itemIdTyre, setItemIdTyre] = useState();
-    // const [itemIdWheel, setItemIdWheel] = useState();
-    // const [itemIdOil, setItemIdOil] = useState();
-    // const [itemIdBattery, setItemIdBattery] = useState();
     const [itemId, setItemId] = useState<[]>([]);
     const [addGoods, setAddGoods] = useState<boolean>(false);
     const [stockTyre, setStockTyre] = useState<any>();
     const [priceTyre, setPriceTyre] = useState<any>();
     const [stockWheel, setStockWheel] = useState<{}[]>();
     const [priceWheel, setPriceWheel] = useState<{}[]>();
-    // const [stockOil, setStockOil] = useState([]);
-    // const [priceOil, setPriceOil] = useState([]);
-    // const [stockBattery, setStockBattery] = useState([]);
-    // const [priceBattery, setPriceBattery] = useState([]);
     const [valueSort, setValueSort] = useState<string>('')
     const [valueTyre, setValueTyre] = useState('');
     const [valueWheel, setValueWheel] = useState('');
@@ -77,7 +62,6 @@ const AdminGoodsContent = (
             const getTyreRowId: string = e.currentTarget?.getAttribute("data-value");
             let stockByIdTyre = await getAdminStockTyresByIdtyre(getTyreRowId ?? 0);
             let priceByIdTyre = await getAdminPriceTyresById(getTyreRowId ?? 0);
-            //console.log('PRICE_TYRE: ', priceByIdTyre);
             if (priceByIdTyre) {
                setPriceTyre(priceByIdTyre);  
             }
@@ -165,7 +149,6 @@ const AdminGoodsContent = (
         }
     }
     const sortTyreContent = (e: any) => { 
-        console.log('SORT: ', e.target.textContent)
         if (e.target.textContent === 'Код') {
             const sortByCode: any = 
             changedTyresData?.sort(

@@ -215,7 +215,6 @@ const AdminModalSupplierCreate = ({active, setActive, dataSupplier}: SupplierMod
                             className="admFormSupplierCreateAddress" 
                             name="contractSupplierFormName" 
                             maxLength={45}
-                            //defaultValue={dataSupplier?.delivery_dep_ref ?? ''}
                             onChange={(e) => setContractData({...contractData!, name: e.target.value})}
                             placeholder="Назва договору"
                         />
@@ -252,7 +251,6 @@ const AdminModalSupplierCreate = ({active, setActive, dataSupplier}: SupplierMod
                     >Ok</button>
                     </div>
                     <div 
-                        //onClick={(e) => e.preventDefault()}
                         onClick={(e) => e.stopPropagation()}
                     >
                     <button className={dataSupplier?.disableBtns ? 

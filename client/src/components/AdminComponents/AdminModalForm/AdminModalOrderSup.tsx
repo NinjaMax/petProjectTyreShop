@@ -72,10 +72,6 @@ const AdminModalOrderSup = observer((
                     +items?.id_supplier === orderSupData?.orders_sup_storage![0]?.id_supplier
                 );
             }
-            // const supplierFoundOrderSup = supplier!.find(
-            //     (items: any) => 
-            //     +items?.id_supplier === orderSupData?.order_sup_storage![0]?.id_supplier
-            // );
             if (supplierFound) {
                 setAddSupplier(supplierFound);
             }
@@ -86,18 +82,6 @@ const AdminModalOrderSup = observer((
         }
     },[addSupplier, orderSupData, supplier])
     
-    // useEffect(() => {
-    //     if (ordersData) {
-    //         setOrderId(ordersData?.id_order);
-    //         setOrderStorage(ordersData?.order_storage);
-    //         setUpdateBtn('Оновити');
-    //         if (ordersData.disableBtns) {
-    //             setDisableBtn(true);
-    //             setDisableBtnOk(true); 
-    //         }
-    //     }
-    // },[ordersData, state]);
-
     useEffect(() => {
         register("id_user", {required: 'Це необхідні дані'});
         setValue("id_user", user._user?.sub.id_user);
@@ -179,7 +163,6 @@ const AdminModalOrderSup = observer((
     };  
     
     const addSupplierToOrderSup = async (e: any) => {
-        //console.log(valueCust);
         const findSupplier = supplier!.find(
             (items:{id_supplier:number}) => +items?.id_supplier === +e.currentTarget.getAttribute('data-value')
         );
@@ -238,19 +221,14 @@ const AdminModalOrderSup = observer((
             ]);
         }       
     }
-//}),[tyreDatas, wheelDatas, customer])
 
     const deleteItem = async (itemIndex: number) => {
-        //e.preventDefault();
-        //e.stopPropagation();
         dispatch({type: ActionType.DELETEITEM, 
             deleteItem: itemIndex,
         });
     }
 
     const onSubmit = async (data: any, e: any) => {
-        //e.preventDefault();
-        console.log('CREATE_SUP_ORDER: ', data)
         try {
             if (!orderSupId && state.length === 0) {
                let resultForm: any = await createOrderSupForm(data);
@@ -265,22 +243,16 @@ const AdminModalOrderSup = observer((
                 orderSupStorage?.splice(0, orderSupStorage.length);
                 setOrderSupId(+resultForm.data.id_order_sup);
                 setOrderSupData(resultForm.data);
-                // if (data.id_order) {
-                //     setOrderSupStorage(resultForm?.data?.order_sup_storage)
-                // }
-                // if (!data.id_order) {
                     state.forEach(async (itemGoods: any): Promise<any> => {
                         let resultOrderSup: any = await createGoodsToOrderSup(itemGoods, resultForm.data.id_order_sup!);
                         setOrderSupStorage(oldOrdStor => [...oldOrdStor!, resultOrderSup.data]);
                     })
-                //}
                 setUpdateBtn('Оновити');
                 alert(`Замовлення створено, id ${resultForm.data.id_order_sup}. 
                     Для підкріплення товарів до замовлення треба натиснути ОК.`);
             }
             if(orderSupId && state.length > 0 && disableBtnOk === false) {
                 orderSupStorage?.forEach(async(itemsOrd): Promise<any> => {
-                    //await deleteGoodsFromOrderSup(itemsOrd);
                 });
                 orderSupStorage?.splice(0, orderSupStorage.length);
                 state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
@@ -382,7 +354,6 @@ const AdminModalOrderSup = observer((
             if (orderSupId && state.length !== 0 && disableBtnOk === true){
                 const newStorage = () => {
                 orderSupStorage?.forEach(async(itemsOrd): Promise<any> => {
-                    //await deleteGoodsFromOrderSup(itemsOrd);
                 });
                 orderSupStorage?.splice(0, orderSupStorage.length);
                 state.forEach(async (itemGoods: CreateGoods): Promise<any> => {
@@ -487,7 +458,7 @@ const AdminModalOrderSup = observer((
             console.log('ERROR_ORDER_SUP: ', error);
         }    
     }    
-    //GOOD PERFORM
+
     const onSubmitOrderSup = async () => {
         try {
             if(orderSupId && orderSupStorage?.length !== 0) {
@@ -543,7 +514,6 @@ const AdminModalOrderSup = observer((
                         });
                         if (addCommitReq?.data.status === '200' || '201') {
                             alert('Коментар додано');
-                            //showComment(e);
                             setAddNewCommit(addCommitReq.data);
                         } else {
                             alert('Коментар не додано. Помилка')
@@ -584,7 +554,6 @@ const AdminModalOrderSup = observer((
                         }); 
                         if (addCommitReqW?.data.status === '200' || '201') {
                             alert('Коментар додано');
-                            //showComment(e);
                             setAddNewCommit(addCommitReqW.data);
                         } else {
                             alert('Коментар не додано. Помилка')
@@ -623,23 +592,10 @@ const AdminModalOrderSup = observer((
         }    
     }
 
-    console.log(errors);
-    console.log('GOODSID: ', goodsId);
-    console.log('ORDER_SUP_ID: ', orderSupId);
-    console.log('ORDER_DATA_FOR: ', orderSupData);
-    console.log('STATE_SUP: ', state);
-    console.log('ORDER_SUP_SUM: ', orderSum);
-    console.log('ORDER_SUP_STORAGE: ', orderSupStorage);
-    console.log('PURCHASE_SUP: ', purchaseGoods);
-    console.log('SUPPLIERS_SUP: ', addSupplier);
-    console.log('COMMENTS_ADD_SUP: ', addNewCommit);
-
     return (
     <div>
         Замовлення Постачальника
     <div className="containerAdmOrderSupForm"
-            //onSubmit={e => e.stopPropagation()}
-            //onSubmit={e => e.preventDefault()}
             >
         <form 
             onSubmit={handleSubmit(onSubmit)}
@@ -649,7 +605,6 @@ const AdminModalOrderSup = observer((
                     <label htmlFor="date">Дата</label>
                     <input className="admFormOrderData" 
                         type="text"
-                        //type="datetime-local"
                         name="order_date" 
                         data-value={orderSupData ? orderSupData?.createdAt : ''}
                         defaultValue={orderSupData ?
@@ -664,7 +619,6 @@ const AdminModalOrderSup = observer((
                         type="text"
                         name="firstname"
                         value={orderSupId ?? orderSupData?.id_order ?? ''} 
-                        //defaultValue=''
                         placeholder="id замовлення"
                         readOnly={true}
                     />  
@@ -689,7 +643,6 @@ const AdminModalOrderSup = observer((
                         {...register('storage', {required: 'Це необхідні дані'})}
                         name="storage"
                         defaultValue={orderSupData?.storage}
-                        //onChange={(e) => setValue('storage', e.target.value)}
                         >
                             <option value={'Постачальник'}>Постачальник</option>
                             <option value={'Основний Харків'}>Основний Харків</option>
@@ -704,7 +657,6 @@ const AdminModalOrderSup = observer((
                         {...register('order_view', {required: 'Це необхідні дані'})}
                         name="order_view"
                         defaultValue={orderSupData?.order_view}
-                        //onChange={(e) => setValue('order_view', e.target.value)}
                         >
                             <option value="Сайт">Сайт</option>
                             <option value="Роздріб">Роздріб</option>
@@ -743,10 +695,8 @@ const AdminModalOrderSup = observer((
                             placeholder="Ім'я або назва.."
                             value={addSupplier?.name ?? orderSupData?.supplier?.name ?? ''}
                             readOnly={true}
-                            //onChange={() => setAddSupplier(addSupplier)}
                         />
                         <div 
-                            //onClick={e => e.stopPropagation()}
                             onClick={(e)=>e.preventDefault()}
                         >
                             <button onClick={openSupplierForm} 
@@ -755,7 +705,6 @@ const AdminModalOrderSup = observer((
                             </button> 
                         </div>
                         <div 
-                            //onClick={e => e.stopPropagation()}
                             onClick={(e)=>e.preventDefault()}
                         >
                             <button onClick={activeCustomer}
@@ -870,7 +819,6 @@ const AdminModalOrderSup = observer((
                 </div>  
                 <div 
                     onClick={(e)=>e.preventDefault()}
-                    //onClick={e => e.stopPropagation()}
                 >
                     <button onClick={sendRequestToSupplier}
                         disabled={addSupplier?.address && orderSupId ? false : true}
@@ -883,7 +831,6 @@ const AdminModalOrderSup = observer((
                 </div> 
             </div>
             <div className='admFormOrderSupTableBox'
-                //onInput={(e) => e.stopPropagation()}
                 onClick={(e)=>e.preventDefault()}
                 >   
             <table className='admFormOrderSupTable'>
@@ -921,7 +868,6 @@ const AdminModalOrderSup = observer((
                         ) =>(
                     <tr key={item.id + index} 
                         onInput={(e) => e.stopPropagation()}
-                        //onClick={(e)=>e.preventDefault()}
                         >
                         <td >{item.id}</td>
                         <td >{item.full_name}</td>
@@ -982,7 +928,6 @@ const AdminModalOrderSup = observer((
                                     item.id_storage === 4 ?
                                     'Віддалений Дніпро-1' : ''
                                 }
-                                //{...register('storage_index', {required: 'Це необхідні дані'})}
                                 >
                                 <option value={'Постачальник'}>Постачальник</option>
                                 <option value={'Основний Харків'}>Основний Харків</option>
@@ -990,23 +935,15 @@ const AdminModalOrderSup = observer((
                                 <option value={'Віддалений Дніпро-1'}>Віддалений Дніпро-1</option>
                             </select>  
                         </td> 
-                        <td 
-                            //onClick={e =>e.stopPropagation()}
-                            //onClick={(e)=>e.preventDefault()}
-                            //onClickCapture={e => e.preventDefault()}
-                        >
+                        <td>
                             <div 
-                                //onClick={(e) => e.target.addEventListener("click", deleteItem, false)}
-                                //onClickCapture={e=>e.stopPropagation()}
                                 onClick={e=>e.stopPropagation()}
-                                //onClick={(e)=>e.preventDefault()}
                             >
                             <button className='closeAdmGoods' 
                                 key={'deleteBtn' + item.id}
                                 value={index}
                                 disabled={disableBtn}
                                 onClick={e => deleteItem(+e.currentTarget.value)}
-                                //onClickCapture={e=>e.stopPropagation()}
                                 >
                                 <i className="fa fa-remove"></i>
                             </button>
@@ -1041,47 +978,34 @@ const AdminModalOrderSup = observer((
                     maxLength={45}
                     placeholder="Сума доставки.."
                     defaultValue={orderSupData?.delivery_cost ?? 0}
-                        //onChange={setDeliveryCostOrder}
                 />
             </div>
             <div className='admFormOrderCommit'
                 onClick={(e)=>e.preventDefault()}
-                //onClick={(e) => e.stopPropagation()}
                 >
                 <div className='admFormOrderAddCommit'>
                 <button className='admFormOrderBtnAdd'
                     value={orderSupId ?? orderSupData?.id_order}
                     onClick={(e) => addComment(e)}
-                    //onInput={(e) => showComment(e)}
-                    //data-order={orderSupData?.id_order}
-                    >Додати коментар
+                >Додати коментар
                 </button>
                     <textarea 
                     className='admOrderCommitText'
                     value={newComment}
-                    //data-order={orderSupData?.id_order}
                     onChange={e => setNewComment(e.target.value)}
-                    
-                    //placeholder="Введіть коментар.."    
-                    //name="subject" 
                     placeholder="Пишить коментар.."
                     >        
                     </textarea>
                 </div>
                 <div className='admFormOrderCommitChat'>
-                    {/* {comments?.length !== 0 ? */}
-                      <AdminComment 
+                    <AdminComment 
                         main={false}
                         newCommit={addNewCommit}
-                        comments={comments}/>
-                    {/* //   : <span>... очікуємо коментарі ...</span>  
-                    // } */}
+                        comments={comments}
+                    />
                 </div>  
             </div>
-            <div className='admOrderFormGrp'
-                    //onClick={(e) => e.stopPropagation()}
-                    //onClickCapture={e=>e.stopPropagation()}
-                 >
+            <div className='admOrderFormGrp'>
                 <div onClick={(e) => e.stopPropagation()}>
                     <button className={!disableBtnOk ? 'admFormOrderBtnOk' : 'admFormOrderBtnOkDsb'}
                         disabled={disableBtnOk}
@@ -1090,16 +1014,11 @@ const AdminModalOrderSup = observer((
                     </button>
                 </div>
                 <div 
-                    onClick={(e) => e.stopPropagation()}
-                    //onClick={(e)=>e.preventDefault()}
-                    >
+                    onClick={(e) => e.stopPropagation()}>
                     <button className={!disableBtn ? 'admFormOrderBtnSave' : 'admFormOrderBtnSaveDsb'}
                         disabled={disableBtn} 
-                        //type="button"
-                        //type="submit"
                         onClick={handleSubmit(onSubmit)}
-                        //onClickCapture={e=>e.stopPropagation()}
-                        >
+                    >
                         {updateBtn ?? 'Зберегти'}
                     </button>
                 </div>
@@ -1139,7 +1058,6 @@ const AdminModalOrderSup = observer((
             </div>
         </form>
         </div>
-        {/* <div className='admFormOrderSupModalBox'> */}
         {openSupplier ? 
             <ModalAdmin active={openSupplier} setActive={setOpenSupplier}>
                 <AdminModalSupplier 
@@ -1150,7 +1068,6 @@ const AdminModalOrderSup = observer((
         }
         {createSupplier ?
             <ModalAdmin active={createSupplier} setActive={setCreateSupplier}>
-                {/* <AdminModalCustmCreate />    */}
             </ModalAdmin> : null
         }
         {addGoods ? 
@@ -1171,7 +1088,6 @@ const AdminModalOrderSup = observer((
             <span style={{'color': 'red'}}>Помилка! Не заповнені корректно всі дані.</span> 
             : null
         }
-        {/* </div> */}
     </div>
     );
 });

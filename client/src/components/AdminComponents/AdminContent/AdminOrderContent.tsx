@@ -143,13 +143,6 @@ const AdminOrderContent = (
             (+(new Date(a.createdAt).toLocaleString())) - (+(new Date(b.createdAt).toLocaleString())));
             setFilteredOrder(sortByDate);
         }
-        // if (e.target.textContent === 'Дата оновлення') {
-        //     const sortByDateUpdate: any = 
-        //     filteredOrder?.sort(
-        //     (a:any, b:any) => 
-        //     (+(new Date(a.updatedAt).toLocaleString())) - (+(new Date(b.updatedAt).toLocaleString())));
-        //     setFilteredOrder(sortByDateUpdate);
-        // }
         if (e.target.textContent === 'Покупець') {
             const sortByCustomer: any = 
             filteredOrder?.sort(
@@ -350,7 +343,6 @@ const AdminOrderContent = (
             </div>
             {filteredOrder ?
             <div className='admOrdersTable'
-            //onClick={(e) => e.stopPropagation()}
             >
             <table className='admListOrdersTable'>
                 <thead>

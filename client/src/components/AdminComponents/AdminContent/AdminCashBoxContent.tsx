@@ -10,7 +10,6 @@ interface ICashbox {
 }
 
 const AdminCashBoxContent = ({cashboxData}: ICashbox) => {
-    //const [activeCustomer, setActiveCustomer] = useState(false);
     const [cashboxGetData, setCashboxGetData] = useState<any | null>(null);
     const [filteredCashbox, setFilteredCashbox] = useState< any[] | null | undefined>(cashboxData);
     const [cashbox, setCashbox] = useState(false);
@@ -53,7 +52,6 @@ const AdminCashBoxContent = ({cashboxData}: ICashbox) => {
     const itemClickHandler = (e: any) => {
         const entity = e.target.textContent.split(':')
         setValue(entity[1]);
-        //setValue(e.target.value);
         setIsSearch(!isSearch);
     };
 
@@ -119,8 +117,6 @@ const AdminCashBoxContent = ({cashboxData}: ICashbox) => {
             {filteredCashbox ? filteredCashbox.map(
                 (items: ICashboxItem) => (
                     <tr key={'or' + items.id_cashbox}
-                        //onClick={e => showComment(e)}
-                        //onDoubleClick={e => showOrderData(e)}
                         data-value={items.id_cashbox}>
                         <td>{items.id_cashbox}</td>
                         <td>{items.cashbox}</td>

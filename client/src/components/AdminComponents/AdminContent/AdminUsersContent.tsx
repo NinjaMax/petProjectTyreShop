@@ -94,8 +94,6 @@ const AdminUsersContent = ({users}:IUser) => {
             {filteredUserData ? filteredUserData.map(
                 (items: IUserItem) => (
                     <tr key={'or' + items.id_user}
-                        //onClick={e => showComment(e)}
-                        //onDoubleClick={e => showOrderData(e)}
                         data-value={items.id_user}>
                         <td>{items.id_user}</td>
                         <td>{items.name}</td>

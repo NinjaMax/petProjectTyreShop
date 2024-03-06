@@ -12,15 +12,6 @@ interface IModalGoods {
     showRowModData(e: any): void;
 }
 
-type ItyreModData ={
-    price: [{id: number; price: number; id_storage: number; storage: string}];
-    id: number; 
-    full_name: string;
-    full_name_color?: string;  
-    category: { category: string;}; 
-    stock: [{remainder: number; id_storage: number}]; 
-}
-
 const AdminModalGoods = ({props, showRowModData, storageGoods}: IModalGoods) => {
     const [tyreModData, wheelModData] = props;
     const [chooseCatMod, setChooseCatMod] = useState<string>('Шини');

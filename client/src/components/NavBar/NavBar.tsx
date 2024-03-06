@@ -362,7 +362,6 @@ const NavBar = observer(() => {
         {Object.keys(locales).map((locale: any) => (
           <div key={locale}>
             <button style={{ fontWeight: i18n.resolvedLanguage === locale ? 'bold' : 'normal' }} 
-            //type="submit" 
             value={locale}
             onClick={chooseLanguage}>
             {locales[locale].title}

@@ -1,6 +1,5 @@
 import React from 'react';
 import '../../css/Goods/WheelMarking.css';
-//import tyreMarkingWinter from '../../assets/icons/infoTyreMarking/wheel_diameter_3.png';
 
 type IWheelMarket = {
     brand?: string;

@@ -26,8 +26,6 @@ const AdminModalPay = ({
 
     const onSubmit = async (data: any) => {
         try {
-            console.log('DATA_ORDER: ', data);
-            console.log('DATA_ID_ORDER: ', data.id_order === '' ? 0 : data.id_order);
             if (!paynmentData?.disableBtns) {
                 const createPaynmentNew = await createPayment({
                     ...data,
@@ -166,11 +164,6 @@ const AdminModalPay = ({
                             maxLength={45}
                             placeholder="id заказу покупця"
                         />
-                        {/* <div onClick={(e)=>e.preventDefault()}>
-                            <button  className='admPayIncomeSearchCustm'>
-                                <i className="fas fa-search"></i>    
-                            </button> 
-                        </div>  */}
                     </div>
                     <div>
                         <label htmlFor="payOrderSupId">Заказ постачальника </label>
@@ -184,11 +177,6 @@ const AdminModalPay = ({
                             maxLength={45}
                             placeholder="id заказу постачальника"
                         />
-                        {/* <div onClick={(e)=>e.preventDefault()}>
-                            <button  className='admPayIncomeSearchCustm'>
-                                <i className="fas fa-search"></i>    
-                            </button> 
-                        </div>  */}
                     </div>
                     <div>
                         <label htmlFor="payIdcontract">Контрагент (id контракту) </label>
@@ -202,11 +190,6 @@ const AdminModalPay = ({
                             maxLength={45}
                             placeholder="id контракту"
                         />
-                        {/* <div onClick={(e)=>e.preventDefault()}>
-                            <button  className='admPayIncomeSearchCustm'>
-                                <i className="fas fa-search"></i>    
-                            </button> 
-                        </div>  */}
                     </div>
                     <div>
                         <label htmlFor="paySum">Сума </label>

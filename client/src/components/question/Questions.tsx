@@ -16,7 +16,7 @@ const Question = observer(() => {
   const { goodsTyre, goodsWheel, page, customer} = useContext<any | null>(Context);
   const [dataQuestion, setDataQuestion] = useState<{} | null>(null);
   const [dataQuestionsList, setDataQuestionsList] = useState<any[] | null>(null);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     let isMounted = false;
@@ -39,7 +39,6 @@ const Question = observer(() => {
           customer._customer.id_customer,
           customer._customer.picture ?? customer._customer.profile_image_url,
           );
-          console.log('CREATE_QUESTION: ', createQuestionOne);
           if (createQuestionOne?.status === 201) {
             setDataQuestion(null);
             setCreateQuestions(!createQuestions);

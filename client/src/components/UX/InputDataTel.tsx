@@ -21,7 +21,6 @@ const InputDataTel = ({onAccept, dataTel}: IinputDataTel) => {
                 name='telInput'
                 mask='+{38}(000)000-00-00'
                 radix="."
-                // defaultValue={String(dataTel)}
                 value={String(dataTel) ?? "_" }
                 unmask={false}
                 lazy={false}

@@ -55,7 +55,6 @@ const AdminPayExpensesContent = ({payExpenses, payTypes, payViews, cashBoxes}: I
     const itemClickHandler = (e: any) => {
         const entity = e.target.textContent.split(':');
         setValue(entity[1]);
-        //setValue(e.target.value);
         setIsSearch(!isSearch);
     }
 
@@ -152,8 +151,6 @@ const AdminPayExpensesContent = ({payExpenses, payTypes, payViews, cashBoxes}: I
 
     const payExpensesTable = ({index, style}: any) => (
         <div className='admPayIncomesGridItem' style={style}
-            //onClick={showComment}
-            //onDoubleClick={showOrderData}
             data-name='payIncomesShow'
             data-value={filteredPay![index].id_paynment}>
             <div>{filteredPay![index].id_paynment}</div>
@@ -169,15 +166,6 @@ const AdminPayExpensesContent = ({payExpenses, payTypes, payViews, cashBoxes}: I
             <div>{filteredPay![index]?.user?.name}</div>
             <div>{filteredPay![index]?.notes}</div>
             <div>
-                {/* <button className='editAdmGoods'
-                    name='payIncomesShow'
-                    value={filteredPay![index].id_paynment}
-                    onClick={showPayExpensesData}
-                >
-                    <i className="fas fa-list"
-                        title="пов'язані документи"
-                    ></i>
-                </button> */}
                 <button className='editAdmGoods'
                     name='editPayExpenses'
                     value={filteredPay![index].id_paynment}

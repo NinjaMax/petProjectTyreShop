@@ -5,7 +5,6 @@ interface ITimer {
     seconds: number;
 }
 
-
 function Timer({minutes, seconds}: ITimer) {
   const [totalSeconds, setTotalSeconds] = useState(minutes * 60 + seconds);
 

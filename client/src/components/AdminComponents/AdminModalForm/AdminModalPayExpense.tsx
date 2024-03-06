@@ -38,7 +38,7 @@ const AdminModalPayExpense = ({payViews, payTypes, paynmentData}: PayModal) => {
                     <div>
                         <label htmlFor="pereviznik">Організація </label>
                             <select className="admFormPayExpenseDelivery" name="Pereviznik">
-                            <option value="NovaPoshta">ЧП Гайворонський Н.Н</option>
+                            <option value="NovaPoshta">ЧП Шемендюк</option>
                             <option value="UkrPoshta">ТОВ Юітігранд-солюшнз</option>
                         </select>    
                     </div>   

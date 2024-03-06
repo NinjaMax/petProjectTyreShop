@@ -15,8 +15,6 @@ const TabMain = ({filterMainState, filterStateAction, getFilterTitle}: ITabMain)
     const [filterState, setFilterState] = useState<string>('ШИНИ');
     const [filterTyreState, setFilterTyreState] = useState<boolean>(false);
     const [filterWheeleState, setFilterTWheelState] = useState<boolean>(false);
-    //const [filterBatteryState, setFilterBatteryState] = useState<boolean>(false);
-    // const [filterOilState, setFilterOilState] = useState<boolean>(false);
     
     useEffect(() =>{
         if (filterState === 'ШИНИ') {
@@ -55,6 +53,8 @@ const TabMain = ({filterMainState, filterStateAction, getFilterTitle}: ITabMain)
         <img
             fetchpriority='high'
             className='tabCoverImg'
+            width={1440}
+            height={250}
             src="img/tyres_tab_main_1.webp" 
             srcSet="img/tyres_tab_main_1.webp 1440w,
                 img/tyres_tab_main_1_mobile.webp 580w"
@@ -72,8 +72,10 @@ const TabMain = ({filterMainState, filterStateAction, getFilterTitle}: ITabMain)
         }
         {filterState === 'ДИСКИ'  ?
         <img
-            fetchpriority='high'
+            //fetchpriority='high'
             className='tabCoverImg'
+            width={1440}
+            height={250}
             src="img/wheels_tab_main.webp" 
             srcSet="img/wheels_tab_main.webp 1440w,
                 img/tyres_tab_main_1_mobile.webp 580w"
@@ -100,17 +102,6 @@ const TabMain = ({filterMainState, filterStateAction, getFilterTitle}: ITabMain)
                 onClick={handleSetFilterState}>
                 ДИСКИ<span className='arrowTabWheels'></span>   
             </button>
-            {/* <button className="tablinksAkb" 
-                value={'АКБ'} 
-                onClick={handleSetFilterState}>
-                АКБ<span className='arrowTabAkb'></span>
-            </button>
-            <button className="tablinksSelect" 
-                value={'МАСТИЛА/РІДИНИ'} 
-                onClick={handleSetFilterState}>
-                МАСЛА ТА РІДИНИ<span className='arrowTabSelect'></span>
-            </button> */}
-            
         </div>
         {filterTyreState ?
         <div id="filterMainTyre" className="tabContentMain">

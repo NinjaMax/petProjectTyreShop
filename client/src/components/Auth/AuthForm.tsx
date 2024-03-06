@@ -44,7 +44,6 @@ const AuthForm = (
                   <div className="colAuthForm">
                     <input className='inputAuthForm'
                      type="tel" 
-                     //name="phone" 
                      placeholder="номер телефона" 
                      {...register("phone", { required: true, maxLength: 12 })} 
                      required/>

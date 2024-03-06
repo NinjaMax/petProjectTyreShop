@@ -46,9 +46,7 @@ const AuthConfirmTel = ({
                     type="tel" 
                     pattern="[0-9]{12}"
                     maxLength={12}
-                    //name="username" 
                     placeholder="номер телефона 38**********"
-                    //onChange={(e: any) => setWriteTel(+e.currentTarget.value)}
                     {...register("phone", { required: true, maxLength: 12 })} 
                     required/>
                   :null
@@ -66,7 +64,6 @@ const AuthConfirmTel = ({
                   <input className='inputAuthForm' 
                     type="submit" 
                     value="Відправити SMS"
-                    //onClick={() => preSignUp(writeTel)}
                   />
                   : null
                 }

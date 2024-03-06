@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import '../../css/Reviews/ReviewStoreCreate.css';
 import RatingOptions from '../ux/RatingOptions';
 import ButtonAction from '../buttons/ButtonAction';
@@ -7,7 +7,6 @@ import { observer } from 'mobx-react-lite';
 import { Context } from '../../context/Context';
 import Rating from '../ux/Rating';
 import { FormValuesStore } from './types/ReviewStoreCreate.type';
-// import { FormValues } from './types/ReviewStoreCreate.type';
 
 interface IReviewTyreCreate {
     onSubmitReviewStore(arg0: any): void;

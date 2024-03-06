@@ -84,7 +84,7 @@ const Card = observer(({goods, optionsBox, typeCard, checkOrders}:ICard) => {
     };
 
     const restStockCard: number = goods?.price?.reduce((sum: any, current: any) => sum + current.price, 0); 
-    //console.log('GOODS: ', goods);
+
     return (
         <div className="tyresCard">
             <div >

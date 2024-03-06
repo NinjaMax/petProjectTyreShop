@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
-import { createUaStringFromUrl, translateToRu } from '../../services/stringUrl';
+import { translateToRu } from '../../services/stringUrl';
 
 type SeaoTag = {
     paramSeason: string;

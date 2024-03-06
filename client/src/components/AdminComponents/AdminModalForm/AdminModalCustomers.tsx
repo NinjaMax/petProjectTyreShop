@@ -7,15 +7,6 @@ interface IModalCustomers {
     addCustomer(arg0: any): void;
 }
 
-type IAllCustomer = {
-    id_customer: number;
-    name: string;
-    full_name: string;
-    contract: [
-        {name: string; id_contract: number;}
-    ];
-}
-
 const AdminModalCustomers = ({allCustomer, addCustomer}: IModalCustomers) => {
     const [filterCustomer, setFilterCustomer] = useState<any[] | null | undefined>(allCustomer);
     const [filterCustmValue, setFilterCustmValue] = useState<string>();

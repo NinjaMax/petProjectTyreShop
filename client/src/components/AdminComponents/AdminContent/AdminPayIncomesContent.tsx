@@ -27,8 +27,6 @@ const AdminPayIncomesContent = ({payIncomes, payTypes, payViews, cashBoxes}: IAd
         }
     },[payIncomes, value]);
 
-    //createPayment,
-    //updatePayment,
     const showPayIncomesData = async (e: any) => {
         let payIncomesInfo: any = payIncomes?.find(
             (item:{id_paynment: number}) => 
@@ -57,7 +55,6 @@ const AdminPayIncomesContent = ({payIncomes, payTypes, payViews, cashBoxes}: IAd
     const itemClickHandler = (e: any) => {
         const entity = e.target.textContent.split(':')
         setValue(entity[1]);
-        //setValue(e.target.value);
         setIsSearch(!isSearch);
     }
 
@@ -154,8 +151,6 @@ const AdminPayIncomesContent = ({payIncomes, payTypes, payViews, cashBoxes}: IAd
 
     const payIncomeTable = ({index, style}: any) => (
         <div className='admPayIncomesGridItem' style={style}
-            //onClick={showComment}
-            //onDoubleClick={showOrderData}
             data-name='payIncomesShow'
             data-value={filteredPay![index].id_paynment}>
             <div>{filteredPay![index].id_paynment}</div>
@@ -171,15 +166,6 @@ const AdminPayIncomesContent = ({payIncomes, payTypes, payViews, cashBoxes}: IAd
             <div>{filteredPay![index]?.user?.name}</div>
             <div>{filteredPay![index]?.notes}</div>
             <div>
-                {/* <button className='editAdmGoods'
-                    name='payIncomesShow'
-                    value={filteredPay![index].id_paynment}
-                    onClick={showPayIncomesData}
-                >
-                    <i className="fas fa-list"
-                        title="пов'язані документи"
-                    ></i>
-                </button> */}
                 <button className='editAdmGoods'
                     name='editPayIncomes'
                     value={filteredPay![index].id_paynment}
@@ -219,8 +205,8 @@ const AdminPayIncomesContent = ({payIncomes, payTypes, payViews, cashBoxes}: IAd
                 placeholder="Введіть значення для пошуку..."
             />
             <ul className='inputPayExpenseContent'>
-                        {value && isSearch ?
-                            filteredPay?.map(
+                {value && isSearch ?
+                        filteredPay?.map(
                                 (item: IPaymentItem, index: number) =>{
                             return (
                             <li key={'fullName' + index}

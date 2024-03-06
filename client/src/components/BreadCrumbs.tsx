@@ -9,8 +9,6 @@ interface IBreadCrumbs {
 const BreadCrumbs = ({route, hrefTitle}: IBreadCrumbs) => {
     const newRoute = route.slice(0, route.length - 1);
 
-    // console.log(newRoute);
-    // console.log(hrefTitle);
     return (
         <div>
             <ul className="breadcrumb">

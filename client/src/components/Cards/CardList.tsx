@@ -21,12 +21,6 @@ const CardList = ({goods, forOrder, priceItem, countEvent, checkOrders}: ICard) 
     useEffect(() => {
         let isMounted = false;
         const getRatingModel = async () => {
-        //   const taskProduct: any[] = [
-        //     getTyresModelRatingAvg,
-        //   ];
-        // let i: number = 0; 
-        // while (taskProduct.length > i) {
-          //if (!isMounted && taskProduct[i] === getTyresModelRatingAvg && goods) {
             if (!isMounted && goods?.category?.category === ('легковые шины' || 'грузовые шины')) {
                 const getRating: any = await getTyresRatingAvgIdAndIdmodel(
                     +goods!.id,
@@ -41,10 +35,6 @@ const CardList = ({goods, forOrder, priceItem, countEvent, checkOrders}: ICard) 
                 );
                 setRatingModel(getWheelRating[0]);
             }
-        //   const task = taskProduct.shift();
-        //   task();
-        //   await yieldToMain();
-        //}
         };
         getRatingModel();
         return () => {
@@ -64,7 +54,6 @@ const CardList = ({goods, forOrder, priceItem, countEvent, checkOrders}: ICard) 
     return (
         <div className="tyresCardList"
             onClick={() => console.log('CLICK_CARD_LIST')}
-            //onClick={(e: any) => e.stopPropagation()}
         >
             <img 
                 id='imgTyresList' 

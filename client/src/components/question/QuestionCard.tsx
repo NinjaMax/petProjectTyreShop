@@ -1,7 +1,6 @@
 import React from 'react';
 import '../../css/Question/QuestionCard.css';
 import { IQuestionCard } from './types/QuestionCard.type';
-//import customerReview from '../../assets/icons/customer64.png';
 import QuestionAnswer from './QuestionAnswer';
 
 const QuestionCard = ({questionData}: IQuestionCard) => {
@@ -32,15 +31,7 @@ const QuestionCard = ({questionData}: IQuestionCard) => {
             : null
             }
         </div>
-        {/* <ButtonPrevNext prevBtnLeft={-30} nextBtnRight={-30}/> */}
-    </div>
-
-    {/* <div className="dotReviewContainerStore">
-        <a className='reviewsAllLink' href='/#'>Подивитись всі відгуки</a>
-        <DotSite/>
-        <button className='btnStoreReview'>Залишити відгук про магазин</button>     
-    </div> */}
-           
+    </div> 
 </div>
   )
 }

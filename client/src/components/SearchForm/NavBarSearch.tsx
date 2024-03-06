@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import '../../css/NavBarSearch.css';
 import TyresCardList from '../cards/CardList';
-import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../../context/Context';
 import { addGoodsToBasket, createBasket, getBasketById, getStorageByIdParam, getTyresAll, getWheelsAll} from '../../restAPI/restGoodsApi';
 import { yieldToMain } from '../../restAPI/postTaskAdmin';
-import { SEARCH_ROUTE } from '../../utils/consts';
 import { ICheckOrderItem } from '../catalogs/types/CheckOrder.type';
 import Modal from '../modal/Modal';
 import CheckOrder from '../modal/CheckOrder';
@@ -19,13 +18,10 @@ interface INavBarSearch {
 const NavBarSearch = observer((
         {searchBtn, clickSearchBtn}: INavBarSearch
     ) => {
-    //const location = useLocation();
     const history = useHistory();
     const [inputSearchMod, setInputSearchMod] = useState('');
     const [tyreSearchMod, setTyreSearchMod] = useState<[] | null>(null);
     const [wheelSearchMod, setWheelSearchMod] = useState<[] | null>(null);
-    const [oilSearchMod, setOilSearchMod] = useState<[] | null>(null);
-    const [batterySearchMod, setBatterySearchMod] = useState<[] | null>(null);
     const [tabSearchMod, setTabSearchMod] = useState<string>('');
     const [tabSearchModTyre, setTabSearchModTyre] = useState<[] | null>([]);
     const [tabSearchModWheel, setTabSearchModWheel] = useState<[] | null>([]);
@@ -65,8 +61,6 @@ const NavBarSearch = observer((
     },[]);
     
     useEffect(() => {
-        //let isMounted = false;
-        //const searchTask = async () => {
         if ( inputSearchMod.length !== 0 ) {
             const newTyresSearch: any = tyreSearchMod?.filter((itemGoods:any) =>
             (itemGoods.id.toLowerCase().includes(inputSearchMod.toLowerCase()) ||    
@@ -76,9 +70,6 @@ const NavBarSearch = observer((
             if (newTyresSearch) {
                 setTabSearchModTyre(newTyresSearch);
             }  
-            // else {
-            //     setTabSearchModTyre(null);
-            // }
         }
         if ( inputSearchMod.length !== 0 ) {
             const newWheelsSearch: any = wheelSearchMod?.filter((itemGoods:any) =>
@@ -88,26 +79,8 @@ const NavBarSearch = observer((
             ));
             if (newWheelsSearch) {
                 setTabSearchModWheel(newWheelsSearch);
-            }  
-            // else {
-            //     setTabSearchModWheel(null);
-            // }
+            } 
         } 
-        // if ( inputSearchMod.length === 0 ) {
-        //     setTabSearchModWheel([]);
-        //     setTabSearchModTyre([]);
-        // }
-        //};
-        // else {
-        //     setTabSearchModTyre(null);
-        //     setTabSearchModWheel(null);
-        //     setTabSearchModOil(null);
-        //     setTabSearchModBattery(null);
-        // }
-        //searchTask();
-        // return () => {
-        //     isMounted = true;
-        // };
     },[
         inputSearchMod, 
         tyreSearchMod, 
@@ -123,13 +96,11 @@ const NavBarSearch = observer((
         try {
             setActive(!active);
             if (!active) {
-                console.log('ITEM_GOODS: ', item)
                 const getStorageTyre = await getStorageByIdParam(storageItem);
                 const basket: any = await createBasket({
                     id_customer: customer.customer?.id, 
                     storage: getStorageTyre.storage
                 });
-                //console.log('CREATE_BASKET_ID_BASKET: ', basket.data.id_basket);
                 if(basket?.status === 201) {
                     const checkItem = checkOrderItem?.find(value => +value.id === +item.id);
                     const addTobasket: any = await addGoodsToBasket(
@@ -148,7 +119,6 @@ const NavBarSearch = observer((
                     item.reviews.length,
                     item.diameter.diameter,
                     ); 
-                    //console.log('ADD_BASK: ', addTobasket);
                     if (addTobasket?.status === 201) {
                         const updateBasketStorage = await getBasketById(basket.data.id_basket);
                         setCheckOrderItem(
@@ -158,8 +128,6 @@ const NavBarSearch = observer((
                             updateBasketStorage?.basket_storage.reduce(
                                 (sum: any, current: any) => (sum + current.quantity),0)
                         );
-                    //console.log('BASKET_ORDERS_ARR: ', basket?.data.basket_storage);
-                    //console.log('ADD_TO_BASKET: ', addTobasket?.data); 
                     }  
                 }
             }

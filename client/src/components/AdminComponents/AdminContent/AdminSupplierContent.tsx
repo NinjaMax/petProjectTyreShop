@@ -178,8 +178,6 @@ const AdminSupplierContent = ({suppliers}:any) => {
         </div>    
     );
     
-    console.log('SUPPLIERS_DATA: ', suppliers);
-
     return (
         <div onClick={inputCancelHandler}>
         <div className="admSupplierContent">

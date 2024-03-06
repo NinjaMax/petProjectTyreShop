@@ -161,6 +161,11 @@ export class TyresService {
     sort: string,
   ): Promise<any> {
     try {
+      const setWidthFilterMain: any[] | null = [];
+      const setHightFilterMain: any[] | null = [];
+      const setDiameterFilterMain: any[] | null = [];
+      const setBrandFilterMain: any[] | null = [];
+      const setSeasonFilterMain: any[] | null = [];
       const cachedTyresMain = await this.redisService.get(
         'tyrefilter' +
           width +
@@ -232,6 +237,16 @@ export class TyresService {
                 : { model: TyreBrand },
             ],
           });
+        tyresAllWithoutLimitMain?.rows?.map((item: any) => {
+          return (
+            setWidthFilterMain?.push(item?.width?.width),
+            setHightFilterMain?.push(item?.height?.height),
+            setDiameterFilterMain?.push(item?.diameter?.diameter),
+            setBrandFilterMain?.push(item?.tyre_brand?.brand),
+            setSeasonFilterMain?.push(item?.season)
+          );
+        });
+
         await this.redisService.set(
           'tyrefilter' +
             width +
@@ -242,16 +257,42 @@ export class TyresService {
             sort +
             'main',
           86400,
-          JSON.stringify(tyresAllWithoutLimitMain),
+          JSON.stringify({
+            rows: {
+              width: Array.from(new Set(setWidthFilterMain)),
+              height: Array.from(new Set(setHightFilterMain)),
+              diameter: Array.from(new Set(setDiameterFilterMain)),
+              brand: Array.from(new Set(setBrandFilterMain)),
+              season: setSeasonFilterMain.filter(
+                (el, id) =>
+                  setSeasonFilterMain.findIndex(
+                    (item: any) => item?.id_season === el?.id_season,
+                  ) === id
+              )
+            }
+          }),
         );
-        return tyresAllWithoutLimitMain;
+        return {
+          rows: {
+            width: Array.from(new Set(setWidthFilterMain)),
+            height: Array.from(new Set(setHightFilterMain)),
+            diameter: Array.from(new Set(setDiameterFilterMain)),
+            brand: Array.from(new Set(setBrandFilterMain)),
+            season: setSeasonFilterMain.filter(
+              (el, id) =>
+                setSeasonFilterMain.findIndex(
+                  (item: any) => item?.id_season === el?.id_season,
+                ) === id
+            )
+          }
+        };
       }
     } catch (error) {
       console.log('ERROR_GET_TYRE_MAIN: ', error);
       throw new HttpException(
         //'Data is incorrect or Not Found',
         error.message,
-        HttpStatus.NOT_FOUND,
+        HttpStatus.BAD_REQUEST,
       );
     }
   }
@@ -264,6 +305,9 @@ export class TyresService {
     sort: string,
   ): Promise<any> {
     try {
+      const setVehicleTypeFilter: any[] | null = [];
+      const setSpeedIndexFilter: any[] | null = [];
+      const setLoadIndexFilter: any[] | null = [];
       const cachedTyresAll = await this.redisService.get(
         'tyrefilter' +
           price +
@@ -321,6 +365,13 @@ export class TyresService {
                 : { model: TyreLoadIndex },
             ],
           });
+        tyresAllWithoutLimitTyreProps?.rows?.map((item: any) => { 
+          return (
+            setVehicleTypeFilter?.push(item?.vehicle_type),
+            setSpeedIndexFilter?.push(item?.speed_index?.speed_index_with_desc),
+            setLoadIndexFilter?.push(item?.load_index?.load_index_with_desc)
+          )
+        });
         await this.redisService.set(
           'tyrefilter' +
             price +
@@ -330,13 +381,36 @@ export class TyresService {
             sort +
             'middle',
           86400,
-          JSON.stringify(tyresAllWithoutLimitTyreProps),
+          JSON.stringify({
+            rows: {
+              type: setVehicleTypeFilter.filter(
+                (el, id) =>
+                  setVehicleTypeFilter.findIndex(
+                    (item: any) =>
+                      item?.id_vehicle_type === el?.id_vehicle_type,
+                  ) === id,
+              ),
+              speed_index: Array.from(new Set(setSpeedIndexFilter)),
+              load_index: Array.from(new Set(setLoadIndexFilter)),
+            }
+          }),
         );
-        return tyresAllWithoutLimitTyreProps;
+        return {
+          rows: {
+            type: setVehicleTypeFilter.filter(
+              (el, id) =>
+                setVehicleTypeFilter.findIndex(
+                  (item: any) => item?.id_vehicle_type === el?.id_vehicle_type,
+                ) === id,
+            ),
+            speed_index: Array.from(new Set(setSpeedIndexFilter)),
+            load_index: Array.from(new Set(setLoadIndexFilter)),
+          }
+        };
       }
     } catch (error) {
       console.log('ERROR_GET_TYRE_MIDDLE: ', error);
-      throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -348,6 +422,10 @@ export class TyresService {
     sort: string,
   ): Promise<any> {
     try {
+      const setHomologationFilter: any[] | null = [];
+      const setReinforcedFilter: any[] | null = [];
+      const setRunFlatFilter: any[] | null = [];
+      const setStuddedFilter: any[] | null = [];
       const cachedTyresAllProps = await this.redisService.get(
         'tyrefilter' +
           studded +
@@ -406,6 +484,14 @@ export class TyresService {
                 : { model: TyreReinforce },
             ],
           });
+        tyresAllWithoutLimitTyreProps?.rows?.map((item: any) => {
+          return (
+            setHomologationFilter?.push(item?.homologation?.homologation),
+            setReinforcedFilter?.push(item?.reinforce?.reinforce),
+            setRunFlatFilter?.push(item?.run_flat?.run_flat),
+            setStuddedFilter?.push(item?.studded?.studded)
+          )
+        });
         await this.redisService.set(
           'tyrefilter' +
             studded +
@@ -415,13 +501,27 @@ export class TyresService {
             sort +
             'bottom',
           86400,
-          JSON.stringify(tyresAllWithoutLimitTyreProps),
+          JSON.stringify({
+            rows: {
+              homologation: Array.from(new Set(setHomologationFilter)),
+              reinforce: Array.from(new Set(setReinforcedFilter)),
+              run_flat: Array.from(new Set(setRunFlatFilter)),
+              studded: Array.from(new Set(setStuddedFilter)),
+            }
+          }),
         );
-        return tyresAllWithoutLimitTyreProps;
+        return {
+          rows: {
+            homologation: Array.from(new Set(setHomologationFilter)),
+            reinforce: Array.from(new Set(setReinforcedFilter)),
+            run_flat: Array.from(new Set(setRunFlatFilter)),
+            studded: Array.from(new Set(setStuddedFilter)),
+          }
+        };
       }
     } catch (error) {
       console.log('ERROR_GET_TYRE_PROPS: ', error);
-      throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
 

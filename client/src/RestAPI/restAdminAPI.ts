@@ -23,7 +23,6 @@ const createGoodsToOrder = async (
     weight: item.weight,
     ref_weight: item.ref_weight,
     id_order_storage: item.id_order_storage ?? null,
-    // delivery: 'Flintstone',
 })
 .catch(error => {
     console.log(error)
@@ -43,13 +42,10 @@ const createGoodsToOrderBasket = async (
     total: item?.total,
     id_supplier: +item.id_supplier!,
     category: item.category,
-    // id_order: id_order,
-    // id_storage: item.id_storage,
     id_order_storage: item.id_order_storage ?? null,
     ref_diameter: item.ref_diameter,
     weight: item.weight,
     ref_weight: item.ref_weight,
-    // delivery: 'Flintstone',
     })
 
     return data;
@@ -70,7 +66,6 @@ const createGoodsToOrderSup = async (
     price: +item?.price!,
     price_wholesale: +item.price_wholesale!,
     id_order_sup_storage: +item?.id_order_sup_storage! ?? null,
-    // delivery: 'Flintstone',
     }
 )
 .catch(error => {
@@ -323,16 +318,6 @@ await $hostPost.post('/telegram-api/send-message',
 
 const addGoodsToOrderSup = async (value: IRestAdminApi) => 
 await $hostPost.post('/ordersup/add', value
-// {
-//     id_order_sup_storage: value?.id_order_sup_storage,
-//     id: value.id,
-//     id_supplier: value.id_supplier,
-//     id_order: value.order_sup_index,
-//     id_storage: value.storage_index,
-//     quantity: value.quantity,
-//     price: value.price,
-//     price_wholesale: value.price_wholesale,
-// }
 )
 .catch(error => {
     console.log(
@@ -342,15 +327,6 @@ await $hostPost.post('/ordersup/add', value
 
 const addGoodsOrderSupToStock = async (value: IRestAdminApi) => 
 await $hostPost.post('/ordersup/add/stock', value
-// {
-//     id_order_storage: value?.id_order_storage,
-//     id: value.id,
-//     id_supplier: value.id_supplier,
-//     id_order: value.order_index,
-//     id_storage: value.storage_index,
-//     quantity: value.quantity,
-//     price: value.price
-// }
 )
 .catch(error => {
     console.log(
@@ -431,14 +407,12 @@ await $hostGet.get('/comments/all-last')
 const getCommentOrderData = async (orderId: number) =>
 await $hostGet.get('/comments/byorderid', {params: {id_order: orderId ?? 0}})
 .catch(error => {
-    //console.log('ORDERID: ', orderId)
     console.log(error)
 });
 
 const getCommentOrderSupData = async (orderSupId: number) =>
 await $hostGet.get('/comments/byordersupid', {params: {id_order_sup: orderSupId ?? 0}})
 .catch(error => {
-    console.log('ORDER_SUP_ID: ', orderSupId);
     console.log(error);
 });
 

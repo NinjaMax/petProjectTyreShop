@@ -10,7 +10,6 @@ import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 
 type CheckOrderItem = {
-
     category:{
         id_cat: string,
         category: string,
@@ -167,7 +166,7 @@ type CheckOrderItem = {
 const CheckOrder = observer(({orderItem}:any) => {
     const [checkItems, setCheckItems] = useState<any[]>([]);
     const {page} = useContext<any | null>(Context);
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     useEffect(() => {
         let isMounted = false;

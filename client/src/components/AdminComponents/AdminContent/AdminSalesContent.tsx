@@ -42,7 +42,6 @@ const AdminSalesContent = ({sales}: IAdminSales) => {
             );  
         }  
         if(orderSupInfo) {
-            //e.currentTarget.name === 'editSupOrder' ? orderSupInfo.disableBtns = false : orderSupInfo.disableBtns = true;
             setSalesData(orderSupInfo);
             setActiveSales(!activeSales);
         }
@@ -51,7 +50,6 @@ const AdminSalesContent = ({sales}: IAdminSales) => {
     const itemClickHandler = (e: any) => {
         const entity = e.target.textContent.split(':')
         setValue(entity[1]);
-        //setValue(e.target.value);
         setIsSearch(!isSearch);
     }
 
@@ -180,7 +178,6 @@ const AdminSalesContent = ({sales}: IAdminSales) => {
 
     const salesRowTable = ({index, style}: any) => (
         <div className='admOrderSupGridItem' style={style}
-            //onClick={showComment}
             onDoubleClick={showSalesData}
             data-name='salesShow'
             data-value={filteredSales![index].id_sale}>
@@ -199,7 +196,6 @@ const AdminSalesContent = ({sales}: IAdminSales) => {
             <div>
                 <button className='basketAdmGoods'
                     value={filteredSales![index].id_order_sup}
-                    //onClick={addStockOrderSupGoods}
                     >
                     <i className="fas fa-warehouse"
                         title='Додати на склад'
@@ -213,7 +209,6 @@ const AdminSalesContent = ({sales}: IAdminSales) => {
                 <button className='editAdmGoods'
                     name='editSupOrder'
                     value={filteredSales![index].id_order_sup}
-                    //onClick={showOrderSupData}
                     >
                     <i className="fas fa-edit"
                         title='Редагувати'
@@ -284,40 +279,6 @@ const AdminSalesContent = ({sales}: IAdminSales) => {
                 </tr>
             </thead>    
             <tbody>
-            {/* {filteredSales ? filteredSales.map((items: ISalesItem) => (
-                    <tr key={'or' + items.id_sales}
-                        //onClick={e => showComment(e)}
-                        //onDoubleClick={e => showOrderData(e)}
-                        data-value={items.id_sales}>
-                        <td>{items.id_sales}</td>
-                        <td>{new Date(items.createdAt).toLocaleString()}</td>
-                        <td>{new Date(items.updatedAt).toLocaleString()}</td>
-                        <td>{items.customer.full_name}</td>
-                        <td>{items?.storage}</td>
-                        <td>{items?.order_storage?.reduce(
-                                (sum:any, current:any) => 
-                                sum + current.total, 0)}
-                        </td>
-                        <td>{items.status}</td>
-                        <td>{items.order_view}</td>
-                        <td>{items.delivery}</td>
-                        <td>{items.status_delivery}</td>
-                        <td>{items.pay_view}</td>
-                        <td>{items.status_pay}</td>
-                        <td>{items.user.name}</td>
-                        <td>{items.notes}</td>
-                        <td>
-                        <button className='editAdmGoods'>
-                            <i className="fas fa-edit"></i>
-                        </button>
-                        <button className='closeAdmGoods'>
-                            <i className="fa fa-remove"></i>
-                        </button>                  
-                        </td>
-                    </tr>
-                    ))
-                    : <tr><td>......Очікуемо продажі......</td></tr>
-                    }                    */}
             </tbody>
         </table>
         <List

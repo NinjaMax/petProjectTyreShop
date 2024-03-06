@@ -1,6 +1,5 @@
 import React from 'react';
 import '../../css/Question/QuestionAnswer.css';
-// import storeLogo from '';
 import { IAnswerData } from './types/AnswerData.type';
 
 const QuestionAnswer = ({answer}:IAnswerData) => {
