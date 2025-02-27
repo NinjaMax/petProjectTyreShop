@@ -85,9 +85,14 @@
 /* dropdownContent Options container*/
 .contentOptionsFilterMainBtn {
     height: 400px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     gap: 2px;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
     overflow: hidden auto;
     border-radius:0px 0px 10px 10px;
     margin-left: 3px;
@@ -146,4 +151,4 @@
     #myInputFilterBtn {
         width: 208px;
     }
-} 
+}
